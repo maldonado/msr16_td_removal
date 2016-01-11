@@ -8,11 +8,11 @@ import psycopg2
 
 def get_root_folder(project_name):
     if project_name == 'apache-ant':
-        return '/Users/evermal/git/msr16_td_removal/tags/ant_tags/' 
+        return '/Users/evermal/git/msr16_td_interest/tags/ant_tags/' 
     elif project_name == 'apache-jmeter':
-        return '/Users/evermal/git/msr16_td_removal/tags/jmeter_tags/'
+        return '/Users/evermal/git/msr16_td_interest/tags/jmeter_tags/'
     else:
-        return '/Users/evermal/git/msr16_td_removal/tags/jruby_tags/'
+        return '/Users/evermal/git/msr16_td_interest/tags/jruby_tags/'
 
 connection = None
 connection = psycopg2.connect(host='localhost', port='5432', database='comment_classification', user='evermal', password='')

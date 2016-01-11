@@ -1,0 +1,187 @@
+select distinct(a.project_name), a.file_name, a.version_removed_name, a.version_removed_hash, b.repository_directory  from technical_debt_summary a , file_directory_per_version b where a.last_version_that_comment_was_found_hash = b.version_hash and a.file_name =  b.file_name and a.version_removed_author = '' and a.version_removed_name != 'not_removed' and a.version_removed_hash = '583f336a032da565cd2861fa4a0944386ec84699' order by 1,2;
+
+-->(file header)
+project_name |file_name| last_version_that_comment_was_found_name | last_version_that_comment_was_found_hash | version_introduced_author | version_removed_name |version_removed_hash|
+
+01-->(file changed)
+jruby|ASTCompiler.java| 1.7.22 |c28f4926e498e07a0d141846a3f04e13c3c125cd| Charles Oliver Nutter| 9.0.1.0| 583f336a032da565cd2861fa4a0944386ec84699|
+
+01-->(git commit)
+git checkout 9.0.1.0
+git log -- core/src/main/java/org/jruby/compiler/ASTCompiler.java
+commit ed54aab184bed0dc9dbaaf90b357c8f793c33696
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Sep 17 13:40:36 2014 -0500
+
+    Rip out the guts! Removing many non-9k runtime classes.
+
+    * ClassCache is gone; it was hacky and problematic when compiled
+      code held classloader-level (static) data, as when using indy
+      call sites. Java 8 has also eliminated permgen, greatly reducing
+      the hassle and overhead of loading jitted code. Finally, Rails
+      and the other Ruby frameworks are now officially "thread safe"
+      (or the teams are committed to them being so) and the multiple
+      JRuby model of deployment is discouraged (or even deprecated).
+    * All old JIT code is gone. It won't be useful for the new
+      JIT.
+    * Removed the last vestiges of Callback-based functions. If I
+      remember right, there's some ext out there using them...we must
+      find it.
+    * Rewired JITCompiler to use the new JIT.
+    * Rewired InterpretedIRMethod to use JITCompiler.
+    * Moved OneShotClassLoader out of ClassCache (in org.jruby.util)
+
+01-->(sql update)
+update technical_debt_summary set version_removed_commit_hash = 'ed54aab184bed0dc9dbaaf90b357c8f793c33696', version_removed_author = 'Charles Oliver Nutter' where file_name = 'ASTCompiler.java' and version_removed_hash = '583f336a032da565cd2861fa4a0944386ec84699'
+select count(*) from technical_debt where file_name = 'ASTCompiler.java' and version_removed_hash = '583f336a032da565cd2861fa4a0944386ec84699'
+
+02-->(file changed)
+jruby | ASTCompiler19.java| 1.7.22| c28f4926e498e07a0d141846a3f04e13c3c125cd | Charles Oliver Nutter| 9.0.1.0| 583f336a032da565cd2861fa4a0944386ec84699|
+
+02-->(git commit)
+git log -- core/src/main/java/org/jruby/compiler/ASTCompiler19.java
+commit 4e87bc6e153a433032d8e6b91067cae715ab9591
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Oct 30 18:48:57 2013 -0500
+
+    Remove ASTCompiler19 and collapse logic into ASTCompiler.
+
+02-->(sql update)
+update technical_debt_summary set version_removed_commit_hash = '4e87bc6e153a433032d8e6b91067cae715ab9591', version_removed_author = 'Charles Oliver Nutter' where file_name = 'ASTCompiler19.java' and version_removed_hash = '583f336a032da565cd2861fa4a0944386ec84699'
+
+select count(*) from technical_debt_summary where file_name = 'ASTCompiler19.java' and version_removed_hash = '583f336a032da565cd2861fa4a0944386ec84699'
+
+03-->(file changed)
+jruby        | ASTInspector.java                    | 9.0.1.0              | 583f336a032da565cd2861fa4a0944386ec84699 | core/src/main/java/org/jruby/compiler/ASTInspector.java
+
+03-->(git commit)
+git log -- core/src/main/java/org/jruby/compiler/ASTInspector.java
+commit ed54aab184bed0dc9dbaaf90b357c8f793c33696
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Sep 17 13:40:36 2014 -0500
+
+    Rip out the guts! Removing many non-9k runtime classes.
+
+    * ClassCache is gone; it was hacky and problematic when compiled
+      code held classloader-level (static) data, as when using indy
+      call sites. Java 8 has also eliminated permgen, greatly reducing
+      the hassle and overhead of loading jitted code. Finally, Rails
+      and the other Ruby frameworks are now officially "thread safe"
+      (or the teams are committed to them being so) and the multiple
+      JRuby model of deployment is discouraged (or even deprecated).
+    * All old JIT code is gone. It won't be useful for the new
+      JIT.
+    * Removed the last vestiges of Callback-based functions. If I
+      remember right, there's some ext out there using them...we must
+      find it.
+    * Rewired JITCompiler to use the new JIT.
+    * Rewired InterpretedIRMethod to use JITCompiler.
+    * Moved OneShotClassLoader out of ClassCache (in org.jruby.util)
+
+03-->(sql update)
+update technical_debt_summary set version_removed_commit_hash = 'ed54aab184bed0dc9dbaaf90b357c8f793c33696', version_removed_author = 'Charles Oliver Nutter' where file_name = 'ASTInspector.java' and version_removed_hash = '583f336a032da565cd2861fa4a0944386ec84699'
+
+select count(*) from technical_debt_summary where file_name = 'ASTInspector.java' and version_removed_hash = '583f336a032da565cd2861fa4a0944386ec84699'
+
+
+04-->(file changed)
+ jruby        | AssignmentVisitor.java               | 9.0.1.0              | 583f336a032da565cd2861fa4a0944386ec84699 | core/src/main/java/org/jruby/evaluator/AssignmentVisitor.java
+
+04-->(git commit)
+
+git log -- core/src/main/java/org/jruby/evaluator/AssignmentVisitor.java
+commit b90a5c513d5eaa166d1c7f6e7cade84a633b7adc
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Jun 9 15:12:40 2014 -0500
+
+    More removal of old interpreter
+
+
+04-->(sql update)
+update technical_debt_summary set version_removed_commit_hash = 'b90a5c513d5eaa166d1c7f6e7cade84a633b7adc', version_removed_author = 'Thomas E. Enebo' where file_name = 'AssignmentVisitor.java' and version_removed_hash = '583f336a032da565cd2861fa4a0944386ec84699';
+
+select count(*) from technical_debt_summary where file_name = 'AssignmentVisitor.java' and version_removed_hash = '583f336a032da565cd2861fa4a0944386ec84699'
+
+05-->(file changed)
+ jruby        | BaseBodyCompiler.java                | 9.0.1.0              | 583f336a032da565cd2861fa4a0944386ec84699 | core/src/main/java/org/jruby/compiler/impl/BaseBodyCompiler.java
+
+05-->(git commit)
+commit ed54aab184bed0dc9dbaaf90b357c8f793c33696
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Sep 17 13:40:36 2014 -0500
+
+    Rip out the guts! Removing many non-9k runtime classes.
+
+    * ClassCache is gone; it was hacky and problematic when compiled
+      code held classloader-level (static) data, as when using indy
+      call sites. Java 8 has also eliminated permgen, greatly reducing
+      the hassle and overhead of loading jitted code. Finally, Rails
+      and the other Ruby frameworks are now officially "thread safe"
+      (or the teams are committed to them being so) and the multiple
+      JRuby model of deployment is discouraged (or even deprecated).
+    * All old JIT code is gone. It won't be useful for the new
+      JIT.
+    * Removed the last vestiges of Callback-based functions. If I
+      remember right, there's some ext out there using them...we must
+      find it.
+    * Rewired JITCompiler to use the new JIT.
+    * Rewired InterpretedIRMethod to use JITCompiler.
+    * Moved OneShotClassLoader out of ClassCache (in org.jruby.util)
+
+05-->(sql update)
+update technical_debt_summary set version_removed_commit_hash = 'ed54aab184bed0dc9dbaaf90b357c8f793c33696', version_removed_author = 'Charles Oliver Nutter' where file_name = 'BaseBodyCompiler.java' and version_removed_hash = '583f336a032da565cd2861fa4a0944386ec84699';
+
+select count(*) from technical_debt_summary where file_name = 'BaseBodyCompiler.java' and version_removed_hash = '583f336a032da565cd2861fa4a0944386ec84699'
+
+
+06-->(file changed)
+ jruby        | BlockBody.java                       | 9.0.1.0              | 583f336a032da565cd2861fa4a0944386ec84699 | core/src/main/java/org/jruby/runtime/BlockBody.java
+
+06-->(git commit)
+git log -S "// FIXME: This is gross. Don't do this." core/src/main/java/org/jruby/runtime/BlockBody.java
+commit c3a18b3b18b5799a9b8c9b3e6c22fa8867e4aa61
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue May 5 15:45:12 2015 -0500
+
+    More MAsgnNode removal
+    
+06-->(sql update)
+update technical_debt_summary set version_removed_commit_hash = 'b90a5c513d5eaa166d1c7f6e7cade84a633b7adc', version_removed_author = '' where file_name = '.java' and version_removed_hash = '583f336a032da565cd2861fa4a0944386ec84699';
+
+select count(*) from technical_debt_summary where file_name = '.java' and version_removed_hash = '583f336a032da565cd2861fa4a0944386ec84699'
+
+
+07-->(file changed)
+ jruby        | ChildScopedBodyCompiler.java         | 9.0.1.0              | 583f336a032da565cd2861fa4a0944386ec84699 | core/src/main/java/org/jruby/compiler/impl/ChildScopedBodyCompiler.java
+07-->(git commit)
+07-->(sql update)
+update technical_debt_summary set version_removed_commit_hash = 'b90a5c513d5eaa166d1c7f6e7cade84a633b7adc', version_removed_author = '' where file_name = '.java' and version_removed_hash = '583f336a032da565cd2861fa4a0944386ec84699';
+
+select count(*) from technical_debt_summary where file_name = '.java' and version_removed_hash = '583f336a032da565cd2861fa4a0944386ec84699'
+
+
+08-->(file changed)
+ jruby        | ClassNode.java                       | 9.0.1.0              | 583f336a032da565cd2861fa4a0944386ec84699 | core/src/main/java/org/jruby/ast/ClassNode.java
+08-->(git commit)
+08-->(sql update)
+update technical_debt_summary set version_removed_commit_hash = 'b90a5c513d5eaa166d1c7f6e7cade84a633b7adc', version_removed_author = '' where file_name = '.java' and version_removed_hash = '583f336a032da565cd2861fa4a0944386ec84699';
+
+select count(*) from technical_debt_summary where file_name = '.java' and version_removed_hash = '583f336a032da565cd2861fa4a0944386ec84699'
+
+
+09-->(file changed)
+ jruby        | CompoundArray.java                   | 9.0.1.0              | 583f336a032da565cd2861fa4a0944386ec84699 | core/src/main/java/org/jruby/ir/operands/CompoundArray.java
+09-->(git commit)
+09-->(sql update)
+update technical_debt_summary set version_removed_commit_hash = 'b90a5c513d5eaa166d1c7f6e7cade84a633b7adc', version_removed_author = '' where file_name = '.java' and version_removed_hash = '583f336a032da565cd2861fa4a0944386ec84699';
+
+select count(*) from technical_debt_summary where file_name = '.java' and version_removed_hash = '583f336a032da565cd2861fa4a0944386ec84699'
+
+
+10-->(file changed)
+ jruby        | ConstDeclNode.java                   | 9.0.1.0              | 583f336a032da565cd2861fa4a0944386ec84699 | core/src/main/java/org/jruby/ast/ConstDeclNode.java
+10-->(git commit)
+10-->(sql update)
+update technical_debt_summary set version_removed_commit_hash = 'b90a5c513d5eaa166d1c7f6e7cade84a633b7adc', version_removed_author = '' where file_name = '.java' and version_removed_hash = '583f336a032da565cd2861fa4a0944386ec84699';
+
+select count(*) from technical_debt_summary where file_name = '.java' and version_removed_hash = '583f336a032da565cd2861fa4a0944386ec84699'

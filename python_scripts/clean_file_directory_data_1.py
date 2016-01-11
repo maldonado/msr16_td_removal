@@ -17,34 +17,35 @@ results = cursor.fetchall()
 
 for line in results:
 
-    project_name = line[0]
-    version_name = line[1]
+    project_name  = line[0]
+    version_name  = line[1]
     version_order = line[2]
-    file_name = line[3]
+    file_name     = line[3]
 
+    print file_name
 
-    cursor.execute("select file_directory from file_directory_per_version where project_name = '"+project_name+"' and file_name = '"+file_name+"' and version_name = '"+version_name+"' ")
+    cursor.execute("select file_directory from file_directory_per_version where project_name = %s and file_name = %s and version_name = %s ", (project_name, file_name, version_name))
     file_directory_list = cursor.fetchall()
 
-    
+    print len(file_directory_list)
 
+    # case 1 - the files in different directories are identical, so keep both of them and calculate the dependencies for both files. 
     java_file_list = []
-
     for file_directory_line in file_directory_list:
         print file_directory_line[0]
-        
         temp = []    
         with open (file_directory_line[0] ,'r') as f:
             for line in f:
                 temp.append(line)
-        
-        java_file_list.append(''.join(temp))    
+        java_file_list.append(''.join(temp))
 
     for x in xrange(0, len(java_file_list) -1):
-        
         value = distance.levenshtein(java_file_list[x].split('\n'),  java_file_list[x+1].split('\n'))
-
-        print value                                 
+        if value == 0:
+            print 'they are equal'
+            # cursor.execute("update file_directory_per_version set matched_analyzed_file_directory = 'IGNORE' where ")
+        else:
+            print 'they are different'
         # pass
 print '---------'
     # print java_file_list
@@ -68,7 +69,8 @@ print '---------'
     #                 if comment_index == len(comment):
     #                     break
 
-
+# /src/src/functions/org/apache/jmeter/functions/FileWrapper.java
+# /Users/evermal/git/msr16_td_interest/tags/jmeter_tags/57.v2_7/src/src/core/org/apache/jmeter/util/BSFJavaScriptEngine.java
 
     # cursor.execute("select class_name from technical_debt_summary where project_name = '"+project_name+"' and file_name = '"+file_name+"'")
     # class_name_result = cursor.fetchall()
