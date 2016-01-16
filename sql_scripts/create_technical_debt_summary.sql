@@ -120,7 +120,39 @@ select * from file_directory_per_version where version_hash = '92dd8b805b5fc4ae4
 
 select * from file_directory_per_version where file_name ='IR_Builder.java';
 
-regex to parse blame files
--- 
+
+-
+
+drop table if exists time_to_remove_td;
+CREATE TABLE time_to_remove_td (
+  project_name text,
+  processed_comment_id numeric,
+  file_name text,
+  comment_classification  text,
+  version_introduced_name text,
+  version_introduced_hash text,
+  version_introduced_date timestamp without time zone,
+  version_removed_name text,
+  version_removed_hash text,
+  version_removed_date timestamp without time zone,
+  interval_time_to_remove text, 
+  epoch_time_to_remove numeric,
+  number_of_releases_to_remove numeric
+);
+
+insert into time_to_remove_td (project_name, processed_comment_id, file_name, comment_classification, version_introduced_name, version_introduced_hash, version_removed_name, version_removed_hash) 
+    select a.project_name, a.processed_comment_id, a.file_name, b.classification, a.version_introduced_name, a.version_introduced_hash, a.version_removed_name, a.version_removed_hash from technical_debt_summary a, processed_comment b where a.processed_comment_id = b.id order by 1,3,2 
+
+with temp as (select version_date, version_name, project_name from tags_information)
+update time_to_remove_td set version_introduced_date = t.version_date from temp t where t.version_name = time_to_remove_td.version_introduced_name and t.project_name =  time_to_remove_td.project_name
+
+with temp as (select version_date, version_name, project_name from tags_information)
+update time_to_remove_td set version_removed_date = t.version_date from temp t where t.version_name = time_to_remove_td.version_removed_name and t.project_name =  time_to_remove_td.project_name and time_to_remove_td.version_removed_name != 'not_removed'
+
+with temp as (select version_introduced_date, version_removed_date, processed_comment_id from time_to_remove_td)
+update time_to_remove_td set interval_time_to_remove = age(t.version_removed_date, t.version_introduced_date) from temp t where t.processed_comment_id = time_to_remove_td.processed_comment_id
+
+
+
 
 
