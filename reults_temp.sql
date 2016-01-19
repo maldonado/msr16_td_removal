@@ -19,9 +19,6 @@ select a.project_name, a.file_name, a.version_removed_name, a.version_removed_ha
 
 select * from technical_debt_summary where version_removed_name != 'not_removed' and version_removed_author is null or version_removed_author = '' ;    
 
-
-
-
 update technical_debt_summary set 
     version_introduced_commit_hash = 'd9e4470c',
     version_introduced_author = 'Sebastian Bazley',

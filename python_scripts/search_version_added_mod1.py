@@ -1,5 +1,5 @@
 # import difflib
-import distance
+# import distance
 import psycopg2
 import sys
 import os
@@ -28,8 +28,7 @@ def parse_block_comment (comment):
             result.append(new_line)
     return result
 
-
-cursor.execute("select a.comment_type, a.comment_text, a.project_name, a.version_name, a.file_name, b.version_order, a.processed_comment_id from technical_debt_summary a, tags_information b where a.project_name = b.project_name and a.version_name = b.version_name and version_introduced_name is null")
+cursor.execute("select a.comment_type, a.comment_text, a.project_name, a.version_name, a.file_name, b.version_order, a.processed_comment_id from technical_debt_summary a, tags_information b where a.project_name = b.project_name and a.version_name = b.version_name and a.version_introduced_name = a.version_removed_name  ")
 results = cursor.fetchall()
 
 for result in results:
@@ -63,15 +62,15 @@ for result in results:
 
         current_version_path = str(version_order) + '.' + version_name 
         older_version_path = str(older_version_order) + '.' + older_version_name 
-        print current_version_path
-        print older_version_path
+        # print current_version_path
+        # print older_version_path
 
         cursor.execute("select file_directory from file_directory_per_version where project_name = '"+project_name+"' and version_hash = '"+older_version_hash+"' and file_name = '"+file_name+"'")
         older_version_path_results = cursor.fetchall()
         
         for older_version_path_result in older_version_path_results:
             older_file_directory = older_version_path_result[0]
-            print older_file_directory
+            # print older_file_directory
 
             # older_file_directory = file_directory.replace(current_version_path, older_version_path)
             # print older_file_directory
@@ -81,16 +80,17 @@ for result in results:
                 with open (older_file_directory,'r') as f:
                     comment_index = 0
                     # comment_distance_threshold = 0
-                    comment_total_distance = 0
+                    # comment_total_distance = 0
                     java_file = []
                     for line in f:
-                        value = distance.levenshtein(comment[comment_index], line.strip())
+                        if comment[comment_index] in line.strip():
+                        # value = distance.levenshtein(comment[comment_index], line.strip())
                         # print str(value)+' - '+line 
-                        if value < 10:
+                        # if value < 10:
                             found_in_version = True
-                            print str(value)+' - '+line 
-                            print str(value)+' - '+comment[comment_index]
-                            comment_total_distance = comment_total_distance + value
+                            # print line 
+                            # print str(value)+' - '+comment[comment_index]
+                            # comment_total_distance = comment_total_distance + value
                             comment_index = comment_index + 1
                             if comment_index == len(comment):
                                 break

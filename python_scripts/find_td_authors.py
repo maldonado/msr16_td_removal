@@ -31,7 +31,8 @@ def parse_block_comment (comment):
     return result
 
 
-cursor.execute("select version_introduced_hash, file_name , comment_text, comment_type, class_id, comment_start_line, comment_end_line, version_removed_name, version_removed_hash, last_version_that_comment_was_found_hash from technical_debt_summary where version_introduced_hash is not null and version_introduced_commit_hash is null")
+cursor.execute("select version_introduced_hash, file_name , comment_text, comment_type, class_id, comment_start_line, comment_end_line, version_removed_name, version_removed_hash, last_version_that_comment_was_found_hash from technical_debt_summary where processed_comment_id in ('10216','16676','15168','11436','10311','15094','13099','12765','11195','17639','11102','17696','9232','11163','76247','12941','9378','76099','14467','17508','6552','76805','9098','17777','17103','15697','8818','8962','15641','79417','14376','9234','8321','12985','12174','14875','7174','17016','76722','13660','15376','78655','8090','77263','78857','12866','11438','16718','15249','78016','11240','15581','13663','16258','16891','10246','15540','10659','11533','14202','78668','11462','4276','17143','76512','9233','17697','4147','14473','13507','288','11194','6924','10509','9580','11147','11875','17782','9695','14903','14479','11872','9105','14967','76105','9872','17670','18680','10312','8830','17413','6487','7784','76518','15995','12226','10062','10094','13144','14879','6477','15560', '14507')")
+# cursor.execute("select version_introduced_hash, file_name , comment_text, comment_type, class_id, comment_start_line, comment_end_line, version_removed_name, version_removed_hash, last_version_that_comment_was_found_hash from technical_debt_summary where version_introduced_hash is not null and version_introduced_commit_hash is null")
 results = cursor.fetchall()
 
 total_files_to_process = len(results)
