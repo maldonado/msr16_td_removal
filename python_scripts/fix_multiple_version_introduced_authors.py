@@ -15,7 +15,7 @@ connection = None
 connection = psycopg2.connect(host='localhost', port='5432', database='comment_classification', user='evermal', password='')
 cursor = connection.cursor()
 
-cursor.execute("select a.project_name, a.file_name, a.version_introduced_name, a.version_introduced_hash, b.repository_directory, b.version_order,  a.comment_text, a.processed_comment_id, a.comment_type, a.version_introduced_author, a.version_introduced_lines , a.version_introduced_commit_hash  from technical_debt_summary a , file_directory_per_version b where a.version_introduced_hash = b.version_hash and a.file_name =  b.file_name and a.version_introduced_author like'%,%' order by 1,2 limit 1")
+cursor.execute("select a.project_name, a.file_name, a.version_introduced_name, a.version_introduced_hash, b.repository_directory, b.version_order,  a.comment_text, a.processed_comment_id, a.comment_type, a.version_introduced_author, a.version_introduced_lines , a.version_introduced_commit_hash  from technical_debt_summary a , file_directory_per_version b where a.version_introduced_hash = b.version_hash and a.file_name =  b.file_name and a.version_introduced_author like'%,%' order by 1,2")
 results = cursor.fetchall()
 
 total_files_to_process = len(results)
@@ -39,6 +39,7 @@ for result in results:
     
     blame_file_path = get_repository_directory(project_name) + version_order + "." + version_introduced_name + "/src/" + repository_directory.replace('.java', '.txt')
     subprocess.call("subl " + blame_file_path , shell = True)
+    print processed_comment_id
     print version_introduced_author
     print version_introduced_commit_hash
     print version_introduced_lines

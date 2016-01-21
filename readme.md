@@ -8,7 +8,7 @@ Title/Theme: Empirical Study on the Removal of self-admitted technical debt
 6- Look forward to see if the comment no longer exists
 
 RQ1 - How much of self-admitted technical debt gets removed ? [repeat]
-(consistency of code and comment co-change)
+(consistency of code and comment co-change) 
 
 RQ2 - How long does it take to remove technical debt in case of self-removal?
 Determine number of versions and time it takes to remove TD

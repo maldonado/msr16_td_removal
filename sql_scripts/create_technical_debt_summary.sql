@@ -152,7 +152,35 @@ update time_to_remove_td set version_removed_date = t.version_date from temp t w
 with temp as (select version_introduced_date, version_removed_date, processed_comment_id from time_to_remove_td)
 update time_to_remove_td set interval_time_to_remove = age(t.version_removed_date, t.version_introduced_date) from temp t where t.processed_comment_id = time_to_remove_td.processed_comment_id
 
+drop table if exists git_log_files;
+CREATE TABLE git_log_files (
+  project_name text,
+  file_name text,
+  repository_directory  text,
+  file_directory text,
+  oldest_version_order  text,
+  newest_version_order  text,
+  commit_hash text,
+  author_name text,
+  author_email text, 
+  author_date timestamp with time zone,
+  commit_message text
+);
 
+alter table git_log_files drop column commit_hash;
+alter table git_log_files drop column author_name;
+alter table git_log_files drop column author_email;
+alter table git_log_files drop column author_date;
+alter table git_log_files drop column commit_message;
 
-
-
+drop table if exists git_commit;
+CREATE TABLE git_commit (
+  project_name text,
+  file_name text,
+  file_directory text,
+  commit_hash text,
+  author_name text,
+  author_email text, 
+  author_date timestamp without time zone,
+  commit_message text
+);

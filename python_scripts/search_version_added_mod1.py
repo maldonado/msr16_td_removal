@@ -28,12 +28,13 @@ def parse_block_comment (comment):
             result.append(new_line)
     return result
 
-cursor.execute("select a.comment_type, a.comment_text, a.project_name, a.version_name, a.file_name, b.version_order, a.processed_comment_id from technical_debt_summary a, tags_information b where a.project_name = b.project_name and a.version_name = b.version_name and a.version_introduced_name = a.version_removed_name  ")
+# cursor.execute("select a.comment_type, a.comment_text, a.project_name, a.version_name, a.file_name, b.version_order, a.processed_comment_id from technical_debt_summary a, tags_information b where a.project_name = b.project_name and a.version_name = b.version_name and a.version_introduced_name = a.version_removed_name  ")
+cursor.execute("select a.comment_type, a.comment_text, a.project_name, a.version_name, a.file_name, b.version_order, a.processed_comment_id from technical_debt_summary a, tags_information b where a.project_name = b.project_name and a.version_name = b.version_name and a.processed_comment_id = 77649  ")
 results = cursor.fetchall()
 
 for result in results:
     comment_type =   result[0]
-    comment_text =   result[1]
+    comment_text =   "* FIXME: Should this be renamed to match its ruby name?"
     project_name =   result[2]
     version_name =   result[3]
     file_name    = result[4]
@@ -73,7 +74,7 @@ for result in results:
             # print older_file_directory
 
             # older_file_directory = file_directory.replace(current_version_path, older_version_path)
-            # print older_file_directory
+            print older_file_directory
 
             found_in_version = False
             try:
@@ -88,8 +89,8 @@ for result in results:
                         # print str(value)+' - '+line 
                         # if value < 10:
                             found_in_version = True
-                            # print line 
-                            # print str(value)+' - '+comment[comment_index]
+                            print line 
+                            print comment[comment_index]
                             # comment_total_distance = comment_total_distance + value
                             comment_index = comment_index + 1
                             if comment_index == len(comment):
