@@ -159,12 +159,12 @@ CREATE TABLE git_log_files (
   repository_directory  text,
   file_directory text,
   oldest_version_order  text,
-  newest_version_order  text,
-  commit_hash text,
-  author_name text,
-  author_email text, 
-  author_date timestamp with time zone,
-  commit_message text
+  newest_version_order  text
+  -- commit_hash text,
+  -- author_name text,
+  -- author_email text, 
+  -- author_date timestamp with time zone,
+  -- commit_message text
 );
 
 alter table git_log_files drop column commit_hash;
@@ -184,3 +184,5 @@ CREATE TABLE git_commit (
   author_date timestamp without time zone,
   commit_message text
 );
+
+alter table git_commit add column file_checkout boolean
