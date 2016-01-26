@@ -21,7 +21,7 @@ connection = None
 connection = psycopg2.connect(host='localhost', port='5432', database='comment_classification', user='evermal', password='')
 cursor = connection.cursor()
 
-cursor.execute("select distinct(project_name, file_name) from technical_debt_summary where file_name not in (select distinct(file_name) from git_log_files);")
+cursor.execute("select distinct(project_name, file_name) from technical_debt_summary where file_name not in (select distinct(file_name) from git_log_files)")
 all_files = cursor.fetchall()
 
 progress_counter = 0
@@ -56,7 +56,7 @@ for project_and_file_name in all_files:
 
         git_log_file_path = dataset_directory + file_name.replace('.java', '') + "/" + repository_directory[0].replace(file_name, '') 
         subprocess.call(["mkdir", "-p", git_log_file_path ])
-        git_log_file_name = oldest_version + '_' + newest_version + "_" + file_name.replace('.java', '.txt')
+        git_log_file_name = str(oldest_version) + '_' + str(newest_version) + "_" + file_name.replace('.java', '.txt')
 
         git_checkout = "git checkout " + tag[0]
         git_log = "git log -- " + repository_directory[0] + " > " + git_log_file_path + git_log_file_name
@@ -72,7 +72,7 @@ for project_and_file_name in all_files:
 
         file_full_path = git_log_file_path + git_log_file_name
         print file_full_path
-        cursor.execute("insert into git_log_files (project_name, file_name, repository_directory, file_directory, oldest_version_order, newest_version_order) values (%s, %s, %s, %s, %s, %s)", (project_name, file_name, repository_directory,file_full_path, oldest_version, newest_version))
+        cursor.execute("insert into git_log_files (project_name, file_name, repository_directory, file_directory, oldest_version_order, newest_version_order ) values (%s, %s, %s, %s, %s, %s)", (project_name, file_name, repository_directory,file_full_path, oldest_version, newest_version))
 
     connection.commit()
     progress_counter = progress_counter + 1

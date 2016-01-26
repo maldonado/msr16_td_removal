@@ -186,3 +186,7 @@ CREATE TABLE git_commit (
 );
 
 alter table git_commit add column file_checkout boolean
+
+
+
+insert into technical_debt_summary_temp (processed_comment_id) select processed_comment_id from technical_debt_summary 
