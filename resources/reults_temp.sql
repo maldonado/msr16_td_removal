@@ -49,10 +49,10 @@ select count(*) from technical_debt_summary;
 1127
 
 select count(*) from technical_debt_summary where version_removed_name = 'not_removed';
-604
+688
 
 select count(*) from technical_debt_summary where version_removed_name != 'not_removed';
-523
+439
 
 RQ2 - How long does it take to remove technical debt in case of self-removal?
 Determine number of versions and time it takes to remove TD

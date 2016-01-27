@@ -15,7 +15,7 @@ connection = None
 connection = psycopg2.connect(host='localhost', port='5432', database='comment_classification', user='evermal', password='')
 cursor = connection.cursor()
 
-cursor.execute("select a.project_name, a.last_version_that_comment_was_found_name,  b.repository_directory, b.version_order,  a.comment_text, a.processed_comment_id, a.last_version_that_comment_was_found_lines  from technical_debt_summary a , file_directory_per_version b where a.last_version_that_comment_was_found_hash = b.version_hash and a.file_name =  b.file_name and a.version_removed_author like'%,%' and b.matched_analyzed_file_directory != 'removed' order by 1,2  limit 1")
+cursor.execute("select a.project_name, a.last_version_that_comment_was_found_name,  b.repository_directory, b.version_order,  a.comment_text, a.processed_comment_id, a.last_version_that_comment_was_found_lines  from technical_debt_summary a , file_directory_per_version b where a.last_version_that_comment_was_found_hash = b.version_hash and a.file_name =  b.file_name and a.version_removed_author like'%,%' order by 1,2")
 results = cursor.fetchall()
 
 total_files_to_process = len(results)
@@ -27,7 +27,7 @@ for result in results:
     project_name                               = result[0]
     last_version_that_comment_was_found_name   = result[1]
     last_found_repository_directory            = result[2]
-    last_found_version_order                   = result[3]
+    last_found_version_order                   = str(result[3])
     comment_text                               = result[4]
     processed_comment_id                       = result[5]
     last_version_that_comment_was_found_lines  = result[6]
@@ -44,7 +44,7 @@ for result in results:
     version_removed_author      = removed_version_results[0]
     version_removed_commit_hash = removed_version_results[1]
     version_removed_lines       = removed_version_results[2]
-    version_removed_order       = removed_version_results[3]
+    version_removed_order       = str(removed_version_results[3])
     version_removed_name        = removed_version_results[4]
     version_removed_directory   = removed_version_results[5]
 

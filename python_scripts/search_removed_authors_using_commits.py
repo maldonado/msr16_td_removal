@@ -33,7 +33,7 @@ connection = None
 connection = psycopg2.connect(host='localhost', port='5432', database='comment_classification', user='evermal', password='')
 cursor = connection.cursor()
 
-cursor.execute("select processed_comment_id, project_name, file_name, comment_type, comment_text from technical_debt_summary where file_name not in ('PropertyHelper.java', 'TransactionController.java') and version_removed_name != 'not_removed' order by 2,3 ")
+cursor.execute("select processed_comment_id, project_name, file_name, comment_type, comment_text from technical_debt_summary where file_name  in ('MethodDefNode.java') and version_removed_name != 'not_removed' order by 2,3 ")
 results = cursor.fetchall()
 
 total_files_to_process = len(results)
@@ -51,7 +51,8 @@ for result in results:
     print file_name
 
     if 'MULTLINE' == comment_type or 'LINE' == comment_type:
-        comment = parse_line_comment(comment_text)
+        comment = 'Adding implicit nils caused multiple problems'
+        # comment = parse_line_comment(comment_text)
         # print comment
     else:
         comment = parse_block_comment(comment_text)
@@ -92,6 +93,6 @@ for result in results:
          removed_author_name =  'not removed'
          removed_commit_hash =  'not removed'
 
-    cursor.execute("update technical_debt_summary_temp set version_removed_author = %s , version_removed_commit_hash = %s where processed_comment_id = %s", (removed_author_name, removed_commit_hash, processed_comment_id))
+    # cursor.execute("update technical_debt_summary_temp set version_removed_author = %s , version_removed_commit_hash = %s where processed_comment_id = %s", (removed_author_name, removed_commit_hash, processed_comment_id))
     connection.commit()
                 
