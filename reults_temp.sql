@@ -5,9 +5,30 @@ select project_name, file_name , version_introduced_author, version_removed_auth
 RQ1 - How much of self-admitted technical debt gets removed ? [repeat]
 (consistency of code and comment co-change) 
 
+
+
+
 -- total of TD comments
 select count(*) from technical_debt_summary;
 1127
+
+-- per project
+select project_name, count(*) from technical_debt_summary group by 1;
+---------------+-------
+ jruby         |   622
+ apache-ant    |   131
+ apache-jmeter |   374
+
+-- removed per project
+ select project_name, count(*) from technical_debt_summary where version_removed_name != 'not_removed' group by 1;
+project_name  | count
+---------------+-------
+ jruby         |   398
+ apache-ant    |    19
+ apache-jmeter |    22
+
+-- self removal per project
+ select project_name, count(*) from technical_debt_summary where version_removed_name != 'not_removed' and version_removed_author = version_introduced_author group by 1;
 
 -- found in 491 files:
 select count(distinct(file_name)) from technical_debt_summary;
@@ -31,7 +52,11 @@ select count(distinct(file_name)) from technical_debt_summary where version_remo
 
 RQ2 - How long does it take to remove technical debt in case of self-removal?
 
--- average days from self removal (plot these values)
+select count(*) from technical_debt_summary where version_introduced_author = version_removed_author and version_removed_name != 'not_removed'
+257
+select count(*) from technical_debt_summary where version_introduced_author != version_removed_author and version_removed_name != 'not_removed'
+183
+-- average days from self removal
 select  avg(a.epoch_time_to_remove)/86400 from time_to_remove_td a, technical_debt_summary b where a.processed_comment_id = b.processed_comment_id and b.version_introduced_author = b.version_removed_author;
  ?column?
 -----------------------
@@ -278,6 +303,7 @@ select project_name , version_removed_author, count(*) from technical_debt_summa
 (count the number of commits that the authors of the top five appears and make a percentage of the number of commits in the project)
 experience/role of the person who removes it 
 
+pareto principle
 
 RQ4 - Why these TD's are removed and why some of them does not get removed ?
 look into the commit (messages) and issue trackers to see the reason? - corrective , non functional, feature addition ... 
