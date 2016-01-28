@@ -31,6 +31,7 @@ cursor.execute("copy (select * from tags_information) to '/Users/evermal/git/msr
 cursor.execute("copy (select * from file_directory_per_version) to '/Users/evermal/git/msr16_td_removal/datasets/CSV/file_directory_per_version.csv' (format csv,  header true)")
 cursor.execute("copy (select * from time_to_remove_td) to '/Users/evermal/git/msr16_td_removal/datasets/CSV/ftime_to_remove_td.csv' (format csv,  header true)")
 cursor.execute("copy (select * from git_commit) to '/Users/evermal/git/msr16_td_removal/datasets/CSV/git_commit.csv' (format csv,  header true)")
+cursor.execute("copy (select * from git_commit_analysis) to '/Users/evermal/git/msr16_td_removal/datasets/CSV/git_commit_analysis.csv' (format csv,  header true)")
 connection.close()
 
 print 'restoring database'

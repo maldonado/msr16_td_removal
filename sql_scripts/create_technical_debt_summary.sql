@@ -187,6 +187,49 @@ CREATE TABLE git_commit (
 
 alter table git_commit add column file_checkout boolean
 
-
-
 insert into technical_debt_summary_temp (processed_comment_id) select processed_comment_id from technical_debt_summary 
+
+-- fixing the data
+select a.version_introduced_commit_hash, b.version_introduced_commit_hash, a.version_introduced_author,  b.version_introduced_author from technical_debt_summary a, technical_debt_summary_temp b where a.processed_comment_id = b.processed_comment_id and a.version_introduced_commit_hash like '%,%';
+with temp as (select version_introduced_commit_hash, processed_comment_id from technical_debt_summary_temp)
+update technical_debt_summary set version_introduced_commit_hash = t.version_introduced_commit_hash from temp t where t.processed_comment_id = technical_debt_summary.processed_comment_id 
+
+select a.version_removed_commit_hash, b.version_removed_commit_hash, a.version_removed_author,  b.version_removed_author from technical_debt_summary a, technical_debt_summary_temp b where a.processed_comment_id = b.processed_comment_id and a.version_removed_commit_hash like '%,%';
+with temp as (select version_removed_commit_hash, processed_comment_id from technical_debt_summary_temp)
+update technical_debt_summary set version_removed_commit_hash = t.version_removed_commit_hash from temp t where t.processed_comment_id = technical_debt_summary.processed_comment_id and technical_debt_summary.version_removed_name != 'not_removed' and t.version_removed_commit_hash != 'not removed'
+
+
+drop table if exists git_commit_analysis;
+CREATE TABLE git_commit_analysis (
+  processed_comment_id integer,
+  project_name text,
+  file_name text,
+  version_introduced_name text,
+  version_introduced_order numeric,
+  version_introduced_author text,
+  version_introduced_commit_hash text,
+  version_introduced_message text,
+  version_removed_name text, 
+  version_removed_order numeric,
+  version_removed_author text,
+  version_removed_commit_hash text,
+  version_removed_message text
+);
+
+
+insert into git_commit_analysis (processed_comment_id,project_name,file_name,version_introduced_name,version_introduced_commit_hash,version_introduced_author,version_removed_name,version_removed_author,version_removed_commit_hash)
+select processed_comment_id,project_name,file_name,version_introduced_name,version_introduced_commit_hash,version_introduced_author,version_removed_name,version_removed_author,version_removed_commit_hash from technical_debt_summary order by 1
+
+with temp as (select commit_message, commit_hash from git_commit group by 2,1)
+update git_commit_analysis set version_introduced_message = t.commit_message from temp t where t.commit_hash = git_commit_analysis.version_introduced_commit_hash 
+
+with temp as (select commit_message, commit_hash from git_commit group by 2,1)
+update git_commit_analysis set version_removed_message = t.commit_message from temp t where t.commit_hash = git_commit_analysis.version_removed_commit_hash 
+
+with temp as (select project_name, version_name, version_order from tags_information )
+update git_commit_analysis set version_introduced_order = t.version_order from temp t where t.project_name = git_commit_analysis.project_name and t.version_name = git_commit_analysis.version_introduced_name  
+
+with temp as (select project_name, version_name, version_order from tags_information )
+update git_commit_analysis set version_removed_order = t.version_order from temp t where t.project_name = git_commit_analysis.project_name and t.version_name = git_commit_analysis.version_removed_name  
+
+

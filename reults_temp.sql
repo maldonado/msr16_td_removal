@@ -121,7 +121,7 @@ select a.project_name, avg(a.number_of_releases_to_remove) from time_to_remove_t
 -- can one observe difference in self-removal rate/speed between different kinds of technical debt?
 
 All projects
-select comment_classification, avg(epoch_time_to_remove)/86400 from time_to_remove_td where version_removed_name != 'not_removed' group by 1;
+select comment_classification, epoch_time_to_remove)/86400 from time_to_remove_td where version_removed_name != 'not_removed' and comment_classification='TEST' group by 1;
  comment_classification |       days
 ------------------------+-----------------------
  IMPLEMENTATION         | 1686.4107040644540509
@@ -316,6 +316,9 @@ stats
 
 select a.file_name,a.version_introduced_name, a.version_removed_name, b.repository_directory, a.comment_text  from technical_debt_summary a , file_directory_per_version b where a.last_version_that_comment_was_found_hash = b.version_hash and a.file_name =  b.file_name and a.version_introduced_name = a.version_removed_name and a.version_removed_name != 'not_removed'  and a.project_name= 'apache-ant' order by 1,2 ;
 
+
+
+select processed_comment_id, project_name, file_name, version_introduced_name, version_introduced_order, version_introduced_author, version_introduced_commit_hash, version_introduced_message,  
 
 
 
