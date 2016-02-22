@@ -41,8 +41,11 @@ alter table technical_debt_summary add column last_version_that_comment_was_foun
 
 
 -- 2
+-- 'apache-ant-1.7.0',
+-- 'apache-jmeter-2.10',
+-- 'jruby-1.4.0'
 insert into technical_debt_summary (project_name, file_name, class_id, class_name, class_access, is_class_abstract, is_class_enum, is_class_interface, class_start_line, class_end_line, processed_comment_id, comment_location, comment_type, function_signature,comment_start_line,comment_end_line,comment_classification,comment_text) 
-    select b.projectname, b.filename, b.id , b.classname, b.access, b.isabstract, b.isenum, b.isinterface, b.startline, b.endline, a.id, a.location, a.type, a.description,   a.startline, a.endline, a.classification , a.commenttext from processed_comment a , comment_class b where a.commentclassid = b.id and b.projectname in ('apache-ant-1.7.0','apache-jmeter-2.10','jruby-1.4.0') and a.classification not in ('WITHOUT_CLASSIFICATION', 'BUG_FIX_COMMENT') order by 1, 2, 4,  9, 5;
+    select b.projectname, b.filename, b.id , b.classname, b.access, b.isabstract, b.isenum, b.isinterface, b.startline, b.endline, a.id, a.location, a.type, a.description,   a.startline, a.endline, a.classification , a.commenttext from processed_comment a , comment_class b where a.commentclassid = b.id and b.projectname in ('emf-2.4.1','hibernate-distribution-3.3.2.GA','sql12') and a.classification not in ('WITHOUT_CLASSIFICATION', 'BUG_FIX_COMMENT') order by 1, 2, 4,  9, 5;
 
 -- 3
 drop table if exists tags_information;
@@ -140,6 +143,16 @@ CREATE TABLE time_to_remove_td (
   number_of_releases_to_remove numeric
 );
 
+-- after creation of the table
+alter table time_to_remove_td add column was_td_removed boolean;
+alter table time_to_remove_td add column max_version_analyzed_name text;
+alter table time_to_remove_td add column max_version_analyzed_hash text;
+alter table time_to_remove_td add column max_version_analyzed_date timestamp;
+alter table time_to_remove_td add column interval_time_in_the_system text;
+alter table time_to_remove_td add column epoch_time_in_the_system numeric;
+alter table time_to_remove_td add column number_of_releases_in_the_system numeric;
+
+
 insert into time_to_remove_td (project_name, processed_comment_id, file_name, comment_classification, version_introduced_name, version_introduced_hash, version_removed_name, version_removed_hash) 
     select a.project_name, a.processed_comment_id, a.file_name, b.classification, a.version_introduced_name, a.version_introduced_hash, a.version_removed_name, a.version_removed_hash from technical_debt_summary a, processed_comment b where a.processed_comment_id = b.id order by 1,3,2 
 
@@ -151,6 +164,34 @@ update time_to_remove_td set version_removed_date = t.version_date from temp t w
 
 with temp as (select version_introduced_date, version_removed_date, processed_comment_id from time_to_remove_td)
 update time_to_remove_td set interval_time_to_remove = age(t.version_removed_date, t.version_introduced_date) from temp t where t.processed_comment_id = time_to_remove_td.processed_comment_id
+
+-- after creation of the table
+update time_to_remove_td set was_td_removed = false where version_removed_name = 'not_removed'
+update time_to_remove_td set was_td_removed = true where version_removed_name != 'not_removed'
+
+-- for apache-ant
+with temp as (select version_date, version_name, version_hash, project_name from tags_information where project_name = 'apache-ant' and version_order = 66)
+update time_to_remove_td set max_version_analyzed_name = t.version_name, max_version_analyzed_hash = t.version_hash, max_version_analyzed_date = t.version_date from temp t where t.project_name = time_to_remove_td.project_name 
+
+-- for apache-jmeter
+with temp as (select version_date, version_name, version_hash, project_name from tags_information where project_name = 'apache-jmeter' and version_order = 75)
+update time_to_remove_td set max_version_analyzed_name = t.version_name, max_version_analyzed_hash = t.version_hash, max_version_analyzed_date = t.version_date from temp t where t.project_name = time_to_remove_td.project_name 
+
+-- for jruby
+with temp as (select version_date, version_name, version_hash, project_name from tags_information where project_name = 'jruby' and version_order = 107)
+update time_to_remove_td set max_version_analyzed_name = t.version_name, max_version_analyzed_hash = t.version_hash, max_version_analyzed_date = t.version_date from temp t where t.project_name = time_to_remove_td.project_name 
+
+
+-- preciso colocar o intervalo que o debt tecnico esta no sistema.
+-- para comments que ainda nao foram removidos do sistema essa conta eh feita pelo intervalo do data_max - data introduced.
+with temp as (select version_introduced_date, max_version_analyzed_date, processed_comment_id from time_to_remove_td where was_td_removed = false)
+update time_to_remove_td set interval_time_in_the_system = age(t.max_version_analyzed_date, t.version_introduced_date) from temp t where t.processed_comment_id = time_to_remove_td.processed_comment_id
+
+-- para comments removidos esse numero eh igual o tempo removido. 
+update time_to_remove_td set interval_time_in_the_system = interval_time_to_remove , epoch_time_in_the_system = epoch_time_to_remove , number_of_releases_in_the_system = number_of_releases_to_remove where was_td_removed = true
+
+
+
 
 drop table if exists git_log_files;
 CREATE TABLE git_log_files (
@@ -232,4 +273,45 @@ update git_commit_analysis set version_introduced_order = t.version_order from t
 with temp as (select project_name, version_name, version_order from tags_information )
 update git_commit_analysis set version_removed_order = t.version_order from temp t where t.project_name = git_commit_analysis.project_name and t.version_name = git_commit_analysis.version_removed_name  
 
+--commit table
+drop table commit_guru
+CREATE TABLE commit_guru (
+  project_name text,
+  version text,
+  commit_hash text,
+  author_name text,
+  author_date_unix_timestamp numeric,
+  author_email text,
+  author_date timestamp,
+  commit_message text,
+  fix text,
+  classification text, 
+  linked text, 
+  contains_bug text, 
+  fixes text, 
+  ns numeric,
+  nd numeric,
+  nf numeric,
+  entrophy numeric,
+  la numeric,
+  ld numeric,
+  fileschanged text,
+  lt numeric,
+  ndev numeric,
+  age numeric, 
+  nuc numeric,
+  exp numeric,
+  rexp numeric,
+  sexp numeric,
+  glm_probability numeric,
+  repository_id text
+); 
 
+--suvival plot table
+drop table survival_plot;
+CREATE TABLE survival_plot (
+  processed_comment_id numeric,
+  project_name text,
+  was_td_removed numeric, 
+  epoch_interval numeric
+); 
