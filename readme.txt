@@ -30,9 +30,32 @@
             try heuristic first. 
         solve manually the others.
 
-
 06- search the td comment version added and removed 
     - execute script 06_search_version_added.py
     - execute script 07_search_version_removed.py
 
+Using the git blame approach (not recommended)
+
+07- extract the blame files from each of the td files
+    - copy script 08_populate_tags_information.py into the cloned repositories
+    - execute the following scripts from blame_approach folder : 08,09,10,11,12 and 13
+
+Using file versions (commits) approach
+    - execute the following scripts from file_versions_approach folder : 08,09,10,11 and 12
+
+08- remove non ASCII characters from the authors name
+    - execute 14_data_treatement_strip_characters.py
+
+09- populate results table "time_to_remove_td"
+    - execute script to create and populate table's base information. 
+    - execute 15_populate_time_to_remove_td.py
+
+10- populate results table "survival_plot" 
+    - execute script to create and populate table's base information. 
+    - execute 16_populate_survival_plot.py
+
+11- insert commit guru data to see the classification of the commits. 
+    - import files from commit guru 
+    - process files using 16_populate_survival_plot.py
+    
 
