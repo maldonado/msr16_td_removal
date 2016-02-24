@@ -1,3 +1,5 @@
+# remove files that has been identified having the same root folder than the manually classified file
+
 import os
 import re
 import sys

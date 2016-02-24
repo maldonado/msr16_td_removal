@@ -11,9 +11,9 @@ dataset_directory = '/Users/evermal/git/msr16_td_removal/datasets/git_log/'
 
 def get_repository_directory (project_name):
     switcher = {
-        "jruby": "/Users/evermal/git/jruby/",
-        "apache-ant": "/Users/evermal/git/ant/",
-        "apache-jmeter": "/Users/evermal/git/jmeter/",
+        "jruby": "/Users/evermal/git/mined_repos/jruby/",
+        "apache-ant": "/Users/evermal/git/mined_repos/ant/",
+        "apache-jmeter": "/Users/evermal/mined_repos/git/jmeter/",
     }
     return switcher.get(project_name)
 

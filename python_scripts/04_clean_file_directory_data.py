@@ -1,3 +1,5 @@
+# identify files that have the same root folder than the mannualy classified file. 
+
 import os
 import re
 import sys
