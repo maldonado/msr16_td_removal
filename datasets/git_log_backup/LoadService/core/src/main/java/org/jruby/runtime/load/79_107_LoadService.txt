@@ -1,0 +1,466 @@
+commit 2adae4315b255b1c59c7723b38fe4f1994423840
+Author: Christian Meier <meier.kristian@gmail.com>
+Date:   Wed Jul 29 14:31:30 2015 +0200
+
+    allow to add classloader to instance config
+    
+    when the runtime gets created the classloader root gets added to the LOAD_PATH
+    and to the Gem::Specification.dirs in case these uri-like paths are directories
+
+commit 23663762cb4254a99d896b31400d0fc4262fe5f0
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Jul 16 13:22:29 2015 -0500
+
+    Fixes #3126. load current directory file
+
+commit 8a396dccd8584df1657a06dc20e716536716fe7d
+Author: Christian Meier <m.kristian@web.de>
+Date:   Sun May 31 00:20:39 2015 +0200
+
+    keep OSGiScriptingContainer alive
+    
+    there are no tests for this OSGiScriptingContainer and the last test
+    did work for felix4 only. no equinox nor knoplerfish no felix3. regular
+    ScriptingContainer now works with all three osgi frameworks including
+    embedded gems, etc and has tests for all those frameworks.
+
+commit 97e35b89b92361baf25661d39218e84b3f9eacb0
+Author: Christian Meier <m.kristian@web.de>
+Date:   Sat May 30 11:55:01 2015 +0200
+
+    find directory entries inside the jar if there is no .jrubydir file
+    
+    when using the uri:classloader: protocol and the lookup can be a directory
+    then to determine whether it is a directory or not the following sequence takes place
+    
+    * look for my_directory/.jrubydir and if there use it
+    * if the url from the classloader is jar url, then see if the jar file
+      has a directory entry and use it (zip files may or may not have such
+      directory entries depending on how it got packed)
+    * if url from classloader is file url, then use the file on filesystem and
+      check if it is a directory
+    
+    using ClassLoader.getResources as well URLClassLoader.getURLs for finding directory entries.
+
+commit 0b01058f3964dec60a68c08f0c198ea3d7384925
+Merge: eab2354 ab3b1d5
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Apr 22 02:24:22 2015 -0500
+
+    Merge remote-tracking branch 'origin/jruby-1_7'
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/RubyIO.java
+    	core/src/main/java/org/jruby/runtime/ThreadContext.java
+    	core/src/main/java/org/jruby/runtime/load/LoadService.java
+    	core/src/main/java/org/jruby/util/TypeConverter.java
+    	lib/pom.rb
+
+commit 17357526110510bde49ce3bc180e7647b14d932c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Apr 20 13:56:20 2015 -0500
+
+    Transplant recent LoadService fixes from master.
+    
+    * Fix autoload in the presence of canonicalized paths
+    * Fix require locking in the presence of canonicalized paths
+    * Fix circular require warning setting $!
+
+commit 088b8d4366f711fe292916775e77733aa6ba5baf
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Apr 15 12:49:06 2015 -0500
+
+    Circular warning logic caused $! to be set, breaking test autorun.
+
+commit 9800b443591eca4476b0615d98c46bf901a014fc
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Apr 7 13:06:32 2015 -0500
+
+    Make site_lib add unconditional, since RG needs it to insert paths.
+
+commit efb4a537bff570480925e16bd587852f21125452
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Apr 7 13:01:32 2015 -0500
+
+    Revert "Revert "Shared path is gone and site dir is not there by default.""
+    
+    This reverts commit 6cff7101e9126d19eb35d35c760d66ac3edc4542.
+
+commit 6cff7101e9126d19eb35d35c760d66ac3edc4542
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Apr 7 10:57:34 2015 -0500
+
+    Revert "Shared path is gone and site dir is not there by default."
+    
+    This reverts commit c5b3e0251de24445be4f73b101fadc036f98ffc2.
+
+commit c5b3e0251de24445be4f73b101fadc036f98ffc2
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Apr 6 10:03:18 2015 -0500
+
+    Shared path is gone and site dir is not there by default.
+
+commit 0f305773e07c3e3ff5eea9e928b0f7c79b53daa2
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Apr 1 14:08:16 2015 -0500
+
+    Rework load sequence wrt feature checking and locking.
+    
+    Band-aid for #2788.
+
+commit 28f5506f3fd6e913b44afd2c77b2ee5e52a179ee
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Dec 30 14:40:40 2014 -0600
+
+    Depollute LOADED_FEATURES.
+    
+    * enumerator.jar, complex.jar, rational.jar are now "provided" as
+      faux already-required libraries.
+    * Do the same for jruby.jar and java.jar, standard since 1.7.
+
+commit f5d1f9b99aa667c4449241b43dd4dcec258548cb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Dec 22 15:12:15 2014 -0600
+
+    Remove .jar.rb extension from load search.
+
+commit e911ed094ddaf200fe714369e9c8a476df121a3b
+Merge: 40e4c8f 1eedf72
+Author: Christian Meier <m.kristian@web.de>
+Date:   Fri Dec 12 13:54:31 2014 +0100
+
+    Merge branch 'jruby-1_7'
+    
+    Conflicts:
+    	core/pom.xml
+    	core/src/main/java/org/jruby/RubyString.java
+    	core/src/main/java/org/jruby/embed/internal/EmbedRubyRuntimeAdapterImpl.java
+    	core/src/main/java/org/jruby/runtime/load/LibrarySearcher.java
+    	core/src/main/java/org/jruby/util/AbstractFileResource.java
+    	core/src/main/java/org/jruby/util/FileResource.java
+    	core/src/main/java/org/jruby/util/JarFileResource.java
+    	core/src/main/java/org/jruby/util/URLResource.java
+    	core/src/test/java/org/jruby/embed/ScriptingContainerTest.java
+    	lib/ruby/1.8/rexml/document.rb
+    	lib/ruby/1.9/rexml/document.rb
+    	lib/ruby/2.0/rexml/document.rb
+    	spec/tags/1.8/ruby/core/file/readlink_tags.txt
+    	spec/tags/1.9/ruby/core/file/readlink_tags.txt
+    	test/test_file.rb
+
+commit ae1a055ca3a9f775a7a10df48fd2660f9adbfea4
+Author: Dmitry Ratnikov <ratnikov@google.com>
+Date:   Fri Dec 5 17:32:35 2014 -0500
+
+    Make JarredScript attempt to load associated service library if necessary.
+
+commit 43051c56cc8bd8d72e0803b3f3364d898bf372fb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Dec 4 16:11:21 2014 -0600
+
+    Clean up imports.
+
+commit a46ce8ef916cf53eff244b8e8d9f6862d16090c9
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Dec 4 16:09:34 2014 -0600
+
+    RedBridge runScriptlet(CLASSPATH.. should make claspath: __FILE__.
+    
+    Fixes #1875.
+
+commit 6cc07a5e22267a62df255d04580627dc90f9d9a5
+Merge: 8bdf8e2 22331c2
+Author: Christian Meier <m.kristian@web.de>
+Date:   Mon Dec 1 12:25:48 2014 +0000
+
+    Merge branch 'jruby-1_7'
+    
+    Conflicts:
+    	pom.xml
+
+commit 83b1742c63ee606e1150c559f05550360cd32626
+Author: Christian Meier <m.kristian@web.de>
+Date:   Sun Nov 30 18:29:50 2014 +0000
+
+    fix IllegalArgumentException for an exotic classloader
+
+commit f0a8db7a768b2631152e5471c103e08a92b0974f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Nov 24 15:20:24 2014 -0600
+
+    Clean up imports.
+
+commit f5c2edfaf2e48bd289cfad692f38d629df32750a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Nov 24 15:19:27 2014 -0600
+
+    Add jruby.aot.loadClasses property for pre-9k AOT .class logic.
+
+commit 2c3147e674967e87cd227ed6afd379cb192008a7
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Oct 29 14:04:41 2014 -0500
+
+    Reorg of stdlib files.
+    
+    * lib/ruby/2.2 => lib/ruby/stdlib
+    * lib/ruby/shared => lib/ruby/stdlib
+    * added minitest, test-unit, and power_assert to default gems
+    * fixes and config changes throughout to support these moves
+
+commit 5ee083231860a41e352ecbb93297457b7efea3ca
+Merge: c7a3739 1f13c08
+Author: Christian Meier <m.kristian@web.de>
+Date:   Mon Sep 29 11:22:29 2014 +0100
+
+    Merge branch 'jruby-1_7'
+    
+    Conflicts:
+    	.travis.yml
+    	VERSION
+    	core/pom.xml
+    	core/src/main/java/org/jruby/RubyClass.java
+    	core/src/main/java/org/jruby/util/TypeConverter.java
+    	core/src/main/java/org/jruby/util/URLResource.java
+    	docs/man/pom.xml
+    	docs/pom.xml
+    	ext/pom.xml
+    	ext/readline/pom.xml
+    	ext/ripper/pom.xml
+    	lib/pom.xml
+    	maven/jruby-complete/pom.rb
+    	maven/jruby-complete/pom.xml
+    	maven/jruby-core-complete/pom.rb
+    	maven/jruby-core-complete/pom.xml
+    	maven/jruby-dist/pom.rb
+    	maven/jruby-dist/pom.xml
+    	maven/jruby-dist/src/main/assembly/jruby.xml
+    	maven/jruby-jars/Mavenfile
+    	maven/jruby-jars/jruby-jars.gemspec
+    	maven/jruby-jars/lib/jruby-jars.rb
+    	maven/jruby-jars/lib/jruby-jars/version.rb
+    	maven/jruby-jars/pom.xml
+    	maven/jruby-jars/src/it/helloworld/pom.xml
+    	maven/jruby-jars/src/it/integrity/pom.xml
+    	maven/jruby-noasm/pom.rb
+    	maven/jruby-noasm/pom.xml
+    	maven/jruby-rake-plugin/pom.rb
+    	maven/jruby-rake-plugin/pom.xml
+    	maven/jruby-stdlib-complete/pom.rb
+    	maven/jruby-stdlib-complete/pom.xml
+    	maven/jruby-stdlib/pom.rb
+    	maven/jruby-stdlib/pom.xml
+    	maven/jruby/pom.rb
+    	maven/jruby/pom.xml
+    	maven/pom.rb
+    	maven/pom.xml
+    	pom.xml
+    	spec/regression/GH-1963_Array_product_coercion_spec.rb
+    	test/pom.xml
+    	test/test_command_line_switches.rb
+
+commit 11e3b3a683e8680d54c545129318eb6c7bd76769
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Sat Sep 20 14:55:21 2014 +0900
+
+    Add simple setter so we can more easily figure out what is setting incorrect LOADED_FEATURES value
+
+commit d9a90e7f9fad9e2d16fbec39280f3b9a0f665e3d
+Author: Christian Meier <m.kristian@web.de>
+Date:   Wed Aug 20 15:39:08 2014 +0200
+
+    Revert "replace old LoadService.findLibraryWithClassloaders with search on classloader"
+    
+    This reverts commit 4ec7615d1ac1e33d4a1cd9fb00f431dbe7fb904b.
+
+commit 4ec7615d1ac1e33d4a1cd9fb00f431dbe7fb904b
+Author: Christian Meier <m.kristian@web.de>
+Date:   Wed Aug 20 12:53:38 2014 +0200
+
+    replace old LoadService.findLibraryWithClassloaders with search on classloader
+
+commit 30af95152d572253cc244c70c28d98746d80d1d7
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Tue Aug 19 13:04:50 2014 +0100
+
+    [Truffle] Move Kernel#puts into Ruby.
+
+commit 061ff3cad3c83b3b513cc705153b3e13381681b0
+Merge: 9e3f229 c04c50f
+Author: Christian Meier <m.kristian@web.de>
+Date:   Sun Jul 27 12:11:39 2014 +0100
+
+    Merge branch 'jruby-1_7'
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/util/URLResource.java
+
+commit 50fda5706b61a8bd80a8642ed9d66bd074e13a0c
+Author: Christian Meier <m.kristian@web.de>
+Date:   Sat Jul 26 13:14:39 2014 +0100
+
+    find builtin libraries on any classloader
+
+commit 7e144f20fb2fefa61b0cc7e2610fd54c663012e1
+Merge: 526d2b7 3ada3d9
+Author: Christian Meier <m.kristian@web.de>
+Date:   Fri Jul 25 14:31:26 2014 +0100
+
+    Merge branch 'jruby-1_7'
+    
+    Conflicts:
+    	BUILDING.md
+    	core/pom.xml
+    	docs/man/pom.xml
+    	docs/pom.xml
+    	ext/pom.xml
+    	lib/pom.xml
+    	maven/jruby-complete/pom.xml
+    	maven/jruby-dist/pom.xml
+    	maven/jruby-jars/Mavenfile
+    	maven/jruby-jars/jruby-jars.gemspec
+    	maven/jruby-jars/lib/jruby-jars.rb
+    	maven/jruby-jars/lib/jruby-jars/version.rb
+    	maven/jruby-jars/pom.xml
+    	maven/jruby-noasm/pom.xml
+    	maven/jruby-rake-plugin/pom.xml
+    	maven/jruby-stdlib/pom.xml
+    	maven/jruby/pom.xml
+    	maven/pom.xml
+    	pom.xml
+    	test/pom.xml
+
+commit dc5c90c07de1c582c582af2fff0b59686640c625
+Author: Christian Meier <m.kristian@web.de>
+Date:   Fri Jul 25 13:00:38 2014 +0100
+
+    find resources via uri as well - not sure how this broke but it just did not work anymore after the big loadservice patch
+
+commit 7c53a8a446abbbcb5a81ac58dbfb49d8a088baf2
+Merge: c57ad62 d3459fe
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Jul 9 14:04:29 2014 -0500
+
+    Merge with jruby-1_7
+
+commit 35e70bbf1e8dfc97d2c36ac75a617ae15e241aba
+Author: Dmitry Ratnikov <ratnikov@google.com>
+Date:   Mon Jun 16 12:07:07 2014 -0400
+
+    Deprecate old stuff.
+
+commit ed0b7ab1dfa76dee16ecfacbd07624a55b264c69
+Author: Dmitry Ratnikov <ratnikov@google.com>
+Date:   Fri Jun 13 10:59:48 2014 -0400
+
+    Require no special jar handling
+
+commit 613673ae6ee2076c93264daad6d99826221352d9
+Author: Dmitry Ratnikov <ratnikov@google.com>
+Date:   Fri May 30 13:47:14 2014 -0400
+
+    Introduce LibrarySearcher and make LoadService use it
+
+commit 05e1b11ad00be5b85a5df8419573aab4f98f2954
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Fri Jun 13 17:36:27 2014 +0100
+
+    Revert "[Truffle] Restore a basic version of set_trace_func."
+    
+    This reverts commit 077a4ffb881e62b4d1fab78270a81cc500c0c252.
+
+commit 077a4ffb881e62b4d1fab78270a81cc500c0c252
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Thu Jun 12 01:48:11 2014 +0100
+
+    [Truffle] Restore a basic version of set_trace_func.
+
+commit 349b5f55e28782c548c9b17008d75b341d56d363
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri Feb 14 14:48:31 2014 -0600
+
+    Dump full stack trace if persist read debugging is on
+
+commit 26f4885e603594237e4cabb01d250f79e4c80773
+Author: Mark Triggs <mark@dishevelled.net>
+Date:   Tue Feb 4 12:03:10 2014 +1100
+
+    Bugfix for issue #1248
+    
+    Change LoadService to cope with classpath entries containing spaces.  This
+    doesn't normally happen when JRuby is invoked from the command-line, but seems
+    to happen when running via jruby-rack.
+
+commit ebd2d8fb33854e5a385dbfec4c324740e86e8e88
+Author: Mark Triggs <mark@dishevelled.net>
+Date:   Tue Feb 4 12:03:10 2014 +1100
+
+    Bugfix for issue #1248
+    
+    Change LoadService to cope with classpath entries containing spaces.  This
+    doesn't normally happen when JRuby is invoked from the command-line, but seems
+    to happen when running via jruby-rack.
+
+commit d5c9c51d5d3a998f987ff38d68eec4bbe3d15bcd
+Author: Christian Meier <m.kristian@web.de>
+Date:   Wed Dec 4 16:09:00 2013 +0000
+
+    replaced JavaUtilLoggingLogger with StandardErrorLogger using the same format. removed any import or usage of java.util.logging
+
+commit d7451082eaf9859e3aef72a33ce79bc84b66c3fa
+Author: Christian Meier <m.kristian@web.de>
+Date:   Wed Dec 4 16:09:00 2013 +0000
+
+    replaced JavaUtilLoggingLogger with StandardErrorLogger using the same format. removed any import or usage of java.util.logging
+
+commit 91277a0b220d47821647c670ab40eaa66ff246a8
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Nov 7 12:39:33 2013 -0600
+
+    Remove Cext support.
+
+commit 13135f5fa0c89ad6ea9a4daf8c80084fcdfa1c26
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Nov 7 12:05:15 2013 -0600
+
+    Eliminate LoadService19.
+
+commit 6d5ddacf7ef3011b3e6856df4d7c430a33cedd9e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Oct 8 15:21:32 2013 -0500
+
+    Bump up execution mode and stdlib to 2.1 (head).
+
+commit 4b6dfbcf361f1d00f13b1a8e3e05c9d0d9218f20
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Oct 7 01:29:08 2013 -0500
+
+    Get all suites in test:extended passing.
+
+commit 697e6895affa646849a685ed58f6f84795c853aa
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Oct 4 23:37:52 2013 -0500
+
+    Eliminate calls to Ruby.is1_8 and is1_9.
+
+commit e74c72bfc6c2639a315c1d5002497a206703c85b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Oct 4 22:38:27 2013 -0500
+
+    IT HAS BEGUN!
+    
+    Remove 1.8 tests and stdlib and start migrating boot logic toward
+    a single runtime compatibility mode.
+
+commit f84e7dbf33dd33930ebdad376097d685563b13c9
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Wed Sep 11 18:29:17 2013 -0400
+
+    Ignore empty strings after splitting on '_'.
+    
+    Fixes #1006.
+
+commit 28c6fbc4e883bc1c9e9242d1da1cb2b785f55339
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 3 12:46:45 2013 -0500
+
+    Move to @mkristian's proposed layout, with some modifications.

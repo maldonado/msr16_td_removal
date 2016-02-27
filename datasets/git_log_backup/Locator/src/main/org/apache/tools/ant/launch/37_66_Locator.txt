@@ -1,0 +1,533 @@
+commit 13000c1a4670271a3257b3c41dc1e17941067c78
+Author: Jesse N. Glick <jglick@apache.org>
+Date:   Wed Jul 17 22:46:10 2013 +0000
+
+    sconnolly advises using TODO rather than XXX in comments.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1504315 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b031b8766db70f993b90b1852b6957bc02175f8d
+Author: Nicolas Lalevee <hibou@apache.org>
+Date:   Wed Aug 22 18:10:37 2012 +0000
+
+    getAbsoluteFile is useless since as the javadoc of File.toURI clearly explain, produced URIs are absolute
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1376167 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 97d423a273f5cbb737e95e15cd4cf149e079f524
+Author: Nicolas Lalevee <hibou@apache.org>
+Date:   Wed Aug 22 13:21:33 2012 +0000
+
+    Don't mess with classloading of the launcher
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1376031 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 055f4eb6502573047dcba7d6cbd3e79a09e8557d
+Author: Nicolas Lalevee <hibou@apache.org>
+Date:   Wed Aug 22 12:38:24 2012 +0000
+
+    Make Locator.fileToURL and replace its use by FileUtils.getFileUtils().getFileURL()
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1376019 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 7829faf36a6f4bc565e0e8b92aa85cc948718176
+Author: Nicolas Lalevee <hibou@apache.org>
+Date:   Wed Aug 22 12:31:57 2012 +0000
+
+    To make an URL of a file, use FileUtils.getFileURL, which seems to do the job correctly
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1376014 13f79535-47bb-0310-9956-ffa450edef68
+
+commit da5f3bfd256e383926c6ece58dba15a7d4bd5761
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Tue Aug 21 14:27:46 2012 +0000
+
+    java 5, continued
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1375571 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 74fb3d870dc2bb95466ba7672eb63ff3d106ad96
+Author: Jesse N. Glick <jglick@apache.org>
+Date:   Wed Jan 5 15:17:59 2011 +0000
+
+    #50543: decodeUri broken for non-ASCII chars in input.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1055487 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3ef6daa0c059beb1dc02fd57435a88a4392219dc
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Sep 27 14:33:08 2010 +0000
+
+    according to the javadocs of JarURLConnection the separator is !/ not ! - this allows dealing with jars in directories that contain a ! in their name, as long as it is not at the end of the directory name.  PR 50007
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1001756 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 58f0bb04db9c5c8a858d7a3be7719608f25f2f49
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Feb 17 12:58:50 2010 +0000
+
+    if user input is compared to fixed strings in a case insensitive manner we should use the default locale.  Use Locale.ENGLISH consistently
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@910955 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 028ba47c8246f510012ef061d879d05240b90c71
+Author: Jesse N. Glick <jglick@apache.org>
+Date:   Wed Aug 26 18:48:21 2009 +0000
+
+    Some miscellaneous updates given that JDK 1.4 can be assumed.
+    The biggest outstanding JDK 1.3 code is in Locator but I am scared to touch it.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@808156 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6e72d89be84e4a3b021e1d59f14a97d2f4959adc
+Author: Steve Loughran <stevel@apache.org>
+Date:   Tue Feb 26 15:52:51 2008 +0000
+
+    Bug 42275 running ant off a network share can cause Ant to fail
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@631263 13f79535-47bb-0310-9956-ffa450edef68
+
+commit bbcd8aea0def7ab0442b4c997483cc81560b9d78
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Fri Nov 2 14:11:44 2007 +0000
+
+    default access precedent for testcase access
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@591341 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e29e6c080c8678d3abfab30e43289c855e6c4d84
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Fri Sep 14 15:45:54 2007 +0000
+
+    checkstyle - magic numbers
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@575728 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c9a992d30c3aac7e0a8c5531777015876acf499a
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Sat Aug 11 12:46:56 2007 +0000
+
+    checkstyle
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@564907 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 424bee292b49822b29c4cc583335999e29df2880
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Sat Aug 11 10:45:19 2007 +0000
+
+    checkstyle: remove trailing ws
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@564891 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1f0bd8f40148f09a029ba4a4d61a9c1293199b53
+Author: Steve Loughran <stevel@apache.org>
+Date:   Thu May 17 16:25:44 2007 +0000
+
+    bug 42275...handle failure of File.toURI() by printing the message (too noisy?) and falling back to our own code.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@539002 13f79535-47bb-0310-9956-ffa450edef68
+
+commit bcf84f5f14a9f80df80ca5836fc5b08d8be7c295
+Author: Steve Loughran <stevel@apache.org>
+Date:   Fri Apr 27 12:45:53 2007 +0000
+
+    Bug 42275: ant doesnt run from a network share, because of an error when trying to work out where we loaded from.
+    
+    1. this exception is still raised, but caught and causes ant to skip setting ant.lib.
+    
+    2. we now have a test class for Locator
+    
+    3. I've split out the java1.3 support and made it public, so we can test it separately.
+    
+    One of the tests is failing, showing the problem is still there. We need to decide what to do about it (ignore, switch to java1.3 code...)
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@533082 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 991ce3f2316ac2f0f40d44f515f885ad7908d4bd
+Author: Kevin Jackson <kevj@apache.org>
+Date:   Fri Apr 27 09:03:26 2007 +0000
+
+    -fix for bug #42227
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@533024 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a8b79fd3155220929b46352bf45cc5c66521a04a
+Author: Kevin Jackson <kevj@apache.org>
+Date:   Mon Apr 23 05:52:59 2007 +0000
+
+    -fix problem with windows file uris (stupid "Documents and Settings" bloody folder)
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@531340 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 290108eb355de4575f4e1a1bbc9c5e8f0a26152d
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Sat Nov 18 18:15:52 2006 +0000
+
+    checkstyle
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@476582 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 5e4d3d0c93a57c8ead35236c6e444d78897f427f
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Wed Nov 15 11:33:43 2006 +0000
+
+    do not uppercase systematically drive letters in FileUtils#normalize
+    append drive letter to absolute paths in Locator#fromURI
+    make FileUtilsTest pass under JDK 1.3
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@475206 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f58d3967f08c8cc033ce0af114bb1ed87ca08664
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Wed Nov 1 23:00:52 2006 +0000
+
+    checkstyle
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@470130 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 2e897819a83981a1f4de2e1cc72e33f080fcf573
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Sep 1 18:49:27 2006 +0000
+
+    copy2license.pl
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@439418 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 69c95afa02d8a3f629053c2dbef24ff386aabc07
+Author: Jesse N. Glick <jglick@apache.org>
+Date:   Fri Aug 18 20:07:32 2006 +0000
+
+    Some Javadoc corrections.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@432709 13f79535-47bb-0310-9956-ffa450edef68
+
+commit bce9fe013a8838393971f990e13f8fc38404a629
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Mon Apr 24 14:15:52 2006 +0000
+
+    Bugzilla Report: 39295
+    Reporter: Waldek Herka
+    extract the fileToURL code
+    use it for tools jar as well as the other paths
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@396563 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 27c1d843ca0b5f75261d97603772e77b36ce0bdd
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Wed Apr 19 16:31:30 2006 +0000
+
+    change name of Locator.encodeUri to Locator.encodeURI
+    
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@395304 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1f4efcbdd41dc5c57dbf9e47bf30b37cb37d746f
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Wed Apr 19 10:50:02 2006 +0000
+
+    escape none URL characters
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@395206 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1d8f9af72e48cb561ca235732f2256a0d5c81284
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Apr 6 19:30:26 2006 +0000
+
+    untabify
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@392046 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 4071974a6a470d7d5f6b6fba17c18be5f14ef028
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Apr 6 19:00:30 2006 +0000
+
+    find tools.jar even if it is distributed with the JRE, submitted by Nick Crossley, PR 38500
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@392037 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 2e52d68af6f378e43debf2e78aa89ef37833179f
+Author: Kevin Jackson <kevj@apache.org>
+Date:   Thu Mar 23 05:38:18 2006 +0000
+
+    revert to code that compiles pre 1.4
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@388050 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 98bd187d46f2be75368062cb386fe1b6b6b61d9d
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Mar 23 05:11:41 2006 +0000
+
+    2006
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@388040 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 774c8654a133d71daf258635191ac62c94713431
+Author: Kevin Jackson <kevj@apache.org>
+Date:   Tue Mar 21 03:49:57 2006 +0000
+
+    remove deprecated code
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@387396 13f79535-47bb-0310-9956-ffa450edef68
+
+commit abef27d39249b2d0fba64e858239e5f7a7496a93
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Tue Dec 20 03:58:17 2005 +0000
+
+    revert encoding of the URI prior to decoding it in Locator#fromURI.
+    Otherwise FileUtilsTest fail.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@357897 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 02d8419021922685f4379c1e95a7fb5c8897e712
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Mon Dec 19 17:52:05 2005 +0000
+
+    add'l fixes RE using URI >= Java 1.4:  ensure the URI is encoded prior to
+    passing to URI.create(); ensure no new object is created by encodeUri until
+    encoding is determined to be necessary.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@357737 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e12c63a6ee1b0bb45e9821ff84392c9391d76bd9
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Fri Dec 16 06:36:28 2005 +0000
+
+    more systematic handling of URIs, delegation of work to the JDK
+    for toURI and fromURI
+    patches prepared by Jesse Glick, Bugzilla 8031
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@357131 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3a30ab2427eef38fc6b8669ff1e2074ec51bcf5f
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Wed Nov 30 23:19:25 2005 +0000
+
+    ws
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@350068 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 551b204c245d4861589a0be50f453507e3c72e81
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Wed Nov 30 22:13:24 2005 +0000
+
+    percent encode the relative paths in ManifestClassPath
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@350061 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c4782a847fbe7aacd68eca6fb71bff313e94e645
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Wed Nov 30 20:45:57 2005 +0000
+
+    not much
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@350045 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 57f95d4cd27abbd37f514c49414101048834b28f
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Nov 29 04:58:45 2005 +0000
+
+    fix build for JDK1.4 and earlier
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@349648 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6a7128309916100dc611f641797b7793ab087a3d
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Mon Nov 28 23:14:24 2005 +0000
+
+    properly convert URIs back to file paths when non ascii characters are percent-encoded
+    matches with the change in FileUtils.toURI recently done
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@349552 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b74502d99c8b8e5c925f4d48bd9803e2a1031e3b
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Fri Aug 5 20:54:13 2005 +0000
+
+    check for File.separator + jre when searching for tools.jar
+    PR: 36043
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@278497 13f79535-47bb-0310-9956-ffa450edef68
+
+commit db20074a24385567131acd6a6fd226e4ce64ec6b
+Author: Jacobus Martinus Kruithof <jkf@apache.org>
+Date:   Tue Apr 19 20:57:24 2005 +0000
+
+    Avoid using of CharacterIterator for URIs that do not contain %, as suggested in pr34529.
+    PR: 34529
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@278152 13f79535-47bb-0310-9956-ffa450edef68
+
+commit bcce5f6e125f9d30a57a0164f6eb69b8587b01d0
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Mon Feb 7 21:38:51 2005 +0000
+
+    Javadoc
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277611 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 12d182f4cc348c477d5971753faf4868c0df5ee7
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Tue Jan 25 15:47:57 2005 +0000
+
+    checkstyle
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277460 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 88039803e60955929a3deb338392a13d661f5147
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Apr 21 07:18:48 2004 +0000
+
+    don't depend on jre being lowercase, PR: 25798
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276376 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8195ed0fa714966dcfb8ad81fcd6114fa5b85076
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Mon Apr 5 21:26:45 2004 +0000
+
+    Fix the previous change; handle invalid URLs and 1.2 compatibility.
+    Submitted by:  Martijn Kruithof, Rainer Noack
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276278 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 9557aed0f00650ea6cda33e994893e5e3f3faf4f
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Fri Apr 2 20:20:43 2004 +0000
+
+    UNC pathnames did not work for ANT_HOME or -lib locations on Windows.
+    PR: 27922
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276275 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c885f568369156a62e3ccb5b4b93b73b9d054443
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Tue Mar 9 16:49:09 2004 +0000
+
+    remove authors from files
+    PR: 27177
+    Obtained from: J.M. (Martijn) Kruithof
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276208 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 278781dcd669412e5e35cc95d8a96e0b2a278f50
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Mon Feb 9 21:05:47 2004 +0000
+
+    Copyright owner is The Apache Software Foundation
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276065 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 66555ca10d24bbfc55e710b9d65f809cfe713dab
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Wed Feb 4 20:38:09 2004 +0000
+
+    Remove trailing spaces in all java files
+    in order to make checkstyle happy
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276017 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ca1513552f7af7fc19de490fbe2d88adb6c993ad
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Tue Feb 3 22:44:50 2004 +0000
+
+    Switch to Apache Software License 2.0
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276010 13f79535-47bb-0310-9956-ffa450edef68
+
+commit dfb102a12e00c10f8fb2cdb7a5be8a6ecd518c70
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Jan 12 10:29:01 2004 +0000
+
+    Class.getClassLoader may return null for the system classloader
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@275899 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 74f58bf0f81de6bc03df6bc1d5315bef92d8f0e4
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Fri Sep 12 20:56:46 2003 +0000
+
+    Typos
+    Submitted by: Larry Shatzer (larry dot shatzer at servent dot com)
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@275232 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6e4e93280e5937d3bdca3f9ca8e2f49378118772
+Author: Conor MacNeill <conor@apache.org>
+Date:   Sun Jul 20 10:01:27 2003 +0000
+
+    Some javadoc'ing
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274869 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 02f7f5bc1e0feef4f516ecc8fbbb7084f61b150e
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Jul 16 10:43:15 2003 +0000
+
+    Make toURI and fromURI work correctly on Netware.
+    
+    Submitted by: Jeff Tulley <JTULLEY at novell dot com>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274827 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f3939727d9e11188d266beed7e9dfa8e2fd0bc9a
+Author: Conor MacNeill <conor@apache.org>
+Date:   Wed Jul 9 13:11:16 2003 +0000
+
+    Refactor some code into the Launcher.
+    Update ant script to use new launcher.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274793 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 5b331f6baa094f399a85688f1642f719680d9574
+Author: Conor MacNeill <conor@apache.org>
+Date:   Fri Jul 4 14:04:56 2003 +0000
+
+    Easy stuff - imports and licence headers
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274768 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b36b67d9e2f4304e706efad7d4090dcfdf03e215
+Author: Conor MacNeill <conor@apache.org>
+Date:   Fri Jun 27 11:19:22 2003 +0000
+
+    New Launch facility. Separate jar now can be used to launch Ant which
+    takes over some of the functionality traditionally found in the Ant launch
+    scripts.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274724 13f79535-47bb-0310-9956-ffa450edef68

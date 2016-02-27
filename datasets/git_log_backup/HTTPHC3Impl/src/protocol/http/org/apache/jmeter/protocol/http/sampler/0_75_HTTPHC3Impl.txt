@@ -1,0 +1,519 @@
+commit 8ed0c1e57d58270e05856a907426b616e2e777df
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Tue Oct 28 16:08:22 2014 +0000
+
+    Explain false positive reported by findbugs
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1634902 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ee7db54f92ff3c8de16657a9cb505b5a4be174ce
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Sat Aug 30 19:12:43 2014 +0000
+
+    Bug 54778 - HTTP Sampler should not return 204 when resource is found in Cache
+    Bugzilla Id: 54778
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1621523 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 05cccf1b4f98d0c2241cc8378b79214fc8bd652d
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Sat Aug 30 14:18:24 2014 +0000
+
+    Bug 54778 - HTTP Sampler should not return 204 when resource is found in Cache
+    Factor out common code
+    Bugzilla Id: 54778
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1621461 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 113b30514de42e67521d1b8433818c1a1a8cdae9
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Mon Mar 17 00:46:21 2014 +0000
+
+    Move redirect location processing from HC3/HC4 samplers to HTTPSamplerBase#followRedirects()
+    Bugzilla Id: 56231
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1578188 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 419a6ad523522f4c114b2dc4d669a3e62645653f
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Wed Mar 5 22:33:32 2014 +0000
+
+    NPE if jmeter.httpclient.strict_rfc2616=true and location is not absolute
+    Bugzilla Id: 56222
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1574701 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 9c53b7a1602ac5f0c4d5c714e61656839a437ad7
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Thu Dec 12 21:53:53 2013 +0000
+
+    Bug 55717 - Bad handling of Redirect when URLs are in relative format by HttpClient4 and HttpClient31
+    Add property to control redirect handling
+    See:
+    http://mail-archives.apache.org/mod_mbox/jmeter-dev/201312.mbox/%3CCAOGo0VaYNmSw9wEA_jx8qb3g1NTAOHsF360aWGyevAsGXJ7D6Q%40mail.gmail.com%3E
+    Bugzilla Id: 55717
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1550547 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 61c1eed7a8b579d981cb9bfbccf2152ed7cdd7f9
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Sat Nov 2 21:53:49 2013 +0000
+
+    Bug 55717 - Bad handling of Redirect when URLs are in relative format by HttpClient4 and HttpClient31
+    Bugzilla Id: 55717
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1538291 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6f252e8d3dceafbab4a2faaa6dfa1833cfba240e
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Wed Aug 28 12:36:16 2013 +0000
+
+    Quote the method so any whitespace is obvious
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1518179 13f79535-47bb-0310-9956-ffa450edef68
+
+commit df17f59e761273f9acf5378878c1b8435b1b5659
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Aug 17 17:17:22 2013 +0000
+
+    Show IP source address in request data
+    Bugzilla Id: 55389
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1515022 13f79535-47bb-0310-9956-ffa450edef68
+
+commit dd1a34699e6e37d2d136b3465f3c96c4d4eec461
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu Aug 8 11:04:58 2013 +0000
+
+    HC3 does not allow IP Source field to override httpclient.localaddress
+    Bugzilla Id: 55388
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1511691 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8075cd90499362fe995c6858deed7687e06ec36a
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Wed Aug 7 21:14:42 2013 +0000
+
+    Bug 54482 - HC fails to follow redirects with non-encoded chars
+    Oups take into account new exceptions
+    Make error message more complete
+    Bugzilla Id: 54482
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1511500 13f79535-47bb-0310-9956-ffa450edef68
+
+commit dadbc89f2256c1df6bb1124847552ca008438734
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Wed Aug 7 01:11:52 2013 +0000
+
+    Move common code to super-class
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1511157 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d91a728ee7cb89c7db30fe660785e6e42ff7df82
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Tue Aug 6 21:30:55 2013 +0000
+
+    Bug 54482 - HC fails to follow redirects with non-encoded chars
+    Bugzilla Id: 54482
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1511125 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c74cfd8030c0caeac5276f51b89f6aeea4c7c6d5
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Jul 21 23:12:55 2013 +0000
+
+    JMeter should default to 0 retries for HTTP requests
+    Bugzilla Id: 55288
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1505503 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c199d56a8a0c721de65d1279375fd731802a1f86
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Sun Jul 21 20:41:43 2013 +0000
+
+    Bug 55023 - SSL Context reuse feature (51380) adversely affects non-ssl request performance/throughput
+    Bugzilla Id: 55023
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1505471 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 78f927f9c55bc4981b8cf8e6149d02ddff5847d2
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Sun Jul 14 20:17:21 2013 +0000
+
+    Bug 55255 - Allow Body in HTTP DELETE method to support API that use it (like ElasticSearch)
+    Bugzilla Id: 55255
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1503047 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 107624fad3cb2d1ad60e90d36493c23c0603586b
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Mon Jun 3 21:35:55 2013 +0000
+
+    SSL Context reuse feature (51380) adversely affects non-ssl request performance/throughput
+    Move testIterationStart code to samplers that actually need it; allows it to be done on first actual sample
+    Bugzilla Id: 55023
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1489189 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 2c19994073b5a78a68576cf7d422b3c5c88af580
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Thu Apr 11 20:24:48 2013 +0000
+
+    Rollback to fix of bugs:
+    54482- HC fails to follow redirects with non-encoded chars
+    54293- JMeter rejects html tags '&lt;' in query params as invalid when they are accepted by the browser
+    54142- HTTP Proxy Server throws an exception when path contains "|" character
+    
+    Bugzilla Id: 54482,54293,54142
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1467074 13f79535-47bb-0310-9956-ffa450edef68
+
+commit fd31714f18abc994964843c25b877aec8955f018
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Mon Feb 4 20:19:36 2013 +0000
+
+    Bug 54482 - HC fails to follow redirects with non-encoded chars
+    Apply fix to HTTPHC3Impl
+    Factor out sanitize code in ConversionUtils
+    Bugzilla Id: 54482
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1442330 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 5de4189b5d9b2dd01d84bd9a9130f12855f702f2
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Nov 27 00:18:19 2012 +0000
+
+    Move to Java 6
+    add @Override for interface implementations
+    Bugzilla Id: 54199
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1413957 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d0356d49f4965be826a885ed66371f7e83f8cc0c
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Sat Nov 24 21:32:41 2012 +0000
+
+    Fix potentiel NPE if method is unknown
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1413269 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 5c8231be7dccc90125990258ec3af0e57a61c509
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Wed Nov 21 23:42:53 2012 +0000
+
+    Request tab does not show headers if request fails
+    Bugzilla Id: 54187
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1412363 13f79535-47bb-0310-9956-ffa450edef68
+
+commit efed4e839d7ea7cdbc474d8c6a33654222d93c63
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Tue Sep 4 20:29:03 2012 +0000
+
+    remove useless brackets
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1380861 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b70e14ce30b32dac62e18699cbeed734eedaf17d
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu Aug 23 21:55:49 2012 +0000
+
+    Don't return null, return empty string
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1376718 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 98eec47a1eb111f9c0bfa8e71cc4959486ab8f8c
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu Aug 23 21:54:44 2012 +0000
+
+    Entity file content is appended below anyway
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1376716 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b9b8653dd43b8c0fa95e773cac12b4039a112639
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu Aug 23 02:12:08 2012 +0000
+
+    Add PATCH verb to HTTP HC3.1 sampler
+    Bugzilla Id: 53675
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1376345 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 2bad2b8f1764f0595dd2d13391e93cc6dc5a7d37
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Jun 23 15:36:18 2012 +0000
+
+    Standardise on HTTPConstants, not the interface
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1353149 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 32a610bcfaf76a9cc5a257c14380abb1354d9185
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Tue Feb 28 13:45:03 2012 +0000
+
+    Use ancestor method
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1294651 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d586a0c5589ec0861433d5d8d05b543287e99f74
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu Jan 5 13:46:12 2012 +0000
+
+    Simplify (label already set to URL; error prefix will be added by errorResult method)
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1227592 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ca8aac431381a1d2d5fe6b151da378a46427dcaf
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Sep 23 22:24:34 2011 +0000
+
+    Log the retry count
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1175054 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 5210237c166374efcc85a2880458b6a7783614a0
+Author: Bruno Demion <milamber@apache.org>
+Date:   Fri Sep 23 17:15:15 2011 +0000
+
+    Change default retry count to 1
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1174891 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c8d0b33ac4f30d9af58bfcc39142fb96b096817c
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Sep 23 13:56:51 2011 +0000
+
+    Bug 51882 - HTTPHC3Client uses a default retry count of 3, make it configurable
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1174767 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3ccce769539015ad25e7ce9255548903cdea4ac4
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Sep 17 23:23:04 2011 +0000
+
+    Bug 51380 - Control reuse of cached SSL Context from iteration to iteration
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1172147 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 9d9fc5b678604e11bdf5b772561b171dfd3808d0
+Author: Bruno Demion <milamber@apache.org>
+Date:   Wed Sep 14 22:03:12 2011 +0000
+
+    Bug 51775 - Port number duplicates in Host header when capturing by HttpClient (3.1 and 4.x)
+    Simplify and improve last fix. Thanks sebb.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1170866 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b3732e9fdbedfaa0032b1cee990a3b20b5510b96
+Author: Bruno Demion <milamber@apache.org>
+Date:   Wed Sep 14 16:10:06 2011 +0000
+
+    Bug 51775 - Port number duplicates in Host header when capturing by HttpClient (3.1 and 4.x)
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1170701 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 7c2db5c6fb9c31455cee0a234ab762e3cf813768
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Aug 30 20:10:27 2011 +0000
+
+    No need for serialVersionUID
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1163365 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 98a9ad03eecd11e9e698774be0f5c9381790415c
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue May 17 19:30:06 2011 +0000
+
+    Bug 50516 - "Host" header in HTTP Header Manager is not included in generated HTTP request
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1104485 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 398b3b342ea04f067dabb3989af694f8fee16cbc
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu Apr 21 01:42:33 2011 +0000
+
+    Avoid NPE when using HEAD method
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1095589 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b2ed735c6580225622cf15c0d3f7098cfb9f3709
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu Apr 21 01:34:08 2011 +0000
+
+    Fix bug introduced when classes re-organised for HC4: need to set default parameters, not an instance that is then abandoned!
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1095588 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a75d1b6fe7af7663da9ff7933085d05a6bcde6b6
+Author: Bruno Demion <milamber@apache.org>
+Date:   Wed Apr 13 22:27:51 2011 +0000
+
+    Change strategy to get response size (use CountingInputStream from Commons IO) View Results Tree - Add new size fields: response headers and response body (in bytes) - derived from Bug 43363 Size Assertion - Add response size scope (full, headers, body, code, message) - derived from Bug 43363
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1091965 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c51e3434ed374025c3a3e5d22f69a4d341b74f48
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Wed Apr 6 12:44:28 2011 +0000
+
+    Simplify calculation of status line length
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1089429 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d9d63d95398b033b5602cf9260a364f08f2f062b
+Author: Bruno Demion <milamber@apache.org>
+Date:   Mon Apr 4 19:30:40 2011 +0000
+
+    Simplify new properties to change method to calculate getBytes()
+    Save Headers size and Content-length on sample (in HTTPSampleResult) instead of calculting when gets results
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1088748 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 592bf6b72baf7c4b1b20254bfb721c54a7169377
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Jan 29 02:08:32 2011 +0000
+
+    Bug 50684 - Optionally disable Content-Type and Transfer-Encoding in Multipart POST
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1064940 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 84ac0ffe897c1329f1575727de71fce1ee87e935
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Dec 10 02:11:23 2010 +0000
+
+    Move HttpClientKey to HC4 subclass
+    Pull up common code from HC3 subclass
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1044196 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 4faf92fb88cee2d6af9891f3d8db8175e2265ca6
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu Dec 9 11:06:13 2010 +0000
+
+    Simplify
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1043892 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 2a5aef96e744317c88bb01316e7c9933ae7be2cf
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu Dec 9 03:06:55 2010 +0000
+
+    HTTP_AUTHENTICATION_PREEMPTIVE is for Commons HttpClient only
+    Add HttpClientKey class for use in HttpClient ThreadLocal maps.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1043826 13f79535-47bb-0310-9956-ffa450edef68
+
+commit fccddeb65438dabc432a4a7e9640523b98dab611
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu Dec 9 01:57:37 2010 +0000
+
+    Unused import
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1043816 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 073c6901dc230357a6c24077115d4acc77ba50c0
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Wed Dec 8 23:56:38 2010 +0000
+
+    Simplify - only need values from the map
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1043786 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e8aafa8737285d87ca9dae4d354cfa334f05d88c
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Dec 7 14:57:49 2010 +0000
+
+    Don't allow illegal methods
+    Move Cache check
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1043074 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 10baaebd741ae71b3be6f89c37dae82d426e45a8
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Dec 7 14:44:11 2010 +0000
+
+    Tidy proxy setup code
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1043068 13f79535-47bb-0310-9956-ffa450edef68
+
+commit bde529a7e232a941270a203df4e012f6952c30a3
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Dec 7 13:58:54 2010 +0000
+
+    Done in finally clause
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1043048 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6ec5c5822e63c39d973da910293a80fc42058f60
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Dec 7 13:38:30 2010 +0000
+
+    Localise variables
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1043043 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 46eda33b329c06423c83e1a2cdf367fc1f9d2e02
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Dec 7 13:29:09 2010 +0000
+
+    Sample method belongs first
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1043038 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a51394c1757892fa15d37dcb1b556d62c84b3837
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Dec 7 13:26:08 2010 +0000
+
+    Re-order methods slightly
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1043037 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 0f9f42957f6b494884c54a2227593960122cbbb7
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Dec 7 03:26:57 2010 +0000
+
+    Simplify
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1042902 13f79535-47bb-0310-9956-ffa450edef68
+
+commit acb6930de78da028a385605a29114be78f0841ab
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Dec 3 13:28:50 2010 +0000
+
+    Allow HTTPSampler2 access to savedClient
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1041804 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a266e6ec4537c71e1814346d53530c7fa0799294
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Dec 3 00:42:13 2010 +0000
+
+    Javadoc
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1041658 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 36d7d69ea012d694dfd334071c23fcfe019a7769
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu Dec 2 16:57:37 2010 +0000
+
+    Move some common code to a super-class for the HttpClient-based samplers
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1041452 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 803af3bd7a0e13eb49746cd2a1b606e5451c98e4
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Nov 30 00:11:42 2010 +0000
+
+    Add HTTP implementations for use by HTTPSamplerProxy
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1040353 13f79535-47bb-0310-9956-ffa450edef68

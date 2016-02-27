@@ -1,0 +1,108 @@
+Removed commit test status
+
+***************************************************************************************************************************************
+Case 1 - TD removal can be found in different versions of the file. 
+
+processed_comment_id           | 996
+project_name                   | apache-ant
+file_name                      | AntClassLoader.java
+comment_type                   | MULTLINE
+comment_text                   | // XXX should instead make a new ProtectionDomain with a CodeSource // corresponding to container.toURI().toURL() and the same // PermissionCollection as Project.class.protectionDomain had
+
+version_introduced_commit_hash = 67c71a89e9e02b6e4841f748c79350b7ca190a00
+version_removed_commit_hash = c8e91147e37e34c4024c33ecf454e7c46639baa2
+***************************************************************************************************************************************
+
+***************************************************************************************************************************************
+Case 2 - TD removal can not be found in different versions of the file, because the file has been removed. So, we need to checkout the  version that the file was removed and check (git log) the commit that deleted the file
+
+processed_comment_id           | 4751
+project_name                   | apache-ant
+file_name                      | AntStarTeamCheckOut.java
+comment_type                   | LINE
+comment_text                   | // Check it out; also ugly.
+
+version_introduced_commit_hash = dc7444ae578ffecc195c4f19a2afbd086532c849
+version_removed_commit_hash = 54bac0e89cab5d40e57a0f33deb102360aa731a6
+***************************************************************************************************************************************
+
+***************************************************************************************************************************************
+Exception 1 - Case 1 could not be applied , moved to Case 2 and the commit_hash provided has wrong. This happens because in one of the snapshots the TD comment has removed. However, the original file (with the TD comment) was restored to the project. The solution for this case is to mark the register as "not removed".
+
+/Users/evermal/git/msr16_td_interest/tags/ant_tags/54.ANT_170_B1/src/src/main/org/apache/tools/ant/taskdefs/CopyPath.java
+
+processed_comment_id           | 1811
+project_name                   | apache-ant
+file_name                      | CopyPath.java
+comment_type                   | JAVADOC
+comment_text                   | /**
+                               |      * Set the number of milliseconds leeway to give before deciding a
+                               |      * target is out of date.
+                               |      * TODO: This is not yet used.
+                               |      * @param granularity the granularity used to decide if a target is out of
+                               |      *                    date.
+                               |      */
+
+version_introduced_commit_hash = 0a5cf98f65e6ff720094f43785a702a9a4fc57c4
+
+52.ANT_170
+52.ANT_170
+MATCH
+-----------------------------------------------
+52.ANT_170
+53.ANT_171_B1
+MATCH
+-----------------------------------------------
+52.ANT_170
+54.ANT_170_B1
+COMMENT NOT FOUND IN THIS VERSION
+-----------------------------------------------
+52.ANT_170
+55.ANT_171
+MATCH
+-----------------------------------------------
+52.ANT_170
+56.ANT_180_RC1
+MATCH
+-----------------------------------------------
+52.ANT_170
+57.ANT_180
+MATCH
+-----------------------------------------------
+52.ANT_170
+58.ANT_181
+MATCH
+-----------------------------------------------
+52.ANT_170
+59.ANT_182
+MATCH
+-----------------------------------------------
+52.ANT_170
+60.ANT_183
+MATCH
+-----------------------------------------------
+52.ANT_170
+61.ANT_184
+MATCH
+-----------------------------------------------
+52.ANT_170
+62.ANT_190
+MATCH
+-----------------------------------------------
+52.ANT_170
+63.ANT_191
+MATCH
+-----------------------------------------------
+52.ANT_170
+64.ANT_192
+MATCH
+-----------------------------------------------
+52.ANT_170
+65.ANT_193
+MATCH
+-----------------------------------------------
+52.ANT_170
+66.ANT_194
+MATCH
+-----------------------------------------------
+removed version =  ANT_170_B1 54

@@ -1,0 +1,388 @@
+commit 7128ea28ad32937fde70b2eebda1eb1d66fe13be
+Author: Alex Tambellini <atambellini@gmail.com>
+Date:   Fri May 17 00:56:55 2013 -0400
+
+    Time.strftime flags should only apply for a single directive. Fixes #731
+
+commit 35b667c400613e6ab45967abf32f70f53154441e
+Author: Alex Tambellini <atambellini@gmail.com>
+Date:   Thu May 16 23:47:06 2013 -0400
+
+    Time#strftime with %z formats a time with fixed offset as '+/-HH:MM:SS' with '::' specifier
+
+commit 61678ac1a2514a9932276f8d527816a5980a94b3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Feb 25 20:41:40 2013 +1100
+
+    Fix more references to CPL.
+    
+    The phrase "Common Public License" was split across two lines in
+    our default header, which caused it to be missed during earlier
+    search/replace. Also, we did not replace the CPL URL in the
+    header with the EPL URL.
+
+commit 330fef3b0fc18af477ccea19bd278669667f31bb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 12 14:49:29 2013 -0600
+
+    Switch JRuby's CPL license to EPL.
+    
+    Governance of the CPL license was moved to the Eclipse Foundation
+    at some point in the past, and Eclipse blessed the EPL (Eclipse
+    Public License v1.0) as the successor to CPL. Because the CPL
+    contains a clause allowing transparent upgrades to future blessed
+    successor licenses, we can make the move to EPL without
+    re-contacting past contributors.
+    
+    The change in going from CPL to EPL largely just removes some
+    punitive language that apparently made many companies nervous. All
+    other language in the license remains identical.
+    
+    Several documents about Eclipse's move from CPL to EPL are here:
+    
+    http://www.eclipse.org/legal/cpl2epl/
+    
+    Note that Eclipse's move came before the blessing of EPL as the
+    upgrade path for CPL, so they had to do a bit more legal juggling.
+    With Eclipse now the administrator of CPL and with their blessing
+    of EPL as the upgrade path for CPL, all we need to do is make the
+    move.
+
+commit 83d13b899ec8619d4be9a76000f2b5ce1775cca0
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Thu Dec 13 15:07:40 2012 -0500
+
+    Fix JRUBY-7032: Time#strftime %3N doesn't limit sub-seconds to 3 digits
+
+commit 541ee698d46f934a5a16e065932f44e51521bd7a
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Thu Dec 13 14:51:05 2012 -0500
+
+    Remove unused import
+
+commit 0ff28f03331c86998ee7364fc090e5f43888f815
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Sat Dec 8 22:13:07 2012 -0500
+
+    At some point, 1.8 also got the support for '%-d'
+    where '-' means "drop the leading zero".
+    
+    Fixes #433.
+
+commit 0d973b898d88be0c30681e65de47a4cc5f0b3f07
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Oct 25 15:51:16 2012 -0500
+
+    Partial fix for JRUBY-6964
+    
+    Format subseconds using String.format.
+    
+    Using String.valueOf on a value does not preserve any leading
+    zeros, and we were blindly appending the result regardless of
+    magnitude change. The new logic formats to an explicit width,
+    avoiding the old logic and the loss of decimal magnitude.
+
+commit 566bcbe042869673d9905ad8056ad4b35cd19dfe
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Jun 14 13:13:24 2012 -0500
+
+    date strftime micro-opt 1/2.  Use specific formatting methods instead of Generic String.format (+30% gain on reasonable iso date format string)
+
+commit 03150d48008fec3e5fd1e331b84f135eee8523a6
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Sun May 13 22:18:59 2012 -0400
+
+    Fix JRUBY-6661: strftime should behave the same for datetime and time
+    
+    Here, the problem was that when using the '%N' formatter, we did not
+    discard it before moving on to the next token. As a result, if the next
+    token needs to be formatted wider than the default value, the output is
+    skewed.
+
+commit 4c0f59fe6ba156d299508a235b8bc19bca9556db
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon May 7 11:16:26 2012 -0500
+
+    Fix JRUBY-6644: Time#strftime doesn't respect %:z
+
+commit ac0aff594c5536bb407ec82511370629d7bef2c9
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Apr 30 00:17:52 2012 -0500
+
+    Fix JRUBY-6631: Time#nsec always returns 0
+    
+    RubyTime now uses nsec base for sub-ms time component. We still
+    cannot produce times with nsec resolution, but we will preserve
+    nsec resolution values if constructed by the user.
+    
+    I also fixed almost all tagged Time specs in 1.9 mode. The only
+    remaining failure is Time#+ adding a negative time, which seems
+    to fail due to differences in floating-point precision.
+
+commit 7f4cf05f1f4e0af2999c051ba320ffdc1ae282ed
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Sun Jan 9 23:33:26 2011 -0500
+
+    Oops. Forgot about "%N".
+
+commit 2f483bebe166418ff985405ba3db109d922043cf
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Sun Jan 9 23:18:08 2011 -0500
+
+    For Time#strfmt("%*N"), the result should be left justified and padded with "0".
+
+commit dd18fe61be989fced374915a40b1ece8d068b1bb
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Sun Jan 9 23:06:27 2011 -0500
+
+    Fix JRUBY-5255: Date#strftime fails to honor "%3N" format
+
+commit e055dbe2e6a793916c7a8383d5a6f6aa0d1e6e7f
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Thu Oct 14 15:51:53 2010 -0400
+
+    Formatting change. Avoid dangling 'if' clause on a line by itself. Also, reformat multi-line boolean conditions so that it is clearer that they indeed span multiple lines.
+
+commit e05b969291d44e3d42e14861e30ce189a52f1b5f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun May 2 02:09:26 2010 -0500
+
+    Miscellaneous cleanup:
+    
+    * A number of findbugs items in the "threadsafe", "performance", "malcious code", and "experimental" warnings
+    * Tidied up all NetBeans "yellows" in the files I touched
+    * Removed now-defunct JRubyServer/Client/Service
+    * Removed now-defunct ssa.rb and DAGBuilder
+
+commit 244b6c85a5af7c8899b2e9b4bfd9c34668e80bd3
+Author: David Calavera <david.calavera@gmail.com>
+Date:   Sun Mar 7 21:04:39 2010 +0100
+
+    fixes: JRUBY-4612: strftime does not support '-' output specifier
+    
+    Signed-off-by: Hiro Asari <asari.ruby@gmail.com>
+
+commit 011aa5b87c1bee96cea66e6feb360d4d4d1ad070
+Author: David Calavera <david.calavera@gmail.com>
+Date:   Fri Aug 28 17:19:37 2009 +0200
+
+    fixes JRUBY-3907: Time.strftime allows tokens deriving from GNU C library
+    
+    Signed-off-by: Nick Sieger <nick@nicksieger.com>
+
+commit d2fdbf36a2fde902c66ab7396ade4470c656f837
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Mon Aug 24 22:44:55 2009 -0500
+
+    Fix bugs in tokens %s, %u and %w. Add token %G (undocumented). Add test cases
+    
+    Signed-off-by: Charles Oliver Nutter <headius@headius.com>
+
+commit a74827e2786367f4c4031898590ab3252095d9ff
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Aug 20 15:08:02 2009 -0500
+
+    Fixes for JRUBY-3871: strftime doesn't support %h
+    
+    No tests or specs for this yet.
+
+commit 34104a9d6bb396b193253acf124b05c6710db68c
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Wed Aug 19 18:09:31 2009 +0200
+
+    Fix JRUBY-3873
+
+commit c222583a8225eee733de2840ddefa7a6443864ae
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jun 9 01:50:56 2009 -0500
+
+    Merge fix from moses/jruby: Fix Time#strftime to understand %l and %P (like Date#strftime does)
+
+commit 46598e4625cd1f3d4aec40596e14e4618a6df46b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed May 27 01:13:45 2009 -0500
+
+    Fix for JRUBY-3698: RubyDateFormat.java does ont handle %R specifier in strftime
+
+commit 9fffa94cd1e94ccd1f4f93ad7022dbd4efcae06d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 3 03:35:26 2009 +0000
+
+    Only format timezone offset with - if it's < 0.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8971 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d7546993c56ff518a9447a7ce7ec060bdc0e856e
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Fri Oct 17 08:08:19 2008 +0000
+
+    Fix JRUBY-3056
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7884 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit f804fe344353d93e58e4437d9dfbe18f43f14da6
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Sep 3 20:58:24 2008 +0000
+
+    Fix for JRUBY-2971, %D and %T in strftime.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7637 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 75447d6aeda289e2a6319d8f2cc3d0b2ae022549
+Author: Wayne Meissner <wmeissner@gmail.com>
+Date:   Thu Aug 7 02:48:12 2008 +0000
+
+    Cleanups to org.jruby.util:
+    - make fields final where possible
+    - add @Override annotation
+    - deprecate unused classes
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7396 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a7b41d876cb677ba653a997002aa397613468d83
+Author: Vladimir Sizikov <vsizikov@gmail.com>
+Date:   Fri Jun 20 13:20:17 2008 +0000
+
+    JRUBY-2682: Replace StringBuffer with StringBuilder.
+    
+    Patch by Wayne Meissner.
+    
+    Signed-off-by: Vladimir Sizikov <vsizikov@gmail.com>
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7004 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 0571c8373d7d1d4890394fddeb060791103a4b3e
+Author: Vladimir Sizikov <vsizikov@gmail.com>
+Date:   Fri Jan 18 21:49:07 2008 +0000
+
+    JRUBY-1999: Time#strftime week of year is broken on some systems.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5661 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a694709e87e269be436ed1d176a688712beb9d5d
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Tue Jan 1 05:09:53 2008 +0000
+
+    Remove unused callbackfactorys
+    Add partial impl of Etc with some cooler pieces of it still commented
+    Remove many warnings
+    Some generics to lessen warnings
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5456 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 67f18433ab54b910da29aa0444bbe7fbd30b5d73
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Sun Dec 16 16:55:27 2007 +0000
+
+    Use Joda for RubyTime, instead of stupid Java Calendar
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5279 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 43131dbc2000be95df15d148a48b8bb8b090efe7
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Mon Jul 2 12:48:08 2007 +0000
+
+    Fix for JRUBY-1135, another strftime bug
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3944 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a075a40b326fdf539465e6e4c54de5cd968feb11
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Mon Jul 2 12:34:58 2007 +0000
+
+    Fix for JRUBY-1147, add %F to strftime
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3943 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit b712acec85342f7a112ae8dff2306b0db7abc158
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Wed Apr 18 08:09:23 2007 +0000
+
+    Fix for JRUBY-830, get the strftime %e modifier in there, and also test strftime a little bit
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3493 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit b7051f668fd03636381f4e117e476fdf9fe3ad09
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Fri Mar 2 15:33:13 2007 +0000
+
+    JRUBY-649: %z in Time.strftime should be +0000 when timezone offset is 0000 (was -0000)
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3102 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 61a7ba7ca1b009786f426346da5a97d70044ab76
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Mon Aug 29 14:41:28 2005 +0000
+
+    Eliminate RubyExceptions and its second references to every exception (now initialized in Ruby)
+    Remove all eclipse warnings in projects except for DefaultRubyParser
+    Move TestHelper into test source hierarchy to get it out of jruby.jar
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1742 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 7a83c48af56081c1c2132111d535f28d10cf3afb
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Fri Dec 31 20:55:52 2004 +0000
+
+    Update license to GPL/LGPL/CPL
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1574 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit e0ef4a00b8bf2b12e8991a00385ac0a14c9bb461
+Author: Stefan Matthias Aust <sma@3plus4.de>
+Date:   Wed Dec 22 14:18:32 2004 +0000
+
+    fix week number bug in strftime
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1529 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit cbd9d52c04b9a7b15c0b2713ae0046baf7b25bc9
+Author: Stefan Matthias Aust <sma@3plus4.de>
+Date:   Sun Dec 12 09:47:44 2004 +0000
+
+    unused field removed
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1471 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 76f879af69439b7f26a34059cedc0978624b042d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Dec 11 05:45:10 2004 +0000
+
+    fixed formatting week of year; made _M work, and Ruby is zero-based
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1458 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit c15ab526440e25745b45a2ab3aaab1b5a7334d1f
+Author: Stefan Matthias Aust <sma@3plus4.de>
+Date:   Sun Nov 28 14:54:57 2004 +0000
+
+    code cleanup
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1428 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a16b4a3596853f2153bfe0df0a8cbe54382d5d58
+Author: Anders Bengtsson <ndrsbngtssn@yahoo.se>
+Date:   Sat Feb 28 23:00:58 2004 +0000
+
+    Removed a lot of old IndexedCallback stuff.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1254 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit c77b91f42c4f3810140d44cbe603248a1d52b7ee
+Author: Jan Arne Petersen <jpetersen@uni-bonn.de>
+Date:   Tue Sep 10 15:18:12 2002 +0000
+
+    - restructure of the code tree.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@782 961051c9-f516-0410-bf72-c9f7e237a7b7

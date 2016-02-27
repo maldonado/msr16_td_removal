@@ -1,0 +1,275 @@
+commit 51aca9d03ea179a8abd78424b6c832b101d514e0
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Aug 7 11:07:39 2015 -0500
+
+    Fix waitpid2 to return proper result when ret = 0.
+    
+    Missed fix for #3117.
+
+commit bfb6c91d32b0146df8dfc858b20eb53a260cc978
+Merge: 07ce81a aedbf26
+Author: kares <self@kares.org>
+Date:   Fri Jul 17 08:48:13 2015 +0200
+
+    Merge branch 'jruby-1_7' into master
+    
+    * jruby-1_7: (36 commits)
+      no need for "" + ...
+      keep the test Java 6 compilable + more asserts
+      method cache hash calc needs to acount for Proc
+      support for matching proc-to-iface methods by arity
+      improve resolving functional-interfaces
+      avoid reflection in getFunctionalInterface
+      some Java.getFunctionalInterfaceMethod asserts
+      introduce a getFunctionalInterfaceMethod helper
+      generix-ize some of JavaUtil's static helpers
+      Make sure windows files generate signatures as part of post_process_artifacts
+      Doh...how did this not get added
+      Fixes #3135. Provide sha256 sums
+      yet another multiple args proc-to-iface spec
+      less deprecation warnings from implementation_spec
+      clean + avoid deprecation warn in executor_spec
+      less rspec deprecation warnings from ant spec
+      avoid File#listFiles in spec since it's ambiguous
+      spec for regression in proc to iface optimization
+      Fix references to old mailing lists.
+      Return nil when waitpid returns 0. Fixes #3117.
+      ...
+    
+    Conflicts:
+    	VERSION
+    	antlib/extra.xml
+    	core/pom.xml
+    	core/src/main/java/org/jruby/RubyProcess.java
+    	core/src/main/java/org/jruby/embed/util/SystemPropertyCatcher.java
+    	core/src/test/java/org/jruby/embed/ScriptingContainerTest.java
+    	docs/man/pom.xml
+    	docs/pom.xml
+    	ext/pom.xml
+    	ext/readline/pom.xml
+    	ext/ripper/pom.xml
+    	lib/pom.xml
+    	maven/jruby-complete/pom.xml
+    	maven/jruby-dist/pom.xml
+    	maven/jruby-dist/src/main/assembly/jruby.xml
+    	maven/jruby-jars/pom.xml
+    	maven/jruby-noasm/pom.xml
+    	maven/jruby-rake-plugin/pom.xml
+    	maven/jruby-stdlib/pom.xml
+    	maven/jruby/pom.xml
+    	maven/pom.xml
+    	pom.xml
+    	test/pom.xml
+    	test/test_backquote.rb
+    	test/test_kernel.rb
+
+commit 30cfff83db05c6710a9f05769df8e7518949fd27
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Jul 9 14:53:43 2015 -0500
+
+    Return nil when waitpid returns 0. Fixes #3117.
+
+commit e4b3f8b1f86177711bebca27c1b647080945ff87
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Jul 9 14:53:43 2015 -0500
+
+    Return nil when waitpid returns 0. Fixes #3117.
+
+commit 512b0a5ab4e129a2e05e6ca83113520252a0048a
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Apr 16 10:49:28 2015 -0500
+
+    StaticScope now has Signature instead of three individual fields.  All other
+    changes were made to support this.  We encode/decode scopes with a full
+    Signature.  Blocks are all rooted in providing a Signature.  All IR*Method
+    will provide a Signature.  Unfortunately, I stopped at IR level for method
+    types.  Over time those should get converted.
+    
+    This corrects all arity issues involving methods and blocks in interp.  JIT
+    is still somewhere passing in the wrong values but I will correct that in
+    a followup (this is not a regression).
+    
+    spec:fast:ruby and test:mri both pass so do JIT variants of those tests
+    but I strong suspect we are shelling out in some way and running some of
+    these tests in interp mode.
+    
+    On other note of distinction is that for builtin functions we only construct
+    a subset of information that Signature wants because Arity is only a subset
+    of the info Signature needs.  Since there are no exotic signatures in builtins
+    there is a Signature.from(Arity) which will convert to a reasonable analogue
+    or throw if it is special in some way.
+    
+    I tried to leave all deprecated versions of methods and constructors but
+    I might have spaced out a few.
+
+commit 37486b9158621c54a4a4b510ac1e9bc414df710d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Apr 2 19:04:57 2015 -0500
+
+    Move Process::Tms struct creation to RubyProcess and add constant.
+    
+    Fixes #2752
+
+commit e4749840c6364c374bc5529710a91918d3fc243c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jan 21 18:44:29 2015 -0600
+
+    Process.detach needs to use status, not waitpid result.
+    
+    I also got MRI's test_process and test_open3 running and updated
+    with appropriate excludes.
+    
+    Fixes #2494.
+
+commit 54a4a77bb03eb3fa6296c1eeef1eed1c40e3c569
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jan 16 12:36:03 2015 -0600
+
+    Process::UID instance methods should be private.
+
+commit eb114793df6c34f2570dda6741910db79ab3907a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jan 16 12:34:25 2015 -0600
+
+    Process::Status does not defined to_int.
+
+commit 0e2aa374aeca8139adc95ebbdc76e389ba26fb7d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jan 16 12:31:42 2015 -0600
+
+    Process::GID instance methods should be private.
+
+commit 4859b48c6c0aa2ccd1e4e905345035621d547547
+Author: tduehr <tduehr@gmail.com>
+Date:   Mon Dec 8 13:15:37 2014 -0600
+
+    security model compilation fix
+
+commit f668b200319a3824663f90f08ed68eb4d081cfe6
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Nov 8 17:30:14 2014 -0600
+
+    Return Process::Status from Process.detach.
+
+commit be985269819653e95db83a97d96aa615308bbbdb
+Author: Chris Heald <cheald@gmail.com>
+Date:   Mon Nov 3 09:32:36 2014 -0700
+
+    Implement Process#groups for non-Windows machines
+
+commit 52a019cdd79741a94522d43f520447f7630d6b1f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jul 22 17:46:45 2014 -0500
+
+    Add a linux version of wait macros, just in case.
+    
+    The BSD and Linux versions may be the same...added Linux version
+    while debugging unrelated process-spawning issue.
+
+commit fce8f3e812d561720af4583f7bfd9d386a925b15
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jul 22 15:30:11 2014 -0500
+
+    Port bits of Kernel#system and hook up spawn logic.
+
+commit 10750bea7a1fbd1589077a6e5acc723f459b57ad
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jul 22 02:14:08 2014 -0500
+
+    Use new spawn logic for backquote, when possible.
+    
+    This allows us to get proper exit status and full behavioral
+    compatibility with MRI's backquote.
+
+commit e20ddef1413f13e7b229500d1c69c98da91c9806
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jul 22 00:15:07 2014 -0500
+
+    Minor change.
+
+commit 3510c6c5eb6f81901a30d72298cddb70bdb7e786
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Jul 20 18:26:54 2014 -0500
+
+    Make Process::Status#{termsig,stopsig,exitstatus,to_s} match MRI.
+
+commit adf81212525c043f414b4246905654471b3f3596
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Jul 20 15:31:59 2014 -0500
+
+    Ooops, use Ruby class, not Java class, for Status#inspect.
+
+commit b72188ad319868975fd9ea37798cec7cf6c62c9d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Jul 20 15:23:58 2014 -0500
+
+    Updates and fixes for Process::Status
+    
+    * Define best-guess equivalents to W macros for process status
+    * Use real native status in Proces::Status
+    * Re-port existing Status methods to use native status
+    * Add missing #signame method
+    * Cleanup and reorg Process::Status code
+
+commit 7b60c665284fd8f4383709bc1d1415b49cb1cd54
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jun 24 13:10:29 2014 -0500
+
+    Reinstate native spawn atop ported logic.
+
+commit de7dba387a965b41ace1f60f7d7f36a7d163a14e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue May 13 15:48:18 2014 -0500
+
+    Implement rest of write plus more.
+    
+    * sync, sync=, fsync
+    * foreach, readlines
+    * binread
+    * proper logic for close and IO shutdown
+
+commit ca1bf5f96e7151cc4d7bcc3aa9ed66145cdba224
+Merge: a4214a2 3c84c29
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Feb 26 13:02:22 2014 -0600
+
+    Merge remote-tracking branch 'origin/jruby-1_7'
+    
+    Conflicts:
+    	test/mri.1.9.index
+
+commit 5d6df93d50b245a0b84834901d0af427e3284b17
+Author: William Thurston <me@williamthurston.com>
+Date:   Sat Feb 15 14:42:25 2014 -0800
+
+    address linux kernel 2.6 call convention error on 32 bit platforms
+
+commit 63dfd65661d3dbf33ddc0a143a5514156b94a06a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Oct 30 22:54:21 2013 -0500
+
+    De-version Process
+
+commit cf3bd5f317fbfd61169ed5feadd6b2b9f76a067e
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Oct 7 16:31:11 2013 -0500
+
+    De-version Process
+
+commit 5a593ff662a11e7a88e1cf1ad20edbe0adb3e749
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Oct 1 15:12:31 2013 -0500
+
+    Remove unused imports.
+
+commit 8c066241bd847b68d8d7255893edbad2d6c311d2
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Oct 1 15:09:16 2013 -0500
+
+    [2.1] Add Process::clock_gettime and clock_realtime (#1056)
+
+commit 28c6fbc4e883bc1c9e9242d1da1cb2b785f55339
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 3 12:46:45 2013 -0500
+
+    Move to @mkristian's proposed layout, with some modifications.

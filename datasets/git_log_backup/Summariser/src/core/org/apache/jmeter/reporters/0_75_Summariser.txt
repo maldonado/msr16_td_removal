@@ -1,0 +1,391 @@
+commit 5d2bcc45284700d83ad769455abd4984e3cb2df5
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Sun Dec 28 14:09:57 2014 +0000
+
+    BUG 57346 Summariser : The + (difference) reports show wrong elapsed time and throughput
+    Update javadocs and add FIXME
+    Bugzilla Id: 57346
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1648207 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ae6f4640e11ac914d7f0a7f55613d6db3edc60c3
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Sun Dec 28 13:59:38 2014 +0000
+
+    BUG 57346 Summariser : The + (difference) reports show wrong elapsed time and throughput
+    Impact removal of useless index field in SummariserRunningSample
+    Add javadocs
+    Rename some variables to make code clear
+    Bugzilla Id: 57346
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1648205 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 40e66825ac2c289a4a62f5d62d0f17251e4624e2
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Dec 28 02:55:22 2014 +0000
+
+    Summariser : The + (difference) reports show wrong elapsed time and throughput
+    Bugzilla Id: 57346
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1648146 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 15c5cf1d6ee283a2b1c0b133648af1378c9a576a
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Mon Dec 15 19:56:36 2014 +0000
+
+    Change case of  static fields
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1645736 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6ec25d4c825d6919abf0be1e422b5e725b3586e9
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat May 17 01:02:44 2014 +0000
+
+    Add missing final EOL
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1595401 13f79535-47bb-0310-9956-ffa450edef68
+
+commit be7f7415ca9171151503ce2257b2bb390440fe24
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Thu Dec 12 21:28:40 2013 +0000
+
+    Bug 55512 - Summariser should be enabled by default in Non GUI mode
+    Bugzilla Id: 55512
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1550536 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 334ec094d3985f6b7f4eea35571aee9c73f71e86
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Mon Jul 22 14:40:45 2013 +0000
+
+    Javadoc fixes
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1505695 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 9ab6b6240f50d3dae399d46bf207c2a00d14ddee
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Nov 27 00:14:39 2012 +0000
+
+    Move to Java 6
+    add @Override for interface implementations
+    Bugzilla Id: 54199
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1413956 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a81b678d62a693b65fba6ebac8a22d3810e7c65a
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Wed Aug 22 22:56:54 2012 +0000
+
+    TestListener interface could perhaps be split up.
+    Bugzilla Id: 53749
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1376300 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 0020bf850730b4bae8f6801b0240330fccbf8725
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Aug 21 14:21:59 2012 +0000
+
+    Summariser: no point displaying fractional time in most cases
+    Bugzilla Id: 53753
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1375566 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f4aa9c53a9d1ca750489a221685e45c95de455a2
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Aug 19 01:04:00 2012 +0000
+
+    Keep track of number of threads started and finished:
+    Display counts in Summariser delta output
+    Bugzilla Id: 53738
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1374691 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 2dadea1f8e5ebf7071500fd48828081acec71f12
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Wed Jun 6 20:36:10 2012 +0000
+
+    DecimalFormat is not thread-safe, so remove static instance
+    Make format a static method
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1347104 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 12ce11b175a94b340ae3b29bd95aed84da56585c
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Sun Nov 20 11:33:19 2011 +0000
+
+    Bug 52215 - Confusing synchronization in StatVisualizer, SummaryReport ,Summariser and issue in StatGraphVisualizer
+    
+    Oups, lock must be static
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1204147 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1755b2395bb954834e91cf8ed6ddb91de5a6a5a9
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Sun Nov 20 10:04:02 2011 +0000
+
+    Bug 52215 - Confusing synchronization in StatVisualizer, SummaryReport ,Summariser and issue in StatGraphVisualizer
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1204144 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1b870d0fb6eb7c01373ae7d47b7ab427ab89d672
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Feb 23 16:09:09 2010 +0000
+
+    Remove trailing spaces
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@915405 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c1c50391ab022d16f2ac525eaf5a53aa26a14a05
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Feb 9 21:09:23 2010 +0000
+
+    Javadoc
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@908219 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 36329e8cb49e385ace10cd53e245481ee3443891
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Wed Jan 27 20:09:01 2010 +0000
+
+    Unused imports
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@903813 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 32dfbf924a5fd19df6cd5da2def535fb8d98a04b
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu Jan 21 00:51:00 2010 +0000
+
+    Use ConcurrentHashMap instead of Hashtable now we are using Java 1.5
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@901471 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f52cf4362f23c38f642b71ec74b8eb135bc5147e
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Oct 10 15:18:56 2009 +0000
+
+    StringBuffer => StringBuilder
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@823869 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 42bc2ce21c0b770f201c9988638d2b61def10182
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Aug 16 01:31:37 2009 +0000
+
+    The "typing" continues ...
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@804543 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a6d9bd2b8ba889b3868ecd408822cd9d3f6b2003
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Oct 12 00:30:16 2008 +0000
+
+    Simplify code by using NoThreadClone
+    Make class Remoteable so output appears in client, not server logs
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@703753 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 413d3f24baddd42541a5310843cb69ce187611d3
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Oct 5 01:02:48 2008 +0000
+
+    Add serialVersionUIDs
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@701738 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6bf94deccce242cd1bba95592f54fd78a90dfc3e
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Jul 6 23:56:15 2008 +0000
+
+    Detab
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@674365 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ea4b8054100625f8ff1f0129d5414e654d7553e4
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu May 15 20:29:59 2008 +0000
+
+    Summariser updated to handle variable names
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@656818 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d92ad9d97316bf6fa1e4802dd713158d3af20a37
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat May 10 16:13:49 2008 +0000
+
+    Standardise placing of transient marker
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@655121 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 850e97226574625f274088a44de3c36df264858d
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat May 3 21:49:46 2008 +0000
+
+    Avoid possible NPE
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@653149 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 97f5943089bcb0248170d09431a17b8a745d5aa6
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Apr 29 21:10:55 2008 +0000
+
+    Ensure that static variables are final to ensure visibility
+    Trim variable name parameter in function calls
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@652128 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6e2f4dcc1e1a6c5ba4c0db0e9854ef772f5ef31c
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu Apr 10 01:21:09 2008 +0000
+
+    Ensure if and for statements always use blocks
+    Other minor tidyups
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@646610 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 5674932bff0577fbd2d22c8ef32d56680198b8c5
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Mon Oct 29 18:47:56 2007 +0000
+
+    Always synch accumulators access
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@589802 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e3847d9aa41ed0c1438a6c964f9ff83f2809e688
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Aug 10 10:58:21 2007 +0000
+
+    Fix NPE caused by incorrect change of clear() to clearData()
+    Clarified code by using testStarted() rather than clear() to initialise accumulator.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-2@564544 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 17eb25fca3aa016a4d99272b3046c6ee9425f20a
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Jun 5 23:46:36 2007 +0000
+
+    The clear() method was defined in the following interfaces:
+    Clearable, JMeterGUIComponent and TestElement.
+    The methods serve different purposes, so two of them were renamed:
+    the Clearable method is now clearData() and the JMeterGUIComponent method is now clearGui().
+    3rd party add-ons may need to be rebuilt.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-2@544682 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a9085679de0cca0fd1ec9b1522de950ce65fbef2
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu Mar 8 15:56:44 2007 +0000
+
+    Update Javadoc - explain why delta can take longer than reporting interval
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-2@516083 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c62d2a4f7152bdf1e862a4f1ab89ca4bffbd0a3b
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Wed Mar 7 18:20:40 2007 +0000
+
+    Fix up some messy comments
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-2@515678 13f79535-47bb-0310-9956-ffa450edef68
+
+commit bd5d121d68038f3e712ec463a2172dd7026f52f8
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Jan 7 17:46:38 2007 +0000
+
+    Update license (remove copyright)
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-2@493779 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 51695f137c82948c0644c7c1b553f3f2e48445af
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Wed Sep 14 00:10:28 2005 +0000
+
+    Bug 36642 - Summariser stopped working in 2.1
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-1@325766 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 76159a5b953d9dc5518b2ccb03bfbc1c4908837d
+Author: Michael Stover <mstover1@apache.org>
+Date:   Tue Jul 12 20:51:09 2005 +0000
+
+    Formatting Code to basic Java Standard
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@325542 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c01ff2884f6409cb2c0be07f1cddc7ca301111ce
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue May 17 22:48:26 2005 +0000
+
+    Remove unnecessary casts
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@325350 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 4a1ae88b32a95e3bd6141daa751dc78a204d1249
+Author: Michael Stover <mstover1@apache.org>
+Date:   Sun Jun 20 01:23:41 2004 +0000
+
+    Merging from 2-0 branch
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@324714 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 503346d6a94eef4d7860b402372346458a59ebe0
+Author: Michael Stover <mstover1@apache.org>
+Date:   Fri May 28 21:09:14 2004 +0000
+
+    Lightning struck, and this is a week's worth of offline effort.  Visualizers have been refactored.  The AccessLogSampler and supporting classes have been refactored, with an additional Filter implementation, and made into a TestBean, fixed a bug that causes tests not to stop in certain cases.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@324592 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a2b1619ae73507fc1708f4a9b5967ed222935a3e
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Mar 30 18:08:09 2004 +0000
+
+    Remove my @author tags
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@324515 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 0b010cc6e180ff9c0b1d256d6a709febb08d7460
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Wed Feb 18 23:31:56 2004 +0000
+
+    Make all fields transient
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@324327 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6454ddae32d996ae552dcb2c817bba4e72ac350b
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Feb 14 03:34:31 2004 +0000
+
+    ASF L V2
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@324292 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8d8f4480b9bb68429dd5c3be021e673e2351229e
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Mon Nov 3 11:27:51 2003 +0000
+
+    Add extra constuctor for use in non-GU runs
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323660 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 41fa7d527f4e6b9fabc45c03cbcf13996c2506eb
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Mon Nov 3 00:39:19 2003 +0000
+
+    New Summariser test element (mainly for use with non-GUI runs)
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323659 13f79535-47bb-0310-9956-ffa450edef68

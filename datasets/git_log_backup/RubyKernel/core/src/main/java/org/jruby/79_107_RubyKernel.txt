@@ -1,0 +1,962 @@
+commit 838c8d7a991d1914357ce47db62f594aca27bc78
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jul 24 22:32:10 2015 -0500
+
+    CallConfiguration is not used by any DynamicMethods anymore.
+    
+    CallConfiguration used to be needed to determine how to frame and
+    scope all methods in the system. However, in JRuby 9k it is no
+    longer needed.
+    
+    * Core methods that need frame/scope have the pre/post logic
+      generated in bytecode (for generated invokers) or in handles
+      (for MethodHandle-based invokers).
+    * Interpreted IR methods have their own flags for frame/scope, or
+      have instructions that perform the pre/post logic.
+    * Jitted IR methods always have emit bytecode to do the pre/post
+      logic.
+    
+    After a quick inspection I found that there's no other uses of
+    the callConfig field in DynamicMethod, so this commit removes it
+    and deprecates the constructors and accessors. This should shrink
+    all DynamicMethod subclasses by at least 4 bytes and perhaps 8. It
+    also reduces the size and overhead of our generated populators,
+    which might have a slight effect on startup.
+
+commit 6e60a21884d516a37b9524b490f7ccbfd39f9166
+Author: Benoit Daloze <eregontp@gmail.com>
+Date:   Tue Jul 21 14:35:38 2015 +0200
+
+    Kernel#respond_to_missing? should only be an instance method.
+
+commit 9a8a41ee359093feae53ed152d7d456b0c1d3b64
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jul 20 15:17:46 2015 -0500
+
+    Mark respond_to_missing? as private to avoid DelegateClass issues.
+    
+    Fixes #3151.
+
+commit e9c524a0ff5f401c39067465d5d137f1dcdff12d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Jul 16 16:13:52 2015 -0500
+
+    Restore missing str2fnum signatures. Fixes #3139.
+
+commit 3a5dda7b4dede7ed8ed480baca8ba06f135d89d8
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu May 28 14:11:01 2015 +0000
+
+    Fix gets on Windows. Fixes #2959
+    
+    * Don't unwrap stdin streams; the direct FileChannel does not seem
+      to be usable and reads result in IOException: Not enough storage
+      is available to process this command.
+    * Tweaks for argf logic.
+    * Always treat FileChannel as ready for read, since files always
+      select immediately and processes can't be selected without
+      native support.
+
+commit 40beb472cb17c6c0cbf46ba199a9461e0e7bd877
+Merge: c0c086e e237201
+Author: kares <self@kares.org>
+Date:   Mon May 25 16:54:09 2015 +0200
+
+    Merge branch 'jruby-1_7'
+    
+    * jruby-1_7: (54 commits)
+      [travis-ci] re-try sudo: false
+      dry out the two (Java helper) respond_to_p19 methods
+      respondsTo JRuby API under 1.9.3 does not do respond_to_missing? like MRI does
+      sleep should convert it's "time interval" argument the same way as MRI
+      respond_to_missing? should always get a symbol name passed (fixes #2946)
+      add a respond_to_missing unit test (on 1.9)
+      introduce and use conversion( just like MRI does) on #timeout's sec argument
+      add missing ' ' (space) in exception message ... TypeError from `sleep('invalid')`
+      DateTime.iso8601 fails with an error if a second fraction is present
+      [build] switch to 1.7.21-SNAPSHOT for test-jruby-jars
+      refactor Timeout's scheduled tasks to an inner class (for easier identification)
+      further hand drying of the Timeout module impl
+      less (int) casting noiz
+      add some (internal) generics for an improved readability xp
+      inner class' Finalizer fields id and finalized can be final
+      generix-ize the environment field (at least internally) + use a StringBuilder
+      unnecessary (int) cast
+      missing throw statement in RubyString's concat
+      tune timeout to work when scheduling or argument convenrsion throws (see #2940)
+      return empty Ruby array for empty dir list
+      ...
+    
+    Conflicts:
+    	.gitignore
+    	.travis.yml
+    	VERSION
+    	core/pom.xml
+    	core/src/main/java/org/jruby/RubyArray.java
+    	core/src/main/java/org/jruby/RubyBasicObject.java
+    	core/src/main/java/org/jruby/RubyDir.java
+    	core/src/main/java/org/jruby/RubyEnumerable.java
+    	core/src/main/java/org/jruby/RubyFile.java
+    	core/src/main/java/org/jruby/RubyGlobal.java
+    	core/src/main/java/org/jruby/RubyIO.java
+    	core/src/main/java/org/jruby/RubyKernel.java
+    	core/src/main/java/org/jruby/RubyModule.java
+    	core/src/main/java/org/jruby/RubyString.java
+    	core/src/main/java/org/jruby/RubyTime.java
+    	core/src/main/java/org/jruby/ext/timeout/Timeout.java
+    	core/src/main/java/org/jruby/java/proxies/JavaProxy.java
+    	core/src/main/java/org/jruby/util/Dir.java
+    	core/src/main/java/org/jruby/util/encoding/CharsetTranscoder.java
+    	docs/man/pom.xml
+    	docs/pom.xml
+    	ext/pom.xml
+    	ext/readline/pom.xml
+    	ext/ripper/pom.xml
+    	lib/pom.xml
+    	lib/ruby/1.9/date/format.rb
+    	lib/ruby/1.9/io/linux_console.rb
+    	lib/ruby/shared/gauntlet_rubygems.rb
+    	lib/ruby/shared/rubygems.rb
+    	lib/ruby/shared/rubygems/available_set.rb
+    	lib/ruby/shared/rubygems/basic_specification.rb
+    	lib/ruby/shared/rubygems/command.rb
+    	lib/ruby/shared/rubygems/command_manager.rb
+    	lib/ruby/shared/rubygems/commands/cert_command.rb
+    	lib/ruby/shared/rubygems/commands/cleanup_command.rb
+    	lib/ruby/shared/rubygems/commands/contents_command.rb
+    	lib/ruby/shared/rubygems/commands/dependency_command.rb
+    	lib/ruby/shared/rubygems/commands/environment_command.rb
+    	lib/ruby/shared/rubygems/commands/generate_index_command.rb
+    	lib/ruby/shared/rubygems/commands/help_command.rb
+    	lib/ruby/shared/rubygems/commands/install_command.rb
+    	lib/ruby/shared/rubygems/commands/list_command.rb
+    	lib/ruby/shared/rubygems/commands/mirror_command.rb
+    	lib/ruby/shared/rubygems/commands/outdated_command.rb
+    	lib/ruby/shared/rubygems/commands/owner_command.rb
+    	lib/ruby/shared/rubygems/commands/pristine_command.rb
+    	lib/ruby/shared/rubygems/commands/push_command.rb
+    	lib/ruby/shared/rubygems/commands/query_command.rb
+    	lib/ruby/shared/rubygems/commands/search_command.rb
+    	lib/ruby/shared/rubygems/commands/setup_command.rb
+    	lib/ruby/shared/rubygems/commands/specification_command.rb
+    	lib/ruby/shared/rubygems/commands/uninstall_command.rb
+    	lib/ruby/shared/rubygems/commands/unpack_command.rb
+    	lib/ruby/shared/rubygems/commands/update_command.rb
+    	lib/ruby/shared/rubygems/commands/which_command.rb
+    	lib/ruby/shared/rubygems/commands/yank_command.rb
+    	lib/ruby/shared/rubygems/compatibility.rb
+    	lib/ruby/shared/rubygems/config_file.rb
+    	lib/ruby/shared/rubygems/core_ext/kernel_gem.rb
+    	lib/ruby/shared/rubygems/core_ext/kernel_require.rb
+    	lib/ruby/shared/rubygems/defaults.rb
+    	lib/ruby/shared/rubygems/dependency.rb
+    	lib/ruby/shared/rubygems/dependency_installer.rb
+    	lib/ruby/shared/rubygems/dependency_list.rb
+    	lib/ruby/shared/rubygems/deprecate.rb
+    	lib/ruby/shared/rubygems/doctor.rb
+    	lib/ruby/shared/rubygems/errors.rb
+    	lib/ruby/shared/rubygems/exceptions.rb
+    	lib/ruby/shared/rubygems/ext.rb
+    	lib/ruby/shared/rubygems/ext/builder.rb
+    	lib/ruby/shared/rubygems/ext/cmake_builder.rb
+    	lib/ruby/shared/rubygems/ext/configure_builder.rb
+    	lib/ruby/shared/rubygems/ext/ext_conf_builder.rb
+    	lib/ruby/shared/rubygems/ext/rake_builder.rb
+    	lib/ruby/shared/rubygems/gemcutter_utilities.rb
+    	lib/ruby/shared/rubygems/indexer.rb
+    	lib/ruby/shared/rubygems/install_update_options.rb
+    	lib/ruby/shared/rubygems/installer.rb
+    	lib/ruby/shared/rubygems/installer_test_case.rb
+    	lib/ruby/shared/rubygems/local_remote_options.rb
+    	lib/ruby/shared/rubygems/name_tuple.rb
+    	lib/ruby/shared/rubygems/package.rb
+    	lib/ruby/shared/rubygems/package/old.rb
+    	lib/ruby/shared/rubygems/package/tar_header.rb
+    	lib/ruby/shared/rubygems/package/tar_reader/entry.rb
+    	lib/ruby/shared/rubygems/package/tar_writer.rb
+    	lib/ruby/shared/rubygems/path_support.rb
+    	lib/ruby/shared/rubygems/platform.rb
+    	lib/ruby/shared/rubygems/psych_additions.rb
+    	lib/ruby/shared/rubygems/rdoc.rb
+    	lib/ruby/shared/rubygems/remote_fetcher.rb
+    	lib/ruby/shared/rubygems/request.rb
+    	lib/ruby/shared/rubygems/request_set.rb
+    	lib/ruby/shared/rubygems/request_set/gem_dependency_api.rb
+    	lib/ruby/shared/rubygems/requirement.rb
+    	lib/ruby/shared/rubygems/resolver/current_set.rb
+    	lib/ruby/shared/rubygems/security.rb
+    	lib/ruby/shared/rubygems/security/policy.rb
+    	lib/ruby/shared/rubygems/security/signer.rb
+    	lib/ruby/shared/rubygems/security/trust_dir.rb
+    	lib/ruby/shared/rubygems/server.rb
+    	lib/ruby/shared/rubygems/source.rb
+    	lib/ruby/shared/rubygems/source/installed.rb
+    	lib/ruby/shared/rubygems/source/local.rb
+    	lib/ruby/shared/rubygems/source/specific_file.rb
+    	lib/ruby/shared/rubygems/source_list.rb
+    	lib/ruby/shared/rubygems/spec_fetcher.rb
+    	lib/ruby/shared/rubygems/specification.rb
+    	lib/ruby/shared/rubygems/ssl_certs/AddTrustExternalCARoot.pem
+    	lib/ruby/shared/rubygems/stub_specification.rb
+    	lib/ruby/shared/rubygems/syck_hack.rb
+    	lib/ruby/shared/rubygems/test_case.rb
+    	lib/ruby/shared/rubygems/test_utilities.rb
+    	lib/ruby/shared/rubygems/text.rb
+    	lib/ruby/shared/rubygems/uninstaller.rb
+    	lib/ruby/shared/rubygems/uri_formatter.rb
+    	lib/ruby/shared/rubygems/user_interaction.rb
+    	lib/ruby/shared/rubygems/util/list.rb
+    	lib/ruby/shared/rubygems/validator.rb
+    	lib/ruby/shared/rubygems/version.rb
+    	maven/jruby-complete/pom.xml
+    	maven/jruby-dist/pom.xml
+    	maven/jruby-jars/pom.xml
+    	maven/jruby-noasm/pom.xml
+    	maven/jruby-rake-plugin/pom.xml
+    	maven/jruby-stdlib/pom.xml
+    	maven/jruby/pom.xml
+    	maven/pom.xml
+    	pom.xml
+    	test/pom.xml
+    	test/test_dir.rb
+    	test/test_kernel.rb
+    	test/test_respond_to.rb
+    	test/test_timeout.rb
+
+commit 100ac2a0afb9046d9d6e4e06a4c887d3c7df1169
+Author: kares <self@kares.org>
+Date:   Sun May 24 19:50:29 2015 +0200
+
+    sleep should convert it's "time interval" argument the same way as MRI
+    
+    we introduced the conversion for `Timeout#timeout(sec)` but under MRI timeout
+    implementation delegates to sleep so it's really a must have for `Kernel#sleep`
+
+commit 68644e3eac61087a695d2fc5a6a7dd9bbfd905a9
+Author: kares <self@kares.org>
+Date:   Sat May 23 14:57:22 2015 +0200
+
+    add missing ' ' (space) in exception message ... TypeError from `sleep('invalid')`
+
+commit 7e94aecd6c4acb60e831328d5fc579d36a8bc1be
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue May 12 16:02:13 2015 -0500
+
+    Fix specs where proc passed to lambda stays a proc?
+
+commit 76ba4b6998bc8ad04dde4c5e2f0a271628cf7018
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue May 5 20:52:17 2015 -0500
+
+    Set thread-local call type and visibility around all m_m dispatch.
+    
+    This also simplifies the pre-built "visibility m_m's" and
+    eliminates a few inner classes.
+    
+    Fixes #540.
+
+commit 279983684edbaeebb730c81e86251d3027ef2488
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue May 5 20:52:17 2015 -0500
+
+    Set thread-local call type and visibility around all m_m dispatch.
+    
+    This also simplifies the pre-built "visibility m_m's" and
+    eliminates a few inner classes.
+    
+    Fixes #540.
+
+commit a9ce5d33940c38e0112f2d41eef2c36cbfaa3d27
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Apr 14 19:51:39 2015 -0500
+
+    Bring introspection methods in line behaviorally with MRI.
+    
+    This should fix remaining issues running mocha head's tests.
+
+commit f41b6d9e38741292a3b274be54b1686b1dc4bd5d
+Author: Teemu <teemu@aikais.in>
+Date:   Mon Feb 9 19:52:18 2015 +0200
+
+    Make filepaths with null byte fail
+    
+    This patch applies to several methods that deal with filepaths in Dir,
+    File, File::Stat, IO, and Kernel. All of these methods now raise an
+    argument error if a null byte is detected in a path argument.
+    
+    Some of these methods are also slightly refactored, mostly by replacing
+    context.runtime with just runtime where applicable.
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/RubyDir.java
+    	core/src/main/java/org/jruby/RubyFile.java
+    	core/src/main/java/org/jruby/RubyFileStat.java
+    	core/src/main/java/org/jruby/RubyIO.java
+    	core/src/main/java/org/jruby/RubyKernel.java
+    	test/mri/excludes/TestFile.rb
+
+commit 040f140208bbd85712cb5e08f5b3440d37315941
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Apr 8 14:11:29 2015 -0500
+
+    Do not search implementer for refinement modules.
+
+commit b27868aa7137ab68eec2076b3ae9b9e8d42d6129
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Sat Feb 14 09:51:40 2015 -0600
+
+    Some more $! save/restore fixes + add comments for all of them
+
+commit 6bd5f8d4919389fe4c7fe8ff91f2a577abebb04a
+Author: Teemu <teemu@aikais.in>
+Date:   Mon Feb 9 19:52:18 2015 +0200
+
+    Make filepaths with null byte fail
+    
+    This patch applies to several methods that deal with filepaths in Dir,
+    File, File::Stat, IO, and Kernel. All of these methods now raise an
+    argument error if a null byte is detected in a path argument.
+    
+    Some of these methods are also slightly refactored, mostly by replacing
+    context.runtime with just runtime where applicable.
+
+commit 5040d48633ecb52ff8e775d2f31a146fc9394cab
+Author: Erik Michaels-Ober <sferik@gmail.com>
+Date:   Wed Jan 28 13:36:15 2015 -0800
+
+    Move #itself and #object_id from Object to Kernel
+
+commit 0d080fc3aaa8225f36e0d5dc1e8c98693ce01505
+Author: Smit Shah <who828@gmail.com>
+Date:   Wed Jan 28 00:53:49 2015 +0530
+
+    Fixed a bug with local_variables ordering and duplicate variables
+
+commit 9a188551214e60c484c1119917e0b1e51dc82ead
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jan 20 11:41:37 2015 -0600
+
+    Don't do native system logic on Windows.
+
+commit a23c03581aae3a71d1e83d852f2d68c88086854c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jan 16 12:05:57 2015 -0600
+
+    MRI has moved callcc to continuation ext. Delete ours.
+
+commit 3bb74b367edc01a44961d9e7e98b8814d4cbafb4
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jan 16 12:01:08 2015 -0600
+
+    Do not define _exec_internal as a module method on Kernel.
+
+commit 414e5febdf21948b5ae07d50842b459d133e755b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jan 14 18:56:15 2015 +0000
+
+    Use old logic for backquote on Windows.
+
+commit 695baa1aa3705b161088b4b4d78eafd0a4424938
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Dec 16 16:22:27 2014 -0600
+
+    Still a bit messy but all extra scope removal is done with known extra depth calcs removed
+
+commit fb50f34ade4943cd4840ead1d8ef905b088de7e4
+Author: Kevin Menard <kevin@nirvdrum.com>
+Date:   Mon Dec 8 20:33:35 2014 -0500
+
+    Fixed casing to match MRI.
+
+commit 307f7e506fceb98698c0736a43f4ad8b95b07579
+Author: Chris Heald <cheald@gmail.com>
+Date:   Mon Nov 10 01:30:47 2014 -0700
+
+    remove_instance_variable is now public [Feature #6539]
+
+commit c3f8a8ab7b43278aced14e28ac34edfe1b7522c0
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Nov 8 13:46:40 2014 -0600
+
+    Missed a spot in raise's cause support.
+
+commit 5ea7030a394795d10907fb3760c91c7fd5ad84f6
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Nov 8 13:36:22 2014 -0600
+
+    Add cause support for Kernel#raise.
+
+commit 4a6e40c7212da8f579a2d8b41ff393bd5a2b1b85
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Nov 5 08:43:44 2014 -0600
+
+    Clean up uses of old select logic.
+
+commit aafb40b0a772613ae288bb2f28fbf6791b11e6c8
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Sep 10 17:06:13 2014 -0500
+
+    Fix coercion of arrays in Kernel#Array and Array#product.
+    
+    Fixes #1961.
+    Fixes #1962.
+
+commit 6ba08e6d48e093e55d445b719300ed3cb3029aac
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Sep 25 13:00:18 2014 -0500
+
+    Revert only temporarily because this breaks something in Rails 4 involing Array.  Figure out for 1.7.17
+
+commit cba8f637ae16b746358cf20ca02066546c89c74e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Sep 17 12:29:40 2014 -0500
+
+    Remove unused param.
+
+commit 0513c951389c015200e7553c515c43b130d64bc9
+Merge: b707c91 5f0e17b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Sep 10 20:55:35 2014 -0500
+
+    Merge remote-tracking branch 'origin/jruby-1_7'
+    
+    Conflicts:
+    	core/pom.xml
+    	core/src/main/java/org/jruby/RubyFile.java
+    	core/src/main/java/org/jruby/RubyFileTest.java
+    	core/src/main/java/org/jruby/RubyKernel.java
+    	core/src/main/java/org/jruby/util/RegularFileResource.java
+    	core/src/main/java/org/jruby/util/TypeConverter.java
+    	docs/man/pom.xml
+    	docs/pom.xml
+    	ext/pom.xml
+    	ext/readline/pom.xml
+    	ext/ripper/pom.xml
+    	lib/pom.xml
+    	maven/jruby-complete/pom.xml
+    	maven/jruby-dist/pom.xml
+    	maven/jruby-jars/pom.xml
+    	maven/jruby-noasm/pom.xml
+    	maven/jruby-rake-plugin/pom.xml
+    	maven/jruby-stdlib/pom.xml
+    	maven/jruby/pom.xml
+    	maven/pom.xml
+    	pom.xml
+    	test/jruby/test_system_error.rb
+    	test/pom.xml
+
+commit 2b0c320695dff770b5ada90da07ac604239dec2e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Sep 10 17:06:13 2014 -0500
+
+    Fix coercion of arrays in Kernel#Array and Array#product.
+    
+    Fixes #1961.
+    Fixes #1962.
+
+commit bd050f58eeade5ce03f69d0b351328b86e872bf6
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Aug 11 12:17:19 2014 -0500
+
+    Merge JI #raise and Kernel#raise since JI is always on now.
+
+commit 868bea07f755c73970885a4927787b8507be81c8
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jul 25 13:52:52 2014 -0500
+
+    Re-register our beans if we have to restart agent on failed exec.
+
+commit b1e2f795bc34d9a80ad69fe9e90e93fff8bf1e23
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jul 25 13:52:52 2014 -0500
+
+    Re-register our beans if we have to restart agent on failed exec.
+
+commit 487c562df5dd5c0255d1e1bc20fb42609672dbef
+Merge: 0ba3d03 6b7bee2
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jul 25 13:27:43 2014 -0500
+
+    Merge remote-tracking branch 'origin/jruby-1_7'
+
+commit 6b7bee24328ea6f523825e27b4891c780145ac3d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jul 25 13:24:06 2014 -0500
+
+    Before a native, in-process exec, shut down JMX agent.
+    
+    If the JRuby JVM is started with the remote JMX agent enabled,
+    subsequence native exec of JRuby (basically restarting JRuby in
+    the same process space) can fail because the port remains bound.
+    This change uses internal OpenJDK classes to shut down the JMX
+    agent before a native exec, so it can restart in the new JVM.
+    
+    A side effect of this is that if native exec fails, we must
+    attempt to restart the agent as well. This will break connections
+    for existing clients, but they would have lost connection had the
+    exec succeeded. I don't see this as a problem.
+    
+    Fixes #1859.
+
+commit fce8f3e812d561720af4583f7bfd9d386a925b15
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jul 22 15:30:11 2014 -0500
+
+    Port bits of Kernel#system and hook up spawn logic.
+
+commit 10750bea7a1fbd1589077a6e5acc723f459b57ad
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jul 22 02:14:08 2014 -0500
+
+    Use new spawn logic for backquote, when possible.
+    
+    This allows us to get proper exit status and full behavioral
+    compatibility with MRI's backquote.
+
+commit b72188ad319868975fd9ea37798cec7cf6c62c9d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Jul 20 15:23:58 2014 -0500
+
+    Updates and fixes for Process::Status
+    
+    * Define best-guess equivalents to W macros for process status
+    * Use real native status in Proces::Status
+    * Re-port existing Status methods to use native status
+    * Add missing #signame method
+    * Cleanup and reorg Process::Status code
+
+commit 2676a1ce936a89deaab7db9f11a6a0d63fdf8610
+Merge: c8d269d c57ad62
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 9 12:55:04 2014 -0500
+
+    Merge remote-tracking branch 'origin/master' into new_transcoder
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/RubyConverter.java
+    	test/mri/excludes/TestMethod.rb
+    	test/mri/excludes/TestModule.rb
+
+commit 7791321ff35529b84e83c0480c621af7dbe5c247
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Jul 6 14:32:53 2014 -0500
+
+    Move toward better metadata in native core methods.
+    
+    * Fully-specify methods that read/write frame or scope fields.
+    * Attach additional "caller" CallConfig to methods for later use.
+    * Eliminate static lists of scope/frame consumers (full field
+      specification means those methods will get picked up on boot.
+    
+    This change moves us toward having full framing information in the
+    DynamicMethod object associated with a given native method. This
+    will allow us to do a better job of late-framed calls (don't
+    frame or scope until we call a method that needs it), alias
+    warnings (only warn when aliasing a method that has framing
+    requirements), and ultimately better frame elimination in the new
+    IR runtime.
+
+commit 7b60c665284fd8f4383709bc1d1415b49cb1cd54
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jun 24 13:10:29 2014 -0500
+
+    Reinstate native spawn atop ported logic.
+
+commit 28588ed678aa94b85a71cf41d555c00fbf76dff0
+Merge: 02eb2f4 1d03c28
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jun 23 14:16:24 2014 -0500
+
+    Merge remote-tracking branch 'origin/master' into new_transcoder
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/RubyBasicObject.java
+    	core/src/main/java/org/jruby/RubyIO.java
+
+commit a8c5cfe344b1aa65e135bd0fc0e2e16ad91ec453
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Jun 9 17:09:05 2014 -0500
+
+    More old interpreter removal
+
+commit 11281db562d4bd3aa974ac863f47236102c9d12b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jun 4 21:37:55 2014 -0500
+
+    Numerous fixes to get CI specs 100% again.
+    
+    * OpenFile needs to register as finalizable to flush on exit
+    * Kernel#p needed some port cleanup
+    * String#gsub's logic needed port cleanup
+    * Removed passing tags for String#inspect and String#scrub.
+
+commit 9fdec6fbf251968e7cc5c569b02b44a22bc30b4f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri May 23 17:06:44 2014 -0500
+
+    Implement Process.spawn atop new popen backend.
+
+commit 1a2daf7bb76fe23ef7a12b7dc5ee45286f605a2d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri May 23 13:39:23 2014 -0500
+
+    Port logic for popen (native version).
+
+commit 239a6bfa4f5a38b379983c864e476855faea4a26
+Merge: fda9e60 ea1d6ff
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed May 21 10:18:48 2014 -0500
+
+    Merge remote-tracking branch 'origin/master' into new_transcoder
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/RubyFile.java
+    	core/src/main/java/org/jruby/RubyIO.java
+
+commit 5c9cdfe905bad8cc3c469276ca2bbd8aad9b4f67
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri May 16 12:51:44 2014 -0500
+
+    Start porting IO open/initialize logic.
+
+commit 953d5d65f254e48911a34a6aef45fa5fb25d11fe
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu May 15 08:29:12 2014 -0500
+
+    Implement Kernel#p, start adding errno and nonblock logic.
+
+commit 4981d37b3a09a2f156b72581400a887e1fba3257
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed May 14 09:52:39 2014 -0500
+
+    Implement rest of print, printf, puts, putc in IO and Kernel.
+
+commit 1c09ad7a3d65189776c13de9c6cd6a6aebbf5fa8
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Tue May 13 19:10:26 2014 -0500
+
+    ISSUE 1601: save/restore $! properly in the runtime
+    
+    * Eliminates one more rubyspec error -- now down to to one
+      failure before rubyspec run is green in IR mode.
+    
+    * This also fixes the error with "bundle exec rake" with the
+      gem "analytics-ruby" line in Gemfile in IR mode (reported
+      by nirvdrum on IRC).
+    
+    * This still requires another set of eyes going over all the
+      files and see if other instances have been missed.
+
+commit 1d491712e40506cb45182747411b0bd2052b0fa4
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue May 13 13:04:46 2014 -0500
+
+    Start port of write logic plus fixing flush and more cleanup.
+
+commit b37a0edd2d095550b43acd13fb5825a40d1e1011
+Merge: 8cb15d2 e05539b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Apr 7 12:32:21 2014 -0500
+
+    Merge remote-tracking branch 'origin/jruby-1_7'
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/RubyTime.java
+    	core/src/main/java/org/jruby/ext/psych/PsychLibrary.java
+    	lib/pom.rb
+    	pom.xml
+
+commit 4e6e7e6b30f6be92cd95f0419aaca3fd2fe6b06c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Apr 7 12:24:33 2014 -0500
+
+    Various fixes for Kernel.Integer().
+    
+    * Localize conversion logic in TypeConverter.
+    * Add missing "badcheck" logic for String to Bignum. Fixes #1608.
+    * Fix last failure in ruby/test_integer.rb by defining
+      Fixnum#succ.
+    
+    Still needs tests or specs.
+
+commit acf5d258db69e9ba73f329b809c0924d7e843c82
+Author: tduehr <tduehr@gmail.com>
+Date:   Thu Feb 20 16:22:22 2014 -0600
+
+    correct visibility of initialize* and respond_to_missing? methods
+
+commit ce4fe6fbc9d43d71204d8585a066919fd234b488
+Merge: 8d95741 55e8e3a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jan 10 15:16:23 2014 -0600
+
+    Merge remote-tracking branch 'origin/jruby-1_7'
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/RubyKernel.java
+    	core/src/main/java/org/jruby/runtime/callsite/RespondToCallSite.java
+
+commit 55e8e3a09ab25902f2b5bfd7f40c23d16481fa42
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jan 10 14:59:44 2014 -0600
+
+    Reenable respond_to? caching logic.
+    
+    The respond_to? call site logic was disabled because it did not
+    take into account respond_to_missing?. Whenever respond_to?
+    returns false, 1.9+ needs to check respond_to_missing? in case the
+    method in question is implemented by method_missing. We disabled
+    all respond_to? caching until we could figure out a safe way to do
+    this caching in 1.9 mode.
+    
+    In this commit, we use the following logic to know whether we can
+    cache the result of a respond_to? call:
+    
+    IF we are in 1.8 mode
+    OR respond_to? returned true
+    OR respond_to_missing? is not overridden
+    THEN cache
+    
+    We will not cache, then, if we're running in 1.9 mode AND
+    respond_to? returned false AND there's a custom
+    respond_to_missing? defined. This should cover all appropriate
+    failure cases and allow us to cache the much more common normal
+    respond_to? cases.
+    
+    Numbers before and after:
+    
+    BEFORE:
+                                              user     system      total        real
+    control, 1 and :to_ary                0.030000   0.000000   0.030000 (  0.031000)
+    1m 1.respond_to?(:to_ary)             0.060000   0.000000   0.060000 (  0.061000)
+    1m 1.respond_to?(:to_ary,true)        0.070000   0.000000   0.070000 (  0.069000)
+    1m 1.respond_to?(:next)               0.040000   0.000000   0.040000 (  0.034000)
+    1m redefined obj.respond_to?          0.020000   0.000000   0.020000 (  0.025000)
+    1m varying name respond_to?           0.030000   0.000000   0.030000 (  0.026000)
+    
+    AFTER:
+                                              user     system      total        real
+    control, 1 and :to_ary                0.030000   0.000000   0.030000 (  0.032000)
+    1m 1.respond_to?(:to_ary)             0.010000   0.000000   0.010000 (  0.011000)
+    1m 1.respond_to?(:to_ary,true)        0.010000   0.000000   0.010000 (  0.015000)
+    1m 1.respond_to?(:next)               0.010000   0.000000   0.010000 (  0.011000)
+    1m redefined obj.respond_to?          0.020000   0.000000   0.020000 (  0.023000)
+    1m varying name respond_to?           0.020000   0.000000   0.020000 (  0.024000)
+    
+    In additionm this should reduce calls to our per-class cache
+    substantially in cases where the argument passed to respond_to? is
+    the same and the target object's type is not changing.
+
+commit fbe18f5ed3a77ed4a6ea0494da598d09baf29879
+Author: Daniel Marcotte <dmarcotte@gmail.com>
+Date:   Thu Dec 5 18:10:03 2013 -0800
+
+    Java enumerators lazily compute Enumerator#size
+    
+    For internally created enumerators (i.e. created with
+    enumeratorizeWithSize), ensure that calls to Enumerator#size reflect the
+    current size of the underlying object being enumerated by
+    introducing a function type which can be lazily computed on calls to
+    Enumerator#size.
+
+commit d1efddd1c5f4420a98bdcaf36112b98dbb6a9f4a
+Author: Daniel Marcotte <dmarcotte@gmail.com>
+Date:   Sat Nov 30 10:03:10 2013 -0800
+
+    Enumerator#size support for loops
+
+commit bdbaec4814366f545a1dcd37a4c293a57073eab9
+Merge: 57b6723 58d44fa
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Nov 27 17:25:26 2013 -0600
+
+    Merge with 1.7
+
+commit 58d44faeb2945f6e153bff369107e27cd1cef0de
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Nov 27 17:23:39 2013 -0600
+
+    Trivial de-yellow on nb
+
+commit 9b1db76d290e21835ef39d14bdee869fadf194cc
+Author: Daniel Marcotte <dmarcotte@gmail.com>
+Date:   Fri Nov 22 18:02:32 2013 -0800
+
+    2.0 Enumerator#size compatibility enhancements
+    
+    Update enum constructors for 2.0, and ensure in a number of cases that
+    we keep the size when we enumeratorize (note: there's still a number
+    of other enumeratorize calls which will be addressed in a later commit)
+
+commit 8d22538bf3c3293310996826c63cb5d098c6a853
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Nov 5 14:11:45 2013 -0600
+
+    Fixes #1176. Array(array) returns a copy instead of array itself
+
+commit 8bf5c821a280d196bf33959b547df5dbaa8d1283
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Nov 5 14:11:45 2013 -0600
+
+    Fixes #1176. Array(array) returns a copy instead of array itself
+
+commit 0c7100e6c17a9a9879f0f94128f1b9e9d19770ea
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Oct 30 18:22:35 2013 -0500
+
+    Remove "untrust", since it is being deprecated in 2.1
+    
+    See ruby/ruby@1f828497d1e8df2b7b68ac2a093ab4439585d88a
+
+commit fa28d760ee58bf43e20842a843541710d65ccca0
+Merge: ff9cee7 5fc06a0
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Oct 28 10:56:40 2013 -0500
+
+    Merge branch 'jruby-1_7'
+
+commit 5fc06a0480011a5c35339a68116dd81d88b1876d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Oct 28 10:55:44 2013 -0500
+
+    Actually implement __dir__ using stack trace logic. Fixes #651
+
+commit a7feb5dc6aeb80f9df2589e40ecd929b967c78b5
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Sat Oct 26 15:59:11 2013 -0500
+
+    Fixes #1167. print called with no arguments prints nil
+
+commit 70d4d77842988b52e41392bf68205328c7118895
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Sat Oct 26 15:55:55 2013 -0500
+
+    Fixes #1167. "print" called with no arguments prints "nil"
+
+commit 60f463f5aa0a2b0acf52b8f299feefdbc2b4be87
+Author: Chris Sinjakli <chris@sinjakli.co.uk>
+Date:   Thu Oct 24 21:57:25 2013 +0100
+
+    Remove unused 2.0 compatibility flag from Kernel
+
+commit 6cb66f56af269a28fe9408367a8fbb0d0977dc5c
+Author: Chris Sinjakli <chris@sinjakli.co.uk>
+Date:   Thu Oct 24 21:56:24 2013 +0100
+
+    Remove 1.9 compatibility flags from Kernel
+
+commit d06210a232f9ea9f48cd61cd0b3746743d074767
+Author: Chris Sinjakli <chris@sinjakli.co.uk>
+Date:   Thu Oct 24 21:40:01 2013 +0100
+
+    Remove 1.8 compatiblity methods from Kernel
+
+commit c913213260b75f6357976435a02f4d39183d9e4a
+Author: Chris Sinjakli <chris@sinjakli.co.uk>
+Date:   Fri Oct 18 23:52:25 2013 +0100
+
+    Remove Kernel.gsub_bang as that was removed in 1.9
+
+commit 3ec492951f08f79288c8afce82f9cb2ec7fd4e4c
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Oct 9 11:45:22 2013 -0500
+
+    Add missing methods for -np support (sub/gsub)
+
+commit b7b5ade43bcd9d7829bd32ae6f1db1baefe21786
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Oct 9 11:29:58 2013 -0500
+
+    De-version Kernel
+
+commit 623cff6b93d547cd216856541a1ba5b9e834f8c1
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Oct 7 16:21:23 2013 -0500
+
+    Remove compat from range and remove first/last with no ThreadContext arg from existing altogether
+
+commit 697e6895affa646849a685ed58f6f84795c853aa
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Oct 4 23:37:52 2013 -0500
+
+    Eliminate calls to Ruby.is1_8 and is1_9.
+
+commit c4eae4b89300c252e6472297ea63fe0583ffed53
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Sep 28 11:39:04 2013 -0500
+
+    Fix framing regression.
+    
+    During 1.7.5 dev cycle, I reworked how backref/lastline are
+    stored to reduce their impact on performance and bring their
+    behavior more in line with MRI wrt blocks. In the process of
+    making this move, I inadvertently turned on the frame requirement
+    for all core class method names, resulting in any Ruby code that
+    calls any of those names using a full frame. This has a serious
+    perf impact on many benchmarks.
+    
+    This change fixes the framing to only be active when the target
+    method actually needs to read or write a frame field, reducing the
+    number of frame-requiring methods significantly and restoring
+    perf to what it should be.
+    
+    We are unsure if this change will go into 1.7.5, given the wide
+    impact a mistake in this fix could have, but it is passing JIT
+    and AOT ruby19 tests and I will continue to test it to hopefully
+    get it into the release.
+
+commit fed0f5315be4e57d2d89b878fae899aa70654576
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Sep 27 11:56:46 2013 -0700
+
+    Mark =~ and !~ methods as writing backref, for compiler use.
+    
+    This is an additional fix related to #1041. That issue appears to
+    be fixed already without this change, but I still believe this
+    change is necessary.
+
+commit a2339c06f4caedbb7079d48e49cc7b41aaf4e349
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Sun Aug 18 23:47:44 2013 -0400
+
+    Set correct dir inside Dir.chdir in native mode
+    
+    Depends on jnr/jnr-posix#14, which provides `chdir()`.
+    
+    Fixes http://jira.codehaus.org/browse/JRUBY-6994
+
+commit 1ea388df6618a4df2c592c9938e23345ddbfb496
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 24 18:04:35 2013 -0500
+
+    Decode #send symbols the same way as regular symbols.
+    
+    Symbols must be decoded using raw bytes, so that we can match
+    MRI logic. In MRI, symbols are unique to their raw bytes rather
+    than their logic character content, which allows differently-
+    encoded Strings to map to different Symbol objects, and those
+    Symbol objects can preserve their original encoding.
+    
+    decoding of the bytes, which caused multibyte strings to map to
+    a different Symbol object via send than via other mechanisms like
+    String#to_sym or parsing. I attempted to make all Symbols decode
+    properly, but this breaks the above-mentioned MRI compatibility.
+    
+    This change modifies all #send paths to decode incoming strings
+    the same way as symbols in the rest of the system, so they will
+    dispatch to the same-encoded symbolic name.
+    
+    Note: This does mean that multi-byte identifiers throughout the
+    system are often represented as their raw byte form rather than
+    their proper encoded form, and the resulting Java String will
+    sometimes be unintelligible. Until we can find a way to support
+    real decoded symbols and maintain compatibility with MRI's raw
+    byte representation of symbols, we can do nothing to prevent this.
+    
+    Fixes #736 and potentially other symbol-related issues.
+
+commit 28c6fbc4e883bc1c9e9242d1da1cb2b785f55339
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 3 12:46:45 2013 -0500
+
+    Move to @mkristian's proposed layout, with some modifications.

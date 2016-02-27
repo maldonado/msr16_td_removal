@@ -1,0 +1,307 @@
+commit 8d20a46835846d0ff4bf0bf2244c7d809832aa03
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Tue Jun 27 20:47:31 2006 +0000
+
+    <fixcrlf> now supports an outputencoding attribute.  Bugzilla report 39697.
+    Submitted by Stephen Goetze
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@417584 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 10910b14175b984e909403695cb5018114f1ebe4
+Author: Jacobus Martinus Kruithof <jkf@apache.org>
+Date:   Thu Feb 2 19:44:13 2006 +0000
+
+    Remove unused imports from testcases
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@374475 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 4a834a6214295d9194f920727213f251656a4b56
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Mar 11 14:14:36 2005 +0000
+
+    Jikes is right, the fallthrough is a problem
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277902 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 0fb6ce69c29faf80158c280c98e57e08327dd576
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Mon Mar 7 18:29:25 2005 +0000
+
+    Forgot to commit testcase for doubled EOF char on the new filter-delegated
+    FixCRLF task.  Translated test assertions from Java to Ant.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277825 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 5061e731c3919a7236bdcdd2ad9965d384313e26
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Thu Mar 3 21:46:47 2005 +0000
+
+    1. Add Kevin Greiner's FixCrLfFilter (slightly modified)
+    2. Adapt FixCRLF the task to use the filter (single set of fixcrlf code)
+    3. Implement ChainableReader in FixCRLF so that the existing taskdef
+       will be recognized as a nested element in a filterchain.
+    PR: 33155
+    Submitted by: Kevin Greiner
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277787 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 015ec69fd10eda4f947c101cb73fd9edf1ed7cf0
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Thu Mar 3 16:24:26 2005 +0000
+
+    Add preservelastmodified attribute to fixcrlf.
+    PR: 25770
+    Submitted by: Yuji Yamano
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277778 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 97150b670e83bc62caac34ee6db7231c6532203d
+Author: Steve Loughran <stevel@apache.org>
+Date:   Fri Feb 25 00:33:00 2005 +0000
+
+    fixcrlf gets a new attribute to make it easier to fix a single file. no nested filesets for <fileset file>, see.
+    
+    Also put the schemavalidate in the right place in WHATSNEW.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277731 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 4ab55dc0c9fdb38aab0be7b96e2d7c16d6fa7c11
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Dec 17 14:12:08 2004 +0000
+
+    More shadows and statics that make Jikes whine
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277240 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 71333195c9d57d80d1a44cd8362a641c62d5e214
+Author: Jesse N. Glick <jglick@apache.org>
+Date:   Tue Dec 7 09:10:39 2004 +0000
+
+    Trying to make unit tests independent of CWD.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277135 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c885f568369156a62e3ccb5b4b93b73b9d054443
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Tue Mar 9 16:49:09 2004 +0000
+
+    remove authors from files
+    PR: 27177
+    Obtained from: J.M. (Martijn) Kruithof
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276208 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 278781dcd669412e5e35cc95d8a96e0b2a278f50
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Mon Feb 9 21:05:47 2004 +0000
+
+    Copyright owner is The Apache Software Foundation
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276065 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 66555ca10d24bbfc55e710b9d65f809cfe713dab
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Wed Feb 4 20:38:09 2004 +0000
+
+    Remove trailing spaces in all java files
+    in order to make checkstyle happy
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276017 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ca1513552f7af7fc19de490fbe2d88adb6c993ad
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Tue Feb 3 22:44:50 2004 +0000
+
+    Switch to Apache Software License 2.0
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276010 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 616ae7c4cb53db737f3614bf14d9140d508a6aeb
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Fri Jan 9 17:45:28 2004 +0000
+
+    opps
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@275889 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f5921264e53af4c642939f5dc1e617363edd7865
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Fri Jan 9 17:36:16 2004 +0000
+
+    fix for CRLF adds extraneous character at the end of File
+    if a file does not end in an eol, fixcrlf will add an eol
+    this patch adds an attribute to fixcrlf to stop this behaviour
+    PR:  23262
+    Obtained from: gudnabrsam at yahoo dot com
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@275886 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 91ae25fffbc870d03793739a1b1d3da3d2ae928d
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Jun 24 08:32:43 2003 +0000
+
+    Demonstrate PR 20840
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274694 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 24436a1c922162464396caca82dd88c9c04d6d6a
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Mar 7 11:23:16 2003 +0000
+
+    Remove email address from sources
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274203 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1dc8a079057e191ca4c158f36843c2c9e9f9be52
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Feb 10 14:15:00 2003 +0000
+
+    Remove Jakarta Project from license
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274040 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 0ee75128d83afe4ccb7b1934b20ad3273bb46ba7
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Sep 3 15:51:53 2002 +0000
+
+    Add explicit tests for <fixcrlf>'s CRCRLF handling.
+    
+    PR: 12219
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273290 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 94fa51d8c2071551bb3549c026849781441cf0f9
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Apr 23 10:30:12 2002 +0000
+
+    make tests use JavaEnvUtils.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@272555 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 2e315eb0590f8c837b80833a55cd1f65469393dd
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Jan 23 09:13:25 2002 +0000
+
+    4 new logos
+    
+    Conor, remove your if you want ;-)
+    
+    Submitted by:	Dylan Schiemann <dylans@yahoo.com>,
+                    Magesh Umasankar <umagesh@apache.org>,
+                    James Andrews <jimhole23@yahoo.com>,
+                    Conor MacNeill <conor@cortexebusiness.com.au>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270833 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3b41e256ee0e91ff17233b4b046d3a712433b245
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Jan 10 16:17:12 2002 +0000
+
+    <fixcrlf> failed on Mac files.
+    
+    Reported by:	Matt McHenry <mmchenry@carnegielearning.com>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270662 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d0fd746309295fa52c8caca7e8eb98cec8cb88a9
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Jan 10 10:13:13 2002 +0000
+
+    License police on testcases and stylesheets:
+    
+    Make sure all years in which the file has been modified are listed.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270654 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e8f24b5abbcc24006eac5cea23cff74791fbea07
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Dec 11 15:45:41 2001 +0000
+
+    JDK 1.1 doesn't grok UTF16 8-(
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270122 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3572b96ca9382bef2069a89931185ba26626f958
+Author: Conor MacNeill <conor@apache.org>
+Date:   Wed Nov 14 12:25:31 2001 +0000
+
+    Move all tests to BuildFileTest from TaskdefsTest
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269911 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 286537d1f81a29fff0b913229d7750604265ea71
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Nov 13 14:49:48 2001 +0000
+
+    Make <fixcrlf> work for long lines as well.
+    
+    PR: 4186, 4646, 4709
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269907 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8e37dd0ba24131a542e2b7d4c7e1983c69ca188b
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Nov 13 13:46:04 2001 +0000
+
+    Add encoding attribute to <fixcrlf>
+    
+    PR: 961
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269904 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f5f32f163a646d83ae0b2501a58f78c901055a97
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Aug 6 12:25:56 2001 +0000
+
+    Make log messages from System.out calls, remove some code in execute
+    that was redundant, remove some tabs, add testcase that checks that
+    files don't get overwritten if they'd be identical to the new version.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269474 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a794b2b204995a03c2e3c117ff2c4749710e6840
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Aug 3 11:22:22 2001 +0000
+
+    <fixcrlf> now deals with CR only line-ends and arbitrary tab lengths.
+    It should work independant of the size of the file as well.
+    
+    Additionally it can treat tabs inside character constants in source
+    files differently.
+    
+    Documentation will follow - also it will now update the timestamp of
+    files, even if the file doesn't change. This will be fixed before the
+    final release but shouldn't stop us from starting the beta cycle.
+    
+    PR: 1053
+    Submitted by:   Peter B. West <pbwest@powerup.com.au>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269449 13f79535-47bb-0310-9956-ffa450edef68

@@ -1,0 +1,74 @@
+commit 9ab12cf5788110dca87caccb6fb6067fe1d37c1e
+Author: Peter Donald <donaldp@apache.org>
+Date:   Tue Jan 30 00:15:30 2001 +0000
+
+    Updated this to use the same approach as main wrt replacing constants in file .... strangely this one works
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268536 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8c97911720b40557d78672245bc2e7f724917297
+Author: Peter Donald <donaldp@apache.org>
+Date:   Mon Jan 8 04:36:48 2001 +0000
+
+    Updated to the version on harddisk + added the start of documentation.
+    
+    Major changes include
+    * making convertion API context-sensitive
+    * the simplification of all the interfaces. The simplification is achived by applying IOC. Now AntEngine is responsible for creating and instantiating shared components via a ComponentManager.
+    * Moved most of startup code to AntEngine so that alternate front ends can be added in simply.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268409 13f79535-47bb-0310-9956-ffa450edef68
+
+commit bba92ec2234c85ea1ff3ec3e4e2bb45adaaf3197
+Author: Peter Donald <donaldp@apache.org>
+Date:   Tue Dec 12 11:46:08 2000 +0000
+
+    Added in the ability to deploy datatypes in properties. Datatypes are currently solely registered through taskdef.xml. Will in future be registered through tasks aswell.
+    
+    Made conditions (if/unless interpreted in a context)
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268342 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 19600e6d005c8bebbf6697bd00516e843f0a34f4
+Author: Peter Donald <donaldp@apache.org>
+Date:   Wed Dec 6 06:11:28 2000 +0000
+
+    Refactored proposal so it is more inline with apporpriate design patterns.
+    
+    Added in a number of new tasks to demonstrate interaction with tasklet runtime.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268316 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ab5d2d667652fc27a6965c50a9d0bc5d06035497
+Author: Peter Donald <donaldp@apache.org>
+Date:   Wed Dec 6 00:23:43 2000 +0000
+
+    Started adding some documentation and exporting the correct services via CM rather than all services.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268313 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1d3dc3765d4efd6ae54488feab07f6a17315ebe6
+Author: Peter Donald <donaldp@apache.org>
+Date:   Tue Dec 5 09:24:59 2000 +0000
+
+    Continued developing myrmidon
+    * simplified logging interface to be independent of org.apache.log
+    * made it so that you no longer need to build a classpath and hand it to ant!!!
+    * added ant-call task
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268306 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ed120ac805fd6c4c681b8691196b53375712b3d3
+Author: Peter Donald <donaldp@apache.org>
+Date:   Mon Dec 4 13:37:33 2000 +0000
+
+    Initiall checkin of myrmidon proposal
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268292 13f79535-47bb-0310-9956-ffa450edef68

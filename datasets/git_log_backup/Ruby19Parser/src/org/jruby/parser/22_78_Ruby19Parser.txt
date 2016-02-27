@@ -1,0 +1,460 @@
+commit 61678ac1a2514a9932276f8d527816a5980a94b3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Feb 25 20:41:40 2013 +1100
+
+    Fix more references to CPL.
+    
+    The phrase "Common Public License" was split across two lines in
+    our default header, which caused it to be missed during earlier
+    search/replace. Also, we did not replace the CPL URL in the
+    header with the EPL URL.
+
+commit 330fef3b0fc18af477ccea19bd278669667f31bb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 12 14:49:29 2013 -0600
+
+    Switch JRuby's CPL license to EPL.
+    
+    Governance of the CPL license was moved to the Eclipse Foundation
+    at some point in the past, and Eclipse blessed the EPL (Eclipse
+    Public License v1.0) as the successor to CPL. Because the CPL
+    contains a clause allowing transparent upgrades to future blessed
+    successor licenses, we can make the move to EPL without
+    re-contacting past contributors.
+    
+    The change in going from CPL to EPL largely just removes some
+    punitive language that apparently made many companies nervous. All
+    other language in the license remains identical.
+    
+    Several documents about Eclipse's move from CPL to EPL are here:
+    
+    http://www.eclipse.org/legal/cpl2epl/
+    
+    Note that Eclipse's move came before the blessing of EPL as the
+    upgrade path for CPL, so they had to do a bit more legal juggling.
+    With Eclipse now the administrator of CPL and with their blessing
+    of EPL as the upgrade path for CPL, all we need to do is make the
+    move.
+
+commit 9cd3b4575c8dc90787c627c2ff34bbb3e1eb3595
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Dec 18 14:46:19 2012 -0600
+
+    Move all lhs {op}= rhs logic into ParserSupport
+
+commit 2a15627b5b178b532dec0ce27f5f500699078f94
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Nov 8 12:28:23 2012 -0600
+
+    Wow missed commandStart all these years :)
+
+commit 28991ca571714634750533e7e9f7f4eb1089835f
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Nov 7 15:00:19 2012 -0600
+
+    update for dueling new_args signatures on null for 1.9 grammar
+
+commit d1de7facd678594481378b4e5ddabb9261bf004d
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Sat Nov 3 13:37:22 2012 -0600
+
+    Update 1.9 grammar to more closely resemble mri 1.9.3
+
+commit 670dfe82b966d9a61dc157e3cc1619f0e6cd40a5
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Oct 16 12:08:41 2012 -0500
+
+    #342 ... missed common case
+
+commit 0b2e88504bde0701179edd9bddeddd3c1557ce19
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Oct 15 10:40:23 2012 -0500
+
+    GH #342: Inline rescue with augmented assignment has wrong precedence
+
+commit 5e78f58b81ea0c680428ee1eadc48d0a812ee538
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Mon Mar 19 21:35:00 2012 -0400
+
+    Fix JRUBY-6538: 'obj !~ thing' is not the same as obj.send(:!~, thing)
+    
+    Credit goes to headius.
+
+commit 58d4d4c90ea9ce720b6a47690ec04ca288b7a9c9
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Mar 8 00:02:24 2012 -0600
+
+    Fix JRUBY-6534: Broken block-local vars in 1.9 mode
+    
+    * Simple typo in the parser.
+
+commit 3e6d201fe4659f14eb0d0565f1b7680a8f162e22
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Mon Feb 27 10:02:26 2012 -0800
+
+    Fix JRUBY-6504: Block parameter syntax issue where the closing | comes at the beginning of the line
+
+commit 1dd08acd0700566be44cbefd87f3392bec5111c1
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Tue Nov 29 01:05:58 2011 -0600
+
+    Fix JRUBY-6237: Allow the syntax `a = b = f 1`
+    
+    This was introduced with MRI 1.9.3.
+
+commit 533838bfda6816ba22cee2b61cedef78322c805c
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Oct 18 19:01:19 2011 -0500
+
+    19: Generate syntax error on non-top level BEGINs
+
+commit 5be4162d454b45fcd77059e4dbf52c0b24ff6ebe
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Oct 18 17:44:44 2011 -0500
+
+    19: Update BEGIN to be less that restrictive than 18
+
+commit 4807459e7a2458de246cb41104075c10c5d0fafb
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Mon Sep 26 13:54:42 2011 -0500
+
+    * Added allocation methods to StaticScope to allocate the appropriate
+      static scopes and protected LocalStaticScope, BlockStaticScope and
+      EvalStaticScope constructors.  This will now let us allocate
+      IR-specific static scopes that IR execution requires.
+    * Also added isBlockScope test on StaticScope to eliminate instanceof
+      tests against BlockStaticScope and LocalStaticScope.
+    * Hand-patched auto-generated files Ruby19Parser.java and
+      DynamicScope.java.
+
+commit 84ac6052e0d403615e95301f0a12e064556ec0b2
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Mar 9 15:13:31 2011 -0600
+
+    Add/fix syntax errors for duplicate variables
+
+commit 70fe94906556a15f3bae11f396c4b7dbe3d073d6
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Jan 18 11:00:35 2011 -0600
+
+    JRUBY-5368: [1.9] Star and unnamed restarg treated differently in 1.9 mode Proc#parameters
+
+commit 758f54f6066da2fb2fcdc3668dec93553202b352
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Jan 17 14:42:30 2011 -0600
+
+    JRUBY-5359: Peculiar parser error in 1.9 mode.  Make 'do' keyword handling it's own method in lexer.
+
+commit 06509b0fa9c2ea6ca093ae5c17d6d0210f119531
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri Jan 7 20:25:27 2011 -0600
+
+    Slight step sideways end of night code dump. StrNode is more accurate for encoding.  Regexp is somewhat better?  More specs fail though
+
+commit fc76ba756bee7aa02db2957dbf691067b038e0b0
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Jan 6 17:34:16 2011 -0600
+
+    Add missing opt_nl for not foo
+
+commit fecf5d4879ae28ef970811678bd14053d7d7f3f8
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Jan 5 20:17:15 2011 -0600
+
+    JRUBY-5250: [RubySpec] [1.9] Parser appears to treat 'not' with incorrect precedence
+
+commit 06acafb6f02f6b9d93e1eed8fecb39461ff5b211
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Jan 5 19:43:53 2011 -0600
+
+    JRUBY-5307: [1.9] variable assignment with rescue doesn't work as expected
+
+commit 42f6eedcb62083adb8e013605734405de9de5556
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Jan 3 11:39:09 2011 -0600
+
+    All 1.9 masgn mixed logic works now?
+
+commit 0fdc07208aee471e451bc48271cbeb6a921ea719
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Dec 30 10:11:01 2010 -0600
+
+    Some more WIP towards Regexp encoding
+
+commit 2163ef3ff41fb0f3c478e90bb3ef54ee3a53a048
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Dec 29 12:30:48 2010 -0600
+
+    Make DStr propagate encoding (fixes the other two defined? regressions as well as fixing a few random specs)
+
+commit 08f42f647b641944a1567e2415e966a9ca59b1d8
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Dec 29 12:08:10 2010 -0600
+
+    Remove four defined? spec failures in 1.9
+
+commit 8d6f750e2a128b3cd227bd111e4aaae38ed55ac8
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Dec 9 16:56:42 2010 -0600
+
+    Update .y for Charlie's last checking
+
+commit 809ee9478a813358b90742cdce2358609b44b76b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Dec 9 16:45:04 2010 -0600
+
+    [1.9] Fix remaining BEGIN tags.
+    
+    * BEGIN executes in containing scope
+    * BEGIN disallowed in block scopes in addition to method and singleton scopes
+
+commit 52192272b2f4afbc7bae4b6ab4c81eb24a098c8e
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Dec 9 13:10:33 2010 -0600
+
+    Initial stab at magic comments...bleh
+
+commit dcdfdbec559478a25fc5f832fbbfd766d7850e50
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Oct 27 12:00:45 2010 -0500
+
+    Make buildFor work by passing in the expected staticscope of its parent
+
+commit f3494cca5fbd326432d4947e3fd9cb7ee8ceddb8
+Author: David Calavera <david.calavera@gmail.com>
+Date:   Sat Jul 3 13:48:42 2010 +0200
+
+    remove superfluous comments
+
+commit 97f8fddfe655f453e9ddf1922d2d770612c630b4
+Author: David Calavera <david.calavera@gmail.com>
+Date:   Sat Jul 3 13:09:45 2010 +0200
+
+    fixes JRUBY-4836: [1.9] Symbol with empty string is allowed
+
+commit ba4fb16f3057524353e5159e505b2f8d8405f38a
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Fri Jul 2 20:35:48 2010 -0400
+
+    Same change as 0d22ff0, for 1.9 mode.
+
+commit c2d3223a9f75bcc78d1122f12c9528d4b43041f6
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon May 17 17:09:29 2010 -0500
+
+    Kicking it like its hot.  Kill switch for megamorphic site in parser
+
+commit 47d0614e3a6ccb640167b77b926f08a2873eadbb
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Mar 11 16:48:29 2010 -0600
+
+    Yeah static outlined methods and some getPosition simplification
+
+commit 539cdcf309c61647c369619cc168a0f048267c70
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Mar 10 14:38:35 2010 -0600
+
+    Get rid of mysterious yyInput nterface...farewell stranger
+
+commit 66195b6595dc7c726e1d7cbf5750746a2bac5344
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Mar 10 14:12:45 2010 -0600
+
+    Remove to unneeded classes in parser + make all parsing errors rescue
+
+commit 2d9943bafe9010641082fb7a88e2a7c64ef3faf6
+Author: Vladimir Sizikov <vsizikov@gmail.com>
+Date:   Tue Feb 2 09:17:30 2010 +0100
+
+    JRUBY-4532: Improper SyntaxError#message for unexpected token
+    
+    Patch by Hiroshi Nakamura.
+
+commit 498a8743a12ed64e3fa6f994318caf62dfa73aa5
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Dec 21 14:52:39 2009 -0600
+
+    Ground work for JRUBY-4119.  New LiteralNode and proper parser changes to support quoted and dynamic symbols.  Zero-sum at this point.  Dynamic versions coming next
+
+commit 02b57d4a3852da77a1d517b93c317b3b24117ee4
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Sat Dec 19 10:12:13 2009 -0600
+
+    JRUBY-4376: Typo in parser code causes unary ~ to act like !
+
+commit 882813c8bf6fa5e88f8ca317ebf3b40699c2c5de
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Dec 17 14:23:59 2009 -0600
+
+    JRUBY-4364, JRUBY-4365: unary operations should execute operations and not optimize in parser like 1.8 did
+
+commit 16a2a445785188c7c1d928545206c9ea1e12ce69
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Fri Nov 27 22:35:17 2009 -0600
+
+    DM_BOOLEAN_CTOR: Method invokes inefficient Boolean constructor; use Boolean.valueOf(...) instead
+    
+    Signed-off-by: Nick Sieger <nick@nicksieger.com>
+
+commit 29de372d37a64464f87ee0dff1cd7b5c0a81df71
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Fri Nov 27 15:55:47 2009 -0600
+
+    Method invokes inefficient Number constructor; use static valueOf instead
+    
+    Signed-off-by: Nick Sieger <nick@nicksieger.com>
+
+commit 5dec556e49922345781c5839e990d1459879f600
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Oct 19 12:31:48 2009 -0500
+
+    JRUBY-4112: -() and other wacky operator expressions exploding...
+
+commit 3cd2e9d3d714cceab46460b33c12c41a512644fe
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Oct 13 15:37:44 2009 -0500
+
+    JRUBY-4029: String hash keys should be copied
+
+commit 91b17b467736a3bd5f3c26af1ae31a916aa8afe4
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Aug 10 14:40:29 2009 -0500
+
+    Properly fix unnamed rest arg case.  restargs should be added to current scope not local scope
+
+commit 999ee4718ef47d47b3c98d122d8213fa33f2ba3a
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri Aug 7 15:21:11 2009 -0500
+
+    [1.9] Fix block arg signature |a,b,| (trailing block is unnamed rest arg)
+
+commit b67c87e77011f6b022697d3cfb226f766d57c8ce
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jul 14 15:22:04 2009 -0500
+
+    Reflectively load the Jay debugger, so it can be excluded from the jar without breaking parsing.
+
+commit cbaa657c6ee914b61a3d5df47b0b3ba2c72d9981
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri Jul 10 14:05:59 2009 +0900
+
+    Needed to regenerate 1.9 parser for new yield stuff
+
+commit 2ad926e983fe1b104a8097401b0fef7dd8861657
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Jun 18 16:45:40 2009 -0500
+
+    Allow -y to be used with --1.9.  JRUBY-3442: 1.9 allows trailing commas in method invocations
+
+commit ff0ab6e097f56eb056bb7f548611b1e6cbb04b1f
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Jun 18 15:36:10 2009 -0500
+
+    JRUBY-382: Better error output from parser
+
+commit 1e7357ba02e536f324019edeeac3bab5aad93754
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Mon Mar 30 20:49:57 2009 +0000
+
+    getPosition wrangling
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9504 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 0f52b5b33bde9e70c39883ac263e0e60a19176cf
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Mon Mar 30 19:00:41 2009 +0000
+
+    More union removal. Found useless code in Struct 2x FTW
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9503 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 8981241985a2b828b17f0d7c2202c6e05e2335aa
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Thu Mar 26 03:21:09 2009 +0000
+
+    __ENCODING__ returns an encoding
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9472 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit ae2975a6ec9153882bd3efe789fa274e0ed1b6ff
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Mon Feb 23 21:38:28 2009 +0000
+
+    JRUBY-2326: Invalid cast during parsing of recursive.rb in facelets-2.3.0 (org.jruby.ast.YieldNode cannot be cast to org.jruby.ast.BlockAcceptingNode)
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9279 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 5315ce1cb84af0f1e3c70fec9b6564f5696064de
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Tue Feb 17 21:42:03 2009 +0000
+
+    Outline Jay-generated case bodies to methods to allow hotspot to optimize parser (4-6x improvement once hotspots does its thing)
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9222 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 2c813e9d06d454dbbce800bf961ec1c2a797e5c2
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Tue Jan 13 22:53:26 2009 +0000
+
+    Re-landing case/when AST refactoring
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8751 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 75f48785fa21e4aff89581353bb425648c2ec7c4
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jan 12 22:37:21 2009 +0000
+
+    Revert "Change how we do case/when in AST.  Remove rewriter tests and position tests until they move to jruby-parser project on Kenai"
+    
+    This reverts commit 195ec6a446134c05697686c1b885e13579a220f1.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8728 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d7361b88d4e224e6837111e9e111342ca9581406
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Mon Jan 12 21:01:09 2009 +0000
+
+    Change how we do case/when in AST.  Remove rewriter tests and position tests until they move to jruby-parser project on Kenai
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8726 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit c184a184430de04bfde76b6c5f082ac1c3013aa8
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Tue Dec 16 21:34:58 2008 +0000
+
+    guard warning
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8372 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit bdbfba1faa96809dfb2efdecce491ef3d94afb01
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Mon Dec 1 22:34:27 2008 +0000
+
+    JRUBY-2324: AST Node positions and content incorrect when passing down Multibyte content to lexer (syntax exception part)
+    Possibly also JRUBY-2484
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8237 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 48a0107ae725ef86c7e3396458273d9e277b631b
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sun Nov 30 16:48:08 2008 +0000
+
+    JRUBY-3107: Ability to get extra position information from DefaultRubyParser
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8214 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit fa85e7262ceb02be9c18e699356c357f10b89ff0
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Tue Nov 25 00:37:02 2008 +0000
+
+    Add new_colon2/new_colon3 to parsersuport and grammars to specialize logic without needing to regenerate grammars
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8128 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit bf8db0bc4acaeed7900b867e821e959f254be0be
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sat Nov 22 22:57:11 2008 +0000
+
+    Biggest commit eva (1.9 parser+1.9-runtime-related-changes landing)
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8099 961051c9-f516-0410-bf72-c9f7e237a7b7

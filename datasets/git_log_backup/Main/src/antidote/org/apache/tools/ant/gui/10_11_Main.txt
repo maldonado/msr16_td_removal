@@ -1,0 +1,172 @@
+commit cf483b905df8ff9f06826b8ec81c592314914e6b
+Author: metasim <dev-null@apache.org>
+Date:   Wed Jan 24 19:51:33 2001 +0000
+
+    Incremental update.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268519 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 18931f719f446825f75c6f7572698f0bf26370ce
+Author: metasim <dev-null@apache.org>
+Date:   Wed Jan 17 22:23:38 2001 +0000
+
+    Added more panels to build wizard, and created state machine framework.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268476 13f79535-47bb-0310-9956-ffa450edef68
+
+commit faf459ad4374779901d12681be4a77b8c119e04e
+Author: metasim <dev-null@apache.org>
+Date:   Tue Jan 16 18:36:00 2001 +0000
+
+    Successfully managed to expose myself to public embarassssment by mispellln'
+    "wizzzerd" all over the place. :-(
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268468 13f79535-47bb-0310-9956-ffa450edef68
+
+commit bb67dc44d84a49fc3d8a14b02b014ac5acd41877
+Author: metasim <dev-null@apache.org>
+Date:   Mon Jan 15 19:47:32 2001 +0000
+
+    Initial framework for a build-file wizzard.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268453 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 268ddaabdb95f09b0b99244a9066c8557a6cbb0f
+Author: metasim <dev-null@apache.org>
+Date:   Thu Jan 11 19:21:00 2001 +0000
+
+    Cleanup and debug support.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268435 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 53def3821e68f07fe0fe6acd40bace16cd8d7c00
+Author: metasim <dev-null@apache.org>
+Date:   Wed Jan 10 20:46:59 2001 +0000
+
+    Added full support for multiple projects open at the same time. Each project
+    appears as an entry in the "Projects" menu.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268425 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1056b715f84a4c3b17b7fcdecbaef6eaeb566ea7
+Author: metasim <dev-null@apache.org>
+Date:   Mon Jan 8 19:44:01 2001 +0000
+
+    Added *internal* support multiple projects, and generalized the selection
+    state mechanism.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268419 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6c287080d460efa63e022407e88a04558b9fdbb6
+Author: Conor MacNeill <conor@apache.org>
+Date:   Wed Jan 3 14:18:52 2001 +0000
+
+    Make licence statements mention Ant in place of Tomcat
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268392 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d9dc37613d9674bcd4caa399529317bdd41ac512
+Author: metasim <dev-null@apache.org>
+Date:   Sun Dec 24 14:04:24 2000 +0000
+
+    Major package reorganization.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268382 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8ff35a2d7d2250207f320ddfb977de3cf9d3f2c3
+Author: metasim <dev-null@apache.org>
+Date:   Sat Nov 25 04:33:04 2000 +0000
+
+    Added simplistic, non-editable version of context fontification in Console.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268240 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8785091ee1c92874c44324f0429765539987b048
+Author: metasim <dev-null@apache.org>
+Date:   Fri Nov 24 17:09:22 2000 +0000
+
+    Rewrote command handling infrastructure, allowing for dynamic mapping
+    between actions and commands rather than the original hard-coded
+    mapping. Associations specified in the actions.properties file under
+    the "<actionID>.command" property.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268232 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 0c852dba516bf705d62a2d53c47a7b1b1cdd5048
+Author: metasim <dev-null@apache.org>
+Date:   Thu Nov 16 22:38:43 2000 +0000
+
+    Changed mechanism by which the PropertyEditor editor is instantiated so that it
+    uses whatever class is retured by BeanDescriptor.getCustomizerClass() rather
+    than assuming DynamicCustomizer. This will allow BeanSpecific customizers to be
+    used in leu of the DynamicCustomizer.
+    
+    Also finally figured out the IllegalAccessException problem with calling the
+    NodeList methods in the ACSTreeNodeElement classes, which turned out only to
+    happen when jikes was used for compiling. Implemented a work around.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268199 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 71cd7defed7816e61f8779e3605e5e808933475d
+Author: metasim <dev-null@apache.org>
+Date:   Thu Nov 16 18:32:31 2000 +0000
+
+    Added option to turn on notification of emacs on a build error so that emacs
+    goes to the file and location of the error. Also added the ability to provide a
+    build file to load at startup from the command line.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268195 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3ddbc0b6c9ac6420db40ac98fd25c9960a28880b
+Author: metasim <dev-null@apache.org>
+Date:   Tue Nov 14 19:55:45 2000 +0000
+
+    Added warning about incompatibility with vm version "Blackdown-1.3.0-RC1".
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268184 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c70641243c667093d23f689c7c28866fa661b1af
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Nov 6 12:52:51 2000 +0000
+
+    Tow Antidote patches:
+    
+    *) Design document.
+    
+    *) can now write BuildEvents to console.
+    
+    Submitted by:	Simeon Fitch <metasim@yahoo.com>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268152 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 7f80f383cfd4df8b6d30bbf64ceac0ba03b69bfc
+Author: Conor MacNeill <conor@apache.org>
+Date:   Fri Nov 3 12:04:32 2000 +0000
+
+    The initial checkin of antidote - the ant GUI.
+    
+    This initial version is mainly to establish the source infrastructure. The
+    code currently compiles under JDK 1.2+ and provides a basic GUI which is able
+    to open a build.xml file.
+    
+    Stay tuned ...
+    
+    Submitted by:	Simeon Fitch <metasim@yahoo.com>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268148 13f79535-47bb-0310-9956-ffa450edef68

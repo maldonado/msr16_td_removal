@@ -1,0 +1,315 @@
+commit e9fb65c64894c7811e56942f8b7cf17a6f296891
+Author: Christian Meier <m.kristian@web.de>
+Date:   Mon Feb 16 15:09:02 2015 +0100
+
+    make sure URLResource always gets a runtime
+
+commit 6bd5f8d4919389fe4c7fe8ff91f2a577abebb04a
+Author: Teemu <teemu@aikais.in>
+Date:   Mon Feb 9 19:52:18 2015 +0200
+
+    Make filepaths with null byte fail
+    
+    This patch applies to several methods that deal with filepaths in Dir,
+    File, File::Stat, IO, and Kernel. All of these methods now raise an
+    argument error if a null byte is detected in a path argument.
+    
+    Some of these methods are also slightly refactored, mostly by replacing
+    context.runtime with just runtime where applicable.
+
+commit f2c75116648c414659e3f6466747ff9f82f23f2c
+Author: Teemu <teemu@aikais.in>
+Date:   Wed Feb 4 21:15:35 2015 +0200
+
+    Fix uninitialized usage of File::Stat
+    
+    * Fix File::Stat#struct when uninitialized
+    * Make other methods fail unless initialized
+
+commit 98ee132a08c414e00051a719d3c31a34a563ccae
+Merge: 08ce901 81879f1
+Author: Christian Meier <m.kristian@web.de>
+Date:   Fri Dec 12 14:32:39 2014 +0100
+
+    Merge branch 'jruby-1_7'
+    
+    Conflicts:
+    	.travis.yml
+    	VERSION
+    	core/pom.xml
+    	core/src/main/java/org/jruby/Ruby.java
+    	core/src/main/java/org/jruby/RubyClass.java
+    	core/src/main/java/org/jruby/RubyFile.java
+    	core/src/main/java/org/jruby/RubyRegexp.java
+    	core/src/main/java/org/jruby/ast/SymbolNode.java
+    	core/src/main/java/org/jruby/common/RubyWarnings.java
+    	core/src/main/java/org/jruby/compiler/ASTCompiler.java
+    	core/src/main/java/org/jruby/compiler/BodyCompiler.java
+    	core/src/main/java/org/jruby/compiler/CacheCompiler.java
+    	core/src/main/java/org/jruby/compiler/impl/BaseBodyCompiler.java
+    	core/src/main/java/org/jruby/compiler/impl/InheritedCacheCompiler.java
+    	core/src/main/java/org/jruby/compiler/impl/InvokeDynamicCacheCompiler.java
+    	core/src/main/java/org/jruby/ext/tempfile/Tempfile.java
+    	core/src/main/java/org/jruby/parser/ParserSupport.java
+    	core/src/main/java/org/jruby/parser/Ruby19Parser.java
+    	core/src/main/java/org/jruby/parser/Ruby19Parser.y
+    	core/src/test/java/org/jruby/embed/ConstantCompilationTest.java
+    	default.build.properties
+    	docs/man/pom.xml
+    	docs/pom.xml
+    	ext/pom.xml
+    	ext/readline/pom.xml
+    	ext/ripper/pom.xml
+    	lib/pom.xml
+    	lib/ruby/1.9/rexml/entity.rb
+    	lib/ruby/2.0/net/http.rb
+    	lib/ruby/2.0/rexml/document.rb
+    	lib/ruby/2.0/rexml/entity.rb
+    	lib/ruby/shared/gauntlet_rubygems.rb
+    	lib/ruby/shared/rubygems.rb
+    	lib/ruby/shared/rubygems/available_set.rb
+    	lib/ruby/shared/rubygems/basic_specification.rb
+    	lib/ruby/shared/rubygems/command.rb
+    	lib/ruby/shared/rubygems/command_manager.rb
+    	lib/ruby/shared/rubygems/commands/cert_command.rb
+    	lib/ruby/shared/rubygems/commands/cleanup_command.rb
+    	lib/ruby/shared/rubygems/commands/contents_command.rb
+    	lib/ruby/shared/rubygems/commands/dependency_command.rb
+    	lib/ruby/shared/rubygems/commands/environment_command.rb
+    	lib/ruby/shared/rubygems/commands/generate_index_command.rb
+    	lib/ruby/shared/rubygems/commands/help_command.rb
+    	lib/ruby/shared/rubygems/commands/install_command.rb
+    	lib/ruby/shared/rubygems/commands/list_command.rb
+    	lib/ruby/shared/rubygems/commands/mirror_command.rb
+    	lib/ruby/shared/rubygems/commands/outdated_command.rb
+    	lib/ruby/shared/rubygems/commands/owner_command.rb
+    	lib/ruby/shared/rubygems/commands/pristine_command.rb
+    	lib/ruby/shared/rubygems/commands/push_command.rb
+    	lib/ruby/shared/rubygems/commands/query_command.rb
+    	lib/ruby/shared/rubygems/commands/search_command.rb
+    	lib/ruby/shared/rubygems/commands/setup_command.rb
+    	lib/ruby/shared/rubygems/commands/specification_command.rb
+    	lib/ruby/shared/rubygems/commands/uninstall_command.rb
+    	lib/ruby/shared/rubygems/commands/unpack_command.rb
+    	lib/ruby/shared/rubygems/commands/update_command.rb
+    	lib/ruby/shared/rubygems/commands/which_command.rb
+    	lib/ruby/shared/rubygems/commands/yank_command.rb
+    	lib/ruby/shared/rubygems/compatibility.rb
+    	lib/ruby/shared/rubygems/config_file.rb
+    	lib/ruby/shared/rubygems/core_ext/kernel_gem.rb
+    	lib/ruby/shared/rubygems/core_ext/kernel_require.rb
+    	lib/ruby/shared/rubygems/defaults.rb
+    	lib/ruby/shared/rubygems/dependency.rb
+    	lib/ruby/shared/rubygems/dependency_installer.rb
+    	lib/ruby/shared/rubygems/deprecate.rb
+    	lib/ruby/shared/rubygems/doctor.rb
+    	lib/ruby/shared/rubygems/errors.rb
+    	lib/ruby/shared/rubygems/exceptions.rb
+    	lib/ruby/shared/rubygems/ext.rb
+    	lib/ruby/shared/rubygems/ext/builder.rb
+    	lib/ruby/shared/rubygems/ext/cmake_builder.rb
+    	lib/ruby/shared/rubygems/ext/configure_builder.rb
+    	lib/ruby/shared/rubygems/ext/ext_conf_builder.rb
+    	lib/ruby/shared/rubygems/ext/rake_builder.rb
+    	lib/ruby/shared/rubygems/gemcutter_utilities.rb
+    	lib/ruby/shared/rubygems/install_update_options.rb
+    	lib/ruby/shared/rubygems/installer.rb
+    	lib/ruby/shared/rubygems/installer_test_case.rb
+    	lib/ruby/shared/rubygems/local_remote_options.rb
+    	lib/ruby/shared/rubygems/name_tuple.rb
+    	lib/ruby/shared/rubygems/package.rb
+    	lib/ruby/shared/rubygems/package/old.rb
+    	lib/ruby/shared/rubygems/package/tar_header.rb
+    	lib/ruby/shared/rubygems/package/tar_reader/entry.rb
+    	lib/ruby/shared/rubygems/platform.rb
+    	lib/ruby/shared/rubygems/psych_additions.rb
+    	lib/ruby/shared/rubygems/rdoc.rb
+    	lib/ruby/shared/rubygems/remote_fetcher.rb
+    	lib/ruby/shared/rubygems/request.rb
+    	lib/ruby/shared/rubygems/request_set.rb
+    	lib/ruby/shared/rubygems/request_set/gem_dependency_api.rb
+    	lib/ruby/shared/rubygems/requirement.rb
+    	lib/ruby/shared/rubygems/resolver/current_set.rb
+    	lib/ruby/shared/rubygems/security.rb
+    	lib/ruby/shared/rubygems/security/policy.rb
+    	lib/ruby/shared/rubygems/security/trust_dir.rb
+    	lib/ruby/shared/rubygems/server.rb
+    	lib/ruby/shared/rubygems/source.rb
+    	lib/ruby/shared/rubygems/source/installed.rb
+    	lib/ruby/shared/rubygems/source/local.rb
+    	lib/ruby/shared/rubygems/source/specific_file.rb
+    	lib/ruby/shared/rubygems/source_list.rb
+    	lib/ruby/shared/rubygems/spec_fetcher.rb
+    	lib/ruby/shared/rubygems/specification.rb
+    	lib/ruby/shared/rubygems/ssl_certs/AddTrustExternalCARoot.pem
+    	lib/ruby/shared/rubygems/stub_specification.rb
+    	lib/ruby/shared/rubygems/syck_hack.rb
+    	lib/ruby/shared/rubygems/test_case.rb
+    	lib/ruby/shared/rubygems/test_utilities.rb
+    	lib/ruby/shared/rubygems/text.rb
+    	lib/ruby/shared/rubygems/uninstaller.rb
+    	lib/ruby/shared/rubygems/uri_formatter.rb
+    	lib/ruby/shared/rubygems/user_interaction.rb
+    	lib/ruby/shared/rubygems/util/list.rb
+    	lib/ruby/shared/rubygems/validator.rb
+    	lib/ruby/shared/rubygems/version.rb
+    	maven/jruby-complete/pom.xml
+    	maven/jruby-dist/pom.xml
+    	maven/jruby-jars/lib/jruby-jars/version.rb
+    	maven/jruby-jars/pom.xml
+    	maven/jruby-noasm/pom.xml
+    	maven/jruby-rake-plugin/pom.xml
+    	maven/jruby-stdlib/pom.xml
+    	maven/jruby/pom.xml
+    	maven/jruby/src/templates/osgi_all_inclusive/src/test/java/org/jruby/embed/osgi/test/JRubyOsgiEmbedTest.java
+    	maven/pom.rb
+    	maven/pom.xml
+    	pom.xml
+    	spec/tags/ruby/core/symbol/length_tags.txt
+    	spec/tags/ruby/core/symbol/size_tags.txt
+    	spec/tags/ruby/core/symbol/versions/encoding_1.9_tags.txt
+    	test/pom.rb
+    	test/pom.xml
+    	test/test_file.rb
+    	tool/globals_1_9_3.rb
+
+commit 00e8c00bcdf0595148708ab975c46423e7895fbe
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Dec 10 10:17:06 2014 -0600
+
+    Fixes #2048
+
+commit 792530e7d450857b6f565bc7536431fa88768bc3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Nov 17 21:59:50 2014 -0800
+
+    Actually include filename in File.stat ENOENT error.
+
+commit b74fe447b413562f62de9063006abdea79e0ade6
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Nov 17 21:59:50 2014 -0800
+
+    Actually include filename in File.stat ENOENT error.
+
+commit ec237599e08b27c17a9fbb425f3dbda3fb4ad8e2
+Author: Chris Heald <cheald@gmail.com>
+Date:   Mon Nov 10 00:02:47 2014 -0700
+
+    Fixes for #test_bad_initialize_copy - ensure that frozen objects are not copyable. Fix a type check bug in RubyMatchData#initialize_copy
+
+commit 34dcf809f49de56409001e6bbdb56b56bb1d0085
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Nov 8 16:09:42 2014 -0600
+
+    Implement FileStat#/File./File#/Pathname#birthtime. #2152
+    
+    Note that this still does not pass MRI's tests, and does not
+    appear to provide sub-second accuracy.
+
+commit 0513c951389c015200e7553c515c43b130d64bc9
+Merge: b707c91 5f0e17b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Sep 10 20:55:35 2014 -0500
+
+    Merge remote-tracking branch 'origin/jruby-1_7'
+    
+    Conflicts:
+    	core/pom.xml
+    	core/src/main/java/org/jruby/RubyFile.java
+    	core/src/main/java/org/jruby/RubyFileTest.java
+    	core/src/main/java/org/jruby/RubyKernel.java
+    	core/src/main/java/org/jruby/util/RegularFileResource.java
+    	core/src/main/java/org/jruby/util/TypeConverter.java
+    	docs/man/pom.xml
+    	docs/pom.xml
+    	ext/pom.xml
+    	ext/readline/pom.xml
+    	ext/ripper/pom.xml
+    	lib/pom.xml
+    	maven/jruby-complete/pom.xml
+    	maven/jruby-dist/pom.xml
+    	maven/jruby-jars/pom.xml
+    	maven/jruby-noasm/pom.xml
+    	maven/jruby-rake-plugin/pom.xml
+    	maven/jruby-stdlib/pom.xml
+    	maven/jruby/pom.xml
+    	maven/pom.xml
+    	pom.xml
+    	test/jruby/test_system_error.rb
+    	test/pom.xml
+
+commit f607e53ea18fbf7cc036000e12752832bf2339f9
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Sun Sep 7 13:48:50 2014 -0500
+
+    Fixes #1945. File.exists?("broken_symlink") returns true. Fixes #1950. All RubyFileTest methods have a race condition
+
+commit a88339329d708b9529b924ad4f208ec674f03108
+Merge: df432f4 b4edc3f
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Sep 2 12:10:22 2014 -0500
+
+    The painful merge with jruby-1_7
+
+commit dd0208efcbfe51362e6bed69f04c380d96b7a2ea
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Sat Aug 30 10:37:25 2014 -0500
+
+    Change FileResource.lstat() to not rely on passed in posix since RegularFileResource now has a bonafide posix instance.  Note: this breaks a public API but it has only existed for one point release so I am willing to take the heat...
+
+commit c01bd97a7a8b717760e2645b43b2c3ac316c001b
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Sat Aug 30 10:29:45 2014 -0500
+
+    Change FileResource.stat() to not rely on passed in posix since RegularFileResource now has a bonafide posix instance.  Note: this breaks a public API but it has only existed for one point release so I am willing to take the heat...
+
+commit 0163e4b0da86cc3ab4d2426e82979ae5105d0fd2
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Sat Aug 30 10:16:18 2014 -0500
+
+    Use builtin posix vs creating one per regularfileresource.  Besides overhead of lots of new jnr-posix instances we need to push this into resource because we do not know if native is enabled or disabled.  On platforms with native unable to load lstat could not execute.
+
+commit 504738a4306f865fd33afa4b3e2428f105ec0b9c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed May 28 08:58:51 2014 -0500
+
+    Remove all references to getMainStream[Safe].
+
+commit 9c758b4f31c0eeb50d77b3dad28438aca365e857
+Author: tduehr <tduehr@gmail.com>
+Date:   Thu Feb 27 21:54:56 2014 -0600
+
+    fix initialize visibility
+
+commit acf5d258db69e9ba73f329b809c0924d7e843c82
+Author: tduehr <tduehr@gmail.com>
+Date:   Thu Feb 20 16:22:22 2014 -0600
+
+    correct visibility of initialize* and respond_to_missing? methods
+
+commit 7f393ee1a8670cdbb1399120753836d68d51bea6
+Merge: b78e3fe ebca8f6
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Feb 13 14:57:56 2014 -0600
+
+    Merge with jruby-1_7
+
+commit 1098bea0743911971860d5bb2feca0d7b4febba7
+Author: Dmitry Ratnikov <ratnikov@google.com>
+Date:   Fri Feb 7 19:52:15 2014 -0500
+
+    Added stat method to FileResource and refactored RubyFileStat to make use of it.
+    
+    This way RubyFileStat doesn't need to do any more custom logic for jars.
+
+commit 9f1aad943d280a373153294d5c628b01413bff16
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Oct 8 13:26:10 2013 -0500
+
+    De-version FileStat
+
+commit 28c6fbc4e883bc1c9e9242d1da1cb2b785f55339
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 3 12:46:45 2013 -0500
+
+    Move to @mkristian's proposed layout, with some modifications.

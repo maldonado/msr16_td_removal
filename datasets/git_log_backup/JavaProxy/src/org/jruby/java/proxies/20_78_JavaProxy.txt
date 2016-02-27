@@ -1,0 +1,991 @@
+commit bb98e4b8decffc0361b70a6c99c1ade5fed0abcb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Mar 28 10:02:33 2013 +0000
+
+    Move RuntimeHelpers to org.jruby.runtime.Helpers.
+
+commit a121b62db206de48e9561cd2e01c508853aa9bf8
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Dec 12 01:52:40 2012 -0600
+
+    Improve construction of Java arrays and add type.new_array.
+
+commit 73346330acfb093102c60773acd8b8225d391ec5
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Dec 11 22:24:57 2012 -0600
+
+    Better error messages for Java objects that fail to match target.
+
+commit ede89b51bd897c4792f8a3cc79a35922be202c96
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jul 27 14:47:25 2012 -0500
+
+    Apparently my refactoring fu is weak. Removing more TC.getRuntime.
+
+commit b8181cda909f6e42d7c0b7fffaabbe2a502f273b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jul 27 02:19:54 2012 -0500
+
+    Inline all calls to ThreadContext.getRuntime to access the field.
+
+commit b561306229d6764ebab34eb87995d7e74a99d239
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Jun 3 19:31:05 2012 +0200
+
+    Fix and test for #190
+    
+    Baffling that this got through, but I obviously botched the impl
+    of __persistent__ and __persistent__=. They were set up as meta-
+    class methods but using the instance method versions. So they
+    received a RubyClass object but then the invoker has to cast to
+    JavaProxy. Fixed by making them static and adjusting impl
+    accordingly.
+
+commit f9ca028c26d3b3a34e641a49f14804c47c9c9524
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed May 9 16:54:58 2012 -0500
+
+    Allow primitive boxes to pass for primitive toJava targets.
+    
+    Fixes #165.
+
+commit 279fad5ec3be93f279c2429d4e4b2c9599e969b5
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Mar 5 15:26:05 2012 -0600
+
+    Clean up messages for non-persistent Java object ivars and singletons
+
+commit bdbb8aa51cd39facd5bffd0fd1e28b86bbccbaea
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Mar 4 11:09:50 2012 -0600
+
+    Add one-time warning for Java singletons/ivars.
+
+commit ed5390cd580cd98ecc201c239a3c1bc7f2b036c1
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Mar 2 17:34:02 2012 -0500
+
+    IR2JVM work.
+    
+    * Non-self calls binding directly (but permanently)
+    * Permute fixes for arity
+    * Casting fixes for non-static target methods
+
+commit 8b22798f7230a64eebee7eba2b8bbe2ca9703423
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Feb 6 10:19:49 2012 -0600
+
+    Deprecate and remove uses of defunct JRubyMethod.backtrace flag.
+
+commit 6886cc0d191dcd883fde1ad87342aba5d5058cfb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jan 9 23:48:40 2012 -0600
+
+    Rewire ENV_JAVA to be a read/write mirror of system properties.
+    
+    Normally ENV_JAVA will remain a read-only copy of System properties,
+    but after require 'java', it is replaced with a read-write wrapper.
+    Updates then are propagated into System properties, and updates
+    from outside JRuby are visible.
+
+commit 6f159fe5dd51c062a5b1aab64a8ede916990877a
+Author: Hiroshi Nakamura <nahi@ruby-lang.org>
+Date:   Mon Jul 11 03:36:17 2011 +0900
+
+    Deprecation of fast constant access paths.
+    
+    Each os those has the same definition as non-fast verision.
+
+commit d915e3421d6e3b33fd05c0cada98a04de0dac673
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Tue Jun 7 09:28:25 2011 -0500
+
+    JRUBY-5852: Improve failed serialization message a bit
+
+commit 88515c6b358597df7be4829a6ee99d90bd2b8b51
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Jun 5 23:57:07 2011 -0500
+
+    Better error message for marshaling an unserializable Java object.
+
+commit ce516bde9daa5b18e50f6013ad5c80dcfd4c2f7c
+Author: Yoko Harada <yokolet@gmail.com>
+Date:   Fri Jan 7 16:32:27 2011 -0500
+
+    Fix for the case that wrong number of args are given to constructor.
+
+commit 095a36a4798e627dd7004c46aedafe71716edd41
+Author: Hiroshi Nakamura <nahi@ruby-lang.org>
+Date:   Mon Jan 3 23:59:17 2011 +0900
+
+    JRUBY-5004: remove unused imports
+    
+    This commit is based on the patch from Douglas Campos <qmx@qmx.me>.
+
+commit fd0fa789b21b30f294e8286b72b75fe3b688c27a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Dec 1 12:07:42 2010 -0600
+
+    Merge "backtrace" branch to master, now that it runs clean on all our various test cases.
+    
+    This is a squashed merge encompassing the following commits from "backtrace":
+    
+    commit eb0e24242050199ac1cc4cf6e48d93025f0186f4
+    Merge: 32137de ea48d8d
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Dec 1 12:03:28 2010 -0600
+    
+        Merge remote branch 'origin/master' into backtrace
+    
+    commit 32137decc9351dd7b6a19c49c7955808f535bb9c
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Dec 1 09:41:29 2010 -0600
+    
+        Fix remaining failures for test-all.
+    
+        * Disable CheckClassAdapter temporarily, since it disallows what should be valid JVM identifiers.
+        * Use the presence of $RUBY$ in method name as an additional indicator that we're processing a compiled Ruby body during backtrace gathering.
+        * Move some largely-static properties out of "init" target in build.xml, so they're available whether init is triggered or not (e.g. run.jvm.model).
+    
+    commit ee2a624201d5e9cd408d6ae793160aeb99b50b3d
+    Merge: cd50ae5 88ad204
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Dec 1 08:01:22 2010 -0600
+    
+        Merge branch 'master' into backtrace
+    
+    commit cd50ae5f06b95a2fffab6bc1f3a7419f478d0a52
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Tue Nov 30 19:15:07 2010 -0600
+    
+        Get remaining spec failure with -X+C passing.
+    
+        * Embed the actual Ruby method name into the Java method for block bodies, rather than __block__.
+    
+    commit 52bbfffcae1aed62bf4afcb692bed9725e4e1564
+    Merge: 4ed7235 1aace5e
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Tue Nov 30 01:37:15 2010 -0600
+    
+        Merge branch 'master' into backtrace
+    
+    commit 4ed723579101fffd8bfa73b30dc6e4e8991866f2
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Tue Nov 30 01:31:44 2010 -0600
+    
+        Precompiled (AOT) specs *nearly* green.
+    
+        * Mark __method__ as reading frame "name"
+        * Fix AOT-based stack trace mining logic
+    
+    commit 64e20aa939b5b9c6e41e0e9fe09039a0bb92794a
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Mon Nov 29 16:50:55 2010 -0600
+    
+        Jitted specs running green.
+    
+        * eval needs to set method name into the binding, so it's there for "__method__" in the eval'ed code.
+    
+    commit fd442c0a815bcab9eb6c9aa1b71e1f8a260ee03b
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Mon Nov 29 16:06:53 2010 -0600
+    
+        Interpreted specs green on backtrace.
+    
+        * Tagged some __method__ specs for which backtrace behaves like 1.9, which Matz apparently likes but was afraid to backport. Odd cases anyway.
+        * Fixed method name for the block used to define_method.
+    
+    commit cedb27e430b422c1158f66b4dcc7769922433506
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Nov 24 18:35:22 2010 -0600
+    
+        Reinstate deprecated java_to_ruby and ruby_to_java I removed, since it's still needed by some external libs.
+    
+    commit b48b17910de662b4e2d20ee8f4b5cc734eefc1ed
+    Merge: f39007e 2ae4995
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Nov 24 13:40:58 2010 -0600
+    
+        Merge remote branch 'origin/master' into backtrace
+    
+        Conflicts:
+        	src/org/jruby/Ruby.java
+        	src/org/jruby/RubySymbol.java
+        	src/org/jruby/runtime/CompiledBlock19.java
+        	src/org/jruby/runtime/Interpreted19Block.java
+        	src/org/jruby/runtime/InterpretedBlock.java
+        	src/org/jruby/runtime/MethodBlock.java
+    
+    commit f39007eca676c1e6ec9f891ac63b7c5d907b0d1b
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Thu Nov 18 14:01:29 2010 -0600
+    
+        Start normalizing the method/class names generated into Java by JIT and AOT compiler, to wrap up the remaining spec failures.
+    
+    commit 76e42c4b4522dc87c066d20051d02d1e4005b860
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Nov 17 20:40:33 2010 -0600
+    
+        Disable dynopt for now, to allow better stabilization on the main feature of this branch: frame elimination.
+    
+    commit d03099690df2e16d423e8b6a8969e0264983237f
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Nov 17 15:00:14 2010 -0600
+    
+        Encapsulate "coreMethods" hash in Ruby and add "bound method" logic to default (non-generated) class populator. `ant test-all` runs green now.
+    
+    commit ed7458f72bce55b11e5231f8e7b9d590c09ca53d
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Nov 17 10:46:43 2010 -0600
+    
+        Fix incorrect use of fastSetInstanceVariable instead of fastSetInternalVariable in FFI.
+    
+    commit f09626121b6a8bea6ab39a3c8ed3ccd69f56b505
+    Merge: f780b97 e8ca689
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Nov 17 10:15:16 2010 -0600
+    
+        Merge branch 'master' into backtrace
+    
+    commit f780b972b1f3e18f4c2608d9536e797a0845cd1a
+    Merge: 25ab5d3 6967ea7
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Nov 17 09:04:42 2010 -0600
+    
+        Merge branch 'master' into backtrace
+    
+        Conflicts:
+        	src/org/jruby/runtime/ThreadContext.java
+    
+    commit 25ab5d3d3f8c1fbf0fa334427b1485d322e83f86
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sun Nov 7 00:42:54 2010 -0500
+    
+        Don't do dynopt against calls that receive blocks; non-local flow is not properly handled yet.
+    
+    commit a4ad27056dcc3acf6bae0b0af7e618966d08a6dd
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sat Nov 6 15:22:40 2010 -0500
+    
+        Tag caller specs that do not pass with new backtrace logic (peculiar eval caller behaviors).
+    
+    commit eed8902084cfa06d4648935c1f70da57bf0c7a9c
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sat Nov 6 00:32:59 2010 -0500
+    
+        More fixes to get specs and tests green on backtrace branch:
+    
+        * Hash#index was not being bound properly from RubyHash#index19
+        * Range#min and Range#max need super, and therefore need frame = true
+        * tc_owned is a bad test and fails on system like OS X where (for some reason) / may be owned by user
+        * test_trace_func had been hacked for a bad class result (Integer, instead of Fixnum)...fixed that
+    
+    commit 9d9f94c30de76fa25e738e70e84ea09163eca5cb
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Fri Nov 5 20:03:22 2010 -0500
+    
+        Fix Kernel#caller to replace .java lines with Ruby lines. Brings specs mostly to passing.
+    
+    commit de433c771830e95c54f8196453208f2b312191aa
+    Merge: 3ffe1cf e25c58f
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Fri Nov 5 17:40:02 2010 -0500
+    
+        Merge branch 'master' into backtrace
+    
+        Conflicts:
+        	src/org/jruby/RubyIO.java
+        	src/org/jruby/compiler/impl/StackBasedVariableCompiler.java
+        	src/org/jruby/evaluator/ASTInterpreter.java
+        	src/org/jruby/java/proxies/JavaProxy.java
+    
+    commit 3ffe1cfba86f52ee96d89f3a1c352597f22f76b7
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Oct 27 01:42:06 2010 -0200
+    
+        Fix compile error I accidentally merged.
+    
+    commit b081253fb3cdf5141f7f0cf76d3f8546837d9f42
+    Merge: fc3028d ad68e22
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Tue Oct 26 16:30:25 2010 -0200
+    
+        Merge branch 'master' into backtrace
+    
+        Conflicts:
+        	src/org/jruby/Ruby.java
+        	src/org/jruby/internal/runtime/methods/DefaultMethod.java
+        	src/org/jruby/runtime/ThreadContext.java
+    
+    commit fc3028d9da2750c9d1c394600ab8ee712388724d
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Tue Oct 26 14:39:29 2010 -0200
+    
+        Add better description for class bodies in backtrace
+    
+    commit d796555494c2237116c7477c932fd96cd30d2e20
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Tue Oct 26 11:36:29 2010 -0200
+    
+        Clean up and add color to Rubinius backtraces.
+    
+    commit 012f5357ce649bd5a996211fe231f26097bf4f5b
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sun Oct 24 16:23:04 2010 -0500
+    
+        Fix classloader check to allow for compiled method handles, which use a no-arg constructor.
+    
+    commit 473d48aac6a5523304188d1d433e4c12df989b89
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sun Oct 24 16:10:32 2010 -0500
+    
+        Improve Proc-binding-based eval position info by propagating block's position into the binding and through to the backtrace frame.
+    
+    commit bcfd16b519b145c9ee055db1592dfaced05b71a0
+    Merge: 4902faa 5b49583
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sun Oct 24 11:07:15 2010 -0500
+    
+        Merge branch 'master' into backtrace
+    
+        Conflicts:
+        	src/org/jruby/RubyTime.java
+        	src/org/jruby/runtime/ThreadContext.java
+        	test/org/jruby/test/TestRubyException.java
+    
+    commit 4902faaf1678d5aecdef8b0b66f8ec78062aeec5
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Thu Oct 21 09:28:45 2010 -0500
+    
+        Fix badly-merged RubyProc.to_s19, missing opening brace.
+    
+    commit 69177d7098f9dc4ff9096d08eee25c0d8bb4f971
+    Merge: 801e764 f895837
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Oct 20 21:50:53 2010 -0500
+    
+        Merge branch 'master' into backtrace
+    
+    commit 801e7641b8838a8ae8931a9c6dcc5cf050096c4a
+    Merge: 0c60a89 dda4644
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Tue Oct 19 23:16:41 2010 -0500
+    
+        Merge branch 'master' into backtrace
+    
+        Conflicts:
+        	src/org/jruby/RubyDigest.java
+        	src/org/jruby/RubyProc.java
+    
+    commit 0c60a89aa746f286588b218681e9ad25b11318c4
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Tue Oct 19 23:06:15 2010 -0500
+    
+        Only compile direct recursive calls when we haven't branched to another method body (e.g. for rescues) and we're not compiling a closure or class body.
+    
+    commit 18333fe82c808e8ed49eef898f19c86fa2d764b2
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Tue Oct 12 17:04:13 2010 -0500
+    
+        Get 1.8 specs running green except for a handful of Kernel#caller specs (which don't expect to see .java files in the trace...not sure how to deal with that).
+    
+        * Fix another literal-block-calling path that wasn't using callIter
+    
+    commit 366740120ee76d8df3f977edc1727b60b2d4ad63
+    Merge: b64390b 6b243a3
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Tue Oct 12 10:35:14 2010 -0500
+    
+        Merge remote branch 'origin/master' into backtrace
+    
+    commit b64390b8cf0d2cb13e06d352969a093b5e86818d
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Tue Oct 12 10:33:39 2010 -0500
+    
+        Remaining fixes to get precompiled mode passing all our tests. Still some spec failures.
+    
+        * Bump up permgen max for test runs
+        * Fix stack-based scope initialization to not leave an unused nil on stack
+        * Ensure compiled method handles properly wrap pre/post logic for dummy and backtrace frames.
+    
+    commit 96bd3cbde91fc505b37ee13cbea6ffa3e8690c58
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Mon Oct 11 18:36:34 2010 -0500
+    
+        First fixes for backtrace branch in precompiled mode:
+    
+        * Add test-precompiled build target for running just precompiled
+        * Eliminate extraneous toplevel scope being pushed for precompiled loads (because that logic is all in the generated "load" method now.
+        * Add a new scope descriptor decoding path that properly sets up a toplevel scope
+    
+    commit 0ebbd6ac46c9ac04558f5200f980f26f798b9413
+    Merge: fc387be ac455fc
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Oct 6 21:53:18 2010 -0500
+    
+        Merge branch 'master' into backtrace
+    
+        Conflicts:
+        	src/org/jruby/RubyIO.java
+    
+    commit fc387befff57ada6c116b646a3dfb767cc926ee5
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Tue Sep 28 15:57:58 2010 -0500
+    
+        Renumber arguments for consistency.
+    
+    commit bbc91d3c4039bf6c26ceffd4899dcaaeaa3d46d0
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Tue Sep 28 15:40:38 2010 -0500
+    
+        Fixes to get specs a bit closer to running green.
+    
+        * Move pre/post logic for Script.load into generated code, so it's the same everywhere.
+        * Make pre/post-load push a frame, so top-level of a script is always framed
+        * Remove break handling from non-literal block call paths in CachingCallSite
+        * Make sure all literal block calls are using CallSite.callIter, which handles break
+        * Fix a bad test in testCompiler that needed visibility tweaks and framing
+        * Add complete doco for CallSite
+        * Fix Kernel#caller to trim from top of stack instead of bottom
+    
+    commit 4e814a24d5b2ef1b6567a3076a463ff9d08e2a0d
+    Merge: 91dc13a 3dbcef3
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Mon Sep 27 17:43:30 2010 -0500
+    
+        Merge branch 'master' into backtrace
+    
+    commit 91dc13a2f0b74bc1054d83378782416465ecc1b8
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Mon Sep 27 01:02:48 2010 -0500
+    
+        Fixes to get test-compiled (but not precompiled) passing 100%.
+    
+        * Fix eqlInternal's RubyNumeric branch check if classes are equal
+        * Provide file and line from all BlockBodies, so Proc#to_s can always use it
+        * Fix rejiggered Struct#each and Struct#each_pair to call the appropriate internal version
+        * Fix ruby_test's IO.new suite to not use STDOUT directly, risking that it get closed
+    
+    commit dc4af45352607ebb8a95d70befdcdb15c1111c58
+    Merge: ec8bb7f 90275be
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Tue Sep 21 09:52:10 2010 -0700
+    
+        Merge branch 'master' into backtrace
+    
+        Conflicts:
+        	src/org/jruby/Ruby.java
+        	src/org/jruby/RubyDir.java
+        	src/org/jruby/RubyKernel.java
+        	src/org/jruby/compiler/ASTInspector.java
+        	src/org/jruby/javasupport/util/RuntimeHelpers.java
+    
+    commit ec8bb7fc31d4acd4ebcb040f088e19fb427448e8
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sun Sep 19 16:21:38 2010 -0700
+    
+        Remove frame = true from all core class methods, to reduce their call costs. A few remain for invokeSuper and methods that may still need frames.
+    
+    commit ec276b6ca0c6009702839b12d97664b9e52b1023
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Thu Sep 16 14:10:43 2010 -0500
+    
+        Eliminate RubyTuple use that snuck in.
+    
+    commit f80254100cfc17ac6eb558e465fc1fb9122c3ee4
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Tue Sep 14 10:07:53 2010 -0500
+    
+        Special case a few immutable core types in equalInternal/eqlInternal.
+    
+    commit eb66c45145e4fd1f8c28e9a8c544114f034116e8
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sun Sep 12 18:26:13 2010 -0300
+    
+        Performance changes for backtrace logic:
+    
+        * Back off using Java stack trace for Proc's to_s file+line, since it's prohibitively expensive
+        * Move the Backtrace stack to being a fixed-size array of objects updated, rather than created, when a push happens
+    
+    commit 6f0ade5ab28946b8800431d3454d2e57fc0dbe19
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sun Sep 12 11:36:07 2010 -0300
+    
+        Add generation guard around trivially-inlined logic.
+    
+    commit c4d8705217174580d35757dc85c5c646e980b57f
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sun Sep 12 06:18:38 2010 -0300
+    
+        Full speed ahead with a caching mechanism for calls from core classes. Only works for core class methods right now, but opens the door to expanding that.
+    
+    commit 5874abc01104f6c0f435f8ac4643ed0f77cf7cff
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sun Sep 12 03:43:37 2010 -0300
+    
+        Localize some fields used in Array#include? to speed up the loop.
+    
+    commit 346245cd5e154574d14736cf4b9e0b4b98260d14
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sat Sep 11 15:02:41 2010 -0300
+    
+        Allow passing a number of iterations to bench_quicksort.rb.
+    
+    commit b4687022a1f00d0b63838b1c9daf00753fcfa93e
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sat Sep 11 11:55:15 2010 -0300
+    
+        Fixes to get run-junit-compiled 100% passing on backtrace branch.
+    
+        * Fixed a couple tests that are too sensitive to core method line numbers or expected only .rb elements in the trace
+        * Added a mechanism for procs to retrieve the most recent Ruby frame, for to_s purposes
+        * Added comments for hybrid backtrace logic
+    
+    commit 15cd9b16cb2750d0e40ba478d07fe5bf265dc620
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sat Sep 11 08:07:57 2010 -0300
+    
+        Add better logging to AnnotationBinder (for showing framed/scoped core methods), ASTInspector (for showing methods detected as framed/scoped and for reporting deopt flags as they are set), and JITCompiler (for dumping jitted methods' full classes and inspector results). New property jruby.jit.dumping=(true|FALSE).
+    
+    commit c4e6176498590d791868055025c2e72ded1ccf13
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Fri Sep 10 02:10:20 2010 -0400
+    
+        Improve dumping of generated bytecode by including class and method name when possible.
+    
+    commit 07fc4215f6873f449f89d4f5da7a7e2e8963bc70
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Thu Sep 9 23:39:20 2010 -0400
+    
+        Make attr accessor's var accessor field volatile, to guarantee visibility across threads.
+    
+    commit e3a7cf5cd4d8ccd08407955779bdd94feb5e4ac8
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Sep 8 13:26:48 2010 -0500
+    
+        Add missing "in" to caller backtrace lines.
+    
+    commit 7140c339f386959853f747d86cb2ea9a8afa6f2a
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Sep 8 12:10:50 2010 -0500
+    
+        Fixes to get tracing tests running in interpreted mode:
+    
+        * Off-by-one line numbers were off for MRI too. Fixed to correct line numbers
+        * call and return for Ruby methods need to use impl class, not self class
+    
+    commit cbc9c4edab56807a023817d06db9c22441fa4b53
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Sep 8 10:31:57 2010 -0500
+    
+        Fix runInterpreterBody to properly unwrap RootNode for "gets loop" execution.
+    
+    commit 3a09773058d8d58d5bf8f1b6fbebc494fc18f7c6
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Sep 8 10:01:43 2010 -0500
+    
+        Make --bytecode attempt a recompile, so that dynopt and no-compile modes can still print bytecode.
+    
+    commit 4e48e722ba5ded10975af348738237fcb7fe9b2a
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Sep 8 09:23:38 2010 -0500
+    
+        Add a "full" backtrace style which does not omit any Java frames and interlaces the Ruby frames.
+    
+    commit 6f5057e3ae1e372bd66602dcc26864adc3270128
+    Merge: 7006d31 811fd8d
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Sep 8 07:48:47 2010 -0500
+    
+        Merge branch 'master' into backtrace
+    
+        Conflicts:
+        	src/org/jruby/Ruby.java
+    
+    commit 7006d3175bbf4630921dfecaa4faef2a39a77205
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sat Sep 4 16:04:28 2010 -0500
+    
+        Bytecode size reductions for stack-based nil-initialization of locals and for x, *y and x, * forms of masgn.
+    
+    commit 3a8fb16f020c2b9aaa6228605bdb3d8fd1b78ccf
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sat Sep 4 14:52:04 2010 -0500
+    
+        Do not do direct recursive invocations for heap-based scopes, since the scope is not currently being reset.
+    
+    commit ec00e99636667eff97a891917ae9ef37f94a6eb7
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Fri Sep 3 19:55:24 2010 -0500
+    
+        Turn on dynopt by default, to aid testing of new logic.
+    
+    commit 9508e8a6925fce4f57a386ede867b3f8f9b67d38
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Thu Sep 2 12:40:38 2010 -0500
+    
+        Fix Time test that expected two separate Time.now objects to to_s the same.
+    
+    commit 65ba8b37a8a232495453e71b2a560c761b40893f
+    Author: Nick Sieger <nick@nicksieger.com>
+    Date:   Mon Aug 30 14:50:03 2010 -0500
+    
+        Use new backtrace info to set a more useful Java thread name
+    
+    commit 75b100604af39de52b26bdb21669136234424a0b
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Mon Aug 30 11:37:49 2010 +0900
+    
+        Fix ifne/ifeq bug in dynopt guard and switch DefaultMethod to not flip generations on JIT in dynopt mode.
+    
+    commit fe3b408629e94b7db0436152968bd6d2232f6c7c
+    Merge: eea60da 85c64c6
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sun Aug 29 20:33:06 2010 +0900
+    
+        Merge branch 'master' into backtrace
+    
+    commit eea60da3905c87c16fbb4e6c78fd7a07f842e4bd
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Fri Aug 27 14:09:44 2010 +0900
+    
+        Modify Java Fixnum fib bench to use the long call paths where possible, to be more like what compiled Ruby does not.
+    
+    commit a189563d9073208292e91aff3eb1c88489bd113d
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Aug 25 15:07:21 2010 +0900
+    
+        Fixes for jitted/compiled backtrace generation
+    
+        * SClass in a method body needs to frame, so it has a jump target for non-local return
+        * Compiled methods need to always have their ruby name in the method name, so it can be mined out appropriately
+        * Synthetic calls, like to rescue bodies, need to gobble caller frames to avoid multiple entries
+    
+    commit 276226de611cb8d5af942148109c2a51982e7640
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Aug 25 14:03:44 2010 +0900
+    
+        Add callNumber tracking to method handles, to properly handle return jumps.
+    
+    commit b94bcf119a54f52ab9be3c86bc5cc85078f20eee
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Aug 25 13:16:25 2010 +0900
+    
+        More fixes for hybrid backtrace:
+    
+        * Get generated trace to be RaiseException's Java trace
+        * Add Ruby exception name to the RaiseException message
+        * Rewire and repair trace calls
+    
+        All main suite tests now pass in interpreted mode.
+    
+    commit dc9fcd3de0f3070507ac0a0647973d1e9f16ae4f
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Mon Aug 23 14:38:47 2010 -0500
+    
+        Fix debug logging of exceptions being raised and patch a couple tests for new backtrace structure.
+    
+    commit 3acd3201d85e4da9186fa17d3a04bdc9db742e29
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Mon Aug 23 13:23:04 2010 -0500
+    
+        Include original source file in compiled Ruby, add missing "in" line for MRI rendering, and soften requirements in test_backtraces to allow for native elements in the backtrace.
+    
+    commit 728cf3983fbeffba944fe34a8b0e410cc1de041c
+    Merge: 88a64de 0e9c956
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Mon Aug 23 00:18:07 2010 -0500
+    
+        Merge branch 'master' into backtrace
+    
+    commit 88a64de879446be3398ba7671b5fa1f3e46ce02f
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sun Aug 22 17:29:21 2010 -0500
+    
+        Turn on "positionless" compilation, since compiled code no longer needs to update interpreter backtrace frames. Also fix nil/null backtrace rendering.
+    
+    commit 5712a4ce285a5b3662c8ef8def2599223a232626
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sun Aug 22 17:18:17 2010 -0500
+    
+        Fix off-by-one line numbers from interpreter frames.
+    
+    commit 519f4625b9d9658f50b986b1add560903ee453de
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sun Aug 22 17:10:47 2010 -0500
+    
+        Remove some old backtrace code no longer in use and get all "backtrace" method handles to generate with no frame at all (since Java stack is used now).
+    
+    commit 424d967df8a3b6ba277bdb1b530d4f7f62ecbc4a
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sun Aug 22 16:52:29 2010 -0500
+    
+        Get Kernel#caller working with hybrid traces, get Rubinius rendering working again (partially), separate gathering and rendering of backtraces.
+    
+    commit a00822740712ddd924896feccc10f015fd20d4be
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sun Aug 22 15:32:08 2010 -0500
+    
+        Mine method names out of AOT and JIT compiled stacktrace elements and get JIT using the original name of the method.
+    
+    commit 039d184ac5f798aed21870a7552b66c5973ca0eb
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sat Aug 14 22:16:48 2010 -0500
+    
+        Simplify in-class encoding of StaticScope data.
+    
+    commit 876a762b8af88955bee598dfd0421805d9b47c40
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sun Aug 22 01:41:44 2010 -0500
+    
+        Fixes to hybrid traces to get tests working better:
+    
+        * Omit Kernel#raise and the KernelJavaAddons rbRaise from traces
+        * Handle getBacktrace when there's been no preparation
+    
+        Also modified test/testException.rb to allow internal line numbers for the "load" call, rather than MRI standard "whatever line it was called from".
+    
+    commit 06f1bd171d6897f651b3cebfd76551080acbfe40
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sun Aug 22 00:39:59 2010 -0500
+    
+        Move backtrace management to a separate stack and implement mixed-mode backtrace generation.
+    
+    commit ca40e73a7c136dfdd3853f0cd62a73bf70a3a08f
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sat Aug 21 20:56:50 2010 -0500
+    
+        Get all major interpreter entry-points passing through simple, known method bodies. First step toward mixed-mode backtraces.
+
+commit 8ed94cc8adccb24f36fa64e7d80b018e1b5047ae
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Nov 9 02:50:06 2010 +0100
+
+    Port ArrayJavaProxyCreator to Java, with an eye for performance and eventual elimination.
+
+commit f51ac547d093dfa3db2f5c93bec633c1ebca2cdc
+Author: Ryan Brown <ribrdb@google.com>
+Date:   Wed Sep 29 14:12:02 2010 -0700
+
+    Explicitly use the JRubyClassLoader when unmarshaling Java objects
+    
+    Signed-off-by: Charles Oliver Nutter <headius@headius.com>
+
+commit 7a79d16e8668eeea5625624a57e14e494de42062
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Oct 20 11:18:39 2010 -0500
+
+    Escape hatch for JRUBY-5105: scripting java: unable to access non static final variables
+    
+    field_accessor and friends were defining methods for static fields as instance methods. Modified it to define them as class methods instead, which allows accessing normally non-visible, non-constant static fields as in JRUBY-5105.
+
+commit d1a1e59d32a3903c6da10230d2ae05b35e7ed06a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed May 5 18:46:29 2010 -0500
+
+    Remove unused method.
+
+commit 0450ff74766ed83bb05cdbc248074a6560f3f907
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Apr 26 10:24:21 2010 -0500
+
+    Make sure the "hashy" inspect uses the identity hashcode of the wrapped object for JI.
+
+commit 1b919d492bd5cf2132383d291369c14972f47f63
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Apr 23 14:31:57 2010 -0500
+
+    Fixes (and more) for JRUBY-4737: Compatibility issue with Spring property from 1.4.0 to 1.5.0.RC1
+    
+    It appears that JRuby 1.4.0 allowed various objects to coerce to "void" by returning null, so this commit fixes that.
+    
+    In addition, I've tried to unify some of the toJava logic, making most implementations call super.toJava if they can't coerce to the requested type (allowing RubyBasicObject's implementation to try some other avenues or error out). I also added some additional coersion cases for Time to java.util.Calendar, java.sql.Date/Time/TimeStamp, and joda's DateTime (it already did java.util.Date).
+
+commit 7a8e6611357eda632c02f7c968813718bb00894f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Apr 22 19:19:16 2010 -0500
+
+    Fixes for JRUBY-4732: Clean up anything that calls dataGetStruct on a wrapped Java object to get the object
+
+commit 03c902b409a286a60a87ae1e4a81627f4e84c56d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Apr 18 16:28:26 2010 -0500
+
+    Fix for JRUBY-4704: "Java wrapper with no contents" error when subclassing a Runnable class in JRuby
+
+commit a55fcb067f99286c294536cfecfdeff70d2fd848
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Mar 9 11:36:03 2010 -0600
+
+    Sweater unraveling for JRUBY-4615: java integration specs interference
+    
+    The original problem here was that depending on what order JI-related code was used, a different object could get cached for a java.lang.Class in ObjectProxyCache. Normally, it should just be the proxy wrapper, but some paths inserted a the RubyClass version of the class. This led to peculiar failures if specs were reordered.
+    
+    The fixes made here are as follows:
+    
+    * Eliminate all remaining to_java_object logic, which is where the bad OPC.put originated from
+    * Move all coerce*ToJavaObject logic from JavaUtil into the appropriate toJava overrides
+    * Fixes and modifications surrounding the above two changes
+
+commit 0a8119f4a3e33bf2dd835bf2775bc9eed016bc5f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Mar 6 19:03:41 2010 -0600
+
+    Add custom getJavaClass to JavaProxy to avoid standing up a JavaObject and getting the JavaClass that way.
+
+commit f23a04ec0da90adcd36417dcdb5fd1452e0fccb5
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jan 15 14:00:15 2010 -0600
+
+    Add the ability to java_* against no-arg methods with empty array and improve error when calling with inappropriate signature+args combination.
+
+commit 2f3802343d0de9440a71e099002d3b66f51c0a51
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Dec 23 00:40:00 2009 -0600
+
+    Use accessors for those pesky ByteList fields and update bytelist.jar to a current version with accessors and deprecated fields (for compile warnings and because we'll want to privatize them some day).
+
+commit 9f86a5c6295d05998ac743c78fac0ae1ffc96694
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Nov 2 17:59:32 2009 -0800
+
+    Add inline caching for __jcreate! invocation in concrete Java object construction.
+
+commit f26816a48bef76948639094e7c9e01fa0260d092
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Oct 24 16:59:27 2009 -0500
+
+    Improvements to JavaProxy-wrapped Java objects:
+    
+    * Lazily allocate the inner JavaObject, so if we don't use it we never create it.
+    * Don't enter newly-constructed Objects into the proxy cache immediately.
+
+commit a380ea009f84fcea82f0bd4896d495812065f466
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Sep 28 15:58:56 2009 -0500
+
+    Refactor java_send and java_method to reduce duplication.
+
+commit 32ee31c211d58b9d7403b4aa6af5d4ec0977e529
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Sep 27 22:48:52 2009 -0500
+
+    Add specs for java_method and java_send, and fix a few cases that fell out from spec'ing.
+
+commit d70b2b35c62264ac45946348105d848027396ae7
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Sep 27 21:27:31 2009 -0500
+
+    Add support for static methods and unbound instance methods in java_method.
+
+commit 74792d770c0b4b1bcddaeb51390d2b16ea821e36
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Sep 27 20:02:18 2009 -0500
+
+    Add java_method to peel out a specific overloaded Java method for later selection-free invocation. Only for instance methods atm.
+
+commit b5c0f199dd1ceeffb07fbaf106e00e0d8a0cf3e1
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Sep 27 18:24:25 2009 -0500
+
+    Add java_send, to allow calling a specific signature from Ruby without going through JavaClass/JavaMethod nonsense. No specs yet.
+
+commit 7a67bd07c400f7ebfdcc09175e3fbee7f8cc3a9c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Sep 22 09:34:37 2009 -0500
+
+    Simplifications of existing coercion protocols; trying to reduce the weight of code that needs to be reworked.
+
+commit 281e79771d6df0ff7e18ca35bf16c4cd561b1b45
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Sep 10 21:50:57 2009 -0500
+
+    Readds and fixes for refactoring work thus far
+
+commit 6731c62cb06a3a3e056678d9c936e553752d1a9e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Sep 10 08:16:30 2009 -0500
+
+    First pass of refactoring for Java stuff.
+
+commit fe8302dcd3a3a1b8a3c120091250f6e749262ae7
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Jul 11 17:27:56 2009 -0500
+
+    Multiple cleanups, refactorings, improvements for standard Java invocation:
+    
+    * Eliminate use of JavaObject as much as possible
+    * Delay boxing into an args array as late as possible, in preparation for generated handles
+    * General cleanup of invokers
+
+commit a502d52b93154635101d52ce2109a91fe5815d38
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue May 12 09:25:58 2009 -0500
+
+    Fixes for JRUBY-3640: Minor optimizations with Map.entrySet
+
+commit 2c61e300501401eb06c083216df4a5b9f3b42add
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri May 1 00:08:21 2009 -0500
+
+    Perf improvements for JI:
+    
+    * Java array access nearly 10x faster. This was probably why JetBrains' in-conference language benchmarks put JRuby last.
+    * Wrapped Java object access avoids hashing, using new ivar table stuff
+
+commit 4fd8f361091f8bc2dfed1acf2b096236621365c0
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 17 05:46:10 2009 +0000
+
+    Fix for JRUBY-3224: Array#to_java with java object reference doesn't carry over object identity
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9210 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 98fb914d0d8560558972d18c18e03cf5b2639704
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Fri Sep 26 22:00:44 2008 +0000
+
+    JRUBY-3018: Add field_reader, field_writer, and field_accessor
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7787 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 1927a7663b582a1cca34044f609cc2b7a728e495
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Aug 31 04:53:57 2008 +0000
+
+    Miscellaneous call optimizations:
+    * Partial arity-splitting of super invocation (really only useful for Java to Ruby calls
+    * Moved callSuper logic into RuntimeHelpers, modified all callers to use the new methods, and deprecated callSuper on IRubyObject
+    * Eliminated 30-some more uses of indexed IRubyObject.callMethod and deprecated one of them
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7596 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit ec7406706c2b6252761bbea0c3f69f99e0dbe62c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Aug 21 19:40:01 2008 +0000
+
+    Move JavaInterfaceTemplate to java.proxies package, add a closure conversion bench, add InterfaceJavaProxy native impl beginnings, but it's not enabled yet.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7514 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 304b540ba200c6b000223af4f25a263583e84933
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Aug 10 02:45:03 2008 +0000
+
+    * Eliminate visibility checking for almost all fcall and vcall paths.
+    * Outline some method_missing logic
+    * Start adding some specific-arity paths for method_missing; still too much boxing, but the code isn't in normal call paths now.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7417 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 61170d717cb4010b1c4ea508dbcdc8e1c07d1585
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Aug 8 03:02:55 2008 +0000
+
+    Move new Java ports of Ruby-based JI functionality to new packages under org.jruby.java
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7407 961051c9-f516-0410-bf72-c9f7e237a7b7

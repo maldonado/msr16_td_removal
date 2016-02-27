@@ -1,0 +1,863 @@
+commit c61fa3e83de52bab0af6711e7859bfbd2f224d05
+Author: josedonizetti <jdbjunior@gmail.com>
+Date:   Wed May 1 22:34:47 2013 -0400
+
+    REFACTORING: using bytelist instead of a linkedlist for a better performance.
+
+commit 5fe7db09b859ca12e476baa5b9991ff2a82eb0a5
+Author: josedonizetti <jdbjunior@gmail.com>
+Date:   Tue Apr 30 21:05:03 2013 -0400
+
+    REFACTORING: supporting a list of bytes, which will help fix issues with ungect19
+
+commit 61678ac1a2514a9932276f8d527816a5980a94b3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Feb 25 20:41:40 2013 +1100
+
+    Fix more references to CPL.
+    
+    The phrase "Common Public License" was split across two lines in
+    our default header, which caused it to be missed during earlier
+    search/replace. Also, we did not replace the CPL URL in the
+    header with the EPL URL.
+
+commit 924faab656a0561a7e5720e6c110da2c0d5b43e6
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Feb 7 16:30:33 2013 -0600
+
+    Hmm I am hitting tests that 1.7.2 does not without excludes...implement TEXTMODE for IO
+
+commit 330fef3b0fc18af477ccea19bd278669667f31bb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 12 14:49:29 2013 -0600
+
+    Switch JRuby's CPL license to EPL.
+    
+    Governance of the CPL license was moved to the Eclipse Foundation
+    at some point in the past, and Eclipse blessed the EPL (Eclipse
+    Public License v1.0) as the successor to CPL. Because the CPL
+    contains a clause allowing transparent upgrades to future blessed
+    successor licenses, we can make the move to EPL without
+    re-contacting past contributors.
+    
+    The change in going from CPL to EPL largely just removes some
+    punitive language that apparently made many companies nervous. All
+    other language in the license remains identical.
+    
+    Several documents about Eclipse's move from CPL to EPL are here:
+    
+    http://www.eclipse.org/legal/cpl2epl/
+    
+    Note that Eclipse's move came before the blessing of EPL as the
+    upgrade path for CPL, so they had to do a bit more legal juggling.
+    With Eclipse now the administrator of CPL and with their blessing
+    of EPL as the upgrade path for CPL, all we need to do is make the
+    move.
+
+commit 57a8fdb0d0b0a9550df334387ff2553a02221bc6
+Author: Alex Tambellini <atambellini@gmail.com>
+Date:   Tue Jan 1 22:47:38 2013 -0500
+
+    File.truncate should not move write pointer
+
+commit 582b0f84459dff96e79be76a4120d90ae502d87d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Aug 2 10:26:47 2012 -0500
+
+    Use a cached EOFException rather than constructing new.
+    
+    Exception creation (or more correctly, stack trace generation) is
+    not cheap on the JVM. By creating a new EOFException for every
+    read EOF, we introduce a lot of overhead into processes that open
+    many small files and read them to completion. The EOFExceptions we
+    raise are also immediately caught and turned into appropriate
+    Ruby errors or return values. In order to reduce the cost of EOF
+    reads, I've introduced a single cached EOFException we throw for
+    all EOF events. Commenting out its initialization in
+    ChannelStream will return the original behavior, if necessary for
+    debugging.
+
+commit 533b30428668c35e240ef272f1685347999592a3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jul 20 20:45:00 2012 -0500
+
+    Fix JRUBY-6780
+    
+    File.open creates file without permissions
+    
+    Two fixes:
+    
+    * We were using a numeric arg[1] from File.open as permission.
+    Permission is always passed as a third argument (or perhaps as a
+    hash argument). Removed the relevant code, since we had other
+    logic to properly handle permission elsewhere.
+    * Append modes should not seek to the end of the file immediately;
+    rather, they seek only on each write. Because the above change
+    fixed how we handled a+ mode, this other bug was exposed. Fixed by
+    removing a seek-to-end on file open.
+
+commit 163af3d57211825fa1d6ffdb36b68ae412201a39
+Author: Wayne Meissner <wmeissner@gmail.com>
+Date:   Sat Jun 16 00:01:51 2012 +1000
+
+    Always use the channel's selector provider to open a selector in ChannelStream.ready()
+
+commit e6bf20a9485ff44c47ccbcd1d277d1f0526385f4
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Mar 12 15:30:51 2012 -0500
+
+    More socket refactoring and miscellaneous cleanup
+    
+    * Cleanup TCPSocket and TCPServer
+    * Use SelectableChannel.blockingLock wherever we're changing blocking
+    * Clean up a bunch of deprecations
+
+commit cb777c23ff945a4454ef9edca2bb73fcdb829781
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Feb 15 15:50:52 2012 -0600
+
+    Partial fix for JRUBY-6442
+    
+    TCPSocket#write_nonblock blocks
+    
+    Only selectable Java channels can be set nonblocking, so this
+    patch only improves situations for selectable channels. Others
+    will still just do a blocking write, as before. This patch does at
+    least get sockets and other selectables to actually do write_nonblock
+    close to how it's supposed to be done.
+    
+    Better fix will come with 1.7 IO refactoring, though the non-
+    selectable channels will still be an issue.
+
+commit 4a09d081fa10b293f65d0ca058605a5b6b4ba04f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jan 31 10:34:29 2012 -0600
+
+    First large-scale refactoring to better support IO encodings.
+
+commit 01fa54f7350de22621e3e6bd2894910be8001a18
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jan 2 13:41:40 2012 -0600
+
+    Fix JRUBY-6280: Fails to open fifo for writing.
+    
+    It turns out that in glibc, fopen operations that would seek in
+    the resulting file descriptor do actually check for ESPIPE to know
+    that a failed seek is due to the file being a pipe or FIFO. We do
+    not have direct access to the actual ESPIPE, but we can check the
+    IOException message to know if it's the same problem.
+    
+    I don't think there's any real risk in this change, since it will
+    only quietly fail to seek on a file when it's impossible to seek
+    on that file, which is what we want. Other error cases and open
+    failures should propagate as before.
+
+commit ed560a8ca711b5886c4f7bba2df89d7fd2936a2d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Nov 17 02:30:50 2011 -0600
+
+    Fix JRUBY-6198: When calling dup on file open in binmode the new object does not respect binmode
+    
+    * binmode was propagated as a mode, but not as a flag on the underlying Stream.
+
+commit 84411ede14fcf244ae642b508d39286202c45202
+Author: Douglas Campos <qmx@qmx.me>
+Date:   Fri Jul 15 03:43:42 2011 -0300
+
+    migrating all j.u.l logging to our wrapper
+
+commit 76dd52883ac3cf63863d32eaca0db48277f8e291
+Author: David Calavera <david.calavera@gmail.com>
+Date:   Fri Mar 25 10:44:17 2011 -0700
+
+    Revert "If readSize == 0, don't bother constructing an empty ByteList."
+    
+    This reverts commit 279a09e4a4996e6d808bcdfcf46ce24334ce83a8.
+
+commit 279a09e4a4996e6d808bcdfcf46ce24334ce83a8
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Mar 25 03:25:41 2011 -0500
+
+    If readSize == 0, don't bother constructing an empty ByteList.
+
+commit d60304cf18271691fc7b13b9230d77f37fb82cae
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Dec 31 12:09:20 2010 -0600
+
+    Fix for JRUBY-5193: a File named "classpath:/path" uses ByteList's classloaders
+    
+    * Modified Yoko's patch to pass in a ClassLoader for ChannelDescriptor.open, allowing it to open classpath: resources.
+
+commit 3bf1de65b393e8f6bcb80a52c6602672892f7253
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Dec 10 13:51:00 2010 -0600
+
+    Fix intermittent EBADF by raising error before creating ChannelStream (so it doesn't immediately deref and collect).
+
+commit 0b7aed72d439294c6cd50f7ad4d9c424d11f60e9
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Nov 23 16:28:42 2010 -0600
+
+    Alternative fix for JRUBY-5114: provide an autoclose flag on all IO objects that will allow turning off the close-on-finalize behavior. Also modified the "to_io" impls for InputStream, OutputStream, and Channel to take an :autoclose option.
+
+commit 43f380a04191adf46e1fd7280c1b6a3bda82cf45
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Nov 18 22:33:11 2010 -0600
+
+    Cleanup and improve close-less finalization in ChannelStream and ChannelDescriptor, even though we may have to go back :(
+
+commit 620caccb1537e436a45448e27e1c6714ae8af560
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Nov 18 15:10:31 2010 -0600
+
+    Fix for JRUBY-5114: Frequent internal server errors resulting from AJAX calls -- GlassFish v3 1.0.2 with JRuby 1.5.2 and newer
+    
+    See comments on bug for explanation of fix.
+
+commit 4aa30906c386ce556f20efa50351ef00d4d8cac2
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Oct 23 01:25:19 2010 -0500
+
+    Fix for JRUBY-5002: Stuck when loading marshalled data > 32000 bytes from IO stream
+    
+    The problem here was our chunking, to avoid large native NIO buffers. The limit was always set to just the max chunk size, rather than the current position of the buffer plus the chunk size. This caused buffers over a certain size to never get filled, since they'd sit at the chunk max and never read any more.
+
+commit 2e8b31762b35ccc57b0537431699f0e0d9f1ef58
+Author: Hiroshi Nakamura <nahi@ruby-lang.org>
+Date:   Thu Oct 28 16:53:59 2010 +0900
+
+    boolean ChannelStream#readDataBuffered() should check ungotc as well.
+    
+    And make RubyIO#getPartial do waitReadable before invoking
+    Stream#readpartial as CRuby 1.8.7. (It was the TODO I added)
+
+commit 83c50c049ed5d197edcf1a662c1050d1d05d38da
+Author: Hiroshi Nakamura <nahi@ruby-lang.org>
+Date:   Tue Oct 26 20:39:21 2010 +0900
+
+    More fixes for IO + NONBLOCK behavior: read, read(n), readpartial and read_nonblock.
+    
+    Add following fixes for JRUBY-5122.
+     * updated RubyIO#getPartial logic according to io_getpartial in io.c
+       CRuby 1.8.7.
+     * updated RubyIO#readAll logic according to read_all in io.c CRuby
+       1.8.7.
+     * added new method RubyIO#fread(int length) according to io_fread in
+       io.c CRuby 1.8.7.  And let other logics use it instead of using
+       ChannelStream#read_all().
+     * marked ChannelStream#read_all() as deprecated. It does busy loop when
+       the IO has NONBLOCK bit. Might be too aggressive?
+
+commit d9f4b889d9183c514435d1ee04879ea8ce68c87c
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Mon Sep 13 17:35:11 2010 +1000
+
+    Add a fix for JRUBY-5076
+
+commit a806844f69225d97c2c2bb909743cdfaea27b721
+Author: Hiroshi Nakamura <nahi@ruby-lang.org>
+Date:   Tue Sep 7 14:43:39 2010 +0900
+
+    JRUBY-5064: ChannelStream#read() should return an unsigned value.
+    
+    For InputStream compatibility. Reading int from buffered bytes works but
+    reading from unbeffered bytes did not work.
+
+commit af2a5012e67f975f82cfd6bf8ea421a87dc076c5
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Wed Aug 18 14:39:44 2010 -0500
+
+    Eliminate a couple printStackTrace dumps that might cause needless warning
+
+commit 30d7b6d8b79856f461d19ddae66a8e7e3b917bf2
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Aug 18 13:45:42 2010 -0500
+
+    Fix for JRUBY-5021: imap-over-ssl connections left to GC do not clean up completely
+
+commit 02772211f19e7f5b14edc4ba83d11c8a458b6491
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Tue Jun 1 16:56:18 2010 -0500
+
+    JRUBY-4838: Don't block on channel stream finalization
+
+commit 1c6e5609b45528b80c956a4f69f86f232e98fb51
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue May 4 15:58:27 2010 -0500
+
+    Rework fileno/descriptor registration to live entirely within ChannelDescriptor. This avoids descriptors being unregistered prematurely by RubyIO finalization, eliminates RubyIO finalization, and centralizes registration much more neatly. An additional map is added to Ruby to allow 0, 1, and 2 to always map to the current runtime's notion of in, out, and err.
+
+commit 8e51e6e32ca9b779fce39778e49e9bccd2d023e3
+Author: Vladimir Sizikov <vsizikov@gmail.com>
+Date:   Tue Mar 9 12:39:42 2010 +0100
+
+    Fixes for JRUBY-2282 and JRUBY-2475.
+    
+    JRUBY-2282: Unclosed, unflushed IO objects might not write contents before program exit
+    JRUBY-2475: JRuby and Builder::XmlMarkup (strange File interaction)
+    
+    This is actually a regression, caused by IO rewrite long, long time ago.
+
+commit 9d57dbc3b7b0d10dd4d8c6d49b73cf1af2e8e287
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Thu Dec 24 12:02:04 2009 -0600
+
+    JRUBY-61, JRUBY-2140, JRUBY-4253: Merry Christmas JRuby windows users!
+    
+    Three-year old bug finally squashed!
+
+commit 2f3802343d0de9440a71e099002d3b66f51c0a51
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Dec 23 00:40:00 2009 -0600
+
+    Use accessors for those pesky ByteList fields and update bytelist.jar to a current version with accessors and deprecated fields (for compile warnings and because we'll want to privatize them some day).
+
+commit edfa8a8b809938dc618345078192f4d480345b41
+Author: Wayne Meissner <wmeissner@gmail.com>
+Date:   Mon Dec 7 07:00:02 2009 +1000
+
+    Fix JRUBY-4319
+
+commit 6c408492cd088cb9f8e2ee204a8f40247ac123d6
+Author: Wayne Meissner <wmeissner@gmail.com>
+Date:   Sun Dec 6 22:38:23 2009 +1000
+
+    Minor cleanups of read/write buffer space calculations
+
+commit 4de7b0d7d760b0755c24aba63b6656739bc23717
+Author: Wayne Meissner <wmeissner@gmail.com>
+Date:   Sun Dec 6 16:48:37 2009 +1000
+
+    Java 1.5 IOException has no constructor that takes a Throwable, so pass the text message from BadDescriptorException instead.
+
+commit feea254223e193dfa8cdd6812760409a90f39cf8
+Author: Wayne Meissner <wmeissner@gmail.com>
+Date:   Sat Dec 5 17:55:13 2009 +1000
+
+    Even betterer fix for JRUBY-4308 - add InputStream and OutputStream adapters to ChannelStream, so they can share the read/write buffer, and use them directly from IOInputStream and IOOutputStream.  Some benches are 6x faster than VVSiz's already improved version.
+
+commit 1f4c8660ad135a4f1e145d2845f09ed44fb46cb6
+Author: Wayne Meissner <wmeissner@gmail.com>
+Date:   Sat Dec 5 14:35:49 2009 +1000
+
+    In ChannelStream#copyBufferedBytes(ByteBuffer), correctly limit the temporary buffer, and adjust the position of the read buffer after the copy.
+
+commit d086d1a1886dc590ee952d81f479e555fd0e908c
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Sep 14 13:08:35 2009 -0700
+
+    [19] Let IO.gets accept a limit value
+
+commit 2c50d7f11505d9a3b9812fd1a9898f0bb1c6080d
+Author: Wayne Meissner <wmeissner@gmail.com>
+Date:   Wed Jul 1 13:09:46 2009 +1000
+
+    Fix JRUBY-3784 - More than 2G memory required for jruby -e 'buf = IO.read("/tmp/1GB.txt"); p buf.size'
+    
+    Now as little as 1200m is needed for reading a 1G file.
+    
+    $ ./bin/jruby -J-Xmx1200m -e 'buf = IO.read("/tmp/1GB.txt"); p buf.size'
+    1073741824
+
+commit 9ca6b64dcde3d3af319b79b369476510277cd896
+Author: Wayne Meissner <wmeissner@gmail.com>
+Date:   Mon Jun 1 10:42:22 2009 +1000
+
+    Throw an IOException or IOError if someone tries a readall on a file
+    larger than 2G
+
+commit f58587bf520c84bb74bce44035025e3a06fb8095
+Author: Wayne Meissner <wmeissner@gmail.com>
+Date:   Mon Jun 1 09:15:45 2009 +1000
+
+    Add bufferedRead(ByteList dst, int number), and make bufferedRead(int
+    number) a wrapper around it.  This allows a pre-existing ByteList to be
+    passed in as the destination to a read.
+    
+    Also pre-allocate the buffer size when the needed size can be determined
+    (i.e. files).
+
+commit 9987df509b429295de0062f05a151ad2587d7be3
+Author: Wayne Meissner <wmeissner@gmail.com>
+Date:   Sun May 31 17:41:59 2009 +1000
+
+    Add ChannelStream#copyBufferedBytes(ByteList dst, int len) to handle
+    copies from the buffer into a ByteList
+
+commit 02dd11c31cf9b21bd0ad93cd0a514f6a474e8b67
+Author: Wayne Meissner <wmeissner@gmail.com>
+Date:   Sun May 31 16:31:34 2009 +1000
+
+    Add ChannelStream#bufferedBytesAvailable() to count the number of bytes
+    that can be read from the buffer (including the ungotc char), and handle
+    the ungotc char in copyBufferedBytes()
+
+commit 3cd9279d17f082ef8e0e2d43b63fc34b51bdc86a
+Author: Wayne Meissner <wmeissner@gmail.com>
+Date:   Sun May 31 13:20:11 2009 +1000
+
+    Remove duplicate copy of ChannelStream#copyBufferedBytes()
+
+commit 846ef65488da513d6970f07fe176eb7d6b067599
+Author: Wayne Meissner <wmeissner@gmail.com>
+Date:   Sat May 16 17:16:18 2009 +1000
+
+    Implement untested ChannelStream reading into a ByteBuffer
+
+commit 6978b2a6f47b657ee8085540110b80bb34588db9
+Author: Wayne Meissner <wmeissner@gmail.com>
+Date:   Sun May 31 08:22:24 2009 +1000
+
+    Fix JRUBY-3721 by reading buffered data in ChannelStream#readall(),
+    instead of flushing the buffer then re-reading from the channel.
+
+commit e92706582b91fd7dfa7035c5e9b3e4372458d463
+Author: Wayne Meissner <wmeissner@gmail.com>
+Date:   Sun May 31 05:31:01 2009 +1000
+
+    Fix for JRUBY-3688 - only use the optimized read path for files with a
+    size larger than zero.  Pointed out by Rick Ohnemus.
+
+commit 61a0d45a0af9c648a9374df9122a9ee3bdd13127
+Author: Wayne Meissner <wmeissner@gmail.com>
+Date:   Wed May 20 20:38:00 2009 +1000
+
+    Maybe fix for JRUBY-3679 - make ChannelStream#sync() synchronized, and use flushWrite() internally.
+
+commit fa28a14132402fac058fe1bf2610079c3aa6df4a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Feb 23 22:51:45 2009 +0000
+
+    Fix for JRUBY-2506: Marshal/IO.eof bug
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9281 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 82f44c18940a29a1059a8ad558466cea172ee3b1
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Feb 18 05:57:05 2009 +0000
+
+    Make eof on ChannelStream volatile.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9233 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 94392e17282ac564b9399b81d7a619ca20703137
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Feb 11 20:11:47 2009 +0000
+
+    Fix all locations where we set channel blocking modes for select without proper re-setting protocol. Needs more cleanup, but fixes JRUBY-3017: DRb "premature header" error on JRuby client.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9087 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 9b4bf419f7e9488fe35be77c3dbfe35e3827d0a2
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Feb 8 23:01:01 2009 +0000
+
+    More robustness to the runtime clearing in ChannelStream, so it should never cause an NPE even in odd cases.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9070 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit b8cc375ce6cd4d8aa173f970c0b41e9d26d3f618
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Feb 8 22:52:19 2009 +0000
+
+    Modify ChannelStream to be a bit less dependent on the runtime it aggregates (moving toward no dependence) and have it clear the reference on close. JRUBY-2933: Ruby runtimes are pinned to memory due to ChannelStream
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9069 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 98a2248099afd616a72c7ae1fc1a89f401e822f9
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Feb 8 01:46:27 2009 +0000
+
+    Fix a few definite Selector leaks and make a couple other places certain to close.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9060 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 3b3a34120fafb5ff3d7032747eb9bac995782292
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Feb 4 04:36:03 2009 +0000
+
+    Fix for JRUBY-2108: IOWaitLibrary ready? returns nil when ready
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8982 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 8956ef0bddf15798fb68cfa3910f1d490522ae8c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Nov 17 20:49:58 2008 +0000
+
+    Fix for JRUBY-3155: TCPSocket#puts block when the socket is waiting in read
+    
+    The fix here was to make ChannelStream#feof not be synchronized. It only checks a field on the stream now, rather than trying to do a test read of a single character. It also does not modify state, so it does not need to be synchronized. The problem arose because most of the write operations check for a read EOF first, which meant that if read was blocking, it held the monitor for the stream, and feof would also block. Removing synchronization is safe in this case, and allows the provided script to run to completion.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8082 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 282588e7653e39adb848592554804acd0bea59cd
+Author: Wayne Meissner <wmeissner@gmail.com>
+Date:   Wed Sep 24 15:45:12 2008 +0000
+
+    Fix JRUBY-3008 by not flushing putc after every char.  This also allows BadDescriptorExceptions to be propagated from IO#putc - the failing tests were expecting putc to be buffered.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7776 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 6ed1c324d5acfcaa7f9c1bb0965452b8b8f0d89c
+Author: Wayne Meissner <wmeissner@gmail.com>
+Date:   Tue Sep 23 11:24:51 2008 +0000
+
+    Implement non-blocking writes on ChannelStream.  This first attempts to flush any buffered data in a non-blocking manner, then proceeds to write out the data also non-blocking.
+    
+    Not tested at this stage, other than the non-SelectableChannel path, which isn't exactly complex.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7764 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 682a79617edbc2e02747af449aa5e61024dd981b
+Author: Wayne Meissner <wmeissner@gmail.com>
+Date:   Mon Sep 22 14:59:21 2008 +0000
+
+    Tweak ChannelStream#readpartial to work on all Channel types, with an optimization for FileChannel to call fread().
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7760 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit ae32b472f1d6b04363298d73ec7611e1c5e76340
+Author: Wayne Meissner <wmeissner@gmail.com>
+Date:   Mon Sep 22 14:58:55 2008 +0000
+
+    Fix IO#read_nonblock so it works on files as well.  Since files are always non-blocking, just do a normal read.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7759 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit b7b26c9c4a15201231227b32263eb91d8d0cac0e
+Author: Wayne Meissner <wmeissner@gmail.com>
+Date:   Mon Sep 22 14:15:47 2008 +0000
+
+    Fix for JRUBY-2586
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7758 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 076749c99d1027181daa8189cd1bbf4d6a5df310
+Author: Wayne Meissner <wmeissner@gmail.com>
+Date:   Mon Sep 22 13:02:11 2008 +0000
+
+    Propagate IOException from fputc.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7757 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d76761e2186cace9bd1d0db20ed80114be7a8e6e
+Author: Vladimir Sizikov <vsizikov@gmail.com>
+Date:   Sun Jul 13 16:22:01 2008 +0000
+
+    JRUBY-2789: IO#read crashes JRuby when pos is bigger than the file length.
+    
+     * Regression tests added to rubyspec.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7155 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit ae65e95de2d6d3df5e1ca0ca4d01889cdf72e13e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Jul 13 04:50:39 2008 +0000
+
+    Fix for JRUBY-2625, pending a set of test cases or specs.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7153 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit b1d615bc75163621172997e3258476157c16bf27
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Jul 12 18:18:08 2008 +0000
+
+    Fixes for EOF logic in ChannelStream for JRUBY-2386.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7147 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit b58678bb397e996947ecbe6c9168557a361ee597
+Author: Vladimir Sizikov <vsizikov@gmail.com>
+Date:   Fri Jul 11 18:20:52 2008 +0000
+
+    JRUBY-2779: Race condition in IO
+    
+     * This removes non-deterministic rubyspec IO failures
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7143 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit e382475a248d01631d6723a79fc612e38dafe465
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jun 30 09:21:34 2008 +0000
+
+    Various modifications, cleanups in the process of investigating JRUBY-2719, but still broken.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7051 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 7d500602a454b62c63dc82c291a29589af9f481b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Jun 21 13:06:42 2008 +0000
+
+    Wayne Meissner's fixes/improvements for getline performance. JRUBY-2689.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7006 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit b20b9c634a1e25db0ed0f09fc2f18732309aadcf
+Author: Vladimir Sizikov <vsizikov@gmail.com>
+Date:   Sun Jun 15 10:58:14 2008 +0000
+
+    JRUBY-2663: fgetpos does not need to flush buffers
+    
+    Patch by Wayne Meissner.
+    
+    Signed-off-by: Vladimir Sizikov <vsizikov@gmail.com>
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6983 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 2211f67b4178ad403a1f554b40fa57943d8abb29
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Jun 15 03:47:49 2008 +0000
+
+    Re-fix for JRUBY-2657, with ungetc getting cleared appropriately during a readall.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6977 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 9c0f283a1ad2ec0288accd909faaf4c5520da209
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Jun 15 00:20:04 2008 +0000
+
+    Revert change from JRUBY-2657 for now, since it regresses an IO spec.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6973 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit b2fa79f9a4cf44ee76d32b0046500342111e271e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Jun 14 06:20:46 2008 +0000
+
+    Wayne Meissner's changes for JRUBY-2657, to reduce the read/write buffer size and failover to a large buffer for larger reads.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6963 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a7bd040de587e7208322614e23d2948fb19d0d77
+Author: Vladimir Sizikov <vsizikov@gmail.com>
+Date:   Wed Jun 11 13:50:36 2008 +0000
+
+    JRUBY-2637: Channelstram should null the buffer in close.
+    
+    Patch by Wayne Meissner (with minor adjustment).
+    
+    Signed-off-by: Vladimir Sizikov <vsizikov@gmail.com>
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6933 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit afe466dba594dd645d6e98561c4e56d5523e4d88
+Author: Vladimir Sizikov <vsizikov@gmail.com>
+Date:   Wed Jun 11 08:43:12 2008 +0000
+
+    IO#readpartial fixes:
+    - JRUBY-2632: IO#readpartial doesn't handle unget char
+                  (Heavily reworked patch by Kevin Ballard)
+    
+    - JRUBY-2635: IO#readpartial crashes when negative argument is specified
+    
+    - JRUBY-2636: IO#readpartial doesn't honor maxlength parameter and
+                  always returns the whole buffer content
+    
+    - IO#readpartial raises NotImplementedError on closed streams
+    
+    Regression tests for all cases added to the rubyspecs.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6930 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 43b288b3794c51d1ddccbfc13eaef9a3e801c708
+Author: Vladimir Sizikov <vsizikov@gmail.com>
+Date:   Wed Apr 2 19:41:18 2008 +0000
+
+    JRUBY-2357: File#truncate blows up JRuby on files from within JAR files.
+    
+    Regression test added.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6399 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a175d77cd8d76675bb84798ce919605372730e7e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Mar 28 11:19:26 2008 +0000
+
+    Additional fix for regression caused by JRUBY-2314 fix: readpartial should only read what's available on the buffered and do a normal unbuffered read otherwise. Because readpartial originally called bufferedRead, the fix for 2314 broke it. The correct behavior is that readpartial freads only what's already buffered, rather than the number provided.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6362 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d990ee5af4646612693318f1f8aa820a889125d8
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Mar 28 10:23:51 2008 +0000
+
+    Fix for JRUBY-2314, allow buffered reads to keep reading as long as they're successfully getting bytes back and do not hit EOF. EOF or zero bytes read will terminate the read loop.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6359 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 23d786f79b699f365026a71f8807c806399311f3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Mar 17 05:33:23 2008 +0000
+
+    Additional fixes to get reopen, popen, and seeking working correctly with various types of streams.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6233 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit e85e442e2fc4a3730c28c91f5bcef8afb62193ff
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Fri Mar 7 16:53:19 2008 +0000
+
+    Fix for JRUBY-2164. Add appropriate waitReadable and waitWritable to important places.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6138 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 20b8cfaadbc765f357ead07815c606b2edee5504
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Mar 6 15:49:25 2008 +0000
+
+    Fix for JRUBY-2125, trying to create /dev/null on a reopen.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6118 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 0f7b96bf9292b808532c54408658c8f2c7d90c5b
+Author: Vladimir Sizikov <vsizikov@gmail.com>
+Date:   Fri Feb 29 14:56:52 2008 +0000
+
+    JRUBY-2202: IO#ungetc dosen't put the position back.
+    JRUBY-2203: IO's seek, rewind, pos= should discard the char that was
+                previously pushed back with 'ungetc'
+    
+    Regression tests added.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6069 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 6967d56b0e28dfcd94697db83df494cfd8c6fa7e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Feb 25 04:06:31 2008 +0000
+
+    Various fixes to the "null channel" for JRUBY-2159. Tests coming from me or Vladimir.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6023 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit e8a3ebe129ec569c9ce6744e0e4b70773b0423ef
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Feb 24 14:05:38 2008 +0000
+
+    Fix for JRUBY-2071, reopen seek errors because of shared position in the underlying channel.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6013 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit ca37723c37663842bec20234c0b0dacfb22e6f13
+Author: Vladimir Sizikov <vsizikov@gmail.com>
+Date:   Wed Feb 20 09:40:58 2008 +0000
+
+    JRUBY-2145: FileUtils.cp on /dev/null
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5975 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 7fe5a9649597671c98fc9c598645fcf55ce65243
+Author: Vladimir Sizikov <vsizikov@gmail.com>
+Date:   Wed Feb 13 12:02:52 2008 +0000
+
+    JRUBY-2109: Rubicon test_io's test_reopen1 fails after IO reorg.
+    Regression tests are provided as part of rubyspecs.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5924 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 3c58a8a75d242208c063fb4d9c850f803c98b667
+Author: Vladimir Sizikov <vsizikov@gmail.com>
+Date:   Mon Feb 11 20:58:02 2008 +0000
+
+    Fixed regression in JRUBY-1923: STDIN not working under Kernel.system,
+    after IO reorg.
+    
+    Also, added few unit tests.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5909 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 80880fb42f9ef8ff90bfcb8b56957e28e7753d01
+Author: Vladimir Sizikov <vsizikov@gmail.com>
+Date:   Wed Feb 6 09:57:43 2008 +0000
+
+    The BUFSIZE is set back to 16Kb, not 16 bytes.
+    
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5843 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 4f951a36efdfec60a3dc58f1cb862b4eb6cc54fe
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Feb 6 08:53:48 2008 +0000
+
+    More spec fixes:
+    - ungetc should clear EOF state
+    - ungetc should ceck for RBUF (can't ungetc unless you've just read)
+    - syswrite should use to_s to coerce argument
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5841 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit c05c87fadadde85664ecf669b6b46d6d7a1001b6
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Feb 6 08:26:05 2008 +0000
+
+    Enable permission setting for a file being created. However this does not yet obey umask, since we have to create the file via Java APIs and ten set the permissions via POSIX, and there's no way to query the current umask to emulate the behavior ourselves.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5840 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 8a548d6aaf3c54261a487dd212e69c05ef2cb45e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Feb 6 05:32:37 2008 +0000
+
+    Fix for rails+mongrel console not tailing the log correctly; File::APPEND mode was not seeking to end of file on each write, as per open(2) semantics. Fixes a spec as well, so no test included.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5838 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 4ff455c1388e5ec0e3f375c03a69616f0e6d9a6a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Feb 6 04:36:37 2008 +0000
+
+    Guard fgetpos in ChannelStream for when it's not a FileChannel (throw PipeException).
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5837 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 3b4fffaad0a3e3958f6a5c68fe072f4825dd3343
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 5 23:11:04 2008 +0000
+
+    Do "readall" as buffered read rather than direct read into a big buffer.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5836 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit aa4ffa1be5572b91327ce11238a623b1bd681b27
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 5 06:18:45 2008 +0000
+
+    Fix botched merge that doubled new file content.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5822 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 66b024fedbb2ee32316ccd9de8387931d07993ec
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 5 05:57:53 2008 +0000
+
+    Merging the new IO implementation to trunk to give it appropriate burn-in time. Give it a go, friends!
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5821 961051c9-f516-0410-bf72-c9f7e237a7b7

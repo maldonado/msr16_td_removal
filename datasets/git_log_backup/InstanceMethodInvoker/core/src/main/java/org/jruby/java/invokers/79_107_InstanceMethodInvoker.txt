@@ -1,0 +1,128 @@
+commit 487938c6d0ff8d1c482d6d814e6c81761bd12af9
+Merge: be01825 aaf1681
+Author: kares <self@kares.org>
+Date:   Tue Apr 7 16:15:45 2015 +0200
+
+    Merge branch 'jruby-1_7'
+    
+    * jruby-1_7:
+      fix compilation error left-over from 7774be525ac71997cd2ed75ef641c47078a704bc
+      some more var-args tests - make sure var-arg (overload) methods are covered
+      move ALLOCATOR into a static field
+      guess the ivar list size (most objects have only @ variables)
+      private can be static
+      handle Ruby super -> Java constructor with var-args correctly (fixes cases in #2375)
+      mark generated proxy class constructor with @java.lang.SafeVarargs if super is var-args
+      time to start sharing the generic (handles var-args) argument toJava conversion
+      use (and cache) the more Java [array] version of the API to retrieve proxy constructors
+      avoid deprecated JavaMethod.create + make sub-class helpers final
+      do the toJava conversion on site instead of constant indirection esp. in loops
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/RubyModule.java
+    	core/src/main/java/org/jruby/java/invokers/ConstructorInvoker.java
+    	core/src/main/java/org/jruby/java/invokers/InstanceMethodInvoker.java
+    	core/src/main/java/org/jruby/java/invokers/SingletonMethodInvoker.java
+    	core/src/main/java/org/jruby/java/invokers/StaticMethodInvoker.java
+    	test/test_higher_javasupport.rb
+
+commit 4e1fe960df4168bb7118de6784a427240fa6ae4d
+Author: kares <self@kares.org>
+Date:   Fri Mar 27 12:42:15 2015 +0100
+
+    time to start sharing the generic (handles var-args) argument toJava conversion
+
+commit 1a605a2918451e8856d2dd022a4a5d60dfa0fe71
+Author: kares <self@kares.org>
+Date:   Fri Mar 27 09:19:17 2015 +0100
+
+    do the toJava conversion on site instead of constant indirection esp. in loops
+
+commit c26fe1ba92acad0de01273d4711711f8e2e690ec
+Merge: ab4be7b dd9cf5f
+Author: kares <self@kares.org>
+Date:   Thu Mar 26 10:51:46 2015 +0100
+
+    Merge branch 'jruby-1_7'
+    
+    * jruby-1_7: (35 commits)
+      align added JavaSupport method name with convention
+      test `[].copy_data` addon - also added alias so it can be used with 2 args as well
+      cleanup and add tests from Java array addons ...  seems a litle strange
+      move Java array assertions around from equality test
+      should override proxy implemented call() with block as well
+      export void early on with other (primitives) and test it's behaviour
+      DRY-up interface-template impl ... (extracted some anonymous into inner classes)
+      handle nested array.to_java conversion where element is already an array + cleanup
+      implement array.component_type helper on the Ruby side + test how [].to_java works
+      fix array factories `Java::int[1][2].new` as well as `Java::byte.new_array(3)` (#2749)
+      unify and test the no-matching-callable raised error messages / hints
+      handle yet another unnecessary "ambiguous Java methods found" warning
+      add a JI test - setting a security manager created in Ruby
+      use `getArity()` in favor of `getParameterTypes().length`
+      use IntHashMap as callable cache for `__jcreate!` method and share a new-cache helper
+      the intention here was to "use the lowest-arity non-overload" and we're finally there!
+      as (most) Java invokers will not have overrides - they won't use the internal cache ... for loading up JRuby's built-in JI classes this saves up allocating > 2100 maps
+      explicit inspect() method for JavaProxyConstructor + annotate with JRubyClass
+      a working inspect for Java proxy methods
+      empty class array count-- and make sure correct name is annotated with @JRubyClass
+      ...
+    
+    Conflicts:
+    	core/pom.xml
+    	core/src/main/java/org/jruby/java/invokers/StaticMethodInvoker.java
+    	core/src/main/java/org/jruby/javasupport/JavaMethod.java
+    	core/src/main/java/org/jruby/javasupport/JavaSupport.java
+    	core/src/main/java/org/jruby/javasupport/JavaUtil.java
+    	test/test_higher_javasupport.rb
+
+commit f0021549e38dea03e546401f56120d9645b283a8
+Author: kares <self@kares.org>
+Date:   Mon Mar 23 13:01:19 2015 +0100
+
+    use `getArity()` in favor of `getParameterTypes().length`
+
+commit 805ccb822f92f985f98a8de8612ef4110236fe94
+Author: kares <self@kares.org>
+Date:   Fri Mar 13 23:57:13 2015 +0100
+
+    use 'new' CallableSelector methods (with IntHashMap cache) for better performance
+    + make the internals do less casting by making private methods type generic
+    
+    ... also made some of the callable concrete classes final
+
+commit 2366bd6a49118eb41abb868230613e0d748168cd
+Merge: 15ec551 e61b737
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Mar 2 12:28:47 2015 -0600
+
+    Merge remote-tracking branch 'origin/jruby-1_7'
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/RubyProc.java
+    	core/src/main/java/org/jruby/javasupport/JavaMethod.java
+    	core/src/main/java/org/jruby/javasupport/JavaSupport.java
+    
+    This commit puts JavaSupport back the way it was, so we can git mv
+    instead and get merging across that move.
+
+commit 342571abf759ef0159f2d02bb33baf1b8efc2ddd
+Author: kares <self@kares.org>
+Date:   Mon Mar 2 13:03:45 2015 +0100
+
+    avoid redundant array instance creations in Java method invoker impls
+
+commit f5313d521aa68dd45ce23407ea31aeddcfba4a1b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Aug 6 13:22:20 2014 -0500
+
+    More tweaks for exception-raising in JI calls.
+    
+    * Propagate ThreadContext through for stack rewriting.
+    * Avoid creating intermediate objects for rewriting.
+
+commit 28c6fbc4e883bc1c9e9242d1da1cb2b785f55339
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 3 12:46:45 2013 -0500
+
+    Move to @mkristian's proposed layout, with some modifications.

@@ -1,0 +1,360 @@
+commit 2e4c5f9c9289ec95b620956a9c3349ad3d7158f9
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Wed Mar 4 08:19:35 2015 -0600
+
+    CFG.toStringInstrs: Don't dump CFG of nested scopes
+    
+    * This can be extremely distracting in debugging output.
+    * Users of CFG debug output that need output from nested scopes
+      should explicitly do it where required.
+
+commit e2964e5b0881b4bf734be5b385206f571830e53f
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Sat Feb 28 13:12:10 2015 -0600
+
+    lots of rearrangement and state added to fullinterpretercontext and some basic outline of flow in prepareFullBuild
+
+commit 5ad4c5c8ebd74ed24b5bbccf84f4a01d9c1c22cc
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Feb 25 15:03:36 2015 -0600
+
+    CFG can use Instr[] to build
+
+commit 65aec3e0f85804665297bb190a213b4057c511a1
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Wed Feb 18 20:38:17 2015 -0600
+
+    Don't build CFG for closures eagerly -- let it get built on demand.
+
+commit c34f31cb0928b5c4706a4132f0914539bb5d8329
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Sun Jan 11 11:05:51 2015 -0600
+
+    Convert all instrs to store the operands and result to instr class.
+    
+    This work eliminates a lot of tmeporary array construction of getOperands[] by storing
+    all operands in instr by default.  It adds a small amount of memory for this aspect (basically
+    an extra primitive array ref for all non d*node instrs/call methods).  Unfortunately, I also
+    pushed result down to instr and this ended up using more memory that I had hoped for.  A
+    followup commit will address this.  Once result is fixed this will use ~500-750k more memory
+    than before this commit for rails console.
+    
+    The secondary benefit to this work is it eliminates quite a few repeated methods in instrs.
+    Methods like simplifyOperand end up being a single method on instr now.
+
+commit 9221325eecaa7fc1991f667d4b473f124ff780de
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Dec 15 11:33:51 2014 -0600
+
+    We don't need this to know it is a set
+
+commit ea530e20dd89eeb6aad69a765787b432d0ac9515
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Dec 15 11:20:40 2014 -0600
+
+    Move directed graph into external project
+
+commit d3e98b67e1e5789bf35140b78d64631aa05a9646
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Nov 4 13:08:22 2014 -0600
+
+    Whoop forgot to remove import
+
+commit 9a83034265c9005b970005518440cb9a8b56170b
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Nov 4 13:02:16 2014 -0600
+
+    Use instanceof for WrappedIRClosure here since next line is a cast to WrappedIRClosure.  It also reduces OperandType to be used only for persistence
+
+commit 8434fe5bca86854cbd245b600b31d089efe3f6a4
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Fri Oct 31 21:10:36 2014 -0500
+
+    Cleanup! Removed a bunch of stale FIXMEs.
+    
+    * Cleaned up some comments.
+    * Removed some and tweaked some FIXMEs.
+
+commit b160b2d2fb12f497e79a1f68b6fda931409e1f90
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Sat Oct 25 11:09:55 2014 -0500
+
+    Optimize returns (merge them with copies where possible).
+
+commit 695b38986b97b908556c3b55d9cc5266bba5a722
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Tue Oct 14 22:49:14 2014 -0500
+
+    Make sure every scope gets its own copy of GLOBAL_ENSURE_BLOCK_LABEL
+    
+    * These labels were being shared across all blocks which caused buggy
+      rescue maps being set up across scopes and led to infinite loops
+      in block_spec.rb and raise_spec.rb when specs were run with all
+      passes enabled after recent InterpreterContext changes.
+    
+    * This patch fixes that up.
+
+commit 4a5d8184a9fb5ecc1457ec88e1a0f4bce66fa4f2
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Mon Oct 13 19:24:55 2014 -0500
+
+    Eliminate special-case break/nonlocal return handling for lambdas
+    
+    * Lambdas need to trap breaks/nonlocal-returns and terminate them.
+      However, whether a block becomes a lambda or not is determined
+      at runtime. So, only blocks that becomes lambdas need a try/catch
+      to trap these breaks/nonlocal-returns. So far, in the interp,
+      we used to tackle these by adding the try/catch at runtime on
+      first execution.
+    
+    * This patch eliminates that runtime check and unconditionally
+      adds the try/catch for all blocks (lambdas or not). Did this by
+      uncommenting the unconditional handling that was there in
+      IRBuilder.
+    
+      To make sure everything continued to work fine, fixed non-local
+      return handling in IRReturnHelpers to ignore them if the
+      blockType is not null (methods) or a lambda. This ensures
+      that independent of what exists on the scope-stack, we only test
+      for a matching non-local returns in lambdas or method scopes.
+    
+    * Had to fix up addition of global-ensure-blocks in store-local-var
+      analysis to only add a GEB if one didn't already exist.
+    
+    * Eliminated all lambda-specific tests while preparing instructions
+      for interpretation/JITting.
+    
+    * Unrelated:
+      - Fixed toStringOutput of BacktickInstr
+
+commit 26a96be0577cf6636e51d56e7bd96fdd4958e075
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Oct 9 16:54:24 2014 -0500
+
+    Some CFG diamond removal (trivial) plus some other small changes.  Make a generic BasicBlock.clone(InlineInfo). Remove callbase+wrappedirclosure conditionals and let IRClosure.cloneForInlining register with its lexical parent
+
+commit e19b7c0d2cbc8696d0c523b4305fde10f291fdd9
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Oct 9 15:21:17 2014 -0500
+
+    Change cloneForInliningClosure to be a generic clone() and an instance method of CFG.  Fixed bug in clone where GEB was not being set (even though it was being cloned in DG).
+
+commit 94eb4ae16f1460c1bf1cc23cae8e6075510c25b8
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Oct 9 10:17:45 2014 -0500
+
+    Split apart InlinerInfo into SimpleCloneInfo and InlineCloneInfo.  Specialization used to make it clearer which code is performing which type of cloning
+
+commit 1887a381f2cc286af3e76711d3ad00b35cb6f2cc
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Sep 12 12:12:12 2014 -0500
+
+    Do not include entry BB in global rescue...init logic goes there.
+
+commit e44163d02a06c9d5ff27b5890e0296f0cde65fb7
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Aug 13 17:19:00 2014 -0500
+
+    Reduce use of bitset a little
+
+commit 0cdd14aaae2ecdec6d5fcdc92d1fe19b6faa55d8
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Mon Jul 21 00:14:45 2014 -0500
+
+    Pass staticScope through interpreter call stack + optimized imports.
+    
+    * In preparation for a fix for #1792, pass the current static scope
+      through the interpreter call stack.
+    
+    * Unrelated: I accidentally applied optimize imports on the ir/
+      directory while refactoring in IntelliJ.
+    
+    * Next steps:
+      - Make the nesting-depth fix outlined in #1792.
+      - Maybe, rename CurrentScope to ActiveScope.
+      - Maybe, fix ScopeModule to be based off CurrentScope.
+      - Maybe, get rid of currDynScope arg through call stack and get it from
+        ThreadContext where needed (maybe).
+
+commit 242bfecf0c0e31b96feaa672ed1d45f8e182fd8a
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Thu Jul 17 18:20:59 2014 -0500
+
+    Revert "Hoist non-excepting code out of exception regions where possible."
+    
+    * Reverting previous commit since this is unnecessary work and code
+      for now. Can revive this later if found useful.
+    
+    This reverts commit 6d4e2840df1aa633af59e0231a00cdcde146fc55.
+
+commit 6d4e2840df1aa633af59e0231a00cdcde146fc55
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Thu Jul 17 18:18:52 2014 -0500
+
+    Hoist non-excepting code out of exception regions where possible.
+    
+    * This was an experimental fix for issue #1786.
+    * Now abandoning that experiment, but this shrinking is potentially
+      interesting on its own merit. For now, committing this code for
+      putting this in git history.
+
+commit 85ded9fc828b3740eb5157a60da4a9db7c9d72a7
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri Jun 27 13:28:24 2014 -0500
+
+    If you have closures in dead BBs; remove that closure from the parents scope so we don't do compiler passes against those unreachable blocks
+
+commit 8cb15d238d3e4484505f39bccd2aac6e45a519b5
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Apr 7 10:20:18 2014 -0500
+
+    Trivially IR changes from when doing dynjs work
+
+commit 0232577beccb24fd05029550053f350557548b96
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri Feb 14 13:05:56 2014 -0600
+
+    Whoops inverting this conditional worked for too many things
+
+commit 8537f4323716aba924638d20f474732a8d0da9ff
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri Feb 14 11:31:11 2014 -0600
+
+    IR persist recreates UNRESCUED_REGION_LABEL.  Change from == to equals.
+
+commit 5ff2b6a688a56919739aaa04d674c88c4241f9e0
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Sun Feb 9 21:54:13 2014 -0600
+
+    [IR] Bug fix in CFG - reset cached state when a new BB is added
+    
+    * We need a better solution than caching. Added a FIXME to revisit
+      this in the near future as we do another round of cleanup in
+      how we build IR and manage state.
+    
+    * This fixes the bug where all instrs of the global ensure block
+      were being (incorrectly) marked dead.
+    
+      jruby -X_CIR -Xir.passes='AddLocalVarLoadStoreInstructions,AddCallProtocolInstructions,DeadCodeElimination,LinearizeCFG' -e 'p 1'
+
+commit ec268cd37591aea2d3f07e68e0329a8849e8fd48
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Jan 30 15:52:55 2014 -0600
+
+    [IR] Change CFG to produce proper direction iterators so we can just call next where they are used.  Change DataFlowProblem to use them.  Mild formatting changes
+
+commit 64177eb12aa3d7d21c630199d37b4eb5026e9c25
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Thu Jan 23 16:55:04 2014 -0600
+
+    [IR] Redid IR for ensure bodies
+    
+    * JSR-style ensure bodies are removed since this is harder to
+      compile into java bytecode using ASM.
+    
+    * All ensure bodies are now cloned at all sites that they need
+      to run (protected body, next, return, break).
+    
+      The cloned ensure bodies have different rescue-protection than
+      the surrounding code and this required maintaining additional
+      information during IR building to make sure that exceptions
+      raised in ensure code is protected by the same code as at the
+      ensure-code definition site (rather than ensure-code clone site).
+    
+    * Ensure body cloning made use of previously implemented instruction
+      cloning code by adding a new clone mode for slightly different
+      semantics than other clone modes.
+    
+      TODO: The inliner-info class could use some refactoring and
+      cleanup since it now supports 4 different clone modes.
+    
+    * Eliminated SetReturnAddressInstr and JumpIndirectInstr classes.
+    
+    * OptimizeTempVarsPass and CFG building is slightly simplified.
+    
+    * All originally passing ruby specs now pass.
+
+commit 8317a13efbbc7c3146d7f4d73fcb7ad519c9990c
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Wed Jan 22 16:55:37 2014 -0600
+
+    [IR] Removed exception region structure state from the CFG.
+    
+    * The exception regions in a scope were not used anywhere and
+      just led to more state that requires maintenance.
+    
+    * Also removed a few unused imports.
+
+commit d302977e8f9892984a20d77295b681d4de1aba7f
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Sun Jan 19 10:45:47 2014 -0600
+
+    Sort more debug output to reduce diff size when comparing encode/decode
+
+commit a7c387d05427b8bd52dfd83a543f48ccc3df8eb2
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Sat Nov 30 23:04:58 2013 -0600
+
+    [IR] Various fixes to inlining code.
+    
+    * Added ipc to Instr so that inliner can use ipc to identify
+      the call site where code should be inlined rather than rely on
+      reference identity of the call instruction.
+    
+    * Added ability to clone host scope instructions before inlining
+      in case the host scope is on call stack (this prevents destructive
+      updates between the two invocations of the scope).
+    
+    * Rescue map for a scope is created during interpretation and used
+      directly rather than traversing CFG which would be buggy in the
+      presence of inlining.
+    
+    * Other related cleanup and fixes stemming from the above changes.
+
+commit d0e6e49bc90a96c22ecf7a0513181bfe28c167dd
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Fri Nov 29 17:36:05 2013 -0500
+
+    [IR] Cleanup of inlining-related instruction cloning code.
+    
+    * Got rid of the various cloneFor* methods and replaced with a
+      single cloneForInlining method.
+    
+    * Exposed the CloneMode enum publicly and used the cloning mode
+      to do specialized cloning for some instructions based on mode.
+      - This improves code readability and maintainability quite a bit.
+
+commit dbfaa618877446fa1c3e390077d7b2b3886b3755
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Mon Nov 11 12:47:27 2013 -0600
+
+    [IR] Strip no-longer-needed ensure-map and related state
+    
+    * git 27442fc0 fixed some bugs in the interpreter that effectively
+      used the rescue map for handling both rescue and ensures which
+      left the ensure map unused.
+    
+    * This patch got rid of the ensure map and all related state from
+      the IR builder, instructions, CFG, and exception regions.
+    
+    * Verified that there is no change in spec test results especially
+      since the CFG removed exception edges to ensure-block, which could
+      potentially have affected accuracy of the opt. passes.
+
+commit 45cdf844b627ed31ba9ce57ca4ca4cf88cdde053
+Author: Prathamesh Sonpatki <csonpatki@gmail.com>
+Date:   Thu Sep 19 23:52:19 2013 +0530
+
+    Simple merge conflict
+
+commit ce51ec3196d14657e94c1b8063e2120638ab7695
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Fri Sep 27 16:07:17 2013 -0500
+
+    Cleanup: Deleted trailing whitespace on lines in ir/ directory
+
+commit 28c6fbc4e883bc1c9e9242d1da1cb2b785f55339
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 3 12:46:45 2013 -0500
+
+    Move to @mkristian's proposed layout, with some modifications.

@@ -1,0 +1,726 @@
+commit d24646d1e675d1ac787317c014769456b848ca32
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Sep 18 11:34:14 2012 -0500
+
+    deadend without moving to Java 6...unwinding this craziness
+
+commit 964717cfbd31457f63cb8e3af2cd7b3b45351537
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Sep 6 17:30:30 2012 -0500
+
+    Does this look safe to you?
+
+commit 900296175ba21f45c05da6e03600d4daf191ca5f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Mar 15 16:03:04 2012 -0500
+
+    Allow cexts to build under OpenJDK on OS X, where os.arch == 'amd64'
+
+commit 32972ae101e9e7edbfdf5d81dd8895299ca51c48
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jan 25 11:22:12 2012 -0600
+
+    Really fix JRUBY-6361
+    
+    RbConfig reports wrong OS type on Solaris
+
+commit f9e5bcddca7ec0aa2e8d5d0d4ac589d410b1b496
+Author: Matthew Denner <md12@sanger.ac.uk>
+Date:   Wed Nov 9 12:47:48 2011 +0000
+
+    Bump macosx-version-min from 10.4 to 10.5.
+    
+    With this set at 10.4 the MacOS X compiler complains about '-rpath' only
+    being applicable to 10.5 and above (noticed during 'gem install
+    mysql2').  Bump it to 10.5 and the error is gone.
+    
+    Signed-off-by: Hiro Asari <asari.ruby@gmail.com>
+
+commit d3c18933f6dc03fb4fb82446564cb681a3dd5e80
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Sat Nov 12 21:39:14 2011 -0500
+
+    Revert "Override certain RbConfig::MAKEFILE_CONFIG values with environment variables. This resolves JRUBY-6199 in a more general way."
+    Since MRI doesn't allow this, I'm going to revert this in this branch.
+    
+    This reverts commit fa781be8cb74f7e8854f5a8f3137b6497bb57dd2.
+
+commit fa781be8cb74f7e8854f5a8f3137b6497bb57dd2
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Wed Nov 9 13:14:20 2011 -0500
+
+    Override certain RbConfig::MAKEFILE_CONFIG values with environment variables. This resolves JRUBY-6199 in a more general way.
+
+commit 1e09d92417e505c39baf06835b799cd19cce690d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jan 26 15:32:12 2011 -0600
+
+    Remove some uses of varargs-based RubyBasicObject.callMethod.
+
+commit efb527b1fe90ca309a99f7868c3d94948e524797
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Tue Jan 4 11:01:29 2011 -0500
+
+    Expose joda-time and tzdata versions in RbConfig.
+
+commit 0044ac30341fa24f0971c14e5dc59b87a3ba07b7
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Sun Dec 12 23:32:37 2010 -0500
+
+    Rely on org.jruby.ext.posix.util.Platform.IS_WINDOWS for Windows-ish platforms.
+
+commit d4c22c8fe3ef5d4a80629b2a42d8aa8ff1514f63
+Author: Tim Felgentreff <timfelgentreff@gmail.com>
+Date:   Mon Sep 20 23:46:58 2010 +0200
+
+    force position-independent code for unix native extensions
+
+commit 896acd7f287134e06cb7cb631b4b186d401c3023
+Author: Tim Felgentreff <timfelgentreff@gmail.com>
+Date:   Mon Sep 20 00:45:02 2010 +0200
+
+    add empty DEFS string to MAKEFILE_CONFIG
+
+commit 2f014d500766ad3ef0d284a4935c0531a51236d9
+Author: Tim Felgentreff <timfelgentreff@gmail.com>
+Date:   Sun Sep 19 01:08:17 2010 +0200
+
+    add another bunch of keys to MAKEFILE_CONFIG hash
+
+commit 696ddcef6478c98bd8a35a5c422938bb8cdfca5d
+Author: Tim Felgentreff <timfelgentreff@gmail.com>
+Date:   Fri Sep 17 15:04:09 2010 +0200
+
+    cleanup and extend RbConfigLibrary. This hopefully fixes some C++ extensions on Windows
+
+commit 7c9936c9b4ec62f4c191edb9c209fab1a635d5ba
+Author: jonforums <jon.forums@gmail.com>
+Date:   Mon Sep 13 23:25:16 2010 +0200
+
+    This patch appears to get rid of the environment setup step on windows
+
+commit 3ceede5cd748f7af1dea1b97db65e5737ddf81d9
+Merge: 414605b 69c2bac
+Author: Tim Felgentreff <timfelgentreff@gmail.com>
+Date:   Fri Sep 10 18:00:36 2010 +0200
+
+    Merge remote branch 'origin/master' into cext
+    
+    Conflicts:
+    	.gitignore => cext added cext build results
+    	build.xml => cext added osfamily-specifiers to git invocation
+    	lib/ruby/1.9/mkmf.rb => master added functions, cext added jruby support
+    	src/org/jruby/RubyBignum.java => cext made LONG_MIN, LONG_MAX and ULONG_MAX public fields
+
+commit f4b63c3c6187f4cb5ecee28719a424a6956d3a4d
+Author: jonforums <jon.forums@gmail.com>
+Date:   Fri Sep 10 12:06:28 2010 +0200
+
+    env CC whitespace cleanup for RbConfigLibrary
+
+commit 1298c8d3630e16c2f667cd383677c3d8e88c8bf3
+Author: Tim Felgentreff <timfelgentreff@gmail.com>
+Date:   Thu Sep 9 19:23:44 2010 +0200
+
+    honor environment variables for CC and CPP in RbConfig
+
+commit 499808fd5be259b96cb2c51397306463e61b817d
+Author: Tim Felgentreff <timfelgentreff@gmail.com>
+Date:   Fri Aug 27 10:47:42 2010 +0200
+
+    define LIBRUBY_ALIASES in config hash
+
+commit 059b8de56187333262c4ba101ab5188957ff4710
+Author: timfel <timfelgentreff@gmail.com>
+Date:   Tue Aug 17 17:16:50 2010 +0200
+
+    more windows fixes for cext support compiles and runs thin now!
+
+commit 76bc561c0f9865cafb7ba5c0ee28ae4cea5d9c3d
+Author: Tim Felgentreff <timfelgentreff@gmail.com>
+Date:   Sat Aug 14 12:20:58 2010 +0200
+
+    -arch is only supported on darwin, use -m32/-m64 for default archflags in mkmfHash
+
+commit f1c36f8ee8718bf9135c9301685a7131e191140d
+Author: Tim Felgentreff <timfelgentreff@gmail.com>
+Date:   Tue Aug 3 17:59:38 2010 +0200
+
+    add the sitearch to the CONFIG hash, too, as it is expected by ruby-pg
+
+commit 3aafd1bd24befcce7264afbe89700845f2f50b9a
+Author: Tim Felgentreff <timfelgentreff@gmail.com>
+Date:   Mon Aug 2 18:44:08 2010 +0200
+
+    do not put bundle symbols in a flat namespace. fixes problems with function shadowing
+
+commit 50e90605edb157d21996b91e8de246a7667eb88d
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Fri Jul 23 22:09:53 2010 -0400
+
+    Re-fixing JRUBY-4352: Rbconfig's Config::CONFIG provides wrong name for Windows 2008 Server, based on input from Rakesh Arora. (See 07fb757.)
+
+commit 537065667ede6efd561e9cfad906eae75a1c2d3d
+Author: Tim Felgentreff <timfelgentreff@gmail.com>
+Date:   Fri Jul 23 21:15:15 2010 +0200
+
+    tweak mkmf behaviour. undefined functions should break when trying to link, except when they are included in our ruby.h
+
+commit a8f78360e0f91d5acb9358ae9d0b27b5f629fce6
+Author: Tim Felgentreff <timfelgentreff@gmail.com>
+Date:   Tue Jul 20 14:34:07 2010 +0200
+
+    add includedir to config hash
+
+commit 5808f2e89cf67ab6f19d517bf81d8fbe1245b726
+Author: Tim Felgentreff <timfelgentreff@gmail.com>
+Date:   Sun Jul 18 16:34:18 2010 +0200
+
+    mkmf fixes to get god to compile
+
+commit 0dd6d4e2c268a2a97eb81e966b679fe9c093e398
+Author: Wayne Meissner <wmeissner@gmail.com>
+Date:   Sat Jul 17 23:49:14 2010 +1000
+
+    Implement rb_ensure()
+
+commit 99e4e18c4e5698be5db3b969f639f9d2b0cf25d1
+Author: Tim Felgentreff <timfelgentreff@gmail.com>
+Date:   Fri Jul 16 11:41:30 2010 +0200
+
+    more fixes to get makefiles to build
+
+commit 7f0e3c9d3f858de2609dbe5ae27d0b25d0bf5790
+Author: Tim Felgentreff <timfelgentreff@gmail.com>
+Date:   Fri Jul 9 20:19:19 2010 +0200
+
+    MAKEFILE_CONFIG changes for better mkmf support
+
+commit d488119da014f45683d05d960a33a46ca768b9dc
+Author: Tim Felgentreff <timfelgentreff@gmail.com>
+Date:   Sun Jul 4 01:27:23 2010 +0200
+
+    Make MAKEFILE_CONFIG hash more platform dependent
+
+commit fc5b63d4964b40fe4c10bb24b7664d53d6d919e3
+Author: Tim Felgentreff <timfelgentreff@gmail.com>
+Date:   Tue Jun 29 18:13:07 2010 +0200
+
+    Revert "just use the same hash for MAKEFILE_CONFIG and CONFIG on RbConfig"
+    We cannot do this as people might rely on it and the hashes are neither
+    disjunct nor have the same values for all the same keys.
+    
+    This reverts commit dc63cb8802355ca60b5a7302cbcd017160c574f1.
+
+commit dc63cb8802355ca60b5a7302cbcd017160c574f1
+Author: Tim Felgentreff <timfelgentreff@gmail.com>
+Date:   Sat Jun 26 12:41:08 2010 +0200
+
+    just use the same hash for MAKEFILE_CONFIG and CONFIG on RbConfig
+
+commit 83e8e53da4cc62154a6c0200f6f13005586c7888
+Author: Tim Felgentreff <timfelgentreff@gmail.com>
+Date:   Sat Jun 26 10:00:00 2010 +0200
+
+    proper variable naming in RbConfigLibrary.setConfig
+
+commit 13830a633f91a7a463e9fb6bf55637519e118c30
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon May 3 20:36:46 2010 -0500
+
+    Generate Constants.java during build rather than loading properties from resources at runtime.
+
+commit 90afa087b454c0fcf6c587096599fb3c265593e6
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Apr 26 16:27:08 2010 -0500
+
+    Temporary fix for JRUBY-4749: require 'rbconfig' fails on GAE because of NullPointerException
+
+commit be134cc299d7fd25de6566a48a2eef34ffe63e59
+Author: David Kellum <dek-oss@gravitext.com>
+Date:   Sun Apr 18 09:25:59 2010 -0700
+
+    Add jruby.gem.(path|home) property support for rubygems. (Take 2)
+    
+    Fix for JRUBY-4729.
+    
+    Signed-off-by: Nick Sieger <nick@nicksieger.com>
+
+commit b82e387f87b95128a5593c6dd66815481d57fa7a
+Author: David Kellum <dek-oss@gravitext.com>
+Date:   Sun Apr 18 08:56:20 2010 -0700
+
+    Add jruby.bindir property override to RbConfig::CONFIG[bindir] (Take 2)
+    
+    Signed-off-by: Nick Sieger <nick@nicksieger.com>
+
+commit 5c62b34bb5f7cb844050a4d6a5b467fc59e1906e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jan 19 01:39:09 2010 -0600
+
+    Modifications and additions to address JRUBY-4487: gem prelude should be loaded in 1.9 mode
+
+commit 5c931f77fc3ec759803d28b23f745b5ac0c89bbb
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Mon Jan 18 18:56:59 2010 -0600
+
+    JRUBY-4499: [1.9] RbConfig::CONFIG["MINOR"] should be "9".
+    
+    Signed-off-by: Charles Oliver Nutter <headius@headius.com>
+
+commit 60bfd25a521626e64f26d21675cfbb47eb4af544
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Mon Jan 18 18:54:10 2010 -0600
+
+    JRUBY-4495: [1.9] RbConfig.ruby to print absolute path to the ruby executable
+    
+    A faithful translation of what MRI generates, and tests that go with it.
+    
+    Signed-off-by: Charles Oliver Nutter <headius@headius.com>
+
+commit 07fb75714c46e7bfc5be9735a004fc2d4b27dfa9
+Author: Alex Coles <alex@alexcolesportfolio.com>
+Date:   Fri Dec 11 18:25:33 2009 +0100
+
+    JRUBY-4352: Rbconfig's Config::CONFIG provides wrong name for Windows 2008 Server
+    
+    Signed-off-by: Vladimir Sizikov <vsizikov@gmail.com>
+
+commit 3487bba2fada506a4c56b7e643e82ae3b6294cb5
+Author: Vladimir Sizikov <vsizikov@gmail.com>
+Date:   Tue Dec 8 11:54:04 2009 +0100
+
+    Fixed JRUBY-4116 and JRUBY-3950 (IRB in Applet and WebStart environments).
+    
+    - JRUBY-4116: security error running org.jruby.demo.IRBConsole in jruby-complete
+    - JRUBY-3950: samples/irb-applet.html doesn't load the Applet
+
+commit 2c5dfbd68dd04a0e4e9e9ee4f9329b6e05654a9c
+Author: Vladimir Sizikov <vsizikov@gmail.com>
+Date:   Tue Oct 27 16:53:16 2009 +0100
+
+    JRUBY-4172:  Rbconfig's Config::CONFIG provides wrong name for Windows 7
+
+commit 6632b89e947a15f7923a081b89e81573c743a8d4
+Author: Vladimir Sizikov <vsizikov@gmail.com>
+Date:   Tue Oct 20 12:53:54 2009 +0200
+
+    JRUBY-4122: RbConfig/Gem cleanup after switch to native launcher
+    
+    *NOTE*: This also requires the following change from
+    jruby-launcher repo: c17e095.
+
+commit 00e6e5ecac6618a0535fac21accffade25618a60
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Sep 29 11:09:48 2009 -0500
+
+    [19] ridir is new 1.9 value in RbConfig::CONFIG
+
+commit ee3c3b0d2be46a7f8c5201ebbb6e01e87fe7b44a
+Author: Wayne Meissner <wmeissner@gmail.com>
+Date:   Wed Oct 15 02:54:53 2008 +0000
+
+    Fix JRUBY-3058
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7881 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit b14872d45736680f5b49d580b243823d9c63a1d9
+Author: Vladimir Sizikov <vsizikov@gmail.com>
+Date:   Tue Jun 24 08:39:44 2008 +0000
+
+    JRUBY-2320: Remove of unused imports in package org.jruby
+    JRUBY-2321: Remove of unused imports in all packages
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7023 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 92719607c6719170764e56a2c1edf274e9296cc9
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue May 27 21:52:24 2008 +0000
+
+    Additional rbconfig tweaks for extconf; the included sample ext builds and loads correctly with jruby-loadmod.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6841 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 3bc84e7155ad13093f0d88454e8d0c96152a4795
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue May 27 15:21:03 2008 +0000
+
+    * Add full contents of mkmf.rb, still disabled
+    * Add most of the MAKEFILE_CONFIG rbconfig properties needed to get mkmf/extconf to generate a Makefile. Still not 100%.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6824 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 2843dcf20f7b6e642a89c193e4d882d0666c2b6d
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Tue May 27 12:41:23 2008 +0000
+
+    Revert "Allow JRuby home to be set from complete jar if -Djruby.home not present"
+    
+    This reverts commit 6748 (8e472568076c93772bdb47afb5f6029667dd9b61).
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6818 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit bff821d1ac3753b5c71014e7d7084658bfd7957a
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Thu May 22 21:56:31 2008 +0000
+
+    DRY up jruby.properties resource location
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6753 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit e11f5c1ac70cd3e41d5d473fe97ece0fcee87192
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Thu May 22 19:08:35 2008 +0000
+
+    JRUBY-2458: Move jruby.properties to a proper package (patch by Martin)
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6751 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit baafe7317120147572e1f5fcf1af48d6f22e6d30
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Wed May 21 04:03:55 2008 +0000
+
+    Allow JRuby home to be set from complete jar if -Djruby.home not present
+    
+    - Still needs work for full in-jar operation
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6748 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 19ac35c27b8787018c593344e9953d89035f2f62
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu May 1 22:07:22 2008 +0000
+
+    Add miracle cure for slow startup to jruby(sh) and jruby.bat startup scripts.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6608 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 6608b88bfbb815669afea17f0d16885b885fb3b5
+Author: Vladimir Sizikov <vsizikov@gmail.com>
+Date:   Fri Apr 25 20:43:09 2008 +0000
+
+    Make sure that "Windows NT (unknown)" is recognized as Windows platform.
+    
+    "Windows NT (unknown)" is what JDK5 returns on Vista.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6564 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit aa2d87f7c9d2db7e365dac51110dec984fed10f1
+Author: Vladimir Sizikov <vsizikov@gmail.com>
+Date:   Tue Apr 1 11:51:45 2008 +0000
+
+    JRUBY-2350: Rbconfig's Config::CONFIG provides non-standard platform
+    names.
+    
+    Added regression test for Windows.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6379 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 424a1cbff5aea37f2f92cc208d29d2544f092828
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Wed Mar 19 12:21:15 2008 +0000
+
+    Annotate the rest of the Java classes with names, parents and inclusions. Also add a warning to install_doc.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6291 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 7e8814f95506d79702efc40176b9f3a73c01fabd
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sun Mar 16 23:19:38 2008 +0000
+
+    JRUBY-2274: File.lchmod causes UnsatisfiedLinkError on unsupported platforms
+    Similiar work down for lchown
+    chown should report unimplemented on windows
+    Added convenience method to detect whether methods of a particular name are mapped
+    Refactored POSIXFactory a little
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6227 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 852d904134ad970a20497fdcc5d752dd4ae49766
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Fri Mar 7 22:04:54 2008 +0000
+
+    The RC3 Surprise!
+    
+    Allow annotation defined ruby methods to optionally specify ThreadContext as first parameter
+    Convert easiest and most common methods to accept ThreadContext when method or child method can use context
+    
+    These changes give about 15% improvement on petstore bench and about 10% in ar-bench.  In ar-bench getCurrentContext calls go from 14 million down to 2 million.  The remaining calls largely can be removed but they were much more invasive.
+    
+    IRubyObject op_eqq and op_equal both not have ThreadContext consumer, but we could see no use of this in any extensions and figured it worth the trouble of converting.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6143 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 8dd4776340e89a0b4037475cb34117586371fba4
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Fri Feb 29 00:57:09 2008 +0000
+
+    JRUBY-2132: introduce a jruby.util.Platform class to begin isolating platform-specific tests (patch by Robert Jay Osborne with transmogrifying by me to put it in posix package)
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6066 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit c4c463923a27519fcff8e4eb9b51d77461447415
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Wed Feb 27 17:09:40 2008 +0000
+
+    - Move setJRubyHome to instance config, so it can be set before instance is
+      created and initialized
+    - Allow jruby home to be set to 'file:' URL, so that it can reference e.g.
+      'META-INF/jruby.home' inside the complete jar
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6045 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d0b672fd7831f020c82cdf85c42e8c867f736037
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Tue Feb 5 17:47:02 2008 +0000
+
+    JRUBY-2068: rbconfig missing localstatedir
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5827 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 9fbe1b5a00c873acce42cb77e86e2a1758843ac1
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jan 14 09:45:33 2008 +0000
+
+    Add mapping logic from Java's "friendly" OS names to those used by Ruby. Solves at least one spec failure.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5595 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 6ab91044fa0b45f460491755f639d968bf4be13d
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Thu Jan 3 22:59:51 2008 +0000
+
+    JRUBY-1771: gem install mongrel broken (fix for real this time)
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5482 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit ae81f34c7760874c86b6e5490849e404e93dee28
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Thu Jan 3 22:33:08 2008 +0000
+
+    JRUBY-1771: gem install mongrel broken
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5481 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d5edd038a6f0356e46d6307c3391182f12211e9d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Dec 28 21:54:03 2007 +0000
+
+    Fix for JRUBY-1812, load should accept a "wrap" parameter that causes it to load in a new top self.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5400 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 014ba11a30f5d7aed08986c77a2aea3f6748839e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Dec 21 21:08:48 2007 +0000
+
+    More security fixes for applets, specifically to allow IRB to run again. For JRUBY-1762, from Vladimir.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5329 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 4984ddaaa6c63bfbe6dbea809e730af8c02de237
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Oct 20 05:14:00 2007 +0000
+
+    Fix for JRUBY-1262, rbconfig should define RbConfig == Config
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4646 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a10e46cec019a3964c75ebb6b2ec648c3b449ed3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Oct 8 18:23:45 2007 +0000
+
+    Migrate Hash to annotating bindings, rename and remap all equality methods to new conventions
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4514 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit afc101978c40ad3fd9e9d389985fcef5c1d0048f
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Mon Jul 2 10:11:10 2007 +0000
+
+    Fix for JRUBY-1180, (target os version on Mac OS), by Dmitry Verkhovsky
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3939 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 5ade8e7740c07b6d55e1bda4bbd889f7f5d91e13
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Fri Jun 1 01:00:01 2007 +0000
+
+    JRUBY-958: Damian's patch for Readline::HISTORY, plus
+    try harder to normalize jruby home path, and fix extract
+    once and for all
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3798 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a1162b28fe63ddc4758c1c53e60b3dfe62b7a267
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Fri May 4 15:27:36 2007 +0000
+
+    Make the DLEXT config parameter ".jar"
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3617 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 03d436908e3637814ddd283f1b8ca8ae7de43624
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Apr 17 14:55:53 2007 +0000
+
+    Making several rbconfig properties better match what MRI reports. JRUBY-454.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3484 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit edbb5ee29cdb377d51fc4ea6acc8d8d69f4e5edf
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Thu Apr 5 07:18:06 2007 +0000
+
+    Add target_os to Config::CONFIG
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3392 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 0a81bbdbbd936a5cf0959a5a4d8651950fbb6663
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Mar 27 21:16:07 2007 +0000
+
+    Added a couple missing config properties IOWA looked for on install
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3308 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a2107e60085a5063bca76d897783a512bbd7eddc
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sun Feb 18 15:18:18 2007 +0000
+
+    JRUBY-606: Get rid of un/under-used IRuby interface
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3022 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit ed3ba3d77f4ec87b2d8414ccffe1532c9c03231e
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Thu Feb 1 23:35:50 2007 +0000
+
+    I think osmeone cursed me....
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2904 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 4aa8f4c2b0b7bedcf21846029f2577407e639224
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Thu Feb 1 23:30:48 2007 +0000
+
+    Remove accidental print
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2903 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 409cf0d1dbd00adcb0a142b17d8eec0e087f0c58
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Thu Feb 1 23:21:43 2007 +0000
+
+    JRUBY-516: rubygems and others do not like non-canonicalized libdir
+    
+    [Should help some users having problem with new rubygems -- it helps me on Mac]
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2902 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 3494e586739d10aede1009bb510128ccab362f8a
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Thu Jan 11 04:21:53 2007 +0000
+
+    - JRUBY-418: a couple more config values (for tattle)
+    
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2714 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 201a41ace1641fe1baf03f91da8f670318f739b7
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Mon Jan 8 02:34:07 2007 +0000
+
+    - JRUBY-418: jruby home and configuration updates
+    
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2696 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit ecaa1075877123d6bc029331082a3fbb34a47c21
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Tue Dec 5 09:12:29 2006 +0000
+
+    Fix for bug 316, adds Config::CONFIG['arch'] parameter.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2546 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 1d43870a42678f709851fcd9349d32a5f5be0dca
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Feb 2 19:51:50 2006 +0000
+
+    merging cnutter_work1 to HEAD
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1869 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 1dd061e800c87a70038a6459ff6e9ca519dad5e8
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jan 25 05:46:27 2006 +0000
+
+    normalizing all file paths to use forward-slash as path separator
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1867 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit f11f183fa177acbe7f7b2685c56f38fb3261856d
+Author: David Corbin <dcorbin@users.sourceforge.net>
+Date:   Thu Nov 24 16:46:48 2005 +0000
+
+    Added dummy placeholder for Etc.
+    Added "ruby_version" to rbconfig
+    Fixed NPE in ReflectionCallback.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1834 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit b9fc22569381e4cf67845d6a9b87ff69d6165135
+Author: David Corbin <dcorbin@users.sourceforge.net>
+Date:   Wed Nov 23 10:55:34 2005 +0000
+
+    Added 'very fake' fcntl, and bit more Socket support.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1832 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 4dfdacd80c56018084c618f3bbab7b542653d95e
+Author: David Corbin <dcorbin@users.sourceforge.net>
+Date:   Sat Oct 8 13:07:06 2005 +0000
+
+    Introduced IRuby interface for Ruby runtime object.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1798 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 35d53d166de629779bfb76d9c9842646a41defeb
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sat Oct 1 19:22:50 2005 +0000
+
+    Consistency of Libraries (since I want to make a new one and have it follow similiar conventions to the others):
+    - Remove ILoadService and LoadServiceFactory (file under your are not gonna need it [YANGNI])
+    - Rename and move libraries so they use the same conventions for names and locations
+      - Mutex becomes RubyMutex (like BasicSocket)
+      - RbConfig becomes RbConfigLibrary
+      - SocketLibrary moved to same package as other libraries
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1781 961051c9-f516-0410-bf72-c9f7e237a7b7

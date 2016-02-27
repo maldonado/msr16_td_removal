@@ -1,0 +1,180 @@
+commit be4d1fe659618fae35c752ee098e1d33a85eda8e
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Sun Aug 24 21:09:04 2014 +0000
+
+    Bug 56772 - Handle IE Conditional comments when parsing embedded resources
+    Bugzilla Id: 56772
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1620188 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8833ecda4fb8206c4f02a1b89d3cd2f77524f1c4
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Sun Aug 24 12:48:50 2014 +0000
+
+    Add javadocs and rename constructor parameters to make it clearer
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1620133 13f79535-47bb-0310-9956-ffa450edef68
+
+commit cd46d92b66db7717cc78547a99c32fc4f4baf9a7
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Mon Oct 7 21:36:47 2013 +0000
+
+    Bug 55632 - Have a new implementation of htmlParser for embedded resources parsing with better performances
+    Bugzilla Id: 55632
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1530074 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 99b941c59771d9882aa585934d53f620d301f58b
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Sat Oct 5 22:32:38 2013 +0000
+
+    Bug 55632 - Have a new implementation of htmlParser for embedded resources parsing with better performances
+    Bugzilla Id: 55632
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1529543 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f6aa85ee55b9286c02bd0368686613b3722f4260
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Nov 27 00:10:41 2012 +0000
+
+    Move to Java 6
+    add @Override for interface implementations
+    Bugzilla Id: 54199
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1413953 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 63ca412d460c62b512abf1812e77bc7aad2def71
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Wed Sep 5 20:39:19 2012 +0000
+
+    use indexOf(char)
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1381356 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 9de8dfd38617dabcf25545e54f3e061d9c1e9793
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Wed Dec 28 14:33:41 2011 +0000
+
+    Bug 49374 - Encoding of embedded element URLs depend on the file.encoding property
+    Now using SampleResult#getDataEncodingWithDefault() to avoid relying on file.encoding of the JVM.
+    Modified HTMLParserTestFile_2.xml to take into account the impact of encoding change.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1225193 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ecaa712a0938eff16391906722642b2bce98c949
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Oct 22 22:43:49 2011 +0000
+
+    Unused import
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1187820 13f79535-47bb-0310-9956-ffa450edef68
+
+commit cc50138531465286ea2cabee484856e101186507
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Fri Oct 7 09:27:54 2011 +0000
+
+    Fixed errors in TestCase (6 test failures):
+    - Error in baseURL for relative file names (testfiles not needed I think)
+    - FileInputStream not closed
+    - Renamed  HTMLParserTestFile_2.htm to HTMLParserTestFile_2.html
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1179979 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3e7a09eb57e8ee9c118ca70570d2e97dff31b27f
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu Oct 6 17:47:32 2011 +0000
+
+    Add test for file: protocol with relative file names (e.g. as saved by browsers)
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1179719 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d8e9ba8f2d416919114f8368fb6a14d69a096e3c
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Aug 15 15:14:47 2009 +0000
+
+    Fix up some raw types
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@804478 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6e2f4dcc1e1a6c5ba4c0db0e9854ef772f5ef31c
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu Apr 10 01:21:09 2008 +0000
+
+    Ensure if and for statements always use blocks
+    Other minor tidyups
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@646610 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6b4f8427311fbe8c555404828ede3eb119698924
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Mon Feb 4 19:55:48 2008 +0000
+
+    Add some missing svn:eol-style native properties
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@618404 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e5232161398dac373c43660652d26e8dd5cbdd8d
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Jan 7 18:31:05 2007 +0000
+
+    Update license (remove copyright)
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-2@493796 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 37116ad588568456c035c5982f0111fe26f4ed2b
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu Apr 27 22:26:58 2006 +0000
+
+    Ensure TestSuites are named
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-1@397662 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b8bdbe2b2112658ebb083156470456d74fa9b494
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Apr 8 14:56:50 2006 +0000
+
+    Update test list to allow for changed shared .set/.all files
+    Shorten assertion messages
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-1@392540 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 55f011d93a3731d53ffdc5256a1c760017b51574
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Mar 24 19:14:13 2006 +0000
+
+    Add file to assert message
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-1@388603 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ce53e7e172e573ed40cd40cf165e563c77621448
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu Jan 12 02:35:06 2006 +0000
+
+    New test for base href with full URL
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-1@368236 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a602e2849917d06ce3ceeaab13dd60ed0e18e6dd
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Mon Dec 5 19:35:22 2005 +0000
+
+    Another possible return
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-1@354143 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 2bf3e82350d4509268a2f2245d750beeb28236b5
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu Dec 1 00:46:51 2005 +0000
+
+    Fix tests to fail if they don't fail when they should!
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-1@350088 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c87bbdb4ca3905db7c4e5957736d16ff6b2a6dcf
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Mon Nov 14 00:35:21 2005 +0000
+
+    Tidy up constants; move test code to separate file
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-1@344014 13f79535-47bb-0310-9956-ffa450edef68

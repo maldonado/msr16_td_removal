@@ -1,0 +1,1062 @@
+commit 326b38f70193a95c9ef8371a727747fe0a5fecb5
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Jan 2 14:37:32 2014 +0000
+
+    assorted micro-optimizations by Adrian Nistor - 13 different Bugzilla issues
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1554813 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 46c940785aaa80d86df0bd49cd11bd2035d557bf
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Sun May 5 23:49:49 2013 +0000
+
+    adding if and unless namespaces allowing to put conditions on all tasks and nested elements. Code written by Peter Reilly. Bugzilla PR 43362.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1479422 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3d706ab8188a674936880b6f4530b0cf3991758b
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Mon Aug 20 17:49:13 2012 +0000
+
+    java 5 updates
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1375137 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6b7bc9e53500d2347a555dea2988788a922f3101
+Author: Jacobus Martinus Kruithof <jkf@apache.org>
+Date:   Sat May 26 13:33:54 2012 +0000
+
+    Bug 53291 - Several spell checker findings in apache ant 1.8.3 documentation
+    -- api --
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1342897 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6aa0a70ff793a6d40e7463c528b98f6ac064b22a
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Sun Feb 5 07:30:49 2012 +0000
+
+    make sure Project#createTask has read defaults.properties.  PR 50788
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1240669 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a28f64f5cf1b63d9342683d77d79a5cdf9e67f85
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Nov 22 12:27:03 2010 +0000
+
+    fix a bunch of warnings you get when building on Harmony which uses Eclipse's compiler.  There are still lots (more than 100) of deprecation warnings and warnings about missing serialversionids that I have ignored.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1037691 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 2bcbbabc08c4473a33730fd06cc67870f01e17fe
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Thu Feb 25 20:41:46 2010 +0000
+
+    sp
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@916442 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e73391195c100bd8f482ad79c84f17dac6ee293a
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Aug 25 14:04:01 2008 +0000
+
+    reallyput the value into the map.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@688729 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b456160d70409bf1b5b6a2cfd211a4d012378f00
+Author: Scokart Gilles <gscokart@apache.org>
+Date:   Mon Aug 25 13:10:20 2008 +0000
+
+    Fix possible race condition when modifying/reading restrictedDefinitions
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@688715 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 4068d7cd9986a3f05760e3856c003bc9b8a6a8dd
+Author: Scokart Gilles <gscokart@apache.org>
+Date:   Wed Aug 20 14:40:03 2008 +0000
+
+    Thread safety fix in case a macrodef/presetdef is executed in parallel to other type related tasks (like TypeFound conditions or starting a subproject)
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@687358 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 733f95fdf2959897b5226252914c05bdc1e5b333
+Author: Steve Loughran <stevel@apache.org>
+Date:   Tue Oct 16 10:48:13 2007 +0000
+
+    seems to me these should be synchronized
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@585106 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1ecdefae95b15e2ed1c1978465ae6589c2eb1e5d
+Author: Steve Loughran <stevel@apache.org>
+Date:   Wed Sep 19 12:28:01 2007 +0000
+
+    make this synchronized, especially the pop
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@577279 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 424bee292b49822b29c4cc583335999e29df2880
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Sat Aug 11 10:45:19 2007 +0000
+
+    checkstyle: remove trailing ws
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@564891 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 31deeb980977afb1cfe3234eb17a1360aab49d5e
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Fri Aug 10 22:26:22 2007 +0000
+
+    adding componentdef code
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@564787 13f79535-47bb-0310-9956-ffa450edef68
+
+commit dcc08844ad3507551cbe32a2e4dffc0ff0580bd4
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Wed Jul 18 10:37:18 2007 +0000
+
+    checkstyle: 100charlimit
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@557217 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c72c5d65d15100ae4e24cf816ddd17dcb9335519
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Wed Jul 18 09:58:53 2007 +0000
+
+    checkstyle
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@557212 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a840de1ce8f5d8b5cf31c5f91efb95f4d97467cc
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Tue Jul 17 18:37:53 2007 +0000
+
+    fmt/refac
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@557013 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a109f4fc4f94dffd829fe40566fb0c691e6ac5e6
+Author: Jacobus Martinus Kruithof <jkf@apache.org>
+Date:   Sun Apr 8 15:29:51 2007 +0000
+
+    unused imports / serialverUID
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@526568 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d5836ac061734031a67a6c3bb5fb2fe1e73e566f
+Author: Jacobus Martinus Kruithof <jkf@apache.org>
+Date:   Sun Apr 8 12:08:27 2007 +0000
+
+    Changes after static code analysis.
+    Code totally equivalent
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@526545 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b2db0ad0877fcd69ad3ddb91b0e4eac55b377321
+Author: Steve Loughran <stevel@apache.org>
+Date:   Thu Jan 11 22:01:51 2007 +0000
+
+    Extra diagnostics. Dump all types in a namespace if the one you ask for isnt known. Good for identifying typos, and helps you differentiate "library not yet loaded" from "task unknown"
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@495399 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d44807f593435cc95f2db2ddef3553166dc61226
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Wed Jan 10 19:46:47 2007 +0000
+
+    move and publish public static Project getProject(Object)
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@494952 13f79535-47bb-0310-9956-ffa450edef68
+
+commit cdadcda40f178fa306bcb336bacaff34f3a0d026
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Wed Dec 27 23:48:39 2006 +0000
+
+    checkstyle: make method a little smaller
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@490604 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 0c25b6891413a3af1006c54d9d68459b1a5609b5
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Sun Dec 10 22:24:29 2006 +0000
+
+    Fix for Bugzilla 41049.
+    This modification stops ComponentHelper from keeping track
+    of tasks so that they can be invalidated if the task
+    definition changes. This is not needed anymore as
+    changes in UnknownElement processing in ant 1.7 mean
+    that UEs are kept in the Target task/type list, not the
+    resultant tasks.
+    
+    
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@485287 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ebefa298a138aaf7088ad1af981a392b895eff85
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Thu Nov 23 22:34:51 2006 +0000
+
+    cast null in method call to allow 1.5 generices to not whine
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@478693 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c3232ae202e7c7d75d99cf50289148949db1ba4d
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Tue Nov 21 23:49:59 2006 +0000
+
+    reorder ComponentHelper imports, refactor getElementName to minimize
+    code duplication
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@477969 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 90e46ca4cd336158e0b702bf3b8f0d43b429d7a2
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Sat Nov 4 22:50:20 2006 +0000
+
+    checkstyle
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@471289 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 0aa2b2528ff92c3786e50f82ea65acf4d134c260
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Wed Nov 1 00:13:43 2006 +0000
+
+    some checkstyle changes
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@469717 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b912cb97f49f54d02ab97e8d98cfe10c9abc80b3
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Wed Sep 20 22:41:51 2006 +0000
+
+    Performance: bugzilla  25778
+        Minor optimization for ComponentHelper.initDefaultDefinitions
+    
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@448385 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ca38198a6c3919fb271160dd9530c902aa91f804
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Tue Sep 5 07:36:39 2006 +0000
+
+    do not get the exposed class unless necessary
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@440286 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 2e897819a83981a1f4de2e1cc72e33f080fcf573
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Sep 1 18:49:27 2006 +0000
+
+    copy2license.pl
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@439418 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 9ae85e523be191767f8d56d68a8f33651acd4f0b
+Author: Steve Loughran <stevel@apache.org>
+Date:   Tue Aug 22 23:07:49 2006 +0000
+
+    This is slick. Instead of printing ANT_HOME/lib in the message, we print the real directory set where libs can be added. And, if ant.home is not set, we decide this is an IDE and tell the user that too.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@433794 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1ad79cdf7799076d5acedea9e3611c429e0c56ce
+Author: Steve Loughran <stevel@apache.org>
+Date:   Wed Mar 8 12:44:14 2006 +0000
+
+    closing
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@384202 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 80bd9c5434773c1bdefa5bc486d92da827bb3087
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Mon Mar 6 15:54:23 2006 +0000
+
+    s/an bug/a bug/
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@383569 13f79535-47bb-0310-9956-ffa450edef68
+
+commit fb8e47ecf41c8e3f5bbd59f5f773e6ccf9a5f7e2
+Author: Steve Loughran <stevel@apache.org>
+Date:   Sun Mar 5 22:23:34 2006 +0000
+
+    took out the "dont bother us line". I know, we hate the calls, but maybe we are being too harsh here.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@383423 13f79535-47bb-0310-9956-ffa450edef68
+
+commit fdade0537c4628290168a365b9a14d28c3e32b72
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Feb 27 05:05:08 2006 +0000
+
+    2006
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@381261 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b3668ba41d255ec7713ab31e9c8cc2f113ef0b7a
+Author: Jesse N. Glick <jglick@apache.org>
+Date:   Sat Feb 25 00:50:48 2006 +0000
+
+    More helpful diagnostic message for an obscure mistake I once made...
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@380876 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 954f6058d772148440655e920c59b4cdfc651924
+Author: Jacobus Martinus Kruithof <jkf@apache.org>
+Date:   Thu Sep 22 20:03:53 2005 +0000
+
+    Layout, extracted methods / named constants
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@291012 13f79535-47bb-0310-9956-ffa450edef68
+
+commit fce0b0c9d0c8db530d1838c7db5a78e08df7e49b
+Author: Steve Loughran <stevel@apache.org>
+Date:   Tue Aug 23 09:43:07 2005 +0000
+
+    extra javadocs, as requested by JHM
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@278538 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 7527ef19625d2d77806b9ce8262b49e667bb7101
+Author: Steve Loughran <stevel@apache.org>
+Date:   Mon Aug 22 23:02:52 2005 +0000
+
+    Antlib changes. One I like, one I am still not sure I have right
+    1. you can go <typedef uri="antlib:something" /> and the resource is worked out automatically from the URI.
+    2. if you use antlib://org/ex/resource.xml we load in the resource by its full path, so you dont need multiple packages to have multiple antlib files.
+    I'm not sure about #2; I think it is convenient once you have antlib-only distros (i.e. inline declaration and script; nothing else), but am not sure about the syntax. Maybe
+    antlib://org.ex/antlib.xml would be better, and more in keeping with WWW URLs; if /antlib.xml is omitted, we would add it by default.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@278535 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b0078a54717eaf1f896ce3094adeed0540f6bd8e
+Author: Steve Loughran <stevel@apache.org>
+Date:   Mon Aug 22 21:24:22 2005 +0000
+
+    just making some strings constants, adding javadocs
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@278534 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 0d66fda8afb68be5649679aaa11c71c57b4ac25c
+Author: Steve Loughran <stevel@apache.org>
+Date:   Mon Aug 22 16:51:16 2005 +0000
+
+    move to constants to define policy strings; change so that ignore loads print out something at -v level. Why so? to debug antlib namespace declarations.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@278532 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a44afbeef74753208e8f526cde2f2024ae177d76
+Author: Steve Loughran <stevel@apache.org>
+Date:   Sat Aug 13 15:15:23 2005 +0000
+
+    typefound prints diags in -v option
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@278516 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b32f4587da5b6aa63458564000e7c29ab5f3e5cb
+Author: Jacobus Martinus Kruithof <jkf@apache.org>
+Date:   Mon Jun 6 19:45:32 2005 +0000
+
+    PR: 35246
+    As suggested by Darin Swanson.
+    (use USER_LIBDIR, and use File.separatorChar in there)
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@278406 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 39cc96663f1c8fe0df6249e2f8210f405f858e78
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Thu May 26 18:54:25 2005 +0000
+
+    Consistency and some spaces
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@278365 13f79535-47bb-0310-9956-ffa450edef68
+
+commit fcd9581d6121602489e491a92dea0109a186a274
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Mon May 23 19:27:30 2005 +0000
+
+    add brief version of getElementName()
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@278331 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f5d573cf7d0525034c174bec7367e563116e6e33
+Author: Steve Loughran <stevel@apache.org>
+Date:   Mon May 16 12:11:44 2005 +0000
+
+    merged antlib: strings to a single (currently private) constant.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@278268 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f6624325f53f33627fda986b65abc557b86dd3d1
+Author: Steve Loughran <stevel@apache.org>
+Date:   Thu May 5 15:57:19 2005 +0000
+
+    antlib awareness in diagnostics messages
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@278230 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 99903f49b574b8e8328dcd64499fd4fb8b6538b2
+Author: Jacobus Martinus Kruithof <jkf@apache.org>
+Date:   Thu Mar 3 14:04:27 2005 +0000
+
+    reduced visibility of the members not defined in super class of a private inner class
+    removed unnecessary casts
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277775 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 71f620bcdbb1b510143fc7e52def480044aca335
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Tue Mar 1 17:17:39 2005 +0000
+
+    Clean up spacing, remove erroneously inserted "not".
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277754 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 86365f103e67eae76ab6059b61289f6ba4bbbd45
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Tue Mar 1 16:23:41 2005 +0000
+
+    Some space/punctuation cleanup.  Like it, Steve.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277752 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b0003afe366c593c70d5af9b037ae55dee28df1e
+Author: Steve Loughran <stevel@apache.org>
+Date:   Tue Mar 1 14:55:47 2005 +0000
+
+    complete rework of reporting when we cant instantiate an element
+    
+    old: generic error message
+    
+    new: step by step diagnostics with instructions.
+    
+    The code treats ant tasks and ant optional tasks specially, based on package names.
+    
+    Also: moved some constants into the appropriate places.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277750 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 58e0d44ddfcdcbd18d16c9a7be8c10867870bdd8
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Fri Jan 28 16:01:07 2005 +0000
+
+    Who'd have guessed that:
+     boolean xor not boolean
+    is equivalent to:
+     boolean == boolean?
+    
+    Added a comment as well so Peter will be my friend again!
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277544 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 407da1a68be77db48efe9c3d19157ca863bf7e65
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Thu Jan 27 21:53:27 2005 +0000
+
+    -2 characters
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277521 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 841c7e41432de534c545186cbcd6572c5588fe2a
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Wed Jan 26 20:12:51 2005 +0000
+
+    Oops, got | and ^ confused... :(
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277487 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ac030691d61b77566e6f4a3151c6e5f3c4c4d952
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Thu Jan 20 16:58:56 2005 +0000
+
+    date
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277400 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 89e05ac351ed080061f4965f20d47afd155026ab
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Thu Jan 20 16:54:54 2005 +0000
+
+    trailing space
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277399 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f8bc42dda797ae478d391992b6cd1fb42933adbb
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Thu Dec 16 18:13:18 2004 +0000
+
+    Yet more bumming & javadoc.  You'd think I'd have stopped by now...
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277228 13f79535-47bb-0310-9956-ffa450edef68
+
+commit bc61ebf17a2d171d44f66e0a09f828ac3c1a6b38
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Thu Dec 16 16:51:11 2004 +0000
+
+    Same LOC count, minus 2 method calls, cute implementation.  ;)
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277225 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 305da99f8eb56edf8b809e56cb86aa22e26b2553
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Thu Dec 16 14:57:10 2004 +0000
+
+    Checkstyle
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277221 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 960cd2a7117d0fa96b4247c3081da7b5363ba0d8
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Wed Dec 15 23:44:06 2004 +0000
+
+    More javadoc work and LOC bumming.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277215 13f79535-47bb-0310-9956-ffa450edef68
+
+commit db48fbb829447064857a6b918e78cdab0b0c89b1
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Nov 22 09:23:37 2004 +0000
+
+    Various checkstyle violations
+    
+    Submitted by:	Larry Shatzer
+    
+    And some
+    
+    (untabify (point-min) (point-max))
+    
+    on some files.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277063 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 29b76e0c0106639914aec76b2f1c7d7b63b1c0d4
+Author: Steve Loughran <stevel@apache.org>
+Date:   Wed Nov 10 00:37:31 2004 +0000
+
+    These are all patches to stop java1.5 whining about varargs.
+    In java.15 some of the reflection APIs are overloaded to be
+    usable via varargs, so untyped things cause confusion. These
+    are everywhere that bootstrap complains.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277008 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 527056c9efc3468a3b3c2bd0aba9c3b249474eb4
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Wed Jun 16 15:41:51 2004 +0000
+
+    Code cleanup.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276586 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 5ee9f7e6b52909e3d72fe3b58dca99b035b5d176
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Apr 14 15:42:08 2004 +0000
+
+    -breakiterator fixes by Jack Woehr
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276313 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c885f568369156a62e3ccb5b4b93b73b9d054443
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Tue Mar 9 16:49:09 2004 +0000
+
+    remove authors from files
+    PR: 27177
+    Obtained from: J.M. (Martijn) Kruithof
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276208 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 036aacdf4d92193b8d93b3e2ce281acc76e239d7
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Mon Feb 23 09:40:13 2004 +0000
+
+    Autoload of antlib.xml from default namespace
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276132 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 278781dcd669412e5e35cc95d8a96e0b2a278f50
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Mon Feb 9 21:05:47 2004 +0000
+
+    Copyright owner is The Apache Software Foundation
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276065 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 66555ca10d24bbfc55e710b9d65f809cfe713dab
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Wed Feb 4 20:38:09 2004 +0000
+
+    Remove trailing spaces in all java files
+    in order to make checkstyle happy
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276017 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ca1513552f7af7fc19de490fbe2d88adb6c993ad
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Tue Feb 3 22:44:50 2004 +0000
+
+    Switch to Apache Software License 2.0
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276010 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 80b892fb4f0b581ad054fbb8d5b825167b255b5c
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Wed Dec 24 10:52:03 2003 +0000
+
+    ComponentHelper.
+    Logic for copying the checked namespaces to new projects was broken.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@275842 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b1f07fa5504beeeffc19fc6be6587738b0bf5c8c
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Fri Oct 17 08:09:46 2003 +0000
+
+    synchonize ComponentHelper#checkNamespace()
+    This fixes a bug with use of <parallel> and xmlns:prefix="antlib:package
+    <project default="bug" xmlns:ac="antlib:net.sf.antcontrib">
+      <target name="t2">
+        <parallel>
+          <ac:shellscript shell="bash">echo hello</ac:shellscript>
+          <ac:shellscript shell="bash">echo hello</ac:shellscript>
+        </parallel>
+      </target>
+    </project>
+    - need a unit test for this
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@275522 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 99b22a7da3308ae6800e2b6d95ec3827b54c852f
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Wed Sep 10 10:37:14 2003 +0000
+
+    Change design for storing the current antlib uri
+    Allows deferred execution to work - for example
+    ant script in macro def.
+    Bugzilla report : 23029 from Yannick Menager
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@275209 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3de1a4577ed1aa9bf0c9a9f3ea05b9748045b363
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Tue Sep 9 16:52:03 2003 +0000
+
+    fix typeofs
+    Patch from Larry Shatzer
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@275207 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 665a5463e7d894a3d7cfb6071dae3fc0ec98cb39
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Mon Sep 1 14:15:30 2003 +0000
+
+    Place antlibs temp defintions in a ant:current namespace.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@275163 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c7ec7ad1a4aa4f52693b354d08914e07e0bcd2a8
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Fri Aug 15 15:04:29 2003 +0000
+
+    * add equality and similar methods for the ant definitions
+      used to check if a new definition overriding a previous
+      definition is actually the same definition via a ant or
+      antcall command
+    * remove pointless check for antlib: in setUri
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@275106 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6f6769834a03b8f8c87730bb2e418f4d6ca80a74
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Fri Aug 15 08:40:37 2003 +0000
+
+    move same definition to AntTypeDefinition
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@275099 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 9434671efa81b38a4ebc571a5ea531375b541758
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Wed Aug 13 14:46:15 2003 +0000
+
+    removing enum variable
+    PR: 22345
+    Obtained from:
+    Submitted by:
+    Reviewed by:
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@275074 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 0c43380c15fc81165edf01e2cb6152e9b4087288
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Wed Aug 13 14:06:20 2003 +0000
+
+    remove some deprecated methods and 1.1 holdovers
+    Bugzilla: 22326
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@275071 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ca5799fd8c1780abcc25f63745faf95bd2cdb06a
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Wed Aug 13 13:18:54 2003 +0000
+
+    Add ns support
+    Also split Definer.java in a base class (DefBase) to allow
+    it to be used for other defining tasks
+    Also add AntlibInterface to allow antlib to set uri and
+    classloader for other tasks/types that Definer.
+    
+    Bugzilla: 19897
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@275064 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 5d4f445f37f39465ca8d550e57c8d80e61495af0
+Author: Conor MacNeill <conor@apache.org>
+Date:   Tue Aug 12 15:15:06 2003 +0000
+
+    Rename some enums ...
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@275058 13f79535-47bb-0310-9956-ffa450edef68
+
+commit facb8658b28232d1d70fdf09e707efbe8cae920e
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Mon Jul 21 10:10:07 2003 +0000
+
+    Fix for NPE reported by Nick Chalko.
+    When overriding a definition the code did not
+    check if the old (or new) definitions classes existed
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274876 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e580392c2d28c2a3530ebe0e1005bae0d45c5b8b
+Author: Conor MacNeill <conor@apache.org>
+Date:   Sun Jul 6 09:57:37 2003 +0000
+
+    More cleanup
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274776 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1819851c5e4d6f37b443dd17bf52bdc8f8896c4c
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Fri Jul 4 17:00:11 2003 +0000
+
+    changed for checkstyle
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274771 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 5b331f6baa094f399a85688f1642f719680d9574
+Author: Conor MacNeill <conor@apache.org>
+Date:   Fri Jul 4 14:04:56 2003 +0000
+
+    Easy stuff - imports and licence headers
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274768 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 24f13ef07707ecf4f46a9d90fd434a8d35f14940
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Fri Jul 4 09:35:31 2003 +0000
+
+    Remove cloning of AntTypeDefinition when creating a sub-project
+    PR: 21296
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274761 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 4ffa9e1380956291543b6662e6ebfe89e859ebeb
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Fri Jun 27 18:16:59 2003 +0000
+
+    quick fix for Ant.java use of property in Ant#reinit
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274726 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 9f6981d2a21d4a2d0d8f3fafee609080c65dbf6e
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Fri Jun 27 09:24:10 2003 +0000
+
+    Get Project#getTaskDefinitions and Project#getDataTypeDefinitions
+    to emulate old behaviour
+      This fixs the <antstructure/> output.
+    Provide ComponentHelper#getAntTypeTable to provide the full table
+    Revert changes to ProjectTest
+    Update Typedef.java (forgot this in previous commit)
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274723 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8701272b2418d74536d09b289f118d1833d42217
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Thu Jun 26 08:54:29 2003 +0000
+
+    Second patch from antlib update as described in
+    http://issues.apache.org/bugzilla/show_bug.cgi?id=19897
+    This patch
+       * unifies the type and task definitions into one table
+       * types and tasks are represented by a AntTypeDefinition object
+       * taskadapter has been generalized to a typeadapter
+       * <typedef/> has a number of new attributes:
+           - adapter
+           - adaptto
+           - onerror
+       * <taskdef/> html page updated to refer to <typedef/> page
+    
+    PR: 19897
+    Submitted by:	Peter Reilly
+    Reviewed by:
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274718 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f97fcdb35ec37a4a93fc3e7a38ae7e8675e77092
+Author: Conor MacNeill <conor@apache.org>
+Date:   Tue Jun 10 14:05:58 2003 +0000
+
+    Improve error messages when creating tasks
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274659 13f79535-47bb-0310-9956-ffa450edef68
+
+commit abf343291206f3cab8b3436214cc0a88efefcb25
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Wed May 28 16:27:37 2003 +0000
+
+    PR: 19897
+    Submitted by:	Peter Reilly
+    
+    This patch adds the add(Type) to the introspection rules and
+    updates ConditionBase, FilterChain, Path, SelectorBase and TokenFilter
+    to use the new introspection rule.
+    
+    =========================================
+    =   Changed Files
+    =========================================
+    
+    src/main/org/apache/tools/ant/ProjectHelper.java
+      add two methods used by introspection - getComponentClass and
+      createComponent
+    
+    src/main/org/apache/tools/ant/IntrospectionHelper.java
+      implement addTypeMethods add(Type)
+    
+    src/main/org/apache/tools/ant/filters/TokenFilter.java
+       get TokenFilter to use add(Type) instead of dynamicconfigurator
+       make all nested classes ProjectComponents
+    
+    src/main/org/apache/tools/ant/taskdefs/Delete.java
+       implement an add(FileSelector) method
+    
+    src/main/org/apache/tools/ant/taskdefs/MatchingTask.java
+       implement an add(FileSelector) method
+    
+    src/main/org/apache/tools/ant/taskdefs/condition/ConditionBase.java
+       add an add(Condition) method to demostrate use of add(Type) method
+    
+    src/main/org/apache/tools/ant/types/AbstractFileSet.java
+       implement add(FileSelector)
+    
+    src/main/org/apache/tools/ant/types/FilterChain.java
+       use add(ChainableReader) instead of DynamicConfigurator
+    
+    src/main/org/apache/tools/ant/types/Path.java
+      add an add(Path) method
+    
+    src/main/org/apache/tools/ant/types/optional/ScriptFilter.java
+      remove set/get project as parent imlements them now
+    
+    src/main/org/apache/tools/ant/types/selectors/BaseSelectorContainer.java
+      implement the add(FileSelector) method
+    
+    src/main/org/apache/tools/ant/types/selectors/SelectorContainer.java
+      add an add(FileSelector) method
+    
+    
+    =========================================
+    =   New Files
+    =========================================
+    
+    src/etc/testcases/types/addtype.xml
+      testcases for addtype
+    
+    src/testcases/org/apache/tools/ant/types/AddTypeTest.java
+      test cases for add type
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274635 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b3a0cca7caed8bb8ca0c267aad7e60cae78eaa37
+Author: Costin Manolache <costin@apache.org>
+Date:   Mon May 5 13:59:24 2003 +0000
+
+    Last part of component helper merge ( including the fix contains -> containsKey for the test case )
+    
+    PR:
+    Obtained from:
+    Submitted by:
+    Reviewed by:
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274550 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 2a0b07ef1df0ddcb78c56d8d1a972f90740117d1
+Author: Costin Manolache <costin@apache.org>
+Date:   Mon May 5 02:17:28 2003 +0000
+
+    Remove one method - it wasn't used, and it seems it's not powerfull enough for
+    all cases discussed. The method that takes UnknownElement, ns, tag should
+    be able to cover everything ( by having access to UE you get access to parent
+    and all the tree - so any kind of policy can be implemented )
+    
+    Of course - nothing calls this method yet. Switching UnknwonElement and the
+    normal component creation is easy - but there are many pieces of code that
+    call the old method.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274548 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 695a96add42d2fe78ce7fff5a0d7c1fb887a26ed
+Author: Costin Manolache <costin@apache.org>
+Date:   Sat May 3 06:27:00 2003 +0000
+
+    The ctor takes Project as param.
+    
+    PR:
+    Obtained from:
+    Submitted by:
+    Reviewed by:
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274546 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d60aff9e78c3c0878ccdd02a4738ef4646d92ae5
+Author: Costin Manolache <costin@apache.org>
+Date:   Sat May 3 05:59:35 2003 +0000
+
+    Update with the changes in Project.
+    
+    This makes ComponentHelper the almost exact duplication of the task creation
+    code in Project.
+    
+    
+    PR:
+    Obtained from:
+    Submitted by:
+    Reviewed by:
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274545 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 26a9faff104e1786d28d7855210de58f0b818184
+Author: Magesh Umasankar <umagesh@apache.org>
+Date:   Tue Apr 15 17:23:16 2003 +0000
+
+    Refactor static method into a non-static version.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274466 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c4fc48f69dc1a3abe436e42c103e6b53eb92d918
+Author: Magesh Umasankar <umagesh@apache.org>
+Date:   Mon Apr 14 17:21:27 2003 +0000
+
+    Call setproject for all created objects.
+    
+    PR: 18312
+    
+    Submitted by: peter.reilly@corvil.com (peter reilly)
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274448 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1dc8a079057e191ca4c158f36843c2c9e9f9be52
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Feb 10 14:15:00 2003 +0000
+
+    Remove Jakarta Project from license
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274040 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c38217dcc32fef96f464b96b1fa05a72faa9a9b3
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Jan 6 07:32:35 2003 +0000
+
+    Happy New Year ;-)
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273757 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 2ba55667967546b923a7f23fe3f0255e5dc9efdb
+Author: Costin Manolache <costin@apache.org>
+Date:   Sat Jan 4 16:36:42 2003 +0000
+
+    Cut&paste of all code related to task/types from Project.
+    
+    This is _not_ an antlib, just a mechansim to make the task/type
+    management pluggable and simplify Project ( which will just delegate
+    for backward compat. ).
+    
+    Please review - and -1 ( or just remove/change ) if you think this
+    is bad.
+    
+    The actual details of the plugin mechanisms are not perfect -
+    we need to settle on them before 1.6 is released ( same for PropertyHelper).
+    
+    PR:
+    Obtained from:
+    Submitted by:
+    Reviewed by:
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273745 13f79535-47bb-0310-9956-ffa450edef68

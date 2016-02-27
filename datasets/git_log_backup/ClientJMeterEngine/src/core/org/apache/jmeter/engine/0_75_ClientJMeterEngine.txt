@@ -1,0 +1,421 @@
+commit 022af006bf9b49bca43464f376cf63c427a9828f
+Author: Andrey Pokhilko <undera@apache.org>
+Date:   Fri Jan 30 09:33:21 2015 +0000
+
+    Bug 57500 - Introduce retry behavior for remote testing
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1655969 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 820ab22f714b2d7a5acf500862c348344068ce91
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Mon Nov 4 19:55:51 2013 +0000
+
+    Bug 55739 - Remote Test : Total threads in GUI mode shows invalid total number of threads
+    Bugzilla Id: 55739
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1538742 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 9ab6b6240f50d3dae399d46bf207c2a00d14ddee
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Nov 27 00:14:39 2012 +0000
+
+    Move to Java 6
+    add @Override for interface implementations
+    Bugzilla Id: 54199
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1413956 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c1ca828f7e90e7c684f489acd9a8ef25ca5ae0a2
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Aug 21 21:34:14 2012 +0000
+
+    Pull constant string out of loop
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1375809 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b578fde88f6b262b6bb2a241d922d6d137ca292a
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Aug 21 21:32:50 2012 +0000
+
+    Inline variables that are only used once
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1375805 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 2aa894829dcfa216db08686ac7dcc926fbeec959
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Aug 21 21:31:16 2012 +0000
+
+    ClientJMeterEngine perfoms unnecessary traverse using SearchByClass(TestListener)
+    [it appears this has always been the case]
+    Bugzilla Id: 53759
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1375802 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 316e1d9287f2038768f7dc6504e12fb65353fded
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Sun Apr 1 20:56:14 2012 +0000
+
+    Bug 52967 - The function __P() couldn't use default value when running with remote server in GUI mode.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1308201 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 5f71128272eac1c6e1fde08a13740575f0879eda
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Tue Nov 8 21:14:34 2011 +0000
+
+    Bug 51091 - New function returning the name of the current "Test Plan"
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1199459 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3d8f5f735ce87829c8d09975832c0eaf0fed0ec2
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Mon Oct 3 10:43:01 2011 +0000
+
+    Be more precise about which method actually failed
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1178372 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 845feae3f5f5df457a76cbd91dda69edbeafdaee
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Sep 16 16:41:59 2011 +0000
+
+    It's confusing to use the same interface method names for JMeterEngine and RemoteJMeterEngine,
+    so prefix the remote interface method names with "r".
+    This also makes it easier to trace the method calls in an IDE.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1171656 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3f5b04a7e258bfa392ce2abc14f6d719f2fa6a42
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Feb 4 01:04:06 2011 +0000
+
+    Add remote shutdown capability
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1067054 13f79535-47bb-0310-9956-ffa450edef68
+
+commit dc1a76af6e8a4d17d800059a25400a89c6e8fbce
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu Feb 3 23:54:13 2011 +0000
+
+    Bug 50659 - JMeter server does not support concurrent tests - prevent client from starting another
+    (part deux)
+    Remove thread from ClientJMeterEngine - if it is required for GUI, then let the GUI create the thread
+    This allows proper return of error conditions
+    Also replace System.exit() with interrupt() of RMI thread
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1067038 13f79535-47bb-0310-9956-ffa450edef68
+
+commit da0accd5c3129f90f58fe400960cd98c1182fbee
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Wed Feb 2 23:10:06 2011 +0000
+
+    Bug 50659 - JMeter server does not support concurrent tests - prevent client from starting another
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1066684 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 62536724c77451af8272a0c70a8106decb6f7823
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Jan 28 22:55:46 2011 +0000
+
+    Bug 50675 - CVS Data Set Config incompatible with Remote Start
+    Fixed RMI startup to provide location of JMX file relative to user.dir.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1064920 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 762aef9b0ca8a7b7dfc1b9f558c234ff502976e9
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Mar 6 21:02:34 2010 +0000
+
+    Bug 48350 - Deadlock on distributed testing with 2 clients
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@919850 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1b870d0fb6eb7c01373ae7d47b7ab427ab89d672
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Feb 23 16:09:09 2010 +0000
+
+    Remove trailing spaces
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@915405 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8487f3805d104d207197954c9cddd7445c430179
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Wed Nov 18 23:55:01 2009 +0000
+
+    Add generics to SearchByClass
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@882009 13f79535-47bb-0310-9956-ffa450edef68
+
+commit bf31e836bc9de8b859cf97b6422512093e6f39d4
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu Jun 11 14:18:36 2009 +0000
+
+    Fix problems with remote clients - bug introduced in 2.3.3
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@783782 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ac460ac76aadb8174137c4e76f75c6c0c244a880
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Apr 18 14:46:01 2009 +0000
+
+    Unused method
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@766331 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 7902bed60b3a4dce33b7c527622a1a2d608e7606
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu Feb 26 02:32:31 2009 +0000
+
+    Bug 46636 - rmi ports
+    Remote server now uses port defined by the property server.rmi.localport if present
+    Simplified Client / Server classes
+    Show remote object connections on console
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@747989 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 15840f7d683fdce7838e763e1c0aeb3559cc57ad
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Jul 6 23:42:12 2008 +0000
+
+    Detab
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@674362 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c2ec28742850b10f65ad61384129c64e3ca6647f
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Mar 30 14:35:01 2008 +0000
+
+    Bug 44707 - Running remote test changes stored tree
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@642746 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 9a7422c2426646dd5c1431740743d7a37d1b9be4
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Wed Nov 7 18:40:57 2007 +0000
+
+    Restrict test Pre-compiler processing to ResultCollector only for the client part of a remote test
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@592849 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1cc6519152c99f12f68113907015eaa29fe8be90
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu Oct 25 20:34:48 2007 +0000
+
+    Bug 42012 - Variable Listener filenames do not get processed in remote tests
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@588342 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 9a3ef375c1a56be08dede6da6e4c484ac96af8bc
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Mon Oct 22 00:27:57 2007 +0000
+
+    Move setProperty() action to StandardJMeterEngine as that is where the other actions are handled
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@586978 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 2d1d5b3bc890ad0a8c33825aca95c429fdb68395
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Oct 21 23:59:54 2007 +0000
+
+    Add -G option: send properties to remote servers
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@586977 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8f6aa594e524034556c624c7ce36dfdbf080c953
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Mon Aug 20 13:41:33 2007 +0000
+
+    Remove unnecessary try/catch
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-2@567702 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b5e007fceb6bab6d5d879b70a5d55498dc478ba4
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Mon Aug 20 12:37:06 2007 +0000
+
+    Move object construction out of synchronised block
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-2@567669 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 361684fd48c9d3c9f9f2de74ddda73d16968207d
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Mon Aug 20 12:34:18 2007 +0000
+
+    Bug 39792 - ClientJMeter synchronisation needed
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-2@567668 13f79535-47bb-0310-9956-ffa450edef68
+
+commit bd5d121d68038f3e712ec463a2172dd7026f52f8
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Jan 7 17:46:38 2007 +0000
+
+    Update license (remove copyright)
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-2@493779 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a7843484866917797f9a3587b179674c20ad1012
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Wed Apr 5 19:35:42 2006 +0000
+
+    Tidy up; add NLS markers
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-1@391745 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 76159a5b953d9dc5518b2ccb03bfbc1c4908837d
+Author: Michael Stover <mstover1@apache.org>
+Date:   Tue Jul 12 20:51:09 2005 +0000
+
+    Formatting Code to basic Java Standard
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@325542 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 2e97b4c88eed1a739adf62fb4fa30b4ca78527ab
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Jul 9 11:20:59 2004 +0000
+
+    Bug 29913  Caching problem of remote engine stub
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@324783 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 503346d6a94eef4d7860b402372346458a59ebe0
+Author: Michael Stover <mstover1@apache.org>
+Date:   Fri May 28 21:09:14 2004 +0000
+
+    Lightning struck, and this is a week's worth of offline effort.  Visualizers have been refactored.  The AccessLogSampler and supporting classes have been refactored, with an additional Filter implementation, and made into a TestBean, fixed a bug that causes tests not to stop in certain cases.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@324592 13f79535-47bb-0310-9956-ffa450edef68
+
+commit eae70826a51860762bf8ff04b261fb2afa2d4e43
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu Feb 12 23:59:02 2004 +0000
+
+    ASF L V2; added Remote Exit functionality
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@324275 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 66cb35c16d4da1e4b54b734139255b0d993d4a95
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Mon Feb 9 00:48:16 2004 +0000
+
+    Apply temp fix suggested in bug 23487
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@324221 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 96c6175b1fed9ed4f66964fb1566cb67a445d12b
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Oct 21 00:00:00 2003 +0000
+
+    Fixing Javadoc warnings; some unused fields commented
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323621 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 482d5c153440b8e04ddf6be5cf7903d26d010e7f
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Oct 19 22:22:22 2003 +0000
+
+    Fix @created; remove unused fields; make log final
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323597 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 06af2893b5be3ca0bb7401f974851c9098559045
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu Oct 9 01:02:53 2003 +0000
+
+    Demote warning messages to informational
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323497 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 81e0259837bfcd96223d0199179f932aaab9703e
+Author: Jeremy Arnold <jeremy_a@apache.org>
+Date:   Wed Jun 25 21:18:05 2003 +0000
+
+    Reformatted to JMeter conventions.
+    Minor JavaDoc updates.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323368 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 12057fa053d0d0c6d43d6536cb9c393afd0409c6
+Author: Michael Stover <mstover1@apache.org>
+Date:   Fri Jun 6 14:02:09 2003 +0000
+
+    New Logging procedure (Sebastian Bazley)
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323318 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f76dc9b5159997fe2db8957b09df4830f248960b
+Author: Michael Stover <mstover1@apache.org>
+Date:   Fri May 2 20:58:10 2003 +0000
+
+    Putting remote start in asynchronous mode so gui doesn't get locked up
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323247 13f79535-47bb-0310-9956-ffa450edef68
+
+commit baa7b1776ba3876cd5962bf0126010272a2b6f87
+Author: Michael Stover <mstover1@apache.org>
+Date:   Wed Feb 5 05:12:10 2003 +0000
+
+    Creating new Extractor component type.  Making first new Extractor implementation (RegexExtractor)
+    Also hit the "Organize Imports" button in eclipse at the wrong time.  Many class files touched - sorry.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323072 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e010fabc00d06483b01456d61caeba54a3812c10
+Author: Michael Stover <mstover1@apache.org>
+Date:   Thu Oct 17 19:47:20 2002 +0000
+
+    Moving jorphan classes back under JMeter's umbrella
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@322908 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 31ecdbb04d2bc04d4a64ec3274e1ff3fc32e8454
+Author: Michael Stover <mstover1@apache.org>
+Date:   Tue Oct 15 18:53:31 2002 +0000
+
+    Extracting non-JMeter specific classes to separate library
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@322904 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 83c789314d92cc998b022447286c01debba9da97
+Author: Michael Stover <mstover1@apache.org>
+Date:   Thu Aug 29 18:17:43 2002 +0000
+
+    Updating docs for help system
+    Making class members transient as appropriate
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@322888 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 35208e9484592ab0405fd9dace4949d3e7ad5f53
+Author: Michael Stover <mstover1@apache.org>
+Date:   Fri Aug 23 22:51:47 2002 +0000
+
+    Removing calls to system.out, system.err, and printStackTrace()
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@322867 13f79535-47bb-0310-9956-ffa450edef68
+
+commit dd9932a03c9826150ab4c98914a145ba5f3248ae
+Author: Michael Stover <mstover1@apache.org>
+Date:   Sun Aug 11 19:24:54 2002 +0000
+
+    New src directory organization, committing all files
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@322831 13f79535-47bb-0310-9956-ffa450edef68

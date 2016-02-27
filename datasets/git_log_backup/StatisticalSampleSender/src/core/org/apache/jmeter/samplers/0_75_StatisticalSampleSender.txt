@@ -1,0 +1,198 @@
+commit f023972dbfdd074dd8bedd06a56b8ce5143c2353
+Author: Felix Schumacher <fschumacher@apache.org>
+Date:   Tue Jan 6 11:02:22 2015 +0000
+
+    Bug 57193: Add param and return tags to javadoc
+    Bugzilla Id: 57193
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1649775 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 0d2c02da2e23e7bb8e3522cc5a6b9e55f0b2f969
+Author: Felix Schumacher <fschumacher@apache.org>
+Date:   Sun Dec 21 18:57:33 2014 +0000
+
+    Correct a few typos in javadoc comments
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1647187 13f79535-47bb-0310-9956-ffa450edef68
+
+commit fa1260e00f5567ec275acd3861b7f93cf9bc4114
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Wed Mar 27 00:48:57 2013 +0000
+
+    StringIndexOutOfBoundsException at SampleResult.getSampleLabel() if key_on_threadname=false when using Statistical mode
+    Bugzilla Id: 5473
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1461380 13f79535-47bb-0310-9956-ffa450edef68
+
+commit aeb0793e3a2f8f7d494f9cd03f1e0dac1558d193
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Mar 17 23:28:26 2013 +0000
+
+    Tab police - also remove trailing spaces in same files
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1457590 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 9ab6b6240f50d3dae399d46bf207c2a00d14ddee
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Nov 27 00:14:39 2012 +0000
+
+    Move to Java 6
+    add @Override for interface implementations
+    Bugzilla Id: 54199
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1413956 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 33e3ed95a5d3fa6f8c4a4b38567ac7e3a27a61e3
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Dec 16 14:43:32 2011 +0000
+
+    Fetch settings once in readResolve rather than on each sample
+    Fix misleading log message
+    Make server only fields transient - no point in copying them from the client
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1215158 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a2454a7e5616a0e6b16d9617e956b62eaa5be4dc
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Dec 16 14:13:07 2011 +0000
+
+    Revert to original names and locations used for the static server values.
+    Makes it easier to follow the changes since the 2.5.1 release
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1215137 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e2c299553529e87f979527f0c9a61dbe479e6974
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Wed Dec 14 11:42:26 2011 +0000
+
+    Standardise logging; move unused testEnded() method to parent
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1214179 13f79535-47bb-0310-9956-ffa450edef68
+
+commit cbe79b3b817380975e0ef71623995a829a375ac7
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Sun Nov 13 15:12:43 2011 +0000
+
+    Bug 51886 - SampleSender configuration resolved partly on client and partly on server
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1201437 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 5b082889071fb075921ad2058657e94d5eca438e
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Jan 28 16:04:51 2011 +0000
+
+    Clean up logging - drop per-sample to reduce load
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1064752 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 942cac4f45bd7f81357e993954e7f58aee80e82d
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Jan 11 00:42:12 2011 +0000
+
+    Docs
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1057429 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 5fdd7572beb4e943e224b70dbb24fc54ca0d2d6e
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Mar 12 10:44:48 2010 +0000
+
+    Revert to previous behaviour, i.e. key on thread Group, but allow this to be changed by defining key_on_threadname=true
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@922204 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 7656a452ee590c8844c17f31b069f34c3a92c694
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu Mar 11 11:37:54 2010 +0000
+
+    Simplify. Ensure only count or timer fire for a given sample.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@921807 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a79b26a28fea6871defb79161af04958d74f7850
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu Mar 11 10:52:18 2010 +0000
+
+    Might as well be static variables
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@921796 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a14244315588abc86f495bb7eaaab08ab91a127d
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Jan 31 12:59:07 2010 +0000
+
+    Add serial version UIDs
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@905027 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ee06b2621ed5492d07a89a569a6db30b8ae3c1a1
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Mon Sep 7 21:27:56 2009 +0000
+
+    Document test-only constructors
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@812281 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 85084e2cdb718b00fb220b11c3edb4e800858bdf
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Aug 16 00:33:20 2009 +0000
+
+    The "typing" continues ...
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@804542 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f61eb370f4cde8a7fac146529f73cb1f45c9518f
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Oct 12 01:06:02 2008 +0000
+
+    General tidyup of Remote Listener classes
+    - made variables final where possible
+    - SampleOccurred => sampleOccurred
+    - added some documentation
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@703755 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6bf94deccce242cd1bba95592f54fd78a90dfc3e
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Jul 6 23:56:15 2008 +0000
+
+    Detab
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@674365 13f79535-47bb-0310-9956-ffa450edef68
+
+commit bd5d121d68038f3e712ec463a2172dd7026f52f8
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Jan 7 17:46:38 2007 +0000
+
+    Update license (remove copyright)
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-2@493779 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c576cf0efeeaa296d9b3ddb2e3c48c1c1dcceb7e
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Nov 27 01:01:05 2005 +0000
+
+    Fix missing properties
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-1@349162 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 2f0c58fbcccc5a69c750c962edde1de7c13bacc6
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu Nov 3 00:53:48 2005 +0000
+
+    Allow serialisation to be checked
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-1@330397 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3cef5f384e6dd9381d72f66a03b5e96b1b80d774
+Author: Peter Lin <woolfel@apache.org>
+Date:   Tue Oct 25 03:45:17 2005 +0000
+
+    checking in part of the contribution submitted by Lars Krog-Jensen.
+    I still need to go over the visualizer and change it to use JCharts
+    peter lin
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-1@328249 13f79535-47bb-0310-9956-ffa450edef68

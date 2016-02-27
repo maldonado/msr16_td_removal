@@ -1,0 +1,1516 @@
+commit 3b5c88ca213d01f324ab24205e6b7e6c5c816544
+Author: Christian Meier <m.kristian@web.de>
+Date:   Mon Aug 10 09:30:27 2015 +0200
+
+    added more info on how to generate .jrubydir files
+    
+    those .jrubydir are needed when adding classloader to JRuby instance config to
+    work consistently. some classloaders produce some directory info via 'getResource'
+    and other classloader do not. sometimes JRuby is able to inspect the classloader
+    and parse all the attached jars. adding a classloader to the instance config only
+    works consistently with those .jrubydir files.
+
+commit 9fcd48c23e72c3ffdb318cad0106610b4215a894
+Author: Christian Meier <meier.kristian@gmail.com>
+Date:   Thu Jul 30 09:11:54 2015 +0200
+
+    bring the add classloader to the scriping containers
+
+commit 2adae4315b255b1c59c7723b38fe4f1994423840
+Author: Christian Meier <meier.kristian@gmail.com>
+Date:   Wed Jul 29 14:31:30 2015 +0200
+
+    allow to add classloader to instance config
+    
+    when the runtime gets created the classloader root gets added to the LOAD_PATH
+    and to the Gem::Specification.dirs in case these uri-like paths are directories
+
+commit a9557fffd26a63191d73db44fcfaefb76d758db2
+Merge: 2187665 5df5491
+Author: kares <self@kares.org>
+Date:   Thu Aug 6 16:58:56 2015 +0200
+
+    Merge branch 'jruby-1_7'
+    
+    * jruby-1_7:
+      avoid (expensive) replaceAll when char replace is possible
+      little BacktraceData#transformBacktrace cleanup
+      avoid Pattern compiling on every BacktraceData construction - use startsWith
+      use static helpers in OSEnvironment for slightly less empty map garbage
+      Hack --2.0 net/http gzip problem to avoid multiple version refactoring hell (Fixes #1595, #1216)
+      Revert "[build] do not use maven-rc"
+      use EMPTY_MAP instead of new (temporary) HashMap instance
+      avoid getRuntime() in RubyHash#to_h
+      minor cleanup at RubyGlobal
+      for better ENV compatibility we should not respond to `to_h` on <= 1.9.3
+      ensure that ENV.to_h duplicates the env per MRI ruby
+      add failing spec for to_h not duplicating
+      [build] do not use maven-rc
+      improve test on whether jrubyHome is inside a jar
+      Fix NPE when getting parameter.
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/RubyGlobal.java
+    	core/src/main/java/org/jruby/runtime/backtrace/BacktraceData.java
+    	core/src/main/java/org/jruby/util/OSEnvironment.java
+    	ext/readline/src/main/java/org/jruby/JRubyApplet.java
+    	lib/ruby/2.0/net/http/response.rb
+
+commit ee8ed2ca0ba16c9f625e3336f6846a99a3d37bdb
+Author: Christian Meier <m.kristian@web.de>
+Date:   Tue Aug 4 21:45:58 2015 +0200
+
+    improve test on whether jrubyHome is inside a jar
+    
+    this fixes issue #3220
+    
+    Sponsored by Lookout Inc.
+
+commit 449377cf55576e08cc679843e6cc7782454f532d
+Merge: 0be4796 83c47ba
+Author: kares <self@kares.org>
+Date:   Sat Jul 25 22:28:18 2015 +0200
+
+    Merge branch 'jruby-1_7'
+    
+    * jruby-1_7: (40 commits)
+      keep the provider in a local while terminating + missing @Override
+      un-used imports
+      close (URLClassLoader's) resources on JRubyClassLoader#tearDown on Java 7+
+      only re-wrap non-runtime exceptions in getJDBCDriverUnloader
+      depreacate JRubyClassLoader's getJDBCDriverUnloader (its un-used - but still should not be part of public API)
+      review the WeakHashSet impl + add missing (useful) methods: equals, toString, ...
+      correct javadoc and generix-ize the guts of WeakValued map-like collections
+      JavaMethod's (redundant) arityValue field is only used in ReflectedJavaMethod
+      Add test for packages of classes in nested JARs
+      Define packages for classes in nested JARs
+      fixes expand_path on relative reference and inside uri:classloader: as CWD
+      detect uri-like paths better for File.expand_path
+      fixes commandline execution of internal java -cp ... org.jruby.Main command
+      get classloader root url right without an trailing slash
+      added nested IsolatedScriptingContainer via jruby-mains test
+      make it 1.8 compatible
+      you can not close classloaders on jdk6
+      extracted the classloader to uri-like path into helper class
+      have no side effects when creating instance of IsolatedScriptingContainer
+      remove some import jul left-overs + finalize accessibleObject() on JavaMethod
+      ...
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/Ruby.java
+    	core/src/main/java/org/jruby/RubyInstanceConfig.java
+    	core/src/main/java/org/jruby/compiler/JITCompiler.java
+    	core/src/main/java/org/jruby/embed/IsolatedScriptingContainer.java
+    	core/src/main/java/org/jruby/embed/ScriptingContainer.java
+    	core/src/main/java/org/jruby/internal/runtime/methods/JavaMethod.java
+    	core/src/main/java/org/jruby/internal/runtime/methods/ReflectedJavaMethod.java
+    	core/src/main/java/org/jruby/javasupport/JavaEmbedUtils.java
+    	core/src/main/java/org/jruby/util/ClassCache.java
+    	core/src/main/java/org/jruby/util/JRubyClassLoader.java
+    	core/src/main/java/org/jruby/util/cli/Options.java
+    	core/src/main/ruby/jruby/kernel19/kernel.rb
+    	lib/ruby/1.9/date.rb
+    	lib/ruby/shared/rubygems/defaults/jruby.rb
+    	maven/jruby-complete/src/it/integrity/pom.xml
+    	maven/jruby-complete/src/templates/osgi_many_bundles_with_embedded_gems/test/src/test/java/org/jruby/embed/osgi/test/JRubyOsgiEmbedTest.java
+    	maven/jruby/src/it/runnable/spec/one_spec.rb
+    	maven/jruby/src/templates/osgi_all_inclusive/src/test/java/org/jruby/embed/osgi/test/JRubyOsgiEmbedTest.java
+    	test/test_file.rb
+    	test/test_load.rb
+
+commit efa6ce00488717cab3141ea4598e7d1c7a8929fc
+Author: kares <self@kares.org>
+Date:   Sat Jul 25 20:43:59 2015 +0200
+
+    un-used imports
+
+commit 1c3cdaa6e74c197e07fe2f1eded792bfbaf9a116
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Jul 16 13:56:29 2015 -0500
+
+    Remove half-baked and non-functional JIT caching. Fixes #3147
+
+commit 8e934e84115738bfe61298adbfa48260d292a7d0
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jul 6 12:24:18 2015 -0500
+
+    Lazy handles no longer exist.
+
+commit 45aee57f7edc4802f62eb6fee7d425eb79cc0282
+Author: Benoit Daloze <eregontp@gmail.com>
+Date:   Fri Jun 19 17:09:54 2015 +0200
+
+    Properly type RubyInstanceConfig.optionGlobals
+
+commit 2e28c9cebea6e3dc810eb0dca941093820275112
+Merge: c8a1836 7f1739b
+Author: Christian Meier <m.kristian@web.de>
+Date:   Thu Jun 18 14:08:58 2015 +0200
+
+    Merge branch 'jruby-1_7'
+    
+    Conflicts:
+    	.travis.yml
+    	core/src/main/java/org/jruby/RubyInstanceConfig.java
+    	core/src/main/java/org/jruby/embed/ScriptingContainer.java
+    	core/src/main/java/org/jruby/ext/zlib/JZlibRubyGzipReader.java
+    	core/src/main/java/org/jruby/util/JRubyFile.java
+    	core/src/main/java/org/jruby/util/cli/ArgumentProcessor.java
+    	core/src/test/java/org/jruby/embed/ScriptingContainerTest.java
+    	lib/ruby/shared/rubygems.rb
+    	lib/ruby/shared/rubygems/remote_fetcher.rb
+    	maven/jruby-complete/src/it/extended/Mavenfile
+    	test/test_file.rb
+
+commit a50803b8bf8877085dab955df8472c30428a0956
+Author: Christian Meier <m.kristian@web.de>
+Date:   Tue Jun 16 15:09:08 2015 +0200
+
+    make the JRubyFile api more descriptive
+    
+    without the POSIX instance from the runtime the created RegularFileResource
+    can not perform any poix related operations. adds integration test with
+    jruby-complete
+    
+    Sponsored by Lookout Inc.
+
+commit c1b7ea0859e07bec3ac514f025893d5870f0c815
+Merge: 7f2ab51 311f12f
+Author: Christian Meier <m.kristian@web.de>
+Date:   Mon Jun 8 19:03:45 2015 +0200
+
+    Merge branch 'jruby-1_7' into test-merge-1_7
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/RubyInstanceConfig.java
+    	lib/ruby/shared/rubygems/defaults/jruby.rb
+
+commit 311f12f1689a02108255b9215f3456840523147c
+Author: Christian Meier <m.kristian@web.de>
+Date:   Mon Jun 8 16:48:41 2015 +0200
+
+    factor out the classpath launcher so it can be used by Gem.ruby as well
+    
+    also makes sure we are using platform dependent paths when craeting
+    the classpath launcher for ENV['RUBY']. put the helper into its own
+    class so the Gem.ruby (rubygems/defaults/jruby.rb) can use it.
+    
+    Sponsored by Lookout Inc.
+
+commit abaa0db4cb42db986d5d2f143f510baef95a5d17
+Author: Christian Meier <m.kristian@web.de>
+Date:   Mon Jun 8 11:53:13 2015 +0200
+
+    build the jruby launcher using the defaultClassLoader()).getURLs()
+
+commit 7f2ab51687bf77ba50c334bd4dd3b57e7d88f132
+Author: Christian Meier <m.kristian@web.de>
+Date:   Mon Jun 8 11:53:13 2015 +0200
+
+    build the jruby launcher using the defaultClassLoader()).getURLs()
+
+commit 55027df6b4f164ff9b97e28bd9592b9f97809531
+Author: Christian Meier <m.kristian@web.de>
+Date:   Sun Jun 7 14:03:30 2015 +0200
+
+    use common defaultClassLoaderm from RubyInstanceConfig
+    
+    Ruby.getClassLoader() or similar contruct can be null. have a common
+    place to retrieve the defaultClassLoader (most probably the same as
+    runtime.getJRubyClassLoader().getParentClassLoeder()).
+
+commit d76a33bfed7bc8ea67469490343341dd1ccb8c9a
+Author: Christian Meier <m.kristian@web.de>
+Date:   Tue Jun 2 10:31:28 2015 +0200
+
+    use new JRuby.create to load script from command line script source
+    
+    delegate script source argument to the new load service FileResource
+    factory and allow all uri like paths which the regular JRuby code
+    uses as well.
+    
+    fixes #2948
+    
+    Sponsored by Lookout Inc.
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/RubyInstanceConfig.java
+    	core/src/main/java/org/jruby/util/ClasspathResource.java
+    	core/src/main/java/org/jruby/util/URLResource.java
+    	core/src/test/java/org/jruby/util/URLResourceTest.java
+
+commit 7df3e56395cf4dbd1d22089726680bb890adfcd9
+Merge: e810614 967ca40
+Author: kares <self@kares.org>
+Date:   Fri Jun 5 14:20:44 2015 +0200
+
+    Merge branch 'jruby-1_7'
+    
+    * jruby-1_7: (38 commits)
+      basic BigDecimal sub-class test ... all working the same as MRI 1.8/1.9
+      avoid deprecated newInstance + one less pattern to match on BigDecimal.new
+      [bigdecimal] keep the simplified newInstance backport 1.8 compatible
+      [bigdecimal] backport simplified newInstance impl from master
+      minor BigDecimal code cleanup
+      handle big decimal ** float value calculation (with Java double math) ... since we're now not raising users should get ~ the value they expect (closing #1967)
+      static-ize and simplify private helpers
+      BigDecimal should not raise error on pow/** with float arg (under 1.9 #1967)
+      some more (internal) RubyBigDecimal dry-ing / tidy-ing
+      do coercion on * and / (same as MRI has been doing since 1.8) ... fixes #2538
+      handle BigDecimal cmp failure compatibly with MRI (fixes #2539)
+      pass around context in BigDecimal impl + simplify cmp method's code
+      move JI java.mat.BigDecimal test out of Ruby's BigDecimal tests
+      [travis-ci] test-extended on jdk8
+      if current directory is inside the classloader a spawn jruby process should do the same
+      use the new bin stubs from new rubygems
+      set ENV['RUBY'] when jruby.home is not regular directory
+      Add support for http.nonProxyHosts and rework ENV_JAVA support.
+      pik the right class in URLResourceTest
+      use new JRuby.create to load script from command line script source
+      ...
+    
+    Conflicts:
+    	.travis.yml
+    	core/src/main/java/org/jruby/RubyDir.java
+    	core/src/main/java/org/jruby/RubyEnumerable.java
+    	core/src/main/java/org/jruby/RubyEnumerator.java
+    	core/src/main/java/org/jruby/RubyHash.java
+    	core/src/main/java/org/jruby/RubyInstanceConfig.java
+    	core/src/main/java/org/jruby/RubyModule.java
+    	core/src/main/java/org/jruby/ext/bigdecimal/RubyBigDecimal.java
+    	core/src/main/java/org/jruby/util/ClasspathResource.java
+    	core/src/main/java/org/jruby/util/URLResource.java
+    	core/src/test/java/org/jruby/util/URLResourceTest.java
+    	lib/ruby/2.0/net/http.rb
+    	lib/ruby/2.0/uri/generic.rb
+    	maven/jruby/src/it/runnable/spec/one_spec.rb
+    	test/test_backquote.rb
+    	test/test_big_decimal.rb
+    	test/test_dir.rb
+    	test/test_file.rb
+    	test/test_higher_javasupport.rb
+    	test/test_load.rb
+
+commit 5c45c39163edc37267199db023323704a4410641
+Author: Christian Meier <m.kristian@web.de>
+Date:   Wed Jun 3 12:20:53 2015 +0200
+
+    set ENV['RUBY'] when jruby.home is not regular directory
+    
+    JRuby comes with rake as part of its ruby stdlib. rake has a feature
+    to spawn a new ruby process and execute things. this is used by unit
+    tests and rspec. this spawn needs to determin the ruby executable. when
+    jruby runs from the jruby-complete.jar then ENV['RUBY'] will tell rake to
+    use which does actual execute and spawn a new
+    `java -cp jruby-complete.jar org.jruby.Main` process.
+    
+    added an integration test in maven/jruby-complete/src/it which executes
+    `java -jar jruby-complete.jar -S rake test:mri`
+    
+    there are still short comings with ArgumentProcessor and some -J-xyz switches
+    
+    Sponsored by Lookout Inc.
+
+commit 4da7547f08c9168c3a5755441e8f2746d4c7afc6
+Author: Christian Meier <m.kristian@web.de>
+Date:   Tue Jun 2 10:31:28 2015 +0200
+
+    use new JRuby.create to load script from command line script source
+    
+    delegate script source argument to the new load service FileResource
+    factory and allow all uri like paths which the regular JRuby code
+    uses as well.
+    
+    fixes #2948
+    
+    Sponsored by Lookout Inc.
+
+commit 9e79159b25e97436562b3c1cd5b9e64978fdc51f
+Author: Christian Meier <m.kristian@web.de>
+Date:   Wed May 27 11:56:57 2015 +0200
+
+    reduce the classloader lookups for require
+    
+    most creation of  the URLResource are via require 'some/thing' where
+    it is clear before hand that it is a file and not a directory
+    
+    URLResource always returns a FileResource, it can be either a file or
+    a directory or it is marked as not existing. some classloaders return
+    a stream to directory resource and some classloaders do not. to distinguish
+    a file from directory you need to check for the .jrubydir file or dig
+    deeper into the classloader to find out whether this is directory or not.
+
+commit 40beb472cb17c6c0cbf46ba199a9461e0e7bd877
+Merge: c0c086e e237201
+Author: kares <self@kares.org>
+Date:   Mon May 25 16:54:09 2015 +0200
+
+    Merge branch 'jruby-1_7'
+    
+    * jruby-1_7: (54 commits)
+      [travis-ci] re-try sudo: false
+      dry out the two (Java helper) respond_to_p19 methods
+      respondsTo JRuby API under 1.9.3 does not do respond_to_missing? like MRI does
+      sleep should convert it's "time interval" argument the same way as MRI
+      respond_to_missing? should always get a symbol name passed (fixes #2946)
+      add a respond_to_missing unit test (on 1.9)
+      introduce and use conversion( just like MRI does) on #timeout's sec argument
+      add missing ' ' (space) in exception message ... TypeError from `sleep('invalid')`
+      DateTime.iso8601 fails with an error if a second fraction is present
+      [build] switch to 1.7.21-SNAPSHOT for test-jruby-jars
+      refactor Timeout's scheduled tasks to an inner class (for easier identification)
+      further hand drying of the Timeout module impl
+      less (int) casting noiz
+      add some (internal) generics for an improved readability xp
+      inner class' Finalizer fields id and finalized can be final
+      generix-ize the environment field (at least internally) + use a StringBuilder
+      unnecessary (int) cast
+      missing throw statement in RubyString's concat
+      tune timeout to work when scheduling or argument convenrsion throws (see #2940)
+      return empty Ruby array for empty dir list
+      ...
+    
+    Conflicts:
+    	.gitignore
+    	.travis.yml
+    	VERSION
+    	core/pom.xml
+    	core/src/main/java/org/jruby/RubyArray.java
+    	core/src/main/java/org/jruby/RubyBasicObject.java
+    	core/src/main/java/org/jruby/RubyDir.java
+    	core/src/main/java/org/jruby/RubyEnumerable.java
+    	core/src/main/java/org/jruby/RubyFile.java
+    	core/src/main/java/org/jruby/RubyGlobal.java
+    	core/src/main/java/org/jruby/RubyIO.java
+    	core/src/main/java/org/jruby/RubyKernel.java
+    	core/src/main/java/org/jruby/RubyModule.java
+    	core/src/main/java/org/jruby/RubyString.java
+    	core/src/main/java/org/jruby/RubyTime.java
+    	core/src/main/java/org/jruby/ext/timeout/Timeout.java
+    	core/src/main/java/org/jruby/java/proxies/JavaProxy.java
+    	core/src/main/java/org/jruby/util/Dir.java
+    	core/src/main/java/org/jruby/util/encoding/CharsetTranscoder.java
+    	docs/man/pom.xml
+    	docs/pom.xml
+    	ext/pom.xml
+    	ext/readline/pom.xml
+    	ext/ripper/pom.xml
+    	lib/pom.xml
+    	lib/ruby/1.9/date/format.rb
+    	lib/ruby/1.9/io/linux_console.rb
+    	lib/ruby/shared/gauntlet_rubygems.rb
+    	lib/ruby/shared/rubygems.rb
+    	lib/ruby/shared/rubygems/available_set.rb
+    	lib/ruby/shared/rubygems/basic_specification.rb
+    	lib/ruby/shared/rubygems/command.rb
+    	lib/ruby/shared/rubygems/command_manager.rb
+    	lib/ruby/shared/rubygems/commands/cert_command.rb
+    	lib/ruby/shared/rubygems/commands/cleanup_command.rb
+    	lib/ruby/shared/rubygems/commands/contents_command.rb
+    	lib/ruby/shared/rubygems/commands/dependency_command.rb
+    	lib/ruby/shared/rubygems/commands/environment_command.rb
+    	lib/ruby/shared/rubygems/commands/generate_index_command.rb
+    	lib/ruby/shared/rubygems/commands/help_command.rb
+    	lib/ruby/shared/rubygems/commands/install_command.rb
+    	lib/ruby/shared/rubygems/commands/list_command.rb
+    	lib/ruby/shared/rubygems/commands/mirror_command.rb
+    	lib/ruby/shared/rubygems/commands/outdated_command.rb
+    	lib/ruby/shared/rubygems/commands/owner_command.rb
+    	lib/ruby/shared/rubygems/commands/pristine_command.rb
+    	lib/ruby/shared/rubygems/commands/push_command.rb
+    	lib/ruby/shared/rubygems/commands/query_command.rb
+    	lib/ruby/shared/rubygems/commands/search_command.rb
+    	lib/ruby/shared/rubygems/commands/setup_command.rb
+    	lib/ruby/shared/rubygems/commands/specification_command.rb
+    	lib/ruby/shared/rubygems/commands/uninstall_command.rb
+    	lib/ruby/shared/rubygems/commands/unpack_command.rb
+    	lib/ruby/shared/rubygems/commands/update_command.rb
+    	lib/ruby/shared/rubygems/commands/which_command.rb
+    	lib/ruby/shared/rubygems/commands/yank_command.rb
+    	lib/ruby/shared/rubygems/compatibility.rb
+    	lib/ruby/shared/rubygems/config_file.rb
+    	lib/ruby/shared/rubygems/core_ext/kernel_gem.rb
+    	lib/ruby/shared/rubygems/core_ext/kernel_require.rb
+    	lib/ruby/shared/rubygems/defaults.rb
+    	lib/ruby/shared/rubygems/dependency.rb
+    	lib/ruby/shared/rubygems/dependency_installer.rb
+    	lib/ruby/shared/rubygems/dependency_list.rb
+    	lib/ruby/shared/rubygems/deprecate.rb
+    	lib/ruby/shared/rubygems/doctor.rb
+    	lib/ruby/shared/rubygems/errors.rb
+    	lib/ruby/shared/rubygems/exceptions.rb
+    	lib/ruby/shared/rubygems/ext.rb
+    	lib/ruby/shared/rubygems/ext/builder.rb
+    	lib/ruby/shared/rubygems/ext/cmake_builder.rb
+    	lib/ruby/shared/rubygems/ext/configure_builder.rb
+    	lib/ruby/shared/rubygems/ext/ext_conf_builder.rb
+    	lib/ruby/shared/rubygems/ext/rake_builder.rb
+    	lib/ruby/shared/rubygems/gemcutter_utilities.rb
+    	lib/ruby/shared/rubygems/indexer.rb
+    	lib/ruby/shared/rubygems/install_update_options.rb
+    	lib/ruby/shared/rubygems/installer.rb
+    	lib/ruby/shared/rubygems/installer_test_case.rb
+    	lib/ruby/shared/rubygems/local_remote_options.rb
+    	lib/ruby/shared/rubygems/name_tuple.rb
+    	lib/ruby/shared/rubygems/package.rb
+    	lib/ruby/shared/rubygems/package/old.rb
+    	lib/ruby/shared/rubygems/package/tar_header.rb
+    	lib/ruby/shared/rubygems/package/tar_reader/entry.rb
+    	lib/ruby/shared/rubygems/package/tar_writer.rb
+    	lib/ruby/shared/rubygems/path_support.rb
+    	lib/ruby/shared/rubygems/platform.rb
+    	lib/ruby/shared/rubygems/psych_additions.rb
+    	lib/ruby/shared/rubygems/rdoc.rb
+    	lib/ruby/shared/rubygems/remote_fetcher.rb
+    	lib/ruby/shared/rubygems/request.rb
+    	lib/ruby/shared/rubygems/request_set.rb
+    	lib/ruby/shared/rubygems/request_set/gem_dependency_api.rb
+    	lib/ruby/shared/rubygems/requirement.rb
+    	lib/ruby/shared/rubygems/resolver/current_set.rb
+    	lib/ruby/shared/rubygems/security.rb
+    	lib/ruby/shared/rubygems/security/policy.rb
+    	lib/ruby/shared/rubygems/security/signer.rb
+    	lib/ruby/shared/rubygems/security/trust_dir.rb
+    	lib/ruby/shared/rubygems/server.rb
+    	lib/ruby/shared/rubygems/source.rb
+    	lib/ruby/shared/rubygems/source/installed.rb
+    	lib/ruby/shared/rubygems/source/local.rb
+    	lib/ruby/shared/rubygems/source/specific_file.rb
+    	lib/ruby/shared/rubygems/source_list.rb
+    	lib/ruby/shared/rubygems/spec_fetcher.rb
+    	lib/ruby/shared/rubygems/specification.rb
+    	lib/ruby/shared/rubygems/ssl_certs/AddTrustExternalCARoot.pem
+    	lib/ruby/shared/rubygems/stub_specification.rb
+    	lib/ruby/shared/rubygems/syck_hack.rb
+    	lib/ruby/shared/rubygems/test_case.rb
+    	lib/ruby/shared/rubygems/test_utilities.rb
+    	lib/ruby/shared/rubygems/text.rb
+    	lib/ruby/shared/rubygems/uninstaller.rb
+    	lib/ruby/shared/rubygems/uri_formatter.rb
+    	lib/ruby/shared/rubygems/user_interaction.rb
+    	lib/ruby/shared/rubygems/util/list.rb
+    	lib/ruby/shared/rubygems/validator.rb
+    	lib/ruby/shared/rubygems/version.rb
+    	maven/jruby-complete/pom.xml
+    	maven/jruby-dist/pom.xml
+    	maven/jruby-jars/pom.xml
+    	maven/jruby-noasm/pom.xml
+    	maven/jruby-rake-plugin/pom.xml
+    	maven/jruby-stdlib/pom.xml
+    	maven/jruby/pom.xml
+    	maven/pom.xml
+    	pom.xml
+    	test/pom.xml
+    	test/test_dir.rb
+    	test/test_kernel.rb
+    	test/test_respond_to.rb
+    	test/test_timeout.rb
+
+commit 76b6992aec4fbf5c420d58de01231c425103902e
+Author: kares <self@kares.org>
+Date:   Fri May 15 12:27:51 2015 +0200
+
+    generix-ize the environment field (at least internally) + use a StringBuilder
+
+commit 6044f60e3749d875781545bb718d91f979a7a57f
+Merge: d03d09e c38758f
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Tue Apr 28 18:50:17 2015 +0100
+
+    Merge branch 'master' into truffle-head
+
+commit 208abc2d2a62c7c501e1945111645b3cfa2db4fb
+Author: Joe Kutner <jpkutner@gmail.com>
+Date:   Sun Apr 26 11:30:53 2015 -0500
+
+    Added uri:classloader handling to RubyInstanceConfig.getScriptSource. This is to support Warbler's runnable feature
+
+commit 2f57e88358a9c4c6dd056497bf8dcae38413fdfc
+Author: Joe Kutner <jpkutner@gmail.com>
+Date:   Sat Apr 25 16:45:16 2015 -0500
+
+    Fix typo in error message
+
+commit 9f228b9ac536b12b3b927b9a9bc32cdb0090d559
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Mon Apr 20 12:50:29 2015 +0100
+
+    [Truffle] Add support for cross language interop and interface to C extensions.
+
+commit 0cff9f9668f02eaa90b025eff984446c37724dcd
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Feb 25 18:18:18 2015 -0600
+
+    Recognize JVM spec 1.9.
+
+commit 79c69bd718e9312034f1d4bce47edf7c35b00c25
+Author: Christian Meier <m.kristian@web.de>
+Date:   Thu Feb 12 11:47:48 2015 +0100
+
+    using 'classloader.delegate' instead of 'self.first.class.loader'
+    
+    the new name seems to be more common and is used in tomcat, glassfish, etc where the
+    same feature exists for webapp classloaders
+
+commit 290e3f1cd1755e6614af921960e1f97f0e811dd5
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Sun Feb 8 21:00:21 2015 +0000
+
+    Simplify setupLoader and remove temporary field.
+
+commit 46e1058c1fb31caebd2a2104b4bc273b5700cef0
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Sun Feb 1 18:19:21 2015 +0100
+
+    Don't fallback to the class loader from the current thread.
+
+commit 02bcdfea628bdb92f946b827b2d7a2065bafa591
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Sun Feb 1 17:37:39 2015 +0100
+
+    Isolate code that uses class loaders.
+
+commit 9b4d8e960d74bc41e70ced6cab3f75b7f816a28e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Jan 29 02:13:57 2015 -0600
+
+    Fix BC self-first-classloader tests.
+    
+    System properties are often loaded only once, as is the case for
+    this value loaded into a static field of RubyInstanceConfig. This
+    fix sets the mode in the container's config, removes the static
+    field (just go directly to the Option), and provides get/set
+    on ScriptingContainer.
+
+commit 580bd4ef0bdb7a17aa2bf2be4af9aedf1a189f36
+Author: Christian Meier <m.kristian@web.de>
+Date:   Tue Jan 27 23:02:35 2015 +0100
+
+    make the regular classloader load path default again
+    
+    add an option which allows to switch to a self-first strategy which might
+    be able to solve some classloader conflicts.
+    
+    keep the old tests using the switch to use the SelfFirstClassLoader
+
+commit 20fb9e004f437170b10d2f7762ec66ac3d91a66d
+Merge: 6658212 0dfd501
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Dec 18 11:58:58 2014 -0600
+
+    Merge remote-tracking branch 'origin/jruby-1_7'
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/RubyFile.java
+    	core/src/main/java/org/jruby/compiler/impl/StandardASMCompiler.java
+
+commit 2515fc0193a9c40a765d4d965425d760ac7a5572
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Dec 17 09:04:21 2014 -0600
+
+    Warn but do not error for odd java.specification.version.
+
+commit 1a21f15d99c933ee0e57c278da6a5c658d683943
+Author: Christian Meier <m.kristian@web.de>
+Date:   Fri Nov 21 13:42:20 2014 +0000
+
+    be less strict about the jruby.home warning
+
+commit 254a32779c769f77a3898fcf1a998e38c579edbe
+Merge: 16c4b16 2a9ccce
+Author: Christian Meier <m.kristian@web.de>
+Date:   Thu Nov 20 13:14:43 2014 +0000
+
+    Merge branch 'jruby-1_7'
+    
+    Conflicts:
+    	.gitignore
+    	.travis.yml
+    	build.xml
+    	core/pom.xml
+    	core/src/main/java/org/jruby/RubyInstanceConfig.java
+    	core/src/main/java/org/jruby/RubyModule.java
+    	core/src/main/java/org/jruby/RubyTime.java
+    	core/src/main/java/org/jruby/compiler/ASTCompiler.java
+    	core/src/main/java/org/jruby/compiler/BodyCompiler.java
+    	core/src/main/java/org/jruby/compiler/impl/BaseBodyCompiler.java
+    	core/src/main/java/org/jruby/ext/bigdecimal/RubyBigDecimal.java
+    	core/src/main/java/org/jruby/internal/runtime/methods/DefaultMethod.java
+    	core/src/main/java/org/jruby/lexer/yacc/RubyYaccLexer.java
+    	core/src/main/java/org/jruby/lexer/yacc/StringTerm.java
+    	core/src/main/java/org/jruby/parser/ParserConfiguration.java
+    	core/src/main/java/org/jruby/runtime/Helpers.java
+    	core/src/test/java/org/jruby/test/MainTestSuite.java
+    	docs/CodeConventions.txt
+    	lib/pom.rb
+    	lib/ruby/1.8/resolv.rb
+    	lib/ruby/1.8/rexml/document.rb
+    	lib/ruby/1.8/rexml/entity.rb
+    	lib/ruby/1.8/rexml/rexml.rb
+    	lib/ruby/1.8/rexml/text.rb
+    	lib/ruby/1.9/cgi/core.rb
+    	lib/ruby/1.9/dl/func.rb
+    	lib/ruby/1.9/drb/ssl.rb
+    	lib/ruby/1.9/gserver.rb
+    	lib/ruby/1.9/ipaddr.rb
+    	lib/ruby/1.9/net/http.rb
+    	lib/ruby/1.9/net/imap.rb
+    	lib/ruby/1.9/net/pop.rb
+    	lib/ruby/1.9/net/smtp.rb
+    	lib/ruby/1.9/open-uri.rb
+    	lib/ruby/1.9/optparse.rb
+    	lib/ruby/1.9/rake.rb
+    	lib/ruby/1.9/rake/alt_system.rb
+    	lib/ruby/1.9/rake/application.rb
+    	lib/ruby/1.9/rake/clean.rb
+    	lib/ruby/1.9/rake/cloneable.rb
+    	lib/ruby/1.9/rake/contrib/ftptools.rb
+    	lib/ruby/1.9/rake/contrib/sys.rb
+    	lib/ruby/1.9/rake/dsl_definition.rb
+    	lib/ruby/1.9/rake/ext/core.rb
+    	lib/ruby/1.9/rake/ext/module.rb
+    	lib/ruby/1.9/rake/ext/string.rb
+    	lib/ruby/1.9/rake/ext/time.rb
+    	lib/ruby/1.9/rake/file_list.rb
+    	lib/ruby/1.9/rake/file_task.rb
+    	lib/ruby/1.9/rake/file_utils.rb
+    	lib/ruby/1.9/rake/file_utils_ext.rb
+    	lib/ruby/1.9/rake/gempackagetask.rb
+    	lib/ruby/1.9/rake/invocation_chain.rb
+    	lib/ruby/1.9/rake/multi_task.rb
+    	lib/ruby/1.9/rake/packagetask.rb
+    	lib/ruby/1.9/rake/pseudo_status.rb
+    	lib/ruby/1.9/rake/rake_module.rb
+    	lib/ruby/1.9/rake/rdoctask.rb
+    	lib/ruby/1.9/rake/ruby182_test_unit_fix.rb
+    	lib/ruby/1.9/rake/runtest.rb
+    	lib/ruby/1.9/rake/task.rb
+    	lib/ruby/1.9/rake/task_arguments.rb
+    	lib/ruby/1.9/rake/task_manager.rb
+    	lib/ruby/1.9/rake/tasklib.rb
+    	lib/ruby/1.9/rake/testtask.rb
+    	lib/ruby/1.9/rake/version.rb
+    	lib/ruby/1.9/rake/win32.rb
+    	lib/ruby/1.9/resolv.rb
+    	lib/ruby/1.9/rexml/document.rb
+    	lib/ruby/1.9/rexml/entity.rb
+    	lib/ruby/1.9/rexml/text.rb
+    	lib/ruby/1.9/ripper/lexer.rb
+    	lib/ruby/1.9/socket.rb
+    	lib/ruby/1.9/time.rb
+    	lib/ruby/1.9/webrick/htmlutils.rb
+    	lib/ruby/1.9/webrick/httputils.rb
+    	lib/ruby/1.9/yaml.rb
+    	lib/ruby/2.0/bigdecimal/util.rb
+    	lib/ruby/2.0/cgi/core.rb
+    	lib/ruby/2.0/csv.rb
+    	lib/ruby/2.0/erb.rb
+    	lib/ruby/2.0/fileutils.rb
+    	lib/ruby/2.0/gserver.rb
+    	lib/ruby/2.0/net/ftp.rb
+    	lib/ruby/2.0/net/http/response.rb
+    	lib/ruby/2.0/net/imap.rb
+    	lib/ruby/2.0/net/pop.rb
+    	lib/ruby/2.0/net/protocol.rb
+    	lib/ruby/2.0/net/smtp.rb
+    	lib/ruby/2.0/open-uri.rb
+    	lib/ruby/2.0/racc/rdoc/grammar.en.rdoc
+    	lib/ruby/2.0/rdoc/generator/template/darkfish/js/jquery.js
+    	lib/ruby/2.0/rdoc/rd/block_parser.rb
+    	lib/ruby/2.0/resolv.rb
+    	lib/ruby/2.0/rexml/entity.rb
+    	lib/ruby/2.0/rinda/tuplespace.rb
+    	lib/ruby/2.0/socket.rb
+    	lib/ruby/2.0/ssl.rb
+    	lib/ruby/2.0/test/unit/parallel.rb
+    	lib/ruby/2.0/thread.rb
+    	lib/ruby/2.0/time.rb
+    	lib/ruby/2.0/uri/common.rb
+    	lib/ruby/2.0/uri/generic.rb
+    	lib/ruby/2.0/webrick/htmlutils.rb
+    	lib/ruby/2.0/webrick/httprequest.rb
+    	lib/ruby/2.0/webrick/httputils.rb
+    	lib/ruby/2.0/xmlrpc/client.rb
+    	lib/ruby/2.0/xmlrpc/server.rb
+    	lib/ruby/2.0/yaml.rb
+    	maven/jruby-complete/src/it/integrity/verify.bsh
+    	maven/jruby-dist/src/it/integrity/verify.bsh
+    	maven/jruby-jars/src/it/integrity/verify.bsh
+    	maven/jruby-noasm/src/it/integrity/verify.bsh
+    	maven/jruby/src/it/integrity/verify.bsh
+    	pom.xml
+    	spec/ffi/async_callback_spec.rb
+    	spec/ffi/bool_spec.rb
+    	spec/ffi/buffer_spec.rb
+    	spec/ffi/callback_spec.rb
+    	spec/ffi/custom_param_type.rb
+    	spec/ffi/custom_type_spec.rb
+    	spec/ffi/dup_spec.rb
+    	spec/ffi/enum_spec.rb
+    	spec/ffi/errno_spec.rb
+    	spec/ffi/ffi_spec.rb
+    	spec/ffi/function_spec.rb
+    	spec/ffi/io_spec.rb
+    	spec/ffi/library_spec.rb
+    	spec/ffi/long_double.rb
+    	spec/ffi/managed_struct_spec.rb
+    	spec/ffi/memorypointer_spec.rb
+    	spec/ffi/number_spec.rb
+    	spec/ffi/platform_spec.rb
+    	spec/ffi/pointer_spec.rb
+    	spec/ffi/rbx/attach_function_spec.rb
+    	spec/ffi/rbx/memory_pointer_spec.rb
+    	spec/ffi/rbx/spec_helper.rb
+    	spec/ffi/rbx/struct_spec.rb
+    	spec/ffi/string_spec.rb
+    	spec/ffi/strptr_spec.rb
+    	spec/ffi/struct_by_ref_spec.rb
+    	spec/ffi/struct_callback_spec.rb
+    	spec/ffi/struct_initialize_spec.rb
+    	spec/ffi/struct_packed_spec.rb
+    	spec/ffi/struct_spec.rb
+    	spec/ffi/typedef_spec.rb
+    	spec/ffi/union_spec.rb
+    	spec/ffi/variadic_spec.rb
+    	spec/ruby/optional/ffi/library_spec.rb
+    	spec/ruby/optional/ffi/spec_helper.rb
+    	test/mri.1.8.index
+    	test/pom.rb
+    	test/rubicon/test_object_space.rb
+    	test/test_command_line_switches.rb
+    	test/test_dir.rb
+    	test/test_file.rb
+    	test/test_higher_javasupport.rb
+    	test/test_io.rb
+    	test/test_jar_on_load_path.rb
+    	test/test_jarred_gems_with_spaces_in_directory.rb
+    	test/test_launching_by_shell_script.rb
+    	test/test_load_compiled_ruby_class_from_classpath.rb
+    	tool/globals_1_8_7.rb
+    	tool/globals_1_9_3.rb
+    	tool/globals_2_0_0.rb
+
+commit c31ce4e0e707d4be541fdc11cadeda32c72ed8e9
+Author: Christian Meier <m.kristian@web.de>
+Date:   Tue Oct 14 10:08:53 2014 +0100
+
+    warn when jruby home is not set to one of the tested cases
+
+commit 53334272633b0b71dd3ab4a96d3704d7b68c25d9
+Author: Christian Meier <m.kristian@web.de>
+Date:   Thu Oct 9 12:45:10 2014 +0100
+
+    uniform setting path to jruby home - no detection just use the one from the classloader
+
+commit f014b03e6834f6f6bbd4395fa0976a56b3f641cf
+Author: Christian Meier <m.kristian@web.de>
+Date:   Tue Oct 7 00:13:44 2014 +0100
+
+    detect the right root classloader for more cases
+
+commit 27a37492b16b2f1b7be0205d84bf2aac807dae8b
+Merge: 2a2652f 9459764
+Author: Christian Meier <m.kristian@web.de>
+Date:   Wed Nov 5 12:32:42 2014 +0000
+
+    Merge branch 'jruby-1_7' of github.com:jruby/jruby into jruby-1_7
+
+commit 2a2652fb00066a3de7498b0e8b99c2e69453e79b
+Author: Christian Meier <m.kristian@web.de>
+Date:   Wed Nov 5 12:27:12 2014 +0000
+
+    do not canonilize path for jruby home on windows for uri-like pathname - should fix #2042
+
+commit 8942235d2b1e9d86d65b46c7817351c40530187f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Oct 29 10:15:42 2014 -0500
+
+    Use JVM 1.7 bytecodes by default for JVM >= 1.7. Fixes #2077.
+
+commit 11205fa0b5fb33fad66f1a916bb091357703d9d1
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Oct 27 12:11:47 2014 -0500
+
+    More improvement and refactoring of indy binding.
+    
+    * Install call site caching policies from JRuby 1.7.
+    * Clean up super sites by storing more in the site object.
+    * Add failure path to invocation sites.
+    * Remove switchpoint flag; we always use it now.
+    * Remove unused RubyInstanceConfig fields related to indy.
+
+commit 9fe012055aa440bbadea63df4faffb8324a48c25
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Thu Oct 9 21:29:51 2014 +0100
+
+    Follow RubySpec for processing of switches in RUBYOPTS if strict compliance.
+
+commit ed54aab184bed0dc9dbaaf90b357c8f793c33696
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Sep 17 13:40:36 2014 -0500
+
+    Rip out the guts! Removing many non-9k runtime classes.
+    
+    * ClassCache is gone; it was hacky and problematic when compiled
+      code held classloader-level (static) data, as when using indy
+      call sites. Java 8 has also eliminated permgen, greatly reducing
+      the hassle and overhead of loading jitted code. Finally, Rails
+      and the other Ruby frameworks are now officially "thread safe"
+      (or the teams are committed to them being so) and the multiple
+      JRuby model of deployment is discouraged (or even deprecated).
+    * All old JIT code is gone. It won't be useful for the new
+      JIT.
+    * Removed the last vestiges of Callback-based functions. If I
+      remember right, there's some ext out there using them...we must
+      find it.
+    * Rewired JITCompiler to use the new JIT.
+    * Rewired InterpretedIRMethod to use JITCompiler.
+    * Moved OneShotClassLoader out of ClassCache (in org.jruby.util)
+
+commit a88339329d708b9529b924ad4f208ec674f03108
+Merge: df432f4 b4edc3f
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Sep 2 12:10:22 2014 -0500
+
+    The painful merge with jruby-1_7
+
+commit 185cec17755d025d5dc1f28bac7c8317d2621e98
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Aug 27 10:45:49 2014 -0500
+
+    Counteract RegaularFileResource now canonicalizing paths for absolutePath method by also canonicalizing jruby.home value.  This fixed  require 'bundler/setup' not working if invoked with jruby.home having a lowercase drive-letter.
+
+commit 309b13942f6c52fbc02398f9859e2b06b57ce958
+Merge: f425c87 d481131
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Aug 21 15:02:12 2014 -0500
+
+    Merge remote-tracking branch 'origin/jruby-1_7'
+    
+    Conflicts:
+    	build.xml
+    	core/src/main/java/org/jruby/util/URLResource.java
+    	core/src/main/java/org/jruby/util/cli/OutputStrings.java
+    	maven/jruby-complete/pom-generated.xml
+    	maven/jruby-complete/pom.rb
+    	maven/jruby-complete/pom.xml
+    	maven/jruby-complete/src/it/legacy-osgi-test/pom.xml
+    	maven/jruby-complete/src/it/osgi-test/pom.xml
+    	maven/jruby-complete/src/it/osgi-test/pom.xml.skip
+    	maven/jruby-dist/pom.rb
+    	maven/jruby-jars/Mavenfile
+    	maven/jruby-jars/pom.xml
+    	maven/jruby-noasm/pom.rb
+    	maven/jruby-noasm/pom.xml
+    	maven/jruby-rake-plugin/pom.xml
+    	maven/jruby-stdlib/pom.rb
+    	maven/jruby-stdlib/pom.xml
+    	maven/jruby/pom.rb
+    	maven/jruby/pom.xml
+    	maven/pom.rb
+    	maven/pom.xml
+    	pom.xml
+
+commit 311bec242165a4fb339516afc414f44cb650cd80
+Author: Christian Meier <m.kristian@web.de>
+Date:   Tue Aug 19 19:07:26 2014 +0200
+
+    introduce an uri: protocol for generic classloaders and uri:classloader: for the
+    Thread.currentThread.conttextClassLoader
+
+commit 15533fb5079285b97e7985f964ef2c0b160c136f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Jul 20 16:10:36 2014 -0500
+
+    Appease IntelliJ.
+
+commit 92fbb2515f7972c1d164b39ba31add0a5cc2394e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Jul 20 16:09:19 2014 -0500
+
+    Add support for - argument to force stdin.
+
+commit 30e38eac79f7c7e3a34ed384b0d65d3e57745926
+Merge: 4b8c034 41298a6
+Author: Christian Meier <m.kristian@web.de>
+Date:   Thu Jul 17 18:22:09 2014 +0100
+
+    Merge branch 'jruby-1_7'
+    
+    Conflicts:
+    	.travis.yml
+    	lib/ruby/1.9/date.rb
+    	maven/jruby-dist/pom.rb
+    	maven/jruby-dist/pom.xml
+    	maven/jruby-jars/Mavenfile
+    	maven/jruby-jars/pom.xml
+    	maven/jruby/src/it/jetty/pom.xml
+    	maven/jruby/src/it/tomcat/pom.rb
+    	maven/jruby/src/it/tomcat/pom.xml
+
+commit 2676a1ce936a89deaab7db9f11a6a0d63fdf8610
+Merge: c8d269d c57ad62
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 9 12:55:04 2014 -0500
+
+    Merge remote-tracking branch 'origin/master' into new_transcoder
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/RubyConverter.java
+    	test/mri/excludes/TestMethod.rb
+    	test/mri/excludes/TestModule.rb
+
+commit 7c2fcc2baf2869257c3e215a311f796ba7ba0617
+Author: Chris Price <chris@puppetlabs.com>
+Date:   Wed Jul 9 10:38:16 2014 -0700
+
+    Fix minor bug in setNativeEnabled
+    
+    The implementation of setNativeEnabled previously had a hard-coded
+    value of `false`, and ignored the actual value that the caller
+    passed in.
+
+commit 207df03ff51a2af3d6006134fff5235e046889c9
+Merge: ae0ac44 6a65d0f
+Author: Christian Meier <m.kristian@web.de>
+Date:   Tue Jul 1 18:46:29 2014 +0100
+
+    Merge branch 'jruby-1_7' into master
+    
+    Conflicts:
+    	core/pom.xml
+    	core/src/main/java/org/jruby/RubyInstanceConfig.java
+    	docs/man/pom.xml
+    	docs/pom.xml
+    	ext/openssl/lib/jopenssl18/openssl/bn.rb
+    	ext/openssl/lib/jopenssl18/openssl/buffering.rb
+    	ext/openssl/lib/jopenssl18/openssl/cipher.rb
+    	ext/openssl/lib/jopenssl18/openssl/config.rb
+    	ext/openssl/lib/jopenssl18/openssl/digest.rb
+    	ext/openssl/lib/jopenssl18/openssl/pkcs7.rb
+    	ext/openssl/lib/jopenssl18/openssl/ssl-internal.rb
+    	ext/openssl/lib/jopenssl18/openssl/ssl.rb
+    	ext/openssl/lib/jopenssl18/openssl/x509-internal.rb
+    	ext/openssl/lib/jopenssl18/openssl/x509.rb
+    	ext/openssl/lib/jopenssl19/openssl.rb
+    	ext/openssl/lib/jopenssl19/openssl/bn.rb
+    	ext/openssl/lib/jopenssl19/openssl/cipher.rb
+    	ext/openssl/lib/jopenssl19/openssl/digest.rb
+    	ext/openssl/lib/jopenssl19/openssl/ssl-internal.rb
+    	ext/openssl/lib/jopenssl19/openssl/ssl.rb
+    	ext/openssl/lib/jopenssl19/openssl/x509-internal.rb
+    	ext/openssl/lib/jopenssl19/openssl/x509.rb
+    	ext/openssl/lib/jopenssl21/openssl.rb
+    	ext/openssl/lib/jopenssl21/openssl/bn.rb
+    	ext/openssl/lib/jopenssl21/openssl/buffering.rb
+    	ext/openssl/lib/jopenssl21/openssl/config.rb
+    	ext/openssl/lib/jopenssl21/openssl/digest.rb
+    	ext/openssl/lib/jopenssl21/openssl/ssl.rb
+    	ext/openssl/lib/openssl/bn.rb
+    	ext/openssl/lib/openssl/buffering.rb
+    	ext/openssl/lib/openssl/cipher.rb
+    	ext/openssl/lib/openssl/config.rb
+    	ext/openssl/lib/openssl/digest.rb
+    	ext/openssl/lib/openssl/pkcs7.rb
+    	ext/openssl/lib/openssl/ssl-internal.rb
+    	ext/openssl/lib/openssl/ssl.rb
+    	ext/openssl/lib/openssl/x509-internal.rb
+    	ext/openssl/lib/openssl/x509.rb
+    	ext/openssl/pom.xml
+    	ext/openssl/src/main/java/org/jruby/ext/openssl/ASN1.java
+    	ext/openssl/src/main/java/org/jruby/ext/openssl/Attribute.java
+    	ext/openssl/src/main/java/org/jruby/ext/openssl/BN.java
+    	ext/openssl/src/main/java/org/jruby/ext/openssl/BouncyCastlePEMHandler.java
+    	ext/openssl/src/main/java/org/jruby/ext/openssl/Cipher.java
+    	ext/openssl/src/main/java/org/jruby/ext/openssl/Digest.java
+    	ext/openssl/src/main/java/org/jruby/ext/openssl/HMAC.java
+    	ext/openssl/src/main/java/org/jruby/ext/openssl/NetscapeSPKI.java
+    	ext/openssl/src/main/java/org/jruby/ext/openssl/OSSLLibrary.java
+    	ext/openssl/src/main/java/org/jruby/ext/openssl/OpenSSLImpl.java
+    	ext/openssl/src/main/java/org/jruby/ext/openssl/OpenSSLReal.java
+    	ext/openssl/src/main/java/org/jruby/ext/openssl/PEMHandler.java
+    	ext/openssl/src/main/java/org/jruby/ext/openssl/PKCS7.java
+    	ext/openssl/src/main/java/org/jruby/ext/openssl/PKey.java
+    	ext/openssl/src/main/java/org/jruby/ext/openssl/PKeyDH.java
+    	ext/openssl/src/main/java/org/jruby/ext/openssl/PKeyDSA.java
+    	ext/openssl/src/main/java/org/jruby/ext/openssl/PKeyRSA.java
+    	ext/openssl/src/main/java/org/jruby/ext/openssl/Random.java
+    	ext/openssl/src/main/java/org/jruby/ext/openssl/Request.java
+    	ext/openssl/src/main/java/org/jruby/ext/openssl/SSL.java
+    	ext/openssl/src/main/java/org/jruby/ext/openssl/SSLContext.java
+    	ext/openssl/src/main/java/org/jruby/ext/openssl/SSLSocket.java
+    	ext/openssl/src/main/java/org/jruby/ext/openssl/Utils.java
+    	ext/openssl/src/main/java/org/jruby/ext/openssl/X509.java
+    	ext/openssl/src/main/java/org/jruby/ext/openssl/X509CRL.java
+    	ext/openssl/src/main/java/org/jruby/ext/openssl/X509Cert.java
+    	ext/openssl/src/main/java/org/jruby/ext/openssl/X509Extensions.java
+    	ext/openssl/src/main/java/org/jruby/ext/openssl/X509Name.java
+    	ext/openssl/src/main/java/org/jruby/ext/openssl/X509Revoked.java
+    	ext/openssl/src/main/java/org/jruby/ext/openssl/X509Store.java
+    	ext/openssl/src/main/java/org/jruby/ext/openssl/X509StoreCtx.java
+    	ext/openssl/src/main/java/org/jruby/ext/openssl/impl/ASN1Registry.java
+    	ext/openssl/src/main/java/org/jruby/ext/openssl/impl/EVP.java
+    	ext/openssl/src/main/java/org/jruby/ext/openssl/impl/Envelope.java
+    	ext/openssl/src/main/java/org/jruby/ext/openssl/impl/PKCS10Request.java
+    	ext/openssl/src/main/java/org/jruby/ext/openssl/impl/PKCS7.java
+    	ext/openssl/src/main/java/org/jruby/ext/openssl/impl/PKey.java
+    	ext/openssl/src/main/java/org/jruby/ext/openssl/impl/RecipInfo.java
+    	ext/openssl/src/main/java/org/jruby/ext/openssl/impl/SMIME.java
+    	ext/openssl/src/main/java/org/jruby/ext/openssl/impl/Signed.java
+    	ext/openssl/src/main/java/org/jruby/ext/openssl/impl/SignerInfoWithPkey.java
+    	ext/openssl/src/main/java/org/jruby/ext/openssl/x509store/Certificate.java
+    	ext/openssl/src/main/java/org/jruby/ext/openssl/x509store/Function0.java
+    	ext/openssl/src/main/java/org/jruby/ext/openssl/x509store/Function1.java
+    	ext/openssl/src/main/java/org/jruby/ext/openssl/x509store/Function2.java
+    	ext/openssl/src/main/java/org/jruby/ext/openssl/x509store/Function3.java
+    	ext/openssl/src/main/java/org/jruby/ext/openssl/x509store/Function4.java
+    	ext/openssl/src/main/java/org/jruby/ext/openssl/x509store/Function5.java
+    	ext/openssl/src/main/java/org/jruby/ext/openssl/x509store/Lookup.java
+    	ext/openssl/src/main/java/org/jruby/ext/openssl/x509store/LookupMethod.java
+    	ext/openssl/src/main/java/org/jruby/ext/openssl/x509store/Name.java
+    	ext/openssl/src/main/java/org/jruby/ext/openssl/x509store/PEMInputOutput.java
+    	ext/openssl/src/main/java/org/jruby/ext/openssl/x509store/Purpose.java
+    	ext/openssl/src/main/java/org/jruby/ext/openssl/x509store/Store.java
+    	ext/openssl/src/main/java/org/jruby/ext/openssl/x509store/StoreContext.java
+    	ext/openssl/src/main/java/org/jruby/ext/openssl/x509store/Trust.java
+    	ext/openssl/src/main/java/org/jruby/ext/openssl/x509store/X509AuxCertificate.java
+    	ext/pom.xml
+    	ext/readline/pom.xml
+    	ext/ripper/pom.xml
+    	lib/pom.rb
+    	lib/pom.xml
+    	lib/ruby/1.9/date.rb
+    	maven/jruby-complete/pom.xml
+    	maven/jruby-dist/pom.xml
+    	maven/jruby-jars/pom.xml
+    	maven/jruby-jars/src/it/helloworld/pom.xml
+    	maven/jruby-noasm/pom.xml
+    	maven/jruby-rake-plugin/pom.xml
+    	maven/jruby-stdlib/pom.xml
+    	maven/jruby/pom.xml
+    	maven/pom.xml
+    	pom.xml
+    	spec/ffi/managed_struct_spec.rb
+    	spec/ffi/spec_helper.rb
+    	spec/regression/gh-801_date_inspect_spec.rb
+    	test/externals/ruby1.9/openssl/test_integration.rb
+    	test/externals/ruby1.9/openssl/test_x509cert.rb
+    	test/pom.xml
+
+commit 28588ed678aa94b85a71cf41d555c00fbf76dff0
+Merge: 02eb2f4 1d03c28
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jun 23 14:16:24 2014 -0500
+
+    Merge remote-tracking branch 'origin/master' into new_transcoder
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/RubyBasicObject.java
+    	core/src/main/java/org/jruby/RubyIO.java
+
+commit 035fa107031d3a3f7bf8f8df91d5033e794a4936
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Jun 17 11:08:28 2014 -0500
+
+    Trivial doc fixes
+
+commit 8f43dbeddfd7cf14d9f336b76cd7e86e3d055a85
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Jun 17 11:08:28 2014 -0500
+
+    Trivial doc fixes
+
+commit 2aa495848b3606055211c00b2e73660f168aceec
+Merge: 7dbfaef 639ec14
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jun 13 11:03:10 2014 +0100
+
+    Merge branch 'master' into new_transcoder
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/RubyInstanceConfig.java
+
+commit 795e370e2c9eddf864ccd67569958ba9058bcf01
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri Jun 6 13:39:03 2014 -0500
+
+    IR now default runtime with JIT off for now...woot woot...all aboard the IR express
+
+commit d0fc86f7df97e2a98cfa0a4afd5e8e6d0d63fe71
+Merge: ecc42a6 b3ff6cf
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue May 27 20:19:20 2014 -0500
+
+    Merge remote-tracking branch 'github/master' into new_transcoder
+
+commit 7bf6b399e086e646a40863d7624f522532bd69d7
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Sun May 25 21:53:16 2014 +0100
+
+    [Truffle] Fix support for simple deletion of Truffle from the JAR.
+
+commit 6fd1b623fd8f57c4819c9c57980725252c3f2ad1
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Fri May 23 23:27:57 2014 +0100
+
+    [Truffle] Add hook for requiring.
+
+commit 706b4539517e1c444250334ea261ac56542d02cf
+Merge: 75887be c3e7c29
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu May 8 04:54:10 2014 -0500
+
+    Merge branch 'master' into new_transcoder
+    
+    Conflicts:
+    	core/pom.xml
+    	core/src/main/java/org/jruby/RubyFile.java
+    	core/src/main/java/org/jruby/util/TypeConverter.java
+
+commit c58164f7c6d24d317bac36fc57060ed4be8ca5e6
+Author: Thomas E Enebo <tom.enebo@gmail.com>
+Date:   Tue Apr 8 08:38:49 2014 -0500
+
+    Cheryr-picked from master
+
+commit 835f1c71a52de9a42be50dc31cb757029d4581e4
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Apr 8 20:00:58 2014 -0500
+
+    Hook up a mixed-mode for the IR runtime, to aid JIT testing.
+    
+    Like the old AST-based runtime, we have both an interpreter and
+    a compiler. Up to now, it has only been possible to run the IR
+    runtime in *either* the interpreter or the still-in-development
+    JIT. This patch adds a -X+JIR mode that will lazily JIT IR method
+    bodies using the same trivial heuristic (call count) as the AST
+    runtime.
+    
+    This is a major step toward switching to IR runtime being on all
+    the time.
+
+commit 4faa6c6312305540d34ba71acd35ee850cbbc230
+Author: areman <andre.kullmann@googlemail.com>
+Date:   Wed Apr 2 15:19:04 2014 +0200
+
+    avoid nullpointer in case no profiling service is configured
+
+commit 06130f94ed43d3660dea65e2dbb415b8aafdac5f
+Author: areman <andre.kullmann@googlemail.com>
+Date:   Wed Apr 2 00:56:30 2014 +0200
+
+    remove wildcard imports and rename buidin to builtin
+
+commit a5eb4da666cf0ccd118e6786fc9ac1451f4748e7
+Author: areman <andre.kullmann@googlemail.com>
+Date:   Tue Apr 1 20:08:54 2014 +0200
+
+    Change the profiler to make it possible to add custom profiler implementations. Add Config options
+
+commit 89976c359c564543e8766cdf8431de47718265fa
+Merge: 0bbd0bb b7ea457
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Mar 19 14:05:10 2014 -0500
+
+    Merge remote-tracking branch 'origin/jruby-1_7'
+    
+    Conflicts:
+    	core/pom.xml
+    	core/src/main/java/org/jruby/RubyInstanceConfig.java
+    	core/src/main/java/org/jruby/ir/targets/Bootstrap.java
+    	test/externals/ruby1.9/excludes/TestSyslog.rb
+
+commit 309576b21144f2f2483f37292af0f470516fce1a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Mar 19 12:09:17 2014 -0500
+
+    Make it possible to enable/disable invokedynamic after boot.
+    
+    * Deprecate loaded-once static values from RubyInstanceConfig.
+    * Use Option.load everywhere static values were used.
+    * Move to using released "options" library.
+
+commit fb5d1b0aea2d004820601baef4806cdf3d825d32
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Mar 13 18:39:22 2014 -0500
+
+    Add support for --disable flag.
+
+commit 6712676cbbd6d42e4dc238894075e3b76987481e
+Merge: 7f393ee 021e103
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Feb 13 16:11:15 2014 -0600
+
+    Merge remote-tracking branch 'origin/jruby-1_7'
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/util/cli/Options.java
+
+commit e10e4199e0f65b9f9b62c7bd5cc9d92b11da9deb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Feb 13 16:07:48 2014 -0600
+
+    Reinstate executor thread pool for running fibers. Fixes #1443.
+
+commit dec976d6487b5249e4a30e9bb930935eea9cf4cb
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Feb 5 12:42:42 2014 -0600
+
+    JRuby 1.7.x should default to 1.9 mode when invalid version specified not 1.8 mode
+
+commit 567e7f24a44e8f5b16fd32ba32c7cfb6ac892d2a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jan 31 12:20:18 2014 +0100
+
+    Implement frame push/pop and related fixes (IR JIT).
+    
+    * Fix rescue table for disjoint blocks going to same catch.
+    * Implement push/pop of frame.
+    * Various fixes for arity-matching in indy binding.
+    * Add IR JIT compiler passes w/ AddCallProtocolInstructions.
+
+commit f1c4a682ee609628131e39666726efab078a71d3
+Merge: ec268cd 24536e0
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Jan 30 16:04:45 2014 -0600
+
+    Merge remote-tracking branch 'origin/jruby-1_7'
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/lexer/yacc/RubyYaccLexer.java
+    	core/src/main/java/org/jruby/util/cli/Options.java
+
+commit 364f2a5c505a8e804ff24427ce129df926ea8f34
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jan 29 19:40:04 2014 -0600
+
+    Revert "Added new option jruby.timeout.thread.pool.max to control the max number of Timeout worker threads."
+    
+    This reverts commit 8bbe14b9a3483ff9a789f56cc3a4beeb7446a18e.
+    
+    The first parameter to newScheduledThreadPool is not a max, it is
+    a minimum. That makes the original commit moot, since it does not
+    limit thread count and actually causes more threads to be alive
+    than are necessary.
+
+commit aa9a0ca913aaa8160b4192e009488159362fd4c1
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Jan 15 10:11:22 2014 -0600
+
+    Make proper properties to control debugging output for ir persistence
+
+commit 27fb89ab62a82571883ba30c2388f4b3eead6686
+Merge: 0a8680c eec9eb1
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jan 8 20:50:36 2014 -0600
+
+    Merge branch 'master' into truffle
+
+commit 5a005f5cf4ca04f69c46700eacdbb1d6b5b59736
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Tue Jan 7 20:33:56 2014 -0600
+
+    [IR] Experimental: First pass implementing unboxing of floats.
+    
+    * Added a pass to detect unboxable floating-point operations
+      and perform them with Java primitives directly without
+      incurring call overheads.
+    * This code doesn't yet add inlining/type guards for dealing
+      with monkeypatching or type changes along optimized paths.
+    * Added -Xir.unboxing=true commandline option for enabling
+      the pass.
+    * This code hasn't been tested extensively for correctness or
+      performance, but it is meant to be correct (modulo missing
+      type guards). It should work in the presence of closures by
+      adding any required boxing/unboxing instructions at boundaries.
+    * Added support for float ALU, box, and unboxing instructions
+      in IR JIT as well.
+    * Analysis now works correctly on loop-based and closure-based
+      versions of mandelbrot (type-guards are still missing). Some
+      more tweaks are required for the closure version to get rid of
+      some spurious boxing instructions.
+    * Preliminary results:
+      - Over 5x speedup with JIT on the while-loop version of mandelbrot
+        (all fixnum ops still go through boxed calls).
+      - Over 20% speedup with interpreter on the closures version of
+        mandelbrot (when DCE is enabled). JIT doesn't support closures
+        yet.
+      - But, meaningless numbers in the absence of safety guards, but
+        just an indication of potential in fp-heavy code.
+    * To be done:
+      - Additional tweaks to analysis.
+      - Retain exception edge info better in IR and exploit it in
+        analysis.
+      - Fix ToAryInstr to not lose information about safety in most
+        cases where its operand is an Array.
+      - Exploit Fixnum information where it is obvious it won't
+        overflow boundaries (ex: 50.times {..})
+      - Exploit inlining opportunities on simple iterators like
+        (n.times {..}).
+      - Exploit information from Constants and Math.* methods.
+      - A lot of this requires appropriately placed safety guards.
+
+commit 0a8680cf51e31874f8efb15395d592fe5385ef57
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Mon Jan 6 19:26:10 2014 +0000
+
+    [Truffle] Import project.
+
+commit 9bd4b5779c1af66d66f18919eb699342a5bd75c8
+Merge: be6823c 6669bc5
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Dec 20 13:31:11 2013 -0600
+
+    Merge remote-tracking branch 'origin/jruby-1_7'
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/Ruby.java
+    	test/pom.xml
+
+commit 6669bc5dc51a27047d1290fb2ca68b21e11a3a1c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Dec 20 11:21:26 2013 -0600
+
+    Set ext and src encoding from -K flag.
+    
+    Fixes #480.
+
+commit 13c11425d76bb4730e5fabae4452374c8cfb7f07
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Dec 13 11:07:33 2013 +1100
+
+    Add flag to turn on/off indy opto of FFI calls.
+
+commit 1e070ea66cea5b4452879c47d8f720f08e5ce80a
+Merge: 269c91d 1080132
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Dec 11 14:34:35 2013 -0600
+
+    Merge with master
+
+commit 0d4f883468e440a1fccf701ba4fb8fded7a77e70
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Nov 23 00:13:56 2013 -0600
+
+    Remove rarely used and never quite right thread-pool mode.
+
+commit 91277a0b220d47821647c670ab40eaa66ff246a8
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Nov 7 12:39:33 2013 -0600
+
+    Remove Cext support.
+
+commit 13135f5fa0c89ad6ea9a4daf8c80084fcdfa1c26
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Nov 7 12:05:15 2013 -0600
+
+    Eliminate LoadService19.
+
+commit 031d58e95b21e1d15f43e79ca9509cf2dda8ce02
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Oct 30 23:52:03 2013 -0500
+
+    Remove most non-parser references to CompatVersion.
+    
+    This also removes compat logic from annotation-based method
+    binding and invoker generation. I believe only the parser remains
+    to be de-versioned.
+
+commit 4e87bc6e153a433032d8e6b91067cae715ab9591
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Oct 30 18:48:57 2013 -0500
+
+    Remove ASTCompiler19 and collapse logic into ASTCompiler.
+
+commit d83c6c3ee43fe61b5175b7a571fa59f5167a41a0
+Merge: b6a8fd0 16ed222
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Oct 29 17:09:03 2013 -0500
+
+    Merge 1.7 branch to main
+
+commit a2e3c9d05b1a9d567f02e68cd24de0d9be2d3b67
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Oct 29 13:45:35 2013 -0500
+
+    Load uppercase package setting from config rather than static.
+
+commit 96230649ca340c60eab6db46ad58739ffde0dc08
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Oct 22 06:58:41 2013 -0500
+
+    Switch compile mode option to be enum-based.
+
+commit ed83d396e8bf30e37e6684c1d454f52a69b4b6a1
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Oct 16 15:52:42 2013 -0500
+
+    lifus merge: Options for reading added
+
+commit 625bd1fab9e12da37331d58c20080e7df140a4f7
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Oct 15 15:26:04 2013 -0500
+
+    Options added (lifus manual merge)
+
+commit 6d5ddacf7ef3011b3e6856df4d7c430a33cedd9e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Oct 8 15:21:32 2013 -0500
+
+    Bump up execution mode and stdlib to 2.1 (head).
+
+commit 8ec019b6476b40cc0f36ee0a31520102fd393264
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Oct 6 22:34:38 2013 -0500
+
+    Move to 2.0 versioning and line up tests.
+
+commit 032750f2be1cf843ee10326f31b56e9377ebb73b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Oct 5 00:54:34 2013 -0500
+
+    Remove some remaining version-switching nuggets.
+
+commit 697e6895affa646849a685ed58f6f84795c853aa
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Oct 4 23:37:52 2013 -0500
+
+    Eliminate calls to Ruby.is1_8 and is1_9.
+
+commit e74c72bfc6c2639a315c1d5002497a206703c85b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Oct 4 22:38:27 2013 -0500
+
+    IT HAS BEGUN!
+    
+    Remove 1.8 tests and stdlib and start migrating boot logic toward
+    a single runtime compatibility mode.
+
+commit 691bf160dd5d75ff6b48909e2cd36cc1336f343c
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Wed Sep 4 00:05:26 2013 -0400
+
+    Add ability to set preferred network stack
+    
+    Set the preferred IP network stack at runtime, using the extended
+    property `net.preferIPv4`, with the default being `true`.
+    
+    This fixes #775 without involving `jruby-launcher`.
+
+commit a2f2fcf7d1ee879ddf8b1c335c2e81122c8900e8
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 17 12:02:43 2013 -0500
+
+    Eliminate a bunch of one-off unnecessary anon classes.
+
+commit afb16b1663f60661a183f18d42c146dc249af355
+Author: Maximilian Konzack <m.konzack@gmx.de>
+Date:   Wed Jul 17 11:27:10 2013 +0200
+
+    IR visualizer in RubyInstaceConfig
+
+commit 28c6fbc4e883bc1c9e9242d1da1cb2b785f55339
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 3 12:46:45 2013 -0500
+
+    Move to @mkristian's proposed layout, with some modifications.

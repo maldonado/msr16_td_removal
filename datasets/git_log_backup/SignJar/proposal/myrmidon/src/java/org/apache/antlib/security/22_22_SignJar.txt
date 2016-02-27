@@ -1,0 +1,97 @@
+commit d09fc12e5806f0129b029350af8e7b75ab8743fe
+Author: Peter Donald <donaldp@apache.org>
+Date:   Sun Feb 10 01:01:13 2002 +0000
+
+    Removed throwsIOException from Execute.execute() as it was never thrown.
+    
+    Made some tasks specify expected return code rather than checkin it themselves.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@271266 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ca77bf7cd306d07ef1a37b97a97b1de17f07f701
+Author: Peter Donald <donaldp@apache.org>
+Date:   Sun Feb 10 00:46:51 2002 +0000
+
+    Renamed Execute2 to Execute and moved it into the myrmidon.framework package.
+    
+    Cleaned up its code a little. ALso reworked it so that the user can specify an expectedReturnCode and if the value is not the one expected a TaskException is thrown.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@271265 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e0f1ffa9ba8e92b83f863548d6e9b454f7d4983d
+Author: Peter Donald <donaldp@apache.org>
+Date:   Sun Feb 10 00:25:42 2002 +0000
+
+    No need to setup a Logger for Execute.
+    
+    All logging will be routed via System.err or System.out as appropriate
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@271261 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 36a0800e7ea144680d92d4233585363120643b5d
+Author: Peter Donald <donaldp@apache.org>
+Date:   Wed Feb 6 13:38:45 2002 +0000
+
+    Style touchups
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@271189 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f20fc56a10afd37bcb8af902f0f443324b0b648c
+Author: Peter Donald <donaldp@apache.org>
+Date:   Sun Feb 3 10:28:46 2002 +0000
+
+    Add a constructor to Execute2 that takes the ExecManager service
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@271119 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1de83a9a9066650d5cf5176b0b44c2d963d3ec3a
+Author: Peter Donald <donaldp@apache.org>
+Date:   Sat Feb 2 15:44:20 2002 +0000
+
+    Make sure the security tasks declare their tasks so that xdoclet can pick up the meta-data
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@271085 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ad91082694f9344ae3020e16cf9351e48b751b0b
+Author: Peter Donald <donaldp@apache.org>
+Date:   Sun Jan 27 02:32:05 2002 +0000
+
+    Made Execute2 only take Commandlin objects rather than an arrya of strings
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270932 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 90ff09d91dfa9de44a3bb4d8be88d15a80735856
+Author: Peter Donald <donaldp@apache.org>
+Date:   Sun Jan 27 00:17:51 2002 +0000
+
+    Made sure signjar was actually executing command
+    
+    Fixing a audit violation
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270920 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 0c7462a17f34651ebc644b89810827a024d0a53f
+Author: Peter Donald <donaldp@apache.org>
+Date:   Sat Jan 26 02:08:58 2002 +0000
+
+    Update tasks to reflect movement of logic from objects to service/utility objects
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270865 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 918484ab411a54eea06eb555b0a606e0db7a5a04
+Author: Peter Donald <donaldp@apache.org>
+Date:   Fri Jan 25 23:57:18 2002 +0000
+
+    Move security/signing/etc related tasks to antlib
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270860 13f79535-47bb-0310-9956-ffa450edef68

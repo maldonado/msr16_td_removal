@@ -1,0 +1,109 @@
+commit deafc3600ea28afa83e51d43cad57f4bea921ebb
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Fri Apr 8 14:52:41 2011 -0500
+
+    Protect MetaObject constructors and go through MetaObject.create
+
+commit b3eef8c6f5590b577574ec7a81465ba3c8dc78c5
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Mon Apr 4 22:47:59 2011 -0500
+
+    Added missing DefineClass and DefineModule IR instructions
+
+commit 089925a9c0c84d6e7f75d21e3c7f1d840cb86ccf
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Thu Mar 10 16:19:43 2011 -0600
+
+    No use for MethodMetaObject anymore - always lookup the closest lexical
+    container; cleanup load/store binding instructions (more to be done);
+    refactored some interpretation preparation code into a IRScope method.
+
+commit 0091a5bf3fd753e6a0fdcd87c42c7154e11a883c
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Nov 17 10:57:28 2010 -0600
+
+    Use slower ThreadLocal for storing frame-local variables
+
+commit d50cc4187ed9f9396259be4f5bdecc240c3dc21a
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri Nov 12 14:04:23 2010 -0600
+
+    Make getNearestClass so metaobjects can walk itself rather than making consumer do it
+
+commit 523819b404e0bbba3609393230a803907b3805f3
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Oct 26 16:29:58 2010 -0500
+
+    Make MetaObject into a tree of MetaObjects
+
+commit 615808e073ab4aa608a65cdef6e410e2ba6f5b76
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Oct 25 16:48:09 2010 -0500
+
+    Add get const instruction
+
+commit 624e7a76cba93178039e1b0e3f2ea95aceff1361
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Oct 25 16:01:25 2010 -0500
+
+    Add equally shaky module support
+
+commit 2a0a77e295f4ec94479ec5045681594c728f6207
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Oct 25 15:42:31 2010 -0500
+
+    Really rough support for classes
+
+commit e41ed6a4c854cefc18e6297e7d761e3a7ee26d40
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Sat Oct 23 12:35:45 2010 -0500
+
+    All IRScopes have names.  Push name up
+
+commit a4a1ed7e272a36fb18595fda35e10524f209c6a9
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Oct 21 16:14:10 2010 -0500
+
+    entangle StaticScope more into IR
+
+commit 5ba18d897d1a365947ae9f93fba31a4f2d89fffe
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Sun Aug 8 09:48:23 2010 -0500
+
+    Partial cleanup
+
+commit f9c3ccc4acaa8fb591fb5e1e051d21343adf8b6f
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Jun 8 15:08:36 2010 -0400
+
+    Simple renaming in ir package
+
+commit 6cabc8fb6a510545419554de8f9e48ab0d9de2c0
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri Jun 4 17:54:06 2010 -0500
+
+    Madness to go this long without committing
+
+commit 5a08b5476f504d5f0cbbc628a85d88816f9df97b
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Jan 26 15:59:21 2010 -0600
+
+    Trivial IR changes littering my tree
+
+commit 26971842a0b03a49e4d3610e9759f478c76ca775
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Thu Aug 27 17:56:41 2009 -0500
+
+    - Continuing cleanup of scoping code;  IR_Class now extends IR_Module; filled out some more stubs to optimize some core class method calls for constant arguments;
+
+commit a6996526b87550659f9e1ff43bc05df3cc5dc1dc
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Thu Aug 27 13:43:46 2009 -0500
+
+    - Bug fixes in constant put/get (for class definitions).
+
+commit ddaf4c565c871ce4a59cf23683c59bcc2429fec9
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Thu Jul 23 17:37:09 2009 -0500
+
+    - Moved all operands to operands/ and instructions to instructions/ and fixed up imports.  Added some commented out code to start running peephole opts on the IR -- which will also serve as a basis for SCCP passes later on.

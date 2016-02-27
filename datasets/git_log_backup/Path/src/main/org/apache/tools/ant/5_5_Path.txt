@@ -1,0 +1,43 @@
+commit 8162d141e44b778d135f9251277e85c922f0544c
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Jul 14 08:25:52 2000 +0000
+
+    Make rmic, javac and javadoc use Path and add nested elements for
+    various PATH like structures.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@267782 13f79535-47bb-0310-9956-ffa450edef68
+
+commit cf4c2f018749355bf2c390e438cc18bc7e234efa
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Jul 14 07:14:43 2000 +0000
+
+    Remove duplicate entries in Path.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@267781 13f79535-47bb-0310-9956-ffa450edef68
+
+commit aa7f2d4046722f4ed1ea63464f0573e4accb418d
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Jul 13 16:35:08 2000 +0000
+
+    Added Thomas Haas Path class.
+    
+    I've added some minor modifications to his class
+    
+    * Added a String constructor to make it usable as an attribute
+    
+    * renamed the nested element from element to pathelement
+    
+    * Used Conor's PathTokenizer to split the path into parts.
+    
+    The Java task has been modified to use this class both for the
+    classpath attribute as well as for an nested classpath element -
+    documentation will follow.
+    
+    See the runtests target in build.xml for an example of its usage.
+    
+    Submitted by:	Thomas Haas <thomas.haas@softwired-inc.com>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@267778 13f79535-47bb-0310-9956-ffa450edef68

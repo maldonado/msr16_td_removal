@@ -1,0 +1,110 @@
+commit 7956a28161b0dbaabff49b363a249e25fd31b377
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Mar 26 19:35:32 2015 -0500
+
+    Add exception-handling here until codeLength is exception-free.
+
+commit 07f2d97c7974cda897ac0076384aea57da251201
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Mar 26 19:26:57 2015 -0500
+
+    Revert to version that doesn't handle exception.
+    
+    We need to fix these to return the values in MRI, since much of
+    our logic depends on making decisions based on these retvals.
+
+commit 0f3475fade686d9b0cf2b541c1dc6c037895dcf8
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Mar 23 17:45:31 2015 -0500
+
+    Fix negative 32-bit codepoint handling in inspect logic.
+
+commit cc3b1966946acf609142e617f557156284dc0f93
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Mar 23 17:16:17 2015 -0500
+
+    MBC fixes for String#% with %c.
+
+commit 60bbcd72d74ee218a7e554a80204e6d5c50f1aff
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Nov 8 23:13:48 2014 -0600
+
+    Exclude sprintf failure and indicate macro areas to be fixed.
+
+commit c57ad626cb025321cf3fb99f7d6c1d927c0d9889
+Merge: d363904 3159a5c
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Jul 9 12:14:46 2014 -0500
+
+    Merge with jruby-1_7
+
+commit ce855b4e885cfc3bd071b392b1de28d3dea19cf4
+Author: kares <self@kares.org>
+Date:   Fri Jun 27 21:10:15 2014 +0200
+
+    avoid sub-classing ThreadLocal since it will leak in envs such as (warbled) .war apps
+    
+    due JRuby classes being loaded from the (WEB-INF/lib) application loader ...
+    prevents such applications from correctly releasing class memory (e.g. on re-deploys)
+
+commit edd5a0a82edbdff2ddcd326588b1eba4f02a1e8a
+Merge: f0d2c9b 18c026c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Feb 20 14:33:23 2014 -0600
+
+    Merge remote-tracking branch 'origin/jruby-1_7'
+
+commit 0ffb731008259da326f0c35224f16425d80d5034
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Feb 20 14:31:56 2014 -0600
+
+    Remove unused initialization.
+
+commit eb0391f2cab0c932271bcca36b8f66e5d85f026f
+Merge: baeaaff 716ebbc
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jan 17 17:25:32 2014 -0600
+
+    Merge remote-tracking branch 'origin/jruby-1_7'
+
+commit 5d386a82a6d0f83627787c6b8fafb040ab593c20
+Author: Ben Browning <bbrownin@redhat.com>
+Date:   Fri Jan 17 16:24:36 2014 -0500
+
+    Cache DecimalFormatSymbol instances to reduce lock contention
+    
+    Constructing new DecimalFormatSymbol instances requires locking, and
+    in some sample Rails apps this contention was bubbling up as a
+    bottleneck. So, this change caches DecimalFormatSymbol instances
+    per-thread just like NumberFormat instances are already cached.
+    
+    The overall throughput in my test application wasn't much changed
+    because of ActiveRecord's connection mutex still sitting in this way,
+    but this does get rid of one source of multi-threaded lock contention.
+
+commit 697e6895affa646849a685ed58f6f84795c853aa
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Oct 4 23:37:52 2013 -0500
+
+    Eliminate calls to Ruby.is1_8 and is1_9.
+
+commit d1f89e004fdc78dff75407c82123e6c9e8b406bb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Sep 12 18:48:16 2013 +0200
+
+    Make ClassIndex into an enum, to prevent issues like #1004.
+
+commit ba28553a94f7eb2990eb79357c6d5bd5064c83a8
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Mon Sep 2 00:13:58 2013 -0400
+
+    Fill 0 for negative decimals if precision is given
+    
+    If precision is given for negative decimals, fill in 0's as necessary.
+    This fixes #936.
+
+commit 28c6fbc4e883bc1c9e9242d1da1cb2b785f55339
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 3 12:46:45 2013 -0500
+
+    Move to @mkristian's proposed layout, with some modifications.

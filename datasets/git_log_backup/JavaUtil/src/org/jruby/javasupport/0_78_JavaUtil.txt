@@ -1,0 +1,1268 @@
+commit bb98e4b8decffc0361b70a6c99c1ade5fed0abcb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Mar 28 10:02:33 2013 +0000
+
+    Move RuntimeHelpers to org.jruby.runtime.Helpers.
+
+commit 61678ac1a2514a9932276f8d527816a5980a94b3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Feb 25 20:41:40 2013 +1100
+
+    Fix more references to CPL.
+    
+    The phrase "Common Public License" was split across two lines in
+    our default header, which caused it to be missed during earlier
+    search/replace. Also, we did not replace the CPL URL in the
+    header with the EPL URL.
+
+commit 330fef3b0fc18af477ccea19bd278669667f31bb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 12 14:49:29 2013 -0600
+
+    Switch JRuby's CPL license to EPL.
+    
+    Governance of the CPL license was moved to the Eclipse Foundation
+    at some point in the past, and Eclipse blessed the EPL (Eclipse
+    Public License v1.0) as the successor to CPL. Because the CPL
+    contains a clause allowing transparent upgrades to future blessed
+    successor licenses, we can make the move to EPL without
+    re-contacting past contributors.
+    
+    The change in going from CPL to EPL largely just removes some
+    punitive language that apparently made many companies nervous. All
+    other language in the license remains identical.
+    
+    Several documents about Eclipse's move from CPL to EPL are here:
+    
+    http://www.eclipse.org/legal/cpl2epl/
+    
+    Note that Eclipse's move came before the blessing of EPL as the
+    upgrade path for CPL, so they had to do a bit more legal juggling.
+    With Eclipse now the administrator of CPL and with their blessing
+    of EPL as the upgrade path for CPL, all we need to do is make the
+    move.
+
+commit 14be2612f7066a3e54e0b2d56a4e5a0b4a7c35f6
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jul 30 10:58:15 2012 -0500
+
+    Fix JRUBY-6395: Coerce Fixnum to Number
+    
+    Simple enough fix: added Number (and Serializable) to the map of
+    types to converters in JavaUtil. Because our Numeric types were
+    already reporting that their "natural" classes were Number
+    subclasses, they were being selected for Number-receiving methods.
+    But the coercion logic did not know about Number, so it failed.
+
+commit b8181cda909f6e42d7c0b7fffaabbe2a502f273b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jul 27 02:19:54 2012 -0500
+
+    Inline all calls to ThreadContext.getRuntime to access the field.
+
+commit c2abc8caed9dfb383d4ab8d54267ba3cf7b81c20
+Author: ryenus <ryenus@gmail.com>
+Date:   Sun May 6 22:04:30 2012 +0800
+
+    #6606 - respect external encoding instead of hard coding UTF-8
+
+commit 686df60c9f39437661678bcd4b8bd872e6909322
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Feb 6 16:32:16 2012 -0600
+
+    Minor JI cleanup.
+
+commit 532d625e814b091f6e2f11746e644ea65e5747cc
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Feb 6 10:28:46 2012 -0600
+
+    Modest speedup for Java array sets.
+
+commit 96bb3e5651d4c326403448e066a6c0f8eee32551
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Sep 12 15:16:28 2011 -0500
+
+    Move 'bigdecimal' bits under org.jruby.ext.bigdecimal.
+
+commit d17bd1e60be5af227248d1a78ee236377408d660
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Aug 15 21:13:00 2011 -0500
+
+    Clean up too-narrow (or unnecessary) casts.
+    
+    Equivalent to mebigfatguy/jruby@2233071dbed4c0d6e974.
+
+commit 437f98611cee1b87dfd764576e1543dc234bf4a8
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jul 11 11:16:18 2011 -0500
+
+    Minor tweaks to String/CharSequence Java return coercion.
+    
+    * Add a mapping from CharSequence to string converter
+    * Propagate String through to Charset from RubyString.newUnicodeString
+
+commit c58a86d895f31108c6646cd52e733b59d8c5429c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jun 8 23:33:50 2011 -0500
+
+    Initial support for directly binding Java invocations from Ruby. Only no-arg calls with coercible return values (or void) supported for now.
+
+commit 104b98a7acb230e09a83d18c5dbfcf103b5186c5
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed May 11 15:17:36 2011 -0500
+
+    JRUBY-5788: Java names with only on capital letter not getting Ruby shortcuts defined
+
+commit 74b7a65df14ebc61a36c44778fbd9ebc23d01437
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Mar 12 16:48:22 2011 -0600
+
+    Faster, regexp-free versions of getRubyCasedName and getJavaPropertyName.
+    
+    These were showing up on Ruboto startup profiles.
+    
+    * getRubyCasedName: 8-10x faster
+    * getJavaPropertyName: 6-7x faster
+
+commit c4aebe991c9d42b6970722d4a27e0dc884d06cbe
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Mar 7 13:06:24 2011 -0600
+
+    Fix JRUBY-5541: Problem with java_import on Android (Ruboto)
+    
+    Android was producing "null" for unmatching $ group variables in replaceAll, botching our conversion from camelCase to snake_case. Fixed by manually walking the matches and only replacing from groups that matched.
+
+commit f36a117ea2c2dac0f35ee6ff4e650354358ad668
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Thu Jan 20 11:41:20 2011 -0600
+
+    JRUBY-5395: Fix camelCase => snake_case regression for groups of capital letters
+
+commit 8ec14c067e34c4e719e1859d440507c7820ca7d7
+Author: Douglas Campos <qmx@qmx.me>
+Date:   Thu Nov 18 01:27:11 2010 -0200
+
+    fixed camel case pending specs
+    
+    Signed-off-by: Hiro Asari <asari.ruby@gmail.com>
+
+commit 9d8803b0878854cfc3a21366bb31c6b82b8a76e3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Nov 9 03:20:33 2010 +0100
+
+    Port remaining JavaArrayUtilities.java_to_ruby to Java, since it's faster and no more complex.
+
+commit 539321344e5400b75063ee41c2d898b612c72a9e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Oct 23 01:25:01 2010 -0500
+
+    Clean up some warnings in JavaUtil.
+
+commit e671a9175dfa391fbdcb685562936492aed6f3e6
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Oct 23 00:42:28 2010 -0500
+
+    Fix for JRUBY-4998: error in scripts that evaluate to a Complex number: could not coerce Complex to class java.lang.Object
+    
+    Numeric, via JavaUtil's NUMERIC_TO_OTHER converter, was being too strict about failure when there was no coercion target for a given type. When the target type is asssignable from RubyNumeric, we should allow as the object to be passed out directly.
+
+commit 71f9649e1eecb38fd8d67000abdcd8bd9fdb2fa6
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Oct 20 14:09:10 2010 -0500
+
+    Fix for JRUBY-5120: inconsistencies or errors of range checks for integers passed to int, short and byte arguments of Java methods
+
+commit 7a8e6611357eda632c02f7c968813718bb00894f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Apr 22 19:19:16 2010 -0500
+
+    Fixes for JRUBY-4732: Clean up anything that calls dataGetStruct on a wrapped Java object to get the object
+
+commit 3d77ed334891f3be7066c9732ca778309b82fb73
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Mar 12 10:02:49 2010 -0600
+
+    Tweaks and fixes for jrubyc --java
+    
+    * With no signature, generate as many Object arguments as there are args
+    * Change "java_requires" to "java_require"
+    * Undeprecate the primitive convertJavaToRuby methods from JavaUtil
+
+commit 26323269fcfb2341ff8fa3b198037e1290982926
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Mar 10 16:21:23 2010 -0600
+
+    Fixes for JRUBY-4553: Scalability: JRuby suffers from Java Charset lock contention
+
+commit a55fcb067f99286c294536cfecfdeff70d2fd848
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Mar 9 11:36:03 2010 -0600
+
+    Sweater unraveling for JRUBY-4615: java integration specs interference
+    
+    The original problem here was that depending on what order JI-related code was used, a different object could get cached for a java.lang.Class in ObjectProxyCache. Normally, it should just be the proxy wrapper, but some paths inserted a the RubyClass version of the class. This led to peculiar failures if specs were reordered.
+    
+    The fixes made here are as follows:
+    
+    * Eliminate all remaining to_java_object logic, which is where the bad OPC.put originated from
+    * Move all coerce*ToJavaObject logic from JavaUtil into the appropriate toJava overrides
+    * Fixes and modifications surrounding the above two changes
+
+commit d208d74ed3a263e90d3342c84e85f4d55a7dec30
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Feb 18 02:23:55 2010 -0600
+
+    Fix for JRUBY-4529: Allow Ruby Float to always be coerced to a Java float value
+
+commit d04e23d5b6329274db3d459ee9e890dda620d579
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Mon Jan 11 15:18:39 2010 -0600
+
+    Add a RubyObjectHolder interface to generated proxy classes
+    
+    Used to tunnel back through when going from Java->Ruby
+
+commit 2f3802343d0de9440a71e099002d3b66f51c0a51
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Dec 23 00:40:00 2009 -0600
+
+    Use accessors for those pesky ByteList fields and update bytelist.jar to a current version with accessors and deprecated fields (for compile warnings and because we'll want to privatize them some day).
+
+commit 29de372d37a64464f87ee0dff1cd7b5c0a81df71
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Fri Nov 27 15:55:47 2009 -0600
+
+    Method invokes inefficient Number constructor; use static valueOf instead
+    
+    Signed-off-by: Nick Sieger <nick@nicksieger.com>
+
+commit c5758010eb2239e3644296f4dc9958bbb667709c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Oct 15 12:44:39 2009 -0500
+
+    Fix for JRUBY-4043: could not coerce BigDecimal to class java.lang.Object (TypeError)
+
+commit 72d49b972aa955b6aa40f9ee6ce76f4a6bc26a7a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Oct 7 14:58:28 2009 -1000
+
+    Fix for JRUBY-4039: Implicit conversion to List<Long> results in a List<Byte> or List<Integer>
+
+commit 440d372380749d1aad3546072e2701c83b99e828
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Oct 6 21:16:11 2009 -1000
+
+    Fix for JRUBY-4066: ruby subclass of java public void method cannot return numeric values
+
+commit a46a71f47ca91bee98e8a052c377d2fe8104dc3e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Oct 5 11:49:44 2009 -1000
+
+    Fix for JRUBY-4056: unsigned values values should be stuffed into Java signed values like Java does
+
+commit 04c10624d33b9c513281e8a1da3a9d89b35836b8
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Sep 24 12:53:21 2009 -0500
+
+    Restructure, reorder JavaUtil and mark some private stuff private.
+
+commit 4e2b1419624bbe91b047ef592effa1cc9ff62560
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Sep 24 09:30:24 2009 -0500
+
+    More refactoring, more unification of coercion logic. Also a small improvement to the monkey-patched j.u.List#sort Comparable impl.
+
+commit b03e892d3cbb7511aea24e39260ad29e821879b0
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Sep 23 18:28:29 2009 -0500
+
+    Remove the crazier coercion support for array elements and use the newly cleaned-up logic. Two tests had to be modified or disabled, but otherwise everything seems to work.
+
+commit 5c515dea2371140feaa59618749ac7907cf19456
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Sep 22 23:04:48 2009 -0500
+
+    Make refactored range-checks actually run the range check...
+
+commit d401d4ecd99e4ccca26949f2ba5bb1f2a96d2cab
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Sep 22 19:19:14 2009 -0500
+
+    More minor refactoring for numeric JI coercion, 1.9 encoding support for Ruby-Java String coercion.
+
+commit 0b0fdaf69afc9b02760421fb21aaab3fa52e9509
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Sep 22 18:22:52 2009 -0500
+
+    Deprecate a bunch more stuff in JavaUtil that's no longer being used.
+
+commit d76512bea561a28ca0420104f2684d8fb74c8fee
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Sep 22 14:37:30 2009 -0500
+
+    Add range-checking to the narrowing conversions of Fixnum and Float to Java's int, short, char, int, and float. JRUBY-3988.
+
+commit be1ce02e443cb0fcca88079595ea08c5ca6bb515
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Sep 22 12:27:32 2009 -0500
+
+    More consistency fixes for JI coercion:
+    * Move more places to calling toJava
+    * Move code away from calling convertRubyToJava, the old clunky coercion path
+    
+    Two behavior changes are introduced by this commit:
+    * When coming out of a collection (RubyArray, RubyHash) Fixnum will now coerce to the smallest java.lang.Number subtype its value can fit into. We already did this for calling methods that receive Object, but now also do it for many other cases of conversion to Object.
+    * nil values can now be assigned to or passed for primitive fields or arguments; nil will coerce as "0" in the smallest Number type possible.
+
+commit 7a67bd07c400f7ebfdcc09175e3fbee7f8cc3a9c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Sep 22 09:34:37 2009 -0500
+
+    Simplifications of existing coercion protocols; trying to reduce the weight of code that needs to be reworked.
+
+commit 281e79771d6df0ff7e18ca35bf16c4cd561b1b45
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Sep 10 21:50:57 2009 -0500
+
+    Readds and fixes for refactoring work thus far
+
+commit 6731c62cb06a3a3e056678d9c936e553752d1a9e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Sep 10 08:16:30 2009 -0500
+
+    First pass of refactoring for Java stuff.
+
+commit d0274828efc3f9586cfda48d79d4a02b3f376732
+Author: Aslak Hellesøy <aslak.hellesoy@gmail.com>
+Date:   Fri Jul 24 14:04:17 2009 +0200
+
+    Added null checks in convertRubyToJava
+    
+    Signed-off-by: Charles Oliver Nutter <headius@headius.com>
+
+commit 5d308a56f13a9253fe3b19add92aa78a5ca71342
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jul 13 02:29:28 2009 -0500
+
+    Some refactoring and cleanup of the coercion logic used for arguments passed to Java calls, including another hash of types to converters for numeric inputs. Seems to help numeric-passing benchmarks a bit.
+
+commit 66b21e1dde747096465748e504340eeb821cb324
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Jul 12 22:10:42 2009 -0500
+
+    Eliminate a useless wrap/unwrap of uncoercible Java objects returning to Ruby. Doubled perf of calling such methods.
+
+commit 58f655de32a4630f590c21a8d16c132f298ceda1
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed May 13 16:21:00 2009 -0500
+
+    Fix Java array [] to coerce objects correctly on the way out when array type is Object[].
+    
+    This should fix the IBM Java 5 issues we've been seeing on Linux and AIX.
+
+commit 61219265cb4eedcbfbf191eb457e0d22c1e7eedb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat May 2 12:47:00 2009 -0500
+
+    Add faster paths for accessing Java array elements when they are known types with known conversions.
+
+commit 2c61e300501401eb06c083216df4a5b9f3b42add
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri May 1 00:08:21 2009 -0500
+
+    Perf improvements for JI:
+    
+    * Java array access nearly 10x faster. This was probably why JetBrains' in-conference language benchmarks put JRuby last.
+    * Wrapped Java object access avoids hashing, using new ivar table stuff
+
+commit 4a5202eda5bf269eb2a28c913ce82a7aab18d595
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Apr 16 16:36:54 2009 -0500
+
+    Fix from Dmitry Jemerov for JRUBY-3166: Primitive type not being boxed when implementing a Java interface.
+
+commit b0d5d0744f9b3ad79fd44a42035f551cb71ca2c6
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Jan 29 01:41:13 2009 +0000
+
+    Add a FIXME to the JavaUtil method for converting strings, since it doesn't actually allow anything but strings and seems to do so.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8927 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 3957affa23b3974c8378942a56eff85e2fa80331
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Fri Jan 16 16:23:05 2009 +0000
+
+    JRUBY-3305: Fixnums & Floats should be coerced to the narrowest java.lang.Number when passed to a java method that expects Object (patch by Martin Traverso)
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8805 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 91799eaaaf58ee72283b41330e3941b4753ed4e7
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jan 5 07:12:29 2009 +0000
+
+    Large refactoring of CallConfiguration and compiler logic pertaining to it:
+    
+    * Made CallConfiguration an enum, aggregating new Framing and Scoping enums
+    * Juggled all references to CallConfiguration to be appropriate for its new enum status
+    * Reduced and simplified logic based on CallConfiguration in compiler
+    * Added remaining permutations of framing and scoping to better support proper execution in frameless mode. With these changes MRI's test.rb runs green in "fastest" mode.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8594 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 8efa4238ea89aca95378dd282dc85ec7e48c8780
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Dec 17 17:32:15 2008 +0000
+
+    Fix for JRUBY-3250: test_java_pkcs7.rb - Problem coercing Bignum into class java.math.BigInteger
+    
+    During JI refactoring, it appears that the return path from Ruby to Java stopped coercing Bignum to BigInteger correctly. I made the fix and added specs for it.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8383 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit e4f6078a064d2abd1ac72df82684e40b348112cb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Dec 3 04:28:48 2008 +0000
+
+    Fix for JRUBY-3112: Some Ruby instances are not roundtripping from Ruby to Java and back
+    
+    Patch submitted by Michael S. Allman.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8254 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 25bfeeb9f598f641c23ed8855fd46ddd7fe4477d
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Thu Nov 27 21:03:54 2008 +0000
+
+    JRUBY-3192: Fix return value coercion and add specs
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8179 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 7bbedee05b951db8dfcad7c92470b4fc10c2b36e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Nov 16 23:57:16 2008 +0000
+
+    Remove all remaining references/dependencies on MethodIndex's int indicies and related fields.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8081 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 02b4c702a47ae0d3db723b63e5e6be0f936f441c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Oct 31 07:12:14 2008 +0000
+
+    Fixes for JRUBY-3102: Java classes with non-visible constructors should not be constructible
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7980 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit af390319b29d8c1b3998d63c3167fd12fdc06c84
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Oct 29 02:04:26 2008 +0000
+
+    Fixes and specs for JRUBY-2958: jruby casts Integer argument to Long for java method with Integer arg.
+    
+    We lost coercion from numeric types to wrapper Java numerics probably in 1.1.4 with the JI perf work. I added specs for all such cases from Float, Fixnum, and Bignum to all the Java wrapper types, with additional failover to their natural type if the target is Object. All specs pass now.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7935 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 4a8fd0fdc2d2320e977ba1631a84e46b187f736a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Sep 11 01:27:54 2008 +0000
+
+    JRUBY-2957: Regression: to_java fails on arrays containing nil element
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7679 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 1927a7663b582a1cca34044f609cc2b7a728e495
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Aug 31 04:53:57 2008 +0000
+
+    Miscellaneous call optimizations:
+    * Partial arity-splitting of super invocation (really only useful for Java to Ruby calls
+    * Moved callSuper logic into RuntimeHelpers, modified all callers to use the new methods, and deprecated callSuper on IRubyObject
+    * Eliminated 30-some more uses of indexed IRubyObject.callMethod and deprecated one of them
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7596 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a3645cb165782453bb2c11bc94a89bd73e2fafc5
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Aug 26 01:55:02 2008 +0000
+
+    Add some type-checking to the coercion done in JavaUtil.convertRubyToJava, to avoid the ClassCastException seen in JRUBY-2296.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7539 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d78fe9834f682df33128ebe5bb97f015944e7836
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Tue Aug 26 00:03:55 2008 +0000
+
+    JRUBY-2561: JavaField.set_value(foo, nil) breaks
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7533 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 6ede4c28ac48c6854a919f1915b5116d4868e46f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Aug 23 05:28:43 2008 +0000
+
+    Fix for JRUBY-2944, coercing an array containing Java objects to Object[].
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7524 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit df9488f6324f9465b57a0d3c76d593001ea7fd52
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Aug 23 01:38:03 2008 +0000
+
+    For automatic closure conversion, only generate a new class as needed for a new proc + [interface1, ... interfaceN] combination, rather than a new one each time (leak) or every time (inefficient, even if generated into their own classloaders. Fix for JRUBY-2943.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7523 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 18d03923f1c4645a03cfedf14e9786c300ef42c7
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Aug 21 19:39:52 2008 +0000
+
+    Likely fix for JRUBY-2680 and potential fix for JRUBY-2803, by porting the entirety of JavaInterfaceTemplate from Ruby to Java. The bulk of this module was the append_features logic, which was gigantic, involved multiple instance_evals, many method definitions, and a lot of back-and-forth to the Java side of things. Writing up some benchmarks momentarily.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7513 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d493ef889d134df026ef91c5f3d0c3c481bf1439
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Tue Aug 19 16:02:34 2008 +0000
+
+    Fix JRUBY-1976, make Java Fields coerce things that aren't JavaObjects correctly, such as JavaConstructor, JavaMethod and JavaField.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7498 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit c780b07bb448a1ceccb8b7bd24fb0a4994142889
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Mon Aug 18 10:45:05 2008 +0000
+
+    Make setting of fields convert it's arguments a little smarter
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7491 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 9af0c08fbd5cb8bd016df8a0e3555c109e1cccf4
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Sat Aug 16 14:19:44 2008 +0000
+
+    Fix JRUBY-2929 and reenable the specs for these tests
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7479 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 929904d9274ed83f473b378aae6de78b9c40e05a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Aug 14 04:16:59 2008 +0000
+
+    Added fix for JRUBY-2236, pass Object.class instead of null when coercing a Ruby type and no target type has been specified.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7458 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 14db08cb9564260000aedc22596f1ff2d6bb86db
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Aug 8 20:23:07 2008 +0000
+
+    Additional tweaks to the interface impl name searching; if it's a property, don't add isMyFoo? and is_my_foo?. Also moved logic to JavaUtil so I can use it to standardize the name mapping in JavaClass. That's next.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7415 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit fd4c02bbb8116225531ea44564a556ef671f26c7
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Aug 8 07:18:42 2008 +0000
+
+    Fix some bugs in underscored interface implementation, with specs.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7412 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 0828bab4858d640bd25355305702207dffc24d9b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Aug 8 06:15:37 2008 +0000
+
+    Fix for JRUBY-2903, allow interface methods to be implemented with underscore-cased names.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7411 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 61170d717cb4010b1c4ea508dbcdc8e1c07d1585
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Aug 8 03:02:55 2008 +0000
+
+    Move new Java ports of Ruby-based JI functionality to new packages under org.jruby.java
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7407 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 6fdccd9d3b033d1eb17ac2ee38bcf83e6fc5c879
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Aug 7 06:51:56 2008 +0000
+
+    One-two, one-two, and through and through,
+    the vorpal blade went snicker-snack.
+    He left it dead, and with its head,
+    he went galumphing back.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7401 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a68ba88e9ceae4c65ff3b88074ba901d0cc4b301
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Aug 7 04:35:35 2008 +0000
+
+    Fixes for the build breakage (uncovered a bug by filling a gap in tests, then never running the tests) and move the Array#to_java entry point to a Java method that does not do dimensions + fill. Preparing to delete that code after converting a few other areas that use bits of it.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7398 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 29df8f743ff505b68cb99bbdefe1a7955818109b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Aug 3 03:52:35 2008 +0000
+
+    * Allow rescue to rescue non-wrapped Java exceptions (immediately wrapped if handled; interpreter only at the moment)
+    * Allow $! to be assigned a wrapped Java exception
+    * Added beginnings of an Unsafe mimic to use for necessary purposes (like rethrowing exceptions)
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7355 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 596a60421ece202496c041adc6ad74ccfb6a01ff
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 30 02:38:31 2008 +0000
+
+    Fix for JRUBY-2872, Fixnum not turning into Long when passed to an Object-receiving method.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7319 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 364c9ff82e110a6ba205292811b972a302ca15c6
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jul 29 19:11:08 2008 +0000
+
+    Add in the beginnings of wiring up Attila Szegedi's dynalang MOP to our Java integration layer. Not enabled by default since perf is not as good as trunk and there's some open questions about how to handle static methods and constructors.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7316 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit e112a5813d8b240776ec42da62ea58d712b2dc33
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Jul 27 19:52:41 2008 +0000
+
+    Fix for JRUBY-2870, coercing an array of wrapped Java Objects into the appropriate Java typed array.
+    
+    Just needed to add smarts into the "object" array coercer to look for wrapped Java objects and unwrap them. Thanks to Ola for the specs; I unpending'ed the broken ones.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7307 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 4f3e017a61fae1943f837b82be4ecfbb0cb7e492
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Jul 26 09:33:17 2008 +0000
+
+    Port the copy_data method from utilities/array.rb to Java to speed up population of a new Java array from an existing Ruby array. Not super fast, but probably a good 4x faster already. More to do.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7304 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 9498872cf36a89bae7edbe88ec33c1f84cfab274
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jul 25 04:17:32 2008 +0000
+
+    Float was being truncated to long when coercing to double or float.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7285 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 187e4f6bcf2bbc1121d30b23a81371d06b0cf4e3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 23 03:51:46 2008 +0000
+
+    Fix for JRUBY-2850, make sure a wrapped Java object is registered in the cache on its way out to Java.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7267 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 0897bdd559bdb80ff678272c3f42070d18d1122d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jul 22 20:25:37 2008 +0000
+
+    Move additional conversion logic to JavaUtil. I think I got all of it.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7266 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 8c9d0e1b5f77912ff5ebdf914d0bbc04b7487a44
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jul 22 20:25:28 2008 +0000
+
+    Move a bunch of new conversion logic into JavaUtil, in preparation for condensing/combining it.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7265 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 70cf58217e38bd9606ff30245cb569fee20e0090
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jul 22 18:52:55 2008 +0000
+
+    Second phase of interface impl refactoring, reuse minijava code to provide a dynamic-dispatch-free path from the implemented methods (now all generated into a real class) directly to the DynamicMethod they go with. Also eliminated the ruby-based method_missing used for Proc coercion to interfaces. Other than cleaning up code, reducing bytecode generated, and improving coercion, it's mostly done.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7264 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 48a55e65c13829a80f08059418a07aade3f2db07
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jul 22 06:45:01 2008 +0000
+
+    First step to make Ruby interface implementations faster: eliminated intermediate JavaObject coercion products, eliminated intermediate Proc invocation, eliminated use of __send__ call.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7263 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit bce3335a7dac2d704c7c17f9ac9771d69bda7cbc
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jul 14 17:51:26 2008 +0000
+
+    Fixes for JRUBY-2671, coercing array to java with primitive objs inside causes NPE.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7165 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d9d1d2618299c519be2cafb33a080cf66866fd69
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon May 26 22:27:39 2008 +0000
+
+    Fix for JRUBY-2480, make sure Ruby objects that can't be coerced to a Java type are not being wrapped in JavaObject.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6803 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 3b1179fbd5e929838adde3dedf0821339fa5ed3b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun May 25 05:04:28 2008 +0000
+
+    Add Evan Light's specs for reflected field access, along with his fix for JRUBY-2561.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6783 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 8da55f45fc6eac81f4ee44e407997df62e294851
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri May 23 12:48:48 2008 +0000
+
+    Last round of changes for JRUBY-1386, improve instance_eval. Added cases to the benchmark too.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6767 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 7a8c9567fa9eff2e544cd29d8bbf053edd802095
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Apr 21 15:55:48 2008 +0000
+
+    Additional fixes for JRUBY-2363, to actually shut down the main thread when exit! is called from a controller.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6543 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 1d6cbee7a1ffd9ae3d0ed6fe1badee8dcbef5b36
+Author: Bill Dortch <bill.dortch@gmail.com>
+Date:   Sat Mar 22 22:56:51 2008 +0000
+
+    Fix for JRUBY-2093 and JRUBY-2270: eliminated the per-method matchingMethod cache used by InstanceMethodInvoker (and *not* used by StaticMethodInvoker), as it didn't take into account arity and would therefore sometimes return the wrong method (JRUBY-2093), was a pain to synchronize (JRUBY-2270), and added overhead while providing no benefit in the common case where there are not multiple methods with the same name and arity.  Also reworked synchronization so that only a relatively inexpensive volatile read is required for all but the first invocation of a method of a given name.
+    
+    Also includes a small tweak to primitive class matching to evaluate more probable (by my guesstimation) candidates first.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6315 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit ab2e0770590f1be5f66c7bbf5e35a36d0c5ef881
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Mon Mar 17 00:02:20 2008 +0000
+
+    JRUBY-2273: NPE when attempting to set Java primitive field to nil
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6229 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 852d904134ad970a20497fdcc5d752dd4ae49766
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Fri Mar 7 22:04:54 2008 +0000
+
+    The RC3 Surprise!
+    
+    Allow annotation defined ruby methods to optionally specify ThreadContext as first parameter
+    Convert easiest and most common methods to accept ThreadContext when method or child method can use context
+    
+    These changes give about 15% improvement on petstore bench and about 10% in ar-bench.  In ar-bench getCurrentContext calls go from 14 million down to 2 million.  The remaining calls largely can be removed but they were much more invasive.
+    
+    IRubyObject op_eqq and op_equal both not have ThreadContext consumer, but we could see no use of this in any extensions and figured it worth the trouble of converting.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6143 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d3f7da8288b8fed53ff9da53258432a57cf324d4
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Feb 29 15:42:53 2008 +0000
+
+    Reverting fixes for JRUBY-939, since they actually broke Java BigDecimal support more than they helped it. We'll need a different/more complete approach.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6071 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 58560cb11f19c5742d49be9a7a077b11702b2455
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Jan 26 09:32:40 2008 +0000
+
+    Finally adding coercion to/from BigDecimal in Java support. JRUBY-939.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5755 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 7d9d9f3c9a04918bd3db1316992b69e4b9ed4b9d
+Author: Bill Dortch <bill.dortch@gmail.com>
+Date:   Wed Dec 26 13:14:25 2007 +0000
+
+    Fix for JRUBY-199 (and related JRUBY-1513 and JRUBY-1735). Caches proxies in Weak/Concurrent Map-like cache, which replaces the ineffectual JavaObject cache.  TODO: unit tests, measure memory/performance impact.
+    
+    Also, miscellaneous JI cleanup.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5360 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit ff120491b21359d374e6e50a98e8950f963f49cb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Nov 26 06:36:34 2007 +0000
+
+    Remove two more IRubyObject methods:
+    - getNativeTypeIndex moved to a separate interface; former uses now cast to that interface, rather than requiring all IRubyObject instances to specify a native type index directly. Marshalling should probably be refactored to not use this at all (and instead polymorphically dispatch to a method on the target object, similar to how it used to be).
+    - isKindOf moved to RubyModule as isInstance and all references updated to use that version. This maps better to the type being in charge of what is or is not an instance, and mimics Java reflection API (Class#isInstance).
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5045 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit e44edbe3c70c5a1ce8a82328bb53ad30f71fe547
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Nov 21 02:18:55 2007 +0000
+
+    Perf improvement for primitive conversions when calling from Java into e.g. collection types that must convert on the way out.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4977 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 95c346df5368a3f5f06fa9d14022efb85eaa6809
+Author: Bill Dortch <bill.dortch@gmail.com>
+Date:   Mon Oct 15 07:45:22 2007 +0000
+
+    Vars have landed. Does not include concurrent SymbolTable (will follow in the next day or so). Also need multi-threaded unit tests, work in progress.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4588 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 6238ebe634de6655ae0eed313dde6db018e14565
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Aug 6 20:32:24 2007 +0000
+
+    Added converter for remaining coercible types, modified convertJavaToRuby to use converters, fixed string converter to use unicode chars.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4104 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 90301fb2ed4cd56d81196882c95fcf68302e9bd3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Aug 6 18:42:11 2007 +0000
+
+    Committing optimizations to return-value conversion/wrapping/coercion, to greatly improve handling of Java return types entering Ruby-space. This breaks "lower" Java support, but nobody seems to care now.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4101 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit e312b6f982a60f69d6711de6d7af156949245e31
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Sun Jul 1 06:28:44 2007 +0000
+
+    JRUBY-991: experimental new Java interface support
+    - plain Ruby objects can be coerced to implement Java interfaces on demand
+    - additionally, procs and blocks when coerced to implement a Java interface
+      will be given a method_missing that will cause the proc to be invoked for
+      any method call on the java interface
+    - blocks are now converted to procs and made arguments to Java method calls
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3930 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit b1742e48d5561cdc2e90fca3b335c89a0f3d9a84
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Fri Apr 20 02:08:54 2007 +0000
+
+    JRUBY-840: Cow fixes, Enumerable rewrite and arraycopy hunt (Marcin)
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3511 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 49560cd7b5ed640ce85adfcc5f1cdeac290e2be0
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Thu Apr 19 09:29:14 2007 +0000
+
+    Fix for JRUBY-240. Automatic translation to string for IRubyobjects isn't right
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3507 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit ddd2820dd55ee067857767a4925b8040892c0cb8
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Thu Apr 12 15:06:49 2007 +0000
+
+    Fix many YAML issues and failures in test_yaml. Especially numeric and time disrepances
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3446 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 958ad3b9bfc5cae3a21185dec303ac7af7d77482
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Apr 7 02:59:27 2007 +0000
+
+    Expanding STI to a few more methods, and doing a sweep of all "direct" callers to make them use STI.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3406 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d62fa2e40430284407348c6aba9247c83b521086
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Apr 6 08:33:30 2007 +0000
+
+    Convert Java strings to and from UTF8 when crossing into and out of Ruby space
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3403 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 6f13f0d6528f692784548855cd64448527e2f639
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Tue Mar 27 13:54:50 2007 +0000
+
+    Make matching_method native Java
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3297 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a2107e60085a5063bca76d897783a512bbd7eddc
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sun Feb 18 15:18:18 2007 +0000
+
+    JRUBY-606: Get rid of un/under-used IRuby interface
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3022 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d8424d42a02b1ba5b8b47c8f53bb4e3c6dcf56ac
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Sun Feb 18 10:24:55 2007 +0000
+
+    Fix for JRUBY-600. Compilation with 1.4 should work.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3018 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit eb44f53d6ce2ad625425c541a6feb083c862e587
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Wed Feb 14 16:01:07 2007 +0000
+
+    Rest of JvYAMLb is in place. Remove all references to org.jvyaml. package and the jvyaml.jar
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2997 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 74021949e8b021701844310ef3b11175a9650932
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Sun Feb 4 16:14:14 2007 +0000
+
+    The BIG one. JRUBY-71. Not perfect yet. The code mostly by Kresten Krab Thorup, with corrections by me.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2942 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 174e3d01468001668ab299227d4af11aea65341c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Nov 14 03:09:59 2006 +0000
+
+    damn the torpedos! full speed ahead! landing enebo_lexical branch changes plus TC-passing optimizations and a few small compiler updates
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2423 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit ee3274e6d7b92c4c6c3cea31e10c48b8aed82f13
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Wed Apr 19 01:02:19 2006 +0000
+
+    BigDecimal should not be converted to a Fixnum
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1993 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 9f2efc63a858fa0507245b207025eab027840a04
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sun Apr 9 20:58:31 2006 +0000
+
+    Make RubyString use a StringBuffer instead of a String as its internal representation.  This change makes one test case go from 262 s to 0.7s.  Various other function fixes thrown in (with quite a few new unit tests) and some conversion to make more mutable functions use StringBuffer APIs more.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1974 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 41adc9d73b44b14dd25593e772188d405ec00f2f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Oct 26 05:34:12 2005 +0000
+
+    removing revision keywords
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1810 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 4dfdacd80c56018084c618f3bbab7b542653d95e
+Author: David Corbin <dcorbin@users.sourceforge.net>
+Date:   Sat Oct 8 13:07:06 2005 +0000
+
+    Introduced IRuby interface for Ruby runtime object.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1798 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 4cc57dc7fe7f7d6b6b94ec0ee5aeadb55c6cd468
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Wed Aug 31 19:51:19 2005 +0000
+
+    Simple consitency in how Java Support Classes are created
+    Because of how RubyArray and RubyHash convert from Ruby to Java we were missing a call (java integration needs some major cleanup)
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1743 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit cf93c317059add441fa29386dfb5c9d604b06644
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Fri Apr 22 15:31:31 2005 +0000
+
+    Ruby Arrays implement java.util.List
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1679 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 8c54b93def4895b998d669a089420d5925274ea0
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sun Apr 17 21:00:19 2005 +0000
+
+    Land Kiel's Java interface defines 'initialize' versus 'new' patch
+    Change primitive_to_java so that Arrays and Hashes automap to java.util.List and java.util.Map (plus primitive_to_java their children)
+    Remove RubyProxy and friends
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1676 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 7a83c48af56081c1c2132111d535f28d10cf3afb
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Fri Dec 31 20:55:52 2004 +0000
+
+    Update license to GPL/LGPL/CPL
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1574 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 870e1da9b41bfdbae259e1fc5f18fc8b76686998
+Author: Stefan Matthias Aust <sma@3plus4.de>
+Date:   Sun Dec 12 09:25:42 2004 +0000
+
+    removes the instance variable runtime in RubyObject
+    reintroduces the variable in RubyNil, RubyBoolean, and RubyClass
+    delegates all calls to Fixnum,Array,Boolean,String,ArgumentError,IndexError and TypeError.newXXX to Ruby
+    fixes all imports
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1469 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit c15ab526440e25745b45a2ab3aaab1b5a7334d1f
+Author: Stefan Matthias Aust <sma@3plus4.de>
+Date:   Sun Nov 28 14:54:57 2004 +0000
+
+    code cleanup
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1428 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit b1562832239a5e5d73b1ee98dade51601e343257
+Author: Jan Arne Petersen <jpetersen@uni-bonn.de>
+Date:   Tue Nov 16 20:30:04 2004 +0000
+
+    Rename references of org.jruby.Ruby from ruby to runtime.
+    Remove unused methods from the IRubyErrorHandler interface.
+    Add "same" method to RubyObject to fix "equal?"
+    Fix JavaObject cache.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1408 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 206c7b0b7eb0c58d4a00f4aaa94c9013ad204adc
+Author: Anders Bengtsson <ndrsbngtssn@yahoo.se>
+Date:   Sat Oct 5 22:55:32 2002 +0000
+
+    Removed NullJavaObject and fixed a few bugs.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@952 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 40a069d503754895f0b169712da6711bd63f6658
+Author: Anders Bengtsson <ndrsbngtssn@yahoo.se>
+Date:   Sat Oct 5 22:34:27 2002 +0000
+
+    Introduced a NullJavaObject class.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@951 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit f65b3192105333e10cc92fa8c8372b0f7bb46f4b
+Author: Anders Bengtsson <ndrsbngtssn@yahoo.se>
+Date:   Sat Oct 5 21:53:55 2002 +0000
+
+    Removed some dead code; some refactoring.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@950 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 82175ea5817f6119e3a032cc4c6d73546ceac23d
+Author: Anders Bengtsson <ndrsbngtssn@yahoo.se>
+Date:   Tue Sep 24 20:10:45 2002 +0000
+
+    Support for getting length and access values in Java arrays.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@895 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit feaf20e2f695758d3121b9246b7ed0a5d83cbbec
+Author: Anders Bengtsson <ndrsbngtssn@yahoo.se>
+Date:   Sun Sep 22 19:22:30 2002 +0000
+
+    Added JavaClass#assignable_from?
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@891 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit cbbff215ddc8c168eaed4bd8d49160c696d116cf
+Author: Jan Arne Petersen <jpetersen@uni-bonn.de>
+Date:   Sat Sep 21 16:16:37 2002 +0000
+
+    - Add JavaObject cache
+    - Add simple Interface support
+    - Update swing examples.
+    - Fix some bugs.
+    - Some refactorizations.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@876 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 8f8e1f6536fc87db5d1ec0d3e082b7f469603b38
+Author: Anders Bengtsson <ndrsbngtssn@yahoo.se>
+Date:   Fri Sep 20 22:37:42 2002 +0000
+
+    Fixed some java type conversions; Some refactoring.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@870 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 1dd2d63c772b605bffc0c1be9827385d91802ab2
+Author: Anders Bengtsson <ndrsbngtssn@yahoo.se>
+Date:   Thu Sep 19 10:54:11 2002 +0000
+
+    Removed dead code.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@861 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d29ed6b1ebdf02034b728e152e2a8da324dd374a
+Author: Jan Arne Petersen <jpetersen@uni-bonn.de>
+Date:   Thu Sep 19 01:52:52 2002 +0000
+
+    - Refactorize javaSupport class names
+    - Add new_proxy_instance method to Java
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@858 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 61f4adfc6ccfaef9401e6bf0a0e011b19b6d678e
+Author: Anders Bengtsson <ndrsbngtssn@yahoo.se>
+Date:   Wed Sep 18 20:50:56 2002 +0000
+
+    Removed some tests for already-removed code.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@854 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 05c7de156620b4e1926ea77f476287db1b42b4cc
+Author: Jan Arne Petersen <jpetersen@uni-bonn.de>
+Date:   Wed Sep 18 16:51:14 2002 +0000
+
+    - Fix $*
+    - Remove JavaFieldAccesor classes.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@853 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 1c891f41b14e8c341c15f0d32d4f91677bf7f044
+Author: Anders Bengtsson <ndrsbngtssn@yahoo.se>
+Date:   Wed Sep 18 15:21:59 2002 +0000
+
+    Moved JavaObject and JavaArray implementation into the javasupport package; Added a 'clean' target to build.xml.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@849 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 84478133724c760a7c5e0ab399c3750ca272bf75
+Author: Anders Bengtsson <ndrsbngtssn@yahoo.se>
+Date:   Tue Sep 17 21:54:59 2002 +0000
+
+    Renamed RubyJavaObject to JavaObject.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@847 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 03b2d6c6497f2f35ddb3527a34892dffc10ead06
+Author: Anders Bengtsson <ndrsbngtssn@yahoo.se>
+Date:   Tue Sep 17 19:27:46 2002 +0000
+
+    Started on support for Java arrays.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@844 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 5f836b1236b44148df75df38a82e4862c3bdbc75
+Author: Anders Bengtsson <ndrsbngtssn@yahoo.se>
+Date:   Tue Sep 17 17:48:52 2002 +0000
+
+    Removed some old method/constructor stuff from javasupport, since the replacement is in place.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@843 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 2f1fb18e858816b33809494cf5ae1320d8b295ba
+Author: Jan Arne Petersen <jpetersen@uni-bonn.de>
+Date:   Sun Sep 15 23:43:20 2002 +0000
+
+    - global variables bugs
+    - refactorize global variables
+    - refactorize Asserts
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@831 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d740040eb726ac7804eb53962c1784726d2d4dfa
+Author: Anders Bengtsson <ndrsbngtssn@yahoo.se>
+Date:   Sun Sep 15 23:14:13 2002 +0000
+
+    Various planless refactoring.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@829 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 8c84c043f8301509078925c5ec1aa1ac370245bd
+Author: Anders Bengtsson <ndrsbngtssn@yahoo.se>
+Date:   Tue Sep 10 20:44:20 2002 +0000
+
+    JavaCallable extracted as superclass of JavaMethod & JavaConstructor.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@794 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit c77b91f42c4f3810140d44cbe603248a1d52b7ee
+Author: Jan Arne Petersen <jpetersen@uni-bonn.de>
+Date:   Tue Sep 10 15:18:12 2002 +0000
+
+    - restructure of the code tree.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@782 961051c9-f516-0410-bf72-c9f7e237a7b7

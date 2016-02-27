@@ -1,0 +1,479 @@
+commit 45d3af1710e258ce7f4f85cb5ce624758e75ef1b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Jun 15 22:56:15 2013 -0500
+
+    Rework frame management, and backref/lastline along with it.
+    
+    These changes should bring us more in line with the way other
+    implementations manage "frame" data and bindings that capture it.
+    It should also reduce the cost of framing, binding captures,
+    blocks and procs, and operations that manipulate blocks and procs
+    like define_method and instance_eval.
+    
+    The new logic works as follows:
+    
+    * Rather than a binding immediately duplicating a frame, it
+      instead grabs a reference to it and marks it as captured.
+    * When popping a frame, if it has been marked captured it is
+      discarded rather than being cleared. This moves the cost of
+      creating a binding to the pop of the surrounding method, which
+      reduces the cost of nested bindings re-cloning the frame many
+      times.
+    * Bindings that are still active (have captured a frame that has
+      not been popped) will update the method's frame data in-place.
+    * Once the frame has been popped, it will live only in that
+      binding.
+    
+    This commit passes mspec ci and test:mri19, but I am continuing
+    to test it for a while.
+    
+    Note that this commit also moves backref and lastline to
+    the frame. They have always been frame-local, but for a long time
+    we kept them on the scope so we could avoid touching the frame for
+    methods that did not need it. However, because we used the scope,
+    it was difficult or impossible to isolate backref and lastline
+    changes to the block. Moving to the frame, which has a lifespan
+    only as long as the method that activated it, makes isolation
+    easier.
+    
+    This should also make it easier to fix thread-safety issues with
+    backref/lastline, as reported in JRUBY-7167.
+
+commit 61678ac1a2514a9932276f8d527816a5980a94b3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Feb 25 20:41:40 2013 +1100
+
+    Fix more references to CPL.
+    
+    The phrase "Common Public License" was split across two lines in
+    our default header, which caused it to be missed during earlier
+    search/replace. Also, we did not replace the CPL URL in the
+    header with the EPL URL.
+
+commit 330fef3b0fc18af477ccea19bd278669667f31bb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 12 14:49:29 2013 -0600
+
+    Switch JRuby's CPL license to EPL.
+    
+    Governance of the CPL license was moved to the Eclipse Foundation
+    at some point in the past, and Eclipse blessed the EPL (Eclipse
+    Public License v1.0) as the successor to CPL. Because the CPL
+    contains a clause allowing transparent upgrades to future blessed
+    successor licenses, we can make the move to EPL without
+    re-contacting past contributors.
+    
+    The change in going from CPL to EPL largely just removes some
+    punitive language that apparently made many companies nervous. All
+    other language in the license remains identical.
+    
+    Several documents about Eclipse's move from CPL to EPL are here:
+    
+    http://www.eclipse.org/legal/cpl2epl/
+    
+    Note that Eclipse's move came before the blessing of EPL as the
+    upgrade path for CPL, so they had to do a bit more legal juggling.
+    With Eclipse now the administrator of CPL and with their blessing
+    of EPL as the upgrade path for CPL, all we need to do is make the
+    move.
+
+commit 55c3b8f755c0d49612932d438f92ed6f21b82254
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Nov 28 13:16:55 2012 -0600
+
+    Modify scope and block creation to decouple them.
+    
+    * Single method decodeScope for decoding all types of scopes
+    * New StaticScope::Type enum to indicate type of scope
+    * Closure creation receives StaticScope rather than instantiating
+
+commit efd8a3df54daa1e5b6853d07db52fd6ac23a767b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Nov 28 10:54:09 2012 -0600
+
+    More decoupling of constant lookup from ThreadContext.
+    
+    * setConstantInCurrent moved to StaticScope
+    * setConstantInModule moved to RuntimeHelpers
+    * setConstantInObject moved to RuntimeHelpers
+    * getConstantDefined moved to StaticScope#isConstantDefined
+    * A few more ThreadContext#getConstant calls eliminated
+
+commit d1898406206175543afaa19c08637d539abd7a51
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Nov 28 09:37:40 2012 -0600
+
+    Remove unused/rarely used params to const lookup, use StaticScope.
+    
+    In an effort to eliminate the deopt caused by const access from
+    Ruby code, I'm working toward making all constant access work
+    against StaticScope rather than against ThreadContext and the
+    current DynamicScope (which forces us to push dummy scopes where
+    we don't really need any). This commit starts pulling out calls to
+    ThreadContext.getConstant, which requires a DynamicScope to be
+    present, and also removes some unused or rarely-used arguments
+    from the const lookup call chain to simplify the transition.
+
+commit dedeadfa46a29fa07f561eaec0b8b1e68c717cf8
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Jun 14 11:40:08 2012 -0500
+
+    variableCaptured appears to be vestigial
+
+commit ad50c1dc0029f84edf4e671799a32dcd60618eb7
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Sun Jan 29 01:40:07 2012 +0530
+
+    [IR] Replaced SearchConstInstr with (LexicalSearch + InheritanceSearch)
+    instructions + some associated cleanup.
+
+commit 92ebb38ae14c22c53085e910aa35b8710e1dc8f2
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Tue Oct 11 00:14:20 2011 -0500
+
+    [IR] Minor code fixes: updated code comments, removed some dead code.
+
+commit f592cbbfae1186c42fb9e0545e2d9c394e73312f
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Oct 10 16:42:24 2011 -0500
+
+    Use factory for standing up static scopes
+
+commit 29a91f90c351a29e17e744283d720b58dda76ce7
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Mon Sep 26 17:53:28 2011 -0500
+
+    [IR] First pass at creating an IR static scope for use with IR code.
+        This combines Local,Block,Eval static scopes without applying too
+    	 much thought into it could be merged better or simplified in the
+    	 IR execution context.
+
+commit 4807459e7a2458de246cb41104075c10c5d0fafb
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Mon Sep 26 13:54:42 2011 -0500
+
+    * Added allocation methods to StaticScope to allocate the appropriate
+      static scopes and protected LocalStaticScope, BlockStaticScope and
+      EvalStaticScope constructors.  This will now let us allocate
+      IR-specific static scopes that IR execution requires.
+    * Also added isBlockScope test on StaticScope to eliminate instanceof
+      tests against BlockStaticScope and LocalStaticScope.
+    * Hand-patched auto-generated files Ruby19Parser.java and
+      DynamicScope.java.
+
+commit 85c2817d5364b765692b863d36fa3809f023405d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Aug 20 15:11:20 2011 -0500
+
+    Modify method definition to cache static scope, in prep for cheaper constant-using methods.
+
+commit f31ddd479011c67f14efaad9733bc16a24b877d4
+Merge: eef82e7 72ce56a
+Author: Hiroshi Nakamura <nahi@ruby-lang.org>
+Date:   Thu Jul 28 13:02:53 2011 +0900
+
+    Merge branch 'master' into autoload-threadsafe
+
+commit 584a7aadf77e23a2fb829dbbfefac78df2517f6b
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Jul 11 17:28:11 2011 +0900
+
+    Add cref to staticScope toString
+
+commit 4b7708732ae4d40c29ba42ae29e8d6690a6b8c23
+Author: Hiroshi Nakamura <nahi@ruby-lang.org>
+Date:   Mon Jul 11 13:34:54 2011 +0900
+
+    Make autoload thread-safe (in progress)
+    
+    Added autoloadingMap to RubyModule to keep an autoloading state. It
+    consists of a RubyThread which invokes autoloading and an Object
+    assigned to the autoload constant while autoloading.
+    
+    While autoloading, constantMap keeps UNDEF for the constant and
+    autoloadingMap keeps the assigned object instead. Constant lookup checks
+    if the value in constantMap is UNDEF, and iif it's UNDEF, it checks
+    autloadingMap as well.
+    
+    It's still in development. For now, it passes
+    org.jruby.test.ScriptTestSuite but org.jruby.test.JRubyTestSuite causes
+    infinite loop. I'll check later.
+
+commit 6f159fe5dd51c062a5b1aab64a8ede916990877a
+Author: Hiroshi Nakamura <nahi@ruby-lang.org>
+Date:   Mon Jul 11 03:36:17 2011 +0900
+
+    Deprecation of fast constant access paths.
+    
+    Each os those has the same definition as non-fast verision.
+
+commit c57037fc1e2c8febd17423197cc6d07ec0c65ec9
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Jan 18 16:37:55 2011 -0600
+
+    Refactor isArgumentScope a little
+
+commit 6cabc8fb6a510545419554de8f9e48ab0d9de2c0
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri Jun 4 17:54:06 2010 -0500
+
+    Madness to go this long without committing
+
+commit f7831f79f1a435814c16e88943f1a794845beb06
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Aug 4 17:25:47 2009 -0500
+
+    [1.9] Make sure block parms do not capture from enclosing scope but make new local
+
+commit 1fb1e67941341613dd891109209b45f1ea9d8838
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat May 30 12:41:21 2009 -0500
+
+    Fix for JRUBY-3714: ActiveMessaging poller stops silently with JRuby 1.3.0RC1 and RC2.
+    
+    The problem here was that when we built a brand new static scope to contain a Thread's backref/lastline values, we were not entirely copying the original scope. Specifically, we were not using the original scope's previousCRefScope, instead allowing the scope to re-determine what cref scope to use. It ended up choosing the wrong one the second time through, resulting in cvars being incorrectly looked up. Modifying Thread proc creation to also copy the original cref scope fixed the issue.
+
+commit 5cb010871e68cc5760980196c8276e26f20546e0
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun May 17 03:24:52 2009 -0500
+
+    Fix for JRUBY-3638: Multi-Threading issues with JRuby 1.3RC1 and soap4r
+    
+    Whew! This was a doozy! The problem here was as suspected, a "dummy" scope was being shared across calls/threads and causing the backref/lastline to step on each other. This would not simply affect multi-threaded cases either; it could easily break cases where only a single thread happened to read a bad backref from a previous call, or even a single thread read its own backref from an earlier call in the stack trace.
+    
+    The fix is detailed largely in the bug. No test cases accompany this because a new core construct has been introduced to produce a hard failure if we ever make this mistake again. It's a very tricky thing to test since it depends on either thread-unsafety or one call reading a backref and one call writing a backref in ways that are not immediately apparent yo the compiler. So these are fairly specific and localized issues that have far-reaching effects.
+
+commit a8f73e84f5a89939e7d5e84b10f3c06d9397ced6
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun May 17 00:28:23 2009 -0500
+
+    Add documentation to StaticScope's constructor explaining that the array of variable names must be interned Strings.
+
+commit 5d5a6275e01ee45ace8f83f51c611f5fc8d06364
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun May 17 00:26:07 2009 -0500
+
+    Add a comment explaining our String != String.intern check in StaticScope.
+
+commit 589bd52cf73471b110cd27e7bc9cd2697c99675e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Apr 12 01:45:02 2009 -0500
+
+    Shrink StaticScope size by lazily constructing the "dummy" scope used for optimized compiled bodies with no variables.
+
+commit 0a405a33b0704d7dc53b676b34ce7d3e6b735782
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Apr 9 17:02:03 2009 -0500
+
+    Final fixes for migration to DynamicScope as container for backref and lastline. This re-fixes the Thread.new block behavior for backref/lastline.
+
+commit b6feb3e09e8da2cbb74f3fe6a7f1a788660edc5f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Dec 31 09:03:20 2008 +0000
+
+    Spec updates!
+    
+    * There are no 1.8/1.9 separate specs now, so I moved tags and updated configurations for the new layout
+    * New tags for bugs JRUBY-2826, JRUBY-3274, JRUBY-3275, and JRUBY-3276
+    * Fix for constant scoping bug JRUBY-3277 exposed by new constant specs
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8520 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 0b01fd39c3eb7c08f19db278d903353186f91879
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Dec 21 21:13:14 2008 +0000
+
+    Greatly reduce the amount of bytecodes emitted for closure bodies by moving most of the BlockBody construction logic to pre-defined methods. Saves all the bytecode for creating the BlockBody plus the synthetic method into which it was embedded.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8426 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 014fb6276f34be88e0e8eaf5a397dbd7618b13ca
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Nov 28 20:03:10 2008 +0000
+
+    Fix for JRUBY-3117: Constant lookup from method inside class ::Object is incorrect
+    
+    I modified this to always try the cref search, even if starting within Object, when coming through ThreadContext.getConstant path. Subsequent searches up the tree then do the Object equality check to bail out.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8191 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 0be23d6124bbc965e1fcb634ac89561bdc7b1dff
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sat Oct 11 15:21:49 2008 +0000
+
+    JRUBY-3052: Cache constants at their call site (const_node)
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7867 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 3fc75aa4e0fb355b8781f073479fd053dd581599
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Sep 14 05:06:11 2008 +0000
+
+    Eliminate constant and class var dependency on heap-based scopes.
+    
+    This implementation degrades performance slightly for normal stack-based methods (fib goes from 0.33 to 0.37) but in exchange it allows methods with constant or class var access to also be stack-based. It is also a stepping stone; with this code working, it's now easier to return stack-based bodies to using no scope at all and having no pre/post logic.
+    
+    Also included in this patch is a change to evalScriptlet that forces each call to execute in its own scope. I've always been suspicious of evalScriptlet, and now I know why: it was adding variables to whatever scope happened to be on the top of the stack. Even worse, if variables were already there, it would reuse and potentially overwrite them. This behavior simply cannot be allowed, and my forcing stack-based scopes to use NoVarsDynamicScope exposed it. evalScriptlet must execute each call in a separate scope, and we should consider adding a new version taht can take an existing scope.
+    
+    Note also that TestVariableCreation, which depended on evalScriptlet's broken behavior, has been removed.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7698 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a17f82ce1f6b17a388c76dcacc55cf5effbc6384
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Mon Jul 7 05:20:06 2008 +0000
+
+    [interp] make arity specific block pass nodes for call/fcall nodes
+    Move TC.getContext impl into StaticScope
+    Remove unused specific-arity in fcall/call nodes since new node types replaced it
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7114 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 98c6259a914c5449b7fa4bf4d6944485d0bf96d7
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Tue Jun 24 19:03:10 2008 +0000
+
+    Minor code changes
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7025 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 62d533d4552b1c2bc57f30186aaeff992eb0e68f
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Tue Jun 24 16:41:18 2008 +0000
+
+    StaticScope.names is not null.  Remove null checks.
+    Add toString() method to StaticScope, BlockStaticScope, LocalStaticScope
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7024 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit b14872d45736680f5b49d580b243823d9c63a1d9
+Author: Vladimir Sizikov <vsizikov@gmail.com>
+Date:   Tue Jun 24 08:39:44 2008 +0000
+
+    JRUBY-2320: Remove of unused imports in package org.jruby
+    JRUBY-2321: Remove of unused imports in all packages
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7023 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit aeab6d30e7c8c28f86085ec526f6c0347bfe942c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Jun 5 23:57:24 2008 +0000
+
+    Various minor refactorings to shrink methods in the parser chain and elsewhere that HotSpot reported as "too big" to inline. Minimal performance boost, if any, but it's also somewhat cleaner code.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6897 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a694709e87e269be436ed1d176a688712beb9d5d
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Tue Jan 1 05:09:53 2008 +0000
+
+    Remove unused callbackfactorys
+    Add partial impl of Etc with some cooler pieces of it still commented
+    Remove many warnings
+    Some generics to lessen warnings
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5456 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit ec4f90b7e092bb1469913ee818c3dcaf2a7c5070
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Nov 24 04:50:54 2007 +0000
+
+    Based on discoveries by Marcin, confirmed by Ola, adding capability for separate DynamicScope implementations that use fields instead of an array for scopes with small numbers of variables. This primarily improves compiled performance, since the compiler can statically dispatch to methods that amount to little more than field access. I will add additional DynamicScope impls for 0, 2, and 3 variable scopes.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5015 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit b12c787469117caadc1cc6b7e6723db43b6a8bdb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Nov 22 04:02:28 2007 +0000
+
+    Added a "boxed" variable compiler that uses Java locals for variables that are not captured. Enable with jruby.compile.boxed=true. Note: this is incompatible with Ruby 1.8's ability to use a proc as a binding, since it makes it impossible to detect whether a variable is captured or not. Ruby 1.9 currently does not support that feature.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4984 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 16e5550655d971eca1eeea0a2fe8794b86928b97
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Thu Oct 25 18:14:24 2007 +0000
+
+    Lexer jumbo patch.  Speeds up general parsing 10-15%.  Cold parses are about 30% faster.   Code has been refactored to the point that additional optimizations can be considered (like bytelist identifiers for alloc-less identifiers; same for uninterpolated string nodes).
+    
+    intern'ing of identifiers now happen in lexer rather than being smattered through AST
+    Reader -> InputStream for LexerSource
+    A new ByteList LexerSource for evals
+    
+    Additional bugs fixed:
+    JRUBY-1408: JRuby crashes with error: can't find string "EOF" anywhere before EOF (SyntaxError)
+    JRUBY-1443: Wrong position information for a CallNode with parentheses
+    JRUBY-1435: YieldNodes sometimes have wrong position information
+    JRUBY-1416: eval of a "proc" with setting the line number for something lower than 1 to adjust the line number causes "java.lang.ArrayIndexOutOfBoundsException: -1 (NativeException)"
+    JRUBY-1432: NFE from RubyYaccLexer.yylex
+    
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4731 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 4050f98c492fc2a726bf3f947d25d220e646a6fa
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Sep 27 20:46:54 2007 +0000
+
+    A number of additional fixes for the compiler to remedy inconsistent stack issues, and a whole slew of work to make apps run correctly with AOT-compiled stdlib. Very close to "complete" in my eyes.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4410 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d1589c3ecec8aff8c8826f645d48b3cbab247dbd
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Sep 24 13:34:54 2007 +0000
+
+    Total refactoring of zsuper argument processing, and zsuper is now enabled in the compiler. We still need more/better tests and specs for zsuper, unfortunately.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4375 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 47f0d75fbf8f6519ed3527d077e724f0b9264552
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Wed Aug 29 21:20:40 2007 +0000
+
+    NodeTypes now and enum called NodeType
+    Various warning removal
+    Minor Block refactoring
+    More boilerplate fixing
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4233 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 66308a41bee1215d2b084c8fde04156bb8707781
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jul 9 23:36:57 2007 +0000
+
+    Merging CRef changes to trunk from enebo branch.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3984 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit c2b14210deb1febc85f37134c8aa90c81daf4240
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Apr 28 01:47:53 2007 +0000
+
+    Migrate compiler to using interpreter-friendly data structures and TC. This makes it possible for us to enable safe jit as part of 1.0.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3577 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit f643b3211763f1c7f13137c0884cf62d592b4b7a
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Fri Apr 27 18:41:49 2007 +0000
+
+    JRUBY-894: local_variables is printing out all variables lexically in scope rather than only ones that have been initialized
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3573 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 174e3d01468001668ab299227d4af11aea65341c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Nov 14 03:09:59 2006 +0000
+
+    damn the torpedos! full speed ahead! landing enebo_lexical branch changes plus TC-passing optimizations and a few small compiler updates
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2423 961051c9-f516-0410-bf72-c9f7e237a7b7

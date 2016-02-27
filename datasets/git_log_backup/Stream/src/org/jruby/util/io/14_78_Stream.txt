@@ -1,0 +1,158 @@
+commit 61678ac1a2514a9932276f8d527816a5980a94b3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Feb 25 20:41:40 2013 +1100
+
+    Fix more references to CPL.
+    
+    The phrase "Common Public License" was split across two lines in
+    our default header, which caused it to be missed during earlier
+    search/replace. Also, we did not replace the CPL URL in the
+    header with the EPL URL.
+
+commit 330fef3b0fc18af477ccea19bd278669667f31bb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 12 14:49:29 2013 -0600
+
+    Switch JRuby's CPL license to EPL.
+    
+    Governance of the CPL license was moved to the Eclipse Foundation
+    at some point in the past, and Eclipse blessed the EPL (Eclipse
+    Public License v1.0) as the successor to CPL. Because the CPL
+    contains a clause allowing transparent upgrades to future blessed
+    successor licenses, we can make the move to EPL without
+    re-contacting past contributors.
+    
+    The change in going from CPL to EPL largely just removes some
+    punitive language that apparently made many companies nervous. All
+    other language in the license remains identical.
+    
+    Several documents about Eclipse's move from CPL to EPL are here:
+    
+    http://www.eclipse.org/legal/cpl2epl/
+    
+    Note that Eclipse's move came before the blessing of EPL as the
+    upgrade path for CPL, so they had to do a bit more legal juggling.
+    With Eclipse now the administrator of CPL and with their blessing
+    of EPL as the upgrade path for CPL, all we need to do is make the
+    move.
+
+commit ed560a8ca711b5886c4f7bba2df89d7fd2936a2d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Nov 17 02:30:50 2011 -0600
+
+    Fix JRUBY-6198: When calling dup on file open in binmode the new object does not respect binmode
+    
+    * binmode was propagated as a mode, but not as a flag on the underlying Stream.
+
+commit 0b7aed72d439294c6cd50f7ad4d9c424d11f60e9
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Nov 23 16:28:42 2010 -0600
+
+    Alternative fix for JRUBY-5114: provide an autoclose flag on all IO objects that will allow turning off the close-on-finalize behavior. Also modified the "to_io" impls for InputStream, OutputStream, and Channel to take an :autoclose option.
+
+commit 9d57dbc3b7b0d10dd4d8c6d49b73cf1af2e8e287
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Thu Dec 24 12:02:04 2009 -0600
+
+    JRUBY-61, JRUBY-2140, JRUBY-4253: Merry Christmas JRuby windows users!
+    
+    Three-year old bug finally squashed!
+
+commit d086d1a1886dc590ee952d81f479e555fd0e908c
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Sep 14 13:08:35 2009 -0700
+
+    [19] Let IO.gets accept a limit value
+
+commit 9b4bf419f7e9488fe35be77c3dbfe35e3827d0a2
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Feb 8 23:01:01 2009 +0000
+
+    More robustness to the runtime clearing in ChannelStream, so it should never cause an NPE even in odd cases.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9070 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit b8cc375ce6cd4d8aa173f970c0b41e9d26d3f618
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Feb 8 22:52:19 2009 +0000
+
+    Modify ChannelStream to be a bit less dependent on the runtime it aggregates (moving toward no dependence) and have it clear the reference on close. JRUBY-2933: Ruby runtimes are pinned to memory due to ChannelStream
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9069 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 7d500602a454b62c63dc82c291a29589af9f481b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Jun 21 13:06:42 2008 +0000
+
+    Wayne Meissner's fixes/improvements for getline performance. JRUBY-2689.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7006 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 43b288b3794c51d1ddccbfc13eaef9a3e801c708
+Author: Vladimir Sizikov <vsizikov@gmail.com>
+Date:   Wed Apr 2 19:41:18 2008 +0000
+
+    JRUBY-2357: File#truncate blows up JRuby on files from within JAR files.
+    
+    Regression test added.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6399 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 23d786f79b699f365026a71f8807c806399311f3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Mar 17 05:33:23 2008 +0000
+
+    Additional fixes to get reopen, popen, and seeking working correctly with various types of streams.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6233 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit e8a3ebe129ec569c9ce6744e0e4b70773b0423ef
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Feb 24 14:05:38 2008 +0000
+
+    Fix for JRUBY-2071, reopen seek errors because of shared position in the underlying channel.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6013 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 4f951a36efdfec60a3dc58f1cb862b4eb6cc54fe
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Feb 6 08:53:48 2008 +0000
+
+    More spec fixes:
+    - ungetc should clear EOF state
+    - ungetc should ceck for RBUF (can't ungetc unless you've just read)
+    - syswrite should use to_s to coerce argument
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5841 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 8a548d6aaf3c54261a487dd212e69c05ef2cb45e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Feb 6 05:32:37 2008 +0000
+
+    Fix for rails+mongrel console not tailing the log correctly; File::APPEND mode was not seeking to end of file on each write, as per open(2) semantics. Fixes a spec as well, so no test included.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5838 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit aa4ffa1be5572b91327ce11238a623b1bd681b27
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 5 06:18:45 2008 +0000
+
+    Fix botched merge that doubled new file content.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5822 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 66b024fedbb2ee32316ccd9de8387931d07993ec
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 5 05:57:53 2008 +0000
+
+    Merging the new IO implementation to trunk to give it appropriate burn-in time. Give it a go, friends!
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5821 961051c9-f516-0410-bf72-c9f7e237a7b7

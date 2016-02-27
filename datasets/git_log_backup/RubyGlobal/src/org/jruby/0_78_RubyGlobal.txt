@@ -1,0 +1,1367 @@
+commit 3688f6b85014d99c13e7a8015e62b17556d8ae76
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jun 21 11:23:10 2013 -0500
+
+    Update 2.0.0 stdlib to p195, plus other fixes.
+    
+    * Add patchlevel to 2.0.0 version string.
+    * Set up RUBY_REVISION appropriate for 2.0.0.
+    * Fix setting build-time Ruby version to 2.0 (cc @rkh, @mpapis)
+    * Fix setting default Ruby version to 2.0 (cc @khaase)
+
+commit 3fc004fbe83155a4e02891de955d37e26e654ec8
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Jun 13 13:03:47 2013 -0500
+
+    Start moving backref logic back under thread context.
+    
+    In order for us to start optimizing backref logic away, we need to
+    hide how it is stored and retrieved. Moving back under
+    ThreadContext allows us to have more flexibility in implementing
+    new backref mechanisms.
+
+commit 41d174f6220b27da35f99f4e2d6cfde734f8c3df
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Apr 28 14:26:40 2013 -0500
+
+    VERSION toplevel constant is not defined in 1.9 or 2.0. Fixes #665
+
+commit bb98e4b8decffc0361b70a6c99c1ade5fed0abcb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Mar 28 10:02:33 2013 +0000
+
+    Move RuntimeHelpers to org.jruby.runtime.Helpers.
+
+commit 61678ac1a2514a9932276f8d527816a5980a94b3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Feb 25 20:41:40 2013 +1100
+
+    Fix more references to CPL.
+    
+    The phrase "Common Public License" was split across two lines in
+    our default header, which caused it to be missed during earlier
+    search/replace. Also, we did not replace the CPL URL in the
+    header with the EPL URL.
+
+commit 330fef3b0fc18af477ccea19bd278669667f31bb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 12 14:49:29 2013 -0600
+
+    Switch JRuby's CPL license to EPL.
+    
+    Governance of the CPL license was moved to the Eclipse Foundation
+    at some point in the past, and Eclipse blessed the EPL (Eclipse
+    Public License v1.0) as the successor to CPL. Because the CPL
+    contains a clause allowing transparent upgrades to future blessed
+    successor licenses, we can make the move to EPL without
+    re-contacting past contributors.
+    
+    The change in going from CPL to EPL largely just removes some
+    punitive language that apparently made many companies nervous. All
+    other language in the license remains identical.
+    
+    Several documents about Eclipse's move from CPL to EPL are here:
+    
+    http://www.eclipse.org/legal/cpl2epl/
+    
+    Note that Eclipse's move came before the blessing of EPL as the
+    upgrade path for CPL, so they had to do a bit more legal juggling.
+    With Eclipse now the administrator of CPL and with their blessing
+    of EPL as the upgrade path for CPL, all we need to do is make the
+    move.
+
+commit 3b8b934e79bf1001b2ec4d767ac3672e9ee4d079
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Jan 5 12:54:54 2013 -0600
+
+    Reduce cost of repeatedly invalidating global variables.
+    
+    * Mark all variables as GLOBAL, THREAD, or FRAME scoped
+    * Only perform indy caching for GLOBAL
+    * Failover to direct access every time after 100 failures
+    * Add a failover invalidator that eventually stays invalid
+    
+    In order to avoid the impact of invalidating global variables that
+    are modified continually during the run of an application, I've
+    added a config parameter (invokedynamic.global.maxfail) to fail
+    those variables and not continue caching them using invokedynamic
+    and a SwitchPoint. On the update side, I added a new Invalidator
+    called FailoverSwitchPointInvalidator that eventually gives up and
+    stays invalid, since even invalidating an unused SwitchPoint is
+    rather expensive.
+    
+    With these changes, highly-volatile global variables perform as
+    well as without invokedynamic, rather than much slower.
+
+commit 80387a630c2bb57f4425456c1dda5db98f542339
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Nov 27 13:08:19 2012 -0600
+
+    Initial support for Drip, with dripmain.rb for pre-booting.
+
+commit 136b4a0e3e183116981be6aa09a7693c70d797a2
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Oct 26 22:00:41 2012 -0500
+
+    Warn once for a few features that only need a single warning.
+
+commit b8181cda909f6e42d7c0b7fffaabbe2a502f273b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jul 27 02:19:54 2012 -0500
+
+    Inline all calls to ThreadContext.getRuntime to access the field.
+
+commit 47fd4acb720385b7d7852e1876e28520aa0cf484
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jul 27 01:55:07 2012 -0500
+
+    Remove all safelevel checks throughout JRuby (plus misc cleanup).
+
+commit 0b37cfac825ef6fd513e73b8e64fa60f1f769731
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Mar 13 12:14:58 2012 -0500
+
+    A few tweaks to add 2.0 mode and 2.0's lazy enumerator stuff.
+
+commit 08bca6b56199da7b363df8cbf46048accd4931d8
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Feb 26 15:09:14 2012 -0600
+
+    Remove $defout and $deferr, no longer present in 1.9.
+
+commit 71e26966d40ca3e0bfcf848c631cf3b8cf5af722
+Author: Marcin Mielzynski <lopx@gazeta.pl>
+Date:   Tue Feb 14 20:03:23 2012 +0100
+
+    $KCode ignored in 1.9 mode, fix global variable so it returns given
+    value instead of false.
+
+commit 467ce0a956425da5913454b8413084e391ac1794
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jan 16 12:34:16 2012 -0600
+
+    Fix JRUBY-6323
+    
+    JRuby does not pay attention to either -U or LANG in determining encoding for ARGV (it is always ASCII-8BIT)
+    
+    Added and used utility methods for producing internally-encoded
+    Strings from Java strings that came from an external source like
+    command-line arguments. This allows ARGV to reflect the proper ruby
+    internal encoding.
+
+commit 6886cc0d191dcd883fde1ad87342aba5d5058cfb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jan 9 23:48:40 2012 -0600
+
+    Rewire ENV_JAVA to be a read/write mirror of system properties.
+    
+    Normally ENV_JAVA will remain a read-only copy of System properties,
+    but after require 'java', it is replaced with a read-write wrapper.
+    Updates then are propagated into System properties, and updates
+    from outside JRuby are visible.
+
+commit 3a2c1ca01d4423cde86557ec4762074fe2a707cf
+Author: Yoko Harada <yokolet@gmail.com>
+Date:   Wed Jan 4 12:41:49 2012 -0500
+
+    $ARGV and $* should not be readonly to meet with JSR223 spec.
+
+commit 89545f30730438634ea5214bdf1d6547451197b5
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Dec 20 08:18:14 2011 -0600
+
+    Add missing global alias $MATCH from English.rb.
+
+commit d062ccaaac0adbdf9f4d218f79022960c7c84307
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Dec 19 01:42:11 2011 -0600
+
+    Set English.rb aliases immediately, and make it a no-op.
+    
+    Because we rely on the presence of $~ and $_ global variables to
+    know we must allocate space for them, we need to define their
+    English.rb aliases right away and disallow further aliasing. Since
+    we must define those aliases, we might as well define all aliases
+    and make English.rb a no-op.
+
+commit f907bcd072c5c574ab60347fa2c1caff7e44eb99
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Dec 19 01:13:09 2011 -0600
+
+    Ensure globals are volatile.
+
+commit 586f44f2543c4cdd0e5cbb345517aaf87af1098b
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Thu Dec 1 09:03:34 2011 -0600
+
+    Move the logic to set $-W to WarningGlobalVariable constructor
+
+commit bdd8acd09d8dd61da59281d8ab0202e74f3807de
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Wed Nov 30 22:45:16 2011 -0600
+
+    Oops. $-W is read-only.
+
+commit c1abd1009b3901fc1467fbc4ba826e660ddb35de
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Wed Nov 30 22:36:25 2011 -0600
+
+    Implement $-W in the 1.9 mode. This fixes JRUBY-6241.
+
+commit 039bba2a051cb969e87a1d58da4b27e0e2d67249
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Wed Nov 30 13:47:18 2011 -0600
+
+    Add globals $-v and $-w, which are synonyms for $VERBOSE. This fixes JRUBY-6239.
+
+commit 004bacf037f09607667facd3bcf04c1782622ca9
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Sep 14 02:05:57 2011 -0500
+
+    Move general command-line help strings to a separate class and move references off RubyInstanceConfig.
+
+commit d9c84782df3a5aafa0de2c979d3b301e051a4c5f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Sep 14 01:28:15 2011 -0500
+
+    Refactor RubyInstanceConfig.
+    
+    * Reorganize contents into functional groups a bit.
+    * Pull out argument processing into a top-level class.
+    * Pull out command-line printing strings into a top-level class.
+    * Add settings for many fields missing them.
+    * Prepare for moving static configs into instance configs.
+
+commit 122f676c9b1ab34ab42d207af224a223e238a097
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Sep 13 23:40:41 2011 -0500
+
+    Fix a test failure and move native/cext enabled flags to per-runtime (per-config).
+
+commit f804c1070fd01c308ee84c8baa4c949113f868e4
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Sep 13 16:17:30 2011 -0500
+
+    Provide a finer-grained switch for turning off *just* C extensions.
+
+commit 0f7c9ce8261d46ebfb7ef6e17e7da2f86f5d5ba5
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Sep 12 12:48:51 2011 -0500
+
+    Update to ASM 4.0 RC2 and master builds of jnr-{ffi,posix,constants,netdb}.
+    
+    Squashed commit of the following:
+    
+    commit ce02afcf40ede2c485ab357435866ce754cd2671
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Mon Sep 12 12:46:44 2011 -0500
+    
+        Fix group id for jnr-posix and version numbers for modified libs.
+    
+    commit 0b5632be85dce5500c35d3533fa5d7cd240bf515
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Mon Sep 12 12:39:24 2011 -0500
+    
+        Fixes to get ASM 4.0 RC2 passing tests.
+    
+        * Update jnr-* to master versions, since some depend on ASM and had to be updated too.
+        * Fix ASM-related errors due to new class hierarchy.
+        * fix skinnymethodadapter_spec to use new h_ prefix for handles and to filter "asm" constants.
+    
+    commit 4ac391fb3bf2f53dd42f8e4c5f3a0e36ca638e1b
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Mon Sep 12 10:35:08 2011 -0500
+    
+        Remaining tweaks to get jruby compiling with ASM 4.0 RC2.
+    
+    commit 3801518505d0d38bf045a39fd8ca6eb80ef50126
+    Author: Douglas Campos <qmx@qmx.me>
+    Date:   Mon Sep 12 00:21:54 2011 -0300
+    
+        updated InvokeDynamicSupport
+    
+    commit 2aabc1894d38b717cca2b4546f51596b8b03db6e
+    Author: Douglas Campos <qmx@qmx.me>
+    Date:   Sun Sep 11 12:43:39 2011 -0300
+    
+        updating asm version
+
+commit 6c016675c28b4126fd0703f1455b8f25423f739d
+Author: Tobias Crawley <tcrawley@gmail.com>
+Date:   Sat Aug 6 07:25:48 2011 -0400
+
+    Synchronize posix setenv/unsetenv calls, since they may not be reentrant [JRUBY-5933]
+
+commit 217f31a899c58a2529718e9dca253a241c6cfcbc
+Author: Tobias Crawley <tcrawley@gmail.com>
+Date:   Thu Jul 21 10:12:13 2011 -0400
+
+    Allow disabling ENV write-through to the real environment [JRUBY-5934]
+    
+    This adds updateNativeENVEnabled to RubyInstanceConfig with a default of true.
+    If it is true and jruby.native.enabled is also true, any modifications to
+    the runtime's ruby ENV will be reflected in the system env via POSIX. Otherwise,
+    the modifications are not written through.
+    
+    This setting has not yet been pushed out to the embedding API's (ScriptingContainer
+    & JRubyEngine), nor has it been documented.
+
+commit b5cf5046eb648813b5df97388905517299886ae2
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Jun 16 15:48:56 2011 -0500
+
+    JRUBY-5856, JRUBY-5857: ENV on windows stuff
+
+commit 7588393ca5bfeba6182b87b8b47669ecab2fe403
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Jun 9 10:02:23 2011 -0500
+
+    Fix compilation issues under OpenJDK 7 after b142 with primitive + varargs now resolving as ambiguous.
+
+commit 5990281dff83e5f35624dd1ad8f4e7cd2c055085
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue May 24 16:01:57 2011 -0500
+
+    Merge in several Rubinius-specific modules and load all Rubinius-specific core classes/modifications on require 'rubinius'.
+
+commit 04be6304037de75ad4704b548a6c924d2eb6e3f4
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Apr 1 03:17:39 2011 -0500
+
+    ENV setting ends up normalizing to locale encoding.
+    
+    * In MRI, there is no in-memory hash; env is set directly at system level, and accesses always create new strings.
+    * In JRuby, normalize and freeze strings on the way in.
+    * This gets 1.9 specs green again.
+
+commit 3e27e54534290bfa2b220ff1c1ddf9ff65448f7c
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Tue Feb 22 08:59:32 2011 -0600
+
+    JRUBY-5525: Ensure encoding service is set up in both 1.8 and 1.9 modes
+    
+    Move OSEnvironment to org.jruby.util and deprecate single-class
+    org.jruby.environment package.
+
+commit 15832d3b4dc4f4023b40b710db43f66ce9d0a2b7
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Feb 17 14:46:38 2011 -0600
+
+    Fix JRUBY-5514: Errno::EBADF is sometimes raised instead of IOError when TCPSocket#readline is called after TCPSocket#close
+    
+    The problem here is that under real concurrency, EBADF or equivalent are perfectly valid to see. Eventually you have to make a low-level IO call, and under concurrent load that could happen just slightly after another thread calls #close. There's little we can do to eliminate EBADF, but I have cleaned up some paths that raised it unnecessarily and others that raised EPIPE when they should not.
+    
+    I also cleaned up several places that could cause a NullPointerException when under concurrent load, because a stream gets nulled out after it has already been checked for non-nullness.
+
+commit ad351694ef33b15a2d4f886043eec04a311a3cc0
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jan 28 13:57:31 2011 -0600
+
+    Move regexp options into a class.
+
+commit 90594067fc715402b6a36c8ba9137032d1876416
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Dec 2 04:31:18 2010 -0600
+
+    Fix freezing of fixnums used for patchlevel.
+
+commit e055dbe2e6a793916c7a8383d5a6f6aa0d1e6e7f
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Thu Oct 14 15:51:53 2010 -0400
+
+    Formatting change. Avoid dangling 'if' clause on a line by itself. Also, reformat multi-line boolean conditions so that it is clearer that they indeed span multiple lines.
+
+commit 9ee71a018751652f58fcec6aeac8419f080122b2
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Tue Oct 12 08:44:28 2010 -0400
+
+    Refactor op_aref and op_aset to be case-aware.
+
+commit feb97200217d867bc730fef61e6a7feedeb2d033
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Tue Oct 12 01:44:24 2010 -0400
+
+    Redo the fix of JRUBY-5110 a little more carefully.
+    
+    It turns out that, on Windows, ENV_JAVA should be case-sensitive, while ENV is not. They are both case-sensitive on all other platforms. So, subclass org.jruby.RubyGlobal.StringOnlyRubyHash for case-insensitive lookup, and instantiate ENV as an instance of that class. ENV_JAVA remains the same.
+
+commit e4fdc3d0767caf08ce58e476704977166cdad888
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Mon Oct 11 21:43:43 2010 -0400
+
+    Fix JRUBY-5110. On Windows, ENV and JAVA_ENV keys are case-insensitive.
+
+commit 6f69ba70a747d2aa1334ba83bd06095c6d715aee
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Sun Jul 18 21:57:42 2010 -0400
+
+    Fix JRUBY-4945: [1.9] During ci spec run, ENV is not getting reset properly. Problem was that ENV.[]= was not properly overridden in 1.9 mode.
+    
+    Hopefully, this is the last time we have to tag/untag these ENV specs.
+
+commit 9708ce07720b0da9a7488284766324eaff7a1527
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Sat Jun 19 23:33:20 2010 -0400
+
+    * $-n does not exist (any longer?)
+    * $-a, $-l, $-p is true/false, not true/nil.
+
+commit 96055596e4d0f0585bdfc203564e75c5d17677f5
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat May 22 19:44:31 2010 -0500
+
+    Add RUBY_REVISION and fix RUBY_PATCHLEVEL for 1.9, and add JRUBY_REVISION.
+
+commit 515a4c142250fd30b140c22728b061a54aaeacbe
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat May 22 14:44:37 2010 -0500
+
+    Various spec fixes:
+    
+    * Fix all 1.9 Array specs (other than pack, which doesn't seem to run with Ruby 1.9 at the moment).
+    * Backport 1.9's matrix to fix matrix failures
+    * Merge over a ruby_1_8 set.rb fix (ruby bug #118)
+    * Make Digests' #file raise EISDIR on dir
+    * Update rubyspec and mspec and tag remaining failures
+    * Kernel#require should expand ~
+    * $? should be read-only
+
+commit 1bd4ca29a7cb42820a850ad21c76d6da740c6b9b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Oct 25 21:50:28 2009 -0500
+
+    Multiple improvements for JRUBY-4117: RubyIO#incrementLineno is Very Slow
+    
+    I modified both $< and $. to be normal fields on org.jruby.Ruby, with the global var accessors just accessing them directly. This allows all places in the system that access them to go straight in rather than doing the global var hash lookup and constructing a RubyFixnum. I also modified the RubyArgsFile.setCurrentLineNumber to not dispatch back to lineno= and instead just update the int in the ArgsFileData structure. With these changes, we are trimming off the couple seconds RJ Lorimer mentioned in JRUBY-2810.
+
+commit 5cf6332b4eec35ca6e7e4eaa5822322ba50323cd
+Author: Wayne Meissner <wmeissner@gmail.com>
+Date:   Sat Oct 3 14:55:54 2009 +1000
+
+    Use a custom IAccessor instance for $$, so loading the posix subsystem can be delayed until its actually needed.
+
+commit c6c3a8c720cdf74425efc2c98e44312b96c08706
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Sep 29 16:05:48 2009 -0500
+
+    Apply proper patch for jruby-embed
+
+commit 83c86ab64dcb512dc0a5f23e07722ad50f4ec73f
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Tue Aug 4 13:39:51 2009 +0200
+
+    [1.8.7] Add RUBY_DESCRIPTION and RUBY_COPYRIGHT
+
+commit 61b91d0f249964cd71d601991fb6dee54e641a46
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue May 19 17:08:26 2009 -0500
+
+    Changes for JRUBY-3588: Allow rescuing Java Throwables.
+
+commit d0c1a42759dd73d1a32a369d1feba06cf1cdb7bc
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon May 11 15:51:11 2009 -0500
+
+    Oops, fix use of casecmp to check for 0, not true.
+
+commit fa9f48c820599aa8e065f151f4ffee3e14169e5a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon May 11 02:05:21 2009 -0500
+
+    Probable fix for JRUBY-1441: ENV should not be case-sensitive on Windows
+    
+    I took a clue from MRI's handling of ENV on Windows and came up with a quick hack. I have not yet tested this on Windows, as I do not have a Windows VM set up yet.
+
+commit 66b28d6e25993dac775867702563e32e7bc75b41
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Apr 8 20:58:55 2009 -0500
+
+    Migrate to having backref/lastline on DynamicScope again, with inspector changes to ensure the scope is available. Does not yet pass all tests.
+
+commit 7724a5d41666357061a8d2f87d003d4833ae38df
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Mar 21 18:09:01 2009 +0000
+
+    Fix for JRUBY-3514: RUBY_PATCHLEVEL should be a Fixnum instead of String
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9448 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 35b25102dbb523345f259ca0ab92857530d6c472
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Jan 10 21:17:58 2009 +0000
+
+    Update to Ruby 1.8.6p287 stdlib. Also fixed 1.9 version/patchlevel reporting throughout. A few tests had to be tweaked for 1.8.6p287 because they depended on 1.8.7 behavior (that hadn't been reverted in our stdlib yet) or old 1.8.6 behavior that had been updated.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8696 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 24befe5cf0587885f08f7dc82217f141cc500550
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Dec 18 06:51:54 2008 +0000
+
+    House cleaning! Delete a bunch of unused and/or deprecated classes of strange and wonderful origins, eliminate all deprecated Callback-related code, reduce environment lookup to a simple System.getenv call, kill off the last of the old stackless interpreter's "Instruction" interface, and other miscellaneous cleanup.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8395 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 020377515153817fa6d8d13100cb346948e5a175
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Nov 30 05:41:40 2008 +0000
+
+    Fixes for JRUBY-2834: More than 50 RubySpec failures for ARGF
+    
+    Thanks very much to Joseph LaFata for all these fixes.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8211 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 65c20f8eec5f20fc7affde04e90356f1b40ed17f
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Wed Nov 12 02:05:58 2008 +0000
+
+    use newStringShared where possible (we should consider making newStringNoCopy as for Array).
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8057 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit e080d81bdcaa0608da025167fb6e5b2b41ee6628
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Aug 10 21:50:57 2008 +0000
+
+    A few more cleanups for unnecessary boxing of args.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7430 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 61170d717cb4010b1c4ea508dbcdc8e1c07d1585
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Aug 8 03:02:55 2008 +0000
+
+    Move new Java ports of Ruby-based JI functionality to new packages under org.jruby.java
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7407 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 29df8f743ff505b68cb99bbdefe1a7955818109b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Aug 3 03:52:35 2008 +0000
+
+    * Allow rescue to rescue non-wrapped Java exceptions (immediately wrapped if handled; interpreter only at the moment)
+    * Allow $! to be assigned a wrapped Java exception
+    * Added beginnings of an Unsafe mimic to use for necessary purposes (like rethrowing exceptions)
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7355 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 7c12ce0d83cefbdab76ea8f8686d3997d814371c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jul 25 20:07:36 2008 +0000
+
+    Add specifiy-arity call paths for default Class#new and for concrete Java object construction.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7296 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit c68e71ee99b749477adfa2293e7c9fe7980925ee
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Thu Jul 17 02:57:12 2008 +0000
+
+    missing @override
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7203 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit f93956e8d940ea3547b960ded82f95982f3c9e43
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 16 18:27:41 2008 +0000
+
+    Another attempt at JRUBY-2677, fixing encoding breakage for command-line args.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7193 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 8ca2b03c28ef773483c373c942909e8be39d2607
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jul 15 23:18:20 2008 +0000
+
+    Various fixes for JRUBY-2677, problems opening filenames or passing arguments with unicode characters.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7181 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 72975c6c9467ac11677b86f3886e555911e50299
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Wed Jul 9 00:34:32 2008 +0000
+
+    lots of RO.getRuntime removal
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7131 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit c8dd345c91f45d06d3224cddd3799a272b03f9dd
+Author: Vladimir Sizikov <vsizikov@gmail.com>
+Date:   Wed Jul 2 07:04:20 2008 +0000
+
+    JRUBY-2731: Significant speedup of Time methods (up to 300%-400% in some cases)
+    
+    Also, added the benchmark for Time.at, Time.now, Time.local, Time.gm.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7072 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d64681f4c8caefe0c368abf118b9a209ae8a7e6e
+Author: Vladimir Sizikov <vsizikov@gmail.com>
+Date:   Fri Jun 27 15:07:29 2008 +0000
+
+    JRUBY-2710: CGI#out fails new rubypecs, prints results to original
+    stdout rather than to the redefined one.
+    
+    This fixes 4 rubyspec failures for CGI#out.
+    
+    Regression tests added to rubyspecs.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7038 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit be7160af3ec5dffc795b2545a577a30139e22e0d
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Wed Jun 25 21:46:01 2008 +0000
+
+    [interp] Make BlockNode based on primitive array rather than ArrayList
+    Convert all users of RubyArray.add to RubyArray.append to avoid calling JI layer
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7028 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit e77a1ebd83a4bbcc367ef0b4f08e028213a71bbd
+Author: Vladimir Sizikov <vsizikov@gmail.com>
+Date:   Mon Jun 23 14:24:39 2008 +0000
+
+    JRUBY-2693: PROGRAM_NAME is not available in the modules included via -r command line option.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7017 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 64867ce9d39c71304da15960cdcee000e83b043e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu May 1 19:44:38 2008 +0000
+
+    Add RUBY_ENGINE constant per last night's design discussion.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6607 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 65152fcf730c2a30600668f5c3cde38ee4079843
+Author: Vladimir Sizikov <vsizikov@gmail.com>
+Date:   Tue Apr 15 10:20:07 2008 +0000
+
+    JRUBY-2393: Env.to_hash should return new hash instance
+    
+    Regression test added.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6496 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit cbfcf0c1b80b4cb7f306d268e5ca63c98732c522
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Apr 10 19:54:50 2008 +0000
+
+    Cleaning up more callback use, as well as an ugly one in RubyMethod. Also tagged existing unused callback factory entry points as deprecated. Almost there!
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6456 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit c0f7ed25dc331b130cd8d985bf6a2b09a63bff2b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Mar 17 06:31:21 2008 +0000
+
+    Disable SAFE levels, since they don't work and just blow up if you try to set them. JRUBY-821.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6236 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 852d904134ad970a20497fdcc5d752dd4ae49766
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Fri Mar 7 22:04:54 2008 +0000
+
+    The RC3 Surprise!
+    
+    Allow annotation defined ruby methods to optionally specify ThreadContext as first parameter
+    Convert easiest and most common methods to accept ThreadContext when method or child method can use context
+    
+    These changes give about 15% improvement on petstore bench and about 10% in ar-bench.  In ar-bench getCurrentContext calls go from 14 million down to 2 million.  The remaining calls largely can be removed but they were much more invasive.
+    
+    IRubyObject op_eqq and op_equal both not have ThreadContext consumer, but we could see no use of this in any extensions and figured it worth the trouble of converting.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6143 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 732b70c83f5e5927ea868389dd0de844febe2e71
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Mon Feb 11 17:54:38 2008 +0000
+
+    Reuse thread context local in the compiler when setting/getting backref and last line.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5905 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit c272260478381c8ac3ab13f39db6a0809d3b1d1b
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Mon Feb 11 02:33:23 2008 +0000
+
+    Fix for JRUBY-2103: $~ semantics still doesnt match MRI.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5899 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 689b6d4c530b70ac33134f6a4c7de295e59f1464
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Sun Feb 10 19:47:05 2008 +0000
+
+    Remove '~' case from backRefNode and add setter and a guard to BackRefGlobalVariable.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5898 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a1ed6bb05ea820d3479c693dbe776263579d0762
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Sat Feb 9 13:33:18 2008 +0000
+
+    Fix for JRUBY-1455 - reimplement ARGF to be a regular singleton Object instance with singleton methods. This allows cloning to work correctly.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5880 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 66b024fedbb2ee32316ccd9de8387931d07993ec
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 5 05:57:53 2008 +0000
+
+    Merging the new IO implementation to trunk to give it appropriate burn-in time. Give it a go, friends!
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5821 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 2b1a005a405839ca4eb268288816294e88f20a2b
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sun Feb 3 18:37:14 2008 +0000
+
+    JRUBY-2062: Add ids and convenient data to SyntaxException and IRubyWarning interface to make their life easier
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5806 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 50246ccd2f15c589edc4086312a8c5c745cc11bd
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jan 21 21:43:04 2008 +0000
+
+    Repairs to RubyIO reopen logic to ensure fileno is preserved; also some renaming of isSync variable in IOHandler to be less ugly.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5686 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 9e049bca88d3abc896ea4cd309948f407a9719eb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Jan 19 10:25:08 2008 +0000
+
+    Make IO#read buffered for all other cases (File was done yesterday).
+    Mild hack: set any stream that becomes stdout/stderr to be sync, since ttys are not fully buffered in C/MRI, but we can't (currently) determine if a given stream corresponds to a tty (perhaps out instanceof PrintWriter could be an indication?
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5665 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 9ae5eeeb0fca80ff8a08f6467a9526b8ee05e41c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jan 16 11:09:09 2008 +0000
+
+    Large refactoring of Main.java and Ruby.java, with some additional work on LoadService and RubyGlobals. Cleaned up loading logic, reordered into actual dependency order, and broke up into appropriat emethods. Inlined and simplified Main logic. Set up LoadService to be constructed immediately and initialized during init, as preparation for loadpath/classpath unification.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5628 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 3aaec7082c092cb0fd9066c0facd0de9473582b5
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Mon Jan 14 11:37:51 2008 +0000
+
+    Fix for JRUBY-1949
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5600 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 0a00006b65b1d841eec04f19433c285ace1b08d0
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Jan 13 02:23:45 2008 +0000
+
+    Cleaned up a bunch of command-line params, moved most JRuby-specific options to -X, and updated CLI help docs.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5579 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 7fcf7804f67768f8166e1dbc6f6a610b2d3f57f6
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Dec 30 22:38:34 2007 +0000
+
+    Fix for JRUBY-1849 from Vladimir.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5444 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 04a7e7bacc149c881d5e200f29d8d7d3c20a09be
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Sat Dec 22 12:12:46 2007 +0000
+
+    $KCODE is settable only to String values (causes AIOBE, when: $KCODE = nil).
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5338 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 3ebdff689db8e1e3e87a5dc4db546047d74d7fc9
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Tue Dec 11 03:25:29 2007 +0000
+
+    First phase of Joni related String/Regexp optimizations:
+    - Major RubyRegexp and MatchData cleanup (Compiler/ASTInterpreter synchronized).
+    - Enabled lazy Region instance creation (only when groups defined).
+    - Heavy lifting for String#scan, String#sub, String#gsub, String#split by direct joni Matcher access and smarter backref management.
+    - Enabled joni Matcher reusing for aforementioned methods.
+    - Enabled thread local Regexp cache for String arguments that are converted to regexps.
+    - Global variable ($=) made ineffective.
+    In most cases the modified methods are now 2x - 5x faster (depending on string size)
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5207 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit e4b20bafd8ec5e0b80afde2804b5a254ddcb14c4
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sun Dec 9 02:43:21 2007 +0000
+
+    JRUBY-1516: FileTest#chardev? is not currently implemented.
+    JRUBY-15: Implement File::Stat.ino and File::Stat.dev
+    JRUBY-1438: Create JNA-based implementations of fstat/lstat
+    JRUBY-1580: Pathname#unlink complains "<file> is not a directory"
+    JRUBY-1433: File::Stat.uid needed for rubyzip
+    
+    This patch implements more than the above.  It also implements all of File::Stat, File::Test, Kernel#test, and all File posix methods (sans File.umask and File.readlink).  This is done via JNA and will work on Linux, Windows, and MacOS (32 bits).  64 bit systems require a little more work and Windows may be spotty (e.g. not as solid and Linux/MacOS).
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5198 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit ff120491b21359d374e6e50a98e8950f963f49cb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Nov 26 06:36:34 2007 +0000
+
+    Remove two more IRubyObject methods:
+    - getNativeTypeIndex moved to a separate interface; former uses now cast to that interface, rather than requiring all IRubyObject instances to specify a native type index directly. Marshalling should probably be refactored to not use this at all (and instead polymorphically dispatch to a method on the target object, similar to how it used to be).
+    - isKindOf moved to RubyModule as isInstance and all references updated to use that version. This maps better to the type being in charge of what is or is not an instance, and mimics Java reflection API (Class#isInstance).
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5045 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 3e9c6ccab41022a64edb2c85e5eaf98a8aabfb26
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Nov 24 00:07:31 2007 +0000
+
+    Removing a couple more callMethod implementations; remaining are heavily used, so I may stop here for now and copy-paste then into new IRubyObject impls.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5014 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 3d2df6d93e4d2171fd5eb2d5f6c93bb3b652424d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Nov 5 21:51:55 2007 +0000
+
+    Rewrite of IOHandlerSeekable.gets to better utilize NIO and buffers.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4861 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 95c346df5368a3f5f06fa9d14022efb85eaa6809
+Author: Bill Dortch <bill.dortch@gmail.com>
+Date:   Mon Oct 15 07:45:22 2007 +0000
+
+    Vars have landed. Does not include concurrent SymbolTable (will follow in the next day or so). Also need multi-threaded unit tests, work in progress.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4588 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit f117ff49351f94213ec5a9d7be59ac88b8494d7f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Oct 12 04:28:05 2007 +0000
+
+    Modified yarv run.rb to test ruby vs jruby, added experimental svn-pulling rubinius spec target, fixed a couple NPEs found running specs
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4578 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 98482b6d488925da6e92ac430466b67f83cfe3e3
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Thu Oct 11 11:22:01 2007 +0000
+
+    Fix a few small errors that generated unnecessary warnings in debug mode
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4568 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a10e46cec019a3964c75ebb6b2ec648c3b449ed3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Oct 8 18:23:45 2007 +0000
+
+    Migrate Hash to annotating bindings, rename and remap all equality methods to new conventions
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4514 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 2eece191e4d84bf4fbbf258702867780ef9f1844
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sat Oct 6 19:37:50 2007 +0000
+
+    JRUBY-1284: $$ (pid) returns non-pid (Ruby.hashCode) and it set in Main.java (by skaar)
+      [Note: This does not return real pid on windows...A follow-up issue will have to be created to deal with this on windows -- So currently windows retains same behavior as it had before this patch [e.g. we are no worse off]]
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4495 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 3eec83aee5cc9a2f59992aa72fac2d7c5532515b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Oct 1 04:55:44 2007 +0000
+
+    Fixes for JRUBY-1396, make $? be at least nil, rather than Java null
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4447 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 331f129de93840bb0377876187556eb87c388387
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Sep 30 15:52:10 2007 +0000
+
+    Fixes for JRUBY-854 in the interpreter; since backref and lastline have their own custom smart global variable types, they already do the correct logic. The compiler doesn't really need to be changed, since it can make the determination once ahead of time and avoid it in the future.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4434 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 84f5a2c64dc4f3b9f86960381c26acf42fdd77bf
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Mon Sep 24 22:20:54 2007 +0000
+
+    Fixes for JRUBY-1357: Failure in ruby_test String#chomp test, and enable tc_chomp test.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4381 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 4cf0f4af5a2794b9beddaa151c904573dd620872
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Sep 21 05:49:16 2007 +0000
+
+    Adding RUBY_PATCHLEVEL constant
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4366 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 23c57eeb1e833610f04735538887d40f4df27318
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Wed Aug 22 21:32:44 2007 +0000
+
+    JRUBY-1284: $$ (pid) returns non-pid (Ruby.hashCode) and it set in Main.java
+    
+      This commit just moves the $$ definition into RubyGlobal so embedded scripts still have a $$, but this patch does not address the fact that this is not really the PID for the runtime.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4196 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 3b7e4b01da1a2f967b3691b536be0c1ec8564478
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Thu Aug 9 01:19:16 2007 +0000
+
+    JRUBY-1244: [PATCH] ENV variables should be removed from the environment when set to nil (patch by Dmitry Verkhovsky)
+    Consider for 1.0 branch
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4135 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit fc17861832a4f30aecf7840dc1dcee181618f93f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Aug 7 03:10:35 2007 +0000
+
+    Move backref and lastline into Frame, since there's only ever one copy of them in a given frame. This also will make it possible to turn on stack-based variable AST inspection very soon.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4107 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit af6e40c24dc8a1911a6c9649da129552912699e7
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Sun Jul 8 12:30:32 2007 +0000
+
+    Fix for JRUBY-1193; The new backref handling requires us to call RubyMatchData.use before using it; the problem in JRUBY-1193 was caused by RubyString.each, specifically.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3972 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 3b068a3754b8bfb7496516d7100fd94497088bd0
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Fri Jun 1 02:14:45 2007 +0000
+
+    JRUBY-26: Various special globals should be thread specific and not shared by all threads
+    JRUBY-1028: The special global variables "$=" and "$~" are not defined
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3799 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 83a460e959dc2b0d35a023c43b6460e8dedf1296
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon May 21 19:20:35 2007 +0000
+
+    Fixed $! and $@ to be thread-local (or "thread-global" depending how you look at it). Only $? remains to be made thread-local.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3694 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 3c425379b9d3d5d09870e1656bfa90b2f1bc297f
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Wed May 16 21:40:12 2007 +0000
+
+    JRUBY-869: Requiring 'rss/2.0' causes NameError
+    
+    All backref related variables need global variable entries so those globals can be aliased
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3670 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 6805fad9d54c237bb9f24f80bf4f1fd1bcb862eb
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Sat Apr 21 20:59:02 2007 +0000
+
+    Fix the remaining marshalling issues (for JRUBY-531). Two different failures about singleton classes, first one because we didn't properly generate a singleton-name for cases where the enclosing class/module was singleton. The second problem is that ENV should really be a singleton, and can't be dumped. The real fix for ENV is to generate it the same way as ARGF, but that means custom implementation of a whole lot of hash-methods, which doesn't seem to tempting right now. The quick fix is to make sure ENV is actually a singleton object anyway, done by adding the to_s method as a singleton method to it.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3522 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit dfb0f98c949a4b4cb96b9e6fbdf3108aa057eb2b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Apr 16 20:31:36 2007 +0000
+
+    New feature for JRUBY-809, JRUBY_VERSION constant containing the version of JRuby running
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3478 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 7a77daca5662ec40025900d080e4e71c7271a278
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Apr 15 01:44:36 2007 +0000
+
+    Committing Marcin's excellent Hash and String copy-on-write work for JRUBY-818. ant test is solid, mephisto appears to work well, and with one small bug fix, activesupport, actionpack, and actionmailer appear to run the same as on trunk (maybe a little better?). Also, I found and fixed a small bottleneck that now shows patched JRuby rdoc'ing faster than trunk. So we're gonna go for it.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3462 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit f4c15912b1d4edc84b06c882195d27df371d1023
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Apr 6 23:13:04 2007 +0000
+
+    More cleanup of STI and expanding it to conversion methods and hash.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3404 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit cf0bccafaee1bf01bf0ed77c674af52c2df95870
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Wed Feb 21 11:08:33 2007 +0000
+
+    Fix for JRUBY-611, basic ARGF support, and also fixes a bug in splatting. (to_a added to the metaclass won't be called for splatting, which is wrong)
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3040 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a2107e60085a5063bca76d897783a512bbd7eddc
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sun Feb 18 15:18:18 2007 +0000
+
+    JRUBY-606: Get rid of un/under-used IRuby interface
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3022 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit bb20e69fca02df78c52e9c534db24e9f4dda0509
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sat Feb 17 22:29:59 2007 +0000
+
+    JRUBY-599: JRuby needs a COW, primitive array backed builtin Array
+    JRUBY-604: Hash#sort raises exception
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3014 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 8169a980a437ed4b2e8483aa6032bfaa4f99bb92
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Fri Feb 9 14:48:30 2007 +0000
+
+    Fix for JRUBY-556, by Marcin
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2972 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 726ed07a049d0bf23d1d5257e54c710a388ffef4
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Sun Jan 28 14:51:14 2007 +0000
+
+    A few fixes for ActionPack, make KCODE handling unified, UTF8 shouldnt be default KCODE, and make setting of $KCODE and $-K actually have effect on kcode handling
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2861 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit fe628a940467ceda783730ea34173dec3d365fa4
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sat Nov 25 16:19:08 2006 +0000
+
+    JRUBY-270, JRUBY-284: exception with nil or non-array backtrace causes various incorrect (non-MRI) behaviour
+    RSpec goodness fixing
+    SSLSocket is unused variable
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2471 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 174e3d01468001668ab299227d4af11aea65341c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Nov 14 03:09:59 2006 +0000
+
+    damn the torpedos! full speed ahead! landing enebo_lexical branch changes plus TC-passing optimizations and a few small compiler updates
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2423 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit bd4c92d7c69a8fdae133a5d61a5ca5913b8894e2
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Fri Oct 20 15:51:27 2006 +0000
+
+    JRUBY-215: $LOADED_FEATURES does not exist
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2361 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit dd254ca19030097392162f303e0a82a611d3c5d2
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Fri Sep 29 21:41:35 2006 +0000
+
+    JRUBY-105: ENV allows non-String keys and values
+    Uncomment out mri tests instead of duplicating in our tests
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2252 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 8336216fd7e789cbca0f59d283eb8df57e4c1e5d
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sat May 6 22:17:39 2006 +0000
+
+    - $> should be set when $stdout is set
+    - All Kernel#puts and Kernel#print to work when $> is not a RubyIO
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2031 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 4412cc7fc45c45b61a1fa40d8439c2280bfc71b1
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sat May 6 21:40:55 2006 +0000
+
+    - StringIO.gets was returning nil when $/ was not matched versus rest of string
+    - Kernel#gets would not accept a $stdin set to a StringIO
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2030 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit f67bf159b486fa2ceb3335f98a350e2e5fefe664
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Apr 13 03:58:38 2006 +0000
+
+    committing correct ENV patch (previous was an older patch)
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1978 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit ebc655285fa55c939b42b33be335d9f4b2040047
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Mar 25 06:25:36 2006 +0000
+
+    fixing null default value for ENV hash creation
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1940 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 1d43870a42678f709851fcd9349d32a5f5be0dca
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Feb 2 19:51:50 2006 +0000
+
+    merging cnutter_work1 to HEAD
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1869 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 81b5aaa51a9bfd2e89a4bb4b2058749dd3a5eacf
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Jan 22 20:47:58 2006 +0000
+
+    committing loadedFeatures HashSet fix
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1860 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 4ede4bfb0b4fcc29ce09b82da5f1164b5894d258
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Nov 10 15:09:14 2005 +0000
+
+    TC method refactoring, renaming, inlining of TC-related IRuby methods
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1825 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 41adc9d73b44b14dd25593e772188d405ec00f2f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Oct 26 05:34:12 2005 +0000
+
+    removing revision keywords
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1810 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 4dfdacd80c56018084c618f3bbab7b542653d95e
+Author: David Corbin <dcorbin@users.sourceforge.net>
+Date:   Sat Oct 8 13:07:06 2005 +0000
+
+    Introduced IRuby interface for Ruby runtime object.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1798 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 9b58fa31e2977cb136a10c0e2813c4e55763d78a
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Tue May 10 15:35:38 2005 +0000
+
+    - Dir#rmdir now throws ENOENT
+    - Dir#mkdir now throws EEXIST
+    - ENV['HOME'] added
+    - ENV global moved to better location
+    - Dir#chdir can have no arg version now
+    - Dir#chdir now chdirs in the correct location
+    - File#expand_path now understands '~'
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1689 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 312172d22abc380ccb723b1458f5effeddfc51fa
+Author: David Corbin <dcorbin@users.sourceforge.net>
+Date:   Wed Apr 6 00:40:21 2005 +0000
+
+    Fixed $KCODE
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1668 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit ee9b5aa48bb8637c5f40b2ac16f807215572e75c
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sat Apr 2 15:50:37 2005 +0000
+
+    $SAFE=3; $SAFE=2 yielded java exception and not ruby one
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1660 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 7a83c48af56081c1c2132111d535f28d10cf3afb
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Fri Dec 31 20:55:52 2004 +0000
+
+    Update license to GPL/LGPL/CPL
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1574 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d49668d60ad244dae58e2c2bc6ab5fcff312d6e5
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Dec 19 04:45:00 2004 +0000
+
+    added $deferr global needed by some core libs (e.g. ftools)
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1503 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 99701d6c108d17940c770c551241e5099feb192e
+Author: Jan Arne Petersen <jpetersen@uni-bonn.de>
+Date:   Mon Dec 13 01:20:10 2004 +0000
+
+    Removed some ununsed code.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1483 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 870e1da9b41bfdbae259e1fc5f18fc8b76686998
+Author: Stefan Matthias Aust <sma@3plus4.de>
+Date:   Sun Dec 12 09:25:42 2004 +0000
+
+    removes the instance variable runtime in RubyObject
+    reintroduces the variable in RubyNil, RubyBoolean, and RubyClass
+    delegates all calls to Fixnum,Array,Boolean,String,ArgumentError,IndexError and TypeError.newXXX to Ruby
+    fixes all imports
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1469 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit b1562832239a5e5d73b1ee98dade51601e343257
+Author: Jan Arne Petersen <jpetersen@uni-bonn.de>
+Date:   Tue Nov 16 20:30:04 2004 +0000
+
+    Rename references of org.jruby.Ruby from ruby to runtime.
+    Remove unused methods from the IRubyErrorHandler interface.
+    Add "same" method to RubyObject to fix "equal?"
+    Fix JavaObject cache.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1408 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 158bab74478b3ca0925ddbd2a5c73d4ef53d75f3
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Fri Mar 12 19:38:42 2004 +0000
+
+    Coalecse various getName signatures to just one
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1280 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a16b4a3596853f2153bfe0df0a8cbe54382d5d58
+Author: Anders Bengtsson <ndrsbngtssn@yahoo.se>
+Date:   Sat Feb 28 23:00:58 2004 +0000
+
+    Removed a lot of old IndexedCallback stuff.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1254 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 4c689a812e20d4fcf2da0cdc9b527b00cc1960ef
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Tue Feb 10 16:46:17 2004 +0000
+
+    IO work (phase1)
+    1. Make IO allow random access behavior (seek,rewind,pos)
+    2. Allow most IO duplication (reopen, clone)
+    3. Support almost all other previously missing IO method (sans pipe/popen related ones -- popen will be phase2)
+    4. Fix RubyArgsFile bugs in testing kernel
+    5. Made all rubicon tests for IO run correctly versus ruby 1.8 (exception: pipe/popen related ones)
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1233 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d8c7bdab8430bb1f7826f7cad86d6c1aa9513a82
+Author: Anders Bengtsson <ndrsbngtssn@yahoo.se>
+Date:   Mon Dec 16 21:12:11 2002 +0000
+
+    Reworked class and module lookup.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1171 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit b900ec4b31dd5e6ab04038d78d5fcbe3b40301fe
+Author: Anders Bengtsson <ndrsbngtssn@yahoo.se>
+Date:   Sat Oct 12 12:04:14 2002 +0000
+
+    Allow nil to be assigned to the $, global.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@971 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit f8a328a051972a06bb73cb6c9ace544794de2958
+Author: Anders Bengtsson <ndrsbngtssn@yahoo.se>
+Date:   Fri Sep 27 14:55:10 2002 +0000
+
+    Loading cleanups.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@914 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 05c7de156620b4e1926ea77f476287db1b42b4cc
+Author: Jan Arne Petersen <jpetersen@uni-bonn.de>
+Date:   Wed Sep 18 16:51:14 2002 +0000
+
+    - Fix $*
+    - Remove JavaFieldAccesor classes.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@853 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 839de5dc5ea6ec9b3608a998c7c727bc12f50218
+Author: Jan Arne Petersen <jpetersen@uni-bonn.de>
+Date:   Mon Sep 16 14:08:45 2002 +0000
+
+    - remove Ruby#getGlobalVar and Ruby#setGlobalVar
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@835 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit c77b91f42c4f3810140d44cbe603248a1d52b7ee
+Author: Jan Arne Petersen <jpetersen@uni-bonn.de>
+Date:   Tue Sep 10 15:18:12 2002 +0000
+
+    - restructure of the code tree.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@782 961051c9-f516-0410-bf72-c9f7e237a7b7

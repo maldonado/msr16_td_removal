@@ -1,0 +1,296 @@
+commit 61678ac1a2514a9932276f8d527816a5980a94b3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Feb 25 20:41:40 2013 +1100
+
+    Fix more references to CPL.
+    
+    The phrase "Common Public License" was split across two lines in
+    our default header, which caused it to be missed during earlier
+    search/replace. Also, we did not replace the CPL URL in the
+    header with the EPL URL.
+
+commit 330fef3b0fc18af477ccea19bd278669667f31bb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 12 14:49:29 2013 -0600
+
+    Switch JRuby's CPL license to EPL.
+    
+    Governance of the CPL license was moved to the Eclipse Foundation
+    at some point in the past, and Eclipse blessed the EPL (Eclipse
+    Public License v1.0) as the successor to CPL. Because the CPL
+    contains a clause allowing transparent upgrades to future blessed
+    successor licenses, we can make the move to EPL without
+    re-contacting past contributors.
+    
+    The change in going from CPL to EPL largely just removes some
+    punitive language that apparently made many companies nervous. All
+    other language in the license remains identical.
+    
+    Several documents about Eclipse's move from CPL to EPL are here:
+    
+    http://www.eclipse.org/legal/cpl2epl/
+    
+    Note that Eclipse's move came before the blessing of EPL as the
+    upgrade path for CPL, so they had to do a bit more legal juggling.
+    With Eclipse now the administrator of CPL and with their blessing
+    of EPL as the upgrade path for CPL, all we need to do is make the
+    move.
+
+commit b03d0bc89aefca13deaff7a568e5d9118a9ca2a8
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Sep 17 01:42:22 2012 -0700
+
+    Performance improvements for defined? logic.
+    
+    * Return a cached, frozen string rather than recreating each time.
+    * Cache variable accessors for ivar defined? checks.
+
+commit b8181cda909f6e42d7c0b7fffaabbe2a502f273b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jul 27 02:19:54 2012 -0500
+
+    Inline all calls to ThreadContext.getRuntime to access the field.
+
+commit 1d06ff5a2fe82955a0e80928ddafb7f9985a7d72
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon May 16 00:26:48 2011 -0500
+
+    Improve perf of defined? by avoiding the constant encoding of Java String + ByteList construction + Ruby String.
+
+commit c178e578d075fbfbd32456d92330d4e694f1455e
+Author: David Calavera <david.calavera@gmail.com>
+Date:   Mon Jul 5 19:57:32 2010 +0200
+
+    [1.9] fix the defined? keyword for variables returns local-variable when called with the name of a block local
+
+commit 38539306c47caec741243f5e15be0e345757f069
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Dec 28 01:52:13 2008 +0000
+
+    Bombs away! Eliinate nodeId field from Node and add a method to all nodes of interest to return the value instead. Probably a little slower, but we're moving away from using NodeType on critical path code and the memory savings are pretty substantial (4-8 bytes per node).
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8485 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 24befe5cf0587885f08f7dc82217f141cc500550
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Dec 18 06:51:54 2008 +0000
+
+    House cleaning! Delete a bunch of unused and/or deprecated classes of strange and wonderful origins, eliminate all deprecated Callback-related code, reduce environment lookup to a simple System.getenv call, kill off the last of the old stackless interpreter's "Instruction" interface, and other miscellaneous cleanup.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8395 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 064eb7f1c5889a52e2949d53d9849ba0652ad00e
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Thu Jul 3 16:46:24 2008 +0000
+
+    [interp] Move Definition logic into node
+    [interp] Make CallNode do one less searchMethod per definition
+    [interp] Use specialized getEnclosingModule (bi-morphic between colon2 and colon3)
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7096 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit dbcdcdbac451af5838c377b299289b2a7b94d9e2
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Thu Jun 12 21:28:49 2008 +0000
+
+    Tom Bomb! New Interpreter landing
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6946 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 16e5550655d971eca1eeea0a2fe8794b86928b97
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Thu Oct 25 18:14:24 2007 +0000
+
+    Lexer jumbo patch.  Speeds up general parsing 10-15%.  Cold parses are about 30% faster.   Code has been refactored to the point that additional optimizations can be considered (like bytelist identifiers for alloc-less identifiers; same for uninterpolated string nodes).
+    
+    intern'ing of identifiers now happen in lexer rather than being smattered through AST
+    Reader -> InputStream for LexerSource
+    A new ByteList LexerSource for evals
+    
+    Additional bugs fixed:
+    JRUBY-1408: JRuby crashes with error: can't find string "EOF" anywhere before EOF (SyntaxError)
+    JRUBY-1443: Wrong position information for a CallNode with parentheses
+    JRUBY-1435: YieldNodes sometimes have wrong position information
+    JRUBY-1416: eval of a "proc" with setting the line number for something lower than 1 to adjust the line number causes "java.lang.ArrayIndexOutOfBoundsException: -1 (NativeException)"
+    JRUBY-1432: NFE from RubyYaccLexer.yylex
+    
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4731 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 47f0d75fbf8f6519ed3527d077e724f0b9264552
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Wed Aug 29 21:20:40 2007 +0000
+
+    NodeTypes now and enum called NodeType
+    Various warning removal
+    Minor Block refactoring
+    More boilerplate fixing
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4233 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit df1ae61d89ae343bb981d2727d29b7379371a310
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Tue Aug 28 20:43:52 2007 +0000
+
+    A couple more callAdapter additions to nodes that can support them
+    Remove annoying generics warnings that IDEs like to give for un typed collections
+    Change boilerplate in ast so that netbeans can have them closed by default (and javadocs will not contain them)
+    Remove last vestiges of serialization from AST
+    MethodIndex moved into DefaultAdapter
+    Smaller smattering and things I cannot remember
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4214 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 19129d0d0d6db68a9994ff1fae95ea3df4499bcd
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Mon Jul 16 19:37:06 2007 +0000
+
+    JRUBY-1205: String as condition of if be parsed as MatchNode
+    
+    Remove serializable from asts since we no long serialize them
+    Remove some unused imports
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4034 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 4a2ee1190e77df99271070fa05f41e7d2f90af64
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Thu Feb 1 21:08:05 2007 +0000
+
+    JRUBY-466: Additional position fixes and rewriting utilities for AST
+    JRUBY-145: Adding Comments to the AST
+    
+    Remove getIter from various call nodes
+    Added more INameNodes to things with getName
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2901 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 174e3d01468001668ab299227d4af11aea65341c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Nov 14 03:09:59 2006 +0000
+
+    damn the torpedos! full speed ahead! landing enebo_lexical branch changes plus TC-passing optimizations and a few small compiler updates
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2423 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 6e15491217631472c05c6928672f9c7064a978b3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Oct 9 22:13:11 2006 +0000
+
+    merging new interpreter plus a few minor fixes to trunk. JRUBY-185
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2319 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 9491cdd987a6ef845265b8a8bf1cbf5a1f25c67e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri May 26 00:44:01 2006 +0000
+
+    merging to head:
+    - interned strings optimization
+    - irb scoping fix + test
+    - EvalState reorganization
+    - ThreadContext block stack refactoring
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2040 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit b1293eda8454686e846e2a9837b348e2983bb423
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Wed Dec 21 14:30:32 2005 +0000
+
+    Positioning fixes
+    JRuby library added
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1845 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit ddd084d66677f4d56386f5657874c3efc265d68b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Nov 4 01:34:25 2005 +0000
+
+    merging refactor/rename changes for machine/instruction stuff
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1822 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 41adc9d73b44b14dd25593e772188d405ec00f2f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Oct 26 05:34:12 2005 +0000
+
+    removing revision keywords
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1810 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit f5643d27aa7a2dd836ef19c758a0a13351434da4
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Oct 21 01:04:27 2005 +0000
+
+    merging cnutter_work2 to HEAD...damn the torpedos! full speed ahead!
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1807 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit ed6bb95c6265be4d7b596b5c8ee1d8c7bdb9bf0e
+Author: David Corbin <dcorbin@users.sourceforge.net>
+Date:   Sun Oct 2 17:19:14 2005 +0000
+
+    Enabled project-specific compiler error/warnings and set IGNORE for discouraged access on three projects.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1783 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 3437afe431124a2f60cf7e37c579b0c60ed0bf95
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Fri Sep 30 17:39:23 2005 +0000
+
+    Merge of TOM_RDT_POSITION branch
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1780 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 7a83c48af56081c1c2132111d535f28d10cf3afb
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Fri Dec 31 20:55:52 2004 +0000
+
+    Update license to GPL/LGPL/CPL
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1574 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 035c46fd66ac254cb294f8151bb458a672b46112
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sat Oct 30 22:27:08 2004 +0000
+
+    Remove unlikely to be used soon abstractions and simplify lexing
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1373 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit ab0c0820889f955f3de4c8df77ebda2a4177416d
+Author: Jan Arne Petersen <jpetersen@uni-bonn.de>
+Date:   Sat Oct 26 17:07:53 2002 +0000
+
+    - Add Serial UID to nodes
+    - Lexer refactorizations
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1034 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit c243f407b5038301528f9d7f750efcb2951e1440
+Author: Anders Bengtsson <ndrsbngtssn@yahoo.se>
+Date:   Wed Oct 23 16:28:28 2002 +0000
+
+    Converted some more Nodes into value objects.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1013 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit c77b91f42c4f3810140d44cbe603248a1d52b7ee
+Author: Jan Arne Petersen <jpetersen@uni-bonn.de>
+Date:   Tue Sep 10 15:18:12 2002 +0000
+
+    - restructure of the code tree.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@782 961051c9-f516-0410-bf72-c9f7e237a7b7

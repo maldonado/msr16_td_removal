@@ -1,0 +1,1478 @@
+commit bed22b00f729da46ea6ed768d5f30014d919bcc6
+Author: Jan Materne <jhm@apache.org>
+Date:   Thu Apr 10 10:24:18 2014 +0000
+
+    JavaDoc fixes (for Java8 doclint) - first bunch
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1586262 13f79535-47bb-0310-9956-ffa450edef68
+
+commit bea36bbd2b7a2417e4753b7d6760f586e50590cc
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Mar 4 10:05:43 2014 +0000
+
+    don't assume File#isDirectory == !File#isFile - i.e. explicitly test
+    and drop objects that are neither files nor directories.  PR 56149
+    
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1573999 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 5fc48a4bf92cd63ce993a0bef6738a5ac9d17f96
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Feb 28 16:14:30 2014 +0000
+
+    assorted spelling fixes by Lajos Veres - closes #4
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1572981 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e46fd219c35e1230ed996ade7466b9bc10cea069
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Sun Jan 5 12:54:29 2014 +0000
+
+    removeNotFollowedSymlinks='true' might be deleting too eagerly.  PR 53959
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1555490 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3d706ab8188a674936880b6f4530b0cf3991758b
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Mon Aug 20 17:49:13 2012 +0000
+
+    java 5 updates
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1375137 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 40a73d22b7ccb7255f74253fedd0545889bcb39d
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Sat Jan 21 07:06:20 2012 +0000
+
+    whitespace
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1234277 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 379895a0223302a557295f9c61e7de414104cab5
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Sat Jan 21 07:05:15 2012 +0000
+
+    synchronize access to default excludes.  PR 52188.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1234276 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a28f64f5cf1b63d9342683d77d79a5cdf9e67f85
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Nov 22 12:27:03 2010 +0000
+
+    fix a bunch of warnings you get when building on Harmony which uses Eclipse's compiler.  There are still lots (more than 100) of deprecation warnings and warnings about missing serialversionids that I have ignored.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1037691 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d85d2da8e3133b29b116326c20815d3879ce801b
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Nov 19 15:47:48 2010 +0000
+
+    restrict impact of fix for PR 50295 on 'good' VMs to an additional syscall for empty directories rather than an additional call for every directory
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1036906 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 17d4b3461a58e4dcf0615db3516222f281e935c0
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Nov 19 15:44:38 2010 +0000
+
+    Make DirectoryScanner work on buggy JVMs where File.list() returns an empty array rather than null for files.  PR 50295.  Submitted by Daniel Smith
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1036905 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 43de42a38ffaf685b29e9af7433f59ab7fba7265
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Aug 5 04:55:55 2010 +0000
+
+    add Git, Mercurial and Bazaar files/dirs to defaultexcludes.  Submitted by Ville Skyttä.  PR 49624
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@982469 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6a87b53fcb4f250a076f1447e45a173eb546c31c
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Jun 10 11:30:57 2010 +0000
+
+    don't scan directories that are excluded recursively - this used to be done everywhere except for the (most common) case where the directory itself was not explicitly included.  PR 49420
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@953281 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e052e5e8dc93ef6137e6610428504da26d7558db
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Jun 9 15:44:46 2010 +0000
+
+    some JUnit tests to verify/falsify http://mail-archives.apache.org/mod_mbox/ant-user/201006.mbox/%3C28829117.post@talk.nabble.com%3E
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@953046 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 66b7fa5b879b9765410ad127ec9893cdcdb6a56a
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Dec 19 10:18:16 2008 +0000
+
+    slow-scan was broken for recursive exclude patterns since contentsExcluded was added about four years ago
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@727993 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b1cc0a4edb49ab8e1155a6a9394a980a0196f454
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Dec 18 15:15:13 2008 +0000
+
+    slowscan has been broken, no idea since when.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@727739 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 5f7fbe8b732d8ad675be2e58acf2fde106b484b5
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Nov 13 03:50:53 2008 +0000
+
+    keep track of links that haven't been followed
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@713626 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 9f30d0550989766a9ad2032363a5dfdb49ee6932
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Oct 7 05:35:58 2008 +0000
+
+    factor out symlink methods into a separate utils class
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@702350 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 2e5eacfa9c69935c5f51112f679c3b500015f105
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Sep 22 07:57:04 2008 +0000
+
+    increase default for numer of times a symlink may be traversed
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@697692 13f79535-47bb-0310-9956-ffa450edef68
+
+commit be09d4522b2728d1a2a32286bee75a14b2952fc5
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Sep 19 12:48:58 2008 +0000
+
+    no need to clone a linked list to iterate through it
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@697073 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 9b76a8661bc018586fdbae7e359cee2e6cc2f4e3
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Sep 19 10:17:12 2008 +0000
+
+    remove memoization which measurably (sp?) hurts performance more than it helps
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@697032 13f79535-47bb-0310-9956-ffa450edef68
+
+commit acb91faca4f393c2298e4e82505791453df35a75
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Sep 18 15:28:08 2008 +0000
+
+    replace protected Vectors with a Vector subclass that has constant time access for contains
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@696674 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 4ecea70e9b75546d922e43fde8f61550094119ee
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Sep 17 16:12:53 2008 +0000
+
+    Bring back memoization of File.list
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@696355 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8b58203e3120ecbeb7c53ce127fb41316f7eea92
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Sep 17 15:45:13 2008 +0000
+
+    avoid redundant tokenization of non-wildcard include patterns as well.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@696345 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 2c4faa154f069f3f69d6c3c95629409a7b8b0cc4
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Sep 17 15:11:28 2008 +0000
+
+    avoid redundant tokenization. this is almost complete except for non-wildcard include patterns, will take care of them next.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@696336 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 2b925503d71972d8b782eedd6cdf75711377d7b0
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Sep 17 13:52:40 2008 +0000
+
+    avoid some tokenization (should really pay of in the next iteration/s) and replace recursion with iteration in findFile/isSymLink - right now we lose memoization of File.list but I'll reintroduce this later.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@696298 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 5d1320e99cabb7dad880799accea519ce575d492
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Sep 17 04:27:09 2008 +0000
+
+    split PathPattern into two classes, more behavior will be added later
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@696146 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a98a49253bd792fec570f11f310d61dc9370f67a
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Sep 17 04:02:33 2008 +0000
+
+    minor performace tweaks
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@696144 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c13dba6d524fe74b1518e3442429ba6e97592edd
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Sep 15 09:54:06 2008 +0000
+
+    Avoid repeated tokenization, make DefaultExcludesTest happy.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@695402 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e362b3b1fc28b4d9b2965708b5d5e457f21b0c9f
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Sep 15 09:12:40 2008 +0000
+
+    tiny optimization
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@695389 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 917f222eec3ce8f21d7f56843cf26164fda92e35
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Sep 15 08:30:43 2008 +0000
+
+    whitespace
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@695380 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 4c6cba963c27dec6f39e46f26043ad8d528bbc84
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Sep 15 08:28:44 2008 +0000
+
+    extract constant
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@695379 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 7830ff460def6c04a974b31ea5ffc1e422b54165
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Sep 15 08:03:31 2008 +0000
+
+    some more memoization.  try to ballance memory vs i/o costs.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@695371 13f79535-47bb-0310-9956-ffa450edef68
+
+commit cd517c28816d6aeb32efbd15e8442d5145b1ca30
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Sep 11 13:59:41 2008 +0000
+
+    fix tests broken by changed exception message of svn revision 685593
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@694254 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1d3ca73f3c02e7a06c94f677057b04c3c238027e
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Sep 10 15:41:49 2008 +0000
+
+    don't run into infinite lopps caused by symbolic links.  PR 45499.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@693870 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 4464369821e5824727322622259f6ffd3ab8880b
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Sep 10 14:01:29 2008 +0000
+
+    honor followsymlinks on a fileset's dir as well.  PR 45741.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@693846 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 4248bab8eaef8265c62fc3a612bfee1943086133
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Sep 10 11:18:57 2008 +0000
+
+    make sure the 'correct' error is reported if the directory doesn't exist.  Sync error messages of DirectoryScanner and AbstractFileSet.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@693791 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a87871c71ec228fd64a84d8656f854ba206eb0f3
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Sep 10 11:04:50 2008 +0000
+
+    some style changes, doc fixes (non-wildcard patterns are store upper-case), some minor optimizations and some additional memoization of File.list() that may actually improve performance
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@693785 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1f06891d003a6f39cd3b456c797bb8ed5a1708ac
+Author: Scokart Gilles <gscokart@apache.org>
+Date:   Thu Aug 21 14:18:59 2008 +0000
+
+    Enhance performance of DirectoryScanner by parsing the patterns only once.  Introduce a PathPattern to do that. (# 44226)
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@687768 13f79535-47bb-0310-9956-ffa450edef68
+
+commit cafa34ca0878175f8c8ab1bf7fcfaba70c2b1368
+Author: Jesse N. Glick <jglick@apache.org>
+Date:   Wed Oct 3 23:44:10 2007 +0000
+
+    Various microoptimizations to reduce I/O load of common tasks, esp. no-op <javac> and <depend>.
+    Many inner loops altered to make just 1-2 system calls rather than 4-5.
+    You can easily see how wasteful the previous code was, and find the culprits,
+    by patching r/o java.io.File methods and adding to -Xbootclasspath/p (or use AspectJ). E.g.:
+    
+    public boolean isDirectory() {
+      System.err.println("isDirectory: " + this); if (Math.random() < .01) Thread.dumpStack();
+      // as before...
+    }
+    
+    Ant still makes an order of magnitude more system calls to do what seem like simple operations
+    than you would think necessary, but this patch should at least improve the situation.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@581748 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 51a68c6eceab2fdc841ca2694f7103d44988f12a
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Wed Aug 22 12:43:51 2007 +0000
+
+    trailing spaces
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@568592 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b0bdced687d02b5b68c19b2c7bf9bccb2724b802
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Wed Aug 22 08:16:49 2007 +0000
+
+    Bugzilla 11270: add errorOnMissingDir attribute to fileset
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@568495 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f0e86c70ce9b1818814e6ba38afaf7477c913f8e
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Sun Nov 5 23:03:47 2006 +0000
+
+    checkstyle
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@471562 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 90e46ca4cd336158e0b702bf3b8f0d43b429d7a2
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Sat Nov 4 22:50:20 2006 +0000
+
+    checkstyle
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@471289 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 0aa2b2528ff92c3786e50f82ea65acf4d134c260
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Wed Nov 1 00:13:43 2006 +0000
+
+    some checkstyle changes
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@469717 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ed45d2f66a2b566ce5be500c39eb8bdbe171ea1c
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Wed Sep 13 00:37:27 2006 +0000
+
+    remove needless synchronization in DirectoryScanner.
+    Bugzilla Report 40237.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@442772 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 2e897819a83981a1f4de2e1cc72e33f080fcf573
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Sep 1 18:49:27 2006 +0000
+
+    copy2license.pl
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@439418 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 21a1b3cfb48abc9e87a97e1bdab451abe49b44eb
+Author: Kevin Jackson <kevj@apache.org>
+Date:   Fri Aug 25 09:01:20 2006 +0000
+
+    refactoring DirectoryScanner to reduce duplicated code, tests all pass
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@436724 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 7eb22e8cdc4c161dcf8e89d40a8e072930db5d8f
+Author: Jacobus Martinus Kruithof <jkf@apache.org>
+Date:   Fri Apr 21 21:47:06 2006 +0000
+
+    indicated when methods/classes became deprecated, as to give us the possibility to remove deprecated methods in the future.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@396012 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 9fcc3d5b907d83496ed9f0870264b799a4c477c2
+Author: Steve Loughran <stevel@apache.org>
+Date:   Mon Mar 6 14:58:27 2006 +0000
+
+    accidental plural
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@383553 13f79535-47bb-0310-9956-ffa450edef68
+
+commit eeadc37622ec720f8de44e6dcbb25877f2d5b222
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Jan 16 19:52:05 2006 +0000
+
+    2006
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@369554 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 81543c58c33e4f2f3176e06c6a339191c4413ab8
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Mon Jan 16 17:59:54 2006 +0000
+
+    quote IO error scanning directory...
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@369536 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 5dfc9fa6524211f32349464146215cc6451d415a
+Author: Jesse N. Glick <jglick@apache.org>
+Date:   Wed Dec 28 00:06:00 2005 +0000
+
+    More helpful error message.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@359327 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e84f6000f4fe0a42dae2cd2f8baaca89a5b2195f
+Author: Jacobus Martinus Kruithof <jkf@apache.org>
+Date:   Thu Sep 22 20:00:30 2005 +0000
+
+    whitespace only
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@291011 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 5e6d301d89af8a610fb7f863287865aacecbc37e
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Fri Aug 5 22:39:25 2005 +0000
+
+    minus one LOC
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@278502 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b92e6b644f97b87083602a8ce4029cce01725674
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Mon May 23 19:31:14 2005 +0000
+
+    allow absolute include paths & no basedir for Directory scanning
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@278334 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8522387c40027238decd43f7e5028cca491bf26c
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue May 10 07:37:04 2005 +0000
+
+    fix NPE reported by Curt Arnold
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@278239 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 2fbb2e62ab0d3d323a75c6baf00a2e675c7fd6f5
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Tue May 3 14:59:44 2005 +0000
+
+    Not 100% sure this fixes the entire bug, but it eliminates NPEs for me.
+    PR: 34722
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@278219 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6f61399b0178a57438fcf58745faa7bdf97389c1
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Mar 17 14:23:58 2005 +0000
+
+    DirectoryScanner improvements have been merged
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@278013 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 650c0ab0b12375ac528646794c33c9887ea539ff
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Mon Mar 7 17:27:50 2005 +0000
+
+    Stop being so optimistic; move isDeeper() to 1.7
+    Add @return to contentsExcluded javadoc
+    Remove unnecessary File.separator from endsWith comparison in contentsExcluded
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277817 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 7ad3a991697060d112bd74851c0b6fab7f98202c
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Mon Mar 7 17:16:33 2005 +0000
+
+    static final variables:
+        csScanOnly -> CS_SCAN_ONLY, csThenNonCs -> CS_THEN_NON_CS
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277816 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a62c18b46505e8c47c8fd837b75fd6cc9672b77a
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Mon Mar 7 17:13:05 2005 +0000
+
+    Reuse boolean[] instances for case-sensitivity iterations when scanning;
+    reverse logic for better clarity of intent with these arrays.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277815 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 9b1699347cf0932238521bd920743322408a20fd
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Mon Mar 7 17:02:46 2005 +0000
+
+    Move DirectoryScanner.getScannedDirs() to package-private access;
+    add DirectoryScannerTest to tests.and.ant.share.classloader tests.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277814 13f79535-47bb-0310-9956-ffa450edef68
+
+commit dd7d6b246e7e90f86c2ee86875b866eb228b12eb
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Fri Mar 4 23:41:21 2005 +0000
+
+    By popular demand:  Do not scan directories if their contents are excluded.
+    Changed scannedDirs from a cache to a result and added a gettor method
+    with a warning in the Javadoc that it was a testing method only.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277795 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 0777fa853af3a619d777adaead96e9c0d1aff291
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Thu Mar 3 20:42:43 2005 +0000
+
+    Eliminate possible NPE; note that previous change
+    addressed bug 33118 at least partially.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277786 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 7411f2b4a4b6db8682244d84879344a3045347f8
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Wed Mar 2 22:43:54 2005 +0000
+
+    Stop scanning directories where we match the directory but know based
+    on the pattern that we will never match any of its contents.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277767 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 4585920f3518539481977f5fbbf01c2f52232823
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Fri Feb 11 22:49:56 2005 +0000
+
+    Unfinished caching of IllegalStateExceptions for concurrent scan() invocations.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277651 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 162eda4e6cc68b447d9388a62ccce63521a69c3a
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Fri Feb 11 22:41:40 2005 +0000
+
+    Splitting hairs
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277650 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 4ee5a49d4f4edb933e78de0f684594859ecf53ba
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Fri Feb 11 22:39:56 2005 +0000
+
+    Beautify imports.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277649 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 65802780b638e786a26841d5c3e2cba710d7b716
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Fri Feb 11 22:37:04 2005 +0000
+
+    Merged duplicate code from private methods.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277648 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 4c89cabbb86008692979a5573d3c5fa49c2dc6d7
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Fri Feb 11 20:53:47 2005 +0000
+
+    More javadoc
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277647 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 4004834c04e0eec8f0f698435b0c5983751fb593
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Fri Feb 11 20:27:38 2005 +0000
+
+    LOC
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277646 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6c7f485943c930bf2de75288e47c4bf27c63b50a
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Thu Feb 10 23:51:59 2005 +0000
+
+    Synchronize scanning so that a scan initiated before the end of another scan
+    will block and the two will share results.  Likewise for slow scans.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277633 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8b162d567dc13b9ae576422744854684a6c3ceb1
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Thu Feb 10 23:20:06 2005 +0000
+
+    More javadoc
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277632 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ce84792f2d526fa1e772585f4b5fdfbb35ca8684
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Mon Feb 7 23:18:03 2005 +0000
+
+    Javadoc
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277612 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 25ba6c109278b97ea72c69fe2c83f425265d3dd7
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Fri Feb 4 23:47:09 2005 +0000
+
+    Move instance variables
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277607 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 4122b8a95fe61f58e29b2ddcf1c8ee39ccd0a4f6
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Fri Jan 21 22:15:46 2005 +0000
+
+    Add size to Resource info; switch length task to use Resources
+    instead of files so that it can report lengths for zipfilesets.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277427 13f79535-47bb-0310-9956-ffa450edef68
+
+commit cdd2ba5de98290f5b17ef8de511d1f09f54dd090
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Thu Jan 20 14:35:15 2005 +0000
+
+    trailing whitespace + multi setting
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277395 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 28d39b09a766fbb0dd3ca9b65ac06edf89075e8e
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Jan 20 13:50:57 2005 +0000
+
+    Allow <sync> to keep files in target even if they are not in any source directories, PR 21832
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277393 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 25ae6c22121ab8c68c15f6783da60d93e8663058
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Fri Jan 7 17:14:42 2005 +0000
+
+    Various inconsequentials
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277317 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 257dadeaf0fb8588b80fa71b24ee3aca38ea19b7
+Author: Jacobus Martinus Kruithof <jkf@apache.org>
+Date:   Thu Jan 6 12:05:10 2005 +0000
+
+    Make use of FileUtils in a uniform way via the getFileUtils method and a static final reference in the using files.
+    Also removed unused/* imports along the way.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277295 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e8e8e10d10004b8f369fa7c52ec4755b8afacd6f
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Dec 3 08:04:43 2004 +0000
+
+    Try to speed up DirectoryScanner by using hash lookups instead of
+    linear searches and pattern matching on non-wildcard patterns.
+    
+    Suggested by: Dominique Devienne
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277116 13f79535-47bb-0310-9956-ffa450edef68
+
+commit db48fbb829447064857a6b918e78cdab0b0c89b1
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Nov 22 09:23:37 2004 +0000
+
+    Various checkstyle violations
+    
+    Submitted by:	Larry Shatzer
+    
+    And some
+    
+    (untabify (point-min) (point-max))
+    
+    on some files.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277063 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 0e2cfd51d2dd546c3304993c1e39dde7081c6f8a
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Mon Aug 16 21:56:24 2004 +0000
+
+    <apply> differentiating between empty and up to date broke <classfileset>s.
+    PR: 30567
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276783 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 9cc95d1554ec7aaf066e6c643112d3f53613ae74
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu May 13 07:06:49 2004 +0000
+
+    cosmetics
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276452 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 72621f72077df4b67c31e5b6cae759a8e49c2fed
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Mon Mar 15 17:33:09 2004 +0000
+
+    stylecheck
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276239 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c885f568369156a62e3ccb5b4b93b73b9d054443
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Tue Mar 9 16:49:09 2004 +0000
+
+    remove authors from files
+    PR: 27177
+    Obtained from: J.M. (Martijn) Kruithof
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276208 13f79535-47bb-0310-9956-ffa450edef68
+
+commit cc9f4f71f5fecb225b79e689e8aa6780ba78727f
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Feb 11 15:59:50 2004 +0000
+
+    Be a little more defensive in a protected method of a non-final public class, PR 26737
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276074 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 278781dcd669412e5e35cc95d8a96e0b2a278f50
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Mon Feb 9 21:05:47 2004 +0000
+
+    Copyright owner is The Apache Software Foundation
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276065 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 66555ca10d24bbfc55e710b9d65f809cfe713dab
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Wed Feb 4 20:38:09 2004 +0000
+
+    Remove trailing spaces in all java files
+    in order to make checkstyle happy
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276017 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ca1513552f7af7fc19de490fbe2d88adb6c993ad
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Tue Feb 3 22:44:50 2004 +0000
+
+    Switch to Apache Software License 2.0
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276010 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 655ad8f525f6d55fe32cbecdd3ef437b0f5d5fa5
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Sep 25 12:36:19 2003 +0000
+
+    improved OpenVMS support, submitted by Knut Wannheden <knut dot wannheden at paranor dot ch>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@275346 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8268a3c4e43813becf50d3d892b077d96f519746
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Sat Sep 13 12:58:33 2003 +0000
+
+    Spelling
+    Submitted by: Larry Shatzer (Larry dot Shatzer At Spirent Dot Com)
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@275235 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 9a7f8d24f541c554cedaf2d7c947cdb2828b6609
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Thu Aug 21 16:56:12 2003 +0000
+
+    Optimize scanning in FTP.FTPDirectoryScanner, using similar algorithms
+    to the ones introduced in DirectoryScanner.
+    There is a gain when
+    - the include patterns look like some/very/long/path
+    - the remote file system is case sensitive
+    - the casesensitive and followsymlinks options of the fileset are set
+    to true (the default)
+    PR: 20103
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@275120 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e9d8b2247fa54e4c33027f1140a7a3c3ff046cac
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Tue Aug 5 22:23:57 2003 +0000
+
+    Make the FTP.FTPDirectoryScanner behave like the DirectoryScanner
+    in terms of following symbolic links which are directories.
+    This will make a change of behavior in comparison with ant 1.5.3
+    where the behavior of the ftp task was to never follow symbolic links.
+    
+    Also select symbolic links which are files
+    PR: 14063
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@275028 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8b8cea1e308142afdc5e18146f768cb01a2a21d6
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Tue Jul 29 19:47:16 2003 +0000
+
+    the method isMorePowerfulThanExcludes was returning false on org/apache/tools/ant/taskdefs
+    in the run-tests target of our buildfile because of the exclude pattern :
+              <exclude name="${ant.package}/taskdefs/TaskdefTest*Task.java"/>
+    :-(
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274984 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6ff7df9601e3246d21dbad80778c0f72b1a8bd5c
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Tue Jul 29 10:49:11 2003 +0000
+
+    do not scan needlessly excluded directories
+    PR: 21941
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274979 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 69d9682d5d5a7e740ad083739d6e8f374ffc7cee
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Jul 29 09:10:07 2003 +0000
+
+    Some tasks rely on the DFS ordering getIncludedXYZ used to provide
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274976 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 5a2fc04fee94a9c05081780a146ea421d2427455
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Fri Jul 25 18:44:39 2003 +0000
+
+    checkstyle
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274954 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3c596d4f5f332fd7be500c69330db0abd535c013
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Jul 23 08:09:01 2003 +0000
+
+    Whitespace changes
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274901 13f79535-47bb-0310-9956-ffa450edef68
+
+commit add4e21158c168585174c03b3f10dc9bf58ad63a
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Jul 23 08:07:33 2003 +0000
+
+    One more tweak
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274900 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 7f01b5d12108c35313f1ba97391944ba751e935b
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Jul 23 07:57:07 2003 +0000
+
+    Now that we avoid double scanning in scanDir, we don't need to perform parent-tests on the patterns anymore
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274899 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 9e89cec932a798d958cf6bb310936d9a00c09a9d
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Jul 23 07:50:25 2003 +0000
+
+    Avoid double scanning of directories
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274898 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1ac116d8156df659dbbbc55370dac193bdff2ee2
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Jul 23 07:28:01 2003 +0000
+
+    whitespace changes
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274896 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 4000ee7ee6c2cbd5b6305f382b17d3b47423cdae
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Jul 23 07:25:59 2003 +0000
+
+    fix new DirectoryScanner tests, still needs to be improved to avoid double-scanning
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274895 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1eafac93d30650b0fccee220aa4ec6e73af1355c
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Jul 23 06:59:47 2003 +0000
+
+    fix behavior on case insensitive file systems
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274892 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 5ac6359a7a3e0b7e8600480c060f60e457a183ff
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Mon Jul 21 10:52:20 2003 +0000
+
+    Add a method in DirectoryScanner to reset the default exclude patterns
+    Add corresponding functionality in <defaultexcludes>
+    Update tests
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274877 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8585763d2022bbdda30bb6a7e2d523fbea25542a
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Sat Jul 19 17:08:06 2003 +0000
+
+    Fix a problem introduced in the recent optimization of DirectoryScanner :
+    under Windows, the case of the includedFiles and of the includedDirectories
+    was influenced by the case used in the include patterns of the fileset.
+    This change fixes it.
+    I am using File.getCanonicalFile() because it is the only way I know to get
+    the real case of a file under Windows.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274865 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1f71acf427e164e75bc4f90b1ddaecd51998709b
+Author: Conor MacNeill <conor@apache.org>
+Date:   Fri Jul 18 12:45:58 2003 +0000
+
+    Coding conventions
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274856 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 729aa048f35944987ac79cf8b05b05a2be3f9cb1
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Jul 16 13:56:55 2003 +0000
+
+    Fix symlink check
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274833 13f79535-47bb-0310-9956-ffa450edef68
+
+commit dec8af009abc97d5488fab3ff35eec7fb5dbed83
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Jul 16 11:47:52 2003 +0000
+
+    Fix case-insensitive DirectiryScanner - I hope
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274831 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 57f5357a1ca7f0208c1e7a2ee791e837935d6645
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Tue Jul 15 23:19:15 2003 +0000
+
+    Fix the following (remark of Stefan Bodewig on July 15th 2003 on the dev list)
+    * You go a long way to avoid redundantly adding patterns in
+    DirectoryScanner#checkIncludePatterns (the parent check).  If the
+    patterns come in reversed, you'll still have duplicate roots, no?  Say
+    a/b/c is added before a/b is.  You may avoid this by sorting the
+    include patterns first.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274826 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 9e66320fa042c82cebde8ed6d9c3a16b23dabfa9
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Jul 15 14:18:07 2003 +0000
+
+    Only whitespace changes
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274823 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 787728897a6052af385456788bc4e578ba170ba5
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Mon Jul 14 20:21:11 2003 +0000
+
+    Optimize DirectoryScanner to take advantage of include patterns which are
+    not beginning with wildcards
+    PR: 20103
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274819 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e580392c2d28c2a3530ebe0e1005bae0d45c5b8b
+Author: Conor MacNeill <conor@apache.org>
+Date:   Sun Jul 6 09:57:37 2003 +0000
+
+    More cleanup
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274776 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 7f40e9c5ce2ee7dff5857c649ba487b7a7f87c21
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri May 9 12:44:52 2003 +0000
+
+    retain old array for backwards compatibility.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274555 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f1bc629e34874c4d641b159e31a55ed2cab6ca20
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri May 9 12:10:36 2003 +0000
+
+    A new task that allows users to modify the list of default excludes.
+    
+    PR: 12700
+    Submitted by:	Gus Heck <gus dot heck at olin dot edu>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274554 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 710b0e612e0d93fe9c490a4ae9b274bc51f789e0
+Author: Conor MacNeill <conor@apache.org>
+Date:   Mon Apr 14 14:47:42 2003 +0000
+
+    More cleanup
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274444 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 91a07a1f685acd64f79347288b50584e4df34c3e
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Feb 12 09:05:04 2003 +0000
+
+    Remove the (at least for now) superfluous ResourceScanner interface.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274060 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1dc8a079057e191ca4c158f36843c2c9e9f9be52
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Feb 10 14:15:00 2003 +0000
+
+    Remove Jakarta Project from license
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274040 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 07b710cc96c363b69d4e7225c96ffc0296354597
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Feb 5 10:43:08 2003 +0000
+
+    Refactor <zip> and friends.
+    
+    PR: 10755
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273986 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b15a6630f09a8298ef1010f4cda34f5791dc40e0
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Jan 22 13:27:13 2003 +0000
+
+    Give proper credit
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273851 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a9353331a922b229316fa3da01f1b2df9fd75059
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Jan 22 12:36:41 2003 +0000
+
+    Initial fix for the <jar> doesn't update bug, will need some
+    refinement (see extra mail to list).
+    
+    PR: 10755
+    Submitted by:	Antoine Levy-Lambert <levylambert at tiscali-dsl dot de>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273848 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 50c532e1a165ac6f1a951eef08eec725b1f130e9
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Jan 20 08:09:01 2003 +0000
+
+    2003
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273830 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 9b9894a1075b34d8a153cbd99c5006482447e9ca
+Author: Erik Hatcher <ehatcher@apache.org>
+Date:   Sun Jan 19 01:32:11 2003 +0000
+
+    added .DS_Store to default excludes
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273829 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3c2bbbcda3cfbe3aff8b17b766538149385ceed2
+Author: Magesh Umasankar <umagesh@apache.org>
+Date:   Wed Dec 4 16:42:34 2002 +0000
+
+    Real tired of seeing email address being abused.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273610 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 63623dae1799506b8d8223fbbb32fd5224bb7dd2
+Author: Peter Donald <donaldp@apache.org>
+Date:   Tue Oct 29 22:38:04 2002 +0000
+
+    Remove unused method
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273471 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 01d744455a8ae89ebb1bd5d5be47bc00505cb839
+Author: Bruce Atherton <bruce@apache.org>
+Date:   Tue Aug 20 21:53:13 2002 +0000
+
+    Correct javadoc strings on methods that list deselected files and
+    directories to indicate that they do in fact list files that have
+    NOT been selected.
+    
+    Submitted by: JimWright@quick.cz (Jim Wright)
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273238 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8f413c12084a80db24f4cdfd6b8f908d4e75556f
+Author: Peter Donald <donaldp@apache.org>
+Date:   Thu Jul 25 15:21:25 2002 +0000
+
+    Remove unused imports, remove glob imports, sort imports.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273169 13f79535-47bb-0310-9956-ffa450edef68
+
+commit da5a13f8e4e0e4475f942b5ae5670271b711d423
+Author: Magesh Umasankar <umagesh@apache.org>
+Date:   Tue Jul 9 21:06:15 2002 +0000
+
+    Merge differences between the ANT_15_FINAL branch and the trunk into the trunk.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273081 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ca91f8cb7e4f2bfe1a191dea6126a32649af9565
+Author: Magesh Umasankar <umagesh@apache.org>
+Date:   Sat Jun 1 12:26:43 2002 +0000
+
+    Merge changes made to 1.5 Beta1.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@272826 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f61c1bcd3a4a540bac7ae97559f37c49bfee75d8
+Author: Magesh Umasankar <umagesh@apache.org>
+Date:   Tue Apr 30 22:38:36 2002 +0000
+
+    Selectors feature to specify sophisticated selection criteria to create filesets.
+    
+    Got it in in the 11(and a half)th hour ;-)
+    
+    Submitted by: Bruce Atherton <bruce@callenish.com>
+    
+    Docs and testcases to follow in the next few days.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@272630 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 0c253dc762efa243956ee90970e13fae9aec4d2f
+Author: Conor MacNeill <conor@apache.org>
+Date:   Tue Apr 9 15:27:08 2002 +0000
+
+    Coding standard conformance
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@272320 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f458059b9c8c584be9928c3cec8e8d3d32ace46e
+Author: Jon Skeet <jskeet@apache.org>
+Date:   Wed Mar 27 09:48:20 2002 +0000
+
+    Fixed up JavaDoc comments again.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@272049 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ef3cba5a038b3d07f752b184c24f7e8f604bbda8
+Author: Erik Hatcher <ehatcher@apache.org>
+Date:   Mon Feb 18 18:27:58 2002 +0000
+
+    Applied documentation patches sent by Jon Skeet
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@271414 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 26bfd9b1ecdbacca538de9b864c585a18f67de1d
+Author: Magesh Umasankar <umagesh@apache.org>
+Date:   Sun Feb 3 01:53:34 2002 +0000
+
+    The pattern definition **/._* has been added to the default excludes list.
+    
+    PR: 5886
+    
+    Requested by: gerti-apache@bitart.com (Gerd Knops)
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@271097 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3fddc0bcfddb3f6226843481094795c89862bf5f
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Jan 10 11:21:21 2002 +0000
+
+    License police on documentation files:
+    
+    (1) Make sure all years in which a file has been modified are
+    listed.
+    
+    (2) Make sure the format is consistent, i.e. separate consecutive
+    years with a dash, not a comma.
+    
+    Also: the initial checkin into this CVS module was in 2000, not 1999.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270657 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 44bbe5b1395e8cb74fc90cfb4f688c890c941024
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Dec 6 16:29:37 2001 +0000
+
+    Speed up <move>: Try to rename the top directory if we are moving
+    complete directory trees.
+    
+    PR:
+    Submitted by:	Magesh Umasankar <umagesh@rediffmail.com>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270081 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 80d371a3b4e1ba3f845e1b9a8f831fd6a11fafd5
+Author: Magesh Umasankar <umagesh@apache.org>
+Date:   Wed Nov 21 07:31:01 2001 +0000
+
+    1. Refactored Untar to extend from Expand, as untar is very similar to unjar, unwar and unzip.
+    2. Added 2 new attributes to these tasks - outfile and verbose
+    3. Nested Patternsets can be used to specify what files are to be extracted from within the archive.
+    4. Nested Filesets can be specified to select previously archived files for unarchival (PR: 3074)
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269973 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d12e6411ccc654bc10c102c8a085b6b0e4634f8b
+Author: Stephane Bailliez <sbailliez@apache.org>
+Date:   Sun Oct 28 21:31:01 2001 +0000
+
+    Code clean up:
+     - removed useless/duplicate imports
+     - added explicit imports rather than *
+     - changed specifiers order to be conform to JLS.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269827 13f79535-47bb-0310-9956-ffa450edef68
+
+commit bec2a0777e910345fa7877d5aaa209ddde0937e3
+Author: Conor MacNeill <conor@apache.org>
+Date:   Sun Sep 30 13:21:54 2001 +0000
+
+    Merge of 1.4.1 changes into Main truck for Gump testing
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269745 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ea21f122ab7f20196ffe7e065fe5ac2b0d194df3
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Jul 12 13:02:47 2001 +0000
+
+    Add vssver.scc to default excludes
+    
+    PR: 2015
+    
+    In some cases DirectoryScanner could miss included files/directories.
+    
+    PR: 1415
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269333 13f79535-47bb-0310-9956-ffa450edef68
+
+commit cc695c5ea6f2dfd6f0e3ac79e4fab01ead988228
+Author: Conor MacNeill <conor@apache.org>
+Date:   Thu May 17 09:52:32 2001 +0000
+
+    Minor typo
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269025 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 2ef872804303b611e9a26dbcee320bfbac800c52
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu May 3 13:19:50 2001 +0000
+
+    Make DirectoryScanner's error message a bit more useful.
+    
+    PR: 1234
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269008 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3ccfe4645f3f2fef9f0e81f84ba8b768ec489662
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Mar 29 10:29:46 2001 +0000
+
+    Add pattern for CVS backup files to default excludes
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268901 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b806dbf97e1f9db565c4ec84bbe8085b819328c9
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Mar 15 08:32:12 2001 +0000
+
+    Added "" - the basedir itself - to the list of included directories,
+    if it matches.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268832 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a52b13778357bb53e049573ff67ac060bb153373
+Author: glennm <glennm@unknown>
+Date:   Sat Mar 3 22:56:11 2001 +0000
+
+    Added SCCS dirs to default excludes list.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268754 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 068f7348847e10c8deca027f67e7142c559cdfa0
+Author: Conor MacNeill <conor@apache.org>
+Date:   Fri Mar 2 16:01:13 2001 +0000
+
+    Merge after 1.3 release
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268748 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6c287080d460efa63e022407e88a04558b9fdbb6
+Author: Conor MacNeill <conor@apache.org>
+Date:   Wed Jan 3 14:18:52 2001 +0000
+
+    Make licence statements mention Ant in place of Tomcat
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268392 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 98b1db9d011adb5d99b9ab545fd83b37f8401328
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Nov 14 16:20:40 2000 +0000
+
+    Make **/CVS/** a pattern in the list of default excludes instead of
+    **/CVS/*. This is to support users using cvs edit.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268180 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 54057d742bcffec3013ff101b9f0e8db5ce65009
+Author: Conor MacNeill <conor@apache.org>
+Date:   Mon Aug 21 14:36:04 2000 +0000
+
+    Extend optional FTP task
+    Allow DirectoryScanner to work with remote directories.
+    
+    Submitted by:	Glenn McAllister <glennm@ca.ibm.com>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@267934 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e2a75898e88825b87310be19070b68f967ae000c
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Aug 10 08:49:58 2000 +0000
+
+    avoid NullPointerException in DirectoryScanner.scandir.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@267914 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 4f10a1e3b23a3eca01801f07d95b6a320e163a33
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Aug 4 10:24:30 2000 +0000
+
+    DirectoryScanner will now only scan directories which are included or
+    could hold included files. All other directories will only be scanned
+    when one of the getExcluded... or getNotIncluded... methods is called.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@267886 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 689fca41585cc1768a0501fd11c8235b6e4bc481
+Author: Conor MacNeill <conor@apache.org>
+Date:   Thu Jun 29 15:32:43 2000 +0000
+
+    Update javadoc task to support multiple link and group options.
+    
+    Submitted by:	Patrick Chanezon <chanezon@netscape.com>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@267712 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 064d126d420b174b2a1a028b094b0254bc32822f
+Author: Stefano Mazzocchi <stefano@apache.org>
+Date:   Wed Feb 9 20:52:42 2000 +0000
+
+    better abstraction on the includes/excludes
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@267596 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 23a03fcf16119310506d2e18d585cfdffb550650
+Author: Arnout J. Kuiper <arnout@apache.org>
+Date:   Sun Feb 6 16:13:55 2000 +0000
+
+    Initial checkin
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@267584 13f79535-47bb-0310-9956-ffa450edef68

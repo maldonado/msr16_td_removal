@@ -1,0 +1,176 @@
+commit 2afc643a3ea676cc68f2f010ea3a7560b7a0a3af
+Author: adammurdoch <dev-null@apache.org>
+Date:   Mon Mar 4 02:44:15 2002 +0000
+
+    * Moved FileNameMapper to framework.  Got rid of setTo() and setFrom()
+      from the interface, as these are no longer needed.
+    
+    * Changed tasks to accept a FileNameMapper directly, rather than using Mapper.
+    
+    * Removed the 'flatten' attribute from the <copy> task.
+    
+    * Removed the 'ext' attribute from the <native2ascii> task.
+    
+    * Removed Mapper and MapperType.
+    
+    * Moved <flatten> mapper to antlib.
+    
+    * Made ExtMapper available as <map-extension> and moved to antlib.
+    
+    * Added <prefix> mapper, to apply a fixed prefix to names.
+    
+    * Added <chain> mapper, to apply a chain of mappers to names.
+    
+    * Added <mapped-fileset>, a fileset that transforms nested filesets using a mapper.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@271715 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 25c4d95cd51429feee002187eba3dc0acfbb4d3e
+Author: Peter Donald <donaldp@apache.org>
+Date:   Mon Feb 18 09:08:08 2002 +0000
+
+    Start simplifying so that metrics task does not complain as much
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@271410 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d23de598f040b0dbc6d9696865d1be47e005ac5c
+Author: Peter Donald <donaldp@apache.org>
+Date:   Thu Feb 7 13:02:40 2002 +0000
+
+    Add version tags
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@271210 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8ce1de2178a0422105fa437c327b49fb5637ff28
+Author: Stephane Bailliez <sbailliez@apache.org>
+Date:   Sun Jan 20 17:35:02 2002 +0000
+
+    - Fix order of modifiers
+    - Fix duplicate/unecessary imports
+    - Fix single if/else and loop without block
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270813 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 0cd16649f22c331d20f52e6a23cc94ea2a1609f4
+Author: Peter Donald <donaldp@apache.org>
+Date:   Sat Jan 12 04:52:10 2002 +0000
+
+    Remove unused debug ClassLoader
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270676 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3ddf07367d08d15d5298b81cc83b9c82060c2d0b
+Author: Peter Donald <donaldp@apache.org>
+Date:   Sun Dec 23 06:28:04 2001 +0000
+
+    Fix up license banner.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270361 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3d047699404c1932b6190dc6318d951a497f4aa7
+Author: Peter Donald <donaldp@apache.org>
+Date:   Sat Dec 22 12:35:37 2001 +0000
+
+    Restyled.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270299 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e444e91c26da4e83d4b388fc49a8603bc8bdf231
+Author: Peter Donald <donaldp@apache.org>
+Date:   Mon Nov 19 12:37:29 2001 +0000
+
+    donaldp@apache.org --> peter@apache.org
+    
+    yea - now no one will call me Donald!!!
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269959 13f79535-47bb-0310-9956-ffa450edef68
+
+commit cc0bf7e707542ff4c331cb0988c585459e9a2a6e
+Author: Peter Donald <donaldp@apache.org>
+Date:   Tue Nov 6 08:10:00 2001 +0000
+
+    Separated myrmidon out into several jars.
+    
+    myrmidon-container.jar (all the container classes)
+    myrmidon-api.jar (the API used to write tasks and other types)
+    myrmidon-framework.jar (the framework that makes writing tasks easier)
+    myrmidon-launcher.jar (executable jar used to setup classloaders and run myrmidon)
+    
+    The ClassLoader hierarchy is now
+    
+    System CL  <---  api/framework CL <--- container
+                                      <--- type library 1
+                                      <--- type library 2
+                                      <--- type library 3
+                                      <--- type library 1
+                                      <--- type library 1
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269874 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 05f3d6bc8e3866e677d37a0a2ee7e3faa39b7e09
+Author: Peter Donald <donaldp@apache.org>
+Date:   Mon Jun 4 12:48:05 2001 +0000
+
+    update main to use new embeddor.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269101 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 414575a432489206adb9cbaf9496cc51b320239a
+Author: Peter Donald <donaldp@apache.org>
+Date:   Sun Jun 3 05:03:17 2001 +0000
+
+    Update myrmidon to remove dependencies on camelot part of Avalon (which is still alpha and not released).
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269087 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d678e492b98fc7a29ed46b3f9d8ffade75c3bb4a
+Author: Peter Donald <donaldp@apache.org>
+Date:   Thu May 31 09:25:21 2001 +0000
+
+    Simplified Classloader management.
+    
+    Assume all jar/zip files in lib path are sucked into runtime.
+    Assume that there is no difference between engine and client classes (mainly so as to make it easier to manage engine interaction via task registration et-al) without proliferating a billion jars.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269072 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 157d8f04d2c676ac93a8cda891f804bddf6f7836
+Author: Peter Donald <donaldp@apache.org>
+Date:   Tue May 29 15:24:18 2001 +0000
+
+    Update names of properties.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269069 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6f3f9cca3e46d9b295f612635ddc47d887d760ce
+Author: Peter Donald <donaldp@apache.org>
+Date:   Tue May 29 10:47:58 2001 +0000
+
+    Moved Main/Constants/AntException to new package and made AntException not a RuntimeException
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269066 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 451ca455d5963fd430ac58e449bb791138f07e1a
+Author: Peter Donald <donaldp@apache.org>
+Date:   Mon May 28 10:27:59 2001 +0000
+
+    Update Launcher package and update ProjectListener* to reflect
+    * No project name
+    * tasklet->task
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269051 13f79535-47bb-0310-9956-ffa450edef68

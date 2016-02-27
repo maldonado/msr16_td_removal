@@ -1,0 +1,53 @@
+commit c30264c6dfdd1046e44b1e6e0f0b0b1b392e8b0b
+Author: Genadi Samokovarov <gsamokovarov@gmail.com>
+Date:   Fri May 29 11:41:29 2015 +0300
+
+    Don't warn on private attribute accessors to match CRuby
+    
+    I'm sorry for the back and forth on this one. I introduced it back in
+    jruby/jruby#2637, but CRuby have recently removed the warning in
+    https://bugs.ruby-lang.org/issues/10967.
+
+commit 9dd446f90f6694d81ddfe599884b6bbe41ac2a65
+Author: Genadi Samokovarov <gsamokovarov@gmail.com>
+Date:   Sun Mar 1 19:27:21 2015 +0200
+
+    Produce a warning on private attribute accessors
+    
+    People seem to do that a lot after Sandi's book and not many of them
+    realize it actually produces a warning in CRuby.
+    
+    Tried getting TestModule#test_attr out of the CRuby excluded failures,
+    because it was the only existing test I saw hinting of the behaviour,
+    however it also test that attribute names can't be a invalid
+    identifiers, which seems to go fine in JRuby.
+
+commit ccb5e864f516305c8e3313e64eca02f9cec43a41
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Oct 29 23:16:42 2014 -0500
+
+    Add floating-point support to rational suffix.
+
+commit 823c6ed8ca0f215d6e8405a96382b6082217d245
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Wed Jun 11 16:19:09 2014 +0100
+
+    [Truffle] Update to new source API.
+
+commit f854344b184c75a996c490dfe38042a51ee8d70b
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Feb 4 16:16:13 2014 -0600
+
+    Remove ancient deprecated methods in RubyWarning and IRubyWarnings
+
+commit 62f23578c01c145fa62a040e30ffa65764527e39
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Sat Jan 18 20:58:44 2014 +0000
+
+    [Truffle] Use JRuby’s warning mechanism.
+
+commit 28c6fbc4e883bc1c9e9242d1da1cb2b785f55339
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 3 12:46:45 2013 -0500
+
+    Move to @mkristian's proposed layout, with some modifications.

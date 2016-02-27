@@ -1,0 +1,106 @@
+commit 61678ac1a2514a9932276f8d527816a5980a94b3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Feb 25 20:41:40 2013 +1100
+
+    Fix more references to CPL.
+    
+    The phrase "Common Public License" was split across two lines in
+    our default header, which caused it to be missed during earlier
+    search/replace. Also, we did not replace the CPL URL in the
+    header with the EPL URL.
+
+commit 330fef3b0fc18af477ccea19bd278669667f31bb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 12 14:49:29 2013 -0600
+
+    Switch JRuby's CPL license to EPL.
+    
+    Governance of the CPL license was moved to the Eclipse Foundation
+    at some point in the past, and Eclipse blessed the EPL (Eclipse
+    Public License v1.0) as the successor to CPL. Because the CPL
+    contains a clause allowing transparent upgrades to future blessed
+    successor licenses, we can make the move to EPL without
+    re-contacting past contributors.
+    
+    The change in going from CPL to EPL largely just removes some
+    punitive language that apparently made many companies nervous. All
+    other language in the license remains identical.
+    
+    Several documents about Eclipse's move from CPL to EPL are here:
+    
+    http://www.eclipse.org/legal/cpl2epl/
+    
+    Note that Eclipse's move came before the blessing of EPL as the
+    upgrade path for CPL, so they had to do a bit more legal juggling.
+    With Eclipse now the administrator of CPL and with their blessing
+    of EPL as the upgrade path for CPL, all we need to do is make the
+    move.
+
+commit 38539306c47caec741243f5e15be0e345757f069
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Dec 28 01:52:13 2008 +0000
+
+    Bombs away! Eliinate nodeId field from Node and add a method to all nodes of interest to return the value instead. Probably a little slower, but we're moving away from using NodeType on critical path code and the memory savings are pretty substantial (4-8 bytes per node).
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8485 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 98c6259a914c5449b7fa4bf4d6944485d0bf96d7
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Tue Jun 24 19:03:10 2008 +0000
+
+    Minor code changes
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7025 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit dbcdcdbac451af5838c377b299289b2a7b94d9e2
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Thu Jun 12 21:28:49 2008 +0000
+
+    Tom Bomb! New Interpreter landing
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6946 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d1589c3ecec8aff8c8826f645d48b3cbab247dbd
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Sep 24 13:34:54 2007 +0000
+
+    Total refactoring of zsuper argument processing, and zsuper is now enabled in the compiler. We still need more/better tests and specs for zsuper, unfortunately.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4375 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 47f0d75fbf8f6519ed3527d077e724f0b9264552
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Wed Aug 29 21:20:40 2007 +0000
+
+    NodeTypes now and enum called NodeType
+    Various warning removal
+    Minor Block refactoring
+    More boilerplate fixing
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4233 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit df1ae61d89ae343bb981d2727d29b7379371a310
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Tue Aug 28 20:43:52 2007 +0000
+
+    A couple more callAdapter additions to nodes that can support them
+    Remove annoying generics warnings that IDEs like to give for un typed collections
+    Change boilerplate in ast so that netbeans can have them closed by default (and javadocs will not contain them)
+    Remove last vestiges of serialization from AST
+    MethodIndex moved into DefaultAdapter
+    Smaller smattering and things I cannot remember
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4214 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 4a2ee1190e77df99271070fa05f41e7d2f90af64
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Thu Feb 1 21:08:05 2007 +0000
+
+    JRUBY-466: Additional position fixes and rewriting utilities for AST
+    JRUBY-145: Adding Comments to the AST
+    
+    Remove getIter from various call nodes
+    Added more INameNodes to things with getName
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2901 961051c9-f516-0410-bf72-c9f7e237a7b7

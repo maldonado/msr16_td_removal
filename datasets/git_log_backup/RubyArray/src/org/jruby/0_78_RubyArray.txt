@@ -1,0 +1,4149 @@
+commit 4c9d03c3e62a088da877a9c1581c2f2547b4b095
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jun 14 06:12:12 2013 -0500
+
+    Avoid intermediate long[] in Array#[]= given Range.
+
+commit bcc26747f56e05bd1ceda21d97fd4b0bc5255f0c
+Author: Ron Dahlgren <ronald.dahlgren@gmail.com>
+Date:   Fri May 17 16:15:20 2013 -0700
+
+    Use RubyModule.JavaClassKindOf fixes jruby/jruby#614
+    
+    I've changed all of the relevant cases of anonymous KindOf classes to
+    use the new JavaClassKindOf. This cuts down on some of the noise
+    produced by anonymous inner classes, especially given that these
+    replacement points all had identical implementations.
+
+commit 812f24cc2d2a4d08b99518aa3904cc571ded604b
+Author: Alex Tambellini <atambellini@gmail.com>
+Date:   Fri May 17 03:58:53 2013 -0400
+
+    Array #take and #drop are the same between 1.8 and 1.9. Fixes JRUBY-7151
+
+commit 6ac47221234b5418792d5f838b02ccaa7206bda7
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Apr 26 14:38:35 2013 -0500
+
+    Fix two Array#to_s/inspect encoding issues and add minor optz.
+
+commit 3d15125a1440ef6224266a0de9441c64aa63f7ef
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Apr 26 14:15:18 2013 -0500
+
+    Fix (non-)tainting of single-element Array#join with tainted sep.
+
+commit 7c35e753e7dad20661afa215f6cbd7518d28698d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Apr 26 14:06:46 2013 -0500
+
+    Fix Array#delete return value in 1.8 mode.
+
+commit 1fe90812e44d75353f6455b3454acff49b9315e1
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Mar 29 10:02:28 2013 +0100
+
+    Tweaks to improved 2.0 caller/backtrace logic.
+    
+    * Reuse level/length logic across methods
+    * Reuse gathering logic across methods
+    * Handle special cases (length = 0, size < 0) properly
+    * Other tweaks to get 2.0 test_backtrace 100%
+    * Style fixes
+
+commit bb98e4b8decffc0361b70a6c99c1ade5fed0abcb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Mar 28 10:02:33 2013 +0000
+
+    Move RuntimeHelpers to org.jruby.runtime.Helpers.
+
+commit be1429a0ed5c36000a1faada9bd5d99f92574771
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Mar 9 01:51:58 2013 -0600
+
+    [2.0] Port Array#bsearch from MRI.
+
+commit 61678ac1a2514a9932276f8d527816a5980a94b3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Feb 25 20:41:40 2013 +1100
+
+    Fix more references to CPL.
+    
+    The phrase "Common Public License" was split across two lines in
+    our default header, which caused it to be missed during earlier
+    search/replace. Also, we did not replace the CPL URL in the
+    header with the EPL URL.
+
+commit 330fef3b0fc18af477ccea19bd278669667f31bb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 12 14:49:29 2013 -0600
+
+    Switch JRuby's CPL license to EPL.
+    
+    Governance of the CPL license was moved to the Eclipse Foundation
+    at some point in the past, and Eclipse blessed the EPL (Eclipse
+    Public License v1.0) as the successor to CPL. Because the CPL
+    contains a clause allowing transparent upgrades to future blessed
+    successor licenses, we can make the move to EPL without
+    re-contacting past contributors.
+    
+    The change in going from CPL to EPL largely just removes some
+    punitive language that apparently made many companies nervous. All
+    other language in the license remains identical.
+    
+    Several documents about Eclipse's move from CPL to EPL are here:
+    
+    http://www.eclipse.org/legal/cpl2epl/
+    
+    Note that Eclipse's move came before the blessing of EPL as the
+    upgrade path for CPL, so they had to do a bit more legal juggling.
+    With Eclipse now the administrator of CPL and with their blessing
+    of EPL as the upgrade path for CPL, all we need to do is make the
+    move.
+
+commit 6203f30b52efd7b5fc8f7ad1e092e4ca0d136d18
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Thu Feb 7 08:46:30 2013 -0500
+
+    Fix #529.
+    
+    Here, elt() needs an offset for the effective array we are considering. This was not a problem since 'begin' is often 0.
+
+commit 7492ceaf95273cdbce4e0488983be2762a11fe05
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Mon Feb 4 22:50:02 2013 -0500
+
+    Unused imports.
+
+commit 7c86c1350540817a38d0d89f7e28b6a286063309
+Author: Isaiah Peng <isaiah.peng@vcint.com>
+Date:   Tue Jan 8 12:17:33 2013 +0100
+
+    regression test for gh #482
+
+commit 18aac5674b0e14ce66f1b7cbec7e7f7bf1bf09a6
+Author: Isaiah Peng <isaiah.peng@vcint.com>
+Date:   Mon Jan 7 18:54:57 2013 +0100
+
+    resolve github #482 Array#zip with infinite enum results in OOM
+
+commit 2c44ffd66267da7113eb70baf49a114dc1693a10
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Dec 17 16:15:14 2012 -0600
+
+    Remove getValues that never ended up being useful.
+
+commit daba4d3c0ceafebcadca3eead61d4aaf12ed015b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Dec 17 13:29:34 2012 -0600
+
+    Implement loaded feature caching to reduce load path searching.
+    
+    This is an idea borrowed from Ruby 2.0.0, whereby the short names
+    of loaded features are held in an internal structure and used as
+    a first-line cache to avoid re-searching for re-required files.
+    Before this patch, in both JRuby and MRI, re-required files had to
+    do a full load path search every time because the loaded features
+    list only held the full canonical paths, which are only available
+    after searching for the proper load path entry under which the
+    file exists. With the patch in place, re-required files will
+    usually be immediately found in the cache.
+    
+    The population and invalidation of the cache proceeds as follows:
+    
+    * A reference is held to a dup of the loaded features array. When
+    this reference is captured.
+    * When adding a new feature to loaded features, we re-capture
+    the dup'ed features array and add the short name to a separate
+    internal cache.
+    * As long as the dup'ed features array is non-null and matches
+    the current loaded features array, we know we can safely use the
+    loaded features index.
+    * When the dup'ed features array does not match, we clear the
+    loaded features index and start populating it anew. Since most
+    typical Ruby code does not modify the loaded features array
+    directly, this should be rare.
+    
+    Numbers with and without this change show the performance gained.
+    The following benchmark populates load path with 1000 entries and
+    requires the same file 1000 times.
+    
+    Before:
+    
+    system ~/projects/jruby $ rvm jruby do jruby bench_loaded_features.rb 1000 1000
+      8.110000   3.880000  11.990000 (  9.708000)
+    
+    After:
+    
+    system ~/projects/jruby $ jruby bench_loaded_features.rb 1000 1000
+      0.990000   0.050000   1.040000 (  0.324000)
+
+commit ce7dd8ebe6501128c669edaa1044f9ea60556403
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Dec 12 02:24:34 2012 -0600
+
+    Fix compilation error caused by my unsaved buffer.
+
+commit 843bd786748e94384b7aef1d9e8ab0e815087d21
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Sun Nov 25 22:14:07 2012 -0500
+
+    Array#delete should return the last object *inside* the array, not the one that is given as the argument to it, even when the objects are equal via '=='.
+    
+    This addresses #411.
+
+commit e7d5bc7fbe2cf6b0633e9447031f2511a7e176c4
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Sun Nov 25 22:49:07 2012 -0500
+
+    Revert "Array#delete should delete the first object *inside* the array,"
+    
+    This reverts commit fe138bf2081e312abf4a5785be6ee559e4d6df01.
+
+commit fe138bf2081e312abf4a5785be6ee559e4d6df01
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Sun Nov 25 22:14:07 2012 -0500
+
+    Array#delete should delete the first object *inside* the array,
+    not the one that is given as the argument to it, even when the objects
+    are equal via '=='.
+    
+    This fixes #411.
+
+commit 0b02e67dd5175603a9641bc4197b36ef0ffbefb3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Oct 16 22:11:06 2012 -0500
+
+    Add a common == path for Array, to avoid respond_to? checks on nil
+
+commit c6013c59228b377aa9f8fb0626340fa7831af667
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Oct 17 10:59:42 2012 -0500
+
+    Move Java-sourced dynamic call logic to MethodNames enum.
+
+commit 37bf9acee9c651e78d5b975026a6c4549baecaa5
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Oct 17 11:17:34 2012 -0500
+
+    Small risk...removing from 1.7.0 release.
+    
+    Revert "Add a common == path for Array, to avoid respond_to? checks on nil"
+    
+    This reverts commit 2d823634e054a559faecc56285446f5e327ba67c.
+
+commit 2d823634e054a559faecc56285446f5e327ba67c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Oct 16 22:11:06 2012 -0500
+
+    Add a common == path for Array, to avoid respond_to? checks on nil
+
+commit 3c37b2e59e291f407aca2abae44759858940c148
+Merge: 2ab38ad aad8c93
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Aug 6 23:56:33 2012 -0700
+
+    Merge pull request #224 from thedarkone/array-volatile-fix
+    
+    Flip the Array's isShared last flag last
+
+commit b8181cda909f6e42d7c0b7fffaabbe2a502f273b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jul 27 02:19:54 2012 -0500
+
+    Inline all calls to ThreadContext.getRuntime to access the field.
+
+commit 47fd4acb720385b7d7852e1876e28520aa0cf484
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jul 27 01:55:07 2012 -0500
+
+    Remove all safelevel checks throughout JRuby (plus misc cleanup).
+
+commit 629bf5195fa96b209b99c9157306a82722ab686d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jul 24 14:50:27 2012 -0500
+
+    Patch up some failures I introduced.
+    
+    * Array#join(nil) in 1.9 mode still needs to test sep.nil?.
+    * Better test in File.open logic for permission denied.
+
+commit 39cbc8292ed7eca771fb51e04a34fdd166e71e72
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jul 24 14:03:50 2012 -0500
+
+    Fix JRUBY-6776
+    
+    Array#join(nil) should use $, as a separator for compatibility
+
+commit aad8c93a7956dce214268662704a933d91bbbb62
+Author: thedarkone <thedarkone2@gmail.com>
+Date:   Fri Jul 13 15:39:56 2012 +0200
+
+    Flip the isShared flag only after the array's values have been copied over.
+    
+    Doing things in reverse order risks exposing an Array object with
+    isShared = false, while this.values still pointing to a shared array.
+
+commit 790cb14f61215dc5363857e8d2bd2f9398d9a2c5
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Jun 13 13:54:36 2012 -0500
+
+    Errant printf removed
+
+commit ed738357bdf1385b7d3555f0d94ea020ecdbc8d5
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jun 12 15:44:55 2012 -0500
+
+    Fix JRUBY-6706
+    
+    Collections.shuffle works incorreclty on Ruby arrays
+    
+    We were not implementing List.set properly; it should return the
+    previous value at that index, and we were just returning the
+    given value.
+
+commit 6571f5acb455e4cadb6775f4ac14029ab3528591
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Jun 7 11:42:25 2012 -0500
+
+    JRUBY-6708: NullPointerException instead of proper exceptions output
+
+commit 0d82b698d067c0baaec7e332fab7fa7af30bc5c6
+Author: Hiroshi Nakamura <nahi@ruby-lang.org>
+Date:   Fri Mar 2 16:45:43 2012 +0900
+
+    JRUBY-6518: Array#combination returns unexpected value when argument number too big
+    
+    Because 365C43 overflows signed integer.
+    
+    Remove limitation for lengthy permutations. ref. [ruby-core:29240]
+
+commit b48cfe5a523250dc90dcf8f4beb82086b42395a0
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Feb 25 10:23:54 2012 -0600
+
+    Fix JRUBY-6497
+    
+    Unable to convert varargs into String on JRuby 1.9 mode
+    
+    * In ary_join_0, max is zero-based, where in JRuby it is begin-based,
+    so we need to subtract begin when testing for > 0.
+    * If the element is not a string, we should just leave encoding
+    alone. This may not be 100% right if non-encoded objects have a
+    default encoding.
+
+commit f7c1ffd93f34cef816168f36f5fe4f960a9ac2e2
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Feb 15 12:24:28 2012 -0600
+
+    Additional tweaks for JRUBY-6456
+    
+    * execRecursiveOuter is always outermost, so add finally logic there
+    * Add explicit check for recursiveListOperation in execRecursive
+
+commit 8f2ba4214eb070a83951aef1f143ebf6ebcecce4
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Feb 15 11:16:21 2012 -0600
+
+    Fix JRUBY-6456
+    
+    ThreadLocal Leak in 1.9 Mode w/ Internal Recursive Map
+    
+    Our code was a direct port of MRI's, and they seem to have the
+    same issue: no logic clears out the threadlocal map once the
+    recursive walk is complete. I added an outermost method called
+    recursiveListOperation that should always be used to wrap the
+    execRecursive* calls.
+
+commit d3b828d6df90e11c787f3d2ebbc34ce72834904e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jan 30 06:01:20 2012 -0600
+
+    Fix JRUBY-6382
+    
+    [1.9] Padrino can't generate an app
+    
+    Looks like another tiny porting bug. Calls to joinAny need to
+    specify a start index based on the Array's "begin". Fixed for this
+    case and added an assert.
+
+commit 11cedbaaec15a23d5a56ffd9a93c47a8e62cb8e4
+Author: zszugyi <zoli.szugyi@gmail.com>
+Date:   Tue Jan 24 18:06:54 2012 -0800
+
+    Calls modify() in select_bang to make sure shared memory is not overwritten.
+
+commit cf9b95dbad6e04f20c46078cf1385d7ee3673bfc
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Jan 19 18:41:45 2012 -0600
+
+    Fix JRUBY-6359
+    
+    Can't convert nil to String building ActiveSupport RDoc in 1.9 mode
+
+commit 99e5c7650cd9bab7df8f86b6bbd44de7299f6a47
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Jan 17 16:20:53 2012 -0600
+
+    [19] Several exposed problems with join from mri19 test suite. 1. empty [].join should always be USASCII. 2. join of nested arrays should inherit first elements encoding. 3. to_ary never hit because of faulty to_s logic. 4. Nested values in a join should get first elements encoding
+
+commit 20c3217aae49179a6009d1e646d552d5aaf431c4
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Tue Jan 3 07:56:57 2012 -0500
+
+    Fix JRUBY-5643: [1.9] Array#map and Array#collect produce the same enumerator; should be specific to the method called
+
+commit c8f186cbdacd02a2ce0315380f4911329946db72
+Author: Yoko Harada <yokolet@gmail.com>
+Date:   Mon Dec 19 22:03:03 2011 -0500
+
+    minor fix for reported bug in JRUBY-6264. Perhaps bigger patch will be suggested.
+
+commit 0633de3305946432292503ee9739a172ec23aca9
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Dec 7 18:59:59 2011 -0600
+
+    Add RandomAccess to RubyArray implements.
+
+commit 18e2a21b778d1f0c0f6314f7f52c6a3aa326f79a
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Thu Nov 24 10:22:42 2011 -0600
+
+    This commit generalizes the previous commit to certain array duplicate operations (Array#compact, Array#sort, Array#shuffle).
+
+commit 0ebd4eedf1e0fe0353742734f14287464586f147
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Thu Nov 24 09:18:25 2011 -0600
+
+    In MRI 1.9.3, Array#compact does not keep taintedness and untrustedness.
+
+commit a1f43c08341de994bea1b01041f91ee76eb9d783
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Wed Nov 23 23:22:16 2011 -0600
+
+    In 1.9 mode, allow permutations larger than the number of elements in the set.
+
+commit 445a4e018fa2fa213dcdeec94b11fe117fd242fd
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Wed Nov 23 16:22:58 2011 -0600
+
+    Fix Array#* spec, where taintedness does not propagate to the return value if arg = 0.
+
+commit 25428dc9b51d7f43a1fdd7e0bba1269b355161e4
+Author: Wayne Meissner <wmeissner@gmail.com>
+Date:   Fri Sep 23 15:09:43 2011 +1000
+
+    Add setNativeHandle/getNativeHandle to RubyBasicObject and use that to store/retrieve the native cext handle.
+
+commit 5512c59a734fe09485ece988f3425450dbaebf92
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Sep 20 01:55:08 2011 -0500
+
+    Encoding fixes for JRUBY-6033:
+    
+    * String#% was not setting base encoding of new string to same as format string, as in MRI
+    * Array#to_s and Array#inspect did not use encoding-aware methods for building the string
+    * Hash#inspect ditto
+
+commit 6982b065dbd54ee519d055c59b63607d1fdcf10e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Sep 21 23:24:14 2011 -0500
+
+    Move RString and RArray native handles to varTable.
+    
+    RString and RArray are cached in RubyString and RubyArray to avoid weak-caching
+    handles or recreating handles frequently. However these fields add an additional
+    32 or 64 bits to the size of all String and Array instances even when C exts are
+    not in use. Since C ext use on JRuby is very uncommon, I've moved these fields
+    into the lazily-allocated variable table, in the same manner as the rarely-used
+    object_id. This reduces the size and allocation cost of all String and Array
+    instances for the good of all JRubyists.
+    
+    The cost of retrieving the handles increases slightly due to hopping through
+    getMetaClass.getRealClass, the accessor, and the array, but that cost likely
+    pales in comparison to the already-high cost of C extensions, and only impacts
+    Array and String instances that require native handles.
+
+commit dfbbf05021a9df386d0b056b1d59335e4c86e49c
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Sep 12 16:33:53 2011 -0500
+
+    Fix nil array elements not giving a type error for various pack directives.  Fix nul in directives not being ignored
+
+commit 6cda8ca9a18cad2cae6b4842040f5b5c03bcca9a
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Sep 1 16:47:09 2011 -0500
+
+    Doh! 1.9 methods need 1.9 append.  Also reverse explicit first element encoding set since previous commit unbroke coderange + cat issues
+
+commit 4c8b8af5993c8322d67260c752f723588b12047b
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Sep 1 16:03:57 2011 -0500
+
+    JRUBY-5639: Array#join turns utf-8 strings into ascii-8bit strings (sans non-string element as first element of join)
+
+commit 17409c0c3959dbe0cae5b7365347b37130f16102
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Sep 1 14:52:31 2011 -0500
+
+    Mild style tweak for recursiveJoin
+
+commit fbc85d9466d8b5fc5482cf168828def9a8e0356f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jun 27 15:27:15 2011 -0500
+
+    Fix JRUBY-5883: Hash Subclass#== not respected when checking equality of collections.
+    
+    * Make the Set used for recursion detection into a thread-local
+    * Use actual dyncall for elements rather than short-circuited Hash/Array logic
+
+commit 7edd32d680747a22b05c3e221e3fb209ac273a9d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jun 21 23:15:38 2011 -0500
+
+    Add env arg support to 1.9 Kernel#exec and Process.spawn.
+
+commit 3be905f38b26668ad53fc197784629aa338fefee
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Jun 16 10:58:28 2011 -0500
+
+    Improve performance of "argscat" call form (as in foo(1, *a))
+
+commit 7588393ca5bfeba6182b87b8b47669ecab2fe403
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Jun 9 10:02:23 2011 -0500
+
+    Fix compilation issues under OpenJDK 7 after b142 with primitive + varargs now resolving as ambiguous.
+
+commit 21565774f8800b3df6f839505365d340b573f253
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon May 16 16:53:26 2011 -0500
+
+    Add a special RubyArray subclass for LOADED_FEATURES, to speed up searches during Kernel#require.
+
+commit 8c6dba0f8734a1bd12eb155036a6eba8e6d15f3e
+Merge: 7837c84 fd957a1
+Author: Hiroshi Nakamura <nahi@ruby-lang.org>
+Date:   Wed May 11 12:26:08 2011 +0000
+
+    Merge branch 'MersenneTwister'
+    
+    Conflicts:
+    	src/org/jruby/Ruby.java
+    	src/org/jruby/RubyArray.java
+    	src/org/jruby/RubyRandom.java
+    	src/org/jruby/util/TypeConverter.java
+
+commit dd0ede8696d8b684baacb15f5904279aff6debec
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Apr 2 12:20:27 2011 -0500
+
+    Replace most slow core-to-core calls to ==, hash, and <=> with lighter-weight global cache hits.
+
+commit 455899d62eac3514f0384a9ec060c9d8f74bc7bc
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Mar 29 14:39:07 2011 -0500
+
+    Fix some regressions from perf optz.
+
+commit 0b3ece41c9318fbdfa93e4f602b6096fa09a150a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Mar 19 00:36:00 2011 -0500
+
+    Fix some specs I broke with perf changes.
+
+commit 02537553fb0375387a523d8e79dc10e13d6b8aea
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Mar 18 22:25:08 2011 -0500
+
+    Make RubyArray.aryDup use fast dup.
+
+commit 82693138de633a3ddff27e80d7de7ff98c873432
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Mar 18 18:17:44 2011 -0700
+
+    Minor perf fix for Array#reverse: fast dup if length <= 1
+
+commit 1e10f806f0f5362fde902ad22ac30423cb48bb79
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Mar 18 18:11:05 2011 -0700
+
+    More perf tweaks for Array
+    
+    * Fix taint/untrust in fast dup
+    * Use fast dup in rejectCommon
+    * Don't modify() in reject unless something is rejected
+    * Don't recopy array again in flatten! (don't call modify())
+
+commit f5ddcb0ec72dd1b70f727c0ebb580e775953c187
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Mar 15 14:37:38 2011 -0400
+
+    Store realLength locally since we access it twice.
+
+commit 166808856e0ae7073142daf5c33bdecac54d6089
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Mar 15 14:25:01 2011 -0400
+
+    Avoid slow dyncalling dup if metaClass == Array.
+
+commit 1c4bda49f403e9020a328c43f15578aa861c9d6b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Mar 15 14:23:14 2011 -0400
+
+    Special-case head and tail removal in delete_at.
+
+commit fb60a5baf34d6db58b54b0fabc89624465a4673b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Mar 25 02:32:31 2011 -0500
+
+    Reimplement IO.select/Kernel.select to reduce object churn.
+
+commit 513f0d84a1d28a768ad19816a2aa101b5ac74ed3
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Mar 10 10:22:00 2011 -0600
+
+    JRUBY-5574: Array#select! broken in 1.9
+
+commit b81d3eb49318aaeecf0fb321ce003503539a1cf8
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Feb 28 18:55:39 2011 -0600
+
+    Shrink and simplify RubyArray AIOOBE checking for concurrency errors. Narrow checking to avoid AIOOBE from downstream Ruby getting misinterpreted. See JRUBY-5434.
+
+commit f6919844694619c55aff1bc529f947f7afeaa79e
+Author: Hiroshi Nakamura <nahi@ruby-lang.org>
+Date:   Fri Feb 18 01:08:54 2011 +0900
+
+    Array method cleanups which uses PRNG
+    
+     - Remove Array#choice in 1.9 mode. CRuby 1.9.* does not have it.
+     - Add RubyRandom.randomReal for rb_random_real impl.
+     - Update Array#shuffle and Array#sample to take Random instance as an
+       optional keyword argument.
+
+commit fd957a1956a032be89bd4b309f3c0f2d7f0b6272
+Author: Hiroshi Nakamura <nahi@ruby-lang.org>
+Date:   Thu Feb 10 00:28:16 2011 +0900
+
+    Array method cleanups which uses PRNG
+    
+     - Remove Array#choice in 1.9 mode. CRuby 1.9.* does not have it.
+     - Remove unused random and randomSeed property of runtime.
+     - Add randomClass property to runtime. I once removed it in
+       MersenneTwister branch. My bad.
+     - Add RubyRandom.randomReal for rb_random_real impl.
+     - Update Array#shuffle and Array#sample with MersenneTwister.
+
+commit ebfd468d5a0d665885b835185811ea9e97aea3ad
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Feb 4 14:58:32 2011 -0600
+
+    [1.9] Fix almost all remaining Marshal.load specs
+    
+    * Symbols *should* get yielded to the provided proc
+    * Symbols used for internal structure should *not* get yielded
+    * Non-symbol objects from link cache *should* be yielded
+    * Symbols from link cache should *not* be yielded
+
+commit 5fe02adb2c80da98eea8b45a6f4a78f1feba44fc
+Author: Douglas Campos <qmx@qmx.me>
+Date:   Mon Jan 31 01:14:11 2011 -0200
+
+    Array#join should call to_s before using to_a
+    
+    This is needed as join honors to_str existance, according to MRI sources
+    (string.c#L1424)
+    Signed-off-by: Douglas Campos <qmx@qmx.me>
+
+commit bdbfa4d91c80a49c6ce72408de3b233ee7cff936
+Author: Douglas Campos <qmx@qmx.me>
+Date:   Wed Jan 26 17:38:33 2011 -0200
+
+    deduplicating recursive join for array
+
+commit 5573d703082b554cde7a3bed0fe26b7479187ec8
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jan 17 03:34:03 2011 -0600
+
+    Miscellaneous fixes for Array 1.9 mode.
+
+commit ac3043aca1d8c772e00f811c61870e1ca4e6a8e1
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jan 17 00:41:16 2011 -0600
+
+    [1.9] Remove combination error that appears to be gone from 1.9.
+
+commit 365100bfbd550e3bfc1378c8dcca32d32fa3a82e
+Author: Hiroshi Nakamura <nahi@ruby-lang.org>
+Date:   Wed Jan 5 23:20:13 2011 +0900
+
+    JRUBY-5004: removed unintentional auto-boxing/unboxing
+
+commit d205a0c0c8c46cab20fabafc38ae69d2ef5f0e73
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Dec 30 15:36:03 2010 -0600
+
+    Fix JRUBY-5239: ArrayIndexOutOfBoundsException in threadsafe mode
+    
+    * Expanded ArrayIndexOutOfBoundsException catching to most reads in RubyArray
+
+commit 4a3c6fe08b5da22c0e57015d95aa8f2ebbe241ea
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Sat Dec 25 22:02:04 2010 -0500
+
+    Second attempt to fix JRUBY-5275.
+    Even smaller than the last commit.
+
+commit d649a499ebfff8f08b16efd281df535bcb4d91d3
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Sat Dec 25 00:06:52 2010 -0500
+
+    Fix JRUBY-5275: each_slice enumerator methods fail
+
+commit 1f7ae2094ab18e0045e7938f4b3fbe132df7b089
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Dec 8 14:24:28 2010 -0600
+
+    Fix tainting, coercion for Array#pack. RubySpecs will arrive soon.
+
+commit 7732e5eb43a037615caf4ed5814551f66d497930
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Dec 6 00:36:15 2010 -0600
+
+    Tweaks to support some lighter-weight versions of newer Enumerable methods.
+    
+    * Make all "CallBlock" blocks in Enumerable pass along a proper arity, so we know whether they might want a real array or specific-arity args
+    * Improve Array#each_splice by avoiding intermediate blocks (always) and extra array creations (for specific-arity > 1) to reduce overhead. 30-50% faster.
+
+commit fd0fa789b21b30f294e8286b72b75fe3b688c27a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Dec 1 12:07:42 2010 -0600
+
+    Merge "backtrace" branch to master, now that it runs clean on all our various test cases.
+    
+    This is a squashed merge encompassing the following commits from "backtrace":
+    
+    commit eb0e24242050199ac1cc4cf6e48d93025f0186f4
+    Merge: 32137de ea48d8d
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Dec 1 12:03:28 2010 -0600
+    
+        Merge remote branch 'origin/master' into backtrace
+    
+    commit 32137decc9351dd7b6a19c49c7955808f535bb9c
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Dec 1 09:41:29 2010 -0600
+    
+        Fix remaining failures for test-all.
+    
+        * Disable CheckClassAdapter temporarily, since it disallows what should be valid JVM identifiers.
+        * Use the presence of $RUBY$ in method name as an additional indicator that we're processing a compiled Ruby body during backtrace gathering.
+        * Move some largely-static properties out of "init" target in build.xml, so they're available whether init is triggered or not (e.g. run.jvm.model).
+    
+    commit ee2a624201d5e9cd408d6ae793160aeb99b50b3d
+    Merge: cd50ae5 88ad204
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Dec 1 08:01:22 2010 -0600
+    
+        Merge branch 'master' into backtrace
+    
+    commit cd50ae5f06b95a2fffab6bc1f3a7419f478d0a52
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Tue Nov 30 19:15:07 2010 -0600
+    
+        Get remaining spec failure with -X+C passing.
+    
+        * Embed the actual Ruby method name into the Java method for block bodies, rather than __block__.
+    
+    commit 52bbfffcae1aed62bf4afcb692bed9725e4e1564
+    Merge: 4ed7235 1aace5e
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Tue Nov 30 01:37:15 2010 -0600
+    
+        Merge branch 'master' into backtrace
+    
+    commit 4ed723579101fffd8bfa73b30dc6e4e8991866f2
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Tue Nov 30 01:31:44 2010 -0600
+    
+        Precompiled (AOT) specs *nearly* green.
+    
+        * Mark __method__ as reading frame "name"
+        * Fix AOT-based stack trace mining logic
+    
+    commit 64e20aa939b5b9c6e41e0e9fe09039a0bb92794a
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Mon Nov 29 16:50:55 2010 -0600
+    
+        Jitted specs running green.
+    
+        * eval needs to set method name into the binding, so it's there for "__method__" in the eval'ed code.
+    
+    commit fd442c0a815bcab9eb6c9aa1b71e1f8a260ee03b
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Mon Nov 29 16:06:53 2010 -0600
+    
+        Interpreted specs green on backtrace.
+    
+        * Tagged some __method__ specs for which backtrace behaves like 1.9, which Matz apparently likes but was afraid to backport. Odd cases anyway.
+        * Fixed method name for the block used to define_method.
+    
+    commit cedb27e430b422c1158f66b4dcc7769922433506
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Nov 24 18:35:22 2010 -0600
+    
+        Reinstate deprecated java_to_ruby and ruby_to_java I removed, since it's still needed by some external libs.
+    
+    commit b48b17910de662b4e2d20ee8f4b5cc734eefc1ed
+    Merge: f39007e 2ae4995
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Nov 24 13:40:58 2010 -0600
+    
+        Merge remote branch 'origin/master' into backtrace
+    
+        Conflicts:
+        	src/org/jruby/Ruby.java
+        	src/org/jruby/RubySymbol.java
+        	src/org/jruby/runtime/CompiledBlock19.java
+        	src/org/jruby/runtime/Interpreted19Block.java
+        	src/org/jruby/runtime/InterpretedBlock.java
+        	src/org/jruby/runtime/MethodBlock.java
+    
+    commit f39007eca676c1e6ec9f891ac63b7c5d907b0d1b
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Thu Nov 18 14:01:29 2010 -0600
+    
+        Start normalizing the method/class names generated into Java by JIT and AOT compiler, to wrap up the remaining spec failures.
+    
+    commit 76e42c4b4522dc87c066d20051d02d1e4005b860
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Nov 17 20:40:33 2010 -0600
+    
+        Disable dynopt for now, to allow better stabilization on the main feature of this branch: frame elimination.
+    
+    commit d03099690df2e16d423e8b6a8969e0264983237f
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Nov 17 15:00:14 2010 -0600
+    
+        Encapsulate "coreMethods" hash in Ruby and add "bound method" logic to default (non-generated) class populator. `ant test-all` runs green now.
+    
+    commit ed7458f72bce55b11e5231f8e7b9d590c09ca53d
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Nov 17 10:46:43 2010 -0600
+    
+        Fix incorrect use of fastSetInstanceVariable instead of fastSetInternalVariable in FFI.
+    
+    commit f09626121b6a8bea6ab39a3c8ed3ccd69f56b505
+    Merge: f780b97 e8ca689
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Nov 17 10:15:16 2010 -0600
+    
+        Merge branch 'master' into backtrace
+    
+    commit f780b972b1f3e18f4c2608d9536e797a0845cd1a
+    Merge: 25ab5d3 6967ea7
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Nov 17 09:04:42 2010 -0600
+    
+        Merge branch 'master' into backtrace
+    
+        Conflicts:
+        	src/org/jruby/runtime/ThreadContext.java
+    
+    commit 25ab5d3d3f8c1fbf0fa334427b1485d322e83f86
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sun Nov 7 00:42:54 2010 -0500
+    
+        Don't do dynopt against calls that receive blocks; non-local flow is not properly handled yet.
+    
+    commit a4ad27056dcc3acf6bae0b0af7e618966d08a6dd
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sat Nov 6 15:22:40 2010 -0500
+    
+        Tag caller specs that do not pass with new backtrace logic (peculiar eval caller behaviors).
+    
+    commit eed8902084cfa06d4648935c1f70da57bf0c7a9c
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sat Nov 6 00:32:59 2010 -0500
+    
+        More fixes to get specs and tests green on backtrace branch:
+    
+        * Hash#index was not being bound properly from RubyHash#index19
+        * Range#min and Range#max need super, and therefore need frame = true
+        * tc_owned is a bad test and fails on system like OS X where (for some reason) / may be owned by user
+        * test_trace_func had been hacked for a bad class result (Integer, instead of Fixnum)...fixed that
+    
+    commit 9d9f94c30de76fa25e738e70e84ea09163eca5cb
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Fri Nov 5 20:03:22 2010 -0500
+    
+        Fix Kernel#caller to replace .java lines with Ruby lines. Brings specs mostly to passing.
+    
+    commit de433c771830e95c54f8196453208f2b312191aa
+    Merge: 3ffe1cf e25c58f
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Fri Nov 5 17:40:02 2010 -0500
+    
+        Merge branch 'master' into backtrace
+    
+        Conflicts:
+        	src/org/jruby/RubyIO.java
+        	src/org/jruby/compiler/impl/StackBasedVariableCompiler.java
+        	src/org/jruby/evaluator/ASTInterpreter.java
+        	src/org/jruby/java/proxies/JavaProxy.java
+    
+    commit 3ffe1cfba86f52ee96d89f3a1c352597f22f76b7
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Oct 27 01:42:06 2010 -0200
+    
+        Fix compile error I accidentally merged.
+    
+    commit b081253fb3cdf5141f7f0cf76d3f8546837d9f42
+    Merge: fc3028d ad68e22
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Tue Oct 26 16:30:25 2010 -0200
+    
+        Merge branch 'master' into backtrace
+    
+        Conflicts:
+        	src/org/jruby/Ruby.java
+        	src/org/jruby/internal/runtime/methods/DefaultMethod.java
+        	src/org/jruby/runtime/ThreadContext.java
+    
+    commit fc3028d9da2750c9d1c394600ab8ee712388724d
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Tue Oct 26 14:39:29 2010 -0200
+    
+        Add better description for class bodies in backtrace
+    
+    commit d796555494c2237116c7477c932fd96cd30d2e20
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Tue Oct 26 11:36:29 2010 -0200
+    
+        Clean up and add color to Rubinius backtraces.
+    
+    commit 012f5357ce649bd5a996211fe231f26097bf4f5b
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sun Oct 24 16:23:04 2010 -0500
+    
+        Fix classloader check to allow for compiled method handles, which use a no-arg constructor.
+    
+    commit 473d48aac6a5523304188d1d433e4c12df989b89
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sun Oct 24 16:10:32 2010 -0500
+    
+        Improve Proc-binding-based eval position info by propagating block's position into the binding and through to the backtrace frame.
+    
+    commit bcfd16b519b145c9ee055db1592dfaced05b71a0
+    Merge: 4902faa 5b49583
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sun Oct 24 11:07:15 2010 -0500
+    
+        Merge branch 'master' into backtrace
+    
+        Conflicts:
+        	src/org/jruby/RubyTime.java
+        	src/org/jruby/runtime/ThreadContext.java
+        	test/org/jruby/test/TestRubyException.java
+    
+    commit 4902faaf1678d5aecdef8b0b66f8ec78062aeec5
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Thu Oct 21 09:28:45 2010 -0500
+    
+        Fix badly-merged RubyProc.to_s19, missing opening brace.
+    
+    commit 69177d7098f9dc4ff9096d08eee25c0d8bb4f971
+    Merge: 801e764 f895837
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Oct 20 21:50:53 2010 -0500
+    
+        Merge branch 'master' into backtrace
+    
+    commit 801e7641b8838a8ae8931a9c6dcc5cf050096c4a
+    Merge: 0c60a89 dda4644
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Tue Oct 19 23:16:41 2010 -0500
+    
+        Merge branch 'master' into backtrace
+    
+        Conflicts:
+        	src/org/jruby/RubyDigest.java
+        	src/org/jruby/RubyProc.java
+    
+    commit 0c60a89aa746f286588b218681e9ad25b11318c4
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Tue Oct 19 23:06:15 2010 -0500
+    
+        Only compile direct recursive calls when we haven't branched to another method body (e.g. for rescues) and we're not compiling a closure or class body.
+    
+    commit 18333fe82c808e8ed49eef898f19c86fa2d764b2
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Tue Oct 12 17:04:13 2010 -0500
+    
+        Get 1.8 specs running green except for a handful of Kernel#caller specs (which don't expect to see .java files in the trace...not sure how to deal with that).
+    
+        * Fix another literal-block-calling path that wasn't using callIter
+    
+    commit 366740120ee76d8df3f977edc1727b60b2d4ad63
+    Merge: b64390b 6b243a3
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Tue Oct 12 10:35:14 2010 -0500
+    
+        Merge remote branch 'origin/master' into backtrace
+    
+    commit b64390b8cf0d2cb13e06d352969a093b5e86818d
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Tue Oct 12 10:33:39 2010 -0500
+    
+        Remaining fixes to get precompiled mode passing all our tests. Still some spec failures.
+    
+        * Bump up permgen max for test runs
+        * Fix stack-based scope initialization to not leave an unused nil on stack
+        * Ensure compiled method handles properly wrap pre/post logic for dummy and backtrace frames.
+    
+    commit 96bd3cbde91fc505b37ee13cbea6ffa3e8690c58
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Mon Oct 11 18:36:34 2010 -0500
+    
+        First fixes for backtrace branch in precompiled mode:
+    
+        * Add test-precompiled build target for running just precompiled
+        * Eliminate extraneous toplevel scope being pushed for precompiled loads (because that logic is all in the generated "load" method now.
+        * Add a new scope descriptor decoding path that properly sets up a toplevel scope
+    
+    commit 0ebbd6ac46c9ac04558f5200f980f26f798b9413
+    Merge: fc387be ac455fc
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Oct 6 21:53:18 2010 -0500
+    
+        Merge branch 'master' into backtrace
+    
+        Conflicts:
+        	src/org/jruby/RubyIO.java
+    
+    commit fc387befff57ada6c116b646a3dfb767cc926ee5
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Tue Sep 28 15:57:58 2010 -0500
+    
+        Renumber arguments for consistency.
+    
+    commit bbc91d3c4039bf6c26ceffd4899dcaaeaa3d46d0
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Tue Sep 28 15:40:38 2010 -0500
+    
+        Fixes to get specs a bit closer to running green.
+    
+        * Move pre/post logic for Script.load into generated code, so it's the same everywhere.
+        * Make pre/post-load push a frame, so top-level of a script is always framed
+        * Remove break handling from non-literal block call paths in CachingCallSite
+        * Make sure all literal block calls are using CallSite.callIter, which handles break
+        * Fix a bad test in testCompiler that needed visibility tweaks and framing
+        * Add complete doco for CallSite
+        * Fix Kernel#caller to trim from top of stack instead of bottom
+    
+    commit 4e814a24d5b2ef1b6567a3076a463ff9d08e2a0d
+    Merge: 91dc13a 3dbcef3
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Mon Sep 27 17:43:30 2010 -0500
+    
+        Merge branch 'master' into backtrace
+    
+    commit 91dc13a2f0b74bc1054d83378782416465ecc1b8
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Mon Sep 27 01:02:48 2010 -0500
+    
+        Fixes to get test-compiled (but not precompiled) passing 100%.
+    
+        * Fix eqlInternal's RubyNumeric branch check if classes are equal
+        * Provide file and line from all BlockBodies, so Proc#to_s can always use it
+        * Fix rejiggered Struct#each and Struct#each_pair to call the appropriate internal version
+        * Fix ruby_test's IO.new suite to not use STDOUT directly, risking that it get closed
+    
+    commit dc4af45352607ebb8a95d70befdcdb15c1111c58
+    Merge: ec8bb7f 90275be
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Tue Sep 21 09:52:10 2010 -0700
+    
+        Merge branch 'master' into backtrace
+    
+        Conflicts:
+        	src/org/jruby/Ruby.java
+        	src/org/jruby/RubyDir.java
+        	src/org/jruby/RubyKernel.java
+        	src/org/jruby/compiler/ASTInspector.java
+        	src/org/jruby/javasupport/util/RuntimeHelpers.java
+    
+    commit ec8bb7fc31d4acd4ebcb040f088e19fb427448e8
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sun Sep 19 16:21:38 2010 -0700
+    
+        Remove frame = true from all core class methods, to reduce their call costs. A few remain for invokeSuper and methods that may still need frames.
+    
+    commit ec276b6ca0c6009702839b12d97664b9e52b1023
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Thu Sep 16 14:10:43 2010 -0500
+    
+        Eliminate RubyTuple use that snuck in.
+    
+    commit f80254100cfc17ac6eb558e465fc1fb9122c3ee4
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Tue Sep 14 10:07:53 2010 -0500
+    
+        Special case a few immutable core types in equalInternal/eqlInternal.
+    
+    commit eb66c45145e4fd1f8c28e9a8c544114f034116e8
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sun Sep 12 18:26:13 2010 -0300
+    
+        Performance changes for backtrace logic:
+    
+        * Back off using Java stack trace for Proc's to_s file+line, since it's prohibitively expensive
+        * Move the Backtrace stack to being a fixed-size array of objects updated, rather than created, when a push happens
+    
+    commit 6f0ade5ab28946b8800431d3454d2e57fc0dbe19
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sun Sep 12 11:36:07 2010 -0300
+    
+        Add generation guard around trivially-inlined logic.
+    
+    commit c4d8705217174580d35757dc85c5c646e980b57f
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sun Sep 12 06:18:38 2010 -0300
+    
+        Full speed ahead with a caching mechanism for calls from core classes. Only works for core class methods right now, but opens the door to expanding that.
+    
+    commit 5874abc01104f6c0f435f8ac4643ed0f77cf7cff
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sun Sep 12 03:43:37 2010 -0300
+    
+        Localize some fields used in Array#include? to speed up the loop.
+    
+    commit 346245cd5e154574d14736cf4b9e0b4b98260d14
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sat Sep 11 15:02:41 2010 -0300
+    
+        Allow passing a number of iterations to bench_quicksort.rb.
+    
+    commit b4687022a1f00d0b63838b1c9daf00753fcfa93e
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sat Sep 11 11:55:15 2010 -0300
+    
+        Fixes to get run-junit-compiled 100% passing on backtrace branch.
+    
+        * Fixed a couple tests that are too sensitive to core method line numbers or expected only .rb elements in the trace
+        * Added a mechanism for procs to retrieve the most recent Ruby frame, for to_s purposes
+        * Added comments for hybrid backtrace logic
+    
+    commit 15cd9b16cb2750d0e40ba478d07fe5bf265dc620
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sat Sep 11 08:07:57 2010 -0300
+    
+        Add better logging to AnnotationBinder (for showing framed/scoped core methods), ASTInspector (for showing methods detected as framed/scoped and for reporting deopt flags as they are set), and JITCompiler (for dumping jitted methods' full classes and inspector results). New property jruby.jit.dumping=(true|FALSE).
+    
+    commit c4e6176498590d791868055025c2e72ded1ccf13
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Fri Sep 10 02:10:20 2010 -0400
+    
+        Improve dumping of generated bytecode by including class and method name when possible.
+    
+    commit 07fc4215f6873f449f89d4f5da7a7e2e8963bc70
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Thu Sep 9 23:39:20 2010 -0400
+    
+        Make attr accessor's var accessor field volatile, to guarantee visibility across threads.
+    
+    commit e3a7cf5cd4d8ccd08407955779bdd94feb5e4ac8
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Sep 8 13:26:48 2010 -0500
+    
+        Add missing "in" to caller backtrace lines.
+    
+    commit 7140c339f386959853f747d86cb2ea9a8afa6f2a
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Sep 8 12:10:50 2010 -0500
+    
+        Fixes to get tracing tests running in interpreted mode:
+    
+        * Off-by-one line numbers were off for MRI too. Fixed to correct line numbers
+        * call and return for Ruby methods need to use impl class, not self class
+    
+    commit cbc9c4edab56807a023817d06db9c22441fa4b53
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Sep 8 10:31:57 2010 -0500
+    
+        Fix runInterpreterBody to properly unwrap RootNode for "gets loop" execution.
+    
+    commit 3a09773058d8d58d5bf8f1b6fbebc494fc18f7c6
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Sep 8 10:01:43 2010 -0500
+    
+        Make --bytecode attempt a recompile, so that dynopt and no-compile modes can still print bytecode.
+    
+    commit 4e48e722ba5ded10975af348738237fcb7fe9b2a
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Sep 8 09:23:38 2010 -0500
+    
+        Add a "full" backtrace style which does not omit any Java frames and interlaces the Ruby frames.
+    
+    commit 6f5057e3ae1e372bd66602dcc26864adc3270128
+    Merge: 7006d31 811fd8d
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Sep 8 07:48:47 2010 -0500
+    
+        Merge branch 'master' into backtrace
+    
+        Conflicts:
+        	src/org/jruby/Ruby.java
+    
+    commit 7006d3175bbf4630921dfecaa4faef2a39a77205
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sat Sep 4 16:04:28 2010 -0500
+    
+        Bytecode size reductions for stack-based nil-initialization of locals and for x, *y and x, * forms of masgn.
+    
+    commit 3a8fb16f020c2b9aaa6228605bdb3d8fd1b78ccf
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sat Sep 4 14:52:04 2010 -0500
+    
+        Do not do direct recursive invocations for heap-based scopes, since the scope is not currently being reset.
+    
+    commit ec00e99636667eff97a891917ae9ef37f94a6eb7
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Fri Sep 3 19:55:24 2010 -0500
+    
+        Turn on dynopt by default, to aid testing of new logic.
+    
+    commit 9508e8a6925fce4f57a386ede867b3f8f9b67d38
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Thu Sep 2 12:40:38 2010 -0500
+    
+        Fix Time test that expected two separate Time.now objects to to_s the same.
+    
+    commit 65ba8b37a8a232495453e71b2a560c761b40893f
+    Author: Nick Sieger <nick@nicksieger.com>
+    Date:   Mon Aug 30 14:50:03 2010 -0500
+    
+        Use new backtrace info to set a more useful Java thread name
+    
+    commit 75b100604af39de52b26bdb21669136234424a0b
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Mon Aug 30 11:37:49 2010 +0900
+    
+        Fix ifne/ifeq bug in dynopt guard and switch DefaultMethod to not flip generations on JIT in dynopt mode.
+    
+    commit fe3b408629e94b7db0436152968bd6d2232f6c7c
+    Merge: eea60da 85c64c6
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sun Aug 29 20:33:06 2010 +0900
+    
+        Merge branch 'master' into backtrace
+    
+    commit eea60da3905c87c16fbb4e6c78fd7a07f842e4bd
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Fri Aug 27 14:09:44 2010 +0900
+    
+        Modify Java Fixnum fib bench to use the long call paths where possible, to be more like what compiled Ruby does not.
+    
+    commit a189563d9073208292e91aff3eb1c88489bd113d
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Aug 25 15:07:21 2010 +0900
+    
+        Fixes for jitted/compiled backtrace generation
+    
+        * SClass in a method body needs to frame, so it has a jump target for non-local return
+        * Compiled methods need to always have their ruby name in the method name, so it can be mined out appropriately
+        * Synthetic calls, like to rescue bodies, need to gobble caller frames to avoid multiple entries
+    
+    commit 276226de611cb8d5af942148109c2a51982e7640
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Aug 25 14:03:44 2010 +0900
+    
+        Add callNumber tracking to method handles, to properly handle return jumps.
+    
+    commit b94bcf119a54f52ab9be3c86bc5cc85078f20eee
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Aug 25 13:16:25 2010 +0900
+    
+        More fixes for hybrid backtrace:
+    
+        * Get generated trace to be RaiseException's Java trace
+        * Add Ruby exception name to the RaiseException message
+        * Rewire and repair trace calls
+    
+        All main suite tests now pass in interpreted mode.
+    
+    commit dc9fcd3de0f3070507ac0a0647973d1e9f16ae4f
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Mon Aug 23 14:38:47 2010 -0500
+    
+        Fix debug logging of exceptions being raised and patch a couple tests for new backtrace structure.
+    
+    commit 3acd3201d85e4da9186fa17d3a04bdc9db742e29
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Mon Aug 23 13:23:04 2010 -0500
+    
+        Include original source file in compiled Ruby, add missing "in" line for MRI rendering, and soften requirements in test_backtraces to allow for native elements in the backtrace.
+    
+    commit 728cf3983fbeffba944fe34a8b0e410cc1de041c
+    Merge: 88a64de 0e9c956
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Mon Aug 23 00:18:07 2010 -0500
+    
+        Merge branch 'master' into backtrace
+    
+    commit 88a64de879446be3398ba7671b5fa1f3e46ce02f
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sun Aug 22 17:29:21 2010 -0500
+    
+        Turn on "positionless" compilation, since compiled code no longer needs to update interpreter backtrace frames. Also fix nil/null backtrace rendering.
+    
+    commit 5712a4ce285a5b3662c8ef8def2599223a232626
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sun Aug 22 17:18:17 2010 -0500
+    
+        Fix off-by-one line numbers from interpreter frames.
+    
+    commit 519f4625b9d9658f50b986b1add560903ee453de
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sun Aug 22 17:10:47 2010 -0500
+    
+        Remove some old backtrace code no longer in use and get all "backtrace" method handles to generate with no frame at all (since Java stack is used now).
+    
+    commit 424d967df8a3b6ba277bdb1b530d4f7f62ecbc4a
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sun Aug 22 16:52:29 2010 -0500
+    
+        Get Kernel#caller working with hybrid traces, get Rubinius rendering working again (partially), separate gathering and rendering of backtraces.
+    
+    commit a00822740712ddd924896feccc10f015fd20d4be
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sun Aug 22 15:32:08 2010 -0500
+    
+        Mine method names out of AOT and JIT compiled stacktrace elements and get JIT using the original name of the method.
+    
+    commit 039d184ac5f798aed21870a7552b66c5973ca0eb
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sat Aug 14 22:16:48 2010 -0500
+    
+        Simplify in-class encoding of StaticScope data.
+    
+    commit 876a762b8af88955bee598dfd0421805d9b47c40
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sun Aug 22 01:41:44 2010 -0500
+    
+        Fixes to hybrid traces to get tests working better:
+    
+        * Omit Kernel#raise and the KernelJavaAddons rbRaise from traces
+        * Handle getBacktrace when there's been no preparation
+    
+        Also modified test/testException.rb to allow internal line numbers for the "load" call, rather than MRI standard "whatever line it was called from".
+    
+    commit 06f1bd171d6897f651b3cebfd76551080acbfe40
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sun Aug 22 00:39:59 2010 -0500
+    
+        Move backtrace management to a separate stack and implement mixed-mode backtrace generation.
+    
+    commit ca40e73a7c136dfdd3853f0cd62a73bf70a3a08f
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sat Aug 21 20:56:50 2010 -0500
+    
+        Get all major interpreter entry-points passing through simple, known method bodies. First step toward mixed-mode backtraces.
+
+commit 75839f8603acebecde6a01f0e11f92dff4f71e7b
+Merge: 697b0b6 757ac99
+Author: Tim Felgentreff <timfelgentreff@gmail.com>
+Date:   Fri Sep 17 23:26:44 2010 +0200
+
+    Merge remote branch 'origin/master' into cext
+    
+    Conflicts:
+    	src/org/jruby/RubyThread.java - upstream replaced blocking task
+
+commit 0a95c258c30be9a9d19240d75204e93b4c427719
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Sep 12 03:43:37 2010 -0300
+
+    Localize some fields used in Array#include? to speed up the loop.
+
+commit 3ceede5cd748f7af1dea1b97db65e5737ddf81d9
+Merge: 414605b 69c2bac
+Author: Tim Felgentreff <timfelgentreff@gmail.com>
+Date:   Fri Sep 10 18:00:36 2010 +0200
+
+    Merge remote branch 'origin/master' into cext
+    
+    Conflicts:
+    	.gitignore => cext added cext build results
+    	build.xml => cext added osfamily-specifiers to git invocation
+    	lib/ruby/1.9/mkmf.rb => master added functions, cext added jruby support
+    	src/org/jruby/RubyBignum.java => cext made LONG_MIN, LONG_MAX and ULONG_MAX public fields
+
+commit 81746e2615539a1b2965925401308bbde8c7e415
+Author: Tim Felgentreff <timfelgentreff@gmail.com>
+Date:   Tue Aug 31 01:03:00 2010 +0200
+
+    start implementing syncing of RARRAY
+
+commit 79188986e47ab2d5dd4a2f91f4c1b46495b73a10
+Author: David Calavera <david.calavera@gmail.com>
+Date:   Tue Jul 20 01:19:43 2010 +0200
+
+    [1.9] add Array#repeated_combination
+
+commit 105217d348f9d9446ec18302c4ac098e8583d2f7
+Author: rohit <rohit.arondekar@gmail.com>
+Date:   Sat Jul 3 21:41:31 2010 +0530
+
+    RubyArray now obeys List.remove contract by removing only one element matching Object. Fix JRUBY-4661
+
+commit 719bc20aba3160b30b9e5f27665383e8fc7a8a97
+Author: Rohit Arondekar <rohit.arondekar@gmail.com>
+Date:   Tue Jun 29 21:58:26 2010 -0700
+
+    Remove FIXME asking why push_m is named push_m.
+    
+    Since C doesn't support method overloading,
+    rb_ary_push() is for << and rb_ary_push_m() is for my_array.push.
+    
+    The m most likely stands for 'method', as in push_method.
+    
+    Signed-off-by: Vladimir Sizikov <vsizikov@gmail.com>
+    
+    Author:    Rohit Arondekar <rohit.arondekar@gmail.com>
+
+commit 19cfc5eb03050ed7fb208697dfe794f9494f8cfc
+Author: David Calavera <david.calavera@gmail.com>
+Date:   Sun Jun 27 18:45:43 2010 +0200
+
+    [1.9] Array#pack returns a string infected by the format string and the elements into the array
+
+commit 0d4eae94dcb340c68079a6afa3c28e8c56807787
+Author: Christoffer Sawicki <christoffer.sawicki@gmail.com>
+Date:   Mon May 17 22:32:55 2010 +0200
+
+    Enable Array#count in Ruby 1.8 mode
+
+commit c0c8955f2b0ff31d519c617335ba99dd9b6a4870
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Sat May 22 20:57:04 2010 -0500
+
+    Pass all specs for Array#product in 1.9 mode.
+
+commit d905fd4ef5a7c8e224382f97e44b8d9025dc3f05
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat May 22 19:23:06 2010 -0500
+
+    Add Array#repeated_permutation (1.9)
+
+commit 515a4c142250fd30b140c22728b061a54aaeacbe
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat May 22 14:44:37 2010 -0500
+
+    Various spec fixes:
+    
+    * Fix all 1.9 Array specs (other than pack, which doesn't seem to run with Ruby 1.9 at the moment).
+    * Backport 1.9's matrix to fix matrix failures
+    * Merge over a ruby_1_8 set.rb fix (ruby bug #118)
+    * Make Digests' #file raise EISDIR on dir
+    * Update rubyspec and mspec and tag remaining failures
+    * Kernel#require should expand ~
+    * $? should be read-only
+
+commit 69507685f28adaa80ca491ad5736a5c8b5544ada
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri May 21 12:03:00 2010 -0500
+
+    JRUBY-4085: Array#find can return the wrong value if it's mutated during iteration
+
+commit e05b969291d44e3d42e14861e30ce189a52f1b5f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun May 2 02:09:26 2010 -0500
+
+    Miscellaneous cleanup:
+    
+    * A number of findbugs items in the "threadsafe", "performance", "malcious code", and "experimental" warnings
+    * Tidied up all NetBeans "yellows" in the files I touched
+    * Removed now-defunct JRubyServer/Client/Service
+    * Removed now-defunct ssa.rb and DAGBuilder
+
+commit 8eb139cb811c5b7f4bffbe1648cf3e615494f0fa
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Mar 26 18:51:13 2010 -0500
+
+    Tests and logic clarification for JRUBY-4669: Non-reified Ruby classes can't be to_java :object
+
+commit 9b1f32c2ad5ef8aa7c81d470dd855b49d601d4bc
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Mar 25 20:05:47 2010 -0500
+
+    Minor perf improvements to marshalling and simplification of lazily-initialized collections in RubyModule.
+
+commit 856a80155022cbbe39b9bbfef73a89e5a3d7a5a8
+Author: David Calavera <david.calavera@gmail.com>
+Date:   Wed Mar 3 20:50:45 2010 +0100
+
+    JRUBY-4616: [1.9] New methods Array#select! and Array#keep_if
+    
+    Signed-off-by: Vladimir Sizikov <vsizikov@gmail.com>
+
+commit b78ccc26d091097d3dfa7637d8e520cd6b3a9f0d
+Author: Vladimir Sizikov <vsizikov@gmail.com>
+Date:   Tue Feb 23 13:57:30 2010 +0100
+
+    JRUBY-4586: Array#shift and Array#pop return wrong results in some cases
+    
+    Tests added to RubySpecs.
+
+commit 56eeae1a85453a45e787b212544ac380cf3c1735
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Feb 17 16:40:49 2010 -0600
+
+    Fix for JRUBY-4515: RubyArray doesn't have toJava method which makes JavaEmbedUtils.rubyToJava fail
+
+commit 0505fb1fc7ac96410a7a47b8702f1ef325990997
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Tue Feb 2 16:05:23 2010 +0100
+
+    [1.9] Fix JRUBY-4508, add Array#rotate and Array#rotate!
+
+commit 99275261da64c8820dd7ffa64d2eff2a1109aaca
+Author: Vladimir Sizikov <vsizikov@gmail.com>
+Date:   Wed Jan 20 14:25:34 2010 +0100
+
+    Speed-up of Array#== in some use cases.
+    
+    This is actually how MRI does things too.
+    Improves equal_bench from 16.5sec to 15.7sec.
+
+commit 84271d05f38910f03bf0707094be0351d82e21e4
+Author: Vladimir Sizikov <vsizikov@gmail.com>
+Date:   Wed Jan 20 14:08:46 2010 +0100
+
+    JRUBY-4474: Array#== behavior is different from MRI
+    
+    RubySpec update is pending (under review).
+
+commit 549ccd1f39171f432fd0615fba239f127159fa50
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Tue Jan 12 16:09:45 2010 +0100
+
+    [1.9] Fix Array#flatten to be 1.9 compatible
+
+commit 75e5d3b8860e5588374278008b82a00fcf1c2887
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Tue Jan 12 15:14:07 2010 +0100
+
+    [1.9] Fix Array#* to work correctly
+
+commit 83b1502eed5f738ef5838db9c3201c3ea114aaf9
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Tue Jan 12 14:53:46 2010 +0100
+
+    [1.9] Make Hash#hash and Array#hash fully recursive safe
+
+commit e6c72780d9942527d89c535298026f8403416cbc
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Tue Jan 12 14:09:02 2010 +0100
+
+    [1.9] Fix Array#join and Enumerable#join for 1.9
+
+commit 57999899cc0fcf7d6c0cc9f344a024d2a081fa9b
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Dec 23 11:03:15 2009 -0600
+
+    JRUBY-3427: [19] Array#sort should honor modifications to String and Fixnum
+
+commit 2f3802343d0de9440a71e099002d3b66f51c0a51
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Dec 23 00:40:00 2009 -0600
+
+    Use accessors for those pesky ByteList fields and update bytelist.jar to a current version with accessors and deprecated fields (for compile warnings and because we'll want to privatize them some day).
+
+commit 82dbfca029310650bf429bf0b9c5039a7397cf9f
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Dec 17 13:20:12 2009 -0600
+
+    JRUBY-4321: [1.9] Array#sample crashes with IAE
+
+commit 13c40aeb515d14e62db6cb469a560d900a27647e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Dec 16 00:59:55 2009 -0600
+
+    Set reified class for all the primary core classes, so they'll work properly when extended and an interface gets included.
+
+commit c8f50eda35a8330268da88b60aef6123ed508b7d
+Author: Daniel Luz <dev@mernen.com>
+Date:   Wed Dec 2 15:39:17 2009 -0200
+
+    JRUBY-4297: Array#reverse fails on frozen arrays
+    
+    Removed modification check from RubyArray#reverse, as it operates on a copy.
+    
+    Signed-off-by: Vladimir Sizikov <vsizikov@gmail.com>
+
+commit 50f18ccb59d5899171aa196b13b351d17741f555
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Nov 12 10:59:49 2009 -0600
+
+    Faster Array#zip and Enumerable Array fast path for all?
+
+commit 19adbf64d1d489c03c7f105cfd901d912a3a5ff8
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Nov 5 19:21:21 2009 -0800
+
+    Fix newArrayLight cases that pass 0 to use newEmptyArray, and reduce newArray long paths to int constructors.
+
+commit 7497017d0098fb909c9d6459ea8bff180ed502f8
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Nov 5 18:50:45 2009 -0800
+
+    * Update some templates where the .java version got edits instead
+    * Fix some newArray with NULL_ARRAY to call newEmptyArray
+    * Add separate paths for "array" and "nonarray" in block dispatch, to eliminate the avalue bool
+
+commit d392512b1310979c0f06f867f95dbf2c44ddd475
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Nov 5 14:52:03 2009 -0600
+
+    Last commit was a little premature because I it was wrong if begin != 0
+
+commit e2b866b37e4c180822c5c47c58e4bc352b84ad72
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Nov 5 11:23:30 2009 -0600
+
+    Add detect+find_index array opt.  Also David Calavera RubyArray#select patch (JRUBY-4216)
+
+commit 0fb714395bc9a35151d6e5f46069104500fb45ca
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Nov 4 15:51:25 2009 -0600
+
+    First landing of builtin attribute on methods so we can check to do builtin-specific optimizations + First methods on Array to use such an optimization
+
+commit 20a1121a93ea3ae7072789eb01c9ad2c6b4d1f04
+Author: Vladimir Sizikov <vsizikov@gmail.com>
+Date:   Tue Nov 3 13:38:26 2009 +0100
+
+    JRUBY-4206: Array should provide its own map method
+    
+    This also partially solves 'whichr' gem functionality on Windows,
+    reported in JRUBY-4205.
+
+commit aeef3e6d1d2e2f02cdbc34e19971bbd10726c0b5
+Author: David Calavera <david.calavera@gmail.com>
+Date:   Fri Oct 30 09:37:44 2009 +0100
+
+    fixes JRUBY-4181: [1.8.7] Failures on 1.8.7 HEAD test/ruby/test_array. Failure 4.
+    
+    Signed-off-by: Charles Oliver Nutter <headius@headius.com>
+
+commit 7447f05120849ff89badbcb9cbfb50b578fc8de8
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Oct 29 10:35:59 2009 -0500
+
+    Update test/externals/ruby1.8 to latest, fixing a few issues and masking/reporting some others.
+    
+    Also a fix for a minor flatten! behavior reported as a bug in 1.8.7.
+
+commit ac54677333e25bd8133e8647880259a6ec3eef2f
+Author: David Calavera <david.calavera@gmail.com>
+Date:   Wed Oct 28 19:15:43 2009 +0100
+
+    fixes JRUBY-4175: RubySpec: Array#<=> returns nil when the argument is not array-like
+    
+    Signed-off-by: Charles Oliver Nutter <headius@headius.com>
+
+commit 4d034fafe1ff72ae748c24acee2a8ed0d9afcdbd
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Oct 25 12:56:37 2009 -0500
+
+    Fix for JRUBY-4157: fannkuch and chameneosredux benchmarks timing out on The Benchmarks Game
+    
+    This solves at least the fannkuch problem. I will test chameneos before resolving.
+
+commit 6266374bc8673dbc2a882c392b8af9016af19ab2
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Oct 15 15:26:52 2009 -0500
+
+    Fix for JRUBY-4053: ActiveRecord AssociationCollection#== method is returning false on equal results
+
+commit 4d3196b46c9298a708793d8b17fb447ffb30d26c
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri Sep 25 15:10:28 2009 -0500
+
+    JRUBY-3984++: [1.9] Array improvements to solve several specs (Calavera + me).  Also some name change refactorings.
+
+commit be1ce02e443cb0fcca88079595ea08c5ca6bb515
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Sep 22 12:27:32 2009 -0500
+
+    More consistency fixes for JI coercion:
+    * Move more places to calling toJava
+    * Move code away from calling convertRubyToJava, the old clunky coercion path
+    
+    Two behavior changes are introduced by this commit:
+    * When coming out of a collection (RubyArray, RubyHash) Fixnum will now coerce to the smallest java.lang.Number subtype its value can fit into. We already did this for calling methods that receive Object, but now also do it for many other cases of conversion to Object.
+    * nil values can now be assigned to or passed for primitive fields or arguments; nil will coerce as "0" in the smallest Number type possible.
+
+commit 7b201461f1b2ac65b78e9376dea1cfdd679de9f9
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Sep 6 15:24:00 2009 +0900
+
+    Fixes for JRUBY-3816: Objects returned from Java library call not fully unwrapped
+    
+    Needs specs to be considered resolved.
+
+commit 3a27a006196915dad27d80dd9cbab973fbed679d
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Sat Aug 29 18:58:31 2009 -0500
+
+    [19] fix two Array#sample crashers from rubyspec
+
+commit baccf9a94543c2d6b8879c4bccb5539f1d148921
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Sat Aug 29 16:35:30 2009 -0500
+
+    Add asserts for leakiest abstraction ever
+
+commit 18ab5f080f93d614cdd443814b8baa4c23dabbad
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Aug 24 15:53:41 2009 -0500
+
+    Fix nil as arg for Array#cycle
+
+commit 2b6aedfc5d558d57628ae0e060841e26b3913932
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Aug 20 17:50:50 2009 -0500
+
+    Fix for JRUBY-3878: String representation of arrays and symbols does not match ruby 1.9
+    
+    Basically, Array#to_s calls Array#inspect logic in 1.9. Specs already exist, so they'll pass when we start running them.
+
+commit 0146f95d1ebcb50c39e493dd7ca088efd4be4201
+Author: Martin Traverso <mtraverso@acm.org>
+Date:   Wed Aug 5 09:53:51 2009 -0700
+
+    Fixed eql? & == checks on mutually recursive hashes & arrays
+    
+    Signed-off-by: Charles Oliver Nutter <headius@headius.com>
+
+commit 425dba6a944ece9db9daedd60b343cb686b983f6
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Aug 4 17:37:18 2009 -0500
+
+    Add Array.try_convert
+
+commit 9560b3ac07b25583bf607003c4018ccaec60d673
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Aug 2 21:01:57 2009 -0500
+
+    Make sure there's only one Java method name being bound to the Ruby method name "pop" for RubyArray.
+
+commit 0c1e3fd87f246e596a0fb5cbefbcd2a26dbcb228
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Fri Jul 31 23:01:34 2009 +0200
+
+    [1.8.7] Array#slice!, sort out final bugs for Array compatibility
+
+commit bfaa6ab729e16e12b695121cbb94fc4d37bd7ba9
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Fri Jul 31 19:34:22 2009 +0200
+
+    Fix two bugs in Array#flatten!
+
+commit 68b92f640bd4919a4f40fb40adfe51c953ba1bfe
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Fri Jul 31 13:15:22 2009 +0200
+
+    Make Array#pop return Array instances instead of instances of the same class
+
+commit 532e6a1279c03913c2e63d6ee3bf9ad096979f24
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Fri Jul 31 13:11:47 2009 +0200
+
+    shift should not return the same class, but Array's instead
+
+commit 00d7e8a39591baa90b3517144403854e5692b5ce
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Fri Jul 31 13:08:46 2009 +0200
+
+    Fix a bug in creating new Array's in flatten and flatten!
+
+commit 397ae2d50e640395f86d4c6cf6e5bd0950fa6c30
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Fri Jul 31 13:02:59 2009 +0200
+
+    Fix JRUBY-3148
+
+commit 57596f359a7809fab49135d5618a2f68951408b0
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Fri Jul 31 12:59:47 2009 +0200
+
+    Fix a bug in Array#permutation for the empty array
+
+commit 68469feb970b1b85b3982c77b49cb9d830df1c24
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Fri Jul 31 12:53:03 2009 +0200
+
+    Fix a bug in Array#permutation for the empty array
+
+commit c6aebe391cac80cda3af76b8d3d54e826c99cda0
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Fri Jul 31 12:48:57 2009 +0200
+
+    Fix JRUBY-3612
+
+commit 5f49154bcb4f015aa7ae0f1d613624eab1a9c3bf
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Fri Jul 31 12:42:54 2009 +0200
+
+    [1.8.7] Array#index
+
+commit 7f456091f38ebea2263424d52e4d90d0ab5a8031
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Fri Jul 31 12:41:01 2009 +0200
+
+    [1.8.7] Array#choice
+
+commit f1bb04ecda9025e1ac837c3a1068c2e17f15e17b
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Fri Jul 31 12:36:36 2009 +0200
+
+    [1.8.7] Array#each, Array#each_index, Array#cycle, Array#combination
+
+commit 2b57b610308db7ede65670af67ffbb08b5fd6f06
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Fri Jul 31 12:32:20 2009 +0200
+
+    [1.8.7] Array#flatten, flatten!
+
+commit 0412715a7744dff7ef4037aeb78eedda5560e74b
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Fri Jul 31 12:24:50 2009 +0200
+
+    [1.8.7] Array#permutation
+
+commit 1e1fad81bbec04833f5795b60d7c6c1f7d142b3a
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Fri Jul 31 12:23:00 2009 +0200
+
+    Fix 1.8.7 compatibility for Array#pop
+
+commit 7357a2c2a8d17932631b051bfb084a08eaa534af
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Fri Jul 31 12:20:45 2009 +0200
+
+    Fix 1.8.7 compatibility for Array: reverse_each, rindex, collect, map, collect!, map!, reject, reject! and delete_if
+
+commit ce5d45d3d8bd8521e33f670a91fb10828fe3342f
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Fri Jul 31 12:14:06 2009 +0200
+
+    Fix 1.8.7 for shift, shift!, shuffle and shuffle!
+
+commit 5d3674b403e6f91ba1159f39b5b557784485446f
+Author: Wayne Meissner <wmeissner@gmail.com>
+Date:   Fri May 8 13:49:13 2009 +1000
+
+    Use the return value from Collection#toArray(T[] a) in newArray().  This
+    is needed because the array returned may not be the array passed in if
+    the size of the collection changes during the toArray() operation.
+
+commit 93fca51199bbb9cdda372582ee69b312d1fc35ce
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Sun Mar 22 14:10:33 2009 +0000
+
+    Fix string conversion order for 1.9 String#[]=.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9454 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 44d152fb504cce85a2dce0139d970a5460e65ed7
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Mar 16 17:38:59 2009 +0000
+
+    *Really* fix verbosity of Array#initialize block warning.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9425 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d805d453526677bdf279cf9c851f8ed4ad3abb41
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Mar 16 17:24:37 2009 +0000
+
+    Fix verbosity of "given block not used" warning in Array#initialize.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9424 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit bc3c68946a4e1d75b6e8adafa893e8b0698bf102
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Thu Feb 26 01:37:22 2009 +0000
+
+    Enumeratorize Array#reverse_each.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9326 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit fc3baeb42cfa9854a13dd2a63ededa123efd47f0
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Thu Feb 26 01:31:34 2009 +0000
+
+    1.9 Enumerable#reverse_each.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9325 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 0e049936cce701820afa75c14477df975b588a60
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Wed Feb 25 19:43:27 2009 +0000
+
+    "Block unused" warnings for 1.9 Array#index/rindex.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9318 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit eba2c9089dbfe259a869b484705a48626418a868
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Thu Feb 19 02:03:56 2009 +0000
+
+    Array#sort should never do ThreadContext lookup.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9240 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 2963f4800dd5bf5aa8b5ffb65eb3799424235df9
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Wed Feb 18 19:17:06 2009 +0000
+
+    1.9 Array#uniq/uniq!.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9235 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 9d647786fcbc95475a4b97e30ac3d3c5dd72ff95
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Wed Feb 18 18:46:33 2009 +0000
+
+    Split RubyArray.makeHash.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9234 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit ee8e292ea9b0b24ace2b8470183da7121a193fd1
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Thu Feb 12 20:12:22 2009 +0000
+
+    1.9 Array#sort_by!.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9119 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 639020de8b397c7f8ab1b1c07926618cea742994
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Thu Feb 12 19:19:38 2009 +0000
+
+    Simplify Array sharing logic, fix Array#uniq.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9118 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 1ed4b03ddec5102bfeab191785795322f5fe77e6
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Thu Feb 12 18:31:42 2009 +0000
+
+    Fix Array#permutation.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9117 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 8ca1b8da527bda195a5a6ca2306a3db10719d999
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Thu Feb 12 18:26:05 2009 +0000
+
+    Don't need to use append.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9116 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 09d40fe90fdc3ed3c441480a123732ecb8704a8a
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Thu Feb 12 18:18:24 2009 +0000
+
+    Separate faster path for Array#uniq.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9115 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 219e0308defd2d1e21ee0cde2c531090f5a55d69
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Thu Feb 12 00:15:52 2009 +0000
+
+    Fix for JRUBY-3387: Array#== rubyspec failure.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9101 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 9996dafe4b844260c38a7adc5140305ef564dafd
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Fri Jan 30 20:01:54 2009 +0000
+
+    1.9 Array#[]=.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8957 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit ea89970ed191fdec44e7254ba1d5b07d4032db33
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Fri Jan 30 19:32:35 2009 +0000
+
+    1.9 Array#[]/slice.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8956 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 560e3db3f42afbdc030a4815824b6773aec03a8b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Jan 29 04:50:51 2009 +0000
+
+    Add a nicer concurrency error for a modification path in Array#concat.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8929 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit ddd126aad76361773e51b9f2b6cff6f5b780f9d3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Dec 27 12:22:59 2008 +0000
+
+    Tidying up ArrayNode compilation a bit, since it's used for the 'yield' args list. No measurable perf improvement, but it's less bytecode.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8475 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 05bdd562d35a8634b3a67ca834871b72f4978e83
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Dec 27 05:22:16 2008 +0000
+
+    Another round of compiled block optimizations:
+    * Use RubyArray's fillNil (now moved to RuntimeHelpers) instead of Arrays.fill
+    * Nuke BoxedVariableCompiler, since with proc-as-binding it will never work (and hasn't been kept up-to-date anyway)
+    * Add "expression" param to local var lookup methods, to specify whether they should leave a value on stack. First step toward fully expression-aware compilation.
+    * Only handle exception-based redo when body contains nested logic that could cause it (scope-aware methods like eval).
+    * Reduce preamble logic for both methods and closures by reducing unnecessary stack-twiddling.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8470 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit b3332e8a4b4e338ffe9222dad0df67e35993341a
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Wed Dec 17 19:16:51 2008 +0000
+
+    Fix for JRUBY-3251: ConcurrencyError bug when installing Merb on JRuby. Test pending.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8384 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 061cbd6e3b5407bf6c3f277cfcad399172c7c926
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Mon Dec 15 22:02:54 2008 +0000
+
+    Arity split and some optz for Array#join.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8354 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 018421341f93b363fc9262c0522beb7694a82a3d
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Sat Dec 13 18:37:22 2008 +0000
+
+    Reverting, that was stupid...
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8333 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit c73421ff4ce9a55a306b6586c787cf1f7ef10938
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Sat Dec 13 18:09:01 2008 +0000
+
+    Optimization for modifyCheck so tainted/frozen/tmplock are checked by single bit test on most common path.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8332 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit c32f4e1f675e52f764fa578768debd58d7706129
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Sat Dec 13 17:41:02 2008 +0000
+
+    Big Array modifications. One of the last Array bottlenecks removed making destructive methods begin aware. Also multiple optimizations (Array#reverse etc.). Constant time Array#shift, constant time arr.unshift(arr.shift). bm_so_lists benchmark 30x faster putting JRuby ahead 1.9 (from worst to best).
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8331 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 4c38d8608ef8a3130ffa6b8ff60ae06c1770a261
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Dec 3 00:39:23 2008 +0000
+
+    Improved sort for JRUBY-2198: Array#sort is slower than MRI
+    
+    Thanks to Joseph LaFata for an excellent quicksort impl.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8250 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit ad972227688c610e18d2a5e1d75cdad88cfc6694
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Wed Nov 26 22:09:36 2008 +0000
+
+    Fix stupid fillNil typo (almost typo).
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8153 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 2e13e447a4d0b19608cb96c7ba16c0f2f7c93c64
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Tue Nov 25 17:20:00 2008 +0000
+
+    Array#* should infect result even if the argument is zero.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8132 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 95e1935a0b6dcb6b9c3b28877411fc5407e44b46
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Sun Nov 23 20:44:00 2008 +0000
+
+    1.9 Array#find_index.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8112 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit f6b08fe2c3b6e48babb9a9d843793ee3cc1548a7
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Sun Nov 23 02:39:50 2008 +0000
+
+    1.9 Array#count.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8103 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 635c294c69458d1f3c170a56a222deb9a5671881
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Sun Nov 23 02:13:54 2008 +0000
+
+    Fix Array#sample where it's not begin aware.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8102 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 5bdf13facd4e5c276cbfffe5db0e5999d5c5b6eb
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Sun Nov 23 01:30:24 2008 +0000
+
+    Array#fill arity split.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8100 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit bf8db0bc4acaeed7900b867e821e959f254be0be
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sat Nov 22 22:57:11 2008 +0000
+
+    Biggest commit eva (1.9 parser+1.9-runtime-related-changes landing)
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8099 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 0fd932deb8e88244343ace1274e7c052b88e9137
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Sat Nov 22 22:29:08 2008 +0000
+
+    Make explicit compat annotation for Array#flatten in 1.8 mode.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8098 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 1b52060d313e12523e35eb884f43f9c46a05a231
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Sat Nov 22 22:23:22 2008 +0000
+
+    Fix Array#flatten.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8097 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 0b29bc2cc168d0a4b01c69bcc3912f5c5d9e8bab
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Sat Nov 22 22:03:21 2008 +0000
+
+    1.9 Array#flatten (up to 3x faster than 1.9) One of the last pieces for 1.9 Array compatibility.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8096 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 8ece4632ab80ca120d4046ea90798d61f1cdae9e
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Sat Nov 22 18:20:06 2008 +0000
+
+    1.9 Array#sample
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8092 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit fd41de98893d4e8b187777e211411533972cf270
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Sat Nov 22 15:37:38 2008 +0000
+
+    1.9 Array#shuffle, Array#shuffle!
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8091 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 7bbedee05b951db8dfcad7c92470b4fc10c2b36e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Nov 16 23:57:16 2008 +0000
+
+    Remove all remaining references/dependencies on MethodIndex's int indicies and related fields.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8081 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 0c1c4968bfd2db9c52d53f5ad45a4e9c8a013fae
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Nov 13 21:14:40 2008 +0000
+
+    Multiple fixes, updates to rubyspecs:
+    
+    * Updated to latest rubyspecs; have not gotten full run tested yet but spec-short is clean and tagged
+    * Modified fetching to use wget; ant get does not handle githubs redirect well
+    * Fixed a minor issue in Array block-accepting methods where error message did not match spec
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8066 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit bff3b3bf1d210302b8eabbb401cae2f497b58c80
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Wed Nov 5 19:07:40 2008 +0000
+
+    Big opt for Arrays by using Nil prefilled array to fill empty/ahead storages by System.arraycopy. 5-10% faster literals. The bigger the array the bigger pay back, e.g: Array.new(400) is more than 2x faster.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8003 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 6d193dd7058dd530660e3aaffc28919d3c120cd3
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Tue Nov 4 22:53:13 2008 +0000
+
+    Further eager nil filling removal for array splicings by introducing special realloc for splices.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8002 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 1c2f564c007cc25c61bb3c6a8011a7239b1460f3
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Tue Nov 4 18:07:17 2008 +0000
+
+    Use newArrayNoCopy for Range#to_a (for fixnum opt) and BigDecimal#precs/split.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8000 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 922fd0c4740a6188ac4a0edfe503ea2a95038f6d
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Tue Nov 4 00:14:53 2008 +0000
+
+    make Array#shift doesn't set arrays shared (bm_so_lists 4x faster), remove unnecessary nil fillings when they would be overwritten immediately (or an array doesn't escape). Eliminate lots of length checking on array construction paths. Other minor optimizations. Array#+ 2-3x faster, others depending on nil filling 5-10% faster.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7998 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit e40c27ff5a53decab7e47275320be1a2479672b1
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Fri Oct 31 18:58:26 2008 +0000
+
+    Prevent inefficient cases but not allocating internal Array buffer in Array allocator that could be potentially immediately thrown away in Array#initialize. Do not pass fixnums for Array.new(num){} when the block doesn't use the arg. Array#initialize arity split. Do not call "initialize" in Array::[].
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7983 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 04ce842cc49a9e5e9830a53a27e219d1ed0867be
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Sat Oct 4 00:00:31 2008 +0000
+
+    Fixes for JRUBY-2883: Many Array methods don't handle recursive arrays properly, JRUBY-2878: Array#hash with recursive array crashes JRuby. Affected methods also match 1.9 behavior.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7825 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 4f07fc593e96609b553afa2140b82bfc709636f8
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Tue Sep 23 22:12:04 2008 +0000
+
+    1.9 Array#pop, Array#shift.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7772 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 39e830091b3162e24763ecf560dc0bcd99933fbc
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Tue Sep 23 17:08:40 2008 +0000
+
+    1.9 Array#combination, Array#permutation.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7765 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit dd9108e390ee4891a487ff347277cd109b962c3b
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Mon Sep 22 19:46:01 2008 +0000
+
+    1.9 Array#product.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7762 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 915b99291093e1b6e310aa694c6327bd5c1f4bdd
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Sun Sep 21 18:19:53 2008 +0000
+
+    1.9 Array#cycle.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7752 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 251faac4f18c0a989a823c1bd361b8b63a839a90
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Sun Sep 21 16:55:59 2008 +0000
+
+    1.9 Array#drop, Array#drop_while, Array#take, Array#take_while.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7751 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 52eb5533357be21831322a68d4fa77e24bae46f7
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Sun Sep 21 16:23:43 2008 +0000
+
+    1.9 Array#index and Array#rindex.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7750 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 609f19e48483a65f2faf064c98faf05b7cc67fa0
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Sat Sep 20 20:14:54 2008 +0000
+
+    Enumeratorize 1.9 Array methods.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7730 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 152343373e68dcaa854c7c09283cad269f47dc42
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Sat Sep 20 18:37:58 2008 +0000
+
+    Add 1.9 Enumerable methods.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7727 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit e84813e2e2551967af2250a6c8bd7d4051e22fcd
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Mon Sep 15 17:52:13 2008 +0000
+
+    Basic 1.9 enumeratorize support.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7706 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit ff48bd9bb7b423026efa572c126cc3d076876cb2
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Sep 13 08:35:25 2008 +0000
+
+    Add support for Open3.popen3, which merb's "jruby" spec runner uses. I've just added it to IO for now; I feel dirty about it but I'm too tired to put it into an extension lib. We probably should.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7690 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit dc11f4b2475c83b356291ef3c47448ed363b97d7
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Sep 12 00:47:01 2008 +0000
+
+    Perf improvement for Array#reverse, avoids doing a full arraycopy as well as a reversal.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7682 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit e275166475540e7663a5c6830e9a7bea5e564961
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Sep 7 22:44:43 2008 +0000
+
+    Outlining logic showing up as "too big" to inline during logged bench_string_ops run.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7650 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 1927a7663b582a1cca34044f609cc2b7a728e495
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Aug 31 04:53:57 2008 +0000
+
+    Miscellaneous call optimizations:
+    * Partial arity-splitting of super invocation (really only useful for Java to Ruby calls
+    * Moved callSuper logic into RuntimeHelpers, modified all callers to use the new methods, and deprecated callSuper on IRubyObject
+    * Eliminated 30-some more uses of indexed IRubyObject.callMethod and deprecated one of them
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7596 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 343d78fc864c98fc42701e83b285286690b0efe5
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Tue Aug 26 23:30:08 2008 +0000
+
+    Unbreak rake for special arg since invokers need a no-arg version of insert for this to work
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7555 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 5daed8f1553ed338e6e4ba60f4d1c74ef2c40f5a
+Author: MenTaLguY <mental@rydia.net>
+Date:   Thu Jul 31 18:11:13 2008 +0000
+
+    missed an AIOOBE
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7332 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 6902d680a0945369c10bbcd5356704fae727fa60
+Author: MenTaLguY <mental@rydia.net>
+Date:   Thu Jul 31 18:07:13 2008 +0000
+
+    add ConcurrencyError
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7331 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 7a26b7733e27458faffce4755794456029ec7cb4
+Author: MenTaLguY <mental@rydia.net>
+Date:   Thu Jul 31 00:10:02 2008 +0000
+
+    fix Array#fill regressions
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7329 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 04052114ce442fc05834eed9a7a88d5611a8571b
+Author: MenTaLguY <mental@rydia.net>
+Date:   Wed Jul 30 21:00:39 2008 +0000
+
+    get some remaining AIOOBEs
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7328 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit bdf50fd6ee973b6779da2057a44c48641f1babfa
+Author: MenTaLguY <mental@rydia.net>
+Date:   Wed Jul 30 20:41:42 2008 +0000
+
+    eliminate nulls from RubyArray, and trap AIOOBEs from concurrent modification
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7327 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 4dfbe5c12590fe1fd34e3520bd551b4db54b2944
+Author: MenTaLguY <mental@rydia.net>
+Date:   Wed Jul 30 18:09:07 2008 +0000
+
+    only need one version of RubyArray.elt
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7324 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit e9f180d9fdf942ab61666f29259dfeec669df9fb
+Author: MenTaLguY <mental@rydia.net>
+Date:   Wed Jul 30 07:38:23 2008 +0000
+
+    get rid of elt_f versus elt
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7323 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit f92d2bb4103f3ab6c5aa7a50c7289ba16e1cbe5f
+Author: MenTaLguY <mental@rydia.net>
+Date:   Wed Jul 30 06:51:55 2008 +0000
+
+    try something really sick
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7322 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 93d672d6344276e4185d6eb3d43dff888890d5c2
+Author: MenTaLguY <mental@rydia.net>
+Date:   Wed Jul 30 06:28:29 2008 +0000
+
+    handle long overflow properly
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7321 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit e3b9dd668d892f08d47f7e75475a1f9249b09728
+Author: MenTaLguY <mental@rydia.net>
+Date:   Wed Jul 30 06:24:16 2008 +0000
+
+    experimentally simplify/robustify RubyArray.elt
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7320 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 9496f57e1b3d6aa5ecf650afcde452abd02f07c3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jul 11 04:27:53 2008 +0000
+
+    Splitting up some methods to shrink them for e.g. hotspot inlining purposes.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7135 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 72975c6c9467ac11677b86f3886e555911e50299
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Wed Jul 9 00:34:32 2008 +0000
+
+    lots of RO.getRuntime removal
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7131 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit e72ca1a779973651923c718589f36379ac01280f
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Mon Jul 7 23:41:03 2008 +0000
+
+    Miscellaneous crap: rubyobject.getRuntime to TC.getRuntime; @overrides; searchMethod change
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7122 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 4a6956e15e574ebeb5d5968495f1ea96461f55e5
+Author: Vladimir Sizikov <vsizikov@gmail.com>
+Date:   Fri Jul 4 11:23:07 2008 +0000
+
+    JRUBY-2751: Array#fill should return self instead of raising an error when length is negative
+    
+    This resolves one rubyspec failure.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7102 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit ddb12c73c18b616e683a2c6c604b80b1f4e219bf
+Author: Vladimir Sizikov <vsizikov@gmail.com>
+Date:   Fri Jun 27 15:36:44 2008 +0000
+
+    JRUBY-2711: RubyArray keeps references to unreachable RubyObjects
+    after clear, reject!, delete and delete_at.
+    
+    Patch and tests by Micah Alles. Thanks!
+    
+    Signed-off-by: Vladimir Sizikov <vsizikov@gmail.com>
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7039 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 192082cf00b97ec8f2d6cd89587c3a261bde9ef6
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jun 20 12:39:52 2008 +0000
+
+    Shrink the elt methods a bit by moving the tests out into separate methods; should help inlining, since it showed up as "too big" and it's pretty hot when working with arrays.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6994 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit aeab6d30e7c8c28f86085ec526f6c0347bfe942c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Jun 5 23:57:24 2008 +0000
+
+    Various minor refactorings to shrink methods in the parser chain and elsewhere that HotSpot reported as "too big" to inline. Minimal performance boost, if any, but it's also somewhat cleaner code.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6897 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 63c6c28452c6ff6cb1516c2a3763f989e813ee67
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Fri May 9 23:20:09 2008 +0000
+
+    Proper and safe inspect semantics in most places
+    Dont use StringBuffers in Array#inspect Hash#inspect and Struct#inspect
+    Make Struct#inspect handle recursive references
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6664 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit e0909f476789ee087661a8aa787ca00e5665e2a2
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Thu May 8 00:41:58 2008 +0000
+
+    Use shared empty String where possible.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6638 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a78de7e6bfd7a2d1a2486093db9e411bf95c46c0
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Sat May 3 17:56:28 2008 +0000
+
+    Split arities for some other Array methods.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6619 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d012b5b146159505d59f66d04b8e533420fb85c3
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Sat May 3 16:24:01 2008 +0000
+
+    Arity split for Array#[] and Array#[]=.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6618 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit bf8a61d4439340332f11ff6ae8e55ccdad9a72f4
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Tue Apr 8 17:59:14 2008 +0000
+
+    Some cleanup and simplification for RubyArray.splice and RubyArray#spliceOnce. Further work needed though.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6432 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit fbc9e2d86cd3fdc515a3867c68bd6fde91713d02
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Apr 7 17:17:55 2008 +0000
+
+    Merge branch 'arity'
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6424 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 34f07e351d2b03d52c8a148bbea9d1f542ea3cea
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Wed Mar 26 23:30:38 2008 +0000
+
+    Fix class A;def to_ary;self;end;def == other;:foo;end;end assert_equal([] == A.new, true) case and change equalInternal signature so it matches eqlInternal and is easier to use.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6348 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit f8a029af815ecf044f5268707b5855b85c738db0
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Mar 20 22:14:18 2008 +0000
+
+    First round of logic to pregenerate method binding code, to avoid walking methods and annotations at startup.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6298 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 493c43fb8eac0a22425d375b15e8663d4c0ce74a
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Wed Mar 19 12:20:01 2008 +0000
+
+    Make creation of RI much smarter and add basic type tags to loads of places.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6289 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 993f8c99ef835ed7c86910dc4ec34919b335131c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Mar 17 21:02:28 2008 +0000
+
+    A bunch of findbugs fixes from JRUBY-1173. Also renamed generated callbacks to be Callback in their name instead of Invoker, to distinguish from actual invokers.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6246 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 852d904134ad970a20497fdcc5d752dd4ae49766
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Fri Mar 7 22:04:54 2008 +0000
+
+    The RC3 Surprise!
+    
+    Allow annotation defined ruby methods to optionally specify ThreadContext as first parameter
+    Convert easiest and most common methods to accept ThreadContext when method or child method can use context
+    
+    These changes give about 15% improvement on petstore bench and about 10% in ar-bench.  In ar-bench getCurrentContext calls go from 14 million down to 2 million.  The remaining calls largely can be removed but they were much more invasive.
+    
+    IRubyObject op_eqq and op_equal both not have ThreadContext consumer, but we could see no use of this in any extensions and figured it worth the trouble of converting.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6143 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d66c63984f4b4b39ec9688f987444abfc341790e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Mar 6 00:43:21 2008 +0000
+
+    Fix for NPE in Enumerable.grep; but it still doesn't behave like it should.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6117 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit b316fb1c92712a0ee8064c68a9c64d3abae048ae
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Tue Feb 12 21:40:11 2008 +0000
+
+    Reverting Array#first MRI compat.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5921 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 0cd807395fff8263c685b8064abf227e66ff0250
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Tue Feb 12 17:47:18 2008 +0000
+
+    Array#first should preserve metaclass information.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5919 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a2854314c1d9f05a82dfce08a10ba69823f5efd1
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Tue Feb 5 20:25:48 2008 +0000
+
+    Fix for JRUBY-2065: Array#assoc and Array#rassoc are not COW aware.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5833 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 02bfbc66a86d5b08ff8f5219da4be9888b3ec7ef
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Mon Feb 4 21:03:03 2008 +0000
+
+    JRUBY-2064:  Array.shift leaks
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5818 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 2b1a005a405839ca4eb268288816294e88f20a2b
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sun Feb 3 18:37:14 2008 +0000
+
+    JRUBY-2062: Add ids and convenient data to SyntaxException and IRubyWarning interface to make their life easier
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5806 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 684d8519b060d134838cc4f01ddb563c8f0f05a5
+Author: Vladimir Sizikov <vsizikov@gmail.com>
+Date:   Fri Feb 1 14:55:47 2008 +0000
+
+    JRUBY-2057: Array#join can't handle nested recursive arrays.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5784 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit b3d416662a9b358da11a63a1900dd8a917340322
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Jan 12 23:24:11 2008 +0000
+
+    Multiple cleanups:
+    * Remove most Arity.checkArgumentCount calls since they're handled by generated method handles now
+    * Add javadoc comments to MethodFactory impls and their public methods.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5576 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 8b46a002826832ad729c01c1cc63f39c0e212515
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Jan 12 20:45:02 2008 +0000
+
+    Refactorings to support backtrace-only calls. This will be useful to make "native" calls that only rrequire backtrace information cheaper, since they won't initialize an entire frame. Also moved the annotation-based selection of a call config into a single place and modified frameless compilation to use backtrace-based call configs, as part of an effort to make frameless execution safer for general use (and unfortunately a little slower for now).
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5559 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 73557bfaf6bdfb2d56aa807d136327bb20032c6a
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Fri Jan 4 01:20:30 2008 +0000
+
+    JRUBY-1877: Fix unmarshalling when an object uses a custom marshal_load/dump. The object
+    needs to be registered in the cache before unmarshalling its children.
+    Also moved around the register methods on the marshal side (possibly unnecessary), but makes
+    the code a little more symmetric and hopefully easier to match up.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5484 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d98408c632bff3989cdbf16023e6595d20a5a152
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Thu Jan 3 19:13:25 2008 +0000
+
+    JRUBY-1875: Integer overflow in Array#fill (patch by Vladimir Sizikov)
+    JRUBY-1876: Array#initialize should not modify frozen array (patch by Vladimir Sizikov)
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5478 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 365535e309f50ec440b5929c33854f745e67f89c
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Thu Dec 27 13:27:32 2007 +0000
+
+    Introduce newEmptyArray for null array creation (for cases where methods return empty arrays).
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5382 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 576356b2e6748b87c056da336de4543fb4a19978
+Author: MenTaLguY <mental@rydia.net>
+Date:   Sat Dec 22 03:59:53 2007 +0000
+
+    concurrency comments and fix RubyString field comments
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5335 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 11db823087e3e45de3b1ff19baa6987d7a10c945
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Dec 20 19:40:56 2007 +0000
+
+    Trivial fix to Array#each to resolve the last remaining failure in rubinius Array specs. each should use an internal index for iteration, always indexed from the "begin" of the COW array. It should do this even if the array is not shared at start, since it could become shared while iterating if modification are made.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5316 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit e389d07b921f46266feb9b28a62abbfecbf3907e
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Fri Dec 14 21:17:54 2007 +0000
+
+    JRUBY-1723: String#initialize and String#replace on frozen strings behave incompatibly with MRI  (patch by Vladimir Sizikov)
+    JRUBY-1706: [PATCH] Bad format for "frozen" error messages (patch by Vladimir Sizikov)
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5264 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 442763792361f944f39bdcb79e65db622c878337
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Sun Dec 2 13:53:36 2007 +0000
+
+    Opt for Array.modifyCheck by checking for frozen/tmplock using a single mask. Gives observable boost for 1000000.times {arr[0] = 0}, down from 0.485 to 0.469.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5140 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 466949eac8458b175943ccfd77bf3f8d9d85edb0
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Mon Nov 26 21:20:37 2007 +0000
+
+    JRUBY-1148: Array#== doesn't use custom to_ary method for RHS arguments (patch by Hung Huynh, test patch by Wirianto Djunaidi)
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5058 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 266c06e4838a45165d8d254df6ed96e53704bc06
+Author: MenTaLguY <mental@rydia.net>
+Date:   Sun Nov 25 19:22:09 2007 +0000
+
+    ensure proper synchronization for array sharing
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5042 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 8e769bd2e7f00de9176be96c8b830bea3fe5b284
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Fri Nov 23 15:50:55 2007 +0000
+
+    JRUBY-1586: Array#initialize_copy is public, but should not be (patch by Wirianto Djunaidi)
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5005 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d90d96713b61b44f9a715d2fb31e154a93eb4988
+Author: MenTaLguY <mental@rydia.net>
+Date:   Wed Nov 7 22:08:51 2007 +0000
+
+    Refactor hash deletion
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4887 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit bad1f67887904cd217bbf0239cc1a7354598e89e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Oct 20 01:07:29 2007 +0000
+
+    Fixes for JRUBY-1409, only alias the methods that MRI does; rebind others.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4631 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 9bc9825436ea08670905a6e2a06d760a97b71d70
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Oct 19 20:52:01 2007 +0000
+
+    Migrate JRubyMethod annotation to use String[] for names and aliases. Thanks Brad C from my blog.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4623 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 0b7a2dae2ec0baa531f313568ffc9b7382f89592
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Oct 12 01:50:08 2007 +0000
+
+    Migrate annotation-based method binding to generate DynamicMethod implementations directly, with arity checking built-in
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4575 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 7404d16eb807e139ac660829de7ff76891fd10cd
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Oct 10 04:34:15 2007 +0000
+
+    Completed Kernel/Object migration to annotation binding
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4541 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 8557c622ca2f2cb7e0625bd6137241df0daed496
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Oct 9 22:08:32 2007 +0000
+
+    Migrate RubyJRuby to annotation bindings, and fix an issue with module functions being defined on Object
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4539 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d80b446edecbc40f8b93d2b10bee0eed2a942280
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Oct 9 04:38:29 2007 +0000
+
+    Migrate FileTest and FileStat to annotation bindings
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4531 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d2b68b348a66f5daf579466c7200126b7ce8ce3f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Oct 8 20:33:53 2007 +0000
+
+    Fix arity to calculate right and correct a few bugs that resulted from it being wrong.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4517 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit ba060fb4180f15563ba664403ba62cdd66391e40
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Oct 8 16:35:11 2007 +0000
+
+    Migrated String to annotated methods
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4511 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit e1a1b4740ea53e145fc198b818432d40647f814f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Oct 8 14:55:59 2007 +0000
+
+    Migrate RubyArray to annotation-based binding
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4506 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 06b35f459d410386df261e63f1e663442eb13dcf
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Sun Sep 30 15:28:00 2007 +0000
+
+    ObjectSpace fixes so we don't call runtime.isObjectSpaceEnabled twice.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4432 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit cef7acc6902e10559c06d98fa0ace3b8d9d4385e
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Sun Sep 30 12:22:28 2007 +0000
+
+    Move equalInternal and eqlInternal into RubyObject static methods so they don't pollute IRubyObject interface
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4428 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 3e88cfab0d224fb9efa8d18336993e2c78ce495e
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Thu Sep 27 16:40:57 2007 +0000
+
+    - Identified and extracted construction paths for class/module/singleton/IncludedModuleWrapper, now there's no unnecessary null checks or assignments in their constructors (they take very few arguments so even asserts are not needed).
+    Each of those constructors have a comment what is it the responsible for, also, two RubyClass.newClass() and two RubyModule.newModule() methods have been extracted.
+    - Fixed logic that sets the parent/constant for Modules, now matches MRI (only setConstant/getConstantAt are used here).
+    - RubyClass rewritten, special attention has been put on allocation logic, now Class.new(...) doesn't fire a separate allocator class. (btw, logic of "class B < A;end" and "Class.new(A)" must be split since in second case superclass and allocator are not known until initialize is called). Class/Object allocation implementation mimics MRI's weirdest quirks in behavior, is _much_ simpler that it has been and much faster. This also allowed creation of generalized clone/dup implementations matching MRI. (only our special ivars need a care here).
+    - Rewritten bootstrapping of Object/Class/Module.
+    - Core classes (except Exception hierarchy, they should also be in future) are now cached in runtime (MRI caches them in static VALUE's like rb_cObject) Ruby.getClass(String), Ruby.getModule(String) and Ruby.getClassFromPath(String) should be used only by either interpreter or compiler and when the class name is not known at compile time.
+    - Fixed and simplified nodes: classNode, moduleNode, sclassNode, defsNode. Compiler has been synchronized here as well.
+    - No more __attached__ as ivar, it is now MetaClass field (which means lazy ivars for singletons). Compiler also updated.
+    - added and dosumented isModule() to IRubyObject (isClass(), isSintleton() documented).
+    - Fixed test_autoload test (Object.class_eval do;autoload :SomeClass, 'somefile';class SomeClass; end;end) should raise LoadError, now matches MRI.
+    
+    - Fixed a number of minor bugs:
+       1.instance_eval, was creating a metaclass for Fixnum instances (also affected Symbol/FalseClass/TrueClass/NilClass)
+       marshaler objects were kept in singleton classes
+       Range.inspect, was modifying the begin field (when it was a String)
+       Many bulletproofings in Marshal/Unmarshal (like unmarshaling an instance of nonexistant class), TypeErrors/ArgumentErrors matching MRI.
+       Fiber.new in 1.9, doesn't call #initialize method by funcall, fixed
+       number of method arity fixes and many methods are made fast now
+       fixed initialize/initialize_copy logic, further simplification, no ClassCastExceptions possible now
+       Fixed defineClass(under)/defineModule(under) logic
+       bulletproofed cases such: class A;end;module A;end
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4409 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit b395be2f737ab3d812f1576c639b0cbaef9db961
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Sun Sep 2 21:46:17 2007 +0000
+
+    Rewritten Enumerator class. This in turn fixes JRUBY-1265: Enumerable#each_slice (from enumerator) should splat values passed to block
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4262 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 238d169535c75bd5b5a9e49f1e49d8ff2fff16ff
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Thu Aug 30 21:24:34 2007 +0000
+
+    Fix for JRUBY-1209: Array#uniq, Array#|, Array#&, Array#- should be implemented in terms of RubyHash to actually use #eql? method on objects an array contains
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4242 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 875bdbab098dd2a9469cb97ce2dcda9bfa223217
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Thu Aug 30 20:20:56 2007 +0000
+
+    Fix for JRUBY-1210: Array#join behaves inconsistently on recursive arrays.
+    This required some fixes to the inspection mechanism allowing the join to be efficient (e.g: not looking up a ThreadLoacal on ["foo","bar"].join)
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4238 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 3eee7681b5e2ca9e18ca65304791eef82bde9d12
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Tue Aug 7 19:02:21 2007 +0000
+
+    Add Java based kind_of? for some of our Java based implementations
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4120 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 5d981d73e8acacbf1782dccef26015674f638d9a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Jul 28 00:57:41 2007 +0000
+
+    Reversing modifications to Block#yield making it accept IRubyObject[] instead of IRubyObject (usually an array) because they actually made it *more* complicated to process masgn block arguments.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4069 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 5747fd3ec8312c6a621ef48b17b2f3dd034de75b
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Mon Jul 9 20:03:49 2007 +0000
+
+    Remove various unused imports and code (e.g. make my cref patch more concise)
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3978 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 78cbe773471d332a3c21735e15928769efb108f0
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jul 2 15:36:43 2007 +0000
+
+    Landing Marcin's flags/OS changes; the memory savings alone will make us rich beyond our wildest dreams.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3952 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit fdac690cb77ceed07fd62c9c4cd492b8d023490c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jul 2 08:07:27 2007 +0000
+
+    Added restarg support to compiler. Passes all tests, installs gems, runs rails...
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3938 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 3855b2a7b32d013fbc4dbc8cdc3b4c6e9a9c8f0d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Jul 1 18:59:57 2007 +0000
+
+    Committing brand new dynamic STI generator; it's passing all tests, installs rake, runs rails. Any bugs, we'll find them in place.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3935 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 74e99411e873e71a14c701e8fd200edf9f397ec4
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jun 29 19:44:15 2007 +0000
+
+    Modify the yield path to use IRubyObject[] instead of IRubyObject/RubyArray for passing values; part of simplifying argument processing and moving toward full block compilation support.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3922 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 573fd8f8f0a81f2fcfebb36ad40f517252173049
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Sun Jun 17 15:45:23 2007 +0000
+
+    fix for RubyObject#convertToType and a big opt for Array#join by not using temporary StringBuffer/String
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3881 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d490af4a9d510b46750d3a638162282991658f1c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Jun 7 06:11:00 2007 +0000
+
+    Added STI for inspect.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3847 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 6ab8977aa4861824d215eda0c00d6f4cb1cfa607
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun May 27 05:58:09 2007 +0000
+
+    Zero-sum (hopefully) refactoring of trace functions to have an "event hook" model more like MRI. ruby-debug (and likely jruby-debug in the future) makes use of this event hook mechanism, so we'll need to have it in place to make the port easy. Also in this commit, fixed JIT to actually be running (it got turned off accidentally sometime in the past week) and make sure it's using the same "safe" logic for def arguments.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3746 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit e421186fd854c658a7cac4868e944d102c30a257
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Apr 22 19:18:54 2007 +0000
+
+    Fixes and tests for JRUBY-807, correct eql?/== behavior for hashes.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3527 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit b1742e48d5561cdc2e90fca3b335c89a0f3d9a84
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Fri Apr 20 02:08:54 2007 +0000
+
+    JRUBY-840: Cow fixes, Enumerable rewrite and arraycopy hunt (Marcin)
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3511 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d77f8c9202ed39af9f9aae4987650e3a6fe62508
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Apr 19 08:35:13 2007 +0000
+
+    Fixes for JRUBY-361: supply a real binding to trace functions. Also fixes JRUBY-842 by short-circuiting STI methods so they trace instead of doing fast STI dispatch.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3505 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 6c097f587fdc91d62cbb85ae9dd9abe2de7bb76f
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Mon Apr 16 11:05:33 2007 +0000
+
+    Even more STI
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3471 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d465fd9bc7ee6ae38475299bd82e65ac9d1311b4
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Mon Apr 16 10:41:12 2007 +0000
+
+    Add several new STI's
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3470 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 56921e8385af2ec469b4fb7cfcccfa7fba088d23
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Apr 9 01:56:07 2007 +0000
+
+    JRUBY-785 fixes: use the module index from object's *actual* module, not hardcoded to ARRAY et al.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3411 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 3fa144ebbc464129d9d83ee34463bab17c2d0f9b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Apr 7 07:07:51 2007 +0000
+
+    Added three more nodes to the compiler, added a couple extra STI methods the shootout uses, fixed a bug with dstr node compilation, enabled const nodes as "safe" since they appear to be working right in the contexts I've tried.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3407 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 958ad3b9bfc5cae3a21185dec303ac7af7d77482
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Apr 7 02:59:27 2007 +0000
+
+    Expanding STI to a few more methods, and doing a sweep of all "direct" callers to make them use STI.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3406 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 085e9b23399d22a3ccab1d36aadb827401cb3070
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Apr 7 01:28:18 2007 +0000
+
+    Added a few more method hot spots to STI
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3405 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit f4c15912b1d4edc84b06c882195d27df371d1023
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Apr 6 23:13:04 2007 +0000
+
+    More cleanup of STI and expanding it to conversion methods and hash.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3404 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 94ee8502efb892ce64fe581ba69e97810abe65f2
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Thu Apr 5 09:22:22 2007 +0000
+
+    Do Array.at STI.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3396 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 9b368de1f803eec61076b47d28f9d5b254c84f04
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Apr 4 05:59:07 2007 +0000
+
+    JRUBY-757 fixes
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3378 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 3b56094a521a338e9c42aa70a3c16a45126dddd5
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Apr 3 12:32:31 2007 +0000
+
+    Some cleanups and more objectspace optimizations for multiple assignment.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3360 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 53464ca106582c5ef69040aa27cc005d40b4606c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Apr 3 08:22:02 2007 +0000
+
+    Another couple places we can create "light" arrays
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3357 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 603357aaa9f3ef0e0c5e1572ca1fc980590ba67c
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Sat Mar 31 21:33:57 2007 +0000
+
+    Fix some small stuff
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3350 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 8c2bc8cfe9f4bcaa23b9e8544c55d7f9dc6c54b1
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Mar 29 07:08:05 2007 +0000
+
+    More IRubyObject cleanup; removed initCopy, moved setFrozen around, moved checkArgumentCount to Arity
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3322 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit accc1e23bd002b5176ce93d2d7a1d8961927d7fb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Mar 28 23:50:20 2007 +0000
+
+    Eliminate unnecessary use of ObjectSpace for ArrayNodes that are only used to gather call/fcall/yield arguments
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3318 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 82c72c5a2a3283315a73135eb8cd54d63448aa28
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Wed Mar 28 18:26:17 2007 +0000
+
+    Fix several minor bugs in coercion and BigDecimal
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3315 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit f5d499b05fc77e37e38fcfab0a3d55159dbcf1e8
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Mar 12 20:17:45 2007 +0000
+
+    Eliminate ThreadContext.yield and add an overloaded version in Block instead. One less "utility" method on TC.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3181 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit bcd3301fcd97db90d50558b5bb3c60d7d9226beb
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sat Mar 10 00:20:02 2007 +0000
+
+    The Bill Dortch sprintf special commit....
+    
+    JRUBY-667: String#to_f and Float(str) do not support MRI behavior
+    JRUBY-609: PrintfFormat needs to be completely rewritten
+    JRUBY-39: Floating point formatting discrepancy: "%02f" % '5'
+    JRUBY-581: Kernel.(format|sprintf) does not correspond to MRI's behaviour
+    JRUBY-678: RubyBignum test assertion failure in build 3151
+    
+    In addition to this fix I also removed old PrintfFormat and a few stragglers...There could be some follow work in method_missing in RubyObject and RubyKernel since I removed those old printfformat consumers in a pretty innefficient way.
+    
+    Thanks Bill it is great stuff!!!
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3152 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d6e2fa17e560a1403afb34468170a99b56b2fc99
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Mar 8 23:44:51 2007 +0000
+
+    Additional optimizations for arity and STI methods.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3150 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit f95f5220c0d640d918a1ae20a5c908168d8d0335
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Mar 8 04:48:39 2007 +0000
+
+    Fixes to STI: make add/alias methods flush it correctly, expand to fcall and vcall, add to_s, ensure all appropriate paths are calling via STI
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3141 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 55e4a2bf1b6f61baa6b2b3383b40f8e7c046cda5
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Fri Mar 2 14:58:24 2007 +0000
+
+    Don't check bounds unnecessarily. Also other microoptimizations
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3101 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit cbda6e67b4140fe5bfef5026fe6f911fed52c640
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Feb 23 00:09:28 2007 +0000
+
+    Marcin's fix for Array#fill with out-of-bounds index, along with a fill test.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3066 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 0a675c42ab9fff4e7aad77932642952c4eae67aa
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Wed Feb 21 19:25:16 2007 +0000
+
+    Some updates from Marcin. Improves performance.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3049 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 3cdb25eaa9a513347cfb5a544dc1146202ec82f6
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Wed Feb 21 13:40:57 2007 +0000
+
+    Fixes a bug, where frames are shared for blocks, which make define_method bonkers in certain situations. Also makes argument lists faster. Fixes JRUBY-520
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3041 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 7380355037a18af30aea26496f708605b3319634
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Tue Feb 20 10:56:01 2007 +0000
+
+    Fix for JRUBY-587. MRI YAML doesn't recognize floats with underscores in them, but we do, since that's in the standard. So I've removed that compliant behavior to be more like MRI. Also, the groundwork is in to have faster versions of some Array methods
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3030 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit b7a85659ed43bcb029333b76b5a6afc065566cc7
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Mon Feb 19 09:22:30 2007 +0000
+
+    Fix the arraythings I broke, plus a fix that make it impossible to inherit from things that aren't Class.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3024 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 313705fde61ccdb54f307a77840f550d5d97a4bc
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Sun Feb 18 17:46:51 2007 +0000
+
+    Microopt on elt/entry
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3023 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a2107e60085a5063bca76d897783a512bbd7eddc
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sun Feb 18 15:18:18 2007 +0000
+
+    JRUBY-606: Get rid of un/under-used IRuby interface
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3022 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit bb20e69fca02df78c52e9c534db24e9f4dda0509
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sat Feb 17 22:29:59 2007 +0000
+
+    JRUBY-599: JRuby needs a COW, primitive array backed builtin Array
+    JRUBY-604: Hash#sort raises exception
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3014 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit ecb7a41f6aec2ed210420a8439f743f91964d91d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Feb 12 18:18:08 2007 +0000
+
+    Array#[] and Array#slice should return nil for invalid ranges as in [].slice(-1..1)
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2986 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit ef423f1b886650195114fe952a1a6407fbb63f82
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Wed Feb 7 22:27:41 2007 +0000
+
+    - Create a NULL_BLOCK to replace null checks against blocks:
+      - Now isGiven() on a block tells you whether it is supplied or not
+      - yield on the NULL_BLOCK throw the correct exception
+        - We were not throwing this correctly by most callers with my landing of
+          the block branch
+        - We were generating NPE in cases where we called something that requires
+          a block and supply none
+    - Block.blockObject => Block.proc
+     - Rename and type since this is just a convenience reference for association
+       from block to what proc it might represent
+    - Remove unused blockAtCreation (this may become relevent for Ruby 2 but why do
+      it now
+    - Remove ThreadContext and IRuby from Frame
+    - Remove Scope
+    - Put Visibility directly on Frame
+    - callingzsuper dead code
+    - Now that modules have a proper superclass we can get rid of special code in
+      callSuper
+    - ArgsPushNode.childNodes should not return null
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2956 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d1e187ee1a48a02764375e108a6f62ab580de2ad
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 6 04:18:52 2007 +0000
+
+    First round of changes for JRUBY-565, converting RubyString's internals to byte[] and using PLAIN encoding for most uses of Java strings internally. More to come, including improving (and re-fixing) UTF8 support.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2951 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit de708391ca10a91e894dbc1c60a155181c92f3a3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Feb 2 07:09:29 2007 +0000
+
+    Fixes for JRUBY-519, and re-enabling our test_array unit test
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2916 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 6b91ba8ed9287616087ed5285a510e46cccdc78c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Feb 2 06:55:32 2007 +0000
+
+    Fix for JRUBY-473: when eaching over an array, re-retrieve the length for each test, since it could change while iterating.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2915 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit fa4215cf4b11891109c9c359e220c5de71194707
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jan 30 06:22:19 2007 +0000
+
+    Additional caching to avoid a call to matching_methods, turned part of ruby_to_java into a switch instead of multiple ifs, and added the ability to create "light" Ruby arrays for internal use (to avoid ObjectSpace). All fixes for JRUBY-501.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2882 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit fa021e6350a9913aec4080deb761bacd7e9414e2
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sun Jan 28 17:44:32 2007 +0000
+
+    JRUBY-488: Kernel#dup, Kernel#clone and initialize_copy should obey MRI protocol
+    
+    Patch by Marcin
+    
+    Nice...
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2864 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 1c9db4cbbcca01aa65287532b82330e37ff81173
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Jan 28 03:44:22 2007 +0000
+
+    Big set of changes for marshalling bug JRUBY-472; getting closer to having things sorted out. One known failure in "ant
+    test" is due to our modules defining methods on a singleton class, which appears to be incorrect and harder to fix. I'm
+    on it though.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2857 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 5c0789044de8703f41bdf83f29552ba29ad048f6
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sat Jan 27 17:31:22 2007 +0000
+
+    JRUBY-484: Reverse Iter Call relationship in AST and also pass block via Java frame versus maintaining blocks in TC
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2851 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 1eef0fd6c5b6eb8046466386f02bac86bfb3628a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jan 15 22:04:18 2007 +0000
+
+    Adding back missing arity checks for STI-based methods
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2745 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 97b2ec4b358263fcd35023bb1f1b6c7cdba88a53
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Jan 14 00:59:44 2007 +0000
+
+    Big commit of work from last week:
+    - Beginnings of STI-based dispatcher
+    - CacheMap modifications to make STI "safe"
+    - Code for JITing pure Ruby methods (currently disabled)
+    
+    Additional work on STI and the JIT will come along shortly. This will also fix current trunk failures during ant testing the compiler.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2732 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 84bf8e95db376bb4519bb776cb750e3738296b59
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Tue Jan 9 12:03:50 2007 +0000
+
+    Fix for the Rails test issue... null internal list for an array is NOT good.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2704 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit b390103c285ce373130c474193f69b87f98fb013
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jan 9 01:04:33 2007 +0000
+
+    Damn the torpedos...full steam ahead! Committing fixes for JRUBY-408 to get them out in the wild. There are remaining fixes to be made, but ant test passes, gems install, rails starts, handles requests, and generates.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2700 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 780c79c3c4894f224c360ce3621e40e44d1f8498
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Jan 7 01:20:38 2007 +0000
+
+    Good night, sweet DirectInvocationMethod, And flights of angels sing thee to thy rest.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2690 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 57504d74a1cc15c3236cb063ab5be50e662fa6f5
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Jan 6 10:08:11 2007 +0000
+
+    Initial fixes for JRUBY-408. Added ObjectAllocator and code to consume it throughout the MetaClass hierarchy.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2688 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit f00dfc9fcfb4c7a9ffbe605bd4cbf08cd2e9cb60
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Jan 6 01:42:03 2007 +0000
+
+    Committing changes for JRUBY-405. I've accomplished what I set out to do, which was moving all the yield logic into Block and other appropriate classes. Other block refactoring, including adding a block argument to the call pipline, will come in other JIRAs.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2685 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit c41f74da90a0fae6fd661222d04c6b602b3bc6ec
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Sun Dec 31 12:23:39 2006 +0000
+
+    Fix for JRUBY-385, recursive arrays and hashes
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2627 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit b42633842f09f67265d0738f78d69abc879169ce
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Thu Dec 21 14:48:23 2006 +0000
+
+    Fix for JRUBY-350
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2582 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit e4bf510c4b4daa21f18d1783bc0d10c240e67a57
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Thu Dec 21 14:40:21 2006 +0000
+
+    Fix for JRUBY-356
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2580 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit c5efec819547c1904f24520251cba220ba8d4a25
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Mon Dec 4 22:30:57 2006 +0000
+
+    Fix for JRUBY-308 and JRUBY-314 by Anders Bengtsson,
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2541 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 654f173770fef24a10855574674209b3262a32f7
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Wed Nov 22 23:05:27 2006 +0000
+
+    JRUBY-28: Unicode not suppoprted by interpreter/parser
+    
+    This ONLY fixes unicode in the parser it is not a comprehensive unicode solution.  -Ku should be in a state to play with though.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2457 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 1e0d087fdeb07557be3a064979fee7e0534c215f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Nov 21 23:57:23 2006 +0000
+
+    JRUBY-273 fixed ordering of receiver/arg for == calls within Array#index and rindex
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2450 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 587a4a78e1a863c7acbefb9e9d8d4018f92d19a7
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sat Nov 18 21:35:42 2006 +0000
+
+    JRUBY-252: Array#flatten failure (by Daniel Berger)
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2436 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 174e3d01468001668ab299227d4af11aea65341c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Nov 14 03:09:59 2006 +0000
+
+    damn the torpedos! full speed ahead! landing enebo_lexical branch changes plus TC-passing optimizations and a few small compiler updates
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2423 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 3f04b7ea16a8eaf59cf5de721f876360711e6521
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Oct 10 05:18:55 2006 +0000
+
+    cleaning up a large number of looped calls to IRuby.getCurrentContext
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2320 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a629a570985930f1dc88f37bf2c585dfe4ff6fb2
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Aug 17 01:38:04 2006 +0000
+
+    merging headius branch to trunk
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2204 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit dc9ebc85bd64040a28aeb6d23b3a4c90f21a9b7b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Aug 5 05:54:15 2006 +0000
+
+    optz: avoid multiple calls to IRuby.getCurrentContext in a single method
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2165 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 4b12521bf34cff2c9841b1dacb1a929f6def5327
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Thu Jun 22 02:11:16 2006 +0000
+
+    Reverse hashCode no longer calling ruby hash method (caused fresh rails app to not run)
+    Applied patch to skip over \r chars for non-binary files on windows (work-around until more comprehensive solution decided) [Ola Bini]
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2083 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 5651ee18343f68cfdd3bed6d5960e8ad3f35c766
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Tue Jun 20 02:43:53 2006 +0000
+
+    Do not call 'hash' when calling Java's hashCode().
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2078 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 377cd69bdd48819872b3054afa65b919afc6c58a
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Fri May 26 02:48:41 2006 +0000
+
+    Array.== should test properly against any to_ary instance
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2045 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit dbc75f5775b42f401554a0465098c530e42532d6
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sat Apr 22 22:54:21 2006 +0000
+
+    - to_s/inspect should return IRubyObject (inspect in object by default calls
+      a method which may not actually return a string -- kaboom)
+    - MatchData.inspect should return #<MatchData:0x14ae2c1> not to_s
+    - Remove unused import
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2010 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 9f2efc63a858fa0507245b207025eab027840a04
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sun Apr 9 20:58:31 2006 +0000
+
+    Make RubyString use a StringBuffer instead of a String as its internal representation.  This change makes one test case go from 262 s to 0.7s.  Various other function fixes thrown in (with quite a few new unit tests) and some conversion to make more mutable functions use StringBuffer APIs more.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1974 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit dc8610ee83891b4297cc010122636fc1cd4d1e22
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Thu Mar 23 13:55:00 2006 +0000
+
+    Java methods for Array and Hash toArray(Object[]) implemented.  Patch by Oli Bina
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1937 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 87ff6d0dd5a3c9dc02855dbb9ce1b40b168c25dd
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Mar 20 05:12:56 2006 +0000
+
+    modified Array#join to better match Ruby 1.8.4 logic
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1927 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 5073cc752efc231540d1aa632ff959ad6cc1aeda
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Mar 9 20:02:46 2006 +0000
+
+    merging eval, array, lastclass, and jirb changes from cnutter_work1
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1916 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 1d43870a42678f709851fcd9349d32a5f5be0dca
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Feb 2 19:51:50 2006 +0000
+
+    merging cnutter_work1 to HEAD
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1869 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit f5643d27aa7a2dd836ef19c758a0a13351434da4
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Oct 21 01:04:27 2005 +0000
+
+    merging cnutter_work2 to HEAD...damn the torpedos! full speed ahead!
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1807 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit c0fab8d04fa8e9ab360549a713b46891222be5e1
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Oct 20 21:13:50 2005 +0000
+
+    Reverted bad "call" dispatching for internal String behavior. The resulting code is fairly ugly (lots of casting and encapsulation-busting) but I'll remedy that before converting any more methods.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1806 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit ebd70b6d4c06376091d96db9bc904a9e2e38dc41
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Oct 16 06:04:40 2005 +0000
+
+    began converting methods into direct-invokable, first-class object style
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1802 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 4dfdacd80c56018084c618f3bbab7b542653d95e
+Author: David Corbin <dcorbin@users.sourceforge.net>
+Date:   Sat Oct 8 13:07:06 2005 +0000
+
+    Introduced IRuby interface for Ruby runtime object.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1798 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 36ec84bb4bc5dbd391c6ddb676b2faeb380f0539
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Sep 6 14:57:59 2005 +0000
+
+    merging exception-removal changes to HEAD; EvaluateVisitor changes left on branch for now
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1757 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit ca6b16e996ea9af83ce593594b9c69b9364a9924
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sun Aug 28 13:29:33 2005 +0000
+
+    Kill RubyClasses (core class/modules now initialized in Ruby)
+    Store all top-level classes as constants within Object (fixes things like Object.constants) instead of second datastore
+    Always load all core classes (remove lazy loading)
+    Convenience function RubyModule#getClass added
+    Convenience function Ruby#getObject added
+    JavaObject and JavaArray are now Java::JavaObject and Java::JavaArray to be consistent
+    classes defined under another class/module are now defined in the parents creation routine
+    Removed some masking warnings
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1739 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 31d6374bddf26d6c286c9f865a85d5ac17ebb941
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Wed Jul 13 16:49:30 2005 +0000
+
+    New method caching system
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1730 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 9cbd78d6d1786cf7d2c28951b564656bb906e302
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Tue Jun 21 18:44:54 2005 +0000
+
+    I screwed up logic in 'insert'
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1720 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 9471600b61418fef8cd449559a934a4344c9b14b
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Tue Jun 21 18:20:11 2005 +0000
+
+    Convert Array and Hash to use newer MetaClass mechanism
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1719 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 803c66ee682936beecc8a43fe2cfc90fe5645b22
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Tue Jun 21 14:03:26 2005 +0000
+
+    My Laptop drive is sounding funny (dropping a little earlier than normal -- but completely safe)
+    ReflectionCallback is simpler - removed some indirection levels and split out new dispatch mechanism as...
+    new ReflectedMethod which has less levels of indirection than reflectioncallback and will replace it entriely once all builtin classes use MetaClasses.
+    Many protocol conversion protocols are being followed.  Almost all in numerical methods and a few in array, pack.
+    Several classes have been changed to have a FooMetaClass.
+    'ant test' is running between 25-20% faster right now and this should increase as I convert more builtin classes
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1716 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a36ff3729d6a7f2c61eb51273fcee3d3bd371350
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sat Jun 18 14:47:06 2005 +0000
+
+    More moving towards java.util.Stack contract for remaining Abstract Stack users
+    args are never null (we no longer null check with a few strategic asserts)
+    getPosition() always returns something from Nodes (we no longer null check)
+    Remove AttrSetNode (fake parser node) in favor of CallbackMethod
+    we were pushing/popping an extra dynamic vars set every yield
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1715 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 06fd3a0cc83f264aae38f64564fa24de5d5fe4ac
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Wed Apr 27 01:32:26 2005 +0000
+
+    Make RubyHash implement java.util.Map
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1681 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit cf93c317059add441fa29386dfb5c9d604b06644
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Fri Apr 22 15:31:31 2005 +0000
+
+    Ruby Arrays implement java.util.List
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1679 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 0a56a82804d381b7fb5b51ca46a9b6ed4a08a3a3
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Tue Mar 29 15:36:52 2005 +0000
+
+    IO and File now have full fledged meta classes
+    Many methods in IO and File now do conversions of arguments to the types they expect
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1649 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit fe315e01ba4e5de51f8e4606389b61396994d406
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sat Feb 12 03:49:37 2005 +0000
+
+    Change Array.[m..n] where m > n to return [] versus nil (behavior change between 1.8.1 and 1.8.2)
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1609 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 7a83c48af56081c1c2132111d535f28d10cf3afb
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Fri Dec 31 20:55:52 2004 +0000
+
+    Update license to GPL/LGPL/CPL
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1574 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 0493e2e7e2224d8d24a2559a6955a926c489fac7
+Author: Stefan Matthias Aust <sma@3plus4.de>
+Date:   Sun Dec 26 11:30:57 2004 +0000
+
+    fix Array#values_at (range support was wrong)
+    fix Array#fill (there was no support for blocks)
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1565 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit c7dd68582671accbda88be7e8c056244923e780a
+Author: Stefan Matthias Aust <sma@3plus4.de>
+Date:   Wed Dec 22 13:14:28 2004 +0000
+
+    fix freeze/taint bug for cloned/dup'd objects
+    add correct TypeError/ArgumentError exceptions for at() and Array.new()
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1527 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 40383241ec93bfe226df70f8338e54bf9255140f
+Author: Jan Arne Petersen <jpetersen@uni-bonn.de>
+Date:   Wed Dec 15 23:45:14 2004 +0000
+
+    - Simplified method definition for builtin classes.
+    - Added metaclass support for builtin classes.
+    - Added ruby 1.8 allocate support.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1489 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit b72a2862ae5b2f01f9a767ef2ce248fd785857c4
+Author: Jan Arne Petersen <jpetersen@uni-bonn.de>
+Date:   Mon Dec 13 00:26:02 2004 +0000
+
+    Replaced org.jruby.util.Asserts with Java 1.4 assert.
+    Fixed String#capitalize.
+    Replaced RubyString.nilString(getRuntime()) with getRuntime().getNil().
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1482 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 8081fdc23459ab3e7b62155a53b7f18b561f93c1
+Author: Stefan Matthias Aust <sma@3plus4.de>
+Date:   Sun Dec 12 14:55:16 2004 +0000
+
+    removes type parameter from CallbackFactory.getXXXMethod()
+    and removes CallType from AbstractCallback and ReflectionCallback
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1476 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit fd54bbbd558923b55daa14829e2de69db42bf138
+Author: Stefan Matthias Aust <sma@3plus4.de>
+Date:   Sun Dec 12 09:40:49 2004 +0000
+
+    get rid of some malformed javadoc comments and some other annoying Eclipse warnings
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1470 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 870e1da9b41bfdbae259e1fc5f18fc8b76686998
+Author: Stefan Matthias Aust <sma@3plus4.de>
+Date:   Sun Dec 12 09:25:42 2004 +0000
+
+    removes the instance variable runtime in RubyObject
+    reintroduces the variable in RubyNil, RubyBoolean, and RubyClass
+    delegates all calls to Fixnum,Array,Boolean,String,ArgumentError,IndexError and TypeError.newXXX to Ruby
+    fixes all imports
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1469 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit f0fa191ccea39eebd28835e50521453ebc08b1db
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Fri Dec 3 02:35:44 2004 +0000
+
+    Zero element arrays can sort! and reverse!, but should still report frozen errors when frozen
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1443 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit e6b5100a49718fc8d3cf73e804b366eae694748d
+Author: Jan Arne Petersen <jpetersen@uni-bonn.de>
+Date:   Mon Nov 29 14:12:07 2004 +0000
+
+    Remove (or add a comment) to some empty blocks.
+    Remove unused RubyDir#matches method.
+    Remove some RegExp Adapter remains.
+    Rename RubyObject#argCount to RubyObject#checkArgumentCount
+    Fix the stacktrace of Exceptions.
+    Fix RubyFile#expand_path method.
+    Add LocalJumpError class.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1434 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit e0528a07eb03eecc6125079c5ce22e3246ea0358
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sun Nov 28 18:30:53 2004 +0000
+
+    Remove potential bug on null args to insert
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1431 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit c15ab526440e25745b45a2ab3aaab1b5a7334d1f
+Author: Stefan Matthias Aust <sma@3plus4.de>
+Date:   Sun Nov 28 14:54:57 2004 +0000
+
+    code cleanup
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1428 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit b1562832239a5e5d73b1ee98dade51601e343257
+Author: Jan Arne Petersen <jpetersen@uni-bonn.de>
+Date:   Tue Nov 16 20:30:04 2004 +0000
+
+    Rename references of org.jruby.Ruby from ruby to runtime.
+    Remove unused methods from the IRubyErrorHandler interface.
+    Add "same" method to RubyObject to fix "equal?"
+    Fix JavaObject cache.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1408 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 48c1e3c255484bcb1de9fcaf69950e6666be5a08
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Nov 6 08:21:33 2004 +0000
+
+    implemented 1.8 version of Array#last to finish off the last rubicon failure
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1388 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 72f0d4f6effb0bc3fc4af34ad92e81593b8ff47a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Nov 2 07:10:07 2004 +0000
+
+    fixed overriding of RubyObject.equal
+    fixed Array.new(fixnum)
+    implemented Array.new(fixnum) { ... }
+    fixed & to throw TypeError
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1380 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit dd42ddbe77ba55631a2936752dc4e615f9821e80
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Oct 30 21:58:12 2004 +0000
+
+    Modified RubyArray to use List instead of ArrayList
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1371 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit abca2061afc370daea50096a48c7d3294c27b8c4
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Fri Oct 15 20:39:55 2004 +0000
+
+    Numeric spaceship (<=>) must support Object for array comparisons
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1338 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 3667b6ccac740984972f19731b5b12b76b1f8e94
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sat Aug 7 22:01:36 2004 +0000
+
+    Add support for optional argument to Array#first
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1324 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 557d5a8d0dd3f2232933ecc9d751daf23bf85d5b
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Thu Jun 17 15:15:55 2004 +0000
+
+    Fixnum comparator was sometimes losing precision during sort by casting difference into an int from a long
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1318 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 83ca1988efc1e67d360010f573b77a83d9d9bf03
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sat May 29 23:26:55 2004 +0000
+
+    Messy Commit: 1. Module refactoring (fix bad unit tests) 2. String additions (casecmp, lstring{,!}, rstring{,!}) 3. Allow equal to return nil when needed. 4. testFrozen consolidation
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1309 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 9133107630c5e27fe1f89a1e66e61a5c8b0cce05
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Fri May 28 15:37:27 2004 +0000
+
+    Add fetch, insert, transpose, values_at
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1308 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit f5c9a1ebd775712f2dc086acfce1a14a123ec632
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Tue May 25 15:54:04 2004 +0000
+
+    Another round of star arg grammar fixes
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1302 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d36f5ed66c7039dacfa7a6ebe8e3d57978a5c6c9
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Tue May 18 16:18:43 2004 +0000
+
+    Update some Array methods for 1.8 behavior
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1301 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 1c602493a83e2050f401fa6925ec7e9269b45e4e
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sat Feb 14 01:18:46 2004 +0000
+
+    Removed all XML generation from source (getting rid of all indexed callback consumers except Object which uses a CVS committed Definition class). Fixed all numerical derived classes so that: 1. They all use the same equal/eql logic.  2. Removed all compariable methods that are already inherited. 3. Changed method signatures that want RubyNumeric to be RubyNumeric (versus IRubyObject)
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1237 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 0d70d49526cf6298c2b7bba8580b6bf815f88964
+Author: Anders Bengtsson <ndrsbngtssn@yahoo.se>
+Date:   Thu Jan 15 14:34:43 2004 +0000
+
+    Converted RubyArray to using CallbackFactory.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1213 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 1300280dbcf2d65ee8f09dfddf99fa09f733e83c
+Author: Anders Bengtsson <ndrsbngtssn@yahoo.se>
+Date:   Fri Dec 5 22:41:44 2003 +0000
+
+    Removed some dead code, plus some cleanup.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1207 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 4dc3a88fa61c6e8d3ad55333876e31dd035e4faf
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Fri Dec 5 15:59:00 2003 +0000
+
+    Remove unused import
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1197 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d8c7bdab8430bb1f7826f7cad86d6c1aa9513a82
+Author: Anders Bengtsson <ndrsbngtssn@yahoo.se>
+Date:   Mon Dec 16 21:12:11 2002 +0000
+
+    Reworked class and module lookup.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1171 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 47cd0c1c152ca67f0de2f79faf60bac7a454cf45
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Fri Dec 13 00:06:06 2002 +0000
+
+    Update Array to be fully callIndexed
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1166 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 7c2a0a84515e85113a5f3c6026faa30fa7978437
+Author: Anders Bengtsson <ndrsbngtssn@yahoo.se>
+Date:   Mon Oct 14 21:46:44 2002 +0000
+
+    Array class takes use of ancestor xml-tag
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@988 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit f25d6d4a9c0b8ed208795c381a98b42fdf2ab37d
+Author: Anders Bengtsson <ndrsbngtssn@yahoo.se>
+Date:   Fri Oct 11 18:46:48 2002 +0000
+
+    Small refactorings
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@968 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a6cb9489b25f1d4767e1f6aa79d8436b75acf825
+Author: Anders Bengtsson <ndrsbngtssn@yahoo.se>
+Date:   Fri Oct 11 15:57:39 2002 +0000
+
+    Made initialize() index-called.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@967 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 91e97fd24cb939d5d8d692c1da99bb9ab4ac1d22
+Author: Anders Bengtsson <ndrsbngtssn@yahoo.se>
+Date:   Fri Oct 11 15:51:49 2002 +0000
+
+    Definition-ified Array.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@966 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 06f34f3a6e4941994e00090d1365045e229680be
+Author: Jan Arne Petersen <jpetersen@uni-bonn.de>
+Date:   Sat Sep 21 23:05:19 2002 +0000
+
+    - Some MetaClass refactorizations,
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@881 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 762f2d405b00b2fa2c57571772e86ed9bd93419c
+Author: Anders Bengtsson <ndrsbngtssn@yahoo.se>
+Date:   Mon Sep 16 20:34:09 2002 +0000
+
+    Added support to change the class of Java::JavaMethod#invoke()'s return values.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@836 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 839de5dc5ea6ec9b3608a998c7c727bc12f50218
+Author: Jan Arne Petersen <jpetersen@uni-bonn.de>
+Date:   Mon Sep 16 14:08:45 2002 +0000
+
+    - remove Ruby#getGlobalVar and Ruby#setGlobalVar
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@835 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit c77b91f42c4f3810140d44cbe603248a1d52b7ee
+Author: Jan Arne Petersen <jpetersen@uni-bonn.de>
+Date:   Tue Sep 10 15:18:12 2002 +0000
+
+    - restructure of the code tree.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@782 961051c9-f516-0410-bf72-c9f7e237a7b7

@@ -1,0 +1,334 @@
+commit 6c7feaab6929bfccda57030d670563fc6914dd90
+Author: Felix Schumacher <fschumacher@apache.org>
+Date:   Wed Dec 31 17:04:58 2014 +0000
+
+    Bug 57193: Add param and return tags to javadoc
+    Bugzilla Id: 57193
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1648732 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 87b67eb184b12f5fcc496a6f0977a2267f38bf8b
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Sun Jul 6 14:26:03 2014 +0000
+
+    Bug 56539 - Mail reader sampler: When Number of messages to retrieve is superior to 1, Number of samples should only show 1 not the number of messages retrieved
+    Bugzilla Id: 56539
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1608206 13f79535-47bb-0310-9956-ffa450edef68
+
+commit fce5af6fad9664408df91d2a19648393014d89db
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Apr 19 00:38:48 2014 +0000
+
+    MailReaderSampler - should it use mail.pop3s.* properties?
+    Bugzilla Id: 56428
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1588597 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 0efdf19c1747db1588f6491e516701cfbedd2209
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Apr 19 00:22:31 2014 +0000
+
+    MailReaderSampler enhancement: read message header only
+    Bugzilla Id: 56427
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1588596 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e435f82f73cbf96e275618419f8ac08b12370ea3
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Apr 18 16:28:56 2014 +0000
+
+    MailReaderSampler - no need to fetch all Messages if not all wanted
+    Bugzilla Id: 56033
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1588508 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 085a747c38d7df1ce401a7695287a40cd952c84f
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Nov 27 00:19:20 2012 +0000
+
+    Move to Java 6
+    add @Override for interface implementations
+    Bugzilla Id: 54199
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1413958 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e9ec41c85a3381cb92a31055720a48a9d8495b7f
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Mon Aug 20 23:47:50 2012 +0000
+
+    Standardise on static final
+    No code change
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1375325 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d7fdf5ad24c813a7c93518a8fd841670a942bedf
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Sat Apr 7 19:54:58 2012 +0000
+
+    Bug 53042 - Introduce a new Interface to be implemented by AbstractSampler to allow Sampler to decide wether a config element applies to Sampler
+    
+    Make MailReaderSampler only merge 1 config elements
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1310843 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3dbd39d86b54e605e987e8d13a94038131373f52
+Author: Bruno Demion <milamber@apache.org>
+Date:   Sat Apr 2 14:51:06 2011 +0000
+
+    Bug 51011 - Mail Reader: upon authentication failure, tell what you tried
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1088041 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 0dbced3b0795352489af4216578ff694780e69ec
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Aug 17 14:17:20 2010 +0000
+
+    Tab-police
+    Remove trailing spaces
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@986320 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 91e79e3ed139326e461b345d214be9a1c167b575
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Mon Aug 16 22:15:39 2010 +0000
+
+    Bug 49603 - Allow accepting expired certificates on Mail Reader Sampler
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@986140 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1b870d0fb6eb7c01373ae7d47b7ab427ab89d672
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Feb 23 16:09:09 2010 +0000
+
+    Remove trailing spaces
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@915405 13f79535-47bb-0310-9956-ffa450edef68
+
+commit efa951dfda9c98c84243e93127154dfd77e1fb27
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Mon Feb 22 19:31:29 2010 +0000
+
+    Always default the encoding
+    Allow for nested MimeMultipart message parts
+    Don't include '@' in toString() if user name was not provided
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@915029 13f79535-47bb-0310-9956-ffa450edef68
+
+commit bf65a8fb589a1569463270da7700fd360023e0a9
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Wed Feb 17 17:55:07 2010 +0000
+
+    Replace ComboBox with JTextField
+    TODO: New screen layout needs to be fixed.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@911118 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 592edc9973290a192b92ff9e0757497b90eeea79
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Wed Feb 17 15:34:24 2010 +0000
+
+    Initial implementation of interruptible
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@911021 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 81992b1c2e0ea349057592823c1171282b4dafa5
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Wed Feb 17 05:04:26 2010 +0000
+
+    Fix duplicate child.sampleEnd() calls
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@910824 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 9d00449a04fa6ec33b5ad9c08d6659fba9826ced
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Wed Feb 17 04:52:39 2010 +0000
+
+    Forgot to call sampleStart()
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@910820 13f79535-47bb-0310-9956-ffa450edef68
+
+commit bdcbd6fcd4f6642415f1c6b75d45e6e094aefa74
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Wed Feb 17 03:38:00 2010 +0000
+
+    Add support for multipart messages
+    Avoid possible NPEs in To: and From: processing
+    Store Response Headers if not using store as MIME
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@910812 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c1c50391ab022d16f2ac525eaf5a53aa26a14a05
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Feb 9 21:09:23 2010 +0000
+
+    Javadoc
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@908219 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 33e42df5ba8766624f30cce49479b57ec490bfb3
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Jan 31 13:04:03 2010 +0000
+
+    Add serial version UIDs
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@905028 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 89bb3aee3966c0ee21e303b640de72bca8b36356
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Nov 20 19:51:23 2009 +0000
+
+    Bug 47947 - Mail Reader Sampler should allow port to be overridden
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@882697 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f52cf4362f23c38f642b71ec74b8eb135bc5147e
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Oct 10 15:18:56 2009 +0000
+
+    StringBuffer => StringBuilder
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@823869 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6bf94deccce242cd1bba95592f54fd78a90dfc3e
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Jul 6 23:56:15 2008 +0000
+
+    Detab
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@674365 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8b33aa9847cb50ffa50630dd87ac855e208496a1
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Jun 27 02:15:01 2008 +0000
+
+    Bug 45200 - MailReaderSampler: store the whole MIME message in the SamplerResult
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@672077 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a487c0caf32b7f5c46e0256710784ac0eb018acb
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Jun 24 11:15:22 2008 +0000
+
+    Set suitable content-type for parent sample
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@671130 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 0ea91a20d7ab07e50fef83a474fa33f4131e1bfb
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Apr 18 17:07:52 2008 +0000
+
+    Add POP3S and IMAPS protocols to Mail Reader Sampler.
+    Mail Reader Sampler now creates a sub-sample for each mail
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@649613 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6e2f4dcc1e1a6c5ba4c0db0e9854ef772f5ef31c
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu Apr 10 01:21:09 2008 +0000
+
+    Ensure if and for statements always use blocks
+    Other minor tidyups
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@646610 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 84720b4a4a4a3b193f6a8913fde92610248c947a
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Jun 3 12:57:53 2007 +0000
+
+    Message count was not being restored correctly
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-2@543887 13f79535-47bb-0310-9956-ffa450edef68
+
+commit db8dedbff2834a7eb4e0429a307ecbdd731a53d8
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Jan 7 18:10:21 2007 +0000
+
+    Update license (remove copyright)
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-2@493789 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f7a2f2564e9137cafb6ba1ba9b60ad65e0a095d1
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Wed Oct 11 23:11:02 2006 +0000
+
+    Unused import
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-2@463040 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 0eb7fbbf7e6adcc67e62838931a46a04adc5a3f0
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Wed Apr 5 18:39:57 2006 +0000
+
+    Add some support for MimeMultipart
+    TODO - create subsamples for each message
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-1@391700 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 08afe5600efaa2cd79bd6fcfd673e75157f6e11b
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Mar 24 14:18:02 2006 +0000
+
+    Improve handling of missing mail jar
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-1@388528 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 189cf653504f242eedada0cfd38edb547016f476
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Nov 13 23:24:37 2005 +0000
+
+    Use setResponseCodeOK()
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-1@344003 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 76159a5b953d9dc5518b2ccb03bfbc1c4908837d
+Author: Michael Stover <mstover1@apache.org>
+Date:   Tue Jul 12 20:51:09 2005 +0000
+
+    Formatting Code to basic Java Standard
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@325542 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 28669ab9aa8543efbea2853dfda642a40d69c60e
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu May 19 23:23:37 2005 +0000
+
+    Set Sample label from Test Element name
+    Remove unused code
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@325374 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1e3b06fe9d3ae55ec6d72a16ed28a55e652f6298
+Author: Michael Stover <mstover1@apache.org>
+Date:   Fri Dec 10 21:32:55 2004 +0000
+
+    Big Ugly Merge from 2-0
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@325054 13f79535-47bb-0310-9956-ffa450edef68
+
+commit cb987856072f7607a79a3e5a9377bf78d5551433
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Jun 6 22:27:14 2004 +0000
+
+    Comment out unread fields
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@324627 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e5fa533e659755ee654ea7b1ee492bad17019684
+Author: William Thad Smith <thads@apache.org>
+Date:   Thu Apr 8 18:38:27 2004 +0000
+
+    This is a new sampler that can read text from POP3 and IMAP
+    email folders.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@324538 13f79535-47bb-0310-9956-ffa450edef68

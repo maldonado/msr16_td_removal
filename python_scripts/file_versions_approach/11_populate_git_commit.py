@@ -45,7 +45,6 @@ for result in results:
                 if git_log_file_matcher.group(1):
                     
                     if commit_hash is not '':
-                        
                         cursor.execute("insert into git_commit (project_name, file_name, file_directory, commit_hash, author_name, author_email, author_date, commit_message) values ( %s, %s, %s, %s, %s, %s, to_timestamp(%s, 'Dy Mon DD HH24:MI:SS YYYY +-####'), %s)", (project_name, file_name, file_directory, commit_hash, author_name, author_email, author_date, commit_message))
 
                         # print commit_hash
@@ -66,5 +65,8 @@ for result in results:
                 if commit_hash is not None:
                     commit_message = commit_message + stripped_line
             
+        # last line of the file
+        cursor.execute("insert into git_commit (project_name, file_name, file_directory, commit_hash, author_name, author_email, author_date, commit_message) values ( %s, %s, %s, %s, %s, %s, to_timestamp(%s, 'Dy Mon DD HH24:MI:SS YYYY +-####'), %s)", (project_name, file_name, file_directory, commit_hash, author_name, author_email, author_date, commit_message))
+
     connection.commit()
     print str(progress_counter) + ' out of :'+ str(total_files_to_process)

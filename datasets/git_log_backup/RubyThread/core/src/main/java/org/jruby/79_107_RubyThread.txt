@@ -1,0 +1,556 @@
+commit caa590453bb6222242e6125c90247824c510a91f
+Merge: d2f080e 6992f8e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Aug 18 22:21:01 2015 -0500
+
+    Merge remote-tracking branch 'origin/jruby-1_7'
+
+commit 6992f8ed9d3e818bfc01a2459329b6c55ce1d08f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Aug 18 22:20:25 2015 -0500
+
+    Don't use deprecated Thread.stop anymore. Fixes #3232.
+
+commit b04d9eec5738ef89f4bc2c07d5ae5140e4223cfe
+Author: Benoit Daloze <eregontp@gmail.com>
+Date:   Sat Jul 25 21:07:30 2015 +0200
+
+    Share the priority constants in RubyThread.
+
+commit 0f567041b497ccd7bef389588c136c1d641e471a
+Author: Benoit Daloze <eregontp@gmail.com>
+Date:   Sat Jul 25 20:46:06 2015 +0200
+
+    Share and cleanup functions converting Java priorities to Ruby's.
+
+commit c4a55ac007d6e9e87e490e05abff669c7afeb2e9
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jan 20 12:29:34 2015 -0600
+
+    Improvements to sleep and executeTask.
+    
+    * Don't set unblockFunc before unblockData it needs.
+    * For infinite sleep, always return true on interrupt.
+
+commit f48ebd70c8465a70641ab95294cb4205c1045036
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jan 20 12:04:27 2015 -0600
+
+    Use tryAcquire since acquire seems prone to racy hangs. :-(
+
+commit 013531c5f09b45b2c8aedde6426f0d68139efd84
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jan 16 13:18:36 2015 -0600
+
+    Add Thread#thread_variable* methods and sync all variable methods.
+
+commit 9be5e6a52ecf784fe233dfa1233bae75804dedb5
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jan 14 11:37:43 2015 -0600
+
+    Make rest of RubyThread state volatile and make sleep more robust.
+
+commit e7b1ba302d0e558c5692776baec57ee572736d36
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jan 14 11:36:25 2015 -0600
+
+    Revert "More missing bits transplanted from DL."
+    
+    This reverts commit 0e8e1975e78dfaaac0328eafab15374950aebfb9.
+
+commit 0e8e1975e78dfaaac0328eafab15374950aebfb9
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jan 14 11:34:59 2015 -0600
+
+    More missing bits transplanted from DL.
+
+commit 697b06a140a698cabfe5facdff4be5c9ff531673
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jan 14 08:31:53 2015 -0600
+
+    Ensure sleep permits are reacquired before returning.
+
+commit dc30c92df866e556a075df9e61ae6ffb2a070a74
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jan 14 08:18:11 2015 -0600
+
+    Modify sleep logic to be zero-alloc for reduced race potential.
+
+commit 0df0bbb3a08da6bb68cc055b629f57dfa62fe602
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Dec 30 14:35:59 2014 -0600
+
+    Move Thread#exclusive into Java, to avoid Mutex dependency.
+
+commit 2bbab49001828440b2afff842fc43a2ea32aa399
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Dec 30 14:35:35 2014 -0600
+
+    Add finally in case Thread.yield produces an exception.
+
+commit 39996efb46b9059de30dc346b20fe94bd45e84a3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Dec 10 16:25:31 2014 -0600
+
+    Make sleep interrupts more robust by using Semaphore.
+
+commit 5ea75331a70029e128584c24b3a77428d93ac1f5
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Dec 2 20:50:51 2014 -0600
+
+    Thread events must not poll during sleep.
+    
+    The new thread eventing based loosely on MRI's exits sleep after
+    checking for events. My previous fix to ensure we poll before
+    entering the blocking call unfortunately polled after entering
+    sleep, causing sleep to be exited and tests like those in
+    test/jruby/test_thread.rb that wait for Thread#status == "sleep"
+    to hang.
+
+commit 6ed286f178c0c536bf56cf899f3f19de965299ca
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Dec 1 13:58:38 2014 -0600
+
+    Re-check thread events immediately before blocking call.
+    
+    This is the likely cause of unreliable cross-thread events in
+    Queue and Fiber (which uses SizedQueue). The queue.pop logic
+    uses RubyThread.executeTask, which receives a function object for
+    unblocking and an argument to pass to that function. An interrupt
+    of the thread during this operation will call the function and
+    presumably wake the thread in some safe way. However, if the
+    interrupt triggered between the last event poll and the assignment
+    of the unblocker, it could be lost and the blocking call never
+    interrupted. This resulted in several thread/fiber tests having
+    unpredictable behavior. This also could trigger an improper
+    InterruptedException or ThreadError during a Fiber resume or
+    yield.
+    
+    The fix here does an extra poll *after* assigning the unblocker,
+    so that any interrupts fired are executed before proceeding into
+    the blocking section.
+
+commit 739e00f5d4713b89b1c9bac2e98695ed48026d4a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Nov 10 20:04:28 2014 -0600
+
+    OpenFile.ready needs to use interruptible select logic.
+    
+    This should fix some test hangs on Travis.
+
+commit 016bd208d0994b38f54747b5735a368d8a1d0758
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Oct 16 15:12:24 2014 -0500
+
+    Don't use real RubyThread.select logic for files. Fixes #2045.
+
+commit 5db118ff3de7ca54c711afaf51c4a5cfeeff98d7
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Aug 19 11:22:57 2014 -0500
+
+    Ensure blocking tasks have been assigned before going to sleep.
+    
+    Setting sleep before the blocking task is present can lead to a
+    separate wakeup thread attempting to unblock the thread before an
+    unblocker has been set. Ultimately this means we see a thread stay
+    asleep and the wakeup request is lost.
+    
+    Accompanying test hung quickly without this change and does not
+    appear to hang with it.
+
+commit be3fd73f2abbf91705d2a9f2809d706253554d2e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Aug 19 11:21:29 2014 -0500
+
+    wakeup should do a full thread interrupt.
+    
+    wakeup can also be used to roust a thread from IO and other
+    blocking operations, so it needs to do a full interrupt. This also
+    aligns with MRI 2.1 thread event behavior.
+
+commit 4b17f06e6c1bae50c9b5450ae8235de1905719a2
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Jul 26 01:31:54 2014 -0500
+
+    Properly initiate a kill of target thread for finalization.
+    
+    The logic as written before was passing "this" as the killer
+    thread, which caused the kill logic to raise a ThreadKill. Since
+    this path was only used by the JVM finalizer, it effectively went
+    unnoticed. As a result, Fibers would no longer be properly
+    terminated when finalized.
+
+commit cf8f8308af338a18fb4d3c2ca49f0d31e12f4708
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 9 15:59:08 2014 -0500
+
+    Rework read + select logic and blocking thread logic for new IO.
+
+commit 7dbfaef658122ad51910ce8d8d4fd94f99575254
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jun 9 08:47:42 2014 +0100
+
+    Slowly zeroing in on blocking IO that's interruptible.
+
+commit 432a5b8cbc0bc6d16dca5486fb3cae51e2015789
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jun 4 14:46:21 2014 -0500
+
+    Fix interrupt handling to clear thread interrupt status.
+    
+    Problem manifested as a lock immediately throwing an exception
+    after waking from sleep, because the interrupt status for the
+    thread woke it, but was never cleared.
+
+commit 1b31f4f79f298f9d7a8543c8f205baa1d7ce5163
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed May 28 16:19:13 2014 -0500
+
+    IO.select 100%.
+
+commit c8b2025d23ce4cc452eee90cd491a35c9c212984
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon May 12 09:02:33 2014 -0500
+
+    Bits and bobs to get thread-aware IO blocking working better.
+
+commit edd4826e021907b17360065a08b68aac23efe513
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri May 2 18:28:37 2014 -0500
+
+    Fix up botched merge.
+
+commit 98a5cd4a5fdcd301f660c96260596fb6743fafd1
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri May 2 17:22:50 2014 -0500
+
+    Remaining fixes to get specs green with new interrupts.
+
+commit f82623198a5a8cb626e033836a89c90409cf34b0
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Apr 22 19:00:57 2014 -0500
+
+    Add new, allocation-free callback path for blocking operations.
+
+commit ac4e61a504f4240c50551b168b2c3a4033409d52
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Apr 22 18:56:32 2014 -0500
+
+    Shrink RubyThread.Event object in prep for a proper queue.
+
+commit 51a0de034769c8f0c678bd85d2e6ce0f798987d1
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat May 3 03:30:03 2014 +0800
+
+    Minor cleanup.
+
+commit 3db70e7ec22f1e731bafa75e22ef7aba02394b6c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat May 3 03:29:43 2014 +0800
+
+    Raise immediately if target thread is current thread.
+
+commit 37eb12f46bb04111b62e41b7c1e3a4c3f9a210d9
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Apr 30 16:49:38 2014 +0800
+
+    Implement thread interrupts in the same way as MRI.
+    
+    In order to support Ruby 2.1's ability to disable thread
+    interrupts (async exceptions, etc), we need to match their
+    mechanism of dispatching those interrupts. This is a first attempt
+    to mimic the MRI way.
+
+commit 599436c3bf235a31ed09c2f2c170fc16010db9c3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Apr 22 21:46:53 2014 -0500
+
+    Early start on handle_interrupt logic.
+
+commit e0deb70e9e9eb70830b4ad61d670c192c4205348
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Apr 22 19:00:57 2014 -0500
+
+    Add new, allocation-free callback path for blocking operations.
+
+commit 648ee5c7868b5496e1e98615e566fd712bd6c448
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Apr 22 18:56:32 2014 -0500
+
+    Shrink RubyThread.Event object in prep for a proper queue.
+
+commit 017545414d51458e46d071200a3d113c353d4400
+Merge: b725465 d784882
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Feb 21 14:37:20 2014 -0600
+
+    Merge remote-tracking branch 'origin/jruby-1_7'
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/Ruby.java
+    	core/src/main/java/org/jruby/RubyThread.java
+
+commit 9c47b17ad3fe2a76d19449e3456f393212264003
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Feb 21 10:58:58 2014 -0600
+
+    Add Ruby "runtime number" to all thread names.
+
+commit 6712676cbbd6d42e4dc238894075e3b76987481e
+Merge: 7f393ee 021e103
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Feb 13 16:11:15 2014 -0600
+
+    Merge remote-tracking branch 'origin/jruby-1_7'
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/util/cli/Options.java
+
+commit 686838c0bbe9c303264d9f3e9d6719f189d20300
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Feb 13 16:08:38 2014 -0600
+
+    Avoid double-indirection for fully-synchronized locks list.
+
+commit e8deab2ec86c044750c9167d95ab3c390a3ba357
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jan 3 00:47:26 2014 -0600
+
+    Use a cache of Thread#status values, to reduce alloc overhead.
+
+commit fb4c01c1f3e4096d639a20edb0245e893ebebae8
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Nov 23 00:28:11 2013 -0600
+
+    Oops...missed a reference.
+
+commit 0d4f883468e440a1fccf701ba4fb8fded7a77e70
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Nov 23 00:13:56 2013 -0600
+
+    Remove rarely used and never quite right thread-pool mode.
+
+commit 8e3e767c84bc7c3afefbde4e8f072e703fa4a279
+Merge: e56e278 8831c5a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Nov 22 23:47:08 2013 -0600
+
+    Merge branch 'jruby-1_7'
+
+commit 8831c5a01f398fa449badf0c954fe43acd7a3099
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Nov 22 23:45:42 2013 -0600
+
+    Native thread *can* be null if caught right as GC claims it.
+
+commit b7bb1aab0a44074c49aa16a2958f04c1c223a6c8
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Oct 10 15:57:13 2013 -0500
+
+    De-version Thread
+
+commit 82b736bf77261f241a37f9dab6826828e887f25c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Oct 9 16:31:47 2013 -0500
+
+    Propagate all exceptions out of fibers. Fixes #1106.
+    
+    Only Ruby exceptions were propagating before. This modifies the
+    thread logic for fibers to also propaate the original Java
+    exception out in the same way.
+    
+    This also allows Thread#raise to be called with a Java exception,
+    which was missing before and needed for this fix.
+
+commit d6072471fe4715412eb241409c308a6f13bf27c4
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Oct 9 16:31:47 2013 -0500
+
+    Propagate all exceptions out of fibers. Fixes #1106.
+    
+    Only Ruby exceptions were propagating before. This modifies the
+    thread logic for fibers to also propaate the original Java
+    exception out in the same way.
+    
+    This also allows Thread#raise to be called with a Java exception,
+    which was missing before and needed for this fix.
+
+commit 4b6dfbcf361f1d00f13b1a8e3e05c9d0d9218f20
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Oct 7 01:29:08 2013 -0500
+
+    Get all suites in test:extended passing.
+
+commit b1b1508c40f849166ccb7b8341c14f72df3a7d99
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Oct 5 01:40:15 2013 -0500
+
+    Revert "Always log unhandled exceptions in threads."
+    
+    This reverts commit 79423216e3aa3ed0dc377aa1998471be02845613.
+
+commit 0c5456526e2703e9fb2e9a71eb56317279b3a587
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Oct 5 01:40:08 2013 -0500
+
+    Revert "Move exitedException capture above other logic, to ensure it sets."
+    
+    This reverts commit be4d7212a1bc7e5d516d7d1d6f757d3b34d8d8cd.
+
+commit 697e6895affa646849a685ed58f6f84795c853aa
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Oct 4 23:37:52 2013 -0500
+
+    Eliminate calls to Ruby.is1_8 and is1_9.
+
+commit be4d7212a1bc7e5d516d7d1d6f757d3b34d8d8cd
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Sep 30 11:43:34 2013 -0500
+
+    Move exitedException capture above other logic, to ensure it sets.
+
+commit 79423216e3aa3ed0dc377aa1998471be02845613
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Sep 30 09:37:56 2013 -0500
+
+    Always log unhandled exceptions in threads.
+    
+    This is JRuby's fix for https://bugs.ruby-lang.org/issues/6647
+    which modifies unhandled exception logic in threads to always
+    log if abort_on_exception != true. This will help avoid the issue
+    of threads silently disappearing.
+
+commit d1f89e004fdc78dff75407c82123e6c9e8b406bb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Sep 12 18:48:16 2013 +0200
+
+    Make ClassIndex into an enum, to prevent issues like #1004.
+
+commit 669f6a826843efd7e9a9156cac8588e5505af21e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Oct 3 09:00:37 2013 -0500
+
+    Ensure abandoned Fiber instances finalize properly. Fixes #1075
+    
+    There are several fixes here to ensure that fibers finalize in
+    a consistent and clean way.
+    
+    * Direct delivery of the kill event to the target thread.
+    
+    Without this change, the delivery process caused another
+    ThreadFiber object to come to life, keeping objects alive and
+    endlessly finalizing. Delivering the event via ThreadService
+    caused the finalizer thread to participate in Ruby thread events,
+    which we do not want. The new version delivers the event directly
+    via a special "dieFromFinalizer" method added to RubyThread.
+    
+    * Make a better effort to kill the thread.
+    
+    The original code just shut down the fiber's queue and delivered
+    a kill event. The new logic does both of those as well as
+    interrupting both the RubyThread and the java.lang.Thread in case
+    the fiber is waiting on some other blocking call. We could go the
+    next step and try to forcibly Thread.stop, but that has not been
+    necessary yet.
+    
+    * Ensure that the fiber thread never has on-stack references to
+      the fiber object
+    
+    In order for the fiber object to be GCable and finalizable, there
+    must be no live references to it. This includes references on
+    the fiber thread's execution stack, such as those surrounding the
+    yield method's call to queue.pop. In the new logic, no hard
+    references to the ThreadFiber object appear anywhere in code,
+    and the fiber object is eventually GCed and finalized as expected.
+    
+    * Test to ensure that fibers are getting cleaned up
+    
+    This commit also adds a test that attempts to spin up 10000 fibers
+    and checks that they are cleaned up by comparing pre-test and
+    post-test native thread counts. This should help ensure we do not
+    regress on fiber lifecycle in the future.
+
+commit fec1af4d3b70d08699905c65a7fd97a6af76ba28
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Sep 17 13:06:16 2013 -0500
+
+    Make Thread#backtrace a bit more thread-safe.
+    
+    The original NPE for #406 was due to the thread not having started
+    running yet; its "context" reference was null. I added logic to
+    check for that and not try to produce a backtrace.
+    
+    In addition, I discovered that the building of the trace was also
+    not threadsafe, since the "backtrace" and "backtraceIndex" fields
+    in ThreadContext could be updated at the same time by the original
+    thread. My changes here should make it less likely that backtrace
+    building will walk off the end of the "backtrace" array, but there
+    will still be cases where the index and the array get out of sync
+    and the backtrace contains a couple bogus lines. It is unclear
+    to me whether we should forcibly prevent the target thread from
+    updating these fields while the backtrace-generating thread is
+    generating, since it would surely introduce overhead into the
+    normal backtrace updating process.
+    
+    Fixes #406.
+
+commit 937f414be083800b78a0aacc6203d2c1eda1f04d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Sep 15 16:19:03 2013 +0200
+
+    Remove several locks involved in thread mail and lifecycle.
+    
+    The deadlock reported in #1015 was caused by RubyThread#dispose
+    and Thread#kill logic (RubyThread#kill) acquiring the same two
+    locks in opposite order. dispose first acquired the RubyThread
+    monitor, in order to read and write volatile state, and then
+    acquired the ThreadService monitor without releasing RubyThread in
+    order to unregister the RubyThread object. kill acquired the
+    ThreadService monitor and then attempted to acquire the RubyThread
+    monitor in order to deliver the kill event.
+    
+    As it turned out, the "mail" field on RubyThread was the primary
+    actor triggering the use of synchronization, and much of that
+    synchronization was not necessary. The removal of the thread from
+    ThreadService did not need to be synchronized. The dispose and
+    receiveMail methods did not need to be synchronized if the mail
+    slot was made into an atomic reference. The deliverEvent method
+    did not need to be synchronized for any reason.
+    
+    I made the appropriate changes to turn mail into an atomic
+    reference, avoid keeping the RubyThread lock when calling into
+    ThreadService to remove the RubyThread, and remove locks that
+    became irrelevant once mail became atomic.
+    
+    Fixes #1015.
+
+commit dcca74a0fc11f43b3bd0d5f43c1bcc40b3766c1d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Sep 5 00:35:57 2013 -0500
+
+    Port new Fiber impl from Ruby to Java, for lower-level magic.
+    
+    See faac06d for details on the implementation.
+
+commit b4cedc09a7fb7410da05cd1497b435ad9a2a71c9
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Mon Sep 2 13:55:08 2013 -0400
+
+    Check 'frozen' and 'enclosed' before moving Thread
+    
+    When moving a Thread from one ThreadGroup to another, both
+    the source and the target ThreadGroup must not be frozen or enclosed.
+    
+    This fixes #950.
+
+commit b048978b6e3069ed71ea62aa8d02f3509d9a1c18
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Aug 31 17:48:04 2013 -0500
+
+    Map Ruby thread priorities (-3..3) to Java thread priorities.
+
+commit 28c6fbc4e883bc1c9e9242d1da1cb2b785f55339
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 3 12:46:45 2013 -0500
+
+    Move to @mkristian's proposed layout, with some modifications.

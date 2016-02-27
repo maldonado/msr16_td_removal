@@ -1,0 +1,296 @@
+commit bfb6c91d32b0146df8dfc858b20eb53a260cc978
+Merge: 07ce81a aedbf26
+Author: kares <self@kares.org>
+Date:   Fri Jul 17 08:48:13 2015 +0200
+
+    Merge branch 'jruby-1_7' into master
+    
+    * jruby-1_7: (36 commits)
+      no need for "" + ...
+      keep the test Java 6 compilable + more asserts
+      method cache hash calc needs to acount for Proc
+      support for matching proc-to-iface methods by arity
+      improve resolving functional-interfaces
+      avoid reflection in getFunctionalInterface
+      some Java.getFunctionalInterfaceMethod asserts
+      introduce a getFunctionalInterfaceMethod helper
+      generix-ize some of JavaUtil's static helpers
+      Make sure windows files generate signatures as part of post_process_artifacts
+      Doh...how did this not get added
+      Fixes #3135. Provide sha256 sums
+      yet another multiple args proc-to-iface spec
+      less deprecation warnings from implementation_spec
+      clean + avoid deprecation warn in executor_spec
+      less rspec deprecation warnings from ant spec
+      avoid File#listFiles in spec since it's ambiguous
+      spec for regression in proc to iface optimization
+      Fix references to old mailing lists.
+      Return nil when waitpid returns 0. Fixes #3117.
+      ...
+    
+    Conflicts:
+    	VERSION
+    	antlib/extra.xml
+    	core/pom.xml
+    	core/src/main/java/org/jruby/RubyProcess.java
+    	core/src/main/java/org/jruby/embed/util/SystemPropertyCatcher.java
+    	core/src/test/java/org/jruby/embed/ScriptingContainerTest.java
+    	docs/man/pom.xml
+    	docs/pom.xml
+    	ext/pom.xml
+    	ext/readline/pom.xml
+    	ext/ripper/pom.xml
+    	lib/pom.xml
+    	maven/jruby-complete/pom.xml
+    	maven/jruby-dist/pom.xml
+    	maven/jruby-dist/src/main/assembly/jruby.xml
+    	maven/jruby-jars/pom.xml
+    	maven/jruby-noasm/pom.xml
+    	maven/jruby-rake-plugin/pom.xml
+    	maven/jruby-stdlib/pom.xml
+    	maven/jruby/pom.xml
+    	maven/pom.xml
+    	pom.xml
+    	test/pom.xml
+    	test/test_backquote.rb
+    	test/test_kernel.rb
+
+commit aedbf262bf1829e790f284bfc29d27df8bb9129f
+Author: kares <self@kares.org>
+Date:   Thu Jul 16 12:14:10 2015 +0200
+
+    no need for "" + ...
+
+commit 3264692d1783cabb0bc8dd02ac878e1a740f4d30
+Author: kares <self@kares.org>
+Date:   Wed Jul 15 12:13:47 2015 +0200
+
+    generix-ize some of JavaUtil's static helpers
+
+commit 7df3e56395cf4dbd1d22089726680bb890adfcd9
+Merge: e810614 967ca40
+Author: kares <self@kares.org>
+Date:   Fri Jun 5 14:20:44 2015 +0200
+
+    Merge branch 'jruby-1_7'
+    
+    * jruby-1_7: (38 commits)
+      basic BigDecimal sub-class test ... all working the same as MRI 1.8/1.9
+      avoid deprecated newInstance + one less pattern to match on BigDecimal.new
+      [bigdecimal] keep the simplified newInstance backport 1.8 compatible
+      [bigdecimal] backport simplified newInstance impl from master
+      minor BigDecimal code cleanup
+      handle big decimal ** float value calculation (with Java double math) ... since we're now not raising users should get ~ the value they expect (closing #1967)
+      static-ize and simplify private helpers
+      BigDecimal should not raise error on pow/** with float arg (under 1.9 #1967)
+      some more (internal) RubyBigDecimal dry-ing / tidy-ing
+      do coercion on * and / (same as MRI has been doing since 1.8) ... fixes #2538
+      handle BigDecimal cmp failure compatibly with MRI (fixes #2539)
+      pass around context in BigDecimal impl + simplify cmp method's code
+      move JI java.mat.BigDecimal test out of Ruby's BigDecimal tests
+      [travis-ci] test-extended on jdk8
+      if current directory is inside the classloader a spawn jruby process should do the same
+      use the new bin stubs from new rubygems
+      set ENV['RUBY'] when jruby.home is not regular directory
+      Add support for http.nonProxyHosts and rework ENV_JAVA support.
+      pik the right class in URLResourceTest
+      use new JRuby.create to load script from command line script source
+      ...
+    
+    Conflicts:
+    	.travis.yml
+    	core/src/main/java/org/jruby/RubyDir.java
+    	core/src/main/java/org/jruby/RubyEnumerable.java
+    	core/src/main/java/org/jruby/RubyEnumerator.java
+    	core/src/main/java/org/jruby/RubyHash.java
+    	core/src/main/java/org/jruby/RubyInstanceConfig.java
+    	core/src/main/java/org/jruby/RubyModule.java
+    	core/src/main/java/org/jruby/ext/bigdecimal/RubyBigDecimal.java
+    	core/src/main/java/org/jruby/util/ClasspathResource.java
+    	core/src/main/java/org/jruby/util/URLResource.java
+    	core/src/test/java/org/jruby/util/URLResourceTest.java
+    	lib/ruby/2.0/net/http.rb
+    	lib/ruby/2.0/uri/generic.rb
+    	maven/jruby/src/it/runnable/spec/one_spec.rb
+    	test/test_backquote.rb
+    	test/test_big_decimal.rb
+    	test/test_dir.rb
+    	test/test_file.rb
+    	test/test_higher_javasupport.rb
+    	test/test_load.rb
+
+commit 1ea53a6d87ac6b05ad23ec1f57e5ec86eac6dc74
+Author: kares <self@kares.org>
+Date:   Thu May 28 14:49:50 2015 +0200
+
+    convert if ... return to one liner with ?
+
+commit c26fe1ba92acad0de01273d4711711f8e2e690ec
+Merge: ab4be7b dd9cf5f
+Author: kares <self@kares.org>
+Date:   Thu Mar 26 10:51:46 2015 +0100
+
+    Merge branch 'jruby-1_7'
+    
+    * jruby-1_7: (35 commits)
+      align added JavaSupport method name with convention
+      test `[].copy_data` addon - also added alias so it can be used with 2 args as well
+      cleanup and add tests from Java array addons ...  seems a litle strange
+      move Java array assertions around from equality test
+      should override proxy implemented call() with block as well
+      export void early on with other (primitives) and test it's behaviour
+      DRY-up interface-template impl ... (extracted some anonymous into inner classes)
+      handle nested array.to_java conversion where element is already an array + cleanup
+      implement array.component_type helper on the Ruby side + test how [].to_java works
+      fix array factories `Java::int[1][2].new` as well as `Java::byte.new_array(3)` (#2749)
+      unify and test the no-matching-callable raised error messages / hints
+      handle yet another unnecessary "ambiguous Java methods found" warning
+      add a JI test - setting a security manager created in Ruby
+      use `getArity()` in favor of `getParameterTypes().length`
+      use IntHashMap as callable cache for `__jcreate!` method and share a new-cache helper
+      the intention here was to "use the lowest-arity non-overload" and we're finally there!
+      as (most) Java invokers will not have overrides - they won't use the internal cache ... for loading up JRuby's built-in JI classes this saves up allocating > 2100 maps
+      explicit inspect() method for JavaProxyConstructor + annotate with JRubyClass
+      a working inspect for Java proxy methods
+      empty class array count-- and make sure correct name is annotated with @JRubyClass
+      ...
+    
+    Conflicts:
+    	core/pom.xml
+    	core/src/main/java/org/jruby/java/invokers/StaticMethodInvoker.java
+    	core/src/main/java/org/jruby/javasupport/JavaMethod.java
+    	core/src/main/java/org/jruby/javasupport/JavaSupport.java
+    	core/src/main/java/org/jruby/javasupport/JavaUtil.java
+    	test/test_higher_javasupport.rb
+
+commit 58487dd5735b8eaad4df5dac2d57881d71088890
+Author: kares <self@kares.org>
+Date:   Wed Mar 18 09:19:36 2015 +0100
+
+    move (and name for easier debug) proc-to-iface method_missing method from JavaUtil
+
+commit b390857aaafb52b0c27b847699198f450aa05723
+Author: kares <self@kares.org>
+Date:   Wed Mar 18 09:12:56 2015 +0100
+
+    micro-bm "improve" `JavaUtil.getRubyCaseName` + a new `unwrapJavaValue` helper
+
+commit 765fee8b02dae9cc11aecdc6334365a59e51a113
+Author: kares <self@kares.org>
+Date:   Tue Mar 17 16:39:35 2015 +0100
+
+    more JavaUtil cleanup - "less" startsWith checks in getRubyNamesForJavaName loop
+
+commit ce714cd3191ca0e143932bbc2a8a52e516bbb967
+Author: kares <self@kares.org>
+Date:   Tue Mar 17 15:35:42 2015 +0100
+
+    cleanup JavaUtil - use implicit primitive boxing (instead of explicit) + less array[i] access
+
+commit 983af6e8deac98eb47710bb718293fbd0520665b
+Merge: f2359d1 b596b5a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Feb 27 13:14:07 2015 -0600
+
+    Merge remote-tracking branch 'origin/jruby-1_7'
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/java/invokers/ConstructorInvoker.java
+    	core/src/main/java/org/jruby/java/proxies/JavaProxy.java
+    	core/src/main/java/org/jruby/javasupport/Java.java
+    	core/src/main/java/org/jruby/javasupport/JavaSupport.java
+
+commit d37cdb5245472f3a12e6da98a1d97c2f51f2b9a6
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Feb 26 15:38:26 2015 -0600
+
+    Combine duplicated logic.
+
+commit be31344448e7db89264bf94d2d431b817f6ca738
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Feb 26 12:37:56 2015 -0600
+
+    Pull all initialize logic up and out into initializer classes.
+
+commit 67976c6273b964353d9d2f4808c0de91d1202f51
+Author: Nick Howard <ndh@baroquebobcat.com>
+Date:   Wed Jul 16 00:36:06 2014 -0600
+
+    fix ArrayJavaProxy#to_a failure on arrays containing null
+    
+    https://github.com/jruby/jruby/commit/b96b2219f9df6622883a88eda0ae1dbbcb5c2267 added an unprotected method call in a place where the
+    target could be null. This adds a null check to that expression.
+
+commit 35c55c9b06ed23d0b5baf13cb1bf959c23d0a0d8
+Author: Nick Howard <ndh@baroquebobcat.com>
+Date:   Wed Jul 16 00:36:06 2014 -0600
+
+    fix ArrayJavaProxy#to_a failure on arrays containing null
+    
+    https://github.com/jruby/jruby/commit/b96b2219f9df6622883a88eda0ae1dbbcb5c2267 added an unprotected method call in a place where the
+    target could be null. This adds a null check to that expression.
+
+commit d269590c79eb56175689e1aea710956fa7472786
+Merge: ae5ad64 78d80b5
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu May 1 09:54:27 2014 -0500
+
+    largish merge from jruby-1_7
+
+commit b96b2219f9df6622883a88eda0ae1dbbcb5c2267
+Author: tduehr <tduehr@gmail.com>
+Date:   Wed Apr 30 12:27:38 2014 -0500
+
+    ArrayJavaProxy#to_a now returns nested arrays where applicable
+
+commit d3c07143fef64cf3d04962089e944e150b6bb3b5
+Merge: 3ca2a90 17cb0b2
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Nov 21 20:02:16 2013 -0600
+
+    Merge branch 'jruby-1_7'
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/ext/pathname/RubyPathname.java
+
+commit 17cb0b2403d75e99831ad3db6e501e916eb15066
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Nov 21 19:52:34 2013 -0600
+
+    Fix Java String coercion logic to use fast path.
+    
+    Java Strings that enter Ruby through JI pass through JavaUtil's
+    converters. Unfortunately the converter for Java String was using
+    the slow-path Charset#encode logic rather than our thread-local
+    UTF-8 encoder logic. The former creates a number of buffers and
+    other objects, while the latter will ultimately only create the
+    final byte[] if the incoming String is of a reasonable size.
+    
+    This commit also fixes the generic encodeBytelist used by
+    RubyString.newString(..., java.lang.String) and friends to be
+    smart about how it encodes the string, using the fast path UTF-8
+    and UTF-16 logic as appropriate.
+
+commit 697e6895affa646849a685ed58f6f84795c853aa
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Oct 4 23:37:52 2013 -0500
+
+    Eliminate calls to Ruby.is1_8 and is1_9.
+
+commit d1f89e004fdc78dff75407c82123e6c9e8b406bb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Sep 12 18:48:16 2013 +0200
+
+    Make ClassIndex into an enum, to prevent issues like #1004.
+
+commit 42dc29fb9a80a134641f0c5f22508aef53b7038b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Aug 13 17:52:48 2013 -0500
+
+    Fixed javadoc for getRubyCasedName
+
+commit 28c6fbc4e883bc1c9e9242d1da1cb2b785f55339
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 3 12:46:45 2013 -0500
+
+    Move to @mkristian's proposed layout, with some modifications.

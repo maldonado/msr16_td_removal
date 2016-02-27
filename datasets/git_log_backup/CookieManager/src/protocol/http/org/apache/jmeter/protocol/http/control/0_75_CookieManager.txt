@@ -1,0 +1,855 @@
+commit ee0c987ff64545d318d3262ff13dc9db76a9e02e
+Author: Felix Schumacher <fschumacher@apache.org>
+Date:   Fri Jan 2 21:13:05 2015 +0000
+
+    Bug 57193: Add param and return tags to javadoc
+    Bugzilla Id: 57193
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1649126 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6ec25d4c825d6919abf0be1e422b5e725b3586e9
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat May 17 01:02:44 2014 +0000
+
+    Add missing final EOL
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1595401 13f79535-47bb-0310-9956-ffa450edef68
+
+commit aeb0793e3a2f8f7d494f9cd03f1e0dac1558d193
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Mar 17 23:28:26 2013 +0000
+
+    Tab police - also remove trailing spaces in same files
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1457590 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 5de4189b5d9b2dd01d84bd9a9130f12855f702f2
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Nov 27 00:18:19 2012 +0000
+
+    Move to Java 6
+    add @Override for interface implementations
+    Bugzilla Id: 54199
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1413957 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 9f05e86eb88ba1f73107c893fd9edbd30311458f
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Tue Sep 4 20:26:06 2012 +0000
+
+    Use parse instead of useless Wrappers
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1380856 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 0e633f6c1ff19974e18cb065e28e176f1d7140f8
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Mon Sep 3 19:59:14 2012 +0000
+
+    Use JOrphanUtils#isBlank
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1380327 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 61bd5feb2b04ee42c14afaa366ba3b408a4c94ed
+Author: Bruno Demion <milamber@apache.org>
+Date:   Wed Aug 22 23:54:57 2012 +0000
+
+    Adding a HttpClient 4 cookie implementation in JMeter. Cookie Manager has now the default HC3.1 implementation and a new choice HC4 implementation (compliant with IPv6 address)
+    and
+    Bug 51512 - Cookies aren't inserted into HTTP request with IPv6 Host header
+    Bugzilla Id: 53755
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1376320 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a81b678d62a693b65fba6ebac8a22d3810e7c65a
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Wed Aug 22 22:56:54 2012 +0000
+
+    TestListener interface could perhaps be split up.
+    Bugzilla Id: 53749
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1376300 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 7b959eace3671a2d5e6d84467763029a7e31b641
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Fri Dec 30 10:31:26 2011 +0000
+
+    Added TODO
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1225789 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8123bafb1de2c8087f46b215e36cd9bca0e6a269
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Sun Dec 18 21:55:32 2011 +0000
+
+    Bug 51512 - Cookies aren't inserted into HTTP request with IPv6 Host header
+    First part, introduce interface CookieHandler and make CookieManager use it.
+    
+    Second step will introduce HC4CookieHandler that will enable parsing of IPv6 IPs.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1220552 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 32ce2ad26357314bbb6b36862325a15828a019f7
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Sun Dec 18 15:52:56 2011 +0000
+
+    Make method exposing HTTPClient object not public (prepare enhancement of CookieManager supporting IPv6 (using HTTPClient4))
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1220440 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f4af3451b03fa8b6dcf31cecda9d4be86118c684
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Nov 27 13:17:54 2011 +0000
+
+    Simplify for loops
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1206717 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 55e045e644b3e8af4b0ed79023b134363cb8992c
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Mon Oct 24 13:11:39 2011 +0000
+
+    Bug 52075 - JMeterProperty.clone() currently returns Object; it should return JMeterProperty
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1188141 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 170483ce5e3dbd316d813012512a3338997baee7
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Sep 18 09:18:37 2011 +0000
+
+    log settings in use
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1172231 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 57ef7f1340b3d0c9044d7952d63068a9a634b1fb
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Dec 10 14:04:53 2010 +0000
+
+    Findbugs inefficient code
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1044360 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 383352631e243582f5c5f089e3fb38d1a28fbe75
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Mon Dec 6 11:33:11 2010 +0000
+
+    Move CookieSpec method to CookieManager so CookiePanel no longer depends directly on the HttpClient version
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1042588 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1b870d0fb6eb7c01373ae7d47b7ab427ab89d672
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Feb 23 16:09:09 2010 +0000
+
+    Remove trailing spaces
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@915405 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f52cf4362f23c38f642b71ec74b8eb135bc5147e
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Oct 10 15:18:56 2009 +0000
+
+    StringBuffer => StringBuilder
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@823869 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 7153f62fd9198661f5f2fdd41f0e60b9b0b42409
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Aug 18 00:02:46 2009 +0000
+
+    Fix up some raw types
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@805234 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 2dfed4897e64247fb6d78e9095a5dd6bf0481a87
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Aug 15 19:22:55 2009 +0000
+
+    Fix up some raw types
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@804518 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 4bdf9c6650ba4ede2039a0e29a353224f3127cc9
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Aug 14 19:08:38 2009 +0000
+
+    Add @Override and @Deprecated annotations
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@804323 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f6db8be88bbce487469dc87684492812ae451e71
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Mar 13 14:57:00 2009 +0000
+
+    Document cookie match policy
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@753291 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 11e8a08b926cbf93a2ecde6f9712d4d8dfa5a0cd
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Mar 13 01:57:53 2009 +0000
+
+    Check validity of cookies before storing them.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@753086 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 593dddd144d1b352662c23a27a8266249b63b4fc
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Jan 2 00:44:48 2009 +0000
+
+    Remove obsolete getClassLabel() method
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@730651 13f79535-47bb-0310-9956-ffa450edef68
+
+commit db6298afd016cf3c3007673979e6227fdecbb157
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Mon Dec 8 19:24:51 2008 +0000
+
+    Bug 46332 - HTTP Cookie Manager ignores manually defined cookies (bug introduced in r707810)
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@724454 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 032a993b86e0d7f46ee445462b33722f471f3ea3
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Mon Nov 3 16:09:20 2008 +0000
+
+    Cookie Manager no longer stores cookies by default
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@710091 13f79535-47bb-0310-9956-ffa450edef68
+
+commit cfb9bf9b0868ff879b01fd28de4673790024f876
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Oct 25 14:47:39 2008 +0000
+
+    Cookie Manager now saves/restores cookie versions
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@707849 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 85c77fabcd70b88672247ef0cb60a1d1879deb0b
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Oct 25 02:08:26 2008 +0000
+
+    Cookie Manager was not passing cookie policy to runtime threads so they always used compatibility mode
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@707810 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 413d3f24baddd42541a5310843cb69ce187611d3
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Oct 5 01:02:48 2008 +0000
+
+    Add serialVersionUIDs
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@701738 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6bf94deccce242cd1bba95592f54fd78a90dfc3e
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Jul 6 23:56:15 2008 +0000
+
+    Detab
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@674365 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 2b626b352f1bda32351a83c4cf43673bc234e131
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri May 30 01:23:32 2008 +0000
+
+    Temporarily remove the new setProperty() method to reduce Javadoc changes
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@661545 13f79535-47bb-0310-9956-ffa450edef68
+
+commit aea4db6fdaf9a52ba8b96f35c0b3da076464f57c
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu May 29 15:21:43 2008 +0000
+
+    Ensure existing cookie policy is removed when setting the default
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@661354 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6e2f4dcc1e1a6c5ba4c0db0e9854ef772f5ef31c
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu Apr 10 01:21:09 2008 +0000
+
+    Ensure if and for statements always use blocks
+    Other minor tidyups
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@646610 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b57e170fbd0d867960952e6f4d5f2e9fb8f57750
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Dec 9 01:49:55 2007 +0000
+
+    No need to call clear
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@602608 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 9c28db57a1d26206a7bb96c9c0e276b5d86bba66
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Dec 8 01:18:21 2007 +0000
+
+    Bug 44042 - Regression in Cookie Manager (Bug introduced in 2.3.1)
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@602290 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 04fa2c64630d2ec92336501f6f7382d38a7a3caf
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Oct 7 19:55:19 2007 +0000
+
+    Cookie Manager not longer clears cookies defined in the GUI
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@582672 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 63b0f6266b985e98a6385c88151a612468e810ae
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Sep 2 14:19:10 2007 +0000
+
+    Fix up some Javadoc errors
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-2@571988 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 776c562c2703c8453e7729932d9d76404a007178
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Sep 1 12:40:35 2007 +0000
+
+    Bug 28715 - allow variables in Cookie Manager
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-2@571789 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 17eb25fca3aa016a4d99272b3046c6ee9425f20a
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Jun 5 23:46:36 2007 +0000
+
+    The clear() method was defined in the following interfaces:
+    Clearable, JMeterGUIComponent and TestElement.
+    The methods serve different purposes, so two of them were renamed:
+    the Clearable method is now clearData() and the JMeterGUIComponent method is now clearGui().
+    3rd party add-ons may need to be rebuilt.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-2@544682 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6dd392e9ac9504972b92677cb37f8d8693dc9473
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Mar 4 03:39:11 2007 +0000
+
+    Document cookie flag
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-2@514348 13f79535-47bb-0310-9956-ffa450edef68
+
+commit db8dedbff2834a7eb4e0429a307ecbdd731a53d8
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Jan 7 18:10:21 2007 +0000
+
+    Update license (remove copyright)
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-2@493789 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 4a4ec76a1e40fed3182f9ee5dc26477845c4462f
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Jun 3 22:31:44 2006 +0000
+
+    Implement isPathSpecified and isDomainSpecified;
+    delegate cookie policy setup to the GUI;
+    move cookie save formatting to be near load method
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-1@411479 13f79535-47bb-0310-9956-ffa450edef68
+
+commit fb32e0199071f5d16b80af384b081ae604cc3cd5
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Jun 2 23:50:51 2006 +0000
+
+    Use ExpiresMillis() method
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-1@411338 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 7eb955c2e7cbd1c46f269736e10e6707383e724d
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Jun 2 23:00:29 2006 +0000
+
+    Convert to Commons HttpClient cookie parsing and matching
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-1@411326 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 751fbee0e5920248b75d13e99d9ad25606badd4b
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Mar 7 00:01:18 2006 +0000
+
+    Remove broken method
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-1@383712 13f79535-47bb-0310-9956-ffa450edef68
+
+commit cc600a2c3d8222f5da04946fc9d4341b1d233738
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu Feb 23 18:23:12 2006 +0000
+
+    Bug 38764 - incorrect check for https protocol
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-1@380188 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 93c02ff6208b5c613b3d1878fdf28064bacb842b
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Jan 13 20:11:08 2006 +0000
+
+    See bug 38256 - handling of missing cookie path
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-1@368839 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 084d1c3305a8b83ee5ee945b6e5670af8ae4bf5a
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Mon Nov 21 00:03:56 2005 +0000
+
+    Always remove matching cookies; tidy some constant strings
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-1@345793 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 7258620d29370f5d05a44c9171e1ea712e5de656
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Nov 15 23:10:58 2005 +0000
+
+    Add duplicate cookie test; move test code to test tree
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-1@344466 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d45de03aa3ba3b68ed20fa4e4d04625b5dec27cc
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Wed Nov 2 13:53:18 2005 +0000
+
+    Clarify the debug logging messages
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-1@330254 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1db1969468f44e0697c55ab5a249a051d473d3af
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Oct 23 17:25:19 2005 +0000
+
+    Use new JOrphanUtils.split() method
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-1@327811 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c1cdfbacd1593e740ff7f2c848b3cf40d9547957
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Oct 22 11:07:52 2005 +0000
+
+    Path fix was slightly wrong - trailing slash only needed for Set-Cookie2.
+    Fix ClassCastException when loading cookies from file - get(i)
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-1@327651 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c4da94977b41ab3d8cd195e7ff3d1f4a68419f81
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Oct 21 20:37:04 2005 +0000
+
+    Cookie path should terminate at last slash
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-1@327569 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 4c59a8c8d56418b78277dcb9933ac67030822d15
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Wed Oct 19 23:33:18 2005 +0000
+
+    Add a bit more debug logging
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-1@326753 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 76159a5b953d9dc5518b2ccb03bfbc1c4908837d
+Author: Michael Stover <mstover1@apache.org>
+Date:   Tue Jul 12 20:51:09 2005 +0000
+
+    Formatting Code to basic Java Standard
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@325542 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b722ca1c2b3e0079610dbcb314888d6ab202fd5f
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Jun 17 00:25:38 2005 +0000
+
+    Add some more debug
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@325475 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f057bd6dfc2faeebbcc5493dff85191b3744ff79
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu May 26 23:41:01 2005 +0000
+
+    Default path should be that of url
+    Add a bit more debug
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@325398 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 5a9aa05898b9024ce8b3928016b03556582b7ef0
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Wed May 25 22:58:03 2005 +0000
+
+    Cookie expiry is seconds, not milliseconds
+    Session cookies now indicated by expiry of 0, not Long.MAX_VALUE
+    Don't save session or expired cookies
+    Add cookie expiry tests
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@325393 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8a709b0d9e54926b1e3e40d0855552d72fdf2167
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Wed May 25 20:53:16 2005 +0000
+
+    Forgot to include current time in debug
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@325390 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 73b48d4e0250f44665f6f04a3d75e34c8ef9a266
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Wed May 25 20:01:46 2005 +0000
+
+    Add some debug for cookie handling
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@325389 13f79535-47bb-0310-9956-ffa450edef68
+
+commit abb2edf50592b857009eea90f6128d2f4c88619f
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Apr 2 23:21:49 2005 +0000
+
+    Remove some unnecessary casts
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@325247 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 663bdc0596f0997763f2ea3dfabc9a02371a80f6
+Author: Michael Stover <mstover1@apache.org>
+Date:   Fri Mar 18 15:27:20 2005 +0000
+
+    Merge from 2-0 and some fixes to controllers that need to recover running version after no samplers under them have run.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@325222 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 48502c5e6d03a9abc482a30ac20a01f34b567f04
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Jan 4 19:43:30 2005 +0000
+
+    Rename "enum" variable to avoid clash with Java 1.5 keyword
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@325078 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1e3b06fe9d3ae55ec6d72a16ed28a55e652f6298
+Author: Michael Stover <mstover1@apache.org>
+Date:   Fri Dec 10 21:32:55 2004 +0000
+
+    Big Ugly Merge from 2-0
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@325054 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e73245745e80c1b78150a609df52d08503f29854
+Author: Michael Stover <mstover1@apache.org>
+Date:   Mon Sep 20 23:08:41 2004 +0000
+
+    New code for recording .jtl files using XStream.  Also, a properties file controls what XStream Converters get registered (makes for easier plugins).
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@324856 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 495e0b102a5567a3bae416df482da2d0a0219590
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Jul 3 02:36:44 2004 +0000
+
+    Use Null Sampler for tests
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@324767 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f5c75713850b079b982c698a29d7f179c8f6f7d1
+Author: Michael Stover <mstover1@apache.org>
+Date:   Sun Jun 20 00:32:53 2004 +0000
+
+    New XStream implementation for saving test plans
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@324711 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 5349a7263e4cd424f950bb58d6f9d6b6e162d9b9
+Author: Michael Stover <mstover1@apache.org>
+Date:   Sat Jun 12 17:11:46 2004 +0000
+
+    Merging latest from 2_0 branch
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@324677 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c5e7d0c1b85b231608f878c5b2b37e57fc8fc59f
+Author: Michal Kostrzewa <mkostrze@apache.org>
+Date:   Tue Mar 23 23:23:32 2004 +0000
+
+    Fixes a problem with cookies coming back from Oracle9iAS where
+    cookies would have leading spaces in the domain portion.  For instance,
+    'domain= .mydomain.com;'.  Both IE6 on W2K and Moz 1.6 on W2K and Linux
+    trim the domain.
+    Obtained from: jmeter-user
+    Submitted by: Todd Parnell
+    Reviewed by: Michal Kostrzewa
+    CVS: ----------------------------------------------------------------------
+    CVS: PR:
+    CVS:   If this change addresses a PR in the problem report tracking
+    CVS:   database, then enter the PR number(s) here.
+    CVS: Obtained from:
+    CVS:   If this change has been taken from another system, such as NCSA,
+    CVS:   then name the system in this line, otherwise delete it.
+    CVS: Submitted by:
+    CVS:   If this code has been contributed to Apache by someone else; i.e.,
+    CVS:   they sent us a patch or a new module, then include their name/email
+    CVS:   address here. If this is your work then delete this line.
+    CVS: Reviewed by:
+    CVS:   If we are doing pre-commit code reviews and someone else has
+    CVS:   reviewed your changes, include their name(s) here.
+    CVS:   If you have not had it reviewed then delete this line.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@324505 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 2abe6ca9b9e73bc394c74dc7f078c1a069c9fe54
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Mar 16 19:48:57 2004 +0000
+
+    Treat cookie expiry time of 0 as never expiring (bug 27713)
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@324460 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f488c86dee9de83e280be59ca9bb99d9ef8e1dbf
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Feb 22 19:23:15 2004 +0000
+
+    For speed, use getThreadContext() instead of JMeterContextService
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@324364 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 9bc036ab8b3ba96de2aed518c8473b7dcd84902d
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu Feb 19 00:26:22 2004 +0000
+
+    Close file on Exception return
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@324338 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e01c4d674426f3c1b209b8de139401a90fe19585
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu Feb 12 00:07:12 2004 +0000
+
+    ASF L V2
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@324264 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 2a30d1ec72e9d14b4bd85014db7e6b9e7e264f52
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Dec 16 13:02:02 2003 +0000
+
+    Make dateFormat an instance variable to avoid any synchronization errors
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323901 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 89017ef0fa42969fafb422293a84bb589a4fba5b
+Author: Jordi Salvat i Alabart <jsalvata@apache.org>
+Date:   Sun Dec 14 17:24:11 2003 +0000
+
+    Workaround JDK bug http://developer.java.sun.com/developer/bugParade/bugs/4699765.html
+    
+    PR: 22985
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323890 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 0a878908ce48fc7c7834565e7fbd454122a8e221
+Author: Jordi Salvat i Alabart <jsalvata@apache.org>
+Date:   Thu Dec 11 13:07:15 2003 +0000
+
+    * Modified cookie selection algorithm to match browser behaviour
+    (even though it breaks the applicable RFCs).
+    * Corrected bug by which a cookie set by http://ache.org would be
+    sent back to http://jakarta.apache.org.
+    * Added a couple of test cases and a few commens.
+    
+    PR: 13750
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323852 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6eaf1923b4543cd273c88d19b5880cfc052e142b
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Oct 19 22:43:51 2003 +0000
+
+    final string now static; Boolean() and String() usage; unused fields; javadoc tags
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323610 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 0968ab08331c10d1e215bbe39d04c6fb524799d6
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Oct 5 00:52:25 2003 +0000
+
+    Removing unused items
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323472 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8e422b2a77bf29a5cde85107ec8ef08cb077aad5
+Author: Michael Stover <mstover1@apache.org>
+Date:   Mon Aug 18 12:49:54 2003 +0000
+
+    Fixing cookie manager
+    linking to newest bug fix release
+    Fixing minor gui issues
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323429 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1dd68b883013115def67a6963ff8c1abcc055e5c
+Author: Jeremy Arnold <jeremy_a@apache.org>
+Date:   Sat Aug 16 17:22:52 2003 +0000
+
+    Reformatted to JMeter conventions.
+    Minor JavaDoc updates (mostly formatting).
+    Removed an unused private field.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323420 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 19e8d2b810fccc64749a26a1fd02a0271c907d47
+Author: Michael Stover <mstover1@apache.org>
+Date:   Fri Jul 18 14:38:01 2003 +0000
+
+    Making the cookie manager more forgiving of crap expiration dates
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323394 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 2ba7072b8611527960d95c094a058c644e276879
+Author: William Thad Smith <thads@apache.org>
+Date:   Mon Jun 23 20:28:43 2003 +0000
+
+    Added a feature to the cookie manager to clear the cookies after each
+    test iteration.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323363 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f9baecdf4fce2466716c5b7a638b2ff40ab88e91
+Author: Michael Stover <mstover1@apache.org>
+Date:   Mon Jun 9 16:07:59 2003 +0000
+
+    Doc updates
+    GUI update to User Parameters
+    Update to jmeter-server script files to pass command line arguments on (allows setting proxy for server)
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323324 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 87f67e531cc5bdf1cb9658e07a69bc50f9ba7566
+Author: Jeremy Arnold <jeremy_a@apache.org>
+Date:   Thu May 8 21:14:10 2003 +0000
+
+    Removed obsolete PerSampleClonable and PerThreadClonable interfaces.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323267 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 2122b6aea241928416e13bcf76e6b0b2d84ed9c8
+Author: Michael Stover <mstover1@apache.org>
+Date:   Wed Apr 30 16:52:16 2003 +0000
+
+    new unit test for cookie manager
+    making SSL work in non-gui mode
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323226 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1701e2c38e3094e3fb41d4006b4ff2ed03559406
+Author: Michael Stover <mstover1@apache.org>
+Date:   Fri Apr 25 20:50:56 2003 +0000
+
+    Fixing multiple minor bugs
+    making compile work with jdk1.3
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323202 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 46b851174beb4541e04b69e57948c9741cf27867
+Author: Michael Stover <mstover1@apache.org>
+Date:   Wed Apr 9 15:19:07 2003 +0000
+
+    fixing cookies and downloading images from web pages
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323146 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6dad839268c9c0110921f1ebdb59077bd672a97c
+Author: Michael Stover <mstover1@apache.org>
+Date:   Mon Apr 7 14:35:28 2003 +0000
+
+    New JMeter properties allow functions to be fully recursive and reduces the amount of repetitive cloning of test elements
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323133 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 24158ffe9d92c8d24a229696617e112e13d532d8
+Author: Michael Stover <mstover1@apache.org>
+Date:   Tue Apr 1 16:49:55 2003 +0000
+
+    Fixing GUI problems with assertion and cookie manager guis (Elan Chezhiyan)
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323128 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6f2a73e71a822a619b5eb8a50f340ca43dc52c7d
+Author: Michael Stover <mstover1@apache.org>
+Date:   Fri Sep 20 19:44:40 2002 +0000
+
+    Cookies assume default path is "/"
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@322901 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 83c789314d92cc998b022447286c01debba9da97
+Author: Michael Stover <mstover1@apache.org>
+Date:   Thu Aug 29 18:17:43 2002 +0000
+
+    Updating docs for help system
+    Making class members transient as appropriate
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@322888 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 35208e9484592ab0405fd9dace4949d3e7ad5f53
+Author: Michael Stover <mstover1@apache.org>
+Date:   Fri Aug 23 22:51:47 2002 +0000
+
+    Removing calls to system.out, system.err, and printStackTrace()
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@322867 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 9911505b5b340539d97506ebc4dafbfaffe4f121
+Author: Michael Stover <mstover1@apache.org>
+Date:   Tue Aug 20 01:55:24 2002 +0000
+
+    Objects that act like Config objects have to extend ConfigTestElement
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@322859 13f79535-47bb-0310-9956-ffa450edef68
+
+commit dd9932a03c9826150ab4c98914a145ba5f3248ae
+Author: Michael Stover <mstover1@apache.org>
+Date:   Sun Aug 11 19:24:54 2002 +0000
+
+    New src directory organization, committing all files
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@322831 13f79535-47bb-0310-9956-ffa450edef68

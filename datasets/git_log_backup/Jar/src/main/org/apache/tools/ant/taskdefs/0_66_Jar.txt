@@ -1,0 +1,1438 @@
+commit 5fc48a4bf92cd63ce993a0bef6738a5ac9d17f96
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Feb 28 16:14:30 2014 +0000
+
+    assorted spelling fixes by Lajos Veres - closes #4
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1572981 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a17032a42a83e78686c38db27276919022833c2c
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Sat Jan 4 15:25:04 2014 +0000
+
+    merge filesetmanifest=mergewithoutmain even if no explicit manifest has been specified.  PR 54171
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1555355 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 13000c1a4670271a3257b3c41dc1e17941067c78
+Author: Jesse N. Glick <jglick@apache.org>
+Date:   Wed Jul 17 22:46:10 2013 +0000
+
+    sconnolly advises using TODO rather than XXX in comments.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1504315 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ef4c94df7d5faabb65e7dbec22043cb0cb7a31d8
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Sun Mar 31 10:22:43 2013 +0000
+
+    Provide more control over Zip64 features, in particilar turn them off in <jar> by default - this might fix bugzilla issue 54762
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1462911 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 30a0e6bf899246f045208d0dc5fa01c75ed72290
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Sun Mar 31 07:37:52 2013 +0000
+
+    intermediate stream is not needed and may even cause issues with Zip64 support
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1462890 13f79535-47bb-0310-9956-ffa450edef68
+
+commit da5f3bfd256e383926c6ece58dba15a7d4bd5761
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Tue Aug 21 14:27:46 2012 +0000
+
+    java 5, continued
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1375571 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 282291fb51250021150ac1548fbe8f20044c1302
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Sat Aug 7 20:43:21 2010 +0000
+
+    <jar doesn't merge manifests that come from zipfilesets with prefix.  PR 49605
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@983308 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 9969e4d608937721c2c14287ac42e665c964a91d
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Apr 13 14:26:35 2010 +0000
+
+    jar filesetmanifest=merge only worked for an OS where filesep == /.  PR 49090
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@933630 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c767541c7d35c9eef55bf65e686373b02b71af2a
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Feb 18 11:00:58 2010 +0000
+
+    As Jesse points out, equalsIgnoreCase is not locale-sensitive
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@911324 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 58f0bb04db9c5c8a858d7a3be7719608f25f2f49
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Feb 17 12:58:50 2010 +0000
+
+    if user input is compared to fixed strings in a case insensitive manner we should use the default locale.  Use Locale.ENGLISH consistently
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@910955 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 77cba689ceb7e72931ba405bfab50150a21e3271
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Sun Feb 14 02:18:35 2010 +0000
+
+    fix javadoc warnings
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@909962 13f79535-47bb-0310-9956-ffa450edef68
+
+commit dd92def3ae19c4f8e9b03cf212560bf533caf62b
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Sun Jan 17 10:01:17 2010 +0000
+
+    try to make ZipExtraField change in zip backwards compatible for subclasses that override zipFile.  PR 48541
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@900082 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 996e3e6ff92ae37c0476e206df9f07118b675141
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Sep 4 10:10:16 2009 +0000
+
+    fix some javadoc warnings
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@811335 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 77024a43a293e7911609d3c3192e773f082688ce
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Aug 20 13:52:09 2009 +0000
+
+    allow Class-Path attributes to be merged and optionally be flattened.  PR 39655
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@806174 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ae2ce59075975c8ee7dd2eba234c5ab47f257972
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Jul 29 10:23:59 2009 +0000
+
+    make error message more readable
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@798839 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ffe7ce3c548442235689eef400b468f245416d06
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Jul 16 11:49:08 2009 +0000
+
+    log stuff when actually creating the archive
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@794639 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8df1ef0ecfcd30c0445cb3f7300cdf8e16e32df1
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Jul 16 11:24:47 2009 +0000
+
+    make update="true" and filesetmanifest="merge" work together.  PR 30751
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@794630 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e24b8aa6a0ca6c3984c88e6b71b3335315fb20b1
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Jul 15 10:10:54 2009 +0000
+
+    new zip logic bypassed overridden method in jar and broke manifest/index logic
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@794212 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a6e42833f664835fa3f5352d379e3ec520d54eab
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Jul 15 08:53:07 2009 +0000
+
+    preserve timestamps for directories added to a zip archive (and potentially zip extra fields as well)
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@794198 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 0768b9b643d6d2d43505fd7783cacbae5289952b
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Jul 14 04:28:04 2009 +0000
+
+    filesetmanifest=mergewithoutmain didn't work for nested manifests.  PR 29731.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@793787 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ddf5cd73c9f609b1fc5da325e186b68e6093e717
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Jul 13 10:08:35 2009 +0000
+
+    check error on remaining PrintWriter instances
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@793528 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 5a534d1146c0450e3a426cd4397096164049bbd0
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Jul 10 14:27:06 2009 +0000
+
+    whitespace
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@792961 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 7f2456889917312606d26c68b9cbb32cbaba48b7
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Jul 10 14:24:29 2009 +0000
+
+    add a new indexMetaInf attribute to <jar>.  PR 47457.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@792960 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 27868015eb791e7c83ebc0e12f6a255575504d0e
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Nov 3 16:45:39 2008 +0000
+
+    whitespace
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@710102 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ee0fc90c1af3f49fbfc357258ccf63aafd230b10
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Nov 3 16:40:42 2008 +0000
+
+    make sure log messages to get emmitted twice in double-pass mode.  PR 39426.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@710101 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8aaa005834f2ab61dd187115ca3c922517f2b850
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Oct 21 16:04:52 2008 +0000
+
+    close streams passed in to zipFile(InputStream, ...).  PR 42632.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@706674 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1bff308e51b3dfe4bb1b3ee10cd92b78e9643a18
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Sun Aug 31 15:38:38 2008 +0000
+
+    Bugzilla 45098: update jar index with no other changes
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@690714 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 0e11c9965dbe23b0eec2b28babdec1b709398a37
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Fri Jul 20 17:39:44 2007 +0000
+
+    use the StrictMode enumerated class rather than a string for the setStrict method
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@558067 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 05d6dded010e04fb4e7048f151c202372743fb7e
+Author: Jan Materne <jhm@apache.org>
+Date:   Wed Jul 18 14:11:50 2007 +0000
+
+    Spec breaks now can 'fail' the build or just be reported on 'warn' or verbose ('ignore') level.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@557270 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 154ef1be5cb0da4acbfacf218c7efb86df86b97e
+Author: Jan Materne <jhm@apache.org>
+Date:   Wed Jul 18 11:23:40 2007 +0000
+
+    Interim solution for "strict" attribute. Change to an enum in a few hours.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@557229 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 2c44cef133b46cc3f6d3ea428f361d9f81fe8982
+Author: Jan Materne <jhm@apache.org>
+Date:   Fri Jul 6 12:19:28 2007 +0000
+
+    Encourage people to follow the packaging spec.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@553857 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 7627a966ee4283bebb43ff4f0b6eeb84236a6019
+Author: Jacobus Martinus Kruithof <jkf@apache.org>
+Date:   Sat Jun 30 21:59:12 2007 +0000
+
+    Reviewed Jar (and parts of Zip) because of BR 42632
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@552218 13f79535-47bb-0310-9956-ffa450edef68
+
+commit dc2d06decbb26a5b4fa070d6110299765c4496e4
+Author: Steve Loughran <stevel@apache.org>
+Date:   Mon Jun 11 12:57:42 2007 +0000
+
+    mark some static methods as non-final, as it is implicit from being static
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@546132 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d5836ac061734031a67a6c3bb5fb2fe1e73e566f
+Author: Jacobus Martinus Kruithof <jkf@apache.org>
+Date:   Sun Apr 8 12:08:27 2007 +0000
+
+    Changes after static code analysis.
+    Code totally equivalent
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@526545 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f2e6e1d3961af84d8485ade62eb12fee053ea446
+Author: Kevin Jackson <kevj@apache.org>
+Date:   Fri Feb 2 05:27:57 2007 +0000
+
+    -use FileUtils.close
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@502505 13f79535-47bb-0310-9956-ffa450edef68
+
+commit efd2db02d591dd7902d3ae65cc330a85ccbfc7f3
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Mon Dec 18 21:57:25 2006 +0000
+
+    Bugzilla 41201: [jar-task] wrong name for services folder
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@488437 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 0a5cf98f65e6ff720094f43785a702a9a4fc57c4
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Sat Nov 18 18:13:55 2006 +0000
+
+    checkstyle
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@476580 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 75e6e7f764495e29e7d15f0c40c125f7654616ee
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Mon Nov 13 20:09:11 2006 +0000
+
+    Bugzilla 40847: possible NPE in Jar.java
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@474481 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f0e86c70ce9b1818814e6ba38afaf7477c913f8e
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Sun Nov 5 23:03:47 2006 +0000
+
+    checkstyle
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@471562 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f58d3967f08c8cc033ce0af114bb1ed87ca08664
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Wed Nov 1 23:00:52 2006 +0000
+
+    checkstyle
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@470130 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3f73a851981568afb38cdfb17f202fa7820b9eec
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Tue Sep 26 21:15:12 2006 +0000
+
+    Bugzilla 31520
+    adding SPI to jar-task
+    This patch from bernd Dutkowski adds
+    a nested element <service> to the <jar> task
+    this creates the SPI files - see doc.
+    
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@450209 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 2e897819a83981a1f4de2e1cc72e33f080fcf573
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Sep 1 18:49:27 2006 +0000
+
+    copy2license.pl
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@439418 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 176b11946b0fd2fdc0f5f06d676aba72fc4fce98
+Author: Jacobus Martinus Kruithof <jkf@apache.org>
+Date:   Mon Jul 10 21:54:00 2006 +0000
+
+    manifest issues
+    br: 37548
+    Still not totally convinced that the line is not allowed to be 74 bytes long (including eol)
+    But the specs allow to cut off early, except for the name. So name is allowed to by 70 bytes
+    long, and only if the name is 70 or 69 bytes long the line will be 74 (73) bytes long. Else
+    it will be shorter than 72 bytes including eol.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@420638 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 595802a2b86cc55157ee68629986101574cff45b
+Author: Kevin Jackson <kevj@apache.org>
+Date:   Wed Apr 26 08:37:36 2006 +0000
+
+    more info (added filename to error message) bug #35505
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@397145 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 7eb22e8cdc4c161dcf8e89d40a8e072930db5d8f
+Author: Jacobus Martinus Kruithof <jkf@apache.org>
+Date:   Fri Apr 21 21:47:06 2006 +0000
+
+    indicated when methods/classes became deprecated, as to give us the possibility to remove deprecated methods in the future.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@396012 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 176d949191a5af21228710331f2c174c194e9b1e
+Author: Jacobus Martinus Kruithof <jkf@apache.org>
+Date:   Sun Dec 18 21:40:58 2005 +0000
+
+    Removing unused imports.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@357509 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 7ac5356019aca23d3d4deef18ce09bf05dfc0577
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Nov 29 04:52:33 2005 +0000
+
+    performance enhancement, without this getNonFilesetResourcesToAdd might get invoked twice if the manifest changes
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@349646 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 9d3209f826f5de79f3615e0559547387e47d1624
+Author: Jacobus Martinus Kruithof <jkf@apache.org>
+Date:   Sun Oct 2 20:11:51 2005 +0000
+
+    javadoc fix
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@293158 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 01967f4543e3d84e079481c6ea968fb0b517fad2
+Author: Jacobus Martinus Kruithof <jkf@apache.org>
+Date:   Sun Oct 2 20:04:39 2005 +0000
+
+    Updated the Jar task to have an whenmanifestonly attribute,
+    creating the possibility to skip jar files that would
+    otherwise only contain a jar file. Also started to use this
+    for the optional tasks in the build.xml
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@293157 13f79535-47bb-0310-9956-ffa450edef68
+
+commit fbb0b6d2d73a37a4e6853e0c020f010b2e0a3ded
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Mon Mar 14 10:06:58 2005 +0000
+
+    javadoc
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277925 13f79535-47bb-0310-9956-ffa450edef68
+
+commit de95ac9a0ec428dbb2fffb4fbb866f29b7a54870
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Mar 11 08:41:41 2005 +0000
+
+    Make Solaris detect Ant jar files as jar files, PR: 32649
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277889 13f79535-47bb-0310-9956-ffa450edef68
+
+commit db48fbb829447064857a6b918e78cdab0b0c89b1
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Nov 22 09:23:37 2004 +0000
+
+    Various checkstyle violations
+    
+    Submitted by:	Larry Shatzer
+    
+    And some
+    
+    (untabify (point-min) (point-max))
+    
+    on some files.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277063 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f10dfc61e6373ff18fcefd81200381ad94f8bdf3
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu May 13 07:05:02 2004 +0000
+
+    Add docs for <indexjars>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276451 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c00d5a6977e62911b613f7b4464e9d953057e4cd
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Apr 23 10:03:50 2004 +0000
+
+    Implement jar index for referenced jars, PR: 14255
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276389 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c885f568369156a62e3ccb5b4b93b73b9d054443
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Tue Mar 9 16:49:09 2004 +0000
+
+    remove authors from files
+    PR: 27177
+    Obtained from: J.M. (Martijn) Kruithof
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276208 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 278781dcd669412e5e35cc95d8a96e0b2a278f50
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Mon Feb 9 21:05:47 2004 +0000
+
+    Copyright owner is The Apache Software Foundation
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276065 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 66555ca10d24bbfc55e710b9d65f809cfe713dab
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Wed Feb 4 20:38:09 2004 +0000
+
+    Remove trailing spaces in all java files
+    in order to make checkstyle happy
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276017 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ca1513552f7af7fc19de490fbe2d88adb6c993ad
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Tue Feb 3 22:44:50 2004 +0000
+
+    Switch to Apache Software License 2.0
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276010 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 08084b4e5c26211fb4fb4335d175f1e9c33be1bf
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Tue Sep 16 09:08:57 2003 +0000
+
+    Next round of typo fixes by Larry Shatzer
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@275242 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 9434671efa81b38a4ebc571a5ea531375b541758
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Wed Aug 13 14:46:15 2003 +0000
+
+    removing enum variable
+    PR: 22345
+    Obtained from:
+    Submitted by:
+    Reviewed by:
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@275074 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 24eb5693d6b7363262ea941cac63d15230aa1aab
+Author: Conor MacNeill <conor@apache.org>
+Date:   Sat Jul 19 11:20:23 2003 +0000
+
+    Coding conventions
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274859 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3a35c7d914d8b5a1f203561ae6f89afb5d2b80ec
+Author: Conor MacNeill <conor@apache.org>
+Date:   Sat Jul 19 08:11:10 2003 +0000
+
+    style
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274858 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 410129735b97c3b972e414d89f0798272642e2de
+Author: Conor MacNeill <conor@apache.org>
+Date:   Thu Jul 17 15:44:45 2003 +0000
+
+    style
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274851 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e580392c2d28c2a3530ebe0e1005bae0d45c5b8b
+Author: Conor MacNeill <conor@apache.org>
+Date:   Sun Jul 6 09:57:37 2003 +0000
+
+    More cleanup
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274776 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1d1f2da180d0e6d8c4e1d6c0b73e66babe8cb27c
+Author: Conor MacNeill <conor@apache.org>
+Date:   Fri Apr 18 23:40:30 2003 +0000
+
+    Import cleanup
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274483 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 9ba0cb2f6d429c39815cc6bc8b216e62e6b767cb
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Apr 3 06:41:51 2003 +0000
+
+    Improve standards compliance of created index.
+    
+    PR: 16972
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274386 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 29986536728cd58c9da4193c765f90e94c1fb4e8
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Apr 2 16:01:15 2003 +0000
+
+    Ignore index lists found when creating a jar with index="on".
+    
+    PR: 10262
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274378 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 709e8bb7a2132b80b51b7d2a9ec33c9df8c5db4f
+Author: Conor MacNeill <conor@apache.org>
+Date:   Sat Mar 22 09:39:46 2003 +0000
+
+    Add manifest encoding options to control the encoding used to read in
+    manifests
+    
+    PR:	17634
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274301 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8d651ad96d13016c9c8f77f730a83b18ef49a160
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Mar 12 11:23:27 2003 +0000
+
+    Fix the bug.
+    
+    PR: 17780
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274241 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 4d13582985c2a7c3b91c96f30fa1c3d5e006816d
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Feb 17 14:00:34 2003 +0000
+
+    remove now obsolete override
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274102 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 0657acfd3163a27a278242ac757224423a465af4
+Author: Conor MacNeill <conor@apache.org>
+Date:   Sun Feb 16 02:24:07 2003 +0000
+
+    Also write manifets into JAR as UTF-8
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274076 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a4be70fbf09b8f00cccb697fd031e9bdd277c89a
+Author: Conor MacNeill <conor@apache.org>
+Date:   Sun Feb 16 02:03:06 2003 +0000
+
+    Read/Write manifests in UTF-8
+    
+    PR:	17075
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274074 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 91a07a1f685acd64f79347288b50584e4df34c3e
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Feb 12 09:05:04 2003 +0000
+
+    Remove the (at least for now) superfluous ResourceScanner interface.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274060 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1dc8a079057e191ca4c158f36843c2c9e9f9be52
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Feb 10 14:15:00 2003 +0000
+
+    Remove Jakarta Project from license
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274040 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8cf73939c00495030382d6f0ff13aeb07c039ef3
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Feb 6 09:07:32 2003 +0000
+
+    There are CVS snapshots
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273994 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1cea69ac674b7852c3e00a255bd2aec352218695
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Feb 5 16:16:27 2003 +0000
+
+    Remove the ugly hack, but still ensure that jars always at least contain a manifest
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273993 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 34dc5127ac1a581305f7b89cc9801f1624b2e039
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Feb 5 15:31:33 2003 +0000
+
+    fix the 'is the manifest up-to-date?' checks
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273991 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 07b710cc96c363b69d4e7225c96ffc0296354597
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Feb 5 10:43:08 2003 +0000
+
+    Refactor <zip> and friends.
+    
+    PR: 10755
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273986 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 773a2273edbbe2976362a6698ad57fd4df51ceca
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Feb 3 15:41:18 2003 +0000
+
+    Close original archive after checking for old manifest in <jar> -
+    otherwise the file may still be locked on Windows and friends when we
+    try to rename it.
+    
+    Submitted by:	Antoine Levy-Lambert <levylambert at tiscali dash dsl dot de>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273965 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a9353331a922b229316fa3da01f1b2df9fd75059
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Jan 22 12:36:41 2003 +0000
+
+    Initial fix for the <jar> doesn't update bug, will need some
+    refinement (see extra mail to list).
+    
+    PR: 10755
+    Submitted by:	Antoine Levy-Lambert <levylambert at tiscali-dsl dot de>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273848 13f79535-47bb-0310-9956-ffa450edef68
+
+commit bf37341e1a0cefb4e43784eb86211a28539f50c4
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Jan 17 12:30:44 2003 +0000
+
+    Take care of the original manifest when updating a jar.
+    
+    PR: 12651
+    Based on code submitted by:	Ben Jenkins <bjenkins at dynamicsoft dot com>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273822 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3255fa8ff4d68ae67f32a9df7a54c163fdddb9a0
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Dec 9 12:40:38 2002 +0000
+
+    Add support for Unix permissions to <zip> and friends, doing it the
+    Info-Zip way.
+    
+    PR: 6492
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273629 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 90b811d74ba241f5fe1fe8508acb87fe9d0a5fd2
+Author: Magesh Umasankar <umagesh@apache.org>
+Date:   Thu Nov 21 21:47:53 2002 +0000
+
+    The filesetmanifest attribute of <jar> has been reenabled.
+    
+    PR: 13296
+    Submitted by: bdeitte@macromedia.com (Brian Deitte)
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273570 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a9fbed217170effcba552677625514ed2832e4c4
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Oct 23 09:34:05 2002 +0000
+
+    Swallow warning about filesetManifest as long as its value cannot be
+    altered.
+    
+    Merge from 1.5 branch.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273454 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8f413c12084a80db24f4cdfd6b8f908d4e75556f
+Author: Peter Donald <donaldp@apache.org>
+Date:   Thu Jul 25 15:21:25 2002 +0000
+
+    Remove unused imports, remove glob imports, sort imports.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273169 13f79535-47bb-0310-9956-ffa450edef68
+
+commit da5a13f8e4e0e4475f942b5ae5670271b711d423
+Author: Magesh Umasankar <umagesh@apache.org>
+Date:   Tue Jul 9 21:06:15 2002 +0000
+
+    Merge differences between the ANT_15_FINAL branch and the trunk into the trunk.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273081 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6bd8d6e938a45868902ecd1092858e8372933c7c
+Author: Magesh Umasankar <umagesh@apache.org>
+Date:   Sat Jun 22 23:38:38 2002 +0000
+
+    Merge changes made to 1.5 Beta2.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@272967 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ca91f8cb7e4f2bfe1a191dea6126a32649af9565
+Author: Magesh Umasankar <umagesh@apache.org>
+Date:   Sat Jun 1 12:26:43 2002 +0000
+
+    Merge changes made to 1.5 Beta1.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@272826 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 80080d456c543d039426db35bcf35d90694bbd96
+Author: Conor MacNeill <conor@apache.org>
+Date:   Mon Apr 15 15:33:11 2002 +0000
+
+    Reduce a small number of long lines
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@272443 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 03d0b81deb49fb4b6b87fa7dd648daf8f3bcbf4b
+Author: Conor MacNeill <conor@apache.org>
+Date:   Mon Apr 15 14:56:34 2002 +0000
+
+    Order of modifiers
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@272442 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c4266e92503f9365db8450324de2709fe4ff5423
+Author: Conor MacNeill <conor@apache.org>
+Date:   Mon Apr 15 13:36:22 2002 +0000
+
+    Coding Standard
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@272441 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c51b8ee3856f603a45ddcd068c3bb6b6c235eeb1
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Apr 15 08:39:18 2002 +0000
+
+    Normalize some @since tags
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@272425 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c6c232893c39257745a8f7a618bcdb5c59791cae
+Author: Conor MacNeill <conor@apache.org>
+Date:   Sun Apr 14 11:16:19 2002 +0000
+
+    Various coding standard fixes
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@272418 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 7820c64af8cfa6122b1afe00622c3118ce935a36
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Apr 11 14:28:00 2002 +0000
+
+    Use FileUtils instead of yet another touch method in <get>.
+    
+    cosmetics.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@272376 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1c6ad9069cc029c0e62864712ee3e9a05e278340
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Apr 11 13:22:16 2002 +0000
+
+    Make sure <zip> and <jar> really reset their internal state.
+    
+    Make <zip> update="true" work for zipfiles we've added files with
+    commas or spaces in their names to.
+    
+    cosmetics.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@272372 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6454a8ffac2091edc8f849725916f1300d157abd
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Apr 9 15:21:24 2002 +0000
+
+    In <zip> and <jara> only reset internal state at the end of execute,
+    not the attributes and child elements obtained via configuration.
+    
+    Add a new method that allows the task instances to be reset to their
+    unconfigured state.
+    
+    PR: 7552
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@272319 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c588308c64641155b240b5efb3004c8b93449832
+Author: Conor MacNeill <conor@apache.org>
+Date:   Thu Apr 4 14:08:17 2002 +0000
+
+    Minor improvement to error message
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@272220 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 060c35544e119529ffb94c7f6b7fbe70cc797282
+Author: Magesh Umasankar <umagesh@apache.org>
+Date:   Fri Mar 15 02:36:33 2002 +0000
+
+    No more deprecated warnings for aliased attributes of oft-used zip, jar, war and ear tasks.
+    
+    Conor, Costin and I voted +1
+    Stefan voted +0
+    
+    However, there is *no* guarantee that all these aliases will stay for Ant2.  DestFile is currently the most promising attribute name to be carried over to Ant2.
+    
+    I have left the @deprecated tags in there and haven't touched javadoc also.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@271847 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 732df7532e22b0472690663897388f4b89ca9eb6
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Mar 11 07:23:34 2002 +0000
+
+    JDK 1.1 fixes
+    
+    incomplete in the case of XCatalog, I'll follow up on this.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@271811 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 34c7de003d3fe49eff3f65a1ad6c6f5d6745575e
+Author: Magesh Umasankar <umagesh@apache.org>
+Date:   Tue Mar 5 14:27:09 2002 +0000
+
+    Check for Null.
+    
+    PR: 6871
+    Submitted by: Brian Deitte <bdeitte@macromedia.com>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@271748 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 5c79093cdd38e8d73ef80732beeba0c19dd21398
+Author: Jon Skeet <jskeet@apache.org>
+Date:   Mon Mar 4 08:38:09 2002 +0000
+
+    Reapplied previous JavaDoc patch.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@271718 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 4ab1950bd8ba0bf2335e09b07852d74e1b016f5a
+Author: Magesh Umasankar <umagesh@apache.org>
+Date:   Sun Mar 3 06:52:07 2002 +0000
+
+    Zip task
+    
+    duplicate (attribute): behavior when a duplicate file is found.  Valid values are add, preserve, and fail. The default value is add.
+    
+    zipgroupfileset (nested fileset): allows for multiple zip files to be merged into the archive. Each file found in this fileset is added to the archive the same way that "zipfileset src" files are added.
+    
+    
+    Jar task
+    
+    duplicate/zipgroupfileset: same as in Zip task
+    
+    filesetmanifest (attribute): behavior when a Manifest is found in a zipfileset or zipgroupfileset file is found.  Valid values are skip, merge, and mergewithoutmain.  mergewill merge all of manifests together, and merge this into any other specified manifests  mergewithoutmain merges everything but the Main section of the manifests.  Default value is skip
+    
+    manifest (existing attribute): this attribute now also accepts the name of a jar added through a fileset.  If its the name of an added jar, the task expects the manifest to be in the jar at META-INF/Manifest.mf
+    
+    Submitted by: Brian Deitte <bdeitte@macromedia.com>
+    
+    PR: 5667, 5036
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@271698 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 7fec7616d1d256735fd5a608ca3dc5af444edab6
+Author: Erik Hatcher <ehatcher@apache.org>
+Date:   Sun Mar 3 01:46:23 2002 +0000
+
+    Changing "ant:task" to "ant.task" to avoid JDK 1.4 javadoc warnings (XDoclet has been modified to handle this separator too).
+    
+    Updating the majority of the rest of the tasks with the XDoclet tags.  The generated defaults.properties is *almost* the same as the current hand maintained one!
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@271678 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 10aeeab05bb0ece58bc02b9f32661722985bfa92
+Author: Erik Hatcher <ehatcher@apache.org>
+Date:   Wed Feb 27 20:36:13 2002 +0000
+
+    XDoclet fun!
+    
+    These are harmless Javadoc comment additions for use with the proposal/xdocs runs.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@271582 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d19b7b2415e73fd7176e9f8ca80c196a325a3a49
+Author: Jon Skeet <jskeet@apache.org>
+Date:   Mon Feb 25 15:21:57 2002 +0000
+
+    First pass of JavaDoc work just to get rid of warnings.
+    When this is complete, whole source tree should JavaDoc (with 1.4)
+    with no warnings. (With JDK1.3.1 the 1.4-regexp stuff generates
+    warnings, but that's all.)
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@271544 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 07b48c8512fb0f48adfc9b9c49fdade0c68a33e8
+Author: Conor MacNeill <conor@apache.org>
+Date:   Mon Feb 4 04:31:42 2002 +0000
+
+    Change Jar so empty jars are not rebuilt
+    
+    PR:	6069
+    Submitted by:	jesse.glick@netbeans.com (Jesse Glick)
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@271136 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 17997f266a2dd6b2a879ea9678086a8a9545a389
+Author: Stephane Bailliez <sbailliez@apache.org>
+Date:   Sun Jan 20 20:45:58 2002 +0000
+
+    - Fix order of modifiers
+    - Fix duplicate/unecessary imports
+    - Fix single if/else and loop without block
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270814 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f3577cdb5ce536ebcae232a268d7e01f1897e4e9
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Jan 10 13:59:39 2002 +0000
+
+    License police on task definitions:
+    
+    (1) Make sure there is a Copyright notice on all files.
+    
+    (2) Make sure all years in which a file has been modified are
+    listed.
+    
+    (3) Make sure the format is consistent, i.e. separate consecutive
+    years with a dash, not a comma.
+    
+    (4) Change some references from Tomcat to Ant.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270658 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 5d79a4f5eb355e3058e18c7462b9fdc5b53071b3
+Author: Steve Loughran <stevel@apache.org>
+Date:   Mon Jan 7 06:22:11 2002 +0000
+
+    Addition of destFile(File) attr to the zip/war/ear/jar tasks, fixup of docs, replacement of deprecation methods and appropriate changes to the tests.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270605 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ceb720e799ff00b84ce3a5570f35c5489c7a3792
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Dec 12 10:54:08 2001 +0000
+
+    Make Manifest.java a full flegded task that allows you to write a
+    manifest file.
+    
+    PR: 5190
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270131 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 9a9e3a3581a5d0063cdbf3c90b81811a1286b7bc
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Dec 11 12:55:55 2001 +0000
+
+    Use the proper encoding for the default manifest.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270114 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 45463e16cc6d33e37b34603bed90fee3fddc2773
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Nov 8 16:16:08 2001 +0000
+
+    JARs are never empty.
+    
+    PR: 4448
+    
+    This probably is not what the reporting user intended ...
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269886 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a376c57ae162bb14f507c677767dfd8e6b3e7139
+Author: Stephane Bailliez <sbailliez@apache.org>
+Date:   Thu Nov 1 19:33:13 2001 +0000
+
+    Add the index feature for jar so that it optimizes the class loading process for JDK 1.3+
+    Patch was submitted by Philippe Prados <philippe@prados.net>
+    I added UTF8 encoding as specified in the specifications and changed the logic a little bit to be closer to what is being done in the implementation of sun.misc.JarIndex in JDK 1.3
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269850 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d12e6411ccc654bc10c102c8a085b6b0e4634f8b
+Author: Stephane Bailliez <sbailliez@apache.org>
+Date:   Sun Oct 28 21:31:01 2001 +0000
+
+    Code clean up:
+     - removed useless/duplicate imports
+     - added explicit imports rather than *
+     - changed specifiers order to be conform to JLS.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269827 13f79535-47bb-0310-9956-ffa450edef68
+
+commit bec2a0777e910345fa7877d5aaa209ddde0937e3
+Author: Conor MacNeill <conor@apache.org>
+Date:   Sun Sep 30 13:21:54 2001 +0000
+
+    Merge of 1.4.1 changes into Main truck for Gump testing
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269745 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 9cd6074a06ff0d9cfcbb7b0cf28dcb77d240da31
+Author: Peter Donald <donaldp@apache.org>
+Date:   Wed Sep 12 15:41:54 2001 +0000
+
+    Super is redundent.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269691 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 16e0c2864905cd7709563ef7e38379eff9897455
+Author: Peter Donald <donaldp@apache.org>
+Date:   Wed Sep 12 14:21:43 2001 +0000
+
+    Unify the attribute of the archive to "file" rather than having three separate attributes (zipfile, jarfile and warfile).
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269684 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f66cab0ea7689df54fe51f64018cd3ef8b05cd3d
+Author: Conor MacNeill <conor@apache.org>
+Date:   Sat Aug 18 14:59:40 2001 +0000
+
+    Merge from ANT_145_BRANCH up to Beta 2
+    PR:
+    Obtained from:
+    Submitted by:
+    Reviewed by:
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269587 13f79535-47bb-0310-9956-ffa450edef68
+
+commit cc911f59921cda9a230eebd58c4ab6d9e292d5e9
+Author: Conor MacNeill <conor@apache.org>
+Date:   Wed Aug 1 12:56:23 2001 +0000
+
+    Allow manifests of Jar files to be specified in-line. This allows the
+    use of Ant properties in the manifest. The inline manifest will be
+    merged with any external file manifests. Example usage
+    
+        <jar jarfile="taskjar2.jar" basedir="." manifest="manifest.mf">
+          <include name="src/**/*"/>
+          <manifest>
+            <attribute name="Built-By" value="${user.name}"/>
+          </manifest>
+        </jar>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269431 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 590936af269c77bda5fb410fd81e19958062efe6
+Author: Conor MacNeill <conor@apache.org>
+Date:   Mon Jul 30 11:15:17 2001 +0000
+
+    Manifest is no longer in a fileset and so needs an uptodate check of its own
+    Also now log warnings about malformed manifests
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269407 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b74b9067510ce1fd1ce68b465f74c38c81fb7d01
+Author: Conor MacNeill <conor@apache.org>
+Date:   Sat Jul 28 14:11:41 2001 +0000
+
+    Add new Manifest handling class.
+    Manifest entries longer than 72 bytes are wrapped according to the spec
+    Illegal manifest files now cause errors
+    Standard fields are provided by default and merged in
+    Manifest set by attribute and any added in META-INF/Manifest.mf are merged
+    
+    PR:	1193, 2295
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269404 13f79535-47bb-0310-9956-ffa450edef68
+
+commit fc7cfffc89d82da7426c14b0fcd48682b026a56d
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Jul 5 13:10:26 2001 +0000
+
+    Add encoding attribute to the zip tasks and the ZipOutputStream to
+    make the classes flexible enough to deal with non US-ASCII filenames
+    either consistent with the command line ZIP tools (it has been since
+    it uses the org.apache classes instead of java.util.zip) or the jar
+    command (which it has been up to Ant 1.3).
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269272 13f79535-47bb-0310-9956-ffa450edef68
+
+commit bb58f9a943cef24178e719354a701fa7f5faf524
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Apr 23 16:12:25 2001 +0000
+
+    Reimplementation of ZipOutputStream along with a subclass of ZipEntry
+    to allow Ant generated zip/jar/war/ear files to be extracted on Unix
+    boxes without permission problems for directories.
+    
+    This one uses external file attributes like InfoZip's zip does, this
+    is a rough cut - the infrastructure to set arbitrary permissions and
+    add user/group IDs via Zip's external fields is there, but not used
+    ATM.  Directories will always get 755 permissions right now.
+    
+    The testcases work on my box, and I can extract Ant created archives
+    without any trouble - can't await tomorrows Gump run.
+    
+    package documentation for org.apache.tools.zip will follow.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268959 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c22df87cd897bf115b72d93bd62e99f5e3f72435
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Apr 4 13:35:05 2001 +0000
+
+    Add a <metainf> element to <jar>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268915 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 54b84962a5cf180a8c3cd20236acea0a790619a8
+Author: Peter Donald <donaldp@apache.org>
+Date:   Tue Jan 16 13:16:46 2001 +0000
+
+    Addition of ZipFileset facilities. Descibed by the author
+    ---
+     With these patches, Zip (and derivative tasks such as Jar and War) can
+     merge the entries of multiple zip files into a single output zip file.
+     The contents of an input zip file may be selectively extracted based on
+     include/exclude patterns.
+    
+     An included zip file is specified using a <fileset> with a "src" attribute,
+     as in:
+    
+       <target name="jartest">
+           <jar jarfile="utils.jar">
+             <fileset
+           src="weblogic.jar"
+           includes="weblogic/utils/"
+           excludes="weblogic/utils/jars/,**/reflect/"
+             />
+            </jar>
+        </target>
+    
+     In this example, a subset of the "weblogic/utils" directory is extracted
+     from weblogic.jar, into utils.jar.
+    
+     The fileset may also contain "prefix" and "fullpath" attributes (the
+     functionality of PrefixedFileSet has been retained in the new class
+     ZipFileSet).  Prefixes apply to directory-based and zip-based filesets.
+     The fullpath attributes applies only to a single file in a directory-based
+     fileset.
+    
+     The War task may extract entries from a zip file for all of its filesets
+     (including the files in "classes" and "lib").
+    
+    
+     The motivation for this change is:
+     1) There is significant overlap between "jlink" and "zip", and it seemed
+        better to combine them.
+     2) "jlink" does not support include/exclude patterns which are extremely
+        useful for writing packaging-type tasks such as Zip/Jar/War.  This
+        was my main motivation.
+     3) By adding this functionality to the base task, it can also be used in
+        derivative tasks such as Jar and War.
+    ---
+    Submitted By: Don Ferguson <don@bea.com>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268458 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a50ad9fae4c1995aa1c5a8ed077c5025b371f647
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Jan 8 16:45:32 2001 +0000
+
+    Resolve confusion between <fileset> and <prefixedfileset> in <zip> and
+    friends.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268417 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 03d7f7d69589468d122bd5f3ef0a5306bf675cfc
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Jan 4 12:37:20 2001 +0000
+
+    Reset the global flags that say we have a MANIFEST.MF/web.xml after
+    execute has been run.
+    
+    <jar> would print a warning in Ant's own bootstrap when it zipped
+    ant.jar for the second time.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268398 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6c287080d460efa63e022407e88a04558b9fdbb6
+Author: Conor MacNeill <conor@apache.org>
+Date:   Wed Jan 3 14:18:52 2001 +0000
+
+    Make licence statements mention Ant in place of Tomcat
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268392 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8f2c9066b3357c0d899705839789157352f64ff1
+Author: Peter Donald <donaldp@apache.org>
+Date:   Wed Dec 13 09:48:33 2000 +0000
+
+    Reverse changes and reinstate fileset + prefixedfileset
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268348 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8e955e3a2e84e093d19f8053f610c479a3f27478
+Author: Peter Donald <donaldp@apache.org>
+Date:   Wed Dec 13 01:33:25 2000 +0000
+
+    Patch to unify handling of prefix filesets between war/jar/zip.
+    It also removes a number of small errors in zip task.
+    Deprecated <prefixedfileset> element of war in favour of normal <fileset> element in zip
+    
+    Submitted By: "Rosen, Alex" <arosen@silverstream.com>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268344 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 4fefc6bcdde17dadc54690f6fc0021779088a60b
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Nov 28 13:59:00 2000 +0000
+
+    Make <jar> fail early if a specified manifest file doesn't exist.
+    
+    Submitted by:	Erik Meade <emeade@geekfarm.org>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268255 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6b5745a21d93054c9d1efb9b6782886ba115bf8d
+Author: Peter Donald <donaldp@apache.org>
+Date:   Sat Nov 25 02:38:54 2000 +0000
+
+    Used some elisp magic to remove those tabs and replace with spaces.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268237 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 20a1e91d17753399f8d18a5123f8e5e35e0409da
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Sep 15 11:41:19 2000 +0000
+
+    New tasks <war> and <unwar>.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@267998 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 7ac63c0bc264d9192d38abf2c1f2302c8fdee8f6
+Author: Conor MacNeill <conor@apache.org>
+Date:   Wed Aug 30 14:57:49 2000 +0000
+
+    Improvements to Zip and Jar tasks
+    
+    This patch improves the robustness and error reporting of these tasks
+    especially when no files are to be included in the archives.
+    
+    Submitted by:	Jesse Glick <Jesse.Glick@netbeans.com>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@267947 13f79535-47bb-0310-9956-ffa450edef68
+
+commit bc4dee0c5c9dfaddb36f9aa55298d015cfb0155e
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Jun 27 11:12:12 2000 +0000
+
+    Store the modification time of the files inside the ZIP file.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@267706 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d180ff4e655f2160229d8c45dac21ab6a66d6b3b
+Author: Arnout J. Kuiper <arnout@apache.org>
+Date:   Sat May 20 10:58:17 2000 +0000
+
+    Added a "compress" attribute to the Zip and Jar task.
+    
+    Submitted by:	Stefan Bodewig (bodewig@bost.de)
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@267665 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 064d126d420b174b2a1a028b094b0254bc32822f
+Author: Stefano Mazzocchi <stefano@apache.org>
+Date:   Wed Feb 9 20:52:42 2000 +0000
+
+    better abstraction on the includes/excludes
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@267596 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1844a85f5feebe940057df6b041ab2fe095cc43d
+Author: Arnout J. Kuiper <arnout@apache.org>
+Date:   Sun Feb 6 16:16:29 2000 +0000
+
+    Made tasks able to use the new pattern based directory scanning, while
+    retaining backwards compatibility.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@267585 13f79535-47bb-0310-9956-ffa450edef68
+
+commit bce31805e9b4b1360d50be8e001886d58e087e38
+Author: James Duncan Davidson <duncan@apache.org>
+Date:   Thu Jan 13 10:42:41 2000 +0000
+
+    initial checkin
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@267549 13f79535-47bb-0310-9956-ffa450edef68

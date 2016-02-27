@@ -1,0 +1,45 @@
+commit 2d62cd2dfbb2baa07f96ce5682655ecd8ffffdc9
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Dec 10 14:49:42 2014 -0600
+
+    JIT changes for Symbol encoding issue #2172.
+
+commit 1f56abb341d49c29ea4d7a4f79fa8cf7c6950bbd
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Oct 6 22:54:33 2014 -0500
+
+    Performance improvements to event tracing.
+    
+    * Avoid CopyOnWriteArrayList iterator construction (use a simple
+      array and iterate over that) for event hook list
+    * Use int[] to represent line number hit counts.
+    * Fix int[] size checking to avoid excessive allocation.
+    * Fixes to trace correctly in compiler without Backtrace.
+
+commit 50de44c2cc9daf2170616c5dc8db0838cee2124e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Jan 16 15:26:51 2014 -0600
+
+    For very large case/when, spill when bodies into JVM methods.
+    
+    Many Ruby libraries use very large case/when statements. For
+    example, generated parsers, such as the one in whitequark/parser.
+    These large cases often do not JIT on JRuby because their JITed
+    size exceeds the bytecode size limits of the JVM. Some may compile
+    but then optimize poorly because the JVM decides it is a "huge"
+    method that's not worth optimizing.
+    
+    This patch adds a configurable knob compile.outline.casecount that
+    specifies a count of cases (when bodies) in a case above which the
+    bodies will be emitted into their own JVM methods and
+    single-method optimizations are disabled. Currently this threshold
+    is set to 50 cases, but this is a somewhat arbitrary estimate
+    based on the roughly 30-50 bytes of bytecode required just for
+    the when matcher logic. 50 * 50 = 2500 bytes just for matching,
+    and then the when bodies are usually much more code.
+
+commit 28c6fbc4e883bc1c9e9242d1da1cb2b785f55339
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 3 12:46:45 2013 -0500
+
+    Move to @mkristian's proposed layout, with some modifications.

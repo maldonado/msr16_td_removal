@@ -1,0 +1,2431 @@
+commit 9c22739d44892152bf50985e74bfe33c0b8d2248
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Sat Aug 29 20:58:30 2015 +0100
+
+    [Truffle] Clarify that parse time is for just the initial file.
+
+commit 492d3109047c963c06bd933fab03619fe6d93fe6
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Fri Aug 28 23:46:06 2015 +0100
+
+    [Truffle] Add tools for measuring startup time and memory consumption.
+
+commit d3c2aa3a51e858d1e75ac40842ab71baf87251c2
+Author: kares <self@kares.org>
+Date:   Wed Jul 29 14:45:52 2015 +0200
+
+    do not access the jrubyClassLoader field directly - use the getter
+    
+    ... as it might not have been initialized (code gets more predictable)
+
+commit 852212b1e6dccf3ec9978367ceb1367e799c158b
+Author: kares <self@kares.org>
+Date:   Wed Jul 29 14:41:14 2015 +0200
+
+    only release the class-loader if it's actually != null (do not initialize it)
+
+commit e840a7d3e3d0e1984662a644e972ab62640c5253
+Merge: 9adaca4 1c19d0c
+Author: kares <self@kares.org>
+Date:   Wed Jul 29 13:45:27 2015 +0200
+
+    Merge branch 'jruby-1_7'
+    
+    * jruby-1_7:
+      close JRuby's class-loader resources on Java 7+ (but only in embed uses)
+      make fields final
+      revert "close (URLClassLoader's) resources on JRubyClassLoader#tearDown"
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/Ruby.java
+    	core/src/main/java/org/jruby/embed/ScriptingContainer.java
+    	core/src/main/java/org/jruby/util/JRubyClassLoader.java
+
+commit 1c19d0cc8b0655cff3c1a143bd3313d3c428a9f8
+Author: kares <self@kares.org>
+Date:   Wed Jul 29 12:03:26 2015 +0200
+
+    close JRuby's class-loader resources on Java 7+ (but only in embed uses)
+    
+    ... for other uses users can now manually trigger a releaseJRubyClassLoader
+
+commit 2f9d8eda965d597475a2dfd05caac3b6ff0b4725
+Merge: ab235e2 6b025c9
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jul 27 16:14:14 2015 -0500
+
+    Merge remote-tracking branch 'origin/master' into test-memory-fixes
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/internal/runtime/methods/JavaMethod.java
+
+commit aaa46873a35a40039f107dee8e12205062c47f76
+Author: kares <self@kares.org>
+Date:   Sat Jul 25 23:00:46 2015 +0200
+
+    deprecate JRubyClassLoader#tearDown in favor of close() (we're Closable on Java 7+)
+
+commit 838c8d7a991d1914357ce47db62f594aca27bc78
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jul 24 22:32:10 2015 -0500
+
+    CallConfiguration is not used by any DynamicMethods anymore.
+    
+    CallConfiguration used to be needed to determine how to frame and
+    scope all methods in the system. However, in JRuby 9k it is no
+    longer needed.
+    
+    * Core methods that need frame/scope have the pre/post logic
+      generated in bytecode (for generated invokers) or in handles
+      (for MethodHandle-based invokers).
+    * Interpreted IR methods have their own flags for frame/scope, or
+      have instructions that perform the pre/post logic.
+    * Jitted IR methods always have emit bytecode to do the pre/post
+      logic.
+    
+    After a quick inspection I found that there's no other uses of
+    the callConfig field in DynamicMethod, so this commit removes it
+    and deprecates the constructors and accessors. This should shrink
+    all DynamicMethod subclasses by at least 4 bytes and perhaps 8. It
+    also reduces the size and overhead of our generated populators,
+    which might have a slight effect on startup.
+
+commit e88911e6813acc5f734e7d16447fe4d07a9e7b91
+Author: Kevin Menard <kevin@nirvdrum.com>
+Date:   Thu Jul 23 17:20:04 2015 -0400
+
+    Synchronize the String dedupe cache.
+    
+    Without explicit synchronization, an internal iterator can be corrupted and result in an infinite loop on WeakHashMap#get calls.
+    
+    Fixes #3171: Hang with threads and Hash[]= on unfrozen keys.
+
+commit 1c3cdaa6e74c197e07fe2f1eded792bfbaf9a116
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Jul 16 13:56:29 2015 -0500
+
+    Remove half-baked and non-functional JIT caching. Fixes #3147
+
+commit 32ef1f04451703c8269d4eab74598bd12b8f9a28
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jul 6 14:32:53 2015 -0500
+
+    Do not persist filename in IR; require it when loading.
+    
+    Fixes #3109
+    
+    Because compiled scripts may be moved around or loaded from
+    locations different than when they were compiled, we must pass
+    filename into the decoding process to allow the script to reflect
+    the new filename.
+
+commit 1494436ea6d65ec5f884bb7a87f5c2e06a21f9ee
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jul 6 13:42:12 2015 -0500
+
+    Get AOT-compiled scripts loading properly again. Fixes #3018
+    
+    Note that there's still one missing piece, as detailed in #3109:
+    we are not updating loaded scripts with their actual filename. The
+    original filename they were compiled from is still there, which
+    may cause problems with require_relative and friends.
+
+commit 9425fcccdcec87f108dc490e356f113f64594683
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Jul 5 16:32:37 2015 -0500
+
+    Add c-call, c-return tracing to handle-based methods.
+    
+    This mechanism is slightly heavier than the generated invokers
+    mostly because it ends up checking whether there's events twice.
+    However, this appears to be wrong logic; MRI reports the return
+    of `set_trace_func` for example, and we don't. This commit also
+    makes the following improvements:
+    
+    * Pass all DynamicMethod.call args into the handle chain; this is
+      necessary for tracing and helpful for reporting arity errors
+      with the actually-invoked name.
+    * Don't use an iterator when iterating over event hooks, to avoid
+      allocation on that hot path. This should help all event hooks to
+      be cheaper.
+
+commit a312c6e1c7e9a45f376d0771440f59bc5e9baaf6
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri Jul 3 10:08:43 2015 -0500
+
+    GH #2416 (partial). Kill last vestiges of returnjump
+
+commit ba82f3b8dd1f1ce5eafbad7f6c8a5d354616820f
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri Jun 19 17:23:18 2015 -0500
+
+    Add Node.getLine and remove getPosition uses
+
+commit 34d874f2185da534a077811338548d4c0b9c34f3
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri Jun 19 16:10:55 2015 -0500
+
+    Convert some very high level execution methods to use RootNode.getFile().
+    
+    This looks sketchier than it really is.  We know all things returned from parsing will be
+    a RootNode.  The APIs for the parser existed before RootNode did so it still returns Node.
+    So any casts being done should be fine.  I also changed one public API method but it really
+    is an internal method (damn Java packages) for creating an artificial gets loop so the odds
+    of an extension hooking into this is 0%.
+
+commit d9f12ca8d6b32ba7a0eb62b0b44667fd26f47e50
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri Jun 19 15:54:14 2015 -0500
+
+    Store file on StaticScope and on RootNode.
+    Replace SourcePosition in BuildLambdaInstr to not use ISourcePosition
+    IR now retrieves file from rootnode.
+
+commit 45aee57f7edc4802f62eb6fee7d425eb79cc0282
+Author: Benoit Daloze <eregontp@gmail.com>
+Date:   Fri Jun 19 17:09:54 2015 +0200
+
+    Properly type RubyInstanceConfig.optionGlobals
+
+commit 40d257ce377bc0760caf16935b66bb3e6d730a6a
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Jun 17 09:32:57 2015 -0500
+
+    ListNode is backed by primitive array + size field vs ArrayList.
+    New companion method children().
+    
+    This is primarily to save memory (rails server on empty app with --dev uses ~1MB less memory).
+    It was hoped this may warmup faster but it seems about the same (or a tiny tiny bit faster).  The
+    difference is easily written off as noise.
+
+commit b96813f7c7570ee144fba0bf7a1b4b1e61a480cf
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Jun 9 11:26:01 2015 -0500
+
+    Unregress test_command_line_switches#default_dash_0_split_records
+
+commit 62f4721cc59c9e07a926d28af4886372526f7c05
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Jun 2 13:20:47 2015 -0500
+
+    Fixes #3007. splats with non-array like values.  @JRubyMethod will create two DynamicMethod instances if the method is marked as module=true.  So builtin check needs to check against both builtins
+
+commit 33b0efc8df65b2ac3caf8f2dfc85432eaa502db2
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Jun 1 16:21:12 2015 -0500
+
+    inverted check.  we only want to dedup with it is stringclass
+
+commit 78b009c13a61cee29f10d274f4fa01e240147fc0
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue May 26 15:53:15 2015 -0500
+
+    Implement Socket#[socket]pair to fix #2984.
+    
+    Only supports UNIX, STREAM, but that seems in line with e.g. BSD
+    socketpair(2).
+
+commit d4b4a2694a433fbdba275f1ee0d40179a9e338b3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue May 26 14:44:48 2015 -0500
+
+    Back off Hash String key dedup and make fstring cache strict.
+    
+    Fixes #2976. See #2990 for dedup cases from MRI we may want to add
+    to JRuby.
+
+commit 40beb472cb17c6c0cbf46ba199a9461e0e7bd877
+Merge: c0c086e e237201
+Author: kares <self@kares.org>
+Date:   Mon May 25 16:54:09 2015 +0200
+
+    Merge branch 'jruby-1_7'
+    
+    * jruby-1_7: (54 commits)
+      [travis-ci] re-try sudo: false
+      dry out the two (Java helper) respond_to_p19 methods
+      respondsTo JRuby API under 1.9.3 does not do respond_to_missing? like MRI does
+      sleep should convert it's "time interval" argument the same way as MRI
+      respond_to_missing? should always get a symbol name passed (fixes #2946)
+      add a respond_to_missing unit test (on 1.9)
+      introduce and use conversion( just like MRI does) on #timeout's sec argument
+      add missing ' ' (space) in exception message ... TypeError from `sleep('invalid')`
+      DateTime.iso8601 fails with an error if a second fraction is present
+      [build] switch to 1.7.21-SNAPSHOT for test-jruby-jars
+      refactor Timeout's scheduled tasks to an inner class (for easier identification)
+      further hand drying of the Timeout module impl
+      less (int) casting noiz
+      add some (internal) generics for an improved readability xp
+      inner class' Finalizer fields id and finalized can be final
+      generix-ize the environment field (at least internally) + use a StringBuilder
+      unnecessary (int) cast
+      missing throw statement in RubyString's concat
+      tune timeout to work when scheduling or argument convenrsion throws (see #2940)
+      return empty Ruby array for empty dir list
+      ...
+    
+    Conflicts:
+    	.gitignore
+    	.travis.yml
+    	VERSION
+    	core/pom.xml
+    	core/src/main/java/org/jruby/RubyArray.java
+    	core/src/main/java/org/jruby/RubyBasicObject.java
+    	core/src/main/java/org/jruby/RubyDir.java
+    	core/src/main/java/org/jruby/RubyEnumerable.java
+    	core/src/main/java/org/jruby/RubyFile.java
+    	core/src/main/java/org/jruby/RubyGlobal.java
+    	core/src/main/java/org/jruby/RubyIO.java
+    	core/src/main/java/org/jruby/RubyKernel.java
+    	core/src/main/java/org/jruby/RubyModule.java
+    	core/src/main/java/org/jruby/RubyString.java
+    	core/src/main/java/org/jruby/RubyTime.java
+    	core/src/main/java/org/jruby/ext/timeout/Timeout.java
+    	core/src/main/java/org/jruby/java/proxies/JavaProxy.java
+    	core/src/main/java/org/jruby/util/Dir.java
+    	core/src/main/java/org/jruby/util/encoding/CharsetTranscoder.java
+    	docs/man/pom.xml
+    	docs/pom.xml
+    	ext/pom.xml
+    	ext/readline/pom.xml
+    	ext/ripper/pom.xml
+    	lib/pom.xml
+    	lib/ruby/1.9/date/format.rb
+    	lib/ruby/1.9/io/linux_console.rb
+    	lib/ruby/shared/gauntlet_rubygems.rb
+    	lib/ruby/shared/rubygems.rb
+    	lib/ruby/shared/rubygems/available_set.rb
+    	lib/ruby/shared/rubygems/basic_specification.rb
+    	lib/ruby/shared/rubygems/command.rb
+    	lib/ruby/shared/rubygems/command_manager.rb
+    	lib/ruby/shared/rubygems/commands/cert_command.rb
+    	lib/ruby/shared/rubygems/commands/cleanup_command.rb
+    	lib/ruby/shared/rubygems/commands/contents_command.rb
+    	lib/ruby/shared/rubygems/commands/dependency_command.rb
+    	lib/ruby/shared/rubygems/commands/environment_command.rb
+    	lib/ruby/shared/rubygems/commands/generate_index_command.rb
+    	lib/ruby/shared/rubygems/commands/help_command.rb
+    	lib/ruby/shared/rubygems/commands/install_command.rb
+    	lib/ruby/shared/rubygems/commands/list_command.rb
+    	lib/ruby/shared/rubygems/commands/mirror_command.rb
+    	lib/ruby/shared/rubygems/commands/outdated_command.rb
+    	lib/ruby/shared/rubygems/commands/owner_command.rb
+    	lib/ruby/shared/rubygems/commands/pristine_command.rb
+    	lib/ruby/shared/rubygems/commands/push_command.rb
+    	lib/ruby/shared/rubygems/commands/query_command.rb
+    	lib/ruby/shared/rubygems/commands/search_command.rb
+    	lib/ruby/shared/rubygems/commands/setup_command.rb
+    	lib/ruby/shared/rubygems/commands/specification_command.rb
+    	lib/ruby/shared/rubygems/commands/uninstall_command.rb
+    	lib/ruby/shared/rubygems/commands/unpack_command.rb
+    	lib/ruby/shared/rubygems/commands/update_command.rb
+    	lib/ruby/shared/rubygems/commands/which_command.rb
+    	lib/ruby/shared/rubygems/commands/yank_command.rb
+    	lib/ruby/shared/rubygems/compatibility.rb
+    	lib/ruby/shared/rubygems/config_file.rb
+    	lib/ruby/shared/rubygems/core_ext/kernel_gem.rb
+    	lib/ruby/shared/rubygems/core_ext/kernel_require.rb
+    	lib/ruby/shared/rubygems/defaults.rb
+    	lib/ruby/shared/rubygems/dependency.rb
+    	lib/ruby/shared/rubygems/dependency_installer.rb
+    	lib/ruby/shared/rubygems/dependency_list.rb
+    	lib/ruby/shared/rubygems/deprecate.rb
+    	lib/ruby/shared/rubygems/doctor.rb
+    	lib/ruby/shared/rubygems/errors.rb
+    	lib/ruby/shared/rubygems/exceptions.rb
+    	lib/ruby/shared/rubygems/ext.rb
+    	lib/ruby/shared/rubygems/ext/builder.rb
+    	lib/ruby/shared/rubygems/ext/cmake_builder.rb
+    	lib/ruby/shared/rubygems/ext/configure_builder.rb
+    	lib/ruby/shared/rubygems/ext/ext_conf_builder.rb
+    	lib/ruby/shared/rubygems/ext/rake_builder.rb
+    	lib/ruby/shared/rubygems/gemcutter_utilities.rb
+    	lib/ruby/shared/rubygems/indexer.rb
+    	lib/ruby/shared/rubygems/install_update_options.rb
+    	lib/ruby/shared/rubygems/installer.rb
+    	lib/ruby/shared/rubygems/installer_test_case.rb
+    	lib/ruby/shared/rubygems/local_remote_options.rb
+    	lib/ruby/shared/rubygems/name_tuple.rb
+    	lib/ruby/shared/rubygems/package.rb
+    	lib/ruby/shared/rubygems/package/old.rb
+    	lib/ruby/shared/rubygems/package/tar_header.rb
+    	lib/ruby/shared/rubygems/package/tar_reader/entry.rb
+    	lib/ruby/shared/rubygems/package/tar_writer.rb
+    	lib/ruby/shared/rubygems/path_support.rb
+    	lib/ruby/shared/rubygems/platform.rb
+    	lib/ruby/shared/rubygems/psych_additions.rb
+    	lib/ruby/shared/rubygems/rdoc.rb
+    	lib/ruby/shared/rubygems/remote_fetcher.rb
+    	lib/ruby/shared/rubygems/request.rb
+    	lib/ruby/shared/rubygems/request_set.rb
+    	lib/ruby/shared/rubygems/request_set/gem_dependency_api.rb
+    	lib/ruby/shared/rubygems/requirement.rb
+    	lib/ruby/shared/rubygems/resolver/current_set.rb
+    	lib/ruby/shared/rubygems/security.rb
+    	lib/ruby/shared/rubygems/security/policy.rb
+    	lib/ruby/shared/rubygems/security/signer.rb
+    	lib/ruby/shared/rubygems/security/trust_dir.rb
+    	lib/ruby/shared/rubygems/server.rb
+    	lib/ruby/shared/rubygems/source.rb
+    	lib/ruby/shared/rubygems/source/installed.rb
+    	lib/ruby/shared/rubygems/source/local.rb
+    	lib/ruby/shared/rubygems/source/specific_file.rb
+    	lib/ruby/shared/rubygems/source_list.rb
+    	lib/ruby/shared/rubygems/spec_fetcher.rb
+    	lib/ruby/shared/rubygems/specification.rb
+    	lib/ruby/shared/rubygems/ssl_certs/AddTrustExternalCARoot.pem
+    	lib/ruby/shared/rubygems/stub_specification.rb
+    	lib/ruby/shared/rubygems/syck_hack.rb
+    	lib/ruby/shared/rubygems/test_case.rb
+    	lib/ruby/shared/rubygems/test_utilities.rb
+    	lib/ruby/shared/rubygems/text.rb
+    	lib/ruby/shared/rubygems/uninstaller.rb
+    	lib/ruby/shared/rubygems/uri_formatter.rb
+    	lib/ruby/shared/rubygems/user_interaction.rb
+    	lib/ruby/shared/rubygems/util/list.rb
+    	lib/ruby/shared/rubygems/validator.rb
+    	lib/ruby/shared/rubygems/version.rb
+    	maven/jruby-complete/pom.xml
+    	maven/jruby-dist/pom.xml
+    	maven/jruby-jars/pom.xml
+    	maven/jruby-noasm/pom.xml
+    	maven/jruby-rake-plugin/pom.xml
+    	maven/jruby-stdlib/pom.xml
+    	maven/jruby/pom.xml
+    	maven/pom.xml
+    	pom.xml
+    	test/pom.xml
+    	test/test_dir.rb
+    	test/test_kernel.rb
+    	test/test_respond_to.rb
+    	test/test_timeout.rb
+
+commit f9fd23c56b494980dddccaa93e0e078302ed0015
+Author: Benoit Daloze <eregontp@gmail.com>
+Date:   Thu May 14 23:38:05 2015 +0200
+
+    [Truffle] Separate construction from initialization for RubyContext.
+
+commit 649ec1b68143667cea8ef311a48f30303edd3e5b
+Author: Kevin Menard <kevin@nirvdrum.com>
+Date:   Thu May 14 17:16:17 2015 -0400
+
+    [Truffle] Don't try to require libraries at init from IR in Truffle mode.
+
+commit 590d33c996013513b30cbaac5a1b4778809c67ed
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Mon May 11 20:39:41 2015 +0100
+
+    [Truffle] Fix error message when Truffle is not available.
+
+commit 5802b8b6c8937eeacb0b8fff51bdcdf657827a89
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Mon May 11 16:54:06 2015 +0100
+
+    [Truffle] Update some messages when loading Truffle.
+
+commit da3678a0e0ff0dc737fcd222f74b2e6c1f4caeaa
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Sat May 9 23:32:41 2015 +0100
+
+    [Truffle] Further simplify the entry point.
+
+commit 6e934143e571dbfe253144ec20e8d72ef7f0a536
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Sat May 9 23:08:33 2015 +0100
+
+    [Truffle] Further simplify TruffleContextInterface
+
+commit 49aafeb49f1e0aef095eb6c23b47315d61a6a689
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Sat May 9 22:48:10 2015 +0100
+
+    [Truffle] TruffleBridge -> TruffleContextInterface
+
+commit ec31a17d611f69c15634f6798e2eff5d194b9e3a
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Sat May 9 22:41:35 2015 +0100
+
+    [Truffle] Remove the TruffleBridge abstraction.
+
+commit 72c6c0b8226893575df7dd0d19912011541d7106
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri May 8 19:01:18 2015 -0500
+
+    Refactor argument metadata representation and rendering.
+
+commit 74892a422d9f0bcf258dd538b090ef0a7dace834
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri May 1 12:59:14 2015 -0500
+
+    Fixes #2903. Removing event hooks can AIOOB
+
+commit 8b8d3972e415cbd3603cc452a8367ae32a03f8b0
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri May 1 12:59:14 2015 -0500
+
+    Fixes #2903. Removing event hooks can AIOOB
+
+commit c0a2b33c02baaa7bcfe5a6b2a20f9f1f57325a44
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Apr 27 08:16:03 2015 -0500
+
+    Private field is not in getMethods.
+
+commit 00f5ac7cd927b00058f758567b4559a5a451d042
+Merge: c085e57 d03d09e
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Sat Apr 25 20:25:58 2015 +0100
+
+    Merge branch 'truffle-head' into truffle-pack
+
+commit 4b1526d3328803ac4ab74721dfa3b3d51720eee1
+Merge: c770ac5 9588ec1
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Apr 23 13:05:26 2015 -0500
+
+    Merge remote-tracking branch 'origin/jruby-1_7'
+    
+    Conflicts:
+    	core/pom.xml
+    	core/src/main/java/org/jruby/Ruby.java
+
+commit 8d8842b78707a653c9c0d8a235eb100ef980c291
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Apr 23 10:02:59 2015 -0500
+
+    Improve user experience.
+
+commit 02847f0ef61887c29fad8f4174a0d9d5f7417ec5
+Merge: b5ec83a 00fbf5a
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Thu Apr 23 13:43:17 2015 +0100
+
+    Merge branch 'truffle-head' into truffle-pack
+    
+    Conflicts:
+    	truffle/src/main/java/org/jruby/truffle/nodes/core/ModuleNodes.java
+
+commit fa541f44b41fcc65dd84868e1785ea7b82987d3e
+Author: Kevin Menard <kevin@nirvdrum.com>
+Date:   Wed Apr 22 14:39:51 2015 -0400
+
+    Make sure __ENCODING__ is correct for both inline scripts and source files.
+    
+    Fixes #2847: JRuby not using UTF-8 for source files.
+
+commit 97079aad8f2ff985cbe3ef6ca8924339d3feed9a
+Merge: 31fba64 2961673
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Mon Apr 20 19:10:34 2015 +0100
+
+    Merge branch 'truffle-head' into truffle-pack
+    
+    Conflicts:
+    	truffle/src/main/java/org/jruby/truffle/nodes/core/ArrayNodes.java
+
+commit dd4f0c32685205a7d3cecc5cd662718f7cc1f274
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Sat Apr 11 21:44:20 2015 +0100
+
+    [Truffle] Remove JRuby integration of pack.
+
+commit deecb15587322d06eceb7d9e048227a59d53f7cd
+Merge: e788e1d f959d12
+Author: Christian Meier <m.kristian@web.de>
+Date:   Sat Apr 11 10:57:09 2015 +0530
+
+    Merge branch 'jruby-1_7'
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/Main.java
+    	maven/jruby/pom.rb
+
+commit a41293bf8256bf512d6a7f1146ad8dc7e5deb75a
+Author: Christian Meier <m.kristian@web.de>
+Date:   Wed Apr 8 11:36:07 2015 +0530
+
+    make ObjectSpacer public
+    
+    with this you can have a custom implementation of ObjectSpacer and plug it into the runtime
+    via reflection.
+
+commit 4cdf24de248da2ff88c994bcc33c31d5972dfdd7
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Mon Apr 6 20:49:18 2015 +0100
+
+    [Truffle] Basics of JRuby integration for pack working again.
+
+commit 37486b9158621c54a4a4b510ac1e9bc414df710d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Apr 2 19:04:57 2015 -0500
+
+    Move Process::Tms struct creation to RubyProcess and add constant.
+    
+    Fixes #2752
+
+commit 0825e699fb4a92abad8d86a7abfe4a5b2b470f8e
+Author: kiichi <k77ch7@gmail.com>
+Date:   Fri Mar 13 23:56:34 2015 +0900
+
+    fix GH-2591 on master. keeps encoding of symbol name.
+
+commit 487b2c806065765fe8ed12f10c231ed40bc2eceb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Mar 12 13:24:03 2015 -0500
+
+    Get loading and execution working in new IR AOT.
+
+commit 20be9894f868c5d9bfb9c5aa20242c066e29ac09
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Mar 11 18:17:16 2015 -0500
+
+    Fix typo and restore interface type.
+
+commit 100802c5c1f0feb15b9aa5f07cb07a77a6553512
+Author: Benoit Daloze <eregontp@gmail.com>
+Date:   Mon Mar 9 18:04:02 2015 +0100
+
+    [Truffle] Use a finer-grained lock to control access to truffleBridge.
+
+commit e2964e5b0881b4bf734be5b385206f571830e53f
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Sat Feb 28 13:12:10 2015 -0600
+
+    lots of rearrangement and state added to fullinterpretercontext and some basic outline of flow in prepareFullBuild
+
+commit a8522d937eddd96a439522a931ef6ad5dfb559b4
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Mar 2 12:30:58 2015 -0600
+
+    Move rather than rewrite JavaSupport so we can merge from 1.7.
+
+commit 2366bd6a49118eb41abb868230613e0d748168cd
+Merge: 15ec551 e61b737
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Mar 2 12:28:47 2015 -0600
+
+    Merge remote-tracking branch 'origin/jruby-1_7'
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/RubyProc.java
+    	core/src/main/java/org/jruby/javasupport/JavaMethod.java
+    	core/src/main/java/org/jruby/javasupport/JavaSupport.java
+    
+    This commit puts JavaSupport back the way it was, so we can git mv
+    instead and get merging across that move.
+
+commit 31c2951a14f636f9eca706fc091b4a46a42ffd94
+Author: Christian Meier <m.kristian@web.de>
+Date:   Mon Feb 2 17:00:52 2015 +0100
+
+    no more builtin psych
+
+commit d5a07b3797a1b44936f407f8e44903ce933a766d
+Author: Christian Meier <m.kristian@web.de>
+Date:   Mon Feb 16 11:19:33 2015 +0100
+
+    remove obsolete yecht.jar from list of builtin library
+
+commit a85d0a09cac20e727df5a80c53cd6646c5506363
+Author: Christian Meier <m.kristian@web.de>
+Date:   Mon Feb 16 11:18:11 2015 +0100
+
+    moved ripper back into core sources
+
+commit 5f3ff7cdfb1505e8282b9c76f5c72c8681fe901d
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Sat Feb 14 17:43:43 2015 -0600
+
+    Dont save/restore $! in the teardown method used by embedding API
+    
+    * This seems to be messing with the embedding API based testing
+      wherein excluded failures are being reported (in Travis testing
+      but reproducible locally as well).
+
+commit b27868aa7137ab68eec2076b3ae9b9e8d42d6129
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Sat Feb 14 09:51:40 2015 -0600
+
+    Some more $! save/restore fixes + add comments for all of them
+
+commit 78e968ef4da7880c2f9f2c31098fc0d7d5eb39db
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Fri Feb 13 23:43:16 2015 -0600
+
+    Save/restore $! properly in the JRuby runtime
+    
+    * Whenever a RaiseException is caught and handled, the $! should
+      be the restored to the previous value of the exception before
+      the try-catch was entered.
+    
+    * This fixes #1601 and #2491 but additional code auditing and
+      discussion will be helpful.
+
+commit 79c69bd718e9312034f1d4bce47edf7c35b00c25
+Author: Christian Meier <m.kristian@web.de>
+Date:   Thu Feb 12 11:47:48 2015 +0100
+
+    using 'classloader.delegate' instead of 'self.first.class.loader'
+    
+    the new name seems to be more common and is used in tomcat, glassfish, etc where the
+    same feature exists for webapp classloaders
+
+commit 02bcdfea628bdb92f946b827b2d7a2065bafa591
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Sun Feb 1 17:37:39 2015 +0100
+
+    Isolate code that uses class loaders.
+
+commit 582ed72ff31a02d7b5760fc67bc7a0ec696eb432
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Sat Jan 31 16:32:08 2015 +0100
+
+    [Truffle] Move the bridge factory into a helper.
+
+commit b4b70cd7caf8961bb84c3a3f031b7aec83d8f7a1
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Sat Jan 31 16:16:36 2015 +0100
+
+    Abstract JavaSupport into an interface so it can be mocked.
+
+commit 1a7f68878bfa7cfb96f39a21e00aec862a6c4631
+Author: Benoit Daloze <eregontp@gmail.com>
+Date:   Wed Jan 28 13:41:38 2015 +0100
+
+    [Truffle] Separate class loading from initialization.
+
+commit 580bd4ef0bdb7a17aa2bf2be4af9aedf1a189f36
+Author: Christian Meier <m.kristian@web.de>
+Date:   Tue Jan 27 23:02:35 2015 +0100
+
+    make the regular classloader load path default again
+    
+    add an option which allows to switch to a self-first strategy which might
+    be able to solve some classloader conflicts.
+    
+    keep the old tests using the switch to use the SelfFirstClassLoader
+
+commit e8a0f1d97c260b5815dc8fe29d413f2a805e4305
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jan 27 09:12:18 2015 -0600
+
+    Ruby.class.getClassLoader() is null in bootclasspath.
+
+commit 24765f5990458246cf942d77d42a2cd4734a6cf2
+Author: Christian Meier <m.kristian@web.de>
+Date:   Sat Jan 17 20:02:51 2015 +0000
+
+    factored out the truffle part into its own maven module
+    
+    the source is split into core/src and truffle/src. some little
+    code changes were needed to get it compliled.
+    
+    the lib/jruby.jar remains as is, dito jruby-complete.jar - just
+    the way it gets build is slightly different.
+    
+    jruby-jars.gem has now three jars one is jruby-truffle.jar, so
+    people want to use truffle need to require this jar as well.
+    
+    the jruby artifacts (org.jruby:jruby, org.jruby:jruby-noasm) can
+    easily exclude truffle via :exclusions => ['org.jruby:jruby-truffle']
+    declaration.
+
+commit 400b5d69b2f7d6be975e0519e93fa20f7000e12d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jan 12 15:02:33 2015 -0600
+
+    Implement toplevel#define_method as in MRI.
+    
+    Fixes #2449.
+
+commit 56b52eaa692881da0920747fcf924a927de62d8a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jan 6 18:00:39 2015 -0600
+
+    Implement io/nonblock library.
+
+commit 7c489e2ecf7dab0c64d80bdda640576ae518ef44
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Jan 6 15:47:15 2015 -0600
+
+    Removing old non-flow variables/methods (partial)
+
+commit 2201765051402957732b373412661a77ddaf56bd
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jan 6 14:25:11 2015 -0600
+
+    Remove native bits of delegate lib.
+    
+    We implemented portions of the delegate library as a JRuby ext,
+    in order to improve performance and avoid the heavy method_missing
+    logic that used to be in the pure-Ruby version. However, over the
+    years, the delegate library has improved and no longer has the
+    same performance characteristics as it did in 1.8 and earlier. In
+    addition, there have been functionality changes to the pure-Ruby
+    code that we would have to maintain in the extension.
+    
+    Therefore, we have opted to return to just the pure-Ruby delegate
+    library. We will reexamine performance and work with ruby-core to
+    improve the pure-Ruby version before we consider returning to the
+    native version.
+    
+    Fixes #1370.
+
+commit bb78f8b5f4bef3e99381c1cfec435e5483cf5b59
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Jan 6 14:45:26 2015 -0600
+
+    Fixes #2435. 9k -n does not work with non-local flow control
+
+commit 65dde3ac2191e3635a59f578e4bc099fc7b3e489
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jan 6 09:50:21 2015 -0600
+
+    Remove a couple 1.7isms that snuck in via merge.
+
+commit cbfa1e0c924c464195cb9d6db3c3cfc179fb918f
+Merge: 131970a d7db423
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jan 6 09:40:11 2015 -0600
+
+    Merge remote-tracking branch 'origin/jruby-1_7'
+    
+    Conflicts:
+    	.travis.yml
+    	VERSION
+    	core/pom.xml
+    	core/src/main/java/org/jruby/RubyDir.java
+    	core/src/main/java/org/jruby/RubyIO.java
+    	core/src/main/java/org/jruby/RubyString.java
+    	core/src/main/java/org/jruby/runtime/load/ClassExtensionLibrary.java
+    	core/src/main/java/org/jruby/util/io/ChannelDescriptor.java
+    	core/src/test/java/org/jruby/embed/ScriptingContainerTest.java
+    	docs/man/pom.xml
+    	docs/pom.xml
+    	ext/pom.xml
+    	ext/readline/pom.xml
+    	ext/ripper/pom.xml
+    	lib/pom.xml
+    	lib/ruby/shared/gauntlet_rubygems.rb
+    	lib/ruby/shared/rubygems/dependency_resolver/current_set.rb
+    	lib/ruby/shared/rubygems/resolver/current_set.rb
+    	lib/ruby/stdlib/rubygems.rb
+    	lib/ruby/stdlib/rubygems/basic_specification.rb
+    	lib/ruby/stdlib/rubygems/commands/open_command.rb
+    	lib/ruby/stdlib/rubygems/core_ext/kernel_gem.rb
+    	lib/ruby/stdlib/rubygems/core_ext/kernel_require.rb
+    	lib/ruby/stdlib/rubygems/ext/build_error.rb
+    	lib/ruby/stdlib/rubygems/ext/ext_conf_builder.rb
+    	lib/ruby/stdlib/rubygems/package/file_source.rb
+    	lib/ruby/stdlib/rubygems/package/io_source.rb
+    	lib/ruby/stdlib/rubygems/package/source.rb
+    	lib/ruby/stdlib/rubygems/remote_fetcher.rb
+    	lib/ruby/stdlib/rubygems/request/connection_pools.rb
+    	lib/ruby/stdlib/rubygems/request/http_pool.rb
+    	lib/ruby/stdlib/rubygems/request/https_pool.rb
+    	lib/ruby/stdlib/rubygems/request_set.rb
+    	lib/ruby/stdlib/rubygems/request_set/lockfile.rb
+    	lib/ruby/stdlib/rubygems/resolver.rb
+    	lib/ruby/stdlib/rubygems/resolver/activation_request.rb
+    	lib/ruby/stdlib/rubygems/resolver/api_set.rb
+    	lib/ruby/stdlib/rubygems/resolver/api_specification.rb
+    	lib/ruby/stdlib/rubygems/resolver/best_set.rb
+    	lib/ruby/stdlib/rubygems/resolver/composed_set.rb
+    	lib/ruby/stdlib/rubygems/resolver/conflict.rb
+    	lib/ruby/stdlib/rubygems/resolver/current_set.rb
+    	lib/ruby/stdlib/rubygems/resolver/dependency_request.rb
+    	lib/ruby/stdlib/rubygems/resolver/git_set.rb
+    	lib/ruby/stdlib/rubygems/resolver/git_specification.rb
+    	lib/ruby/stdlib/rubygems/resolver/index_set.rb
+    	lib/ruby/stdlib/rubygems/resolver/index_specification.rb
+    	lib/ruby/stdlib/rubygems/resolver/installed_specification.rb
+    	lib/ruby/stdlib/rubygems/resolver/installer_set.rb
+    	lib/ruby/stdlib/rubygems/resolver/local_specification.rb
+    	lib/ruby/stdlib/rubygems/resolver/lock_set.rb
+    	lib/ruby/stdlib/rubygems/resolver/lock_specification.rb
+    	lib/ruby/stdlib/rubygems/resolver/requirement_list.rb
+    	lib/ruby/stdlib/rubygems/resolver/set.rb
+    	lib/ruby/stdlib/rubygems/resolver/spec_specification.rb
+    	lib/ruby/stdlib/rubygems/resolver/specification.rb
+    	lib/ruby/stdlib/rubygems/resolver/stats.rb
+    	lib/ruby/stdlib/rubygems/resolver/vendor_set.rb
+    	lib/ruby/stdlib/rubygems/resolver/vendor_specification.rb
+    	lib/ruby/stdlib/rubygems/source/git.rb
+    	lib/ruby/stdlib/rubygems/source/lock.rb
+    	lib/ruby/stdlib/rubygems/source/vendor.rb
+    	lib/ruby/stdlib/rubygems/ssl_certs/AddTrustExternalCARoot-2048.pem
+    	lib/ruby/stdlib/rubygems/ssl_certs/DigiCertHighAssuranceEVRootCA.pem
+    	lib/ruby/stdlib/rubygems/stub_specification.rb
+    	lib/ruby/stdlib/rubygems/text.rb
+    	lib/ruby/stdlib/rubygems/util.rb
+    	lib/ruby/stdlib/rubygems/util/stringio.rb
+    	maven/jruby-complete/pom.xml
+    	maven/jruby-dist/pom.xml
+    	maven/jruby-jars/pom.xml
+    	maven/jruby-noasm/pom.xml
+    	maven/jruby-rake-plugin/pom.xml
+    	maven/jruby-stdlib/pom.xml
+    	maven/jruby/pom.xml
+    	maven/pom.xml
+    	pom.xml
+    	test/externals/ruby1.9/excludes/TestM17NComb.rb
+    	test/pom.xml
+
+commit 2008fd8648d3e70b4843d3832e80440d03d2d725
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Dec 31 10:06:42 2014 -0600
+
+    Restore lost fix for ThreadLibrary.load checked exception.
+
+commit 4710b5f9d20ac6975b9eb2b1fa40ba1ab805baaa
+Author: Kevin Menard <kevin@nirvdrum.com>
+Date:   Wed Dec 31 10:16:20 2014 -0500
+
+    Fixed compilation error.
+
+commit 0820935d0cfe06c4e61e56895194a3e0424469e5
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Dec 31 04:08:34 2014 -0600
+
+    Fix removal of boot-time thread lib, since fiber needs it.
+
+commit 28f5506f3fd6e913b44afd2c77b2ee5e52a179ee
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Dec 30 14:40:40 2014 -0600
+
+    Depollute LOADED_FEATURES.
+    
+    * enumerator.jar, complex.jar, rational.jar are now "provided" as
+      faux already-required libraries.
+    * Do the same for jruby.jar and java.jar, standard since 1.7.
+
+commit 9a73dec4ceae78fc33fcc3beb3264897f3b6e316
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Dec 30 12:44:05 2014 -0600
+
+    enumerator, rational, and complex are considered loaded at boot.
+
+commit bd79165a05f4c2e005c5c4e7a7773778a9bdbe36
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Dec 18 13:30:13 2014 -0600
+
+    Unregister stdio filenos from descriptor map, so they don't leak.
+    
+    Fixes #2333.
+
+commit 0f4adc34b63b47f88e113fb5ca2f95817ef8e30b
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Dec 17 19:07:57 2014 -0600
+
+    War of the wallpaper!  I think my fix to remove bogus extra dynscope per simple eval
+    exposed that we somewhere pop off toplevel scope before the runtime shuts down.  To
+    counteract this I add back a bogus scope only for shutdown.  This is likely a bug
+    in that any capture lvars in at_exit blocks is likely lost (haven't tested), but
+    this makes mspec fast run without error for now.
+
+commit 98ee132a08c414e00051a719d3c31a34a563ccae
+Merge: 08ce901 81879f1
+Author: Christian Meier <m.kristian@web.de>
+Date:   Fri Dec 12 14:32:39 2014 +0100
+
+    Merge branch 'jruby-1_7'
+    
+    Conflicts:
+    	.travis.yml
+    	VERSION
+    	core/pom.xml
+    	core/src/main/java/org/jruby/Ruby.java
+    	core/src/main/java/org/jruby/RubyClass.java
+    	core/src/main/java/org/jruby/RubyFile.java
+    	core/src/main/java/org/jruby/RubyRegexp.java
+    	core/src/main/java/org/jruby/ast/SymbolNode.java
+    	core/src/main/java/org/jruby/common/RubyWarnings.java
+    	core/src/main/java/org/jruby/compiler/ASTCompiler.java
+    	core/src/main/java/org/jruby/compiler/BodyCompiler.java
+    	core/src/main/java/org/jruby/compiler/CacheCompiler.java
+    	core/src/main/java/org/jruby/compiler/impl/BaseBodyCompiler.java
+    	core/src/main/java/org/jruby/compiler/impl/InheritedCacheCompiler.java
+    	core/src/main/java/org/jruby/compiler/impl/InvokeDynamicCacheCompiler.java
+    	core/src/main/java/org/jruby/ext/tempfile/Tempfile.java
+    	core/src/main/java/org/jruby/parser/ParserSupport.java
+    	core/src/main/java/org/jruby/parser/Ruby19Parser.java
+    	core/src/main/java/org/jruby/parser/Ruby19Parser.y
+    	core/src/test/java/org/jruby/embed/ConstantCompilationTest.java
+    	default.build.properties
+    	docs/man/pom.xml
+    	docs/pom.xml
+    	ext/pom.xml
+    	ext/readline/pom.xml
+    	ext/ripper/pom.xml
+    	lib/pom.xml
+    	lib/ruby/1.9/rexml/entity.rb
+    	lib/ruby/2.0/net/http.rb
+    	lib/ruby/2.0/rexml/document.rb
+    	lib/ruby/2.0/rexml/entity.rb
+    	lib/ruby/shared/gauntlet_rubygems.rb
+    	lib/ruby/shared/rubygems.rb
+    	lib/ruby/shared/rubygems/available_set.rb
+    	lib/ruby/shared/rubygems/basic_specification.rb
+    	lib/ruby/shared/rubygems/command.rb
+    	lib/ruby/shared/rubygems/command_manager.rb
+    	lib/ruby/shared/rubygems/commands/cert_command.rb
+    	lib/ruby/shared/rubygems/commands/cleanup_command.rb
+    	lib/ruby/shared/rubygems/commands/contents_command.rb
+    	lib/ruby/shared/rubygems/commands/dependency_command.rb
+    	lib/ruby/shared/rubygems/commands/environment_command.rb
+    	lib/ruby/shared/rubygems/commands/generate_index_command.rb
+    	lib/ruby/shared/rubygems/commands/help_command.rb
+    	lib/ruby/shared/rubygems/commands/install_command.rb
+    	lib/ruby/shared/rubygems/commands/list_command.rb
+    	lib/ruby/shared/rubygems/commands/mirror_command.rb
+    	lib/ruby/shared/rubygems/commands/outdated_command.rb
+    	lib/ruby/shared/rubygems/commands/owner_command.rb
+    	lib/ruby/shared/rubygems/commands/pristine_command.rb
+    	lib/ruby/shared/rubygems/commands/push_command.rb
+    	lib/ruby/shared/rubygems/commands/query_command.rb
+    	lib/ruby/shared/rubygems/commands/search_command.rb
+    	lib/ruby/shared/rubygems/commands/setup_command.rb
+    	lib/ruby/shared/rubygems/commands/specification_command.rb
+    	lib/ruby/shared/rubygems/commands/uninstall_command.rb
+    	lib/ruby/shared/rubygems/commands/unpack_command.rb
+    	lib/ruby/shared/rubygems/commands/update_command.rb
+    	lib/ruby/shared/rubygems/commands/which_command.rb
+    	lib/ruby/shared/rubygems/commands/yank_command.rb
+    	lib/ruby/shared/rubygems/compatibility.rb
+    	lib/ruby/shared/rubygems/config_file.rb
+    	lib/ruby/shared/rubygems/core_ext/kernel_gem.rb
+    	lib/ruby/shared/rubygems/core_ext/kernel_require.rb
+    	lib/ruby/shared/rubygems/defaults.rb
+    	lib/ruby/shared/rubygems/dependency.rb
+    	lib/ruby/shared/rubygems/dependency_installer.rb
+    	lib/ruby/shared/rubygems/deprecate.rb
+    	lib/ruby/shared/rubygems/doctor.rb
+    	lib/ruby/shared/rubygems/errors.rb
+    	lib/ruby/shared/rubygems/exceptions.rb
+    	lib/ruby/shared/rubygems/ext.rb
+    	lib/ruby/shared/rubygems/ext/builder.rb
+    	lib/ruby/shared/rubygems/ext/cmake_builder.rb
+    	lib/ruby/shared/rubygems/ext/configure_builder.rb
+    	lib/ruby/shared/rubygems/ext/ext_conf_builder.rb
+    	lib/ruby/shared/rubygems/ext/rake_builder.rb
+    	lib/ruby/shared/rubygems/gemcutter_utilities.rb
+    	lib/ruby/shared/rubygems/install_update_options.rb
+    	lib/ruby/shared/rubygems/installer.rb
+    	lib/ruby/shared/rubygems/installer_test_case.rb
+    	lib/ruby/shared/rubygems/local_remote_options.rb
+    	lib/ruby/shared/rubygems/name_tuple.rb
+    	lib/ruby/shared/rubygems/package.rb
+    	lib/ruby/shared/rubygems/package/old.rb
+    	lib/ruby/shared/rubygems/package/tar_header.rb
+    	lib/ruby/shared/rubygems/package/tar_reader/entry.rb
+    	lib/ruby/shared/rubygems/platform.rb
+    	lib/ruby/shared/rubygems/psych_additions.rb
+    	lib/ruby/shared/rubygems/rdoc.rb
+    	lib/ruby/shared/rubygems/remote_fetcher.rb
+    	lib/ruby/shared/rubygems/request.rb
+    	lib/ruby/shared/rubygems/request_set.rb
+    	lib/ruby/shared/rubygems/request_set/gem_dependency_api.rb
+    	lib/ruby/shared/rubygems/requirement.rb
+    	lib/ruby/shared/rubygems/resolver/current_set.rb
+    	lib/ruby/shared/rubygems/security.rb
+    	lib/ruby/shared/rubygems/security/policy.rb
+    	lib/ruby/shared/rubygems/security/trust_dir.rb
+    	lib/ruby/shared/rubygems/server.rb
+    	lib/ruby/shared/rubygems/source.rb
+    	lib/ruby/shared/rubygems/source/installed.rb
+    	lib/ruby/shared/rubygems/source/local.rb
+    	lib/ruby/shared/rubygems/source/specific_file.rb
+    	lib/ruby/shared/rubygems/source_list.rb
+    	lib/ruby/shared/rubygems/spec_fetcher.rb
+    	lib/ruby/shared/rubygems/specification.rb
+    	lib/ruby/shared/rubygems/ssl_certs/AddTrustExternalCARoot.pem
+    	lib/ruby/shared/rubygems/stub_specification.rb
+    	lib/ruby/shared/rubygems/syck_hack.rb
+    	lib/ruby/shared/rubygems/test_case.rb
+    	lib/ruby/shared/rubygems/test_utilities.rb
+    	lib/ruby/shared/rubygems/text.rb
+    	lib/ruby/shared/rubygems/uninstaller.rb
+    	lib/ruby/shared/rubygems/uri_formatter.rb
+    	lib/ruby/shared/rubygems/user_interaction.rb
+    	lib/ruby/shared/rubygems/util/list.rb
+    	lib/ruby/shared/rubygems/validator.rb
+    	lib/ruby/shared/rubygems/version.rb
+    	maven/jruby-complete/pom.xml
+    	maven/jruby-dist/pom.xml
+    	maven/jruby-jars/lib/jruby-jars/version.rb
+    	maven/jruby-jars/pom.xml
+    	maven/jruby-noasm/pom.xml
+    	maven/jruby-rake-plugin/pom.xml
+    	maven/jruby-stdlib/pom.xml
+    	maven/jruby/pom.xml
+    	maven/jruby/src/templates/osgi_all_inclusive/src/test/java/org/jruby/embed/osgi/test/JRubyOsgiEmbedTest.java
+    	maven/pom.rb
+    	maven/pom.xml
+    	pom.xml
+    	spec/tags/ruby/core/symbol/length_tags.txt
+    	spec/tags/ruby/core/symbol/size_tags.txt
+    	spec/tags/ruby/core/symbol/versions/encoding_1.9_tags.txt
+    	test/pom.rb
+    	test/pom.xml
+    	test/test_file.rb
+    	tool/globals_1_9_3.rb
+
+commit 2746b568707ab6f5149bb66892b7d4eb026e48a1
+Author: Christian Meier <m.kristian@web.de>
+Date:   Thu Dec 11 14:06:14 2014 +0100
+
+    copy the old eventHooks list when adding a new eventHook
+    
+    fixes #2296
+    
+    Sponsored by Lookout Inc.
+
+commit b45a7f080c2b48669fe379f80fc7c750b11e74f2
+Author: Christian Meier <m.kristian@web.de>
+Date:   Sat Nov 29 12:03:27 2014 +0000
+
+    make JRubyClassLoader binary compatible to jruby-1.7.x again
+    
+    and still keep the extra features restricted to runtime.getJRubyClassLoaders.
+    all other internal CL will be ClassDefiningJRubyClassLoader.
+
+commit 90a61d745dad7c3d1db90e842c04a07812d124f1
+Author: Christian Meier <m.kristian@web.de>
+Date:   Tue Nov 25 09:40:44 2014 +0000
+
+    clean up classloader type hierachy
+    
+    * only the classloader runtime.getJRubyClassLoader needs to have
+      all the extra features. all other classloaders just needs to
+      be able to define classes and do not need the extra overhead of
+      loading and finding resources and adding jar files during runtime.
+    * the OneShotClassloader is only used with runtime.getJRubyClassLoader
+      so ensure this relation via types
+    * the JRubyClassLoader is used at various places also as "flag via instanceof".
+      keep this and all other uses of JRubyClassLoader as it was before
+    * replace on use of OneShotClassloader with JRubyClassLoader to check if it possible
+      to load byte code at runtime
+
+commit 7b3a29f0e57d63cbfcf38ce22009055c71aae4b2
+Author: Christian Meier <m.kristian@web.de>
+Date:   Tue Nov 25 09:30:20 2014 +0000
+
+    remove extra whitespaces
+
+commit 334871d451019a19b19e8261917fa33a47b028f3
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Sat Nov 15 21:36:13 2014 +0000
+
+    [Truffle] Remove truffelize for now - it's likely to be confusing.
+
+commit 480c520fc0fe95cd4ed597f80608a221cc429d3b
+Merge: 440ec13 f5d398a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Nov 11 13:15:45 2014 -0600
+
+    Merge pull request #2159 from cheald/signal_fixes
+    
+    Fixes and updates to signal handling
+
+commit f61a17fb24875097992725afe04c12177d5ad372
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Nov 10 13:29:44 2014 -0600
+
+    Add two more POSIX errno msg checks for IOException to Errno.
+    
+    This fixes the exception-creating issue #2107. It's likely the
+    root cause was selectors not being pooled or closed, which was
+    fixed in 4e40345.
+    
+    Fixes #2107.
+
+commit f5d398ad81796296636c584710b227252b7cbd29
+Author: Chris Heald <cheald@gmail.com>
+Date:   Sat Nov 8 22:03:09 2014 -0700
+
+    Fixes and updates to signal handling
+    
+    * Signal.trap now always returns the previous handler for the trapped
+      signal, or the string DEFAULT or SYSTEM_DEFAULT as appropriate. This
+      is the same behavior as MRI.
+    * Signal 0 (SYSEXIT) in MRI is now implemented. If a SYSEXIT trap is
+      set, it will be executed as the JRuby runtime is torn down.
+    * Added taint checking for trap handlers, for MRI parity
+    * Added reserved signal checking for MRI parity
+    * Fixed a bug that previously prevented IGNORE from being sent as a trap
+    * Un-excluded a number of Signal tests
+
+commit 8f628ede4869f27b7cfa6aa5eb0ad3e6181717c3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Nov 7 11:12:28 2014 -0600
+
+    Add frozen string optz and improve string handling in JIT.
+    
+    * FrozenString operand represents "str".freeze
+    * All modes cache frozen strings and bytelists now (none before)
+
+commit 5749d579c1640c949f203d6bf61e796e11c00d8a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Nov 4 18:03:06 2014 -0600
+
+    Fix the failed return value, which should still be null.
+
+commit dd69e08b7a1e92a80ffdf1bb5ce202388e056932
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Nov 4 12:53:28 2014 -0600
+
+    Fix forced-compile loading of files.
+
+commit 33c89b43268217d8871bea0fdae049f65313d106
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Nov 3 21:06:14 2014 -0600
+
+    Handle ELOOP in File.open call chain.
+
+commit 3f5d6edef06e3c3693e6edc51e02732d5433d207
+Merge: b365fa8 696dedf
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Nov 2 14:55:18 2014 -0600
+
+    Merge pull request #1870 from robin850/singleton-ancestors
+    
+    Module#ancestors now includes singletons themselves
+
+commit ea47cab70b37f01f7f7e1bc0815367cac3449f86
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Oct 28 16:18:00 2014 -0500
+
+    Re-add important line? :)
+
+commit 5bf8d52e7c0c49401d91e17ff17079d453f6c15a
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Sun Oct 26 17:07:20 2014 +0000
+
+    Remove some lexer and parser functionality that has been long deprecated.
+
+commit b58b9f37c449ccfca2ae4a3bb4e4b3ac368ce26f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Oct 22 14:51:15 2014 -0500
+
+    Use NotCompilableException more consistently.
+
+commit 9041fe849fd7d04a953c01c44f7bfa10cde4382d
+Merge: 1889a7b4 001d617
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Oct 22 08:24:11 2014 -0500
+
+    Merge remote-tracking branch 'origin/master' into test-jit
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/ir/Compiler.java
+
+commit eafe2d7a8c322c6703e79c7b00950b4f7afbb65a
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Oct 21 15:42:44 2014 -0500
+
+    Moving interpreter logic into Interpreter (for now).  IRScriptBody.interpret moved into Intepreter.
+    
+    New ScriptBodyInterpreterContext to store begin and end blocks (shared with scope currently).
+    
+    Removed some dead code and parameters.
+
+commit efabe068af794db64902e920453165bb11b957ff
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Oct 20 10:36:43 2014 -0500
+
+    Lift constant handle caching to all objects and wire it up.
+    
+    Added handle reuse for:
+    
+    * true/false
+    * nil
+    * runtime
+    
+    And fixed handling for fixnums and symbols.
+    
+    See #2058.
+
+commit 76ca38b7896a515d80988d700b86d3718eb3445f
+Merge: 92396a8 781ebdd
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Oct 20 09:20:20 2014 -0500
+
+    Merge remote-tracking branch 'origin/master' into non-indy-jit
+
+commit 92396a81ce6fb0923afdda1ef749f283c8c6c5d4
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Oct 20 09:19:38 2014 -0500
+
+    Encapsulate and generalize "constant" creation for core types.
+    
+    Part of work for #2058.
+
+commit 71ee348d1c3875de68cf7eba2b3053d476cc24ee
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Oct 20 08:24:36 2014 -0500
+
+    Clean up imports.
+
+commit 2592be7c0f1edfb67b7653d014462aac8bcc5b66
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Oct 6 22:54:33 2014 -0500
+
+    Performance improvements to event tracing.
+    
+    * Avoid CopyOnWriteArrayList iterator construction (use a simple
+      array and iterate over that) for event hook list
+    * Use int[] to represent line number hit counts.
+    * Fix int[] size checking to avoid excessive allocation.
+    * Fixes to trace correctly in compiler without Backtrace.
+
+commit 8e8f1611b09c10a6d31a551576ba15d05f76f6d6
+Merge: b7f248b 4dea67a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Oct 15 18:08:50 2014 -0500
+
+    Merge remote-tracking branch 'origin/master' into non-indy-jit
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/ir/IRScope.java
+
+commit 09b0be3b1ea5c20090c5d15ba5d624aa228523d2
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Oct 14 17:21:08 2014 -0500
+
+    Remove some params for long dead rubyClass field on TC
+
+commit 11aaf098dbbe0be94bc41bb9b18c169b6df1936c
+Merge: 04b89a3 5ab309a
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Thu Oct 9 01:08:21 2014 -0500
+
+    Merge branch 'master' into non-indy-jit
+
+commit c3f9361ca19bbb50f221f9b38466c7a57d25429d
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Wed Oct 8 23:59:16 2014 +0100
+
+    [Truffle] Be more clear about errors that go all the way to the top.
+
+commit 2065177511129889f5847acec08a3890d854eaf6
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Oct 7 13:39:38 2014 -0500
+
+    Get --bytecode working again.
+
+commit 1f56abb341d49c29ea4d7a4f79fa8cf7c6950bbd
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Oct 6 22:54:33 2014 -0500
+
+    Performance improvements to event tracing.
+    
+    * Avoid CopyOnWriteArrayList iterator construction (use a simple
+      array and iterate over that) for event hook list
+    * Use int[] to represent line number hit counts.
+    * Fix int[] size checking to avoid excessive allocation.
+    * Fixes to trace correctly in compiler without Backtrace.
+
+commit 98f7b3fa49d71fc92df743c95181736518e66449
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Sep 24 03:58:11 2014 -0500
+
+    Jit logging should log successful target script compile.
+
+commit 41de7c65a62b448d5582b23c96a1280b5f3d61e8
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Sep 18 12:19:02 2014 -0500
+
+    Clean up more refactored JIT code and unused logic.
+
+commit e1334fdfedcc15cce36076e5c69b4efcaa1a0fb4
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Sep 17 14:50:04 2014 -0500
+
+    Ensure ThreadContext "pre" happens outside try/finally for "post".
+
+commit ed54aab184bed0dc9dbaaf90b357c8f793c33696
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Sep 17 13:40:36 2014 -0500
+
+    Rip out the guts! Removing many non-9k runtime classes.
+    
+    * ClassCache is gone; it was hacky and problematic when compiled
+      code held classloader-level (static) data, as when using indy
+      call sites. Java 8 has also eliminated permgen, greatly reducing
+      the hassle and overhead of loading jitted code. Finally, Rails
+      and the other Ruby frameworks are now officially "thread safe"
+      (or the teams are committed to them being so) and the multiple
+      JRuby model of deployment is discouraged (or even deprecated).
+    * All old JIT code is gone. It won't be useful for the new
+      JIT.
+    * Removed the last vestiges of Callback-based functions. If I
+      remember right, there's some ext out there using them...we must
+      find it.
+    * Rewired JITCompiler to use the new JIT.
+    * Rewired InterpretedIRMethod to use JITCompiler.
+    * Moved OneShotClassLoader out of ClassCache (in org.jruby.util)
+
+commit 13c142a1781c0316e1bcd41360ee1595fd7fda3f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Sep 17 11:54:50 2014 -0500
+
+    ONE SCOPE TO RULE THEM ALL
+    
+    Remove all other StaticScope types and pull IR logic up to it.
+
+commit 21d742880d2acd38dcfacbf5869e5978e1078f0d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Sep 15 16:02:02 2014 -0500
+
+    Improve JIT logging for target script compile.
+
+commit bad0fed920243b1f4bfd5e91aa323efbd0593ba8
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Sep 15 13:40:03 2014 -0500
+
+    Remove some unused imports.
+
+commit bcb285f2596259b8655c9528f50d2262cbb76abf
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Sep 15 13:39:36 2014 -0500
+
+    Split "booting" flag and do not JIT during boot of runtime.
+
+commit b39b9a1db1347cf19816d817cefe4e0a7a5539e4
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Sep 15 13:11:28 2014 -0500
+
+    Fail JIT for any exception during JIT.
+
+commit 0d9120f2e467a90d788507d1ad2b355435c37d2e
+Author: Benoit Daloze <eregontp@gmail.com>
+Date:   Sun Sep 14 19:31:11 2014 +0200
+
+    Use pathname.rb as MRI does and restore our native optimizations
+    
+    * Pathname is a hybrid library both in MRI and JRuby.
+    * The JRuby native part should match MRI's native part.
+    * The Ruby part should be identical so it can be easily merged.
+
+commit ef58d5757132ecfdcfb0932ebb113ff6f100b44e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Sep 4 12:18:15 2014 -0500
+
+    Alter singleton scripting container logic to not teardown on GC.
+    
+    In JRuby 9k, tearing down a runtime will (correctly) flush and
+    close all still-open IO streams. This includes stdio, with the
+    effect that all stdio streams on a runtime are closed and unusable
+    after a teardown.
+    
+    The SINGLETON scope for ScriptingContainer uses a single, static
+    global runtime for all container instances. Previous logic was for
+    a ScriptingContainer to tear down the associated runtime at GC,
+    which resulted in subsequent SINGLETON containers seeing a runtime
+    with stdio closed. This led to EBADF errors appearing in some
+    embedding code.
+    
+    This change modifies our logic in the following ways:
+    
+    * A singleton container will not tear down the runtime on GC
+    * If the global runtime is torn down, we will clear the global
+      runtime so a new runtime will be created for future calls.
+
+commit a4f42c69f9212a1be60601f7bc17ab17beb11d2d
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Tue Aug 26 21:14:06 2014 -0500
+
+    [IR] Create a toplevel IRScope and bind it to the toplevel staticscope
+    
+    * TOPLEVEL_BINDING was trying to fetch the IRScope associated with
+      it and was coming back empty and crashing bundler in some scenarios.
+    
+      Curious why it took this particular combination to uncover this
+      longstanding initialization bug.
+    
+    * Longer term 9k cleanup TODO:
+      - Merge IRStaticScope and IRScope -- there are two of them because
+        of having to co-exist with the earlier runtime. We don't have
+        that constraint anymore.
+
+commit 7729e8de7f357bdc1af8f9cd4cf8a5c4f0edf308
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Mon Aug 25 13:16:19 2014 +0100
+
+    [Truffle] Don't try and pass program result values back to JRuby.
+
+commit a6f20b63a56aff2e1bce74f89078234bc4c34446
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Aug 12 17:46:03 2014 -0500
+
+    Eliminate remnants of old IO backend and localize fileno map.
+    
+    The old Stream/ChannelStream/ChannelDescriptor code is no more.
+    Instead, JRuby 9000 uses a fresh port of MRI's IO and transcoding
+    logic, which then builds off a much thinner fileno shim using NIO
+    channels. This comment removes the old logic, which is no longer
+    used.
+    
+    Utility methods and constants from those classes have been moved
+    to more appropriate places, and the old internal/external fileno
+    map -- which used to be static -- is now managed on a per-runtime
+    basis. For most users running a single JRuby instance with full
+    native-call capabilities, this map will not come into play much,
+    but it is still used to find existing ChannelFD wrappers around a
+    given channel, and must be managed independently from runtime to
+    runtime.
+
+commit abf5c228b51bf31320db0a16baeb79b9e756820e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Aug 11 12:27:11 2014 -0500
+
+    Make err logging of bubbled exceptions a bit more robust.
+
+commit f9b28c47d307282de5097e45f409be0c5e6dd9a8
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Aug 6 09:41:33 2014 -0500
+
+    Reverse comparison to avoid NPE.
+
+commit 696dedffd1435ca542ee85fef62368bc15f35813
+Author: Robin Dupret <robin.dupret@gmail.com>
+Date:   Tue Jul 29 14:14:55 2014 +0200
+
+    Module#ancestors now includes singletons themselves
+    
+    Since Ruby 2.1, calling #ancestors on a singleton class should now
+    include the class itself in the chain.
+    
+    Since BasicObject is at the very base of the ancestors, we also need to
+    change the meta class of Object so that BasicObject's singleton class
+    correctly get included in the chain.
+
+commit 9cca1ec6054afcee8177583c83c0c8a77dbd2a80
+Merge: 9b412cd 448ffb1
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Jul 27 16:05:29 2014 -0700
+
+    Merge remote-tracking branch 'origin/jruby-1_7'
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/Ruby.java
+    	core/src/main/java/org/jruby/util/ClasspathResource.java
+    	core/src/main/java/org/jruby/util/URLResource.java
+    	maven/jruby-stdlib/pom.xml
+
+commit 448ffb1cd605dda84050f3535aeaab6c13e04c7e
+Author: Theo <theo@iconara.net>
+Date:   Tue Mar 25 15:28:53 2014 +0100
+
+    Raise Errno::EBADF for some IOExceptions
+    
+    AbstractSelectableChannel#configureBlocking can raise IOExceptions with the message "Bad file descriptor", this happens for example in SelectBlob#registerSelect under some circumstances. This patch translates these IOExceptions to Errno::EBADF instead of IOError as they are now.
+
+commit 868bea07f755c73970885a4927787b8507be81c8
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jul 25 13:52:52 2014 -0500
+
+    Re-register our beans if we have to restart agent on failed exec.
+
+commit b1e2f795bc34d9a80ad69fe9e90e93fff8bf1e23
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jul 25 13:52:52 2014 -0500
+
+    Re-register our beans if we have to restart agent on failed exec.
+
+commit 2cc1176020374d4f31aa9f63b5053470ed15a440
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jul 22 02:45:09 2014 -0500
+
+    Never store a singletonized string in dedup hash.
+
+commit 8b259bd3c4e04cd95a4b64ea681334bc4a8ed63f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Jul 17 17:53:09 2014 -0500
+
+    Disable test for old internal/external fileno map.
+
+commit 2676a1ce936a89deaab7db9f11a6a0d63fdf8610
+Merge: c8d269d c57ad62
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 9 12:55:04 2014 -0500
+
+    Merge remote-tracking branch 'origin/master' into new_transcoder
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/RubyConverter.java
+    	test/mri/excludes/TestMethod.rb
+    	test/mri/excludes/TestModule.rb
+
+commit 8256df460df5b7401bf83da0d25c3284c985c09b
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Jul 3 13:57:34 2014 -0500
+
+    Starting to remove bits of old JIT one step at a time (should be dead code)
+
+commit 2c81284c39a6ebd5b84b7fe26394108287d696b8
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Jul 3 13:44:13 2014 -0500
+
+    Allow target script to fail jit until jit is 100%
+
+commit 28588ed678aa94b85a71cf41d555c00fbf76dff0
+Merge: 02eb2f4 1d03c28
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jun 23 14:16:24 2014 -0500
+
+    Merge remote-tracking branch 'origin/master' into new_transcoder
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/RubyBasicObject.java
+    	core/src/main/java/org/jruby/RubyIO.java
+
+commit 05e1b11ad00be5b85a5df8419573aab4f98f2954
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Fri Jun 13 17:36:27 2014 +0100
+
+    Revert "[Truffle] Restore a basic version of set_trace_func."
+    
+    This reverts commit 077a4ffb881e62b4d1fab78270a81cc500c0c252.
+
+commit 0173b4e50b3ca2d04cb917203c9e127a1eca2272
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri Jun 13 10:37:13 2014 -0500
+
+    Beginnings of instrumented tracing
+
+commit 2aa495848b3606055211c00b2e73660f168aceec
+Merge: 7dbfaef 639ec14
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jun 13 11:03:10 2014 +0100
+
+    Merge branch 'master' into new_transcoder
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/RubyInstanceConfig.java
+
+commit 0c797f1e068a75e4d43d02f05fad371900143cde
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Jun 12 12:20:53 2014 -0500
+
+    Fixes #1743. Use nil 1.9+ for type in set_trace_func
+
+commit 077a4ffb881e62b4d1fab78270a81cc500c0c252
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Thu Jun 12 01:48:11 2014 +0100
+
+    [Truffle] Restore a basic version of set_trace_func.
+
+commit a8c5cfe344b1aa65e135bd0fc0e2e16ad91ec453
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Jun 9 17:09:05 2014 -0500
+
+    More old interpreter removal
+
+commit 7621334c9b4bef55cc1ac326dcc8d13ce8c36a56
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Jun 9 09:40:27 2014 -0500
+
+    Start removing old interpreter
+
+commit 795e370e2c9eddf864ccd67569958ba9058bcf01
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri Jun 6 13:39:03 2014 -0500
+
+    IR now default runtime with JIT off for now...woot woot...all aboard the IR express
+
+commit d6c7c46243d50c1bb301e56f396a76b5f8cabbdf
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jun 3 17:25:37 2014 -0500
+
+    Rewrite select logic to match MRI. IO and File CI specs 100%.
+
+commit 77bf305256e5665680ca229c7d5ad9e447c4b52c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri May 30 02:06:49 2014 -0500
+
+    Remove experimental and now defunct try_nonblock library.
+    
+    See https://bugs.ruby-lang.org/issues/5138
+
+commit ecc42a6c13d6884dd52e2dcbae8c592c682d6d92
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue May 27 20:18:59 2014 -0500
+
+    IO work continues.
+    
+    * Reopen work and refactorign to support it.
+    * PosixShim class to make POSIX and NIO both look like POSIX.
+    * FilenoUtil class to handle fileno (real/fake) management.
+    * Myriad minor refactorings and cleanups.
+
+commit 3b3fbe198fa0ee44887ba2ce4c6d3c5e005b1069
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue May 20 13:51:24 2014 -0500
+
+    Clean out a bunch more uses of ChannelStream.
+
+commit 78f196d80559e5927c24ce8cf146330399f6f039
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon May 19 19:37:16 2014 -0500
+
+    Working through more logic... sysopen, seek, reopen, init_copy.
+
+commit 222a48b492d61c2ceff729207bbce2119099aad6
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri May 16 14:30:09 2014 -0500
+
+    Continue implementing open logic. Stdio are properly sync now.
+    
+    Lots of extra cleanup in here as old code starts to fall off.
+
+commit 21e096f9ec7ed78d279102c24f6aeeb9687df311
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed May 14 13:10:47 2014 -0500
+
+    IO#read_nonblock and readpartial.
+    
+    Still work to be done to make these work reasonably against non-
+    file, non-selectable channels.
+
+commit d8ef3bd7225436f06a554004df9bd344d0c28971
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed May 14 11:33:14 2014 -0500
+
+    IO#sysread and syswrite.
+    
+    Some other misc cleanup came along for the ride.
+
+commit 706b4539517e1c444250334ea261ac56542d02cf
+Merge: 75887be c3e7c29
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu May 8 04:54:10 2014 -0500
+
+    Merge branch 'master' into new_transcoder
+    
+    Conflicts:
+    	core/pom.xml
+    	core/src/main/java/org/jruby/RubyFile.java
+    	core/src/main/java/org/jruby/util/TypeConverter.java
+
+commit d269590c79eb56175689e1aea710956fa7472786
+Merge: ae5ad64 78d80b5
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu May 1 09:54:27 2014 -0500
+
+    largish merge from jruby-1_7
+
+commit c58164f7c6d24d317bac36fc57060ed4be8ca5e6
+Author: Thomas E Enebo <tom.enebo@gmail.com>
+Date:   Tue Apr 8 08:38:49 2014 -0500
+
+    Cheryr-picked from master
+
+commit 835f1c71a52de9a42be50dc31cb757029d4581e4
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Apr 8 20:00:58 2014 -0500
+
+    Hook up a mixed-mode for the IR runtime, to aid JIT testing.
+    
+    Like the old AST-based runtime, we have both an interpreter and
+    a compiler. Up to now, it has only been possible to run the IR
+    runtime in *either* the interpreter or the still-in-development
+    JIT. This patch adds a -X+JIR mode that will lazily JIT IR method
+    bodies using the same trivial heuristic (call count) as the AST
+    runtime.
+    
+    This is a major step toward switching to IR runtime being on all
+    the time.
+
+commit 9c6d513fcd66f89215b28f11a9abb66e0cc8eb69
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Apr 8 08:41:51 2014 -0500
+
+    Remove already removed code cache code from last landing
+
+commit 1f363b1581750833c65558b2ee0bdc90d660e784
+Author: areman <andre.kullmann@googlemail.com>
+Date:   Wed Apr 2 15:19:30 2014 +0200
+
+    avoid nullpointer in case no profiling service is configured
+
+commit 06130f94ed43d3660dea65e2dbb415b8aafdac5f
+Author: areman <andre.kullmann@googlemail.com>
+Date:   Wed Apr 2 00:56:30 2014 +0200
+
+    remove wildcard imports and rename buidin to builtin
+
+commit 86a75dce0e3db7dd41b651fd32f37e7cce2c6726
+Author: areman <andre.kullmann@googlemail.com>
+Date:   Tue Apr 1 17:09:27 2014 +0200
+
+    Change the profiler to make it possible to add custom profiler implementations
+
+commit 9f3afe6a4df43930978fc709f79a5925627a99ff
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Mar 10 09:06:34 2014 -0500
+
+    Fix encoding exception data accessors and #convert exc creation.
+
+commit b8d2911a89181cbf6a81200c928d1e9a8ac71f37
+Author: Douglas Campos <qmx@qmx.me>
+Date:   Thu Mar 6 23:38:39 2014 -0300
+
+    remove dead code
+
+commit 998161ff95de1773cb93f3678befeeac7fd85448
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Tue Feb 25 16:08:13 2014 +0000
+
+    [Truffle] Allow removable of Truffle classes.
+
+commit 724045fe82c7898160e63be4cd473bf10a4d79c3
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Sun Feb 23 19:01:55 2014 +0000
+
+    [Truffle] Remove debug message.
+
+commit 017545414d51458e46d071200a3d113c353d4400
+Merge: b725465 d784882
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Feb 21 14:37:20 2014 -0600
+
+    Merge remote-tracking branch 'origin/jruby-1_7'
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/Ruby.java
+    	core/src/main/java/org/jruby/RubyThread.java
+
+commit b72546530ad8ea5405b3210416a60c42b6963354
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Fri Feb 21 17:37:47 2014 +0000
+
+    [Truffle] Make allocation of the bridge lazy.
+
+commit 9c47b17ad3fe2a76d19449e3456f393212264003
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Feb 21 10:58:58 2014 -0600
+
+    Add Ruby "runtime number" to all thread names.
+
+commit 83a17df8fb22c8f218e6a608aaa78fc4f9ade7db
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 18 16:37:14 2014 -0600
+
+    [Truffle] Move bridge creation later to pick up Ruby inited fields
+
+commit 6712676cbbd6d42e4dc238894075e3b76987481e
+Merge: 7f393ee 021e103
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Feb 13 16:11:15 2014 -0600
+
+    Merge remote-tracking branch 'origin/jruby-1_7'
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/util/cli/Options.java
+
+commit e10e4199e0f65b9f9b62c7bd5cc9d92b11da9deb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Feb 13 16:07:48 2014 -0600
+
+    Reinstate executor thread pool for running fibers. Fixes #1443.
+
+commit 7f8d2e4bf925b2a8cc6e96e4b5c65bc973bffb9f
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Thu Feb 6 01:46:03 2014 +0000
+
+    [Truffle] Rename 'parser' to 'translator'.
+
+commit a455ef649f8efe95b825d95e10b0cf847fb781f4
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Jan 21 11:22:01 2014 -0800
+
+    Don't swallow all exceptions...this is still buggy since we do not let IOExceptions past
+
+commit c9f3826f0f87e23b051b0a64052fcb981df961af
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Wed Jan 15 23:09:31 2014 +0000
+
+    [Truffle] Add spec:truffle Ant target, and add to the Travis matrix.
+
+commit ce4fe6fbc9d43d71204d8585a066919fd234b488
+Merge: 8d95741 55e8e3a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jan 10 15:16:23 2014 -0600
+
+    Merge remote-tracking branch 'origin/jruby-1_7'
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/RubyKernel.java
+    	core/src/main/java/org/jruby/runtime/callsite/RespondToCallSite.java
+
+commit 55e8e3a09ab25902f2b5bfd7f40c23d16481fa42
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jan 10 14:59:44 2014 -0600
+
+    Reenable respond_to? caching logic.
+    
+    The respond_to? call site logic was disabled because it did not
+    take into account respond_to_missing?. Whenever respond_to?
+    returns false, 1.9+ needs to check respond_to_missing? in case the
+    method in question is implemented by method_missing. We disabled
+    all respond_to? caching until we could figure out a safe way to do
+    this caching in 1.9 mode.
+    
+    In this commit, we use the following logic to know whether we can
+    cache the result of a respond_to? call:
+    
+    IF we are in 1.8 mode
+    OR respond_to? returned true
+    OR respond_to_missing? is not overridden
+    THEN cache
+    
+    We will not cache, then, if we're running in 1.9 mode AND
+    respond_to? returned false AND there's a custom
+    respond_to_missing? defined. This should cover all appropriate
+    failure cases and allow us to cache the much more common normal
+    respond_to? cases.
+    
+    Numbers before and after:
+    
+    BEFORE:
+                                              user     system      total        real
+    control, 1 and :to_ary                0.030000   0.000000   0.030000 (  0.031000)
+    1m 1.respond_to?(:to_ary)             0.060000   0.000000   0.060000 (  0.061000)
+    1m 1.respond_to?(:to_ary,true)        0.070000   0.000000   0.070000 (  0.069000)
+    1m 1.respond_to?(:next)               0.040000   0.000000   0.040000 (  0.034000)
+    1m redefined obj.respond_to?          0.020000   0.000000   0.020000 (  0.025000)
+    1m varying name respond_to?           0.030000   0.000000   0.030000 (  0.026000)
+    
+    AFTER:
+                                              user     system      total        real
+    control, 1 and :to_ary                0.030000   0.000000   0.030000 (  0.032000)
+    1m 1.respond_to?(:to_ary)             0.010000   0.000000   0.010000 (  0.011000)
+    1m 1.respond_to?(:to_ary,true)        0.010000   0.000000   0.010000 (  0.015000)
+    1m 1.respond_to?(:next)               0.010000   0.000000   0.010000 (  0.011000)
+    1m redefined obj.respond_to?          0.020000   0.000000   0.020000 (  0.023000)
+    1m varying name respond_to?           0.020000   0.000000   0.020000 (  0.024000)
+    
+    In additionm this should reduce calls to our per-class cache
+    substantially in cases where the argument passed to respond_to? is
+    the same and the target object's type is not changing.
+
+commit f643747a2c5a81757e704a80e638c146ae0cccf3
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Fri Jan 10 00:36:56 2014 +0000
+
+    [Truffle] Truffle currently needs to be shutdown on the same thread it was started.
+
+commit 0c866031a0ef6d31cb91ca5fa5a25ebe90256b7f
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Fri Jan 10 00:16:13 2014 +0000
+
+    [Truffle] Make truffelize a feature that needs to be required.
+
+commit 91517fda9b9d14a09138acc3c7771c95ad9aedfa
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Thu Jan 9 14:28:20 2014 +0000
+
+    [Truffle] Add truffelize method.
+
+commit d52de9710824e1ad34fa135a306ea8372a209442
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jan 8 20:50:51 2014 -0600
+
+    Use JI coercion for values coming out of Truffle for now.
+
+commit 0a8680cf51e31874f8efb15395d592fe5385ef57
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Mon Jan 6 19:26:10 2014 +0000
+
+    [Truffle] Import project.
+
+commit 695c70eef4c73637dbce5c730d0282e4825de0eb
+Merge: 6105eb8 662e319
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Jan 6 10:01:17 2014 -0600
+
+    IR persistence partial merge
+
+commit feefd2967cb20d8579ea39e43fb66b6ca7abc212
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Jan 4 10:15:27 2014 -0600
+
+    Fix bad merge.
+
+commit 022d99a957829915335db5afdb900a46f8e05453
+Merge: 368f752 4fe7f7c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Jan 4 09:47:59 2014 -0600
+
+    Merge remote-tracking branch 'origin/jruby-1_7'
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/Ruby.java
+    	test/externals/ruby1.9/openssl/fixture/cacert.pem
+    	test/externals/ruby2.0/net/imap/cacert.pem
+
+commit 9a06cbc50061460b7fa2ff44d0453d0bfcb7fbfc
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jan 3 14:25:05 2014 -0600
+
+    Only set source encoding when specified from -K to match MRI.
+    
+    It doesn't appear that MRI's source-encoding logic is the same in
+    1.9 and 2.0, so my fix for -Ku based on 2.0/2.1 codebase caused
+    test failures. But 2.0 and 2.1 fail the tests the same way. So
+    to compromise and allow the -K fix to work when specified, I have
+    modified this code to honor the -K encoding when specified, but
+    otherwise use the old default source encodings. This may not be
+    quite right, but it makes us match 1.9 again.
+
+commit 926ca89075a4a4c84592add729531189263c143f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jan 3 00:25:57 2014 -0600
+
+    Improve pre-frozen string logic with a deduplication cache.
+    
+    This commit brings our "str".freeze compiler optimization in line
+    with MRI by using a global deduplication cache to provide for even
+    more sharing across literals. The cache is both weak-keyed and
+    weak-valued and just maps from an arbitrary RubyString to the
+    pre-frozen cached version of that RubyString.
+    
+    Note that the logic for deduplication is synchronized against the
+    JRuby runtime. This will impact concurrent loads that repeatedly
+    ping the cache, but uses in this commit all cache the value
+    locally and only hit the dedup cache once. This potential
+    concurrency bottleneck may need to be addressed in the future.
+
+commit 98ddffd944024225b5df57c0e2eaab8410a41bf4
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Sun Dec 22 10:12:29 2013 -0600
+
+    commit just to save working reading in scope headers
+
+commit 9bd4b5779c1af66d66f18919eb699342a5bd75c8
+Merge: be6823c 6669bc5
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Dec 20 13:31:11 2013 -0600
+
+    Merge remote-tracking branch 'origin/jruby-1_7'
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/Ruby.java
+    	test/pom.xml
+
+commit 6669bc5dc51a27047d1290fb2ca68b21e11a3a1c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Dec 20 11:21:26 2013 -0600
+
+    Set ext and src encoding from -K flag.
+    
+    Fixes #480.
+
+commit ec9d0d6eb15999fbe8f57bfed78b82df57c7ed51
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Dec 19 21:51:37 2013 -0600
+
+    Fixes for IR JIT to get method def and root script working right.
+
+commit 748e29049072ecef1e1a50467e053644bff629c2
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri Dec 13 13:36:33 2013 -0600
+
+    Regression on IR persist merge where require path was treating all files as if they were main script file
+
+commit be165ca1b9b97b71dee5f746fed575927ab4f513
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Dec 12 15:28:49 2013 -0600
+
+    Fix previous poor merge. IRFileExpert tweaking
+
+commit 671a3e44a6df6eea13c51cf2c52f640154aa0c76
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Dec 12 15:08:42 2013 -0600
+
+    Some more cleanup ir IRTranslator and removal of no longer valid setRubyVersion in IRBuilder
+
+commit d4fc5856dbeb2efc340a4db20a7368fee3ea5f75
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Dec 12 14:50:51 2013 -0600
+
+    Remove threadlocal side-effect of figuring out source filename.  tweak code for loading persisted files
+
+commit f02e46ec122d6558c3c547335a06bf637850fba7
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Dec 11 15:50:38 2013 -0600
+
+    Remove two of the INSTANCE enum tricks
+
+commit 1e070ea66cea5b4452879c47d8f720f08e5ce80a
+Merge: 269c91d 1080132
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Dec 11 14:34:35 2013 -0600
+
+    Merge with master
+
+commit 269c91d5ae7269544b266a25a6264a501409c4a2
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Dec 11 14:26:22 2013 -0600
+
+    Finally compiles but lexer/parser completely broken
+
+commit aa34194a38bf66dcc3f3bdee4ce55085613ee969
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Dec 10 17:10:19 2013 -0600
+
+    Massive lifus merge with lots of my own merging/changes..build broken but almost working
+
+commit e68098b1e9fc172a45d84b62f8ae4fe068183b3c
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Wed Dec 4 23:32:13 2013 -0600
+
+    Always pass RootNode into runInterpreter
+    
+    * This prevents IR interpreter from crashing since it always
+      expects a RootNode.
+    * 2 more failing specs now green.
+
+commit a3f6bf24d3195a52227241c8c6cf7b104715f372
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Nov 22 23:54:36 2013 -0600
+
+    Revert "Remove ffi library hook"
+    
+    This reverts commit cfe02586e584a7f61aade624d6a28ba1a07e65be.
+
+commit e121ba67e12fd97784ef72c104269f964a50937a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Nov 22 23:52:50 2013 -0600
+
+    Revert "Implement a mini-ffi to get Win32API working again."
+    
+    This reverts commit caa6eaebb56c0885dff1afecd77f553f46f0a444.
+
+commit 390ca2c47ebec80b0b01221c19b0ee23f75253d8
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Nov 22 23:51:09 2013 -0600
+
+    Revert "Remove FFI"
+    
+    This reverts commit 1ca75b2e37ccf67ccaf48389e7d0d38741a78038.
+    
+    The effort to move FFI logic out of JRuby was never completed, and
+    we use parts of FFI internally, so we need to revert this.
+
+commit 1d3204ea4fc034010ba393f6afb11f8a7d8ec76d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Nov 12 15:24:36 2013 -0600
+
+    Remove old Generator impl, move toward unifying coroutine logic.
+    
+    The old Enumerator#next logic used our internal Generator impl,
+    which proved eventually to be leaky and slow. As of JRuby 1.7.5,
+    Enumerator#next moved to a Java implementation that was both
+    faster and better about cleaning up dangling instances, but the
+    block form of Enumerator.new still used the old Generator logic.
+    
+    This commit eliminates the old coroutine-based Generator in favor
+    of a trivial version matching Ruby 1.9+. The block forms of
+    Enumerator.new now create this trivial Generator and then fall
+    into the same "Nexter" logic introduced in 1.7.5 for #next.
+
+commit fab973f772af39e6ff980950ac9094593de90ee0
+Merge: 8d22538 c0275b9
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Nov 6 11:40:09 2013 -0600
+
+    Merge jruby-1_7
+
+commit c0275b9c9bb032b8e78dae956b3fe115739764f7
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Nov 6 11:23:16 2013 -0600
+
+    Add some @Extension Annos
+
+commit 3f9d86ff502d42477ae78410b3126464e7f0889f
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Nov 5 09:26:48 2013 -0600
+
+    Partial merge of huge lifus patch
+
+commit ddb96f8588ea3506f44342ba5f58a4f20349ba69
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Oct 30 21:01:52 2013 -0500
+
+    Remove is1_9 and is2_0 fields from Ruby and deprecate accessors.
+
+commit 7218c00bcb55be940faf8ee9b7eac34e64a6395b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Oct 30 20:55:05 2013 -0500
+
+    Condense Ruby kernel into one location.
+
+commit 0c7100e6c17a9a9879f0f94128f1b9e9d19770ea
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Oct 30 18:22:35 2013 -0500
+
+    Remove "untrust", since it is being deprecated in 2.1
+    
+    See ruby/ruby@1f828497d1e8df2b7b68ac2a093ab4439585d88a
+
+commit caa6eaebb56c0885dff1afecd77f553f46f0a444
+Author: Wayne Meissner <wmeissner@gmail.com>
+Date:   Wed Oct 23 21:41:51 2013 +1100
+
+    Implement a mini-ffi to get Win32API working again.
+
+commit 99f761828101706e21498405c3aa94d07fb5ad3d
+Merge: 7191d33 90a814e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Oct 21 09:59:35 2013 -0500
+
+    Merge branch 'jruby-1_7'
+
+commit 13666ffb58c05acda365ad8028723c484c1b7dba
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Oct 21 09:53:47 2013 -0500
+
+    Use COW list for event hooks, to avoid synchronization.
+    
+    See jruby/jruby#1142. This supercedes a fix there.
+    
+    I opted to use CopyOnWriteArrayList here for two reasons:
+    
+    * It does not require synchronization, neither for access nor iter
+    * EventHooks should are only added or removed rarely
+
+commit 7191d33bdc5071daa9b83a643d76a994ac0693f4
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Oct 19 12:56:36 2013 -0500
+
+    iconv library is removed in 2.1.
+
+commit 81a832f3a4c316d8ffe6ef64195ab04b429a4e4b
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri Oct 18 15:29:57 2013 -0500
+
+    lifus merge:  Resources that are 'require'd are not searched among IR files because of possible name collisions; BooleanLiteral and boolean flag are now looks different in IR; Couple of minor fixes.
+
+commit 2722a284d5621c6e5fa4426c343def658fbbea19
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri Oct 18 14:53:05 2013 -0500
+
+    lifus merge: Now sample persisted IR may be executed as rb file
+
+commit 82a55ca8f8a31454702731ad4a7c3be7931a0e32
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Oct 15 15:52:29 2013 -0500
+
+    Manual merge from lifus: Initial work on IR Translation process generalization: 1)IRTanslator created. It contains general logic for both Compiler and Interpretor 2) Interpreter corrected to subclass from IRTranslator 3) IR compilation logic moved from Ruby.java to Compiler.java and subclssed from IRTranslator
+
+commit 76a4f2400e89cbe18616cadf3682cebee36d3a56
+Author: lfstad-bren <christian.brensing@lfstad.bayern.de>
+Date:   Mon Oct 14 06:55:31 2013 +0200
+
+    Fixed Issue 1116: Only logging failure in case a security policy prevents setting the network stack system property.
+
+commit fbd1451ebb7f87021aafd296801012c7f71f6ab0
+Author: lfstad-bren <christian.brensing@lfstad.bayern.de>
+Date:   Mon Oct 14 06:55:31 2013 +0200
+
+    Fixed Issue 1116: Only logging failure in case a security policy prevents setting the network stack system property.
+
+commit cfe02586e584a7f61aade624d6a28ba1a07e65be
+Author: Wayne Meissner <wmeissner@gmail.com>
+Date:   Mon Oct 14 07:36:53 2013 +1100
+
+    Remove ffi library hook
+
+commit 1ca75b2e37ccf67ccaf48389e7d0d38741a78038
+Author: Wayne Meissner <wmeissner@gmail.com>
+Date:   Sun Oct 13 23:35:41 2013 +1100
+
+    Remove FFI
+
+commit 6d5ddacf7ef3011b3e6856df4d7c430a33cedd9e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Oct 8 15:21:32 2013 -0500
+
+    Bump up execution mode and stdlib to 2.1 (head).
+
+commit 4b6dfbcf361f1d00f13b1a8e3e05c9d0d9218f20
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Oct 7 01:29:08 2013 -0500
+
+    Get all suites in test:extended passing.
+
+commit b1b1508c40f849166ccb7b8341c14f72df3a7d99
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Oct 5 01:40:15 2013 -0500
+
+    Revert "Always log unhandled exceptions in threads."
+    
+    This reverts commit 79423216e3aa3ed0dc377aa1998471be02845613.
+
+commit 697e6895affa646849a685ed58f6f84795c853aa
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Oct 4 23:37:52 2013 -0500
+
+    Eliminate calls to Ruby.is1_8 and is1_9.
+
+commit 79423216e3aa3ed0dc377aa1998471be02845613
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Sep 30 09:37:56 2013 -0500
+
+    Always log unhandled exceptions in threads.
+    
+    This is JRuby's fix for https://bugs.ruby-lang.org/issues/6647
+    which modifies unhandled exception logic in threads to always
+    log if abort_on_exception != true. This will help avoid the issue
+    of threads silently disappearing.
+
+commit d1f89e004fdc78dff75407c82123e6c9e8b406bb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Sep 12 18:48:16 2013 +0200
+
+    Make ClassIndex into an enum, to prevent issues like #1004.
+
+commit 2553bd170b67a00b5fb0833d0e6a4600926831eb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Sep 5 12:26:09 2013 -0500
+
+    Safety fixes for new Fiber.
+    
+    * Ensure SizedQueue has been loaded before constructing any.
+    * Do not allow NEVER object to leak out of Fiber logic.
+
+commit dcca74a0fc11f43b3bd0d5f43c1bcc40b3766c1d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Sep 5 00:35:57 2013 -0500
+
+    Port new Fiber impl from Ruby to Java, for lower-level magic.
+    
+    See faac06d for details on the implementation.
+
+commit faac06d6fa09a3e50d1d9f9b62bba7acb61bac3d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Sep 4 17:45:41 2013 -0500
+
+    Experimental pure-Ruby version of Fiber.
+    
+    This version uses a pattern more similar to MRI than the old
+    native implementation in JRuby 1.7.4.
+    
+    Each Fiber has a 1-wide queue used only for receiving values from
+    resume or transfer. A resume pushes a value on to the target
+    fiber's queue and then waits on the calling fiber's queue. This
+    avoids the complexity of using the same queue for putting values
+    into the fiber and getting them back out. Yield works the opposite
+    way, putting a value on the resumer fiber's queue and waiting on
+    its own queue.
+    
+    The contents of the fiber -- specifically its queue and thread --
+    are decoupled as a separate data object. The thread that pumps the
+    fiber only sees that data object, allowing the fiber object to
+    become GCable if it goes out of scope. When the fiber object GCs,
+    its finalizer attempts to shut down the queue and the thread,
+    allowing abandoned fibers to eventually clean themselves up.
+    
+    This implementation is on as of this commit, but may be off by
+    default for 1.7.5. In any case, the property to change is
+    jruby.fiber.native=false|true to select the ruby or native version
+    of fibers, respectively.
+    
+    Note that this implementation is not necessarily more functional
+    (yet) than the pure-Java version, but it is simpler and allows for
+    GC cleanup of abandoned fibers.
+
+commit 691bf160dd5d75ff6b48909e2cd36cc1336f343c
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Wed Sep 4 00:05:26 2013 -0400
+
+    Add ability to set preferred network stack
+    
+    Set the preferred IP network stack at runtime, using the extended
+    property `net.preferIPv4`, with the default being `true`.
+    
+    This fixes #775 without involving `jruby-launcher`.
+
+commit 991f905f9eefa3cfc68df48c382f231a3e06db1a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jul 22 19:00:55 2013 -0500
+
+    More compatibility fixes for transcoding, including crlf logic.
+    
+    * crlf transcoding modes for Converter
+    * More complete errors with error bytes, encodings, etc
+    * Error conditions more consistent with MRI
+    * Partial unification of encoding flag logic
+    * Many miscellaneous fixes
+
+commit 05d7ba00caaf60f24c5f43517d11cdbfb591894f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jul 22 14:13:28 2013 -0500
+
+    Additional fixes for Converter.
+    
+    * last_error implemented and mostly working
+    * primitive_errinfo implemented; mostly working but not 100% match
+    * More error cases handled and cleaned up buffer use a bit
+
+commit 382c7034e1e9d7201085448df3fb2d2eba3d3312
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jul 15 13:47:56 2013 -0500
+
+    Move encoding classes setup later, so fixnum constants can be set.
+
+commit a259433d6416d71a650e989fa12032f122e6aa45
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 10 15:01:59 2013 -0500
+
+    Use actual file stream for DATA when possible. See #873.
+
+commit 4a16c5b990280d9939bd5262ff6456e77bfacc89
+Author: Benoit Daloze <eregontp@gmail.com>
+Date:   Wed Jul 10 16:10:25 2013 +0200
+
+    Remove old builtin for the rubinius library, now distributed as a gem
+
+commit a9fe6ac4f159c8c91e4dcd55f48a69fd89e328f2
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jul 9 14:44:01 2013 -0500
+
+    Move Ripper ext to its own module.
+
+commit 43db643c6192a719e403743960dde817373d94e7
+Author: Benoit Daloze <eregontp@gmail.com>
+Date:   Mon Jul 8 13:02:54 2013 +0200
+
+    always map ENOSYS to NotImplementedError
+    
+    * since this is basically what it means, but the headers still define the function
+    * this is to have similar feature to configure MRI tests and rb_f_notimplement
+
+commit 308c6a36da7ed9bd03826c073b4b6bb4e2e6e609
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Sun Jun 16 23:58:40 2013 -0500
+
+    [IR] First pass setting up IR for keyword args (work-in-progress)
+    
+    * This is just a first rough cut implementation and is not
+      functionally correct yet.  The behavior doesn't fully match
+      MRI or -X-C.
+    * I am going to be redoing receive arg instructions so that the
+      same set of instructions can be used in 1.8, 1.9, 2.0 modes
+      without creating specialized ones for each mode.
+
+commit d71672054518ba8845ed80c8563b9ce5cb0bceb6
+Merge: 88c52f9 10d22da
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Jul 6 03:01:02 2013 -0500
+
+    Merge branch 'native_pathname' of github.com:eregon/jruby into eregon-native_pathname
+
+commit 28c6fbc4e883bc1c9e9242d1da1cb2b785f55339
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 3 12:46:45 2013 -0500
+
+    Move to @mkristian's proposed layout, with some modifications.

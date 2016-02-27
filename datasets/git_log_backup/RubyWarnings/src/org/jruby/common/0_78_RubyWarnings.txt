@@ -1,0 +1,259 @@
+commit 61678ac1a2514a9932276f8d527816a5980a94b3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Feb 25 20:41:40 2013 +1100
+
+    Fix more references to CPL.
+    
+    The phrase "Common Public License" was split across two lines in
+    our default header, which caused it to be missed during earlier
+    search/replace. Also, we did not replace the CPL URL in the
+    header with the EPL URL.
+
+commit 330fef3b0fc18af477ccea19bd278669667f31bb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 12 14:49:29 2013 -0600
+
+    Switch JRuby's CPL license to EPL.
+    
+    Governance of the CPL license was moved to the Eclipse Foundation
+    at some point in the past, and Eclipse blessed the EPL (Eclipse
+    Public License v1.0) as the successor to CPL. Because the CPL
+    contains a clause allowing transparent upgrades to future blessed
+    successor licenses, we can make the move to EPL without
+    re-contacting past contributors.
+    
+    The change in going from CPL to EPL largely just removes some
+    punitive language that apparently made many companies nervous. All
+    other language in the license remains identical.
+    
+    Several documents about Eclipse's move from CPL to EPL are here:
+    
+    http://www.eclipse.org/legal/cpl2epl/
+    
+    Note that Eclipse's move came before the blessing of EPL as the
+    upgrade path for CPL, so they had to do a bit more legal juggling.
+    With Eclipse now the administrator of CPL and with their blessing
+    of EPL as the upgrade path for CPL, all we need to do is make the
+    move.
+
+commit cfbb5d2c5190f36d87c925d3f77d08b63559009d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jul 3 18:14:20 2012 -0500
+
+    Use caller backtrace logic to make warning file:line accurate.
+
+commit bdbb8aa51cd39facd5bffd0fd1e28b86bbccbaea
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Mar 4 11:09:50 2012 -0600
+
+    Add one-time warning for Java singletons/ivars.
+
+commit 7588393ca5bfeba6182b87b8b47669ecab2fe403
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Jun 9 10:02:23 2011 -0500
+
+    Fix compilation issues under OpenJDK 7 after b142 with primitive + varargs now resolving as ambiguous.
+
+commit 095a36a4798e627dd7004c46aedafe71716edd41
+Author: Hiroshi Nakamura <nahi@ruby-lang.org>
+Date:   Mon Jan 3 23:59:17 2011 +0900
+
+    JRUBY-5004: remove unused imports
+    
+    This commit is based on the patch from Douglas Campos <qmx@qmx.me>.
+
+commit e6c7ee96363c5a8afbd0c41d432bc884a7041f1c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Nov 24 13:26:04 2009 -0600
+
+    Disable the hard error in DummyDynamicScope when code tries to set or get it; this generally only happens when you're doing something like send :match, in which case it's questionable whether backref should even be expected to propagate back correctly.
+    
+    In any case, a rework of backref (someday soon) will likely eliminate this problem.
+
+commit da0fdfeab2d6639be42bc787f11456a6d998e460
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Wed Aug 5 21:41:08 2009 +0200
+
+    Remove some tags and make conversion from bytes to longs/bigintegers use the same methods as MRI. First part of converting Convert.
+
+commit 1e7357ba02e536f324019edeeac3bab5aad93754
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Mon Mar 30 20:49:57 2009 +0000
+
+    getPosition wrangling
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9504 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit dfc95ecfd773db530964bc7a0e902385bde75194
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Tue Jan 6 18:28:11 2009 +0000
+
+    Another round of Regexp refactoring, make most initialization/cache lookup code to Regexp instance independent methods so we can toss plain Joni regexps around.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8612 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit c6dbcd0e5ea09b192c110ff41e18188a0fd0e829
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Wed Dec 17 01:59:21 2008 +0000
+
+    Uncomment assert isVerbose() in RubyWArnings.warning().
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8376 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 6fe2f5036a5d052c1d6c667e06d42162da8e650c
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Tue Dec 16 20:49:23 2008 +0000
+
+    Guard all RubyWarning.warning(...) methods by runtime.isVerbose() so the message is not built until they're actually invoked.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8371 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 4f35d613126441c2fdda6cd2ecd71d9d4cfe7da8
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Tue Dec 16 19:47:02 2008 +0000
+
+    Introduce isVerbose and warningsEnabled runtime booleans to easier and faster distinguish $VERBOSE is nil/false/true.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8369 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 1f540438a1e73f114f80a6138b8f9e8463fa0d37
+Author: Wayne Meissner <wmeissner@gmail.com>
+Date:   Sun Aug 10 16:07:54 2008 +0000
+
+    More final field cleanups
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7423 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a7b41d876cb677ba653a997002aa397613468d83
+Author: Vladimir Sizikov <vsizikov@gmail.com>
+Date:   Fri Jun 20 13:20:17 2008 +0000
+
+    JRUBY-2682: Replace StringBuffer with StringBuilder.
+    
+    Patch by Wayne Meissner.
+    
+    Signed-off-by: Vladimir Sizikov <vsizikov@gmail.com>
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7004 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 0fceac8c5163140f83718680a27a80575ccd1d20
+Author: Vladimir Sizikov <vsizikov@gmail.com>
+Date:   Thu May 15 20:04:10 2008 +0000
+
+    * Added javadocs to some RubyWarnings methods.
+    * Adjusted warnings out of StringScanner methods.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6706 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 2b1a005a405839ca4eb268288816294e88f20a2b
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sun Feb 3 18:37:14 2008 +0000
+
+    JRUBY-2062: Add ids and convenient data to SyntaxException and IRubyWarning interface to make their life easier
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5806 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 55b1e747d6fd02d03695b731dbb28af9bef191a1
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Fri Jan 25 23:45:51 2008 +0000
+
+    Phase I: Stop using ISourcePosition in runtime
+      - Removes need to manage extra fields in compiler reducing memory size of methods
+      - Seperates setting of setting line and file (later commit will be doing a lot less setFile's)
+    
+    - Removed a chunk of dead code from RubyKernel.eval
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5747 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 0234089a7576ff0cd79a11f193ecd6705cda1e17
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Mon Jul 2 10:21:59 2007 +0000
+
+    Fix for JRUBY-1177, error messages report wrong line number. Fix by Dmitry Verkhovsky
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3940 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a2107e60085a5063bca76d897783a512bbd7eddc
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sun Feb 18 15:18:18 2007 +0000
+
+    JRUBY-606: Get rid of un/under-used IRuby interface
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3022 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 75dc18d7d993d08ffa73236c2d4d5759afd96b2f
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Tue Jan 9 13:34:23 2007 +0000
+
+    Removed the last spurious constant redeclaration warnings, by wrapping the setting of DATA with swallowing, and also make sure that the warn method doesn't warn anything when verbose is nil, in the way MRI does it.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2709 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 174e3d01468001668ab299227d4af11aea65341c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Nov 14 03:09:59 2006 +0000
+
+    damn the torpedos! full speed ahead! landing enebo_lexical branch changes plus TC-passing optimizations and a few small compiler updates
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2423 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 4ede4bfb0b4fcc29ce09b82da5f1164b5894d258
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Nov 10 15:09:14 2005 +0000
+
+    TC method refactoring, renaming, inlining of TC-related IRuby methods
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1825 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 4dfdacd80c56018084c618f3bbab7b542653d95e
+Author: David Corbin <dcorbin@users.sourceforge.net>
+Date:   Sat Oct 8 13:07:06 2005 +0000
+
+    Introduced IRuby interface for Ruby runtime object.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1798 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 3437afe431124a2f60cf7e37c579b0c60ed0bf95
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Fri Sep 30 17:39:23 2005 +0000
+
+    Merge of TOM_RDT_POSITION branch
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1780 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a36ff3729d6a7f2c61eb51273fcee3d3bd371350
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sat Jun 18 14:47:06 2005 +0000
+
+    More moving towards java.util.Stack contract for remaining Abstract Stack users
+    args are never null (we no longer null check with a few strategic asserts)
+    getPosition() always returns something from Nodes (we no longer null check)
+    Remove AttrSetNode (fake parser node) in favor of CallbackMethod
+    we were pushing/popping an extra dynamic vars set every yield
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1715 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 7a83c48af56081c1c2132111d535f28d10cf3afb
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Fri Dec 31 20:55:52 2004 +0000
+
+    Update license to GPL/LGPL/CPL
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1574 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 0e219b9865b9d95b287ff161c83df5434039f9b1
+Author: Jan Arne Petersen <jpetersen@uni-bonn.de>
+Date:   Sun Dec 12 23:41:29 2004 +0000
+
+    - Replace IRubyErrorHandler with RubyWarnings and SyntaxException.
+    - Add deprecated warning to Object#type method.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1481 961051c9-f516-0410-bf72-c9f7e237a7b7

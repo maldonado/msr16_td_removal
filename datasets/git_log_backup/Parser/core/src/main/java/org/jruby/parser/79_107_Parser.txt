@@ -1,0 +1,110 @@
+commit f6b39eceebd34dac200e916ef9dd3b8d1b9dbd65
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri Jun 19 17:08:34 2015 -0500
+
+    Convert SyntaxException to be based on file and line vs ISourcePosition.
+    Made compile_error method which accepts PID
+
+commit fa541f44b41fcc65dd84868e1785ea7b82987d3e
+Author: Kevin Menard <kevin@nirvdrum.com>
+Date:   Wed Apr 22 14:39:51 2015 -0400
+
+    Make sure __ENCODING__ is correct for both inline scripts and source files.
+    
+    Fixes #2847: JRuby not using UTF-8 for source files.
+
+commit d71ec4f4c7a2106cf817e085773ab3091ebf38db
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Mon Apr 6 11:41:59 2015 +0100
+
+    Remove DetailedSourcePosition.
+
+commit 4caa08755f8defb8aa1cc801b62c7cc0740e8db0
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Sat Apr 4 10:27:03 2015 -0500
+
+    Add back support for SCRIPT_LINES__
+
+commit 51a04d2d7ec266d8c6fc7424fd7ce39ac69898ad
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Apr 2 17:20:21 2015 -0500
+
+    bytelistlexersource was not setting defaultexternalencoding by default. invalid encodings in parser should raise argument error and not a syntax error
+
+commit fbaf0389687e543bcbdd2d416d3f3e67a3a2b5b5
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Apr 1 14:13:44 2015 -0500
+
+    New lexer running plenty of stuff but missing some features like SCRIPT_LINES and with some bad line position info
+
+commit 6028da21fcf2b8b15f58ce6cd46dead6798bc460
+Author: Kevin Menard <kevin@nirvdrum.com>
+Date:   Sun Feb 15 17:08:02 2015 -0500
+
+    Fixed line number reporting for SyntaxErrors with detailed source positions.
+
+commit 6406834677e3e5ae4e69befb680a35841b0bcfec
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Oct 30 17:32:04 2014 -0500
+
+    Remove roque printStackTrace.
+
+commit 305e2249f71c044b57f6b2d9a039cf09c242ddfd
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Oct 29 23:16:42 2014 -0500
+
+    Add floating-point support to rational suffix.
+
+commit 1a93885ded18e4f55848878dd89ab8cb0c97807b
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Sun Oct 26 20:22:36 2014 +0000
+
+    Tests for new detailed source positions.
+
+commit 1c19167b1b2dc321fcdc23e669f4f36b31588862
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Sun Oct 26 17:50:19 2014 +0000
+
+    Fix incomplete source section work.
+
+commit 0e4dc82a6875d924d8773bdb5e9c1323bed22b09
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Sun Oct 26 16:49:54 2014 +0000
+
+    [Truffle] Remove accurate source positions for now.
+
+commit 2cd02e1244369c8bc8da8daf7695cc5800c40b7a
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Thu Aug 7 20:46:50 2014 +0100
+
+    Abstract how source positions are created so Truffle can get more detail without burdening non-Truffle.
+
+commit 5a0b41a2fb467904dc4bd4d566a7f49cd86a09ea
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Jan 22 16:04:19 2014 -0800
+
+    Updated 2.1 grammar with some non-working bits (like imaginary and rational literals)
+
+commit f4775773bc44bc5729e5d752c83c9c0f61a9dc20
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Nov 4 15:26:53 2013 -0600
+
+    Remove vestigial RubyParserPool.  Next possible re-use scenario would be to put Parser instance on TC
+
+commit bdd0b37b4324dd9f97c1041914373e14bec107bb
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Nov 4 15:23:03 2013 -0600
+
+    Minimum to remove 1.9 parser
+
+commit db61864d6a1c049b8bdb3cfcb8240b76e708a73c
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Sat Nov 2 11:57:29 2013 -0500
+
+    minimal work to remove 1.8 parser
+
+commit 28c6fbc4e883bc1c9e9242d1da1cb2b785f55339
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 3 12:46:45 2013 -0500
+
+    Move to @mkristian's proposed layout, with some modifications.

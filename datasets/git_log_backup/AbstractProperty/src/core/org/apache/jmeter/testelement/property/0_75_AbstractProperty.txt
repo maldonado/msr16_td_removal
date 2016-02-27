@@ -1,0 +1,511 @@
+commit 591c1512b20e88f99ef9190c607e4a422f9fd325
+Author: Felix Schumacher <fschumacher@apache.org>
+Date:   Sun Jan 4 21:13:50 2015 +0000
+
+    Bug 57193: Add param and return tags to javadoc
+    Bugzilla Id: 57193
+    
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1649423 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a175f94fd3e47f60bb6ae8944df5d5473ad43dce
+Author: Felix Schumacher <fschumacher@apache.org>
+Date:   Thu Nov 13 19:22:00 2014 +0000
+
+    Bug 57193: Replace a few more &, < and > with html escaped version for
+     javadoc
+    Bugzilla Id: 57193
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1639474 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f0d7fd5eaaf7a3e664b1a4f2681f2d5e57f082b4
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Sep 20 23:30:29 2014 +0000
+
+    Remove unnecessary duplicate (reported as part of https://github.com/apache/jmeter/pull/10)
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1626506 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 128a1e6ef89c62cd2902d1e02bdf12cb771540c8
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Sun Dec 8 14:43:05 2013 +0000
+
+    Bug 55857 - Performance : AbstractProperty should test for emptiness to avoid Exception throwing
+    Bugzilla Id: 55857
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1549031 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 9ab6b6240f50d3dae399d46bf207c2a00d14ddee
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Nov 27 00:14:39 2012 +0000
+
+    Move to Java 6
+    add @Override for interface implementations
+    Bugzilla Id: 54199
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1413956 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c8540eb1700426d4dee6b3932382706b9529da59
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Sun Sep 2 21:24:14 2012 +0000
+
+    Document strange code
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1380060 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ad4f376e06d9901074a17d6318659a7ace7bc87a
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Sun Sep 2 20:20:43 2012 +0000
+
+    Avoid String concat
+    Use parseBoolean instead of creating useless wrapper
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1380047 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e0eff4c761006f6c8619e44e0de3bf32dd4780ba
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Mon Oct 24 18:52:58 2011 +0000
+
+    Assume nothing about input Map
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1188290 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d4455fdcde4f7b79cdb7ab5c575123ff9fde5605
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Mon Oct 24 18:36:10 2011 +0000
+
+    Simplify code
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1188279 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f2d3227e464aeab8a19c63d265f881caa379c729
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Mon Oct 24 18:26:01 2011 +0000
+
+    Fix bug that was causing Jenkins failures.
+    Looks like the compiler was converting the input collection to JMeterProperty then Object.
+    This did not happen in the iterator case, so the incorrect method parameter type was not detected.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1188277 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 5dc08b4eb31d3468ff189747de6b41f6e1dc5bda
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Mon Oct 24 17:26:23 2011 +0000
+
+    Partially revert r1188228 - Jenkins reports errors which are not seen locally
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1188244 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 87951993d360cf82e110a5b52a109d2e9da73695
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Mon Oct 24 16:55:55 2011 +0000
+
+    Generic for loops
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1188228 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 55e045e644b3e8af4b0ed79023b134363cb8992c
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Mon Oct 24 13:11:39 2011 +0000
+
+    Bug 52075 - JMeterProperty.clone() currently returns Object; it should return JMeterProperty
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1188141 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a886850e203c6fc3838aafa5259dd8961a2c279e
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Wed Sep 14 13:11:04 2011 +0000
+
+    Bug 48943 - Functions are invoked additional times when used in combination with a Config Element
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1170595 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a14244315588abc86f495bb7eaaab08ab91a127d
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Jan 31 12:59:07 2010 +0000
+
+    Add serial version UIDs
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@905027 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6d9ab3a3f71c7c9a4da4758eebcf76d5323cefc7
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu Jan 21 01:31:29 2010 +0000
+
+    Javadoc
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@901489 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f6618e739abe7ee8bc5331314179a05fe9cbd451
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Dec 1 23:40:15 2009 +0000
+
+    One more warning fixed ...
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@886009 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3b7f22338b286be81ee8489dba0a1f3005e66ed5
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Nov 20 15:35:11 2009 +0000
+
+    Use interface rather than abstract implementation
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@882608 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6ec6342a5e83686689a70ec503b90e5377d01aa3
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Sep 1 14:25:10 2009 +0000
+
+    Generics fixes
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@810069 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d45dbc23701202db0923432536dd10efec305b25
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Sep 1 12:25:55 2009 +0000
+
+    Generics fixes
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@810000 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 42bc2ce21c0b770f201c9988638d2b61def10182
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Aug 16 01:31:37 2009 +0000
+
+    The "typing" continues ...
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@804543 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ea5add011dd1782e0db7c48a4609eb8ad63aee35
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Aug 15 00:10:15 2009 +0000
+
+    Fix up some raw types
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@804412 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c04374020238a39886f232bab60575a9bff05692
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Aug 14 21:42:05 2009 +0000
+
+    Drop unnecessary casts
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@804383 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ba460d9b91b37ff62ec950391525b2d130ceb1a6
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Aug 14 19:12:26 2009 +0000
+
+    Add @Override and @Deprecated annotations
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@804326 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 4c5e6f68f8694623a8c12c70d47df358990a267b
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Wed Apr 29 00:45:08 2009 +0000
+
+    Better clone method
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@769603 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6bf94deccce242cd1bba95592f54fd78a90dfc3e
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Jul 6 23:56:15 2008 +0000
+
+    Detab
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@674365 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d92ad9d97316bf6fa1e4802dd713158d3af20a37
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat May 10 16:13:49 2008 +0000
+
+    Standardise placing of transient marker
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@655121 13f79535-47bb-0310-9956-ffa450edef68
+
+commit fcdb6ed4aedd63ffe15bf79b5db316af6637cfc0
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat May 3 21:46:02 2008 +0000
+
+    Avoid possible NPE
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@653147 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6e2f4dcc1e1a6c5ba4c0db0e9854ef772f5ef31c
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu Apr 10 01:21:09 2008 +0000
+
+    Ensure if and for statements always use blocks
+    Other minor tidyups
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@646610 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 213c53f7030ec54a2557c48a186a2cb03e6d0438
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Dec 7 17:24:36 2007 +0000
+
+    Tidy up: use getName()/setName() instead of property access
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@602161 13f79535-47bb-0310-9956-ffa450edef68
+
+commit dbb8936918135da1e7a55abda0edf515ca5d48a4
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Nov 24 20:40:36 2007 +0000
+
+    Minor Javadoc tweaks
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@597913 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 264af1a061247f71128e3abd24a2f67949591173
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Jun 3 15:21:10 2007 +0000
+
+    Clone should never return null
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-2@543919 13f79535-47bb-0310-9956-ffa450edef68
+
+commit bd5d121d68038f3e712ec463a2172dd7026f52f8
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Jan 7 17:46:38 2007 +0000
+
+    Update license (remove copyright)
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-2@493779 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f38ae954632bde759027dbf9b22fbfc7556c3882
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Nov 13 22:50:32 2005 +0000
+
+    log is used by derived classes
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-1@343996 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6e7ddc9ba2517f780c0dd756f8195ad29064f974
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Nov 13 22:33:25 2005 +0000
+
+    Use entrySet iterator instead of keySet + get
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-1@343991 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 76159a5b953d9dc5518b2ccb03bfbc1c4908837d
+Author: Michael Stover <mstover1@apache.org>
+Date:   Tue Jul 12 20:51:09 2005 +0000
+
+    Formatting Code to basic Java Standard
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@325542 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f440d2a4522a62a26116df470b1369b40317a934
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat May 7 21:46:17 2005 +0000
+
+    Comment unused field
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@325324 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f5c75713850b079b982c698a29d7f179c8f6f7d1
+Author: Michael Stover <mstover1@apache.org>
+Date:   Sun Jun 20 00:32:53 2004 +0000
+
+    New XStream implementation for saving test plans
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@324711 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 2ff09ca37e330ee3040a4b1fa25be052e97b65f1
+Author: Michael Stover <mstover1@apache.org>
+Date:   Fri May 21 21:09:49 2004 +0000
+
+    Refactoring TestBean to be an interface instead of a class.  Moved needed code to TestBeanHelper
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@324578 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3c8d5a312326be4407fd25e3461c6a1208f4ea15
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Feb 27 11:45:54 2004 +0000
+
+    Revert toString behaviour
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@324383 13f79535-47bb-0310-9956-ffa450edef68
+
+commit cb8cc43d7b397d71f49f5f5ae0980b85983b0660
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu Feb 26 00:51:44 2004 +0000
+
+    Fix Javadoc bug
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@324374 13f79535-47bb-0310-9956-ffa450edef68
+
+commit db7c5658b0dc80a5ff4f2c8fd2490ef77f9ed1cf
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Feb 21 22:21:38 2004 +0000
+
+    Update the toString() method to show the name as well
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@324353 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 18d01311efb17275f204ff586b39b5182d0143ac
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Feb 21 22:03:09 2004 +0000
+
+    Prevent creation of properties with a null name;
+    re-implement equals to take account of name as well as value;
+    add suitable hashCode() method
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@324351 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3cb05c017ee9a65bb687a51b5c7567de37624382
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Feb 13 02:21:39 2004 +0000
+
+    ASF L V2
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@324282 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c269eda7069784d553d7df2d93bda8167c8c3cfd
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Oct 19 22:30:05 2003 +0000
+
+    final log; Boolean usage; Javadoc tag usage
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323602 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a1549767348998fab362b5deac2639529a551ab3
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu Oct 2 13:37:21 2003 +0000
+
+    Removed unused import
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323461 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 76f3b7e41313572cf273bf778ddf6b874dd07cdd
+Author: Michael Stover <mstover1@apache.org>
+Date:   Mon Sep 29 14:56:01 2003 +0000
+
+    Improving memory profile
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323459 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 0ccb12d379924e457e096e1b15f936acb2b0fde1
+Author: Michael Stover <mstover1@apache.org>
+Date:   Wed Aug 6 19:35:38 2003 +0000
+
+    Fixing bugs with SOAP Sampler
+    adding support for gzip encoding
+    fixing bugs with loading jmx files that effected no one but me :-)
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323403 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d46ee9f0032ae3cc07b796e3a1afd24eb4384cb4
+Author: Michael Stover <mstover1@apache.org>
+Date:   Wed Jul 16 15:30:15 2003 +0000
+
+    Fixing bu #21626
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323391 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e39709c954939ec5789f84a6a0b95437c303dc5e
+Author: Michael Stover <mstover1@apache.org>
+Date:   Wed Jul 16 13:12:11 2003 +0000
+
+    Fixing bu #21626
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323390 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3e390258c66f8059a96e14abc4530a1d295fbafb
+Author: Jeremy Arnold <jeremy_a@apache.org>
+Date:   Sat Jun 28 19:13:59 2003 +0000
+
+    Reformatted to JMeter conventions.
+    Minor JavaDoc updates.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323378 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 12057fa053d0d0c6d43d6536cb9c393afd0409c6
+Author: Michael Stover <mstover1@apache.org>
+Date:   Fri Jun 6 14:02:09 2003 +0000
+
+    New Logging procedure (Sebastian Bazley)
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323318 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ecb275e3ea9a751c4b114bca7f69c9fafcc01033
+Author: Jeremy Arnold <jeremy_a@apache.org>
+Date:   Fri May 2 21:38:11 2003 +0000
+
+    Cleaned up some JavaDoc warnings and a few unncessary JavaDoc comments (auto-generated templates with no useful information).
+    Changed some auto-generated JavaDoc to non-JavaDoc comments (because the ones generated by JavaDoc are more useful).
+    Commented out a couple of methods that appear to be no longer used.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323248 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 05947f38384218cb1668364b9fc47a6831819dcb
+Author: Jeremy Arnold <jeremy_a@apache.org>
+Date:   Thu May 1 21:34:18 2003 +0000
+
+    Fix for bug 19499.  We were getting a NullPointerException while comparing properties.  The compareTo method now checks for null.
+    We don't think the properties should actually be null, so I'm generating a warning message so we can look into the root cause.
+    In any case, with this change I can add a MailerVisualizer to my test plan and save the plan.
+    PR: 19499
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323242 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 35f61ca7b6e984a30be3a99512d5688104ec81c5
+Author: Michael Stover <mstover1@apache.org>
+Date:   Tue Apr 29 15:47:44 2003 +0000
+
+    Fixing dirty check when closing JMeter and prompt to save
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323224 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6e6b9c1e14d69bf5c9fe828d92e5d589f082dae1
+Author: Michael Stover <mstover1@apache.org>
+Date:   Thu Apr 10 18:31:18 2003 +0000
+
+    Fixing various problems, making UserParameters either iteration-based, or PreProcessor based
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323149 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6dad839268c9c0110921f1ebdb59077bd672a97c
+Author: Michael Stover <mstover1@apache.org>
+Date:   Mon Apr 7 14:35:28 2003 +0000
+
+    New JMeter properties allow functions to be fully recursive and reduces the amount of repetitive cloning of test elements
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323133 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 55d3666b535d217ea4d228dc81b260ecba0a9d9c
+Author: Michael Stover <mstover1@apache.org>
+Date:   Tue Mar 25 17:24:35 2003 +0000
+
+    new JMeterProperty classes (not yet plugged into JMeter's code)
+    patch from ElanChezhiyan to fix enabling/disabling of JMeter components
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323119 13f79535-47bb-0310-9956-ffa450edef68

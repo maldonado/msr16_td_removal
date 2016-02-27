@@ -1,0 +1,370 @@
+commit 61678ac1a2514a9932276f8d527816a5980a94b3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Feb 25 20:41:40 2013 +1100
+
+    Fix more references to CPL.
+    
+    The phrase "Common Public License" was split across two lines in
+    our default header, which caused it to be missed during earlier
+    search/replace. Also, we did not replace the CPL URL in the
+    header with the EPL URL.
+
+commit 330fef3b0fc18af477ccea19bd278669667f31bb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 12 14:49:29 2013 -0600
+
+    Switch JRuby's CPL license to EPL.
+    
+    Governance of the CPL license was moved to the Eclipse Foundation
+    at some point in the past, and Eclipse blessed the EPL (Eclipse
+    Public License v1.0) as the successor to CPL. Because the CPL
+    contains a clause allowing transparent upgrades to future blessed
+    successor licenses, we can make the move to EPL without
+    re-contacting past contributors.
+    
+    The change in going from CPL to EPL largely just removes some
+    punitive language that apparently made many companies nervous. All
+    other language in the license remains identical.
+    
+    Several documents about Eclipse's move from CPL to EPL are here:
+    
+    http://www.eclipse.org/legal/cpl2epl/
+    
+    Note that Eclipse's move came before the blessing of EPL as the
+    upgrade path for CPL, so they had to do a bit more legal juggling.
+    With Eclipse now the administrator of CPL and with their blessing
+    of EPL as the upgrade path for CPL, all we need to do is make the
+    move.
+
+commit 165ec891f5d5557e1cac89884b0776721dee36ef
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Sep 13 16:50:30 2012 -0500
+
+    Allow java proxy class to be overriden for Android support
+
+commit 6f159fe5dd51c062a5b1aab64a8ede916990877a
+Author: Hiroshi Nakamura <nahi@ruby-lang.org>
+Date:   Mon Jul 11 03:36:17 2011 +0900
+
+    Deprecation of fast constant access paths.
+    
+    Each os those has the same definition as non-fast verision.
+
+commit 29de372d37a64464f87ee0dff1cd7b5c0a81df71
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Fri Nov 27 15:55:47 2009 -0600
+
+    Method invokes inefficient Number constructor; use static valueOf instead
+    
+    Signed-off-by: Nick Sieger <nick@nicksieger.com>
+
+commit be1ce02e443cb0fcca88079595ea08c5ca6bb515
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Sep 22 12:27:32 2009 -0500
+
+    More consistency fixes for JI coercion:
+    * Move more places to calling toJava
+    * Move code away from calling convertRubyToJava, the old clunky coercion path
+    
+    Two behavior changes are introduced by this commit:
+    * When coming out of a collection (RubyArray, RubyHash) Fixnum will now coerce to the smallest java.lang.Number subtype its value can fit into. We already did this for calling methods that receive Object, but now also do it for many other cases of conversion to Object.
+    * nil values can now be assigned to or passed for primitive fields or arguments; nil will coerce as "0" in the smallest Number type possible.
+
+commit 9f664fb5794b5656c76a5c62c598e678529b8c4f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Aug 29 17:35:09 2009 -0500
+
+    Great improvements to Java backtraces from JI call-outs (JRUBY-3890)
+    
+    Thanks to Ryan Brown!
+
+commit 29df8f743ff505b68cb99bbdefe1a7955818109b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Aug 3 03:52:35 2008 +0000
+
+    * Allow rescue to rescue non-wrapped Java exceptions (immediately wrapped if handled; interpreter only at the moment)
+    * Allow $! to be assigned a wrapped Java exception
+    * Added beginnings of an Unsafe mimic to use for necessary purposes (like rethrowing exceptions)
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7355 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 1855c7f12a2cd5493b15c21134746c295435ec23
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Aug 2 20:55:10 2008 +0000
+
+    Fix for JRUBY-2886.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7353 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit be7160af3ec5dffc795b2545a577a30139e22e0d
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Wed Jun 25 21:46:01 2008 +0000
+
+    [interp] Make BlockNode based on primitive array rather than ArrayList
+    Convert all users of RubyArray.add to RubyArray.append to avoid calling JI layer
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7028 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a7b41d876cb677ba653a997002aa397613468d83
+Author: Vladimir Sizikov <vsizikov@gmail.com>
+Date:   Fri Jun 20 13:20:17 2008 +0000
+
+    JRUBY-2682: Replace StringBuffer with StringBuilder.
+    
+    Patch by Wayne Meissner.
+    
+    Signed-off-by: Vladimir Sizikov <vsizikov@gmail.com>
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7004 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d86fed6abe673668947be4187f78667c95262e7b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat May 24 07:32:28 2008 +0000
+
+    Additional features for JRUBY-672, to provide access to the actual class when extending a Java class in Ruby.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6776 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 7a8c9567fa9eff2e544cd29d8bbf053edd802095
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Apr 21 15:55:48 2008 +0000
+
+    Additional fixes for JRUBY-2363, to actually shut down the main thread when exit! is called from a controller.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6543 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 4710fde94682b2d6f2cada05b4c3eed498cc55d5
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Apr 18 19:39:25 2008 +0000
+
+    Remove CallbackFactory references and other spurious imports from a number of files.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6536 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit c9c8cbe108d251458cc4a9f51e5a314130376aa9
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Apr 10 01:06:06 2008 +0000
+
+    Couple more classes clean of CallbackFactory.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6447 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 50a3b89302e67e1d9f720092ee3c05618b7bebd5
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Apr 10 00:45:33 2008 +0000
+
+    Fix Boolean, Process::Status, IPSocket, and JavaProxyClass to no longer use CallbackFactory.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6445 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 424a1cbff5aea37f2f92cc208d29d2544f092828
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Wed Mar 19 12:21:15 2008 +0000
+
+    Annotate the rest of the Java classes with names, parents and inclusions. Also add a warning to install_doc.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6291 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit c4e6f18a4d5a2d0afc55cf128dcff9ef39bda876
+Author: Bill Dortch <bill.dortch@gmail.com>
+Date:   Sun Mar 16 09:45:00 2008 +0000
+
+    Refactored the new declared_method_smart logic a bit, to get code into the right classes.  (See FIXMEs re: is 'declared' really what was intended?) Other misc. JI cleanup in advance of some changes.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6211 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 0f7386ed2fc784595b838436936c6292caa9d512
+Author: Bill Dortch <bill.dortch@gmail.com>
+Date:   Mon Feb 25 10:31:28 2008 +0000
+
+    Partial fix for JRUBY-2169: Round out methods in JI wrappers, and add support for 1.5 methods (for annotations, etc.).  Still more to do for JavaProxyConstructor and JavaProxyMethod (i.e., JRuby-defined subclass methods and ctors).  Includes some unit tests, could use more.
+    
+    Does not include some other needed work on low-level JI (see JRUBY-1976, for instance), or some perf work I hope to get in before 1.1.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6025 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 442afa575bd231320193a75f4c73e9000135ea4a
+Author: Bill Dortch <bill.dortch@gmail.com>
+Date:   Fri Feb 8 07:38:47 2008 +0000
+
+    Fix for JRUBY-2069.  Problems with equals() and hashCode() methods caused every instantiation of a Ruby-defined Java subclass to add a new entry to the method match cache (in the same bucket!), since returned hashCode was that of the class, new constructors were returned on every call, and equals() would never return true.  So if you created 1000 instances, then 1000 entries were searched for the 1001st instantiation, and so on.
+    
+    Fixed equals/hashCode for other types as well, should improve method-matching speed in general.  (The new versions no longer call out to the Ruby hash and == methods; these are internal classes, after all.) I still plan to rework matching_method, as there are other issues.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5862 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a694709e87e269be436ed1d176a688712beb9d5d
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Tue Jan 1 05:09:53 2008 +0000
+
+    Remove unused callbackfactorys
+    Add partial impl of Etc with some cooler pieces of it still commented
+    Remove many warnings
+    Some generics to lessen warnings
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5456 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit b22c6abb720151c7d5bb07aefcb6c81814931191
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Dec 5 22:19:29 2007 +0000
+
+    Remove "intern by default" from many call paths and explicitly intern only when the result will be passed to a method that requires interned strings. This should help reduce the amount of interning going on, easing some permgen pressure. The ultimate and best fix would be to forego interned strings in favor of an artificial ID.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5170 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 2c0f7fd5bea47c6ae49149c40999affe12ea3c26
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Nov 26 22:49:04 2007 +0000
+
+    Offload instance variable methods to a separate interface to reduce the implementation load for IRubyObject. This also is another step toward making lightweights possible; by separating the ivar logic from the object logic (visibly, anyway) it means we can externally represent that logic for lightweights more easily. Bill pointed out that his larger IRubyObject/Object/lightweight refactoring used a similar decomposition, so this has at least been proven out in one form.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5061 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 4d75cc1470f5843b4b66f89f50ed81b88b27b431
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Nov 26 10:01:20 2007 +0000
+
+    Remove the three generic type conversion methods from RubyObject/IRubyObject to TypeConverter utility class. They were never overridden, and so there's no need for them to live in the IRubyObject/RubyObject hierarchy.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5047 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 697648ac073d7f67c08be154342f8e663620bc22
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Fri Nov 9 21:47:50 2007 +0000
+
+    Nick+Tom classload cleanup pass
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4894 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 95c346df5368a3f5f06fa9d14022efb85eaa6809
+Author: Bill Dortch <bill.dortch@gmail.com>
+Date:   Mon Oct 15 07:45:22 2007 +0000
+
+    Vars have landed. Does not include concurrent SymbolTable (will follow in the next day or so). Also need multi-threaded unit tests, work in progress.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4588 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 77a374822cad8808cbbfd9b8426f1716984bae2d
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sun May 6 23:59:03 2007 +0000
+
+    JRUBY-910: Subclasses of generated Java proxy classes don't inherit correctly (by Bill Dotch)
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3630 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 0b9733a01274eca99d4b615d8f2418228932157b
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Mon Apr 30 22:17:55 2007 +0000
+
+    JRUBY-903: Java interface modules (by Bill Dortch)
+    Update some samples to use newer syntax
+    Remove miscellaneous unusied imports
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3601 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 0a60ffec9823d3e7febe963b97b5b88d6516a5d0
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Apr 22 18:58:57 2007 +0000
+
+    Bill's fixes for JRUBY-664 to allow final methods in base classes to be called from Ruby child classes.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3526 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit beaaeb89b6d63d6f60bcbdc2b9cb860f7e0c51c4
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Fri Apr 20 21:35:11 2007 +0000
+
+    JRUBY-814: Multiple improvements to Java integration (was: Java method get lost.) [Bill Dortch]
+    
+    Woot huge JI commit right release...Thanks Bill
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3516 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 2c44b077e2a1d3e95e4be824c8b78d39921e5e1b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Mar 28 01:33:18 2007 +0000
+
+    Cache method parameter types wherever possible, avoiding the hit from retrieving them repeatedly.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3310 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 3c11f81ea33328487d5334173ae989afe82119bd
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Tue Mar 27 16:59:08 2007 +0000
+
+    Use native versions of method_matching where possible
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3304 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 82e541ec0ed5986122fad0433ce1424a796ecaa8
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Sun Feb 25 19:08:53 2007 +0000
+
+    Fix for JRUBY-624. Overloaded Java methods with different arity, overridden from Ruby should work better now.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3075 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit f117e1643d4a0a4c9b89fdfd23ba7156ba004b8f
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Thu Feb 22 10:53:45 2007 +0000
+
+    Fix for JRUBY-579... C wasn't recognized in definitions.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3055 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a2107e60085a5063bca76d897783a512bbd7eddc
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sun Feb 18 15:18:18 2007 +0000
+
+    JRUBY-606: Get rid of un/under-used IRuby interface
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3022 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit ef423f1b886650195114fe952a1a6407fbb63f82
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Wed Feb 7 22:27:41 2007 +0000
+
+    - Create a NULL_BLOCK to replace null checks against blocks:
+      - Now isGiven() on a block tells you whether it is supplied or not
+      - yield on the NULL_BLOCK throw the correct exception
+        - We were not throwing this correctly by most callers with my landing of
+          the block branch
+        - We were generating NPE in cases where we called something that requires
+          a block and supply none
+    - Block.blockObject => Block.proc
+     - Rename and type since this is just a convenience reference for association
+       from block to what proc it might represent
+    - Remove unused blockAtCreation (this may become relevent for Ruby 2 but why do
+      it now
+    - Remove ThreadContext and IRuby from Frame
+    - Remove Scope
+    - Put Visibility directly on Frame
+    - callingzsuper dead code
+    - Now that modules have a proper superclass we can get rid of special code in
+      callSuper
+    - ArgsPushNode.childNodes should not return null
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2956 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 74021949e8b021701844310ef3b11175a9650932
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Sun Feb 4 16:14:14 2007 +0000
+
+    The BIG one. JRUBY-71. Not perfect yet. The code mostly by Kresten Krab Thorup, with corrections by me.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2942 961051c9-f516-0410-bf72-c9f7e237a7b7

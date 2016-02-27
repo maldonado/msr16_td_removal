@@ -1,0 +1,424 @@
+commit 45d3af1710e258ce7f4f85cb5ce624758e75ef1b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Jun 15 22:56:15 2013 -0500
+
+    Rework frame management, and backref/lastline along with it.
+    
+    These changes should bring us more in line with the way other
+    implementations manage "frame" data and bindings that capture it.
+    It should also reduce the cost of framing, binding captures,
+    blocks and procs, and operations that manipulate blocks and procs
+    like define_method and instance_eval.
+    
+    The new logic works as follows:
+    
+    * Rather than a binding immediately duplicating a frame, it
+      instead grabs a reference to it and marks it as captured.
+    * When popping a frame, if it has been marked captured it is
+      discarded rather than being cleared. This moves the cost of
+      creating a binding to the pop of the surrounding method, which
+      reduces the cost of nested bindings re-cloning the frame many
+      times.
+    * Bindings that are still active (have captured a frame that has
+      not been popped) will update the method's frame data in-place.
+    * Once the frame has been popped, it will live only in that
+      binding.
+    
+    This commit passes mspec ci and test:mri19, but I am continuing
+    to test it for a while.
+    
+    Note that this commit also moves backref and lastline to
+    the frame. They have always been frame-local, but for a long time
+    we kept them on the scope so we could avoid touching the frame for
+    methods that did not need it. However, because we used the scope,
+    it was difficult or impossible to isolate backref and lastline
+    changes to the block. Moving to the frame, which has a lifespan
+    only as long as the method that activated it, makes isolation
+    easier.
+    
+    This should also make it easier to fix thread-safety issues with
+    backref/lastline, as reported in JRUBY-7167.
+
+commit e732fd1d9cdb9d86e98534e87281adc8f9e82c53
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Jun 13 13:09:09 2013 -0500
+
+    This file is *not* generated.
+
+commit f592cbbfae1186c42fb9e0545e2d9c394e73312f
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Oct 10 16:42:24 2011 -0500
+
+    Use factory for standing up static scopes
+
+commit 4807459e7a2458de246cb41104075c10c5d0fafb
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Mon Sep 26 13:54:42 2011 -0500
+
+    * Added allocation methods to StaticScope to allocate the appropriate
+      static scopes and protected LocalStaticScope, BlockStaticScope and
+      EvalStaticScope constructors.  This will now let us allocate
+      IR-specific static scopes that IR execution requires.
+    * Also added isBlockScope test on StaticScope to eliminate instanceof
+      tests against BlockStaticScope and LocalStaticScope.
+    * Hand-patched auto-generated files Ruby19Parser.java and
+      DynamicScope.java.
+
+commit 7497017d0098fb909c9d6459ea8bff180ed502f8
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Nov 5 18:50:45 2009 -0800
+
+    * Update some templates where the .java version got edits instead
+    * Fix some newArray with NULL_ARRAY to call newEmptyArray
+    * Add separate paths for "array" and "nonarray" in block dispatch, to eliminate the avalue bool
+
+commit 5cb010871e68cc5760980196c8276e26f20546e0
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun May 17 03:24:52 2009 -0500
+
+    Fix for JRUBY-3638: Multi-Threading issues with JRuby 1.3RC1 and soap4r
+    
+    Whew! This was a doozy! The problem here was as suspected, a "dummy" scope was being shared across calls/threads and causing the backref/lastline to step on each other. This would not simply affect multi-threaded cases either; it could easily break cases where only a single thread happened to read a bad backref from a previous call, or even a single thread read its own backref from an earlier call in the stack trace.
+    
+    The fix is detailed largely in the bug. No test cases accompany this because a new core construct has been introduced to produce a hard failure if we ever make this mistake again. It's a very tricky thing to test since it depends on either thread-unsafety or one call reading a backref and one call writing a backref in ways that are not immediately apparent yo the compiler. So these are fairly specific and localized issues that have far-reaching effects.
+
+commit 0a405a33b0704d7dc53b676b34ce7d3e6b735782
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Apr 9 17:02:03 2009 -0500
+
+    Final fixes for migration to DynamicScope as container for backref and lastline. This re-fixes the Thread.new block behavior for backref/lastline.
+
+commit 66b28d6e25993dac775867702563e32e7bc75b41
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Apr 8 20:58:55 2009 -0500
+
+    Migrate to having backref/lastline on DynamicScope again, with inspector changes to ensure the scope is available. Does not yet pass all tests.
+
+commit 402b06155730eeefe6c7229627d3005117663b14
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sun Mar 29 22:11:16 2009 +0000
+
+    Remove unused field no_args in InterpretedMethod.  New n_args_* impls.  Change arity method calls in erbs to make generated code look slightly more human
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9494 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 6e66cedba30922992c1bd13e3c684704841478a5
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Mar 9 03:56:08 2009 +0000
+
+    Some cleanup for DynamicScope and subtypes in preparation for generation logic.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9380 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d0c0e16eba3c9abde0e227be1b32c8711e5696da
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Mar 8 23:30:37 2009 +0000
+
+    Expand generation to include specific-arity interpreted args processing. Currently only helps up to 4, since we only have dynscopes up to 4 locals.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9379 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 345d93f9edd823d7dff16c588a0d1e40bfaa8521
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Dec 27 03:21:27 2008 +0000
+
+    Microopts for loop, range#each, and arg coercion for blocks, plus switched "dummy scope" creation for light compiled blocks to use NoVars scope; much lighter, very nice perf boost as a result.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8469 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit bf8db0bc4acaeed7900b867e821e959f254be0be
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sat Nov 22 22:57:11 2008 +0000
+
+    Biggest commit eva (1.9 parser+1.9-runtime-related-changes landing)
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8099 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 36247fea442ff881dc81a00ed3e67420a3527709
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Wed Aug 20 20:51:45 2008 +0000
+
+    Add signatures (currently unused) for dynamic scopes to assign args without needing to box them first.  We will use these later and I want to reduce patch size for an experimental patch.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7504 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 1c1c85534290f1628d5314dd5ccb83fa932d4f62
+Author: Wayne Meissner <wmeissner@gmail.com>
+Date:   Thu Aug 7 04:42:32 2008 +0000
+
+    Cleanup more low-hanging-fruit, this time in org.jruby.runtime
+    - final fields where possible
+    - deprecate unused classes
+    - tag a few enum-like classes with FIXME to see if we want to convert to an enum
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7400 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit fc98dec9a875b6ff6dff457e84bea1b7000b8c09
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 23 09:38:20 2008 +0000
+
+    Multiple optimizations to local variable set/get, based on benchmark results and best-case lookup or assignment logic. Probably more tweaking that could be done to improve index > 4, depth > 0 get/set. All results better than 1.1.3 overall though.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7270 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 34c5b29cd1de8959666244a6c8441311badff5d1
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jul 14 17:14:01 2008 +0000
+
+    Add four-var scope and enable it globally.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7164 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a537fc64feaefb7c06a22621f23264d3be5d7435
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jul 14 07:08:49 2008 +0000
+
+    Enable ThreeVar scope globally.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7162 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit fd4b104d0e7193fc8c7f6e66c529cacaf7d15e62
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jul 14 07:08:07 2008 +0000
+
+    Add "index two" entry points into DynamicScope.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7158 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit aafd3613a2c1104e3c22d2483e3868099999df3e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jul 14 07:08:00 2008 +0000
+
+    Add three-var scope, not enabled yet.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7157 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a1ca72d655b50185a17e718e8eb9ef039397e9a1
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Jul 13 04:25:59 2008 +0000
+
+    Fix remaining issues with TwoVarDynamicScope and enable it. JRUBY-2777.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7152 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 083720f9ac7668892e5b7b044c9a9871a6dd55a8
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jul 11 06:03:42 2008 +0000
+
+    Various fixes to TwoVarDynamicScope, but it's still not enabled. Also a fix to OneVar for super args; it wasn't passing everything correctly.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7139 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 6d3455edb1999a041e13be0cc772d4f1c7ddf7a3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jul 11 04:28:17 2008 +0000
+
+    Fixes for interpreter to modify flip-flop under an eval to scope itself no higher than the eval's scope. This appears to be more correct behavior, and also allows us to return to using specific-sized scopes for method scopes. JRUBY-2775.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7138 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 5034f260ed12cf2f8af7b57e326f389ff15be3e7
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jul 7 17:42:42 2008 +0000
+
+    New logic for instantiating blocks in compiled code, reduces block-construction overhead so it's consistently faster than both MRI and interpreted now. JRUBY-2650.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7118 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d290a3e2a288191f08c43e2c9dd0c60e31ab0cc0
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Apr 28 08:16:00 2008 +0000
+
+    Adding microoptz for local variable assignment; reduces amount of stack-juggling necessary. Still needs a fix for one case, where assigning the result of a "while" to a local varaible.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6582 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit cc904c964044a58843c177c5bb60141769ac2724
+Author: Vladimir Sizikov <vsizikov@gmail.com>
+Date:   Thu Jan 31 18:20:16 2008 +0000
+
+    JRUBY-2046: Ranges in conditions are broken.
+    Reviewed by Tom.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5779 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d50ba810da64fe9ced82db246c55ec890a39da47
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Nov 24 20:05:44 2007 +0000
+
+    Last captured var optimization for now: have compiler unwrap to appropriate depth, rather than recursive call to get/setVar.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5029 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d237a30fee4b2a8b2a34303eea80583c8a8872fd
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Nov 24 12:39:37 2007 +0000
+
+    Added no-var and two-var versions of DynamicScope.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5019 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 2c2a66b641fbccc9c04d41a7171f4f99172a143a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Nov 24 11:27:21 2007 +0000
+
+    A fairly extensive refactoring of the relationship between bindings, blocks, and eval. Binding holds the frame and *containing* scope; this allows the binding contained within a block to be use for evals directly, rather than requiring hacks like the previous commit. When a block is invoked, a new DynamicScope is constructed at that time, rather than having an existing scope cloned. Similarly for evals, the first time a binding is used getEvalScope is called on the binding's scope (the containing scope for the eval). This causes a new eval scope to be created the first time and used for subsequent calls with the same containing scope. And again, this avoids contortions when constructing the binding, since the binding only need to contain the unchanging containing scope.
+    
+    This should make it a lot easier to implement the remaining specific-size dynamic scopes. It also simplifies scoping/binding logic and fixes a number of eval/binding/scoping issues.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5018 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit ec4f90b7e092bb1469913ee818c3dcaf2a7c5070
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Nov 24 04:50:54 2007 +0000
+
+    Based on discoveries by Marcin, confirmed by Ola, adding capability for separate DynamicScope implementations that use fields instead of an array for scopes with small numbers of variables. This primarily improves compiled performance, since the compiler can statically dispatch to methods that amount to little more than field access. I will add additional DynamicScope impls for 0, 2, and 3 variable scopes.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5015 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit f71eaa26df835d96fe4acdb7443845bd983ae645
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Oct 4 21:29:43 2007 +0000
+
+    clean up null-to-nil logic when retrieving containing-scope variables, to avoid inlining that logic
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4483 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit ffb259216dbb64ce9846cbe6c6e6639b9e598532
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Oct 2 06:05:19 2007 +0000
+
+    Rename EvaluationState to ASTInterpreter.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4454 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d1589c3ecec8aff8c8826f645d48b3cbab247dbd
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Sep 24 13:34:54 2007 +0000
+
+    Total refactoring of zsuper argument processing, and zsuper is now enabled in the compiler. We still need more/better tests and specs for zsuper, unfortunately.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4375 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 94809836f29c92e41775dda970535480491639ea
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Aug 29 12:50:45 2007 +0000
+
+    - Enabled assertions during all test runs, and made fixes and modifications as appropriate to get those assertions passing again.
+    - Removed -da from jruby startup script to allow specifying -J-da on command line
+    - A few optimizations to IOOutputStream/IOInputStream to use CallAdapter and lightweight strings
+    - Cleaned up the gaggle of private RubyString constructors to four core versions, and added lightweight versions of a few public construction methods
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4225 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 55e82be6c13855671d1be863007ec6003c479af7
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Aug 8 22:05:40 2007 +0000
+
+    Local variables are now (finally) zero-based, so all local scopes will be 8 bytes cheaper to allocate. Made appropriate changes throughout the system and also fixed a small "def" issue in the compiler relating to stack-based methods.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4130 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit fc17861832a4f30aecf7840dc1dcee181618f93f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Aug 7 03:10:35 2007 +0000
+
+    Move backref and lastline into Frame, since there's only ever one copy of them in a given frame. This also will make it possible to turn on stack-based variable AST inspection very soon.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4107 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 3ed77e00f569a76623c1e5437d634b47d62da23e
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Tue Jun 12 14:33:20 2007 +0000
+
+    Lazy initialization of DynamicScope
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3868 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit b4054a7cfceb6399d13c00b0cf849bf58962392f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jun 4 23:36:40 2007 +0000
+
+    Minor optimization for dynscopes, to avoid the hoky parent check we added to prevent leaks.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3832 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit c2b14210deb1febc85f37134c8aa90c81daf4240
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Apr 28 01:47:53 2007 +0000
+
+    Migrate compiler to using interpreter-friendly data structures and TC. This makes it possible for us to enable safe jit as part of 1.0.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3577 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit f643b3211763f1c7f13137c0884cf62d592b4b7a
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Fri Apr 27 18:41:49 2007 +0000
+
+    JRUBY-894: local_variables is printing out all variables lexically in scope rather than only ones that have been initialized
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3573 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 8fb40110ad0aca10556fe4276dbbb6ec642d273c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Apr 11 04:06:22 2007 +0000
+
+    JRUBY-796 Fix for a very big leak in finalizer definition and dynamic scope creation
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3423 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 1a5741a0ba99a5bb95ff8c7ae709e7eb430583e8
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Thu Mar 22 19:28:22 2007 +0000
+
+    Fix for JRUBY-713. Possibly not the best way to do it, though...
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3265 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 8aeb4d213c0f940bc2fdc456e65d4ee340176c58
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Tue Mar 20 20:43:36 2007 +0000
+
+    Why method call n times when we can just do one arraycopy?
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3256 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit fa4a59382df9b322c0d4a01aeaf8639f2a33bb23
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Thu Jan 18 10:32:56 2007 +0000
+
+    Make more parts of YARV run, in particular Test.now makes it possible to time what happens
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2775 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 174e3d01468001668ab299227d4af11aea65341c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Nov 14 03:09:59 2006 +0000
+
+    damn the torpedos! full speed ahead! landing enebo_lexical branch changes plus TC-passing optimizations and a few small compiler updates
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2423 961051c9-f516-0410-bf72-c9f7e237a7b7

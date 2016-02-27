@@ -1,0 +1,222 @@
+commit be66250230d998b3d07bc2324a6ea1fbf0151327
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Jul 8 16:50:10 2015 -0500
+
+    Doh...
+
+commit 1a5daea23853be38f76c801d9b71e4ca0a53a74d
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Jul 8 15:54:27 2015 -0500
+
+    Have RubySocket deal with pseudo_ thingies
+
+commit 1774dc5ded0a1ee0f3bc057da2e3cd695207e221
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Jul 2 13:45:54 2015 -0500
+
+    Minor cleanup.
+
+commit d12556a19f296186cd708b8b6b06303fb6950341
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Jul 2 13:44:58 2015 -0500
+
+    Properly store and pass protocol for Addrinfo/Socket. Fixes #3067.
+
+commit fb5925a8a7c37f4ceb2bbd809a98cecb9625b97a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue May 26 16:02:44 2015 -0500
+
+    Improve protocol logic for Socket.socketpair. #2984.
+
+commit 78b009c13a61cee29f10d274f4fa01e240147fc0
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue May 26 15:53:15 2015 -0500
+
+    Implement Socket#[socket]pair to fix #2984.
+    
+    Only supports UNIX, STREAM, but that seems in line with e.g. BSD
+    socketpair(2).
+
+commit 5da36953438f93a1425c03aa0b0c28c7f53313ac
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu May 7 19:31:12 2015 -0500
+
+    Merge pull request #2724 from kpamidon/socket_getaddrinfo_reverse_lookup
+    
+    Socket.getaddrinfo reverse_lookup
+
+commit e04c5224707d5fa021ed476cfa9bd2f3c628717c
+Author: Gerard Fowley <gerard.fowley@iqeo.net>
+Date:   Wed Dec 31 12:30:26 2014 -0500
+
+    Handle Travis-CI point-to-point interfaces
+    
+    Deal with null from getHardwareInterface()
+    Tests permit multiple ipv4 loopbacks
+
+commit 7be572ee0a92072fa35e9a18f6c951c3ab16dd00
+Author: Gerard Fowley <gerard.fowley@iqeo.net>
+Date:   Sun Dec 7 21:07:11 2014 -0500
+
+    Add Addrinfo and Ifaddr tests to test/jruby.index
+
+commit e9a74a2a58f7700ba08df3cf190accb353b41d5f
+Author: Gerard Fowley <gerard.fowley@iqeo.net>
+Date:   Sun Dec 7 00:27:32 2014 -0500
+
+    improve Socket.getifaddrs...
+    
+    added tests for Ifaddr and Addrinfo
+    Socket.getifaddrs creates a packet interface for each IP interface
+    Ifaddr and Addrinfo methods behave more like MRI 2.2.0
+    Need constant AF_PACKET (17) added to .h files
+    Need to generate packet interface for interfaces with no IP address (platform dependent?)
+
+commit a6f20b63a56aff2e1bce74f89078234bc4c34446
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Aug 12 17:46:03 2014 -0500
+
+    Eliminate remnants of old IO backend and localize fileno map.
+    
+    The old Stream/ChannelStream/ChannelDescriptor code is no more.
+    Instead, JRuby 9000 uses a fresh port of MRI's IO and transcoding
+    logic, which then builds off a much thinner fileno shim using NIO
+    channels. This comment removes the old logic, which is no longer
+    used.
+    
+    Utility methods and constants from those classes have been moved
+    to more appropriate places, and the old internal/external fileno
+    map -- which used to be static -- is now managed on a per-runtime
+    basis. For most users running a single JRuby instance with full
+    native-call capabilities, this map will not come into play much,
+    but it is still used to find existing ChannelFD wrappers around a
+    given channel, and must be managed independently from runtime to
+    runtime.
+
+commit d64dc91c01c34bad6c7ba145e4e194f2b62e47c4
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jul 25 12:43:29 2014 -0500
+
+    Remove unused runtime param.
+
+commit 505bf9835f6a7c90c9f77a1e93b4eed27a557af4
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jul 25 11:31:54 2014 -0500
+
+    Unify ChannelFD creation and set cloexec for all socket types.
+    
+    This does not fix the issues described in #1859 but at least we
+    are fixing *our* sockets.
+
+commit 64c53a05f8f912b93e610830d6411f63f9c2360b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jun 24 11:24:51 2014 -0500
+
+    Enlist sockets in new channel/IO logic.
+
+commit ecc42a6c13d6884dd52e2dcbae8c592c682d6d92
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue May 27 20:18:59 2014 -0500
+
+    IO work continues.
+    
+    * Reopen work and refactorign to support it.
+    * PosixShim class to make POSIX and NIO both look like POSIX.
+    * FilenoUtil class to handle fileno (real/fake) management.
+    * Myriad minor refactorings and cleanups.
+
+commit d269590c79eb56175689e1aea710956fa7472786
+Merge: ae5ad64 78d80b5
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu May 1 09:54:27 2014 -0500
+
+    largish merge from jruby-1_7
+
+commit 9c758b4f31c0eeb50d77b3dad28438aca365e857
+Author: tduehr <tduehr@gmail.com>
+Date:   Thu Feb 27 21:54:56 2014 -0600
+
+    fix initialize visibility
+
+commit acf5d258db69e9ba73f329b809c0924d7e843c82
+Author: tduehr <tduehr@gmail.com>
+Date:   Thu Feb 20 16:22:22 2014 -0600
+
+    correct visibility of initialize* and respond_to_missing? methods
+
+commit 9f54dd55e0d84516c2a125f0e4719238c804e93d
+Author: Lucas Allan Amorim <lucas.allan@gmail.com>
+Date:   Tue Jan 28 15:47:03 2014 -0800
+
+    [JRuby-1068] - Implementing Socket.getifaddrs
+
+commit 92c5089eddbf8fcdb1560b878d8636dd99760ee6
+Author: Lucas Allan Amorim <lucas.allan@gmail.com>
+Date:   Sun Jan 19 21:08:23 2014 -0800
+
+    Implementing method #bind for Socket and ServerSocket.
+
+commit c8d0048e64e6e2e54a3e9ef511b381783d63cb5d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Jan 4 11:37:40 2014 -0600
+
+    Implement more Addrinfo-related logic throughout socket ext.
+    
+    * Addrinfo.getaddrinfo
+    * Socket and ServerSocket binds that take Addrinfo
+    * Correct logic for SO and SOL constants in BasicSocket
+    * ServerSocket for listens in socket.rb
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/ext/socket/RubySocket.java
+
+commit 792f659786aa5909bda2733526b1c037816c0873
+Merge: 56c183a 55f418f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jan 7 22:38:01 2014 -0600
+
+    Merge remote-tracking branch 'origin/jruby-1_7'
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/ext/socket/RubySocket.java
+
+commit 55f418f70709c435b3c89300da7de7610cd1c72a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jan 7 22:36:19 2014 -0600
+
+    Add Socket::SOMAXCONN to fix #1385.
+
+commit 3c1ce2278272ab10840f27d412e6e48014efdb8a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Jan 4 11:37:40 2014 -0600
+
+    Implement more Addrinfo-related logic throughout socket ext.
+    
+    * Addrinfo.getaddrinfo
+    * Socket and ServerSocket binds that take Addrinfo
+    * Correct logic for SO and SOL constants in BasicSocket
+    * ServerSocket for listens in socket.rb
+
+commit e016eab0102e246d232fdaec43731cedd8b25b6f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Oct 30 22:55:46 2013 -0500
+
+    De-version Socket, BasicSocket, and IPSocket
+
+commit da7c4c992ed091c668d7d6de91669d1221547ef6
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Oct 30 22:33:22 2013 -0500
+
+    De-version Socket
+
+commit 697e6895affa646849a685ed58f6f84795c853aa
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Oct 4 23:37:52 2013 -0500
+
+    Eliminate calls to Ruby.is1_8 and is1_9.
+
+commit 28c6fbc4e883bc1c9e9242d1da1cb2b785f55339
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 3 12:46:45 2013 -0500
+
+    Move to @mkristian's proposed layout, with some modifications.

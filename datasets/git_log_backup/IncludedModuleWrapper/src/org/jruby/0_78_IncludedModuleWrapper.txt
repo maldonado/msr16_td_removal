@@ -1,0 +1,443 @@
+commit 61678ac1a2514a9932276f8d527816a5980a94b3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Feb 25 20:41:40 2013 +1100
+
+    Fix more references to CPL.
+    
+    The phrase "Common Public License" was split across two lines in
+    our default header, which caused it to be missed during earlier
+    search/replace. Also, we did not replace the CPL URL in the
+    header with the EPL URL.
+
+commit 330fef3b0fc18af477ccea19bd278669667f31bb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 12 14:49:29 2013 -0600
+
+    Switch JRuby's CPL license to EPL.
+    
+    Governance of the CPL license was moved to the Eclipse Foundation
+    at some point in the past, and Eclipse blessed the EPL (Eclipse
+    Public License v1.0) as the successor to CPL. Because the CPL
+    contains a clause allowing transparent upgrades to future blessed
+    successor licenses, we can make the move to EPL without
+    re-contacting past contributors.
+    
+    The change in going from CPL to EPL largely just removes some
+    punitive language that apparently made many companies nervous. All
+    other language in the license remains identical.
+    
+    Several documents about Eclipse's move from CPL to EPL are here:
+    
+    http://www.eclipse.org/legal/cpl2epl/
+    
+    Note that Eclipse's move came before the blessing of EPL as the
+    upgrade path for CPL, so they had to do a bit more legal juggling.
+    With Eclipse now the administrator of CPL and with their blessing
+    of EPL as the upgrade path for CPL, all we need to do is make the
+    move.
+
+commit d1898406206175543afaa19c08637d539abd7a51
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Nov 28 09:37:40 2012 -0600
+
+    Remove unused/rarely used params to const lookup, use StaticScope.
+    
+    In an effort to eliminate the deopt caused by const access from
+    Ruby code, I'm working toward making all constant access work
+    against StaticScope rather than against ThreadContext and the
+    current DynamicScope (which forces us to push dummy scopes where
+    we don't really need any). This commit starts pulling out calls to
+    ThreadContext.getConstant, which requires a DynamicScope to be
+    present, and also removes some unused or rarely-used arguments
+    from the const lookup call chain to simplify the transition.
+
+commit 2966c12e717f271247ce018e46150c4479eae1c4
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Jul 22 22:50:44 2012 -0500
+
+    Improve performance of RubyClass.getRealClass.
+    
+    getRealClass is used to traverse intermediate non-classes like
+    included modules and singletons. Real classes (natural RubyClass
+    instances) implement getRealClass to return this. Includes and
+    singletons each separately implemented getRealClass to return
+    superClass.getRealClass(), forcing all intermediates to be walked
+    very time.
+    
+    Because getRealClass is used in a large number of places in JRuby,
+    I have modified getRealClass to be a single final implementation
+    that returns a new realClass field on RubyClass. This improves
+    perf in two ways:
+    
+    1. It is no longer necessary to traverse superclasses to find the
+    real class.
+    
+    2. Because there's only a single implementation, it should inline
+    everywhere.
+
+commit 53f010f542105b2fbcca49edde8ffc9efa5fbd37
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jun 29 16:26:44 2012 -0500
+
+    Remove JavaPackageModuleTemplate method_added hook.
+
+commit 656301d0cf410c2441fdc2c265bf2f571c2b8646
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Dec 28 17:51:40 2011 -0600
+
+    Implement most of private_constant.
+    
+    Notable missing items:
+    
+    * class Foo::Bar should fail if Bar is private
+    * class ::Bar should fail if Bar is private
+    * module Foo::Bar should fail if Bar is private
+    * module ::Bar should fail if Bar is private
+
+commit f4376337b9bd5fbeae80ba91ad933ed655ed476c
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Thu Aug 11 16:31:30 2011 -0500
+
+    JRUBY-5987: Fix autoload resolution via IncludedModuleWrapper
+
+commit 6f159fe5dd51c062a5b1aab64a8ede916990877a
+Author: Hiroshi Nakamura <nahi@ruby-lang.org>
+Date:   Mon Jul 11 03:36:17 2011 +0900
+
+    Deprecation of fast constant access paths.
+    
+    Each os those has the same definition as non-fast verision.
+
+commit cbeab2b4a4fd6260f591567192ac3adb44f4acbf
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jan 31 15:18:46 2011 -0600
+
+    Don't risk NPE in IncludedModuleWrapper, in case superClass is null.
+
+commit 54724d4665ccbab0960695d7b79116a56b0f2ec8
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jun 11 01:30:57 2010 -0500
+
+    Remove unused InstanceVariableTable class.
+
+commit 454ecd96f060b5614fee67b79e0f3e329713ddd5
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Apr 29 12:05:20 2010 -0500
+
+    Add double-checked locking (the safe kind) to the getting of class var table for write.
+
+commit 5e4e94528548428dbef47eeff36767c70042b3ff
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jan 20 21:43:01 2010 -0600
+
+    New object_id implementation with uniqueness guarantees.
+    
+    Because identityHashCode turned out to be very unreliable as a unique ID, I redesigned object_id logic to use a strictly-increasing AtomicLong for both ObjectSpace and non-ObjectSpace modes. The long is stored into our object variable table, which is lazily allocated. This does mean that when object_id is called on a given object, the parent's variable table size increases. However, this size increase only affects other objects of the same type that also have object_id called on them (as you would expect) or which have other instance variables (in which case the size increase is just sizeof(pointer) for the extra slot). In general, this should not increase memory usage substantially except for objects that have had object_id called. No additional memory is used for objects that never have object_id called against them or same-typed objects. Also, because the new object_id is based on a Long * 2, object_id is guaranteed to be unique up to 2^63.
+
+commit 764d256067251ace178a42b53e016acec952e035
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Nov 6 05:09:05 2009 +0100
+
+    More cleanup for RubyModule, RubyClass plus lazily allocating all CHMs.
+
+commit 8dc882706f3802b61f49e55548673ac6992d6856
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri May 15 15:46:24 2009 -0500
+
+    Fix for JRUBY-3661: Incorrect super call site caching with multiple included modules
+
+commit 37b7840a30ef687f5e28a31e53ddf8eb110aaf18
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Apr 1 02:10:59 2009 +0000
+
+    Fix class variables by moving them to their own map.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9510 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 3b266cf69f39ba501c32cc238cb898b24ed5a24c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Apr 1 00:13:14 2009 +0000
+
+    Get remaining variables using the new ivar table, and get all tests running (minus one cvar issue I need to dig into).
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9509 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 1785d93207e70b7158811ade4eb57bcd0f407240
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Sun Dec 14 20:07:59 2008 +0000
+
+    Fix the build (delegate variables in IncludedModuleWrapper for variable list related methods).
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8340 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d6c971ca167cc9db347c281f01b0d6269b76e6a8
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Sun Dec 14 18:02:04 2008 +0000
+
+    Big changes, remove 4 fields from RubyBasicObject (finalizer, dataStruct, variableTableSize, variableTableThreshold) Replace variableTable by variables (external org.jruby.runtime.builtin.InstanceVariableTable). The new structure supports packed mode (for <= 5 instance variable when it does linear search for lookup). Finalizer and dataStruct are now kept as internal instance variables. Need to review concurrency issues.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8339 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 302eb3dfb6a1d052cad541a49081795590e6efa5
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Oct 31 02:51:34 2008 +0000
+
+    Reenable constant cache with a global generation number; name-based was tricky to get right and I'm really burned out.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7976 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 1870a13957039555a141f3589093a8417c30a3ff
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Mon Oct 13 20:42:06 2008 +0000
+
+    Generation-based inactive invalidation of constant site caching (active cache invalidation sucked in Rails)
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7876 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 0be23d6124bbc965e1fcb634ac89561bdc7b1dff
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sat Oct 11 15:21:49 2008 +0000
+
+    JRUBY-3052: Cache constants at their call site (const_node)
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7867 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit e5db8a20aacf9290964a7dffb37c99d2fe0aebd4
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Oct 1 06:40:01 2008 +0000
+
+    New serial-number class-level cache and guard in call sites. All tests pass and Rails can generate apps. Needs more testing, and it's not updating superclass's subclass list when inserting a module wrapper into the hierarchy, which seems like it should happen.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7805 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 1f540438a1e73f114f80a6138b8f9e8463fa0d37
+Author: Wayne Meissner <wmeissner@gmail.com>
+Date:   Sun Aug 10 16:07:54 2008 +0000
+
+    More final field cleanups
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7423 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit e72ca1a779973651923c718589f36379ac01280f
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Mon Jul 7 23:41:03 2008 +0000
+
+    Miscellaneous crap: rubyobject.getRuntime to TC.getRuntime; @overrides; searchMethod change
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7122 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 59ca34930cb08d32a9264d98865b0858cf1fb26b
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Fri Apr 18 17:52:30 2008 +0000
+
+    Remove RubyUndef and replace it by RubyObject.UNDEF static.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6533 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 5ddeaaa8a8ec22d1857d7fb747c7687f24804f36
+Author: Bill Dortch <bill.dortch@gmail.com>
+Date:   Sun Mar 2 22:30:23 2008 +0000
+
+    Fix related to JRUBY-2181: Change RubyModule#addMethod to put/replace methods atomically, since searchMethod does not synchronize on methods. (Should also be a tiny perf improvement.) Also includes some minor cleanup of signatures to support generics and prevent adding methods to IncludedModuleWrapper.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6080 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 1eb51095b1447ca07e086b2bd92d4d292fc0c545
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Nov 20 04:55:25 2007 +0000
+
+    JRUBY-1279: Changes and additions for GemStone's contributed patch to add a threadlocal runtime mode. This mode will be used in the near future for GemStone object persistence, as well as for Ruby use cases that do not require separate JRuby runtimes. This in turn enables things like generalized object serialization and the upcoming "compiler #2" that can produce normal, instantiable, callable Java types.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4971 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 95c346df5368a3f5f06fa9d14022efb85eaa6809
+Author: Bill Dortch <bill.dortch@gmail.com>
+Date:   Mon Oct 15 07:45:22 2007 +0000
+
+    Vars have landed. Does not include concurrent SymbolTable (will follow in the next day or so). Also need multi-threaded unit tests, work in progress.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4588 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 8c497befd3203aa63fc52f0fc0dff461dff4f4ba
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Oct 8 19:47:27 2007 +0000
+
+    All numeric classes migrated to annotation binding, with appropriate naming conventions throughout
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4515 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 3e88cfab0d224fb9efa8d18336993e2c78ce495e
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Thu Sep 27 16:40:57 2007 +0000
+
+    - Identified and extracted construction paths for class/module/singleton/IncludedModuleWrapper, now there's no unnecessary null checks or assignments in their constructors (they take very few arguments so even asserts are not needed).
+    Each of those constructors have a comment what is it the responsible for, also, two RubyClass.newClass() and two RubyModule.newModule() methods have been extracted.
+    - Fixed logic that sets the parent/constant for Modules, now matches MRI (only setConstant/getConstantAt are used here).
+    - RubyClass rewritten, special attention has been put on allocation logic, now Class.new(...) doesn't fire a separate allocator class. (btw, logic of "class B < A;end" and "Class.new(A)" must be split since in second case superclass and allocator are not known until initialize is called). Class/Object allocation implementation mimics MRI's weirdest quirks in behavior, is _much_ simpler that it has been and much faster. This also allowed creation of generalized clone/dup implementations matching MRI. (only our special ivars need a care here).
+    - Rewritten bootstrapping of Object/Class/Module.
+    - Core classes (except Exception hierarchy, they should also be in future) are now cached in runtime (MRI caches them in static VALUE's like rb_cObject) Ruby.getClass(String), Ruby.getModule(String) and Ruby.getClassFromPath(String) should be used only by either interpreter or compiler and when the class name is not known at compile time.
+    - Fixed and simplified nodes: classNode, moduleNode, sclassNode, defsNode. Compiler has been synchronized here as well.
+    - No more __attached__ as ivar, it is now MetaClass field (which means lazy ivars for singletons). Compiler also updated.
+    - added and dosumented isModule() to IRubyObject (isClass(), isSintleton() documented).
+    - Fixed test_autoload test (Object.class_eval do;autoload :SomeClass, 'somefile';class SomeClass; end;end) should raise LoadError, now matches MRI.
+    
+    - Fixed a number of minor bugs:
+       1.instance_eval, was creating a metaclass for Fixnum instances (also affected Symbol/FalseClass/TrueClass/NilClass)
+       marshaler objects were kept in singleton classes
+       Range.inspect, was modifying the begin field (when it was a String)
+       Many bulletproofings in Marshal/Unmarshal (like unmarshaling an instance of nonexistant class), TypeErrors/ArgumentErrors matching MRI.
+       Fiber.new in 1.9, doesn't call #initialize method by funcall, fixed
+       number of method arity fixes and many methods are made fast now
+       fixed initialize/initialize_copy logic, further simplification, no ClassCastExceptions possible now
+       Fixed defineClass(under)/defineModule(under) logic
+       bulletproofed cases such: class A;end;module A;end
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4409 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 78cbe773471d332a3c21735e15928769efb108f0
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jul 2 15:36:43 2007 +0000
+
+    Landing Marcin's flags/OS changes; the memory savings alone will make us rich beyond our wildest dreams.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3952 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 995566d78d56052cc5af00f77016d51ebf28cd1b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Apr 5 06:52:16 2007 +0000
+
+    Eliminate polymorphic getMetaClass implementations in child classes of RubyObject
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3391 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a2107e60085a5063bca76d897783a512bbd7eddc
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sun Feb 18 15:18:18 2007 +0000
+
+    JRUBY-606: Get rid of un/under-used IRuby interface
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3022 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 57504d74a1cc15c3236cb063ab5be50e662fa6f5
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Jan 6 10:08:11 2007 +0000
+
+    Initial fixes for JRUBY-408. Added ObjectAllocator and code to consume it throughout the MetaClass hierarchy.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2688 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d5a7ca34538100551a2a3a0439927e77c71710e9
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sat Nov 18 21:58:31 2006 +0000
+
+    JRUBY-219: IncludedModules and Singletons should be immediate (enebo)
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2437 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit f7fd42a4ed234e7ec538d58da2024183eee3d0f4
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Thu Oct 5 15:25:13 2006 +0000
+
+    JRUBY-80: Duplicate Module ancestors (by Miguel)
+    
+    This is a substantial change to module include logic (much closer to original MRI logic).  I have run this though gem installs, a simple set of Rails actions, Rubicon, and our tests and it seems to not cause runtime problems.  Plus it fixes included test in this patch.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2291 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 524049357e360ba81a21756f54071c67d3796180
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Sep 7 01:40:03 2006 +0000
+
+    merging headius to trunk
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2232 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 6dc0abedccb4a042c27e12c6d8d162af40b85070
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Feb 27 18:19:18 2006 +0000
+
+    fixed including modules that include modules; IncludedModuleWrapper was never updated to the new correct-ordered newIncludeClass stuff.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1897 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 4dfdacd80c56018084c618f3bbab7b542653d95e
+Author: David Corbin <dcorbin@users.sourceforge.net>
+Date:   Sat Oct 8 13:07:06 2005 +0000
+
+    Introduced IRuby interface for Ruby runtime object.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1798 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d4b56872e7af16389e67bf607ab8134650a48322
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Oct 4 05:15:43 2005 +0000
+
+    studying; added some comments as I went
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1793 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 7a83c48af56081c1c2132111d535f28d10cf3afb
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Fri Dec 31 20:55:52 2004 +0000
+
+    Update license to GPL/LGPL/CPL
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1574 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit b1562832239a5e5d73b1ee98dade51601e343257
+Author: Jan Arne Petersen <jpetersen@uni-bonn.de>
+Date:   Tue Nov 16 20:30:04 2004 +0000
+
+    Rename references of org.jruby.Ruby from ruby to runtime.
+    Remove unused methods from the IRubyErrorHandler interface.
+    Add "same" method to RubyObject to fix "equal?"
+    Fix JavaObject cache.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1408 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 83ca1988efc1e67d360010f573b77a83d9d9bf03
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sat May 29 23:26:55 2004 +0000
+
+    Messy Commit: 1. Module refactoring (fix bad unit tests) 2. String additions (casecmp, lstring{,!}, rstring{,!}) 3. Allow equal to return nil when needed. 4. testFrozen consolidation
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1309 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 56e6b5f9188cca741623c1deadfae7aff26d9b49
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sat Mar 13 18:17:44 2004 +0000
+
+    getClassname is not getName in Module so an Included one should use same name
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1284 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 158bab74478b3ca0925ddbd2a5c73d4ef53d75f3
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Fri Mar 12 19:38:42 2004 +0000
+
+    Coalecse various getName signatures to just one
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1280 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 06f34f3a6e4941994e00090d1365045e229680be
+Author: Jan Arne Petersen <jpetersen@uni-bonn.de>
+Date:   Sat Sep 21 23:05:19 2002 +0000
+
+    - Some MetaClass refactorizations,
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@881 961051c9-f516-0410-bf72-c9f7e237a7b7

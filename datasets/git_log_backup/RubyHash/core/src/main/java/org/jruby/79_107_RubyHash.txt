@@ -1,0 +1,483 @@
+commit e40c665294ae7590f19bae05b132e82b804d737e
+Merge: d40bc79 0fa8da7
+Author: kares <self@kares.org>
+Date:   Wed Aug 26 15:32:05 2015 +0200
+
+    Merge branch 'jruby-1_7'
+    
+    * jruby-1_7:
+      'more correct' MapJavaProxy key?/include? check that (only) does containsKey
+      rename internal getMap to mapDelegate + add some notes on overrides
+      remove empty line
+      expose iteration check for sub-classes + cleanup putAll (in RubyHash)
+      override more of inherited aset operations on MapJavaProxy (see #930)
+      minimize MapJavaProxy's memory usage - allocate zero RubyHash buckets
+
+commit 36234b1f4dd4281e88fdc8d5c1f32797106cdecd
+Author: kares <self@kares.org>
+Date:   Wed Aug 26 13:17:47 2015 +0200
+
+    expose iteration check for sub-classes + cleanup putAll (in RubyHash)
+
+commit a9557fffd26a63191d73db44fcfaefb76d758db2
+Merge: 2187665 5df5491
+Author: kares <self@kares.org>
+Date:   Thu Aug 6 16:58:56 2015 +0200
+
+    Merge branch 'jruby-1_7'
+    
+    * jruby-1_7:
+      avoid (expensive) replaceAll when char replace is possible
+      little BacktraceData#transformBacktrace cleanup
+      avoid Pattern compiling on every BacktraceData construction - use startsWith
+      use static helpers in OSEnvironment for slightly less empty map garbage
+      Hack --2.0 net/http gzip problem to avoid multiple version refactoring hell (Fixes #1595, #1216)
+      Revert "[build] do not use maven-rc"
+      use EMPTY_MAP instead of new (temporary) HashMap instance
+      avoid getRuntime() in RubyHash#to_h
+      minor cleanup at RubyGlobal
+      for better ENV compatibility we should not respond to `to_h` on <= 1.9.3
+      ensure that ENV.to_h duplicates the env per MRI ruby
+      add failing spec for to_h not duplicating
+      [build] do not use maven-rc
+      improve test on whether jrubyHome is inside a jar
+      Fix NPE when getting parameter.
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/RubyGlobal.java
+    	core/src/main/java/org/jruby/runtime/backtrace/BacktraceData.java
+    	core/src/main/java/org/jruby/util/OSEnvironment.java
+    	ext/readline/src/main/java/org/jruby/JRubyApplet.java
+    	lib/ruby/2.0/net/http/response.rb
+
+commit 2a12ce07ff6862d33c8d5e9dff7b0c60d0bf33c8
+Author: kares <self@kares.org>
+Date:   Thu Aug 6 08:52:13 2015 +0200
+
+    avoid getRuntime() in RubyHash#to_h
+
+commit 7df3e56395cf4dbd1d22089726680bb890adfcd9
+Merge: e810614 967ca40
+Author: kares <self@kares.org>
+Date:   Fri Jun 5 14:20:44 2015 +0200
+
+    Merge branch 'jruby-1_7'
+    
+    * jruby-1_7: (38 commits)
+      basic BigDecimal sub-class test ... all working the same as MRI 1.8/1.9
+      avoid deprecated newInstance + one less pattern to match on BigDecimal.new
+      [bigdecimal] keep the simplified newInstance backport 1.8 compatible
+      [bigdecimal] backport simplified newInstance impl from master
+      minor BigDecimal code cleanup
+      handle big decimal ** float value calculation (with Java double math) ... since we're now not raising users should get ~ the value they expect (closing #1967)
+      static-ize and simplify private helpers
+      BigDecimal should not raise error on pow/** with float arg (under 1.9 #1967)
+      some more (internal) RubyBigDecimal dry-ing / tidy-ing
+      do coercion on * and / (same as MRI has been doing since 1.8) ... fixes #2538
+      handle BigDecimal cmp failure compatibly with MRI (fixes #2539)
+      pass around context in BigDecimal impl + simplify cmp method's code
+      move JI java.mat.BigDecimal test out of Ruby's BigDecimal tests
+      [travis-ci] test-extended on jdk8
+      if current directory is inside the classloader a spawn jruby process should do the same
+      use the new bin stubs from new rubygems
+      set ENV['RUBY'] when jruby.home is not regular directory
+      Add support for http.nonProxyHosts and rework ENV_JAVA support.
+      pik the right class in URLResourceTest
+      use new JRuby.create to load script from command line script source
+      ...
+    
+    Conflicts:
+    	.travis.yml
+    	core/src/main/java/org/jruby/RubyDir.java
+    	core/src/main/java/org/jruby/RubyEnumerable.java
+    	core/src/main/java/org/jruby/RubyEnumerator.java
+    	core/src/main/java/org/jruby/RubyHash.java
+    	core/src/main/java/org/jruby/RubyInstanceConfig.java
+    	core/src/main/java/org/jruby/RubyModule.java
+    	core/src/main/java/org/jruby/ext/bigdecimal/RubyBigDecimal.java
+    	core/src/main/java/org/jruby/util/ClasspathResource.java
+    	core/src/main/java/org/jruby/util/URLResource.java
+    	core/src/test/java/org/jruby/util/URLResourceTest.java
+    	lib/ruby/2.0/net/http.rb
+    	lib/ruby/2.0/uri/generic.rb
+    	maven/jruby/src/it/runnable/spec/one_spec.rb
+    	test/test_backquote.rb
+    	test/test_big_decimal.rb
+    	test/test_dir.rb
+    	test/test_file.rb
+    	test/test_higher_javasupport.rb
+    	test/test_load.rb
+
+commit ddc07f76adbf542164a06ccde896500c4bd4a9d9
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Jun 1 16:46:25 2015 -0500
+
+    Take 2 on dedup'ing in hashes.  Since we only dedup if actual String and not subclasses then the world will be happy
+
+commit 46c7d680ae44dfd865d98517993f8f3a12edf1a1
+Author: kares <self@kares.org>
+Date:   Tue May 26 22:25:05 2015 +0200
+
+    mark select in RubyHash as 1_8 compat since there's a select19 for 1_9
+
+commit d4b4a2694a433fbdba275f1ee0d40179a9e338b3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue May 26 14:44:48 2015 -0500
+
+    Back off Hash String key dedup and make fstring cache strict.
+    
+    Fixes #2976. See #2990 for dedup cases from MRI we may want to add
+    to JRuby.
+
+commit aea099d11f531ba6826e391b056151fc7fd4278d
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed May 6 13:19:54 2015 -0500
+
+    Remove usage ofr block.arity()
+
+commit b76456830027a2360816156a427ddc03c4b97fa5
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Apr 17 13:30:49 2015 -0500
+
+    Hash#each_pair is an alias of each. Fixes #2842.
+
+commit 2775f449bbe6d024330dd042c1eafca39b433946
+Author: Gustav Munkby <grddev@gmail.com>
+Date:   Thu Feb 5 19:25:27 2015 +0100
+
+    Exit iterator when `RubyHash#any?` short-circuits
+    
+    Previously, if `any?` returned true early (or threw an exception) the
+    hash would be marked as still iterating, and thus prevent updates.
+
+commit eb81674d8ff147f768982812ac0c785f81e943aa
+Merge: 7402c07 2a2806e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jan 16 20:57:25 2015 +0000
+
+    Merge pull request #2470 from Who828/methods_audit
+    
+    Implemented methods in MRI in JRuby for parity
+
+commit 2a2806e8bcdc338bfd40559530e12295a15684a7
+Author: Smit Shah <who828@gmail.com>
+Date:   Sat Jan 17 01:55:41 2015 +0530
+
+    Implemented a RubyHash#any? method based on MRI
+
+commit dd58df3593444f0c869a0882052dc3ba2566dcdc
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jan 16 14:18:24 2015 -0600
+
+    Unbind and deprecate RubyHash.sort and remove indices from proxy.
+
+commit e75d58728c2d5f4b4649d2f546e37c0067700e60
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jan 16 14:12:49 2015 -0600
+
+    Revert "Hash#sort was removed in 1.9.3."
+    
+    This reverts commit c9cc8eff97916d341de5833943f5999499264743.
+
+commit c9cc8eff97916d341de5833943f5999499264743
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jan 16 11:55:39 2015 -0600
+
+    Hash#sort was removed in 1.9.3.
+
+commit 30310a5a33378b58f3250aa3274642845e12717c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jan 16 11:54:10 2015 -0600
+
+    Hash#indexes and #indices are no longer in MRI.
+
+commit 9810a50603920c3a32b23a1b476726245b340200
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Mon Dec 15 12:19:51 2014 +0000
+
+    [Truffle] Basic new implementation of large hashes.
+
+commit 55f7384bf4e9b8bae756e5b720fd78c33b4cc8e9
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Nov 8 17:22:31 2014 -0600
+
+    Minor fixes to frozen error messages.
+
+commit 452d35241517426eb576f1311b5a3f6be2515b55
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Sun Jul 27 14:50:27 2014 -0500
+
+    [trivial] Make single-line ifs and make getEntry read as !18
+
+commit c9daed3db39fd42891d4814ab879e0d1a41e704f
+Merge: 9340555 e992b91
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Sun Jul 27 14:46:28 2014 -0500
+
+    Merge with jruby-1_7
+
+commit e992b91af0c27af273766fd97f4d351a61401ec1
+Merge: c04c50f 68d4185
+Author: Thomas E Enebo <tom.enebo@gmail.com>
+Date:   Sun Jul 27 14:39:34 2014 -0500
+
+    Merge pull request #1676 from grddev/empty-hash-optimization
+    
+    Empty hash optimization
+
+commit 6225d60e792b3f60adbd76b15958ba3b221f2279
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Mon Jun 30 23:59:03 2014 -0500
+
+    Death to rubyclass stack: Part 2 of 2
+    
+    * This patch builds on the previous commit and eliminates all
+      traces of rubyclass stack from the codebase.
+    
+      - Remove the push/pop/get from thread-context and use sites.
+      - Removed klass arg from method calls.
+    
+    * TODO: embed used to inject values into the current-module obtained
+      from the rubyclass stack. That code needs investigation.
+    
+    * Replaced the hacky if (klass==null) prepareSelf(binding) calls
+      with information about actual execution context. The primary reason
+      to use binding.self instead of self argument in blocks is when
+      the block is being used in a binding-eval context. The same soln.
+      is applicable in other contexts where this pattern was used (and
+      currently marked with SSS FIXME annotations in code comments).
+    
+    * All tests continue to pass.
+
+commit 68d4185698a1da27e283758ca2dfa475fc2faffb
+Author: Gustav Munkby <grddev@gmail.com>
+Date:   Thu May 1 20:37:58 2014 +0200
+
+    Conform to MRI behaviour for empty hashes
+    
+    In the event that the `#hash` method has side effects, any optimisation
+    with respect to empty hashes will affect the results of the operations.
+    
+    For MRI, the empty-hash optimisation seems to be applied everywhere in
+    2.0.0 and beyond. In 1.9.3 the #hash method is not called for #[] and
+    #key?, but strangely enough the performance is not improved for empty
+    hashes. In 1.8.7, the #hash method is always called even if empty.
+    
+    This does not match the semantics of MRI exactly, as this avoids calling
+    the #hash method from #values_at in 1.9.3, but that would be slightly
+    more involved to implement.
+
+commit ad4521e9b2aa8f5ea9295e77ff3d541059912387
+Author: Gustav Munkby <grddev@gmail.com>
+Date:   Thu May 1 20:28:48 2014 +0200
+
+    Optimize key-based Hash access for empty hashes
+    
+    This avoids performing the potentially expensive hash computation in
+    the event that the Hash is empty, as there cannot possibly be a match.
+
+commit e01f5a26cdaf2e7b02c077a591340aee51fb97e8
+Merge: d269590 1dfe3da
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu May 1 10:12:41 2014 -0500
+
+    merge github/jruby-1_7
+
+commit 1dfe3da8b7dfdd4ae15265033d1c66c794f0484e
+Merge: 78d80b5 e608e4b
+Author: Thomas E Enebo <tom.enebo@gmail.com>
+Date:   Thu May 1 10:11:56 2014 -0500
+
+    Merge pull request #1666 from godfat/jruby-1_7-no-copy-for-compare_by_identity
+    
+    Fix #1664 for Hash#compare_by_identity and Hash#store
+
+commit d269590c79eb56175689e1aea710956fa7472786
+Merge: ae5ad64 78d80b5
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu May 1 09:54:27 2014 -0500
+
+    largish merge from jruby-1_7
+
+commit f192d539a9b5517b990bff01dfbdf2181e8d63aa
+Author: Lucas Allan Amorim <lucas.allan@gmail.com>
+Date:   Sat Apr 26 13:37:14 2014 -0700
+
+    RubyHash#hash reverting the latest changes when it's a recursive call.
+
+commit cf51f9fdb52a5d3e837856779e7fbc004a3a7153
+Author: Lucas Allan Amorim <lucas.allan@gmail.com>
+Date:   Sat Apr 26 13:31:21 2014 -0700
+
+    RubyHash#hash fixing colisions when a hash contains itself.
+    
+    Thanks @atambo for the help.
+
+commit e608e4bcd34985b18d8d5607093a42015071a912
+Author: Lin Jen-Shin <godfat@godfat.org>
+Date:   Sun Apr 27 03:20:28 2014 +0800
+
+    Fix #1664 for Hash#compare_by_identity and Hash#store
+    
+    https://github.com/jruby/jruby/issues/1664
+    
+    Test in RubySpec:
+    https://github.com/rubyspec/rubyspec/pull/274
+
+commit f7c084a571db4b2cf57457562b906f8faadb6094
+Author: Lucas Allan Amorim <lucas.allan@gmail.com>
+Date:   Sat Apr 26 11:57:48 2014 -0700
+
+    Changing RubyHash#hash to use HashMap.hashCode to calculate the hash value.
+
+commit 5da5d2e6f591908f96908def74a45ec373f9d54c
+Author: Lucas Allan Amorim <lucas.allan@gmail.com>
+Date:   Thu Apr 24 16:52:49 2014 -0700
+
+    GH-1590 - Hash#hash should not return the hash size when keys & values are the same.
+
+commit 1d49d70911d57c4dc6f16f5528fa0b56c9b5a30d
+Merge: 2325d6d 7631cfc
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jan 14 12:56:30 2014 -0600
+
+    Merge remote-tracking branch 'origin/jruby-1_7'
+
+commit 7631cfce7cf7331119d1d62c544c0e130285fe07
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jan 14 12:54:01 2014 -0600
+
+    Duplicate kwargs hash before assignment logic. Fixes ##1403.
+    
+    Note that this implementation is much more costly than it should
+    be since it mutates the hash while it assigns variables. The new
+    duping makes it even more costly, but avoids the damage it caused
+    to the incoming hash.
+
+commit e3874527d3f8a0bd667a12b97fef9c2f331a61a6
+Merge: ce4fe6f 3d4bd86
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jan 10 15:46:30 2014 -0600
+
+    Merge remote-tracking branch 'origin/jruby-1_7'
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/RubyHash.java
+
+commit 3d4bd860ff7aa8c9c5ad66b9e4c12bd36319cbbd
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jan 10 15:41:59 2014 -0600
+
+    Temporary fix for cost of Hash#[] dynamically calling #default.
+    
+    This fix adds "default" to the list of methods we build up a
+    per-runtime set of call sites for. I consider this a temporary
+    fix because that set of sites is a matrix of class count * method
+    count, so adding default adds another entire row/column when it
+    will only be used from one class.
+    
+    It's clear we need some better logic for doing call site caching
+    for dynamic calls in Java code, but this will work for the moment.
+
+commit 368f75289d71d0a4cb1a4d3a1797f8462b8f25d0
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jan 3 01:34:07 2014 -0600
+
+    Do not eagerly dedup strings when doing identity comparison.
+
+commit aedcbc7b4024cf651a1df3bb65a8490a74a66562
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jan 3 00:40:25 2014 -0600
+
+    Implement deduplication of literal hash string keys.
+    
+    Because we know that string keys are immediately duplicated and
+    frozen we can use our freeze-dup cache of strings in the compiler
+    whenever we see a literal hash with literal string keys. This
+    avoids the overhead of duplicating and freezing literal strings
+    repeatedly, for a roughly 4x performance speedup on a 5-element
+    literal hash with literal string keys. In addition, this commit
+    modifies the normal freeze-dup process in Hash to use the dedup
+    cache added in 926ca89.
+    
+    This commit may introduce contention since the process of freeze-
+    duping string keys now must pass through the synchronized dedup
+    logic from 926ca89. We may need to reexamine that logic, or not
+    use it in the hash key string insertion freeze-duping.
+
+commit fbe18f5ed3a77ed4a6ea0494da598d09baf29879
+Author: Daniel Marcotte <dmarcotte@gmail.com>
+Date:   Thu Dec 5 18:10:03 2013 -0800
+
+    Java enumerators lazily compute Enumerator#size
+    
+    For internally created enumerators (i.e. created with
+    enumeratorizeWithSize), ensure that calls to Enumerator#size reflect the
+    current size of the underlying object being enumerated by
+    introducing a function type which can be lazily computed on calls to
+    Enumerator#size.
+
+commit 6c1dbdfac03821238ae238b8f16ca1cf98b93c0c
+Author: Daniel Marcotte <dmarcotte@gmail.com>
+Date:   Wed Nov 27 08:03:43 2013 -0800
+
+    Enumerator#size support for hashes
+
+commit ceb9b7ca80a6e22105e06aba2cd10b40c527e783
+Merge: d83c6c3 a2c0adb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Oct 30 09:48:03 2013 -0500
+
+    Merge branch 'jruby-1_7'
+
+commit a2c0adbd8d83234d86b97a097cc1535226365f9b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Oct 30 09:46:51 2013 -0500
+
+    New fix for #1182, plus a regression spec.
+    
+    Revert "Raise error if iteration ends without walking size elements."
+    
+    This reverts commit c4f13b5f395a97d6768f917fdeea18f9d61818f0.
+
+commit 1da1ca681acbf67fbaa4f44549931664f9f33dfd
+Merge: 675723e c4f13b5
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Oct 29 10:23:01 2013 -0500
+
+    Merge branch 'jruby-1_7'
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/RubyHash.java
+
+commit c4f13b5f395a97d6768f917fdeea18f9d61818f0
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Oct 29 10:20:53 2013 -0500
+
+    Raise error if iteration ends without walking size elements.
+    
+    Fixes #1182.
+
+commit 0ae87adbe04d5ff6d02f334a30fbd9308c19b09b
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Oct 8 14:11:19 2013 -0500
+
+    De-version Hash
+
+commit 697e6895affa646849a685ed58f6f84795c853aa
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Oct 4 23:37:52 2013 -0500
+
+    Eliminate calls to Ruby.is1_8 and is1_9.
+
+commit d1f89e004fdc78dff75407c82123e6c9e8b406bb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Sep 12 18:48:16 2013 +0200
+
+    Make ClassIndex into an enum, to prevent issues like #1004.
+
+commit 28c6fbc4e883bc1c9e9242d1da1cb2b785f55339
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 3 12:46:45 2013 -0500
+
+    Move to @mkristian's proposed layout, with some modifications.

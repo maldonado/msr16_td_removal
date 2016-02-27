@@ -1,0 +1,112 @@
+commit 564c53fe61a99b37894d7e1d8f94016cf2537b59
+Author: kares <self@kares.org>
+Date:   Sun Aug 16 19:15:34 2015 +0200
+
+    do not attempt running priviledged due BC (fixed since 1.46 ~ 5 years ago)
+
+commit 69f9741525255f629a8bde3e6f68376e0ca65e7c
+Merge: af7f58f b2d759a
+Author: kares <self@kares.org>
+Date:   Sun Aug 16 18:28:10 2015 +0200
+
+    Merge branch 'jruby-1_7'
+    
+    * jruby-1_7:
+      add declaring class methods for Java/Ruby on JavaConstructor
+      make the java method spec pass on Ruby > 1.9 (method names are symbols)
+      move and add some more Java 8 interface specs
+      use (Java 6+) compiler API instead of `javac` (to make sure right is used)
+      increase return type on internal method
+      re-use some code snippets within instance and meta java_send impls
+      move JavaProxyClassMethods from Java into JavaProxy instead
+      spec TypeError raised with java_send when there's a type mismatch
+      spec how Java array[].to_s behaves on non-byte[]
+      move byte[] proxy to_s into a specialized class
+      avoid e.printStackTrace + init native ex.cause and cleanup RubyDigest some
+      make require 'digest/bubblebabble' work (MRI compatibility)
+      Fix Digest bubblebabble incorrect output on empty string
+      Remove several layers on copying in babblebubble.
+      Add direct BubbleBabble power from OpenSSH
+      manually filter out matching callables with non-matching arguments length
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/ext/digest/RubyDigest.java
+    	core/src/main/java/org/jruby/javasupport/Java.java
+
+commit f05e55d91db1de90620fdcad36f34b6ae9d6c20d
+Author: kares <self@kares.org>
+Date:   Sat Aug 15 10:05:05 2015 +0200
+
+    avoid e.printStackTrace + init native ex.cause and cleanup RubyDigest some
+
+commit 80c359921e1d122838f7b66f387eb88613d397f8
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Mon May 18 23:20:08 2015 +0100
+
+    Remove several layers on copying in babblebubble.
+
+commit 679b2e30718984908bbc2005e87752e908bdfa06
+Author: Chris Heald <cheald@gmail.com>
+Date:   Fri Nov 7 11:43:12 2014 -0700
+
+    Add direct BubbleBabble power from OpenSSH
+
+commit 96fcca6b0e5f8f7373fde9c988801a0624c00ebe
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Mon May 18 23:20:08 2015 +0100
+
+    Remove several layers on copying in babblebubble.
+
+commit aa31b5f0258040aa5e6f97f73860ca14946a1ad0
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Nov 10 11:40:43 2014 -0600
+
+    Trivial add TC and use context over ctx
+
+commit 2f39afa6089f76a3b0958588afbf533197478156
+Author: Chris Heald <cheald@gmail.com>
+Date:   Fri Nov 7 11:43:12 2014 -0700
+
+    Add direct BubbleBabble power from OpenSSH
+
+commit ec084c67a1a7cc4d6c48b91b66a0a824d13c763c
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Nov 6 08:44:59 2014 -0600
+
+    Change ctx to context since we seem to uniformly call is context everywhere else
+
+commit 51a935edddd062718076185a7bfd3858d19b6128
+Author: Chris Heald <cheald@gmail.com>
+Date:   Thu Nov 6 02:14:54 2014 -0700
+
+    Instantly return false if comparing a Digest to a nil (ruby-core bug 9913)
+
+commit 5c6293c871e0b6b7dcce3458e7971dfc73d2004f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Nov 4 16:12:50 2014 -0600
+
+    Digest#hexdigest should produce US-ASCII strings.
+
+commit 9c758b4f31c0eeb50d77b3dad28438aca365e857
+Author: tduehr <tduehr@gmail.com>
+Date:   Thu Feb 27 21:54:56 2014 -0600
+
+    fix initialize visibility
+
+commit acf5d258db69e9ba73f329b809c0924d7e843c82
+Author: tduehr <tduehr@gmail.com>
+Date:   Thu Feb 20 16:22:22 2014 -0600
+
+    correct visibility of initialize* and respond_to_missing? methods
+
+commit e9a7df4f319b4f609ef6ff1c944663a0f4a95880
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Oct 10 11:54:02 2013 -0500
+
+    De-version String
+
+commit 28c6fbc4e883bc1c9e9242d1da1cb2b785f55339
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 3 12:46:45 2013 -0500
+
+    Move to @mkristian's proposed layout, with some modifications.

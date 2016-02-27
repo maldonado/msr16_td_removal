@@ -9,9 +9,9 @@ import psycopg2
 
 def get_repository_directory (project_name):
     switcher = {
-        "jruby": "/Users/evermal/git/jruby/",
-        "apache-ant": "/Users/evermal/git/ant/",
-        "apache-jmeter": "/Users/evermal/git/jmeter/",
+        "jruby": "/Users/evermal/git/mined_repos/jruby/",
+        "apache-ant": "/Users/evermal/git/mined_repos/ant/",
+        "apache-jmeter": "/Users/evermal/git/mined_repos/jmeter/",
     }
     return switcher.get(project_name)
 
@@ -22,6 +22,7 @@ connection = None
 connection = psycopg2.connect(host='localhost', port='5432', database='comment_classification', user='evermal', password='')
 cursor = connection.cursor()
 
+# cursor.execute("select a.project_name, a.file_name, b.repository_directory , a.commit_hash, a.author_date , a.file_checkout from git_commit a, git_log_files b where a.file_directory = b.file_directory order by a.project_name, a.author_date")
 cursor.execute("select a.project_name, a.file_name, b.repository_directory , a.commit_hash, a.author_date from git_commit a, git_log_files b where a.file_directory = b.file_directory and a.file_checkout is false order by a.project_name, a.author_date")
 results = cursor.fetchall()
 
@@ -36,9 +37,11 @@ for result in results:
     repository_directory = result[2]
     commit_hash          = result[3]
 
+    destination_path = file_version_per_commit_path + project_name +"/"+ file_name.replace('.java', '') + "/"
     git_checkout = "git checkout " + commit_hash
-    copy_file = "cp " + repository_directory + " " + file_version_per_commit_path + project_name +"/"+ commit_hash + ".java"
-    command = git_checkout +";"+ copy_file
+    create_destination_path = "mkdir -p " + destination_path
+    copy_file = "cp " + repository_directory + " " + destination_path + commit_hash + ".java"
+    command = git_checkout +";"+ create_destination_path +";"+ copy_file
         
     # print git_checkout
     # print copy_file

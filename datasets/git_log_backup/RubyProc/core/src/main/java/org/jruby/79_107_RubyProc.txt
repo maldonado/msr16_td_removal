@@ -1,0 +1,300 @@
+commit 2e8a323b27e6a71d5be03ba515553ccc327d4ac0
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri Jun 19 16:29:06 2015 -0500
+
+    RubyProc no longer stores file and name is ISourcePosition.
+
+commit b89e4a8505e7e7671f5dbcab6968fcd409a94672
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue May 12 17:03:15 2015 -0500
+
+    yay no more proc failures
+
+commit 75015198636efed0b7e0235bcc07913e687c44e1
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue May 12 14:29:58 2015 -0500
+
+    Fix Proc#arity failures in test:mri
+
+commit 5720901eb903635d8cd7cd60ef216ea277d0a082
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue May 12 14:01:43 2015 -0500
+
+    Fix MRI Proc.to_s failures
+
+commit 72c6c0b8226893575df7dd0d19912011541d7106
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri May 8 19:01:18 2015 -0500
+
+    Refactor argument metadata representation and rendering.
+
+commit 9000d2d1215d16a234300986e330570541a7e40f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri May 8 14:18:00 2015 -0500
+
+    Use a structure for IR argument descs, because OO.
+
+commit 4b213d7938e2950f970bdb9403d3205dc5cfe137
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu May 7 10:45:44 2015 -0500
+
+    Reduce usage of ZERO_ARGS by replacing with Signature.NO_ARGS checks.  Eliminate null checks for signature by passing in one to NullBlockBody
+
+commit c3adbd4b312e94bf7a854732d310aa98ad4a74b8
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed May 6 10:50:30 2015 -0500
+
+    Use signature in RubyProc.prepareArgs and not Arity
+
+commit 512b0a5ab4e129a2e05e6ca83113520252a0048a
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Apr 16 10:49:28 2015 -0500
+
+    StaticScope now has Signature instead of three individual fields.  All other
+    changes were made to support this.  We encode/decode scopes with a full
+    Signature.  Blocks are all rooted in providing a Signature.  All IR*Method
+    will provide a Signature.  Unfortunately, I stopped at IR level for method
+    types.  Over time those should get converted.
+    
+    This corrects all arity issues involving methods and blocks in interp.  JIT
+    is still somewhere passing in the wrong values but I will correct that in
+    a followup (this is not a regression).
+    
+    spec:fast:ruby and test:mri both pass so do JIT variants of those tests
+    but I strong suspect we are shelling out in some way and running some of
+    these tests in interp mode.
+    
+    On other note of distinction is that for builtin functions we only construct
+    a subset of information that Signature wants because Arity is only a subset
+    of the info Signature needs.  Since there are no exotic signatures in builtins
+    there is a Signature.from(Arity) which will convert to a reasonable analogue
+    or throw if it is special in some way.
+    
+    I tried to leave all deprecated versions of methods and constructors but
+    I might have spaced out a few.
+
+commit 367c2bcd7db1524833484db5af23bac92fa8a531
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Apr 14 16:19:21 2015 -0500
+
+    - DynamicScope+children removed no longer used {get,set}ArgValues methods since they are dead.
+    - ArgsNode getRest() replaced by hasRest() or retrieving getRestArgNode directly.
+    - Slight rearrangement internally of fields in ArgsNode.
+    - Remove accidental println from last commit.
+
+commit 76945ab7aab2cd17100aa5fdb6b0efe1fb4ecd5e
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Apr 14 15:12:40 2015 -0500
+
+    Moar documentation and a slight rearrangement of fields
+
+commit 870aa4a8fb4a589287c770597fa9b673389ba215
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Apr 9 12:28:52 2015 -0500
+
+    All IR blocks need this treatment, including jitted.
+
+commit af2e4db762bb2cefadf26eb76db853f5c7239690
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Apr 9 11:48:18 2015 -0500
+
+    Fixed remaining mri kwargs issues sans parsing bug (did not untag because of some JIT failures with kwargs)
+
+commit 4cdc6e92849f286722239edfe13ebfb1e55efd98
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Apr 8 17:23:25 2015 -0500
+
+    Convert kwarg arg via to_hash if not a hash.  procs should not strip off kwargs arg during prepareArguments
+
+commit 2025534e876f655ea00daff9d0251a0d072e800d
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Jan 19 13:45:37 2015 -0600
+
+    Make sure call19 path uses new Signature class for LAMBDA arity checking.
+
+commit 7e01a8653e59d34c76db7d13b6f9e7d4b37c696f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jan 9 15:33:45 2015 -0600
+
+    No need to preserve BacktraceElement object in Binding.
+    
+    Saves cloning it for every block and binding we instantiate!
+
+commit dad0ca518835438f326ef75a4bda5fd63bbb8746
+Author: Chris Heald <cheald@gmail.com>
+Date:   Mon Nov 10 17:05:11 2014 -0700
+
+    BasicObject#inspect no longer calls #to_s, per feature 6130.
+
+commit 8d2f6b362a10586d21835b836733eee38776225d
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Sep 24 15:28:10 2014 -0500
+
+    Remove dead jumptarget crud from old runtime
+
+commit a87d0c7102233c9ddd8c7e55b5e88cf30f4cc288
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Sep 23 13:55:38 2014 -0500
+
+    Implement error info, lambda, and encoding instructions.
+
+commit d3e134ce22368792dc138488fbc29dcfc1347050
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Sep 17 12:18:01 2014 -0500
+
+    Properly duplicate StaticScope for proc construction.
+
+commit 6225d60e792b3f60adbd76b15958ba3b221f2279
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Mon Jun 30 23:59:03 2014 -0500
+
+    Death to rubyclass stack: Part 2 of 2
+    
+    * This patch builds on the previous commit and eliminates all
+      traces of rubyclass stack from the codebase.
+    
+      - Remove the push/pop/get from thread-context and use sites.
+      - Removed klass arg from method calls.
+    
+    * TODO: embed used to inject values into the current-module obtained
+      from the rubyclass stack. That code needs investigation.
+    
+    * Replaced the hacky if (klass==null) prepareSelf(binding) calls
+      with information about actual execution context. The primary reason
+      to use binding.self instead of self argument in blocks is when
+      the block is being used in a binding-eval context. The same soln.
+      is applicable in other contexts where this pattern was used (and
+      currently marked with SSS FIXME annotations in code comments).
+    
+    * All tests continue to pass.
+
+commit e511995bc40a10cfa6e52dd902ee6dcb6c472bc5
+Merge: f854344 feb9540
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Feb 5 14:17:30 2014 -0600
+
+    Merge with jruby-1_7
+
+commit 9ff609f59fdc107336f20cdd41b09ab93311986d
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Feb 5 13:20:52 2014 -0600
+
+    Fixes #1485. NPE in a proc prints out stack trace
+
+commit a6afbfbc2d1d22d3c48a8ba0f1f9304bcf229ed9
+Author: Daniel Marcotte <dmarcotte@gmail.com>
+Date:   Tue Nov 5 08:06:09 2013 -0800
+
+    Centrally prep args for calls/yields
+    
+    Refactor to ensure at the BlockBody level that args are properly prepped
+    for calls and yields (arity checking for lambdas, arity trimming
+    for other blocks).  This doesn't guarantee all calling codepaths are
+    covered (an irresponsible override of some of BlockBody's methods can
+    get around it), but definitely moves in the right direction.
+    
+    This lets us delete some ad-hoc prepping we were doing, and fills some
+    gaps where args should have been prepped but were not (so, for instance,
+    we can untag the Enumerable#any test now that its block args are being
+    treated correctly).
+
+commit d87b1e769fee63ba233137d7d3a1fac13e3d8fe8
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Oct 21 14:34:49 2013 -0500
+
+    Reverting #1143. This has too many changes in one commit.  I will add some comments in #1143
+
+commit 7ad21e106453547cf8caa9e74f532db2bd45b833
+Author: Daniel Marcotte <dmarcotte@gmail.com>
+Date:   Sun Oct 20 14:39:59 2013 -0700
+
+    Improve consistency/correctness of arg handling
+    
+    Employ RubyProc.prepareArgs in a very central place, improving
+    consistency of how args are handled between both yield and block.call.
+    
+    This involves migrating many calls to pass an IRubyObject[] of args
+    rather than prematurely wrapping that array in a RubyArray (which makes
+    it impossible for deeper calls to determine if they have one Array arg,
+    or multiple args).
+    
+    As an added side effect, JavaInternalBlockBody now gets correct arg
+    treatment, and can be used to get RubyEnumerable cleaner and fully
+    rubyspec-compliant.
+
+commit 2e6f0f424cb15c803a1dcefac17eeca33b837d62
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Oct 7 16:38:35 2013 -0500
+
+    De-version Proc
+
+commit d1f89e004fdc78dff75407c82123e6c9e8b406bb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Sep 12 18:48:16 2013 +0200
+
+    Make ClassIndex into an enum, to prevent issues like #1004.
+
+commit 901b47a664f31cfd96ccd938c68f188d01397495
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Sep 12 20:26:56 2013 +0200
+
+    Always clone the block + frame for define_method. Fixes #1000.
+    
+    When executing a method defined via define_method, the current
+    logic passes in a self to use. This self gets set into the binding
+    so that further down the stack the block invocation knows to use
+    the binding self as the actual self.
+    
+    Work done for 1.7.5 to reduce frame costs increased the places
+    where we share a frame object and don't duplicate it across calls.
+    this caused define_method bodies to share a binding and frame for
+    every call, with multiple threads potentially stepping on each
+    other as they prepare and use that frame.
+    
+    This commit makes the inner "call" method in RubyProc always
+    clone both the block and the frame if it intends to set the self
+    of the binding. This effectively isolates define_method body calls
+    from one another, avoiding the threading issue.
+    
+    It has a side effect of breaking backref/lastline sharing across
+    define_method calls, which may or may not be a problem; MRI does
+    do this sharing, and it basically makes backref/lastline totally
+    unreliable and unusable within a define_method body. The current
+    logic makes it impossible to share backref/lastline and not share
+    self.
+    
+    We should audit how self is being mutated on binding and frame
+    throughout the system and see if there's a way to stop doing that.
+    Removing the self mutation would be far better than having to
+    clone every time.
+
+commit fcfa4e7260ec1b757da81cac350f8b3ac2aa07fb
+Merge: a0e1040 91c11f0
+Author: Thomas E Enebo <tom.enebo@gmail.com>
+Date:   Wed Aug 28 09:36:03 2013 -0700
+
+    Merge pull request #928 from dmarcotte/yield-args
+    
+    More arg-handling improvements for Enumerables
+
+commit e5ffaaf0b6b99209cab82f5f7066f27067561201
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Aug 20 13:27:35 2013 -0500
+
+    Fixes to get all 1.9 specs passing again.
+
+commit 91c11f049d070f60397f72df54104d999e461da4
+Author: Daniel Marcotte <dmarcotte@gmail.com>
+Date:   Mon Jul 29 19:36:32 2013 -0700
+
+    Some yield arg-handling improvements
+    
+    Make Enumerable#all, #none, #one, and #find_index behave to spec in the
+    case of #each yielding multiple values (also remove zip_tags.txt while
+    we're in there since it's passing)
+
+commit 28c6fbc4e883bc1c9e9242d1da1cb2b785f55339
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 3 12:46:45 2013 -0500
+
+    Move to @mkristian's proposed layout, with some modifications.

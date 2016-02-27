@@ -1,0 +1,296 @@
+commit cee51919b5692dc0e8283705c14a9664d333128d
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Apr 24 15:23:38 2013 -0500
+
+    At a minimum have parser treat source as UTF-8 by default in 2.0 mode
+
+commit 61678ac1a2514a9932276f8d527816a5980a94b3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Feb 25 20:41:40 2013 +1100
+
+    Fix more references to CPL.
+    
+    The phrase "Common Public License" was split across two lines in
+    our default header, which caused it to be missed during earlier
+    search/replace. Also, we did not replace the CPL URL in the
+    header with the EPL URL.
+
+commit 330fef3b0fc18af477ccea19bd278669667f31bb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 12 14:49:29 2013 -0600
+
+    Switch JRuby's CPL license to EPL.
+    
+    Governance of the CPL license was moved to the Eclipse Foundation
+    at some point in the past, and Eclipse blessed the EPL (Eclipse
+    Public License v1.0) as the successor to CPL. Because the CPL
+    contains a clause allowing transparent upgrades to future blessed
+    successor licenses, we can make the move to EPL without
+    re-contacting past contributors.
+    
+    The change in going from CPL to EPL largely just removes some
+    punitive language that apparently made many companies nervous. All
+    other language in the license remains identical.
+    
+    Several documents about Eclipse's move from CPL to EPL are here:
+    
+    http://www.eclipse.org/legal/cpl2epl/
+    
+    Note that Eclipse's move came before the blessing of EPL as the
+    upgrade path for CPL, so they had to do a bit more legal juggling.
+    With Eclipse now the administrator of CPL and with their blessing
+    of EPL as the upgrade path for CPL, all we need to do is make the
+    move.
+
+commit f7d796e4b384803d24a47d6591e4061600c6858b
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Dec 17 13:32:40 2012 -0600
+
+    trivial: unused imports
+
+commit 93d09db0c216be917aaaf1def7f5576b3c9bc2c3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Aug 29 10:30:54 2012 -0500
+
+    Fix JRUBY-6868
+    
+    Exceptions thrown when running with Coverage enabled
+    
+    * Empty files should add an empty Integer[] array to the coverage
+    data "lines" table.
+    
+    * Negative line numbers should be ignored.
+
+commit 8c0e98c239c0ce29762b0522d7f16ac929f767c5
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Aug 22 17:01:06 2012 -0500
+
+    Fix JRUBY-6106
+    
+    JRuby 1.9 coverage library reports different results than ruby 1.9
+    
+    I have a basic understanding now of how MRI handles 'coverage'.
+    
+    Coverage support is turned on by loading the 'coverage' extension.
+    This sets a global "rb_coverages" to non-nil, as a Hash.
+    
+    At parse time, files parsed are added to the coverages hash as
+    having 'nil' for all lines. Files parsed before the 'coverage' ext
+    is loaded are not added to this hash. This is the first behavioral
+    difference in JRuby, since we're just adding lines to coverage for
+    any file+line encountered, regardless of whether the file was
+    loaded before or after 'coverage' ext loaded. See parse.y,
+    "coverage" function, called from yycompile0 to set up the array
+    for that file.
+    
+    At compile time (after parse) code lines get reset to zeros
+    whenever that line would potentially trigger a "line" event in
+    trace hooks. This is in compile.c in the ADD_TRACE macro.
+    Essentially, compile.c adds the tracing logic as it goes only to
+    the lines that should trigger a line event, and at the same time
+    zeros out that line in the coverages array.
+    
+    The determination of a "code line" happens in compile.c in the
+    iseq_compile_each function, right at the top, where it determines
+    the line is a newline.
+    
+        if (node->flags & NODE_FL_NEWLINE) {
+    	ADD_TRACE(ret, nd_line(node), RUBY_EVENT_LINE);
+        }
+    
+    So for every actual NEWLINE node in the AST, the according line in
+    the coverages array is reset to zero.
+    
+    Assuming our set of newline nodes matches MRI's (questionable), it
+    should basically mean we just need to do the same zeroing of the
+    according line when we construct a NewlineNode in our parser.
+    
+    The changes I made:
+    
+    * In ParserSupport.newline_node, call
+    ParserConfiguration.coverLine with the appropriate line number
+    
+    * In ParserConfiguration.coverLine, maintain a growing Integer[]
+    as lines are encountered. Zero the line being covered.
+    
+    * In Parser, at the end of parse associate the filename with that
+    Integer[] only if coverage is enabled.
+    
+    * In CoverageData's LINE event hook, only update lines for files
+    that already have an associated Integer[].
+    
+    This should basically mimic MRI's behavior, modulo any newline
+    nodes we're missing (which is an open question).
+    
+    There are a few places outside newline_node where we create
+    newlines. I did not add coverage calls there, because I'm unsure
+    if they're intended to be visitable lines or if they're outside of
+    normal executable code.
+
+commit 4a8330815c3e6fc5407b424312fd7d65518203fc
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Oct 26 10:10:14 2011 -0500
+
+    Cleanup and centralize all property-based configuration settings.
+    
+    Properties for JRuby are now all in one location, combined with information
+    on valid options, defaults, and description. All properties going forward
+    should follow the same format, to ensure they're documented in the jruby
+    --properties output.
+    
+    I have added to this new form all properties I thought were interesting to
+    expose. There are a few still hidden that may be deleted soon.
+    
+    I also removed some long-defunct properties and removed unused code that related
+    to them.
+
+commit f592cbbfae1186c42fb9e0545e2d9c394e73312f
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Oct 10 16:42:24 2011 -0500
+
+    Use factory for standing up static scopes
+
+commit 4807459e7a2458de246cb41104075c10c5d0fafb
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Mon Sep 26 13:54:42 2011 -0500
+
+    * Added allocation methods to StaticScope to allocate the appropriate
+      static scopes and protected LocalStaticScope, BlockStaticScope and
+      EvalStaticScope constructors.  This will now let us allocate
+      IR-specific static scopes that IR execution requires.
+    * Also added isBlockScope test on StaticScope to eliminate instanceof
+      tests against BlockStaticScope and LocalStaticScope.
+    * Hand-patched auto-generated files Ruby19Parser.java and
+      DynamicScope.java.
+
+commit 957e62d5a7587e583dfeb1ba97edab7fd448ae49
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Apr 5 14:41:04 2011 -0500
+
+    Fix JRUBY-5694: DATA points to wrong file
+    
+    * We were setting up DATA for every file loaded.
+
+commit 5f8bfc2ce908349fee11f6c14b2535fff1e3e968
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Jan 27 01:29:52 2011 -0600
+
+    Fix JRUBY-5346: jruby 1.6.0.RC1 doesn't recognize multibyte strings in 1.9 branch
+    
+    * inline scripts should assume locale's encoding in 1.9 mode.
+
+commit 11440c3aef65e6540bda1453aeb349193d8fe56b
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Jan 3 13:02:14 2011 -0600
+
+    regexp in 1.9 will throw error during parse
+
+commit 52192272b2f4afbc7bae4b6ab4c81eb24a098c8e
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Dec 9 13:10:33 2010 -0600
+
+    Initial stab at magic comments...bleh
+
+commit d63cc4db5bf5e1c4c029cf3ae034fd75b256de47
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Mon Feb 16 17:19:47 2009 +0000
+
+    JRUBY-3410: Add -y flag to debug the parser
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9194 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit bdbfba1faa96809dfb2efdecce491ef3d94afb01
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Mon Dec 1 22:34:27 2008 +0000
+
+    JRUBY-2324: AST Node positions and content incorrect when passing down Multibyte content to lexer (syntax exception part)
+    Possibly also JRUBY-2484
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8237 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit bf8db0bc4acaeed7900b867e821e959f254be0be
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sat Nov 22 22:57:11 2008 +0000
+
+    Biggest commit eva (1.9 parser+1.9-runtime-related-changes landing)
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8099 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 3511ca4d7eda0f7cdc919dd630e2b3e54f91ed35
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Aug 2 20:55:03 2008 +0000
+
+    Allow enabling Duby parser extensions from command line.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7352 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 461f09837930b56b2276e3823cfef0324892982a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Mar 25 00:57:25 2008 +0000
+
+    Fixes to support Tom's modified syntax plus the actual parser changes themselves.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6334 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d237a30fee4b2a8b2a34303eea80583c8a8872fd
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Nov 24 12:39:37 2007 +0000
+
+    Added no-var and two-var versions of DynamicScope.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5019 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit ec4f90b7e092bb1469913ee818c3dcaf2a7c5070
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Nov 24 04:50:54 2007 +0000
+
+    Based on discoveries by Marcin, confirmed by Ola, adding capability for separate DynamicScope implementations that use fields instead of an array for scopes with small numbers of variables. This primarily improves compiled performance, since the compiler can statically dispatch to methods that amount to little more than field access. I will add additional DynamicScope impls for 0, 2, and 3 variable scopes.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5015 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 16e5550655d971eca1eeea0a2fe8794b86928b97
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Thu Oct 25 18:14:24 2007 +0000
+
+    Lexer jumbo patch.  Speeds up general parsing 10-15%.  Cold parses are about 30% faster.   Code has been refactored to the point that additional optimizations can be considered (like bytelist identifiers for alloc-less identifiers; same for uninterpolated string nodes).
+    
+    intern'ing of identifiers now happen in lexer rather than being smattered through AST
+    Reader -> InputStream for LexerSource
+    A new ByteList LexerSource for evals
+    
+    Additional bugs fixed:
+    JRUBY-1408: JRuby crashes with error: can't find string "EOF" anywhere before EOF (SyntaxError)
+    JRUBY-1443: Wrong position information for a CallNode with parentheses
+    JRUBY-1435: YieldNodes sometimes have wrong position information
+    JRUBY-1416: eval of a "proc" with setting the line number for something lower than 1 to adjust the line number causes "java.lang.ArrayIndexOutOfBoundsException: -1 (NativeException)"
+    JRUBY-1432: NFE from RubyYaccLexer.yylex
+    
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4731 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 47f0d75fbf8f6519ed3527d077e724f0b9264552
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Wed Aug 29 21:20:40 2007 +0000
+
+    NodeTypes now and enum called NodeType
+    Various warning removal
+    Minor Block refactoring
+    More boilerplate fixing
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4233 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit b317014af9c399cd10981d94ff398bb0cabfaf7a
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Mon Jul 16 18:20:31 2007 +0000
+
+    JRUBY-877: Sources not available during command-line debugging
+    
+    Parser interface juggling
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4033 961051c9-f516-0410-bf72-c9f7e237a7b7

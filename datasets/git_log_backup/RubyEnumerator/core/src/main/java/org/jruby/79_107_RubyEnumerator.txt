@@ -1,0 +1,288 @@
+commit 7df3e56395cf4dbd1d22089726680bb890adfcd9
+Merge: e810614 967ca40
+Author: kares <self@kares.org>
+Date:   Fri Jun 5 14:20:44 2015 +0200
+
+    Merge branch 'jruby-1_7'
+    
+    * jruby-1_7: (38 commits)
+      basic BigDecimal sub-class test ... all working the same as MRI 1.8/1.9
+      avoid deprecated newInstance + one less pattern to match on BigDecimal.new
+      [bigdecimal] keep the simplified newInstance backport 1.8 compatible
+      [bigdecimal] backport simplified newInstance impl from master
+      minor BigDecimal code cleanup
+      handle big decimal ** float value calculation (with Java double math) ... since we're now not raising users should get ~ the value they expect (closing #1967)
+      static-ize and simplify private helpers
+      BigDecimal should not raise error on pow/** with float arg (under 1.9 #1967)
+      some more (internal) RubyBigDecimal dry-ing / tidy-ing
+      do coercion on * and / (same as MRI has been doing since 1.8) ... fixes #2538
+      handle BigDecimal cmp failure compatibly with MRI (fixes #2539)
+      pass around context in BigDecimal impl + simplify cmp method's code
+      move JI java.mat.BigDecimal test out of Ruby's BigDecimal tests
+      [travis-ci] test-extended on jdk8
+      if current directory is inside the classloader a spawn jruby process should do the same
+      use the new bin stubs from new rubygems
+      set ENV['RUBY'] when jruby.home is not regular directory
+      Add support for http.nonProxyHosts and rework ENV_JAVA support.
+      pik the right class in URLResourceTest
+      use new JRuby.create to load script from command line script source
+      ...
+    
+    Conflicts:
+    	.travis.yml
+    	core/src/main/java/org/jruby/RubyDir.java
+    	core/src/main/java/org/jruby/RubyEnumerable.java
+    	core/src/main/java/org/jruby/RubyEnumerator.java
+    	core/src/main/java/org/jruby/RubyHash.java
+    	core/src/main/java/org/jruby/RubyInstanceConfig.java
+    	core/src/main/java/org/jruby/RubyModule.java
+    	core/src/main/java/org/jruby/ext/bigdecimal/RubyBigDecimal.java
+    	core/src/main/java/org/jruby/util/ClasspathResource.java
+    	core/src/main/java/org/jruby/util/URLResource.java
+    	core/src/test/java/org/jruby/util/URLResourceTest.java
+    	lib/ruby/2.0/net/http.rb
+    	lib/ruby/2.0/uri/generic.rb
+    	maven/jruby/src/it/runnable/spec/one_spec.rb
+    	test/test_backquote.rb
+    	test/test_big_decimal.rb
+    	test/test_dir.rb
+    	test/test_file.rb
+    	test/test_higher_javasupport.rb
+    	test/test_load.rb
+
+commit 9ea98e9eca0e9b7d080e0cf045108e8ae9204a0b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jun 3 14:29:10 2015 -0500
+
+    Return Enumerator self calling #each with no block. Fixes #3009.
+
+commit cd30b12b4bc1f51200c6b297c3973a4d5c8f8190
+Author: kares <self@kares.org>
+Date:   Thu May 28 10:42:52 2015 +0200
+
+    minor RubyEnumerable internals cleanup - less runtime fields in inner callbacks
+
+commit 512b0a5ab4e129a2e05e6ca83113520252a0048a
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Apr 16 10:49:28 2015 -0500
+
+    StaticScope now has Signature instead of three individual fields.  All other
+    changes were made to support this.  We encode/decode scopes with a full
+    Signature.  Blocks are all rooted in providing a Signature.  All IR*Method
+    will provide a Signature.  Unfortunately, I stopped at IR level for method
+    types.  Over time those should get converted.
+    
+    This corrects all arity issues involving methods and blocks in interp.  JIT
+    is still somewhere passing in the wrong values but I will correct that in
+    a followup (this is not a regression).
+    
+    spec:fast:ruby and test:mri both pass so do JIT variants of those tests
+    but I strong suspect we are shelling out in some way and running some of
+    these tests in interp mode.
+    
+    On other note of distinction is that for builtin functions we only construct
+    a subset of information that Signature wants because Arity is only a subset
+    of the info Signature needs.  Since there are no exotic signatures in builtins
+    there is a Signature.from(Arity) which will convert to a reasonable analogue
+    or throw if it is special in some way.
+    
+    I tried to leave all deprecated versions of methods and constructors but
+    I might have spaced out a few.
+
+commit b27868aa7137ab68eec2076b3ae9b9e8d42d6129
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Sat Feb 14 09:51:40 2015 -0600
+
+    Some more $! save/restore fixes + add comments for all of them
+
+commit 21e03b3eb12e423fe543f007d5e6195c462ff32f
+Author: Smit Shah <who828@gmail.com>
+Date:   Sat Feb 7 23:05:08 2015 +0530
+
+    Fix the bug with size with each_slice without block
+
+commit 38c8c496ab90f813d40a9c33d784521f939e9ac3
+Author: Smit Shah <who828@gmail.com>
+Date:   Thu Jan 22 02:20:19 2015 +0530
+
+    Reduce getRuntime/context.runtime calls for better performance
+
+commit 54127f2856a3ecb0cb35e1f3ca5b0e467c14fd86
+Author: Smit Shah <who828@gmail.com>
+Date:   Thu Jan 22 02:01:01 2015 +0530
+
+    Set feedValue to nil for Enumerator#next_values method as well
+
+commit b9491ce78abd657f042a10ad5c5de4959d8df082
+Author: Smit Shah <who828@gmail.com>
+Date:   Tue Jan 20 09:37:31 2015 +0530
+
+    Implemented Enumerator#feed method
+
+commit c41b90cfcffa62bed94db9e99cdbd67d05a97ce8
+Author: Smit Shah <who828@gmail.com>
+Date:   Sun Jan 18 09:13:04 2015 +0530
+
+    Implemented Enumerator#next_values
+
+commit aa3e89d08d81f38ba31ed8eb006725b90a29a057
+Author: Smit Shah <who828@gmail.com>
+Date:   Sun Jan 18 09:12:46 2015 +0530
+
+    Implemented Enumerator#peek_values
+
+commit 4b89ab914d37eb2208ebf3d6f03eb5b3549bb66d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Jan 15 19:07:27 2015 -0600
+
+    Use a different exception for Enumerator termination.
+    
+    We are trying to eliminate these JumpException subclasses.
+
+commit f8da2dde9c2e8c329f5e4257534d4248c8d2bc96
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 9 15:58:20 2014 -0500
+
+    Fix and add logging in RubyEnumerator.
+
+commit 1c09ad7a3d65189776c13de9c6cd6a6aebbf5fa8
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Tue May 13 19:10:26 2014 -0500
+
+    ISSUE 1601: save/restore $! properly in the runtime
+    
+    * Eliminates one more rubyspec error -- now down to to one
+      failure before rubyspec run is green in IR mode.
+    
+    * This also fixes the error with "bundle exec rake" with the
+      gem "analytics-ruby" line in Gemfile in IR mode (reported
+      by nirvdrum on IRC).
+    
+    * This still requires another set of eyes going over all the
+      files and see if other instances have been missed.
+
+commit 55727ef5a43fecbda9d381cb59b0060be54372f4
+Merge: bd33698 6c64769
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 18 12:42:45 2014 -0600
+
+    Merge remote-tracking branch 'origin/jruby-1_7'
+    
+    Conflicts:
+    	spec/regression/GH-1075_fiber_does_not_finalize_properly_spec.rb
+
+commit 46b148d51e7e92cb7defb341d4b37b82031144a9
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 18 11:04:15 2014 -0600
+
+    Minor tweaks for Fiber, Enumerator, and a fiber spec.
+    
+    * Fiber yielding against a dead queue should raise before trying
+      to exchange.
+    * Enumerator should use fiber executor.
+    * Fix "abandoned fibers" test to reflect new thread pooling.
+
+commit ca45b0cd0e6f1f73de7de0764d0c5de32b42f443
+Merge: de88bde 2e7054b
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Sun Dec 15 10:56:56 2013 -0600
+
+    Merge with jruby-1_7 for Enumerator#peek fix
+
+commit c7e9d05cc2bd888f669ad16c5b37886661d395d5
+Author: Lucas Allan Amorim <lucas.allan@gmail.com>
+Date:   Fri Dec 13 18:44:04 2013 -0800
+
+    Fixing Enumerator#peek behaviour. When the Enumerator position is already at the end and method peek is called then JRuby was throwing a NullPointerException. But the correct behaviour should be raise a StopIteration.
+
+commit ea74bee3b1c3bbd20d86f112a466e43e6e5475fc
+Merge: 0004d77 8db840c
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri Dec 13 10:39:42 2013 -0600
+
+    Merge with jruby-1_7
+
+commit 9e708279a7f37fd5edbc0c4d5190f2c94147b759
+Author: Daniel Marcotte <dmarcotte@gmail.com>
+Date:   Thu Dec 12 09:00:22 2013 -0800
+
+    #enum_slice and #enum_cons are 1.8-only
+
+commit fbe18f5ed3a77ed4a6ea0494da598d09baf29879
+Author: Daniel Marcotte <dmarcotte@gmail.com>
+Date:   Thu Dec 5 18:10:03 2013 -0800
+
+    Java enumerators lazily compute Enumerator#size
+    
+    For internally created enumerators (i.e. created with
+    enumeratorizeWithSize), ensure that calls to Enumerator#size reflect the
+    current size of the underlying object being enumerated by
+    introducing a function type which can be lazily computed on calls to
+    Enumerator#size.
+
+commit 9b1db76d290e21835ef39d14bdee869fadf194cc
+Author: Daniel Marcotte <dmarcotte@gmail.com>
+Date:   Fri Nov 22 18:02:32 2013 -0800
+
+    2.0 Enumerator#size compatibility enhancements
+    
+    Update enum constructors for 2.0, and ensure in a number of cases that
+    we keep the size when we enumeratorize (note: there's still a number
+    of other enumeratorize calls which will be addressed in a later commit)
+
+commit 1d3204ea4fc034010ba393f6afb11f8a7d8ec76d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Nov 12 15:24:36 2013 -0600
+
+    Remove old Generator impl, move toward unifying coroutine logic.
+    
+    The old Enumerator#next logic used our internal Generator impl,
+    which proved eventually to be leaky and slow. As of JRuby 1.7.5,
+    Enumerator#next moved to a Java implementation that was both
+    faster and better about cleaning up dangling instances, but the
+    block form of Enumerator.new still used the old Generator logic.
+    
+    This commit eliminates the old coroutine-based Generator in favor
+    of a trivial version matching Ruby 1.9+. The block forms of
+    Enumerator.new now create this trivial Generator and then fall
+    into the same "Nexter" logic introduced in 1.7.5 for #next.
+
+commit 4405767d2a976740d5f8e36871439af35ea644d1
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Oct 8 13:32:03 2013 -0500
+
+    Whoops extra old 1.9 anno binding
+
+commit 79ed2ee4634d33d25fe92a740289ae415866f10f
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Oct 8 13:03:08 2013 -0500
+
+    De-version Enumerator
+
+commit 697e6895affa646849a685ed58f6f84795c853aa
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Oct 4 23:37:52 2013 -0500
+
+    Eliminate calls to Ruby.is1_8 and is1_9.
+
+commit 5dab55036152f2471ed62891f5e6d86718860587
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Oct 3 07:54:35 2013 -0500
+
+    Invoke super.finalize() in RubyEnumerator's finalize.
+
+commit 91c11f049d070f60397f72df54104d999e461da4
+Author: Daniel Marcotte <dmarcotte@gmail.com>
+Date:   Mon Jul 29 19:36:32 2013 -0700
+
+    Some yield arg-handling improvements
+    
+    Make Enumerable#all, #none, #one, and #find_index behave to spec in the
+    case of #each yielding multiple values (also remove zip_tags.txt while
+    we're in there since it's passing)
+
+commit 28c6fbc4e883bc1c9e9242d1da1cb2b785f55339
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 3 12:46:45 2013 -0500
+
+    Move to @mkristian's proposed layout, with some modifications.

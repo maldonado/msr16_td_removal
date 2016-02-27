@@ -1,0 +1,1132 @@
+commit a9557fffd26a63191d73db44fcfaefb76d758db2
+Merge: 2187665 5df5491
+Author: kares <self@kares.org>
+Date:   Thu Aug 6 16:58:56 2015 +0200
+
+    Merge branch 'jruby-1_7'
+    
+    * jruby-1_7:
+      avoid (expensive) replaceAll when char replace is possible
+      little BacktraceData#transformBacktrace cleanup
+      avoid Pattern compiling on every BacktraceData construction - use startsWith
+      use static helpers in OSEnvironment for slightly less empty map garbage
+      Hack --2.0 net/http gzip problem to avoid multiple version refactoring hell (Fixes #1595, #1216)
+      Revert "[build] do not use maven-rc"
+      use EMPTY_MAP instead of new (temporary) HashMap instance
+      avoid getRuntime() in RubyHash#to_h
+      minor cleanup at RubyGlobal
+      for better ENV compatibility we should not respond to `to_h` on <= 1.9.3
+      ensure that ENV.to_h duplicates the env per MRI ruby
+      add failing spec for to_h not duplicating
+      [build] do not use maven-rc
+      improve test on whether jrubyHome is inside a jar
+      Fix NPE when getting parameter.
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/RubyGlobal.java
+    	core/src/main/java/org/jruby/runtime/backtrace/BacktraceData.java
+    	core/src/main/java/org/jruby/util/OSEnvironment.java
+    	ext/readline/src/main/java/org/jruby/JRubyApplet.java
+    	lib/ruby/2.0/net/http/response.rb
+
+commit ee8ed2ca0ba16c9f625e3336f6846a99a3d37bdb
+Author: Christian Meier <m.kristian@web.de>
+Date:   Tue Aug 4 21:45:58 2015 +0200
+
+    improve test on whether jrubyHome is inside a jar
+    
+    this fixes issue #3220
+    
+    Sponsored by Lookout Inc.
+
+commit 449377cf55576e08cc679843e6cc7782454f532d
+Merge: 0be4796 83c47ba
+Author: kares <self@kares.org>
+Date:   Sat Jul 25 22:28:18 2015 +0200
+
+    Merge branch 'jruby-1_7'
+    
+    * jruby-1_7: (40 commits)
+      keep the provider in a local while terminating + missing @Override
+      un-used imports
+      close (URLClassLoader's) resources on JRubyClassLoader#tearDown on Java 7+
+      only re-wrap non-runtime exceptions in getJDBCDriverUnloader
+      depreacate JRubyClassLoader's getJDBCDriverUnloader (its un-used - but still should not be part of public API)
+      review the WeakHashSet impl + add missing (useful) methods: equals, toString, ...
+      correct javadoc and generix-ize the guts of WeakValued map-like collections
+      JavaMethod's (redundant) arityValue field is only used in ReflectedJavaMethod
+      Add test for packages of classes in nested JARs
+      Define packages for classes in nested JARs
+      fixes expand_path on relative reference and inside uri:classloader: as CWD
+      detect uri-like paths better for File.expand_path
+      fixes commandline execution of internal java -cp ... org.jruby.Main command
+      get classloader root url right without an trailing slash
+      added nested IsolatedScriptingContainer via jruby-mains test
+      make it 1.8 compatible
+      you can not close classloaders on jdk6
+      extracted the classloader to uri-like path into helper class
+      have no side effects when creating instance of IsolatedScriptingContainer
+      remove some import jul left-overs + finalize accessibleObject() on JavaMethod
+      ...
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/Ruby.java
+    	core/src/main/java/org/jruby/RubyInstanceConfig.java
+    	core/src/main/java/org/jruby/compiler/JITCompiler.java
+    	core/src/main/java/org/jruby/embed/IsolatedScriptingContainer.java
+    	core/src/main/java/org/jruby/embed/ScriptingContainer.java
+    	core/src/main/java/org/jruby/internal/runtime/methods/JavaMethod.java
+    	core/src/main/java/org/jruby/internal/runtime/methods/ReflectedJavaMethod.java
+    	core/src/main/java/org/jruby/javasupport/JavaEmbedUtils.java
+    	core/src/main/java/org/jruby/util/ClassCache.java
+    	core/src/main/java/org/jruby/util/JRubyClassLoader.java
+    	core/src/main/java/org/jruby/util/cli/Options.java
+    	core/src/main/ruby/jruby/kernel19/kernel.rb
+    	lib/ruby/1.9/date.rb
+    	lib/ruby/shared/rubygems/defaults/jruby.rb
+    	maven/jruby-complete/src/it/integrity/pom.xml
+    	maven/jruby-complete/src/templates/osgi_many_bundles_with_embedded_gems/test/src/test/java/org/jruby/embed/osgi/test/JRubyOsgiEmbedTest.java
+    	maven/jruby/src/it/runnable/spec/one_spec.rb
+    	maven/jruby/src/templates/osgi_all_inclusive/src/test/java/org/jruby/embed/osgi/test/JRubyOsgiEmbedTest.java
+    	test/test_file.rb
+    	test/test_load.rb
+
+commit 21a9cbe3b8d53a929474d9c64c4541afc71c9738
+Author: Christian Meier <m.kristian@web.de>
+Date:   Fri Jul 24 15:45:40 2015 +0200
+
+    fixes expand_path on relative reference and inside uri:classloader: as CWD
+    
+    using JRubyFile instead of regular File helps to keep the uri-like
+    paths intact.
+    
+    fixes #3176
+    
+    Sponsored by Lookout Inc.
+
+commit 0832a7c997cd47a4a558282efc6cc14313dfa555
+Author: Christian Meier <m.kristian@web.de>
+Date:   Fri Jul 24 14:37:20 2015 +0200
+
+    detect uri-like paths better for File.expand_path
+    
+    whether second argument of File.expand_path('foo', Pathname.new('uri:classloader:/'))
+    is ruby string or pathname, the result should be the same.
+    
+    fixes #3150
+    
+    Sponsored by Lookout Inc.
+
+commit da5dad6a960425375a2921c54fccd55971250076
+Merge: dfdfb54 ec3fc6b
+Author: Christian Meier <m.kristian@web.de>
+Date:   Mon Jul 6 15:51:02 2015 +0200
+
+    Merge branch 'jruby-1_7' into work
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/RubyBignum.java
+    	core/src/main/java/org/jruby/RubyIO.java
+    	core/src/main/java/org/jruby/ext/socket/Addrinfo.java
+    	lib/ruby/1.8/pathname.rb
+    	lib/ruby/1.9/pathname.rb
+    	test/jruby.1.8.index
+    	test/jruby.1.9.index
+    	test/test_file.rb
+    	test/test_load_gem_extensions.rb
+
+commit ee07ad67c99e408b84fe293051c0be5429329f66
+Author: Christian Meier <m.kristian@web.de>
+Date:   Thu Jul 2 18:37:55 2015 +0200
+
+    fix File.basename and Pathname#root? and Pathname#absolute? for uri-like paths
+    
+    on the root of the uri-like paths basename will return the path as is. with this
+    and some extra pattern for detecting the root Pathname does calulate root? and
+    absolute? correctly
+    
+    Sponsored by Lookout Inc.
+
+commit 7e7292e632bd66a95fed78b37e73d6e63f90d631
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Jul 2 11:14:40 2015 -0500
+
+    File.realdirpath and Kernel#require_relative should resolve links.
+    
+    Fixes #3092
+
+commit 2e28c9cebea6e3dc810eb0dca941093820275112
+Merge: c8a1836 7f1739b
+Author: Christian Meier <m.kristian@web.de>
+Date:   Thu Jun 18 14:08:58 2015 +0200
+
+    Merge branch 'jruby-1_7'
+    
+    Conflicts:
+    	.travis.yml
+    	core/src/main/java/org/jruby/RubyInstanceConfig.java
+    	core/src/main/java/org/jruby/embed/ScriptingContainer.java
+    	core/src/main/java/org/jruby/ext/zlib/JZlibRubyGzipReader.java
+    	core/src/main/java/org/jruby/util/JRubyFile.java
+    	core/src/main/java/org/jruby/util/cli/ArgumentProcessor.java
+    	core/src/test/java/org/jruby/embed/ScriptingContainerTest.java
+    	lib/ruby/shared/rubygems.rb
+    	lib/ruby/shared/rubygems/remote_fetcher.rb
+    	maven/jruby-complete/src/it/extended/Mavenfile
+    	test/test_file.rb
+
+commit 0ee3d96f7aa16324ef5ae7af2e413d15961f6275
+Author: Christian Meier <m.kristian@web.de>
+Date:   Thu Jun 18 10:53:52 2015 +0200
+
+    make the File.dirname impl clearer and fix regex
+
+commit 0046bed253942dba80e6a6ca92e360856234bc8c
+Author: Christian Meier <m.kristian@web.de>
+Date:   Thu Jun 18 00:18:12 2015 +0200
+
+    detect uri pattern and not windows drives on File.dirname
+
+commit 85d972c26877542e6fc2c241f90bb08607279183
+Author: Christian Meier <m.kristian@web.de>
+Date:   Thu Jun 18 00:02:36 2015 +0200
+
+    convert  File.dirname("file:/my.jar!/a") to "file:/my.jar!" to avoid !// in uri
+    
+    Sponsored by Lookout Inc.
+
+commit 2c90f46b2d30350a7c7d66bfa7b0d430236bfe0e
+Author: Christian Meier <m.kristian@web.de>
+Date:   Mon Jun 15 23:34:51 2015 +0200
+
+    treat uri-like paths differently when finding parent directory
+    
+    especially treat the "root" of the uri as root, i.e. File.dirname("file:/")
+    is "file:/", File.dirname("uri:classloader:/") is "uri:classloader", etc
+    
+    fixes #2966
+    
+    Sponsored by Lookout Inc.
+
+commit 752d093b49d37f7aa8e5a479ef3912afe8fb5fe7
+Merge: 2f35b40 39e20df
+Author: Thomas E Enebo <tom.enebo@gmail.com>
+Date:   Sat May 2 11:54:12 2015 -0500
+
+    Merge pull request #2756 from lumeet/pathname_open
+    
+    Allow File.open and File.new with 4 arguments
+
+commit 39e20df0fd75412f9219292cd092b8f7c8024e51
+Author: Teemu <teemu@aikais.in>
+Date:   Wed Mar 25 19:24:00 2015 +0200
+
+    Allow File.open and File.new with 4 arguments
+    
+    The methods now support filename, mode, permissions and options as
+    separate parameters.
+
+commit 2daa9d3af56722f4e707dbc198accfb4990b102f
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri May 1 15:20:24 2015 -0500
+
+    Fixes #2387.
+    absolute paths without drive letter don't work in windows
+
+commit cb4e52e49e41ab44bd81e61f28aaec94810ae7c0
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri May 1 14:39:25 2015 -0500
+
+    Fixes #2387.
+    absolute paths without drive letter don't work in windows
+
+commit 92ad0af7faac15c88332b816f27d73815fba5794
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Apr 17 14:32:54 2015 +0000
+
+    Use indirected fmode.
+
+commit f41b6d9e38741292a3b274be54b1686b1dc4bd5d
+Author: Teemu <teemu@aikais.in>
+Date:   Mon Feb 9 19:52:18 2015 +0200
+
+    Make filepaths with null byte fail
+    
+    This patch applies to several methods that deal with filepaths in Dir,
+    File, File::Stat, IO, and Kernel. All of these methods now raise an
+    argument error if a null byte is detected in a path argument.
+    
+    Some of these methods are also slightly refactored, mostly by replacing
+    context.runtime with just runtime where applicable.
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/RubyDir.java
+    	core/src/main/java/org/jruby/RubyFile.java
+    	core/src/main/java/org/jruby/RubyFileStat.java
+    	core/src/main/java/org/jruby/RubyIO.java
+    	core/src/main/java/org/jruby/RubyKernel.java
+    	test/mri/excludes/TestFile.rb
+
+commit 6bd5f8d4919389fe4c7fe8ff91f2a577abebb04a
+Author: Teemu <teemu@aikais.in>
+Date:   Mon Feb 9 19:52:18 2015 +0200
+
+    Make filepaths with null byte fail
+    
+    This patch applies to several methods that deal with filepaths in Dir,
+    File, File::Stat, IO, and Kernel. All of these methods now raise an
+    argument error if a null byte is detected in a path argument.
+    
+    Some of these methods are also slightly refactored, mostly by replacing
+    context.runtime with just runtime where applicable.
+
+commit 49bcb546c591302fa4abb5d4fc2e1fcc0fdb50b1
+Author: Teemu <teemu@aikais.in>
+Date:   Thu Feb 5 21:27:10 2015 +0200
+
+    Fix required arguments for File.chown
+
+commit 1614b99b9d9efa858c3d0134fc7c30860bf09f90
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jan 19 18:19:03 2015 -0600
+
+    Remove unused import.
+
+commit b7bfb4e1742a270872faea3b63a14d0eb304e5c8
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jan 16 11:34:10 2015 -0600
+
+    File#lchown and #lchmod do not exist in MRI.
+
+commit 84fe15ed4b93ea68832b4de32b4224c0e15974e3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jan 14 18:55:54 2015 +0000
+
+    Native unlink is not supported on Windows.
+
+commit faea8f0552d73b3a8823c0e8a99c7db29e7b2703
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jan 14 18:33:42 2015 +0000
+
+    Add File::NONBLOCK for Windows.
+    
+    According to jnr-constants, this is not a defined value on
+    Windows, but MRI appears to use the value "1".
+
+commit 8930f98f38bf0ffd0379d68f5c0d8045efefe682
+Merge: ed7d1df b7fc59d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Dec 18 13:53:44 2014 -0600
+
+    Merge pull request #2275 from jc00ke/fnmatch-extglob
+    
+    Fnmatch extglob support
+
+commit b7fc59dd5060ac171159f8bb0b2633cd1e8ffe2f
+Author: jc00ke <jesse@jc00ke.com>
+Date:   Thu Dec 18 11:49:50 2014 -0800
+
+    Add FNM_EXTGLOB for File.fnmatch
+
+commit 20fb9e004f437170b10d2f7762ec66ac3d91a66d
+Merge: 6658212 0dfd501
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Dec 18 11:58:58 2014 -0600
+
+    Merge remote-tracking branch 'origin/jruby-1_7'
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/RubyFile.java
+    	core/src/main/java/org/jruby/compiler/impl/StandardASMCompiler.java
+
+commit 0dfd50156ffebfa2faf3cad06c2822c9e89b731f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Dec 18 11:48:52 2014 -0600
+
+    Do not canonicalize URLs using JDK canonicalization. Fixes #2331.
+
+commit 98ee132a08c414e00051a719d3c31a34a563ccae
+Merge: 08ce901 81879f1
+Author: Christian Meier <m.kristian@web.de>
+Date:   Fri Dec 12 14:32:39 2014 +0100
+
+    Merge branch 'jruby-1_7'
+    
+    Conflicts:
+    	.travis.yml
+    	VERSION
+    	core/pom.xml
+    	core/src/main/java/org/jruby/Ruby.java
+    	core/src/main/java/org/jruby/RubyClass.java
+    	core/src/main/java/org/jruby/RubyFile.java
+    	core/src/main/java/org/jruby/RubyRegexp.java
+    	core/src/main/java/org/jruby/ast/SymbolNode.java
+    	core/src/main/java/org/jruby/common/RubyWarnings.java
+    	core/src/main/java/org/jruby/compiler/ASTCompiler.java
+    	core/src/main/java/org/jruby/compiler/BodyCompiler.java
+    	core/src/main/java/org/jruby/compiler/CacheCompiler.java
+    	core/src/main/java/org/jruby/compiler/impl/BaseBodyCompiler.java
+    	core/src/main/java/org/jruby/compiler/impl/InheritedCacheCompiler.java
+    	core/src/main/java/org/jruby/compiler/impl/InvokeDynamicCacheCompiler.java
+    	core/src/main/java/org/jruby/ext/tempfile/Tempfile.java
+    	core/src/main/java/org/jruby/parser/ParserSupport.java
+    	core/src/main/java/org/jruby/parser/Ruby19Parser.java
+    	core/src/main/java/org/jruby/parser/Ruby19Parser.y
+    	core/src/test/java/org/jruby/embed/ConstantCompilationTest.java
+    	default.build.properties
+    	docs/man/pom.xml
+    	docs/pom.xml
+    	ext/pom.xml
+    	ext/readline/pom.xml
+    	ext/ripper/pom.xml
+    	lib/pom.xml
+    	lib/ruby/1.9/rexml/entity.rb
+    	lib/ruby/2.0/net/http.rb
+    	lib/ruby/2.0/rexml/document.rb
+    	lib/ruby/2.0/rexml/entity.rb
+    	lib/ruby/shared/gauntlet_rubygems.rb
+    	lib/ruby/shared/rubygems.rb
+    	lib/ruby/shared/rubygems/available_set.rb
+    	lib/ruby/shared/rubygems/basic_specification.rb
+    	lib/ruby/shared/rubygems/command.rb
+    	lib/ruby/shared/rubygems/command_manager.rb
+    	lib/ruby/shared/rubygems/commands/cert_command.rb
+    	lib/ruby/shared/rubygems/commands/cleanup_command.rb
+    	lib/ruby/shared/rubygems/commands/contents_command.rb
+    	lib/ruby/shared/rubygems/commands/dependency_command.rb
+    	lib/ruby/shared/rubygems/commands/environment_command.rb
+    	lib/ruby/shared/rubygems/commands/generate_index_command.rb
+    	lib/ruby/shared/rubygems/commands/help_command.rb
+    	lib/ruby/shared/rubygems/commands/install_command.rb
+    	lib/ruby/shared/rubygems/commands/list_command.rb
+    	lib/ruby/shared/rubygems/commands/mirror_command.rb
+    	lib/ruby/shared/rubygems/commands/outdated_command.rb
+    	lib/ruby/shared/rubygems/commands/owner_command.rb
+    	lib/ruby/shared/rubygems/commands/pristine_command.rb
+    	lib/ruby/shared/rubygems/commands/push_command.rb
+    	lib/ruby/shared/rubygems/commands/query_command.rb
+    	lib/ruby/shared/rubygems/commands/search_command.rb
+    	lib/ruby/shared/rubygems/commands/setup_command.rb
+    	lib/ruby/shared/rubygems/commands/specification_command.rb
+    	lib/ruby/shared/rubygems/commands/uninstall_command.rb
+    	lib/ruby/shared/rubygems/commands/unpack_command.rb
+    	lib/ruby/shared/rubygems/commands/update_command.rb
+    	lib/ruby/shared/rubygems/commands/which_command.rb
+    	lib/ruby/shared/rubygems/commands/yank_command.rb
+    	lib/ruby/shared/rubygems/compatibility.rb
+    	lib/ruby/shared/rubygems/config_file.rb
+    	lib/ruby/shared/rubygems/core_ext/kernel_gem.rb
+    	lib/ruby/shared/rubygems/core_ext/kernel_require.rb
+    	lib/ruby/shared/rubygems/defaults.rb
+    	lib/ruby/shared/rubygems/dependency.rb
+    	lib/ruby/shared/rubygems/dependency_installer.rb
+    	lib/ruby/shared/rubygems/deprecate.rb
+    	lib/ruby/shared/rubygems/doctor.rb
+    	lib/ruby/shared/rubygems/errors.rb
+    	lib/ruby/shared/rubygems/exceptions.rb
+    	lib/ruby/shared/rubygems/ext.rb
+    	lib/ruby/shared/rubygems/ext/builder.rb
+    	lib/ruby/shared/rubygems/ext/cmake_builder.rb
+    	lib/ruby/shared/rubygems/ext/configure_builder.rb
+    	lib/ruby/shared/rubygems/ext/ext_conf_builder.rb
+    	lib/ruby/shared/rubygems/ext/rake_builder.rb
+    	lib/ruby/shared/rubygems/gemcutter_utilities.rb
+    	lib/ruby/shared/rubygems/install_update_options.rb
+    	lib/ruby/shared/rubygems/installer.rb
+    	lib/ruby/shared/rubygems/installer_test_case.rb
+    	lib/ruby/shared/rubygems/local_remote_options.rb
+    	lib/ruby/shared/rubygems/name_tuple.rb
+    	lib/ruby/shared/rubygems/package.rb
+    	lib/ruby/shared/rubygems/package/old.rb
+    	lib/ruby/shared/rubygems/package/tar_header.rb
+    	lib/ruby/shared/rubygems/package/tar_reader/entry.rb
+    	lib/ruby/shared/rubygems/platform.rb
+    	lib/ruby/shared/rubygems/psych_additions.rb
+    	lib/ruby/shared/rubygems/rdoc.rb
+    	lib/ruby/shared/rubygems/remote_fetcher.rb
+    	lib/ruby/shared/rubygems/request.rb
+    	lib/ruby/shared/rubygems/request_set.rb
+    	lib/ruby/shared/rubygems/request_set/gem_dependency_api.rb
+    	lib/ruby/shared/rubygems/requirement.rb
+    	lib/ruby/shared/rubygems/resolver/current_set.rb
+    	lib/ruby/shared/rubygems/security.rb
+    	lib/ruby/shared/rubygems/security/policy.rb
+    	lib/ruby/shared/rubygems/security/trust_dir.rb
+    	lib/ruby/shared/rubygems/server.rb
+    	lib/ruby/shared/rubygems/source.rb
+    	lib/ruby/shared/rubygems/source/installed.rb
+    	lib/ruby/shared/rubygems/source/local.rb
+    	lib/ruby/shared/rubygems/source/specific_file.rb
+    	lib/ruby/shared/rubygems/source_list.rb
+    	lib/ruby/shared/rubygems/spec_fetcher.rb
+    	lib/ruby/shared/rubygems/specification.rb
+    	lib/ruby/shared/rubygems/ssl_certs/AddTrustExternalCARoot.pem
+    	lib/ruby/shared/rubygems/stub_specification.rb
+    	lib/ruby/shared/rubygems/syck_hack.rb
+    	lib/ruby/shared/rubygems/test_case.rb
+    	lib/ruby/shared/rubygems/test_utilities.rb
+    	lib/ruby/shared/rubygems/text.rb
+    	lib/ruby/shared/rubygems/uninstaller.rb
+    	lib/ruby/shared/rubygems/uri_formatter.rb
+    	lib/ruby/shared/rubygems/user_interaction.rb
+    	lib/ruby/shared/rubygems/util/list.rb
+    	lib/ruby/shared/rubygems/validator.rb
+    	lib/ruby/shared/rubygems/version.rb
+    	maven/jruby-complete/pom.xml
+    	maven/jruby-dist/pom.xml
+    	maven/jruby-jars/lib/jruby-jars/version.rb
+    	maven/jruby-jars/pom.xml
+    	maven/jruby-noasm/pom.xml
+    	maven/jruby-rake-plugin/pom.xml
+    	maven/jruby-stdlib/pom.xml
+    	maven/jruby/pom.xml
+    	maven/jruby/src/templates/osgi_all_inclusive/src/test/java/org/jruby/embed/osgi/test/JRubyOsgiEmbedTest.java
+    	maven/pom.rb
+    	maven/pom.xml
+    	pom.xml
+    	spec/tags/ruby/core/symbol/length_tags.txt
+    	spec/tags/ruby/core/symbol/size_tags.txt
+    	spec/tags/ruby/core/symbol/versions/encoding_1.9_tags.txt
+    	test/pom.rb
+    	test/pom.xml
+    	test/test_file.rb
+    	tool/globals_1_9_3.rb
+
+commit 2c1c909fe2866515776afdfb334bbe7f8b60cbf6
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Dec 10 15:23:28 2014 -0600
+
+    Preserve incoming encoding in File.basename. Fixes #2259.
+
+commit 307b85968fb28a398487c16490b4fe480348d48c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Dec 8 14:58:41 2014 -0600
+
+    Don't acquire umask (mutexed) when we're not creating a file.
+
+commit 448c3666bacb6cdbb1bb075813e69a23d84fe1ff
+Author: Teemu <teemu@aikais.in>
+Date:   Wed Dec 3 21:37:52 2014 +0200
+
+    fix RubyFile#rename when the source is a broken symlink
+
+commit 34dcf809f49de56409001e6bbdb56b56bb1d0085
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Nov 8 16:09:42 2014 -0600
+
+    Implement FileStat#/File./File#/Pathname#birthtime. #2152
+    
+    Note that this still does not pass MRI's tests, and does not
+    appear to provide sub-second accuracy.
+
+commit cccc1d7beabd8622738d0a5470c1418d84b2f708
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Sep 24 12:59:08 2014 -0500
+
+    WTF is all this logic for?  Make readlink pass some more rubyspecs
+
+commit 084eef9c25860cccdd65b625a877e7e230414175
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Sep 24 12:59:08 2014 -0500
+
+    WTF is all this logic for?  Make readlink pass some more rubyspecs
+
+commit 0513c951389c015200e7553c515c43b130d64bc9
+Merge: b707c91 5f0e17b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Sep 10 20:55:35 2014 -0500
+
+    Merge remote-tracking branch 'origin/jruby-1_7'
+    
+    Conflicts:
+    	core/pom.xml
+    	core/src/main/java/org/jruby/RubyFile.java
+    	core/src/main/java/org/jruby/RubyFileTest.java
+    	core/src/main/java/org/jruby/RubyKernel.java
+    	core/src/main/java/org/jruby/util/RegularFileResource.java
+    	core/src/main/java/org/jruby/util/TypeConverter.java
+    	docs/man/pom.xml
+    	docs/pom.xml
+    	ext/pom.xml
+    	ext/readline/pom.xml
+    	ext/ripper/pom.xml
+    	lib/pom.xml
+    	maven/jruby-complete/pom.xml
+    	maven/jruby-dist/pom.xml
+    	maven/jruby-jars/pom.xml
+    	maven/jruby-noasm/pom.xml
+    	maven/jruby-rake-plugin/pom.xml
+    	maven/jruby-stdlib/pom.xml
+    	maven/jruby/pom.xml
+    	maven/pom.xml
+    	pom.xml
+    	test/jruby/test_system_error.rb
+    	test/pom.xml
+
+commit f607e53ea18fbf7cc036000e12752832bf2339f9
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Sun Sep 7 13:48:50 2014 -0500
+
+    Fixes #1945. File.exists?("broken_symlink") returns true. Fixes #1950. All RubyFileTest methods have a race condition
+
+commit 91577f798b39bab8d5fa2a1009ef14ed8c05534a
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Sep 4 14:13:11 2014 -0500
+
+    Speed up FileTest.directory? by ~40%
+
+commit 309b13942f6c52fbc02398f9859e2b06b57ce958
+Merge: f425c87 d481131
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Aug 21 15:02:12 2014 -0500
+
+    Merge remote-tracking branch 'origin/jruby-1_7'
+    
+    Conflicts:
+    	build.xml
+    	core/src/main/java/org/jruby/util/URLResource.java
+    	core/src/main/java/org/jruby/util/cli/OutputStrings.java
+    	maven/jruby-complete/pom-generated.xml
+    	maven/jruby-complete/pom.rb
+    	maven/jruby-complete/pom.xml
+    	maven/jruby-complete/src/it/legacy-osgi-test/pom.xml
+    	maven/jruby-complete/src/it/osgi-test/pom.xml
+    	maven/jruby-complete/src/it/osgi-test/pom.xml.skip
+    	maven/jruby-dist/pom.rb
+    	maven/jruby-jars/Mavenfile
+    	maven/jruby-jars/pom.xml
+    	maven/jruby-noasm/pom.rb
+    	maven/jruby-noasm/pom.xml
+    	maven/jruby-rake-plugin/pom.xml
+    	maven/jruby-stdlib/pom.rb
+    	maven/jruby-stdlib/pom.xml
+    	maven/jruby/pom.rb
+    	maven/jruby/pom.xml
+    	maven/pom.rb
+    	maven/pom.xml
+    	pom.xml
+
+commit 311bec242165a4fb339516afc414f44cb650cd80
+Author: Christian Meier <m.kristian@web.de>
+Date:   Tue Aug 19 19:07:26 2014 +0200
+
+    introduce an uri: protocol for generic classloaders and uri:classloader: for the
+    Thread.currentThread.conttextClassLoader
+
+commit 5d4fd39651440455e78ca94aaccb225e0e601e32
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Aug 11 16:40:01 2014 -0500
+
+    Missed removing this no longer used bytelist from last commit
+
+commit e4157701f5b22fd0bd947e0091663eae9e4165d9
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Aug 11 16:37:49 2014 -0500
+
+    Remove old file: removal code in RubyFile. Change JarResource to fast check for '\!' since non-scheme paths an be jar resources.  fast path check against ':' for scheme-oriented resource types.  10+% speedup on simple rails launch
+
+commit a481219ecb13593285daf3632d467b26ae9b4ea8
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Aug 11 16:40:01 2014 -0500
+
+    Missed removing this no longer used bytelist from last commit
+
+commit adb921b4ae889702df9ddca7b4838c826da18e54
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Aug 11 16:37:49 2014 -0500
+
+    Remove old file: removal code in RubyFile. Change JarResource to fast check for '\!' since non-scheme paths an be jar resources.  fast path check against ':' for scheme-oriented resource types.  10+% speedup on simple rails launch
+
+commit ad1d686d057f13d1fd431463e33ddf335d2b9fca
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Jul 24 16:09:11 2014 -0500
+
+    Always define NOCTTY since it's not defining propertly on Linux.
+    
+    See #1853.
+
+commit b183dfe7c6824f5e44fc4213a9c836c7eb7f2e40
+Merge: 0267396 af32441
+Author: Christian Meier <m.kristian@web.de>
+Date:   Thu Jul 24 21:14:21 2014 +0100
+
+    Merge branch 'jruby-1_7'
+    
+    Conflicts:
+    	.travis.yml
+    	build.xml
+    	core/src/main/java/org/jruby/ext/etc/RubyEtc.java
+    	lib/ruby/1.9/rdoc/markdown.rb
+    	maven/jruby-jars/src/it/helloworld/pom.xml
+    	pom.xml
+    	test/jruby.1.9.index
+    	test/jruby/test_pathname_dup.rb
+    	test/test_command_line_switches.rb
+
+commit 141af57aba6b0fc76b3d5675978d5eaef9249c32
+Author: Uwe Kubosch <uwe@kubosch.no>
+Date:   Tue Jul 22 23:37:25 2014 +0200
+
+    * Resolve symlinks in File.realpath.
+
+commit 1f60d7526d720064892a1d857dc89b0eb3bb70f6
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Jun 15 19:02:28 2014 +0100
+
+    More fixes to get test_io passing with excludes.
+
+commit 52220cfb737deea2a0280853c81d39f39e1ef53f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Jun 5 13:57:35 2014 -0500
+
+    Fixes to get MRI's test_tempfile back up to snuff.
+
+commit ddc0d6d89fdd97864ec08a8dd5aa1f11c9bab0ec
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jun 3 17:48:28 2014 -0500
+
+    More specs to untag and some thread logic for flock.
+
+commit d981cf02c75d95f790ea6ee8e89760bc6ffe91c8
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jun 3 10:14:27 2014 -0500
+
+    Start using native IO for files when possible.
+
+commit d9509d5a9940e0fd514853b78db0ea884cf4b8d0
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jun 3 07:41:34 2014 -0500
+
+    More disentangling File from ChannelDescriptor, plus umask fix.
+
+commit fb179d47972de14e9b21b9523e4c77cf1657c6d6
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jun 2 13:07:23 2014 -0500
+
+    More fixes surrounding chFile == null logic.
+    
+    mvn clean package completes now, so we're back to good enough for
+    the Tesla Ruby stuff.
+
+commit 3f79ea8b60c76c8c2b4a59651208c439275c8b22
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed May 28 13:41:27 2014 -0500
+
+    IO.pipe specs 100%.
+
+commit 504738a4306f865fd33afa4b3e2428f105ec0b9c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed May 28 08:58:51 2014 -0500
+
+    Remove all references to getMainStream[Safe].
+
+commit ecc42a6c13d6884dd52e2dcbae8c592c682d6d92
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue May 27 20:18:59 2014 -0500
+
+    IO work continues.
+    
+    * Reopen work and refactorign to support it.
+    * PosixShim class to make POSIX and NIO both look like POSIX.
+    * FilenoUtil class to handle fileno (real/fake) management.
+    * Myriad minor refactorings and cleanups.
+
+commit 3b3fbe198fa0ee44887ba2ce4c6d3c5e005b1069
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue May 20 13:51:24 2014 -0500
+
+    Clean out a bunch more uses of ChannelStream.
+
+commit 78f196d80559e5927c24ce8cf146330399f6f039
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon May 19 19:37:16 2014 -0500
+
+    Working through more logic... sysopen, seek, reopen, init_copy.
+
+commit 564bb6567dea7575f138b0966a7beaccf16a4f0b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri May 16 14:40:26 2014 -0500
+
+    Fix TTY calculation, at least for terminals we consider stdio.
+
+commit 5c9cdfe905bad8cc3c469276ca2bbd8aad9b4f67
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri May 16 12:51:44 2014 -0500
+
+    Start porting IO open/initialize logic.
+
+commit 1d491712e40506cb45182747411b0bd2052b0fa4
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue May 13 13:04:46 2014 -0500
+
+    Start port of write logic plus fixing flush and more cleanup.
+
+commit 78b66c2c8049bb874e9620ae6b17d8f04b5f3d25
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue May 13 10:45:19 2014 -0500
+
+    Wire up static IO.read logic, eliminate old read logic, cleanup.
+
+commit ff52b15efd88f06fbebc054abdd09cb4f7387f64
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon May 12 18:27:03 2014 -0500
+
+    Implement logic for IO#read, getbyte, ungetbyte, ungetc.
+    
+    read specs are nearly passing now. It will be a long tail, since
+    any methods using ChannelStream will lose or steal data from the
+    new way, and there aren't many tests for various combinations of
+    read and write.
+
+commit 55820692d133b4460a2846da45f9d19c07afe9ec
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon May 12 13:36:05 2014 -0500
+
+    Port completed of all gets paths other than read_all. Specs pass.
+
+commit bf6430c4bf005e298ed15674f1f35991b73c9820
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri May 9 10:30:20 2014 -0500
+
+    Fix a couple places trying to access OpenFile too early.
+
+commit 238a5e1a816ce922b43602a90a7a3a543c5654ea
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri May 9 09:41:04 2014 -0500
+
+    Implement IO#gets all the way down to actual IO operations.
+    
+    This logic forced me to implement all the MRI functions for doing
+    buffered, possibly-transcoded reads from a stream. I also had to
+    implement some of the write logic.
+    
+    As other IO methods all out, we should start to move away from our
+    flawed ChannelStream abstraction and toward the MRI way. Later,
+    we can look at doing a better abstraction of the MRI way.
+    
+    What's wrong with ChannelStream, you ask? Nothing, provided all
+    you want to do is POSIX-like FILE* IO. MRI stopped using FILE*'s
+    style buffering at some point -- probably when adding character
+    transcoding -- and as a result we started mixing encoding logic
+    into ChannelStream. This caused the code to become rather confused
+    and no longer useful as a bare FILE* mechanism...while also
+    preventing us from implementing IO+transcoding as efficiently as
+    MRI (which does unbuffered reads into its own buffers and
+    transcodes in place).
+
+commit 706b4539517e1c444250334ea261ac56542d02cf
+Merge: 75887be c3e7c29
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu May 8 04:54:10 2014 -0500
+
+    Merge branch 'master' into new_transcoder
+    
+    Conflicts:
+    	core/pom.xml
+    	core/src/main/java/org/jruby/RubyFile.java
+    	core/src/main/java/org/jruby/util/TypeConverter.java
+
+commit f97bf3082cd0f6966f9395bf1b829242d8122d4a
+Merge: f377d1c 86f0346
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Apr 16 15:27:46 2014 -0500
+
+    Merge
+
+commit 67f78925c4bc9b6202d15a0e3492d9ea8bd8a9d3
+Author: Dmitry Ratnikov <ratnikov@google.com>
+Date:   Fri Apr 11 18:09:04 2014 -0400
+
+    Move descriptor interaction logic to resources.
+
+commit 77c398f9f79f0c477c78515aacc791a18bb3ad48
+Author: Dmitry Ratnikov <ratnikov@google.com>
+Date:   Wed Apr 16 13:41:14 2014 -0400
+
+    Replace custom ChannelDescriptor exceptions to use ResourceException
+
+commit 75887be71fee126d82eed0e7abfb9acbf0a03961
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Mar 17 15:12:46 2014 -0500
+
+    Start dropping the full IO bomb.
+
+commit a8f67689c64f4647c0f4b4acf37d0c84dbf859d2
+Merge: 18c9c61 d379d5e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Mar 12 23:51:21 2014 -0500
+
+    Merge branch 'master' into new_transcoder
+
+commit d379d5e2e08e1896be25292cc87168e0cf36ef16
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Mar 12 23:50:34 2014 -0500
+
+    Implement Tempfile#unlink and File#unlink with jnr-posix.
+    
+    Got sick of the warnings :-D
+
+commit 199164d5ac38515e25bc7b8f74e2a9eef65dd1c5
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Feb 22 15:37:13 2014 -0600
+
+    Rename Transcoder and move some state up in prep for porting.
+
+commit 7f393ee1a8670cdbb1399120753836d68d51bea6
+Merge: b78e3fe ebca8f6
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Feb 13 14:57:56 2014 -0600
+
+    Merge with jruby-1_7
+
+commit 1098bea0743911971860d5bb2feca0d7b4febba7
+Author: Dmitry Ratnikov <ratnikov@google.com>
+Date:   Fri Feb 7 19:52:15 2014 -0500
+
+    Added stat method to FileResource and refactored RubyFileStat to make use of it.
+    
+    This way RubyFileStat doesn't need to do any more custom logic for jars.
+
+commit 20ed2a2a51233de8246babab2f37a398c8043c09
+Merge: 4170398 11e552a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Jan 9 14:48:47 2014 -0600
+
+    Merge remote-tracking branch 'origin/jruby-1_7'
+    
+    Conflicts:
+    	core/pom.xml
+    	core/src/main/java/org/jruby/ext/socket/RubyBasicSocket.java
+    	docs/man/pom.xml
+    	docs/pom.xml
+    	ext/openssl/pom.xml
+    	ext/pom.xml
+    	ext/readline/pom.xml
+    	ext/ripper/pom.xml
+    	lib/ruby/1.9/json.rb
+    	lib/ruby/1.9/json/add/bigdecimal.rb
+    	lib/ruby/1.9/json/add/complex.rb
+    	lib/ruby/1.9/json/add/core.rb
+    	lib/ruby/1.9/json/add/date.rb
+    	lib/ruby/1.9/json/add/date_time.rb
+    	lib/ruby/1.9/json/add/exception.rb
+    	lib/ruby/1.9/json/add/ostruct.rb
+    	lib/ruby/1.9/json/add/range.rb
+    	lib/ruby/1.9/json/add/rational.rb
+    	lib/ruby/1.9/json/add/regexp.rb
+    	lib/ruby/1.9/json/add/struct.rb
+    	lib/ruby/1.9/json/add/symbol.rb
+    	lib/ruby/1.9/json/add/time.rb
+    	lib/ruby/1.9/json/common.rb
+    	lib/ruby/1.9/json/ext.rb
+    	lib/ruby/1.9/json/ext/generator.jar
+    	lib/ruby/1.9/json/ext/parser.jar
+    	lib/ruby/1.9/json/generic_object.rb
+    	lib/ruby/1.9/json/pure.rb
+    	lib/ruby/1.9/json/pure/generator.rb
+    	lib/ruby/1.9/json/pure/parser.rb
+    	lib/ruby/1.9/json/version.rb
+    	lib/ruby/2.0/socket.rb
+    	lib/ruby/2.1/json.rb
+    	lib/ruby/2.1/json/add/bigdecimal.rb
+    	lib/ruby/2.1/json/add/complex.rb
+    	lib/ruby/2.1/json/add/core.rb
+    	lib/ruby/2.1/json/add/date.rb
+    	lib/ruby/2.1/json/add/date_time.rb
+    	lib/ruby/2.1/json/add/exception.rb
+    	lib/ruby/2.1/json/add/ostruct.rb
+    	lib/ruby/2.1/json/add/range.rb
+    	lib/ruby/2.1/json/add/rational.rb
+    	lib/ruby/2.1/json/add/regexp.rb
+    	lib/ruby/2.1/json/add/struct.rb
+    	lib/ruby/2.1/json/add/symbol.rb
+    	lib/ruby/2.1/json/add/time.rb
+    	lib/ruby/2.1/json/common.rb
+    	lib/ruby/2.1/json/ext.rb
+    	lib/ruby/2.1/json/ext/generator.jar
+    	lib/ruby/2.1/json/ext/parser.jar
+    	lib/ruby/2.1/json/generic_object.rb
+    	lib/ruby/2.1/json/pure.rb
+    	lib/ruby/2.1/json/pure/generator.rb
+    	lib/ruby/2.1/json/pure/parser.rb
+    	lib/ruby/2.1/json/version.rb
+    	lib/ruby/shared/json.rb
+    	lib/ruby/shared/json/add/bigdecimal.rb
+    	lib/ruby/shared/json/add/complex.rb
+    	lib/ruby/shared/json/add/core.rb
+    	lib/ruby/shared/json/add/date.rb
+    	lib/ruby/shared/json/add/date_time.rb
+    	lib/ruby/shared/json/add/exception.rb
+    	lib/ruby/shared/json/add/ostruct.rb
+    	lib/ruby/shared/json/add/range.rb
+    	lib/ruby/shared/json/add/rational.rb
+    	lib/ruby/shared/json/add/regexp.rb
+    	lib/ruby/shared/json/add/struct.rb
+    	lib/ruby/shared/json/add/symbol.rb
+    	lib/ruby/shared/json/add/time.rb
+    	lib/ruby/shared/json/common.rb
+    	lib/ruby/shared/json/ext.rb
+    	lib/ruby/shared/json/ext/generator.jar
+    	lib/ruby/shared/json/ext/parser.jar
+    	lib/ruby/shared/json/generic_object.rb
+    	lib/ruby/shared/json/pure.rb
+    	lib/ruby/shared/json/pure/generator.rb
+    	lib/ruby/shared/json/pure/parser.rb
+    	lib/ruby/shared/json/version.rb
+    	maven/gems/pom.xml
+    	maven/jruby-complete/pom.xml
+    	maven/jruby-core-complete/pom.xml
+    	maven/jruby-dist/pom.xml
+    	maven/jruby-jars/pom.xml
+    	maven/jruby-noasm/pom.xml
+    	maven/jruby-rake-plugin/pom.xml
+    	maven/jruby-stdlib-complete/pom.xml
+    	maven/jruby-stdlib/pom.xml
+    	maven/jruby/pom.xml
+    	maven/pom.xml
+    	pom.xml
+    	test/pom.xml
+
+commit 6e79f558cfcbf04e8f601e30a69e27b160b2f16f
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Jan 8 15:25:39 2014 -0600
+
+    Don't use global runtime to try and resolve jar files which are part of runtimes init
+
+commit 446531349f57d3184c24053cc7ef22320d4241ac
+Merge: 4b651cc c78d5b0
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Jan 7 17:19:49 2014 -0600
+
+    Merge with 1.7
+
+commit c78d5b0f88d27d68d6f6ce9823287bb30b97cf13
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Jan 7 17:16:56 2014 -0600
+
+    Fixes #1312. File.expand_path(%q{NUL}) broken
+
+commit 7ca30d09e17e981d4c48b532633c78fa7c0bb7fd
+Merge: f0e97fe 91097da
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Nov 27 14:17:54 2013 -0600
+
+    Merge branch 'jruby-1_7'
+
+commit 91097da93d6fc20dcd5de3616f12ec3875b937f2
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Nov 27 14:17:17 2013 -0600
+
+    Fixes #1272 and hopefully #770
+
+commit fbb178a58da32bf2bdcbbc94a24e3851699509cc
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Oct 30 22:53:53 2013 -0500
+
+    De-version File
+
+commit fa28d760ee58bf43e20842a843541710d65ccca0
+Merge: ff9cee7 5fc06a0
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Oct 28 10:56:40 2013 -0500
+
+    Merge branch 'jruby-1_7'
+
+commit 5fc06a0480011a5c35339a68116dd81d88b1876d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Oct 28 10:55:44 2013 -0500
+
+    Actually implement __dir__ using stack trace logic. Fixes #651
+
+commit f72b75bb2b21778c945197b16538f5cae727af1a
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Oct 24 17:05:02 2013 -0500
+
+    Fixes #1163. File.expand_path should fail if ENV['HOME'] isn't an absolute path
+
+commit 054624c07a9b3a8dc37785992076c5b6d1cfc6cd
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Oct 24 17:05:02 2013 -0500
+
+    Fixes #1163. File.expand_path should fail if ENV['HOME'] isn't an absolute path
+
+commit dec952b4762fa9599c4af163f91643abc0d780d3
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Oct 9 09:42:33 2013 -0500
+
+    De-version IO
+
+commit 8556416c42cf97e1b69a6934af627d51ab807944
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Oct 8 13:17:05 2013 -0500
+
+    De-version File
+
+commit 697e6895affa646849a685ed58f6f84795c853aa
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Oct 4 23:37:52 2013 -0500
+
+    Eliminate calls to Ruby.is1_8 and is1_9.
+
+commit d1f89e004fdc78dff75407c82123e6c9e8b406bb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Sep 12 18:48:16 2013 +0200
+
+    Make ClassIndex into an enum, to prevent issues like #1004.
+
+commit e5ffaaf0b6b99209cab82f5f7066f27067561201
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Aug 20 13:27:35 2013 -0500
+
+    Fixes to get all 1.9 specs passing again.
+
+commit b1d9cb5b850eab6935b50dd77983b45be1da61de
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Aug 9 00:11:14 2013 -0500
+
+    Edging closer to everything passing again.
+
+commit 541c29af716ddab3b9438d28ef0ab37fb7ce3a35
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Aug 8 16:42:26 2013 -0500
+
+    Fixes and a few additional ports to get test:mri19 green.
+    
+    Additional fixes to get test:mri18 green.
+
+commit 1158df5a7ad82af49c031104b6e652924ebc9368
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Aug 8 01:21:50 2013 -0500
+
+    Large port of MRI IO transcoding logic, to fill in our gaps.
+
+commit c0ed12f7dab4be63c3e7d590e87ed1ae48a5f77e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Aug 6 08:00:30 2013 -0500
+
+    Port over a bunch more transcoding stuff + gzip encoding logic.
+
+commit c6725916c5ac826db0dc63a2de0855429953f392
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Aug 1 13:45:42 2013 -0500
+
+    JRUBY-7190:  Incorrect encoding on result string read from File introduced in JRuby 1.7.4
+
+commit 909334fe9b70a6b7b79491767d31efff9a7ce119
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 24 16:55:32 2013 -0500
+
+    Use proper decoding instead of ByteList.toString.
+
+commit d71672054518ba8845ed80c8563b9ce5cb0bceb6
+Merge: 88c52f9 10d22da
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Jul 6 03:01:02 2013 -0500
+
+    Merge branch 'native_pathname' of github.com:eregon/jruby into eregon-native_pathname
+
+commit 28c6fbc4e883bc1c9e9242d1da1cb2b785f55339
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 3 12:46:45 2013 -0500
+
+    Move to @mkristian's proposed layout, with some modifications.

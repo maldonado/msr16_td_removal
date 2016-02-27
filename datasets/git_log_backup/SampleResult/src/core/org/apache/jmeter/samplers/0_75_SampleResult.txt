@@ -1,0 +1,1206 @@
+commit ce1130eb489ab505fd73805236968758d0b69f42
+Author: Andrey Pokhilko <undera@apache.org>
+Date:   Mon Jan 5 19:49:06 2015 +0000
+
+    48799 - Add connect time to output metrics
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1649629 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a16cb9e48633c094e1378afdccb6c11c5fc94b69
+Author: Felix Schumacher <fschumacher@apache.org>
+Date:   Sun Dec 21 18:58:47 2014 +0000
+
+    Bug 57193: Add param and return tags to javadoc
+    Bugzilla Id: 57193
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1647188 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 72e40dbc3141bc7b85ea96b0e3f770208ebd5dff
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Sat Nov 22 15:36:37 2014 +0000
+
+    Bug 55932 - Create a Async BackendListener to allow easy plug of new listener (Graphite, JDBC, Console,...)
+    Bugzilla Id: 55932
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1641081 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d5b673edae05a1f46d97c3d315005e821dd2c13c
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Sat Aug 30 19:15:53 2014 +0000
+
+    Bug 54778 - HTTP Sampler should not return 204 when resource is found in Cache
+    Bugzilla Id: 54778
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1621524 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8e26078bdde7b7e0bacd6748034f31e4f068b4b7
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Fri Dec 6 20:03:20 2013 +0000
+
+    Bug 55852 - Be more lenient in parsing when charset value is surrounded with single quotes
+    Bugzilla Id: 55852
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1548710 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f2538eff6eb9051ef2fce31b1597bc02dfd47c9a
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Sun Jul 21 12:36:53 2013 +0000
+
+    Use TimeUnit for readability
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1505366 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 40f374e4c132074589592b0639639898d7b69426
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Sun Feb 24 21:46:53 2013 +0000
+
+    Bug 54589 - View Results Tree have a lot of Garbage characters Garbage characters
+    Bugzilla Id: 54589
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1449555 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 53ae0a65a467c2315967d2651db90803a34047be
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Wed Feb 6 19:42:04 2013 +0000
+
+    Rename private field to better reflect its contents
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1443162 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1a858ec869c7094225fa0242f5ead602d72b17ac
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Mon Jan 21 11:34:50 2013 +0000
+
+    Set capacity of HashSet to reduce memory usage
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1436289 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d9765e8a3d4079c34e9f36bc31a0341446a26948
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Mon Dec 10 19:35:46 2012 +0000
+
+    Bug 54268 - Improve memory and CPU usage
+    make field volatile and transient as per sebb remark on mailing list
+    Bugzilla Id: 54268
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1419696 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 32f301947fc2e49714bb7d7e29da1600563a8c69
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Sat Dec 8 23:23:03 2012 +0000
+
+    Bug 54268 - Improve memory and CPU usage
+    Improve CPU by caching response as String instead of computing it for each post processor
+    Improve memory by eagerly cleaning the cached field
+    Bugzilla Id: 54268
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1418783 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d1d2cc1f4ea21e50e1af2f63115f8cd7c7785341
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Fri Dec 7 21:16:32 2012 +0000
+
+    remove copy/paste between addRawSubResult and storeSubResult
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1418480 13f79535-47bb-0310-9956-ffa450edef68
+
+commit faa9e3ca0952fad70fdc458d11da9af937480652
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Sun Nov 25 15:02:34 2012 +0000
+
+    Bug 54204 - Result Status Action Handler : Add start next thread loop option
+    Bugzilla Id: 54204
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1413358 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 86858ccfd1d658eec24df98a6440003bedf9787f
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Sun Nov 18 22:34:56 2012 +0000
+
+    Bug 54109 - JSR223TestElement : SampleResult properties should be set before entering script to allow user setting different code
+    Bugzilla Id: 54109
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1411008 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 98c8ab680a5c865392d481fcaa8541d8912bb443
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu Nov 1 17:19:11 2012 +0000
+
+    The type video/f4m is text, not binary
+    Bugzilla Id: 54088
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1404680 13f79535-47bb-0310-9956-ffa450edef68
+
+commit cd40459139d67298d2e210c81fb04c253c2b6196
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Wed Sep 5 20:29:54 2012 +0000
+
+    use indexOf(char)
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1381342 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 7729bf4156fa32a56358e539300f70e4476edbc0
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Mon Aug 20 23:49:05 2012 +0000
+
+    Standardise on static final
+    No code change
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1375327 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3bd416ec412cce93a587c4b8c6d0544b86f9c8b6
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Wed Mar 7 01:12:35 2012 +0000
+
+    Bug 52843 - Sample headerSize and bodySize not being accumulated for subsamples
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1297821 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ec6ecdf01e0b8fd6dc2cd683e3a182afae50b143
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu Jan 5 02:20:12 2012 +0000
+
+    FindBugs reports IC: Initialization circularity (IC_INIT_CIRCULARITY)
+    
+    A circularity was detected in the static initializers of the two classes
+    referenced by the bug instance.  Many kinds of unexpected behavior may
+    arise from such circularity.
+    
+    This was caused by calling the static method SampleResult.sampleNsClock() from a NanoOffset static block; fixed by performing the init externally.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1227444 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 61c819fef602cfa46fa2d6709523b6ac6536eba7
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Jan 3 19:12:10 2012 +0000
+
+    Create arrays with the correct size [Findbugs]
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1226923 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 90a351bcc0c2599da5abcca3187dc191f12cc5dc
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Jan 3 18:38:01 2012 +0000
+
+    Does not seem to be any reason for nanoTime fields to be transient (Findbugs)
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1226907 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d02e144ece8303713c867f197699c710f9d28593
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Dec 17 00:16:06 2011 +0000
+
+    Bug 52333 - Reduce overhead in calculating SampleResult#nanoTimeOffset
+    Use a background thread to calculate the offset instead of doing it each sample
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1215361 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f382c7e4373c33d644f553a3532ce95564b8d95e
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Wed Sep 21 00:48:08 2011 +0000
+
+    Bug 51855 - Parent samples may have slightly inaccurate elapsed times
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1173443 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 536f48aff0cdd4dacbd5a81f78f8de71bd6366f5
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Mon Sep 19 19:35:09 2011 +0000
+
+    Ensure the overridden setting is used by test code
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1172767 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a75d1b6fe7af7663da9ff7933085d05a6bcde6b6
+Author: Bruno Demion <milamber@apache.org>
+Date:   Wed Apr 13 22:27:51 2011 +0000
+
+    Change strategy to get response size (use CountingInputStream from Commons IO) View Results Tree - Add new size fields: response headers and response body (in bytes) - derived from Bug 43363 Size Assertion - Add response size scope (full, headers, body, code, message) - derived from Bug 43363
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1091965 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8eea8d1999464efcbd25ae528faebe9a3c42ce26
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu Jan 27 20:55:12 2011 +0000
+
+    Add TODO
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1064298 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 641a8404dc703956c8998bcd334b2e45d59e8c8c
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Jan 2 13:38:32 2011 +0000
+
+    Allow direct read access to nano fields by test code
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1054404 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 65c131fb72b9785588e44247fdcc7ff7faab6677
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Jan 2 12:49:03 2011 +0000
+
+    Allow test code to change the default useNanoTime setting
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1054396 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ace9627dac5e86b36e40cd3f0d7ab82fa9512606
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Mon Nov 22 23:18:05 2010 +0000
+
+    System.nanoTime() tends to drift relative to System.currentTimeMillis().
+    Change SampleResult to recalculate offset each time.
+    Also enable reversion to using System.currentTimeMillis() only.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1037933 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d3ca4d70738a56179e3aac200903b57cd17c88a8
+Author: Bruno Demion <milamber@apache.org>
+Date:   Thu Oct 28 19:09:27 2010 +0000
+
+    Bug 50080 - Transaction controller incorrectly creates samples including timer duration
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1028437 13f79535-47bb-0310-9956-ffa450edef68
+
+commit dc1ccea49e50958a90a2a99338f5422908c87a2b
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Wed Sep 22 15:44:21 2010 +0000
+
+    Javadoc
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1000053 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 7459ffa07629f7ff61cf5a0beb2c814ccc5f257b
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Wed Jul 7 23:53:10 2010 +0000
+
+    Bug 49560 - wrong "size in bytes" when following redirections
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@961539 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 820b6627acd24df2acc2041da6436698e2ed52e4
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu Jul 1 13:37:13 2010 +0000
+
+    handle charsets of the form: ContentType: text/plain; charset=ISO-8859-1; format=flowed
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@959653 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 03b83b2daa5e3a7bb3fee8cce2357cbbe4f2871c
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Wed Mar 31 02:24:29 2010 +0000
+
+    Bug 43678 - Handle META tag http-equiv charset?
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@929364 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a53d789d658f35c6f24f14a32eb6353422eb2a98
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu Mar 11 15:51:45 2010 +0000
+
+    Javadoc
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@921906 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1b870d0fb6eb7c01373ae7d47b7ab427ab89d672
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Feb 23 16:09:09 2010 +0000
+
+    Remove trailing spaces
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@915405 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 58fa666e8d55ddbaee38b71ed04b0c346dce2f13
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Wed Feb 17 01:57:20 2010 +0000
+
+    Add setResponse() shorthand method
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@910798 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 014cf0a08b1df272119a96196bc8f2139599f16a
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Mon Feb 15 13:55:44 2010 +0000
+
+    Extract static constant
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@910218 13f79535-47bb-0310-9956-ffa450edef68
+
+commit fdb1b8f274f525dadc5f634f6d5b90ce32a8a4b2
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Jan 31 13:04:52 2010 +0000
+
+    Unused
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@905029 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3885b6428b56fff63f600c314bd34b04e85ef8f6
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu Dec 10 02:13:53 2009 +0000
+
+    Drop support for Avalon format JMX and JTL files
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@889059 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d9d3ce2945afd17c0d6a9f64008612366ed15fbc
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu Dec 10 00:55:34 2009 +0000
+
+    Allow idle time to be set
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@889041 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 919b50fff373fcb685f1ff68afd7131f3dbe603c
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Nov 17 18:08:02 2009 +0000
+
+    Use String constant for OK
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@881416 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f52cf4362f23c38f642b71ec74b8eb135bc5147e
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Oct 10 15:18:56 2009 +0000
+
+    StringBuffer => StringBuilder
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@823869 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 05f60949f427e62b26d51b35d57b71b045b2f042
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Sep 29 16:39:19 2009 +0000
+
+    Tab police
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@820025 13f79535-47bb-0310-9956-ffa450edef68
+
+commit fb287143a20a375d565056a60eebeff0d6e308aa
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Wed Sep 23 14:47:49 2009 +0000
+
+    Add utility method setResponseData(text, encoding) for samplers that generate strings rather than bytes.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@818125 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8742d90a9705bcabffc801f5b01cf8d2fa744858
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Sep 19 14:23:40 2009 +0000
+
+    Bug 47869 -  Ability to cleanup fields of SampleResult
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@816930 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 27e83acd9915e8d7245952beae05297b757b2ee9
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Aug 14 21:41:19 2009 +0000
+
+    Java 1.5 always has nanoTime()
+    Fix up some raw types
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@804382 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 7dadcc1bd9581178bba3e0f65280b6be48721a76
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Aug 14 20:16:36 2009 +0000
+
+    Drop some deprecated/unused methods
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@804356 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ba460d9b91b37ff62ec950391525b2d130ceb1a6
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Aug 14 19:12:26 2009 +0000
+
+    Add @Override and @Deprecated annotations
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@804326 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ba13d0cefe1507d8dc326869db50e8dccc76b355
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Wed Aug 5 16:36:50 2009 +0000
+
+    Javadoc
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@801288 13f79535-47bb-0310-9956-ffa450edef68
+
+commit af9eb83d4e52f7e7eb7a1c224ee9169ef0251fca
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu Jun 11 16:03:03 2009 +0000
+
+    Fix some synchronisation issues in ResultCollector and SampleResult (wrong locks were being used)
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@783822 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c2570bf29348621bb53a58b58032e7d540f9946d
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Apr 24 20:56:33 2009 +0000
+
+    Add Stop Now to Thread Group and Result Status Action post-processor
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@768416 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 819eecedfb380d32e8aa5c555acb84826a531c67
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Oct 12 00:23:29 2008 +0000
+
+    Typo
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@703752 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a0b4f3291d6b75a43d246ac4a5a35a141259f63f
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Oct 11 14:54:11 2008 +0000
+
+    setResponseData(String) Use current encoding to convert input if possible
+    Update some Javadoc
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@703666 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 9e257074ebcaff588bfc86e86bb0f11f53b39bb3
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Oct 4 17:32:49 2008 +0000
+
+    Add serialVersionUID
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@701678 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6bf94deccce242cd1bba95592f54fd78a90dfc3e
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Jul 6 23:56:15 2008 +0000
+
+    Detab
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@674365 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 2f0d54777819d6ecfc9b271d54b591546a92696c
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu May 29 11:56:28 2008 +0000
+
+    Document bytes/getBytes()
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@661306 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 0816cbe456296cf0d786907cb3e9729a56cbc4ad
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu May 8 11:13:44 2008 +0000
+
+    Ensure that dummy sub-results (e.g. Debug PostProcessor) do not adversely affect the sample time.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@654476 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a131b88d4ebcf5107acd92c5c3e715a117cd6329
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Apr 27 16:02:33 2008 +0000
+
+    Use Locale.ENGLISH for lower-casing
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@651973 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ddb8e27af98c10ffda9d3aeead0cf56217ba224e
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Mar 30 01:40:10 2008 +0000
+
+    FileDialoger can return null
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@642658 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e48b6d0c929c6874b7f215144aba266c2981b2ee
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Mar 29 01:10:57 2008 +0000
+
+    Bug 44600 - 1-ms resolution timer when running with Java 1.5+
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@642469 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b99306e2b32f40b970f1a70904b45cae88815fa9
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Mar 2 03:41:10 2008 +0000
+
+    Revert to pre-2.3.1 behaviour - only check content-type for known binary types.
+    Originally just image/; now also audio/ and video/
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@632707 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 26401dca0488b228a1509e498bb6fff7ae139a44
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Feb 26 22:54:37 2008 +0000
+
+    Add application/vnd.wap.xhtml+xml as a text type
+    Allow View Results Tree maximum display size to be configured
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@631417 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 64ad8e2f0b668fa160f0df93a7934a234fe1e95d
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Wed Jan 9 17:07:40 2008 +0000
+
+    Bug 44011 - add application/xml as a text type
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@610461 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 77b9934de0a2b07b9879b18ae8a0c5df6fc52dc6
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Mon Dec 3 15:48:25 2007 +0000
+
+    Bug 44011 - application/soap+xml not treated as a text type
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@600573 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 17273ae3293af9e525485eed95f349d64b0a4be0
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Nov 24 17:59:23 2007 +0000
+
+    Fix SampleResult dataType checking to better detect TEXT documents
+    Allow optional specification of addition TEXT content-types
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@597899 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 50265a75c67098443baaf6b8ca91b731816097e7
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu Nov 15 23:54:00 2007 +0000
+
+    HTTP default encoding is ISO-8859-1; use default encoding if blank
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@595493 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 2dbd0f13db6aded41f77feea1296161c7cc1589e
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Mon Nov 12 18:30:15 2007 +0000
+
+    Oops - forgot to set the other times...
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@594250 13f79535-47bb-0310-9956-ffa450edef68
+
+commit df5cb653d44c1caea90cc185f1701f77127a0408
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Mon Nov 12 17:12:15 2007 +0000
+
+    Fix error log when loading JT files with missing timestamp or elapsed times
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@594214 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e114dcb5ac358a18cf7bf8b8a9282d2c7d9f221d
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Oct 23 18:05:24 2007 +0000
+
+    Deprecate getDataEncoding and replace with getDataEncodingWithDefault
+    Add getDataEncodingNoDefault for accessing raw dataEncoding field.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@587579 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 0145afdc605e1ff807dd42742e97aa275c51fe5e
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Oct 23 13:43:17 2007 +0000
+
+    Protect against storing null as responseData
+    Remove deprecated getResponseDataAsBA() as no longer used
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@587506 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6f9771e84a9e83772b69fb4aebbcfcfe6dddaa89
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Sep 22 18:14:53 2007 +0000
+
+    Bug 43450 - add save/restore of error count; fix Calculator to use error count
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@578467 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 9a3d4075af6f2feb098088b9eb0c63b3404c8245
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu Sep 20 02:31:30 2007 +0000
+
+    Bug 43430 - Count of active threads is incorrect for remote samples
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@577514 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f37e800011421cb284868fc0bc93ebf3d66771c8
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Aug 14 10:20:31 2007 +0000
+
+    Allow for quoted charset in Content-Type parsing
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-2@565694 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d1bab6aedbaf1129882d2f1d60c6ac77662ee089
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Apr 22 13:33:11 2007 +0000
+
+    Bug 42184 - Number of bytes for subsamples not added to sample when sub samples are added
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-2@531175 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f87f685e697c6e50ed1ab170ee35a9b2f5dbeb2d
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Apr 3 00:05:44 2007 +0000
+
+    Bug 42019 - additionally set up contentType and dataEncoding;
+    urlsetup moved from subclass
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-2@524978 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 9a2f2c346b1e0704d9a5b9cf7277d7456b0a8664
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Apr 1 15:19:28 2007 +0000
+
+    If thread name has to be fetched, save it.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-2@524614 13f79535-47bb-0310-9956-ffa450edef68
+
+commit bd5d121d68038f3e712ec463a2172dd7026f52f8
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Jan 7 17:46:38 2007 +0000
+
+    Update license (remove copyright)
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-2@493779 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 61a2a130a94bbd39123e1bee5046a41e973a95d9
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Oct 20 23:31:45 2006 +0000
+
+    Bug 40773 - XML JTL not parsed correctly
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-2@466304 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 0f47767455c33ce2374ef77643ba800dc0aaaf1a
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Jun 4 22:09:27 2006 +0000
+
+    Add getMediaType() method
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-1@411607 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 99da6927719bfea54d48aee7f4547ef45a1e733a
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Jun 2 15:58:50 2006 +0000
+
+    Add getUrlAsString() utility method
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-1@411194 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 5c126dc98b25cb3b75460cd695ecec5dde5a3b85
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu May 25 22:37:14 2006 +0000
+
+    Bug 29481 - fix reloading sample results so subresults not counted twice
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-1@409495 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d56c5a706e33b77233987c6f0347c75260f6f7ad
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun May 14 20:46:22 2006 +0000
+
+    Document getTimeStamp()
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-1@406426 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 56dc870b3261da4e51cdf28a2340d4bd1ace8255
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue May 9 16:55:24 2006 +0000
+
+    Remove unnecessary else
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-1@405466 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d6ac68dc60a2158672ae1cde1abf21396bd287cd
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Apr 30 11:54:06 2006 +0000
+
+    Ensure responseCode is never null
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-1@398316 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c796499b7ce5d9e005cbdc73bc53365a78e8d89e
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu Apr 13 20:31:32 2006 +0000
+
+    Move method to parent class as it only affects fields in the parent class anyway
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-1@393920 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3866031f953970ecde97abc8141b2d5141f5c6fa
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Apr 7 00:20:44 2006 +0000
+
+    Add resultFileName for keeping track of ResultSaver files
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-1@392130 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e8a4e0ef439fe66dfb76cfdefa14048d404600b1
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Mar 31 23:03:43 2006 +0000
+
+    Deprecate getResponseDataAsBA - no longer needed, as RD is never null
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-1@390534 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 55604c27c6816a7f475865f8f06ac45e87787cb1
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Mar 31 19:17:55 2006 +0000
+
+    Calculate byte size if not already set up
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-1@390480 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6628feb02570175d7e2b5cc8443bdf1940ffacb0
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Mar 24 01:33:29 2006 +0000
+
+    Oops - forgot to assign the value
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-1@388314 13f79535-47bb-0310-9956-ffa450edef68
+
+commit bc36b9d8f881029794bdabc9d7813a2566fee3d5
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Mar 24 00:58:36 2006 +0000
+
+    Ensure that subresult thread names are set up
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-1@388311 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 5ff9aa620dc9f823735196e60da220fd367137bc
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Mar 21 20:42:12 2006 +0000
+
+    Avoid NPE when writing JTL if threadName does not get set
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-1@387618 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 521fea2d067fe5cbc362f71c70fcb133720b97a2
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Jan 13 00:39:35 2006 +0000
+
+    Move test code to test tree
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-1@368532 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ba33896d2cab566bb46ed5d6ebbd732c600f1c27
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Nov 29 00:53:02 2005 +0000
+
+    Document latency
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-1@349565 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 30d33125d45ba77886669e121b677a9fbbcdc75e
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Nov 13 23:20:35 2005 +0000
+
+    Add OK methods to avoid using "200" everywhere
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-1@344001 13f79535-47bb-0310-9956-ffa450edef68
+
+commit bfec779783bafaf8a8a9411393b1125a4cf244f8
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Nov 13 02:05:30 2005 +0000
+
+    Add getResponseDataAsString() convenience method
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-1@332874 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ec8a1b8378dc548c4da855edf6c8d14648cb517a
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu Nov 10 21:58:40 2005 +0000
+
+    Add setResponseData(String) method for use with BeanShell
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-1@332383 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3cef5f384e6dd9381d72f66a03b5e96b1b80d774
+Author: Peter Lin <woolfel@apache.org>
+Date:   Tue Oct 25 03:45:17 2005 +0000
+
+    checking in part of the contribution submitted by Lars Krog-Jensen.
+    I still need to go over the visualizer and change it to use JCharts
+    peter lin
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-1@328249 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 0ffe310f266e52fa5a7fb8044faf391a18c1b34c
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Oct 14 17:56:55 2005 +0000
+
+    Avoid NPE in XStream - ensure dataType does not default to null
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-1@325825 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 76159a5b953d9dc5518b2ccb03bfbc1c4908837d
+Author: Michael Stover <mstover1@apache.org>
+Date:   Tue Jul 12 20:51:09 2005 +0000
+
+    Formatting Code to basic Java Standard
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@325542 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ca28480445a0df1fda7ea0c811318983d77626db
+Author: Michael Stover <mstover1@apache.org>
+Date:   Wed May 25 14:16:06 2005 +0000
+
+    Adding default "parse all embedded resources" into HTTP Defaults Config and did some refactoring of HTTPSamplers.
+    Fixed bug that caused embedded resources not to be parsed from redirected urls.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@325388 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 73adf5a7f42122fa6507620448279a6dac5004fc
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Apr 2 23:18:55 2005 +0000
+
+    Deprecate setTime()
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@325246 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 663bdc0596f0997763f2ea3dfabc9a02371a80f6
+Author: Michael Stover <mstover1@apache.org>
+Date:   Fri Mar 18 15:27:20 2005 +0000
+
+    Merge from 2-0 and some fixes to controllers that need to recover running version after no samplers under them have run.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@325222 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 00811acaf6e6ccdfd7a7abe916c247b5739f33b7
+Author: Peter Lin <woolfel@apache.org>
+Date:   Thu Oct 28 23:38:14 2004 +0000
+
+    I added two attributes to sampleResult, which may be useful to other
+    samplers like the java sampler. the first one is sampleCount in case a
+    sampler does a set number of loops within each sample() call. the
+    second is bytes length in case a sampler doesn't pass back the contents
+    of the response. this allows the aggregate listener to calcuate the rate
+    without the cost of passing back the entire response message/result.
+    
+    peter
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@325005 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 33a338ba4f520ed60fd15f414f7a869ecb76aa9d
+Author: Michael Stover <mstover1@apache.org>
+Date:   Wed Oct 6 14:43:57 2004 +0000
+
+    Merging 2-0 to HEAD
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@324917 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e73245745e80c1b78150a609df52d08503f29854
+Author: Michael Stover <mstover1@apache.org>
+Date:   Mon Sep 20 23:08:41 2004 +0000
+
+    New code for recording .jtl files using XStream.  Also, a properties file controls what XStream Converters get registered (makes for easier plugins).
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@324856 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f53c85934daf1ff3c2e420a3dcfac77ad61910d8
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Jun 27 00:12:24 2004 +0000
+
+    Print actual time if pause test fails
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@324753 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 4a1ae88b32a95e3bd6141daa751dc78a204d1249
+Author: Michael Stover <mstover1@apache.org>
+Date:   Sun Jun 20 01:23:41 2004 +0000
+
+    Merging from 2-0 branch
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@324714 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 5349a7263e4cd424f950bb58d6f9d6b6e162d9b9
+Author: Michael Stover <mstover1@apache.org>
+Date:   Sat Jun 12 17:11:46 2004 +0000
+
+    Merging latest from 2_0 branch
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@324677 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 503346d6a94eef4d7860b402372346458a59ebe0
+Author: Michael Stover <mstover1@apache.org>
+Date:   Fri May 28 21:09:14 2004 +0000
+
+    Lightning struck, and this is a week's worth of offline effort.  Visualizers have been refactored.  The AccessLogSampler and supporting classes have been refactored, with an additional Filter implementation, and made into a TestBean, fixed a bug that causes tests not to stop in certain cases.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@324592 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 4428e02616edc5ae9a236da48a77a839bf36a73c
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Mar 13 14:06:20 2004 +0000
+
+    Remove author; fix Javadoc bug
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@324423 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 82a3e2b25360e2ed35c34e295f4e8bd2720d7863
+Author: Peter Lin <woolfel@apache.org>
+Date:   Sat Mar 13 05:52:07 2004 +0000
+
+    Added a new attribute for SampleResults to indicate if a sampler is
+    used as a monitor sampler.
+    
+    peter lin
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@324420 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f01d765ac37fde7f0c54c83dc9cb0630538c03a3
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Feb 22 14:36:46 2004 +0000
+
+    Add comments to some fields; fix default encoding from 8895-1 to ISO-8895-1
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@324356 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 85757f397b9b0920d88382945db2d84d971428c6
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Feb 13 02:40:55 2004 +0000
+
+    ASF L V2
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@324283 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 803f41f2e5714e3400b75e3f37fd021f4c2b7a18
+Author: Jordi Salvat i Alabart <jsalvata@apache.org>
+Date:   Thu Jan 15 10:41:19 2004 +0000
+
+    Parent samples need to accumulate the times of their subsamples.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@324076 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 7c5b67585623659f9f1c12cdd712aabe245fa9b0
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Dec 20 16:56:25 2003 +0000
+
+    Oops! wrong parameters to setTimes
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323941 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b95b88c5845a29a2f1aad532fe420e89e6704b0e
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Dec 20 16:51:15 2003 +0000
+
+    SampleResult fixes to use start and End times
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323940 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 095d4dbe5310010530b44ea703e7a895d3b954ca
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Dec 20 01:00:54 2003 +0000
+
+    Removed setTime/setTimeStamp
+    Added code to set timeStamp to start of sample if property is set
+    Added getters for start/end time
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323929 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a66deec92589793716e26d2db52cb4f4221b695a
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Dec 19 17:53:40 2003 +0000
+
+    Add constructors to allow creation but not update of timestamp and elapsed
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323921 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 185d0e01e49d88f2eebe71934710975a57c3f05c
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Dec 19 17:01:56 2003 +0000
+
+    Increase margin of error on the test
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323919 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 592836df9014469bca5ece776ae1cb1536d1efe7
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Dec 19 15:24:44 2003 +0000
+
+    Deprecate another method
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323918 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 012a1ee754efc0675517d53426320920b80674fc
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Dec 19 14:41:12 2003 +0000
+
+    Deprecate setTime(); ensure time is initialised to 0
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323916 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c688ba2175c584538ad45a3cc256ef3f714fbf73
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Dec 19 02:26:39 2003 +0000
+
+    New methods for collecting times; add some tests for them
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323914 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 86a9069fa94722c9cb2e305174a42ad45151d447
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Dec 9 00:28:28 2003 +0000
+
+    Ensure some fields not null
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323842 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 67798abc627c8b6cc4904968511cceb97c1dced6
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Nov 22 03:25:54 2003 +0000
+
+    Fixing Javadoc errors
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323720 13f79535-47bb-0310-9956-ffa450edef68
+
+commit bb0ac411f3850b55ae60604d850c17c5248eda8d
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu Nov 20 00:20:36 2003 +0000
+
+    Add request and response headers and content-type
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323708 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 96c6175b1fed9ed4f66964fb1566cb67a445d12b
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Oct 21 00:00:00 2003 +0000
+
+    Fixing Javadoc warnings; some unused fields commented
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323621 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 4ce99d98576833ebec6bf3461e3322a4352894c4
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Oct 5 00:10:33 2003 +0000
+
+    Implementing stop thread and stop test functionality
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323469 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6c58d60c8611be7541e56100e9071a0be6b21be4
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu Oct 2 19:18:42 2003 +0000
+
+    Replaced convenience method responseDataToString with responseDataAsBA
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323464 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1420e504566ade31bb110398752615aa8cd901ef
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu Oct 2 16:18:21 2003 +0000
+
+    Add convenience method responseDataToString
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323462 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3a1e6a75ab3a3c2480e266557df2b8ba695a61ff
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Sep 7 18:54:54 2003 +0000
+
+    Converted to use getLoggerForClass()
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323446 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 767d4c935ae0fee122ae91a522b82a53ef25a963
+Author: Jeremy Arnold <jeremy_a@apache.org>
+Date:   Fri Jun 27 21:09:52 2003 +0000
+
+    Reformatted to JMeter conventions.
+    Minor JavaDoc updates.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323374 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 031a7132ae18bf4689e187fe9070e4ea0c6809c0
+Author: Jeremy Arnold <jeremy_a@apache.org>
+Date:   Tue Apr 15 21:40:31 2003 +0000
+
+    Fixed "unused import" warnings.  Used Eclipse "Organize imports" on only those files with warnings, so in these files there may also be reordering of import statements and expansion of "import java.net.*" to individual classes.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323162 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6dad839268c9c0110921f1ebdb59077bd672a97c
+Author: Michael Stover <mstover1@apache.org>
+Date:   Mon Apr 7 14:35:28 2003 +0000
+
+    New JMeter properties allow functions to be fully recursive and reduces the amount of repetitive cloning of test elements
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323133 13f79535-47bb-0310-9956-ffa450edef68
+
+commit dc54e286df2008dd10d5988d7e1744d31b9518f1
+Author: Michael Stover <mstover1@apache.org>
+Date:   Tue Mar 11 19:04:19 2003 +0000
+
+    patches from list members, other minor changes
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323107 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a5a669904f40908fa6bb13361a76f08c133f923e
+Author: Michael Stover <mstover1@apache.org>
+Date:   Thu Feb 20 02:59:16 2003 +0000
+
+    new ListElement test element that provides some convenience.
+    New methods in AbstractTestElement for getting values as collections
+    new dataEncoding property in SampleResult, unused currently, but should be used for international compatibility
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323090 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 83c789314d92cc998b022447286c01debba9da97
+Author: Michael Stover <mstover1@apache.org>
+Date:   Thu Aug 29 18:17:43 2002 +0000
+
+    Updating docs for help system
+    Making class members transient as appropriate
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@322888 13f79535-47bb-0310-9956-ffa450edef68
+
+commit bae5abd86cc930fb2521678d654acf219fa35f71
+Author: Michael Stover <mstover1@apache.org>
+Date:   Fri Aug 23 21:02:12 2002 +0000
+
+    Replaced log4j with Avalon LogKit
+    created some simple logging categories in jmeter.properties
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@322866 13f79535-47bb-0310-9956-ffa450edef68
+
+commit dd9932a03c9826150ab4c98914a145ba5f3248ae
+Author: Michael Stover <mstover1@apache.org>
+Date:   Sun Aug 11 19:24:54 2002 +0000
+
+    New src directory organization, committing all files
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@322831 13f79535-47bb-0310-9956-ffa450edef68

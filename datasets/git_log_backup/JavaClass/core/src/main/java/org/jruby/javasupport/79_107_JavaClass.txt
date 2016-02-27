@@ -1,0 +1,238 @@
+commit d81a52f7678caca383e988b1c7dc8b606d0754ab
+Author: kares <self@kares.org>
+Date:   Tue Mar 24 12:44:34 2015 +0100
+
+    handle nested array.to_java conversion where element is already an array + cleanup
+    
+    najs to have ... has been reported as well #1354
+
+commit c80f1c472986afae376959d972cfc8ee4e7d8432
+Author: kares <self@kares.org>
+Date:   Thu Mar 19 11:37:48 2015 +0100
+
+    JavaClass - share more internals and test some of the method/constructor reflection
+    ... also avoided ArrayIndexOutOfBoundException since we checked args.length late
+
+commit 5a7501fbb94ee5a91e27ac814d023cf209fd9dd4
+Author: kares <self@kares.org>
+Date:   Thu Mar 19 08:41:52 2015 +0100
+
+    introduce alternative toRubyArray (internal) helpers - more code sharing & less looping
+
+commit 9902ebd3bfe9908e4c863973f4b00c472d793bd7
+Author: kares <self@kares.org>
+Date:   Thu Mar 12 09:01:59 2015 +0100
+
+    a slight Java integration (mostly bootstrap internals) cleanup
+
+commit 317e9ba99fc8482ce9c219cfe83a2ab88dff58e6
+Author: kares <self@kares.org>
+Date:   Fri Feb 27 10:03:27 2015 +0100
+
+    for easier multi-thread debugging trigger name calculation when proxy class ready
+
+commit 79f0889692872b499a2c902331315db9e27f1fa1
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Feb 27 08:32:32 2015 -0600
+
+    Cleanup, reduce duplication, refactor methods for proxy creation.
+    
+    * Java.getProxyClass is the one true way to get the Ruby proxy
+      class for a Java class.
+    * Unified more of class vs interface proxy logic.
+    * Both #1621 and #2014 appear to be working with this commit.
+
+commit f82f1367a4d5f9f32da5ecd2660b02a748a4929d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Feb 26 15:38:59 2015 -0600
+
+    These are encapsulated again.
+
+commit 40be8d298efc9b32b2a7d423654e131fe1b6f19d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Feb 26 15:38:44 2015 -0600
+
+    Remove unused field.
+
+commit d37cdb5245472f3a12e6da98a1d97c2f51f2b9a6
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Feb 26 15:38:26 2015 -0600
+
+    Combine duplicated logic.
+
+commit a63248b01e394898bf9da705e354966ccc929814
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Feb 26 15:22:28 2015 -0600
+
+    Encapsulate new ClassValue fields.
+
+commit 5d4a39d14b05bdc5b593d2a093ba25687789011e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Feb 26 15:13:29 2015 -0600
+
+    Remove JavaClass from participation in proxy binding.
+    
+    This commit makes several substantial changes:
+    
+    * JavaClass does not reference the associated proxy class; this
+      now happens entirely through ClassValue logic.
+    * ClassValue logic for the proxy class checks for uninitialized
+      proxy in current thread, otherwise proceeding to creation. First
+      thread wins, but if any two actually start building at the same
+      time they will do the same work and one will be thrown away.
+      This allows us to eliminate locking.
+    * The "uninitialized" proxy reference now lives as a thread-local
+      ClassValue.
+    
+    The basic logic for booting a class goes like this:
+    
+    * Request proxy from ClassValue proxy cache. If it's there, done.
+    * Check for thread-local ClassValue unfinished proxy. If it's
+      there, we're in a thread that's binding classes and return it.
+    * Proceed to construct the proxy. Two threads may get to this
+      point, but only the first one to complete its hierarchy will
+      permanently cache the proxy.
+    
+    This appears to pass all our tests and passes tests for #1621.
+
+commit 3ab1f25d7497914b2a6baf649dc7684e9b1bbe27
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Feb 26 13:50:02 2015 -0600
+
+    Move "assigned names" maps from JavaClass to a ClassValue.
+
+commit 9b06e941c3f409b34bb74d266e41167b61b7230c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Feb 26 12:40:23 2015 -0600
+
+    Clean up imports.
+
+commit be31344448e7db89264bf94d2d431b817f6ca738
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Feb 26 12:37:56 2015 -0600
+
+    Pull all initialize logic up and out into initializer classes.
+
+commit 725df3f0460397d35506a4d95317762e0242bdb0
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Feb 26 12:01:03 2015 -0600
+
+    Move more binding logic into initializers.
+
+commit 9959aefc49b046048dc579b667457b13cca4ee80
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Feb 26 11:21:41 2015 -0600
+
+    Remove unused value.
+
+commit 66f79e9fff16b5dba54b35f0778971682dc22a0f
+Author: kares <self@kares.org>
+Date:   Fri Feb 6 17:53:56 2015 +0100
+
+    less (duplicate - initialization) instance state to keep in JavaClass - re-arranged privates
+
+commit 8044d7910838b21a5c5e2c0509fe4cfc46c4cfed
+Author: kares <self@kares.org>
+Date:   Fri Feb 6 17:48:08 2015 +0100
+
+    make scala reflection helper method a bit more readable + re-arranged imports
+
+commit f82937843e798f85e115d7f006ad07aac173884e
+Author: kares <self@kares.org>
+Date:   Fri Feb 6 16:59:35 2015 +0100
+
+    re-arrange method-installer/field setup to happen late + removed useless synchronized
+
+commit 9a55be8fca6fe07a33c2c51e5b91bc6483f330b1
+Author: kares <self@kares.org>
+Date:   Fri Feb 6 14:41:29 2015 +0100
+
+    rename internal helper method & move around get_proxy_class so it's easier to read
+
+commit 51fde2b038b9fde2785ec00b90e2a727d6324485
+Author: kares <self@kares.org>
+Date:   Fri Feb 6 07:38:08 2015 +0100
+
+    no need to keep the initializer around - create it on demand when setting up proxy
+
+commit bb26fcb07e1957f74c101313262638dc24429a42
+Author: kares <self@kares.org>
+Date:   Thu Feb 5 20:58:11 2015 +0100
+
+    simplify (internal) installer classes + initializer happens under lock - no need to sync
+
+commit 57195fa140b1fd1e7f33788da671be8fde9cc98a
+Author: kares <self@kares.org>
+Date:   Thu Feb 5 08:37:53 2015 +0100
+
+    refactor internal getRuntime invokes (esp. in loops) - pass it around
+    
+    also (package) "internalized" JavaClass.getRubyArray as toRubyArray
+
+commit 358414928c86d3edc8e26d5b6117864ffc7ddb35
+Author: kares <self@kares.org>
+Date:   Wed Feb 4 16:01:19 2015 +0100
+
+    avoid having a JAVA_UTILITIES field for every JavaClass instance - not at all needed
+
+commit f4e7711b545a086a64084b33cfe9afd43a51eb23
+Author: kares <self@kares.org>
+Date:   Wed Feb 4 13:15:42 2015 +0100
+
+    move (related) static getJavaClass helper into JavaClass (and name both accordingly)
+
+commit 8fbf8dc51a9e958a6356ab06aa49bdfc9c7e887f
+Author: kares <self@kares.org>
+Date:   Sun Feb 1 00:38:35 2015 +0100
+
+    one less static (Java) primitive map to initialize
+
+commit aadfcd085f720cf30c0879cf8c1c669de71e6265
+Author: kares <self@kares.org>
+Date:   Tue Feb 3 21:31:55 2015 +0100
+
+    guard against concurrent Java:: package module initializations (in multiple threads)
+    
+    avoid warnings such as rb:42 warning: already initialized constant JavaUtilConcurrent
+    
+    probably related to #2014
+
+commit edf6e23fc61e06c1e3586a200ba6ca356fd8fa5b
+Author: kares <self@kares.org>
+Date:   Tue Feb 3 16:59:41 2015 +0100
+
+    use the same code for setting @java_class for a Java proxy class/module
+
+commit 2c50057a9a833a4d97d0c390f737fdc9e4373058
+Author: kares <self@kares.org>
+Date:   Tue Feb 3 16:46:27 2015 +0100
+
+    set the anonymous (generated) class name instead of an empty string on proxy class
+
+commit 00fcfac7627dfb39450e4ad312da348c612ac620
+Author: kares <self@kares.org>
+Date:   Tue Feb 3 13:32:38 2015 +0100
+
+    unify proxy class/module setup and hide methods such as lockProxy which are internal
+    
+    also hidden JavaClass' constructor as if it's ever instantiated outside JavaSupport's class-value cache it will start to break things badly
+
+commit ef97a30455720b2100c733ba499d8aadc5535fc4
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Aug 13 12:37:04 2014 -0500
+
+    Bind static interface methods (Java 8) to their proxy modules.
+    
+    Fixes #1899.
+
+commit 58c6a275efdbcb1281e749f500fd76cfca3949ad
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Oct 21 11:31:28 2013 -0500
+
+    Set parent of Java inner class to outer class proxy. Fixes #1117.
+
+commit 28c6fbc4e883bc1c9e9242d1da1cb2b785f55339
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 3 12:46:45 2013 -0500
+
+    Move to @mkristian's proposed layout, with some modifications.

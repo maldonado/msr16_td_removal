@@ -1,0 +1,145 @@
+commit 330fef3b0fc18af477ccea19bd278669667f31bb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 12 14:49:29 2013 -0600
+
+    Switch JRuby's CPL license to EPL.
+    
+    Governance of the CPL license was moved to the Eclipse Foundation
+    at some point in the past, and Eclipse blessed the EPL (Eclipse
+    Public License v1.0) as the successor to CPL. Because the CPL
+    contains a clause allowing transparent upgrades to future blessed
+    successor licenses, we can make the move to EPL without
+    re-contacting past contributors.
+    
+    The change in going from CPL to EPL largely just removes some
+    punitive language that apparently made many companies nervous. All
+    other language in the license remains identical.
+    
+    Several documents about Eclipse's move from CPL to EPL are here:
+    
+    http://www.eclipse.org/legal/cpl2epl/
+    
+    Note that Eclipse's move came before the blessing of EPL as the
+    upgrade path for CPL, so they had to do a bit more legal juggling.
+    With Eclipse now the administrator of CPL and with their blessing
+    of EPL as the upgrade path for CPL, all we need to do is make the
+    move.
+
+commit 72d49b972aa955b6aa40f9ee6ce76f4a6bc26a7a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Oct 7 14:58:28 2009 -1000
+
+    Fix for JRUBY-4039: Implicit conversion to List<Long> results in a List<Byte> or List<Integer>
+
+commit be1ce02e443cb0fcca88079595ea08c5ca6bb515
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Sep 22 12:27:32 2009 -0500
+
+    More consistency fixes for JI coercion:
+    * Move more places to calling toJava
+    * Move code away from calling convertRubyToJava, the old clunky coercion path
+    
+    Two behavior changes are introduced by this commit:
+    * When coming out of a collection (RubyArray, RubyHash) Fixnum will now coerce to the smallest java.lang.Number subtype its value can fit into. We already did this for calling methods that receive Object, but now also do it for many other cases of conversion to Object.
+    * nil values can now be assigned to or passed for primitive fields or arguments; nil will coerce as "0" in the smallest Number type possible.
+
+commit 45f1c989866a3c1f50247517d320d41e2e56f573
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue May 22 20:22:25 2007 +0000
+
+    Anders' cleanup for TestBSF, JRUBY-850.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3715 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 9f820c5a318361b544507cf37bbe15eba1075518
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Thu Apr 19 01:57:32 2007 +0000
+
+    JRUBY-370: Cleanup of BSF tests; work from within IDE (patch by Anders Bengtsson)
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3501 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 7a77daca5662ec40025900d080e4e71c7271a278
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Apr 15 01:44:36 2007 +0000
+
+    Committing Marcin's excellent Hash and String copy-on-write work for JRUBY-818. ant test is solid, mephisto appears to work well, and with one small bug fix, activesupport, actionpack, and actionmailer appear to run the same as on trunk (maybe a little better?). Also, I found and fixed a small bottleneck that now shows patched JRuby rdoc'ing faster than trunk. So we're gonna go for it.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3462 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 1528534bec157b431615bce4b81331f400e31c04
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Mon Jan 22 03:33:04 2007 +0000
+
+    JRUBY-449: some test tweaks to start to get them to run under maven
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2811 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 174e3d01468001668ab299227d4af11aea65341c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Nov 14 03:09:59 2006 +0000
+
+    damn the torpedos! full speed ahead! landing enebo_lexical branch changes plus TC-passing optimizations and a few small compiler updates
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2423 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit b46a9962586a768eaf50113d17bdb4aef7e22000
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Fri Jul 14 03:09:56 2006 +0000
+
+    From patch notes:
+    
+    The attached patch (via subversive) fixes the problem described and also implements RubyHash#values
+    
+    class RubyHash
+    ==============
+    
+        * entrySet() implemented as per the original TODO
+        * values() implemented
+        * keySet() reimplemented in same style as values() without dependency on inner
+          class ConversionSet()
+    
+    Fixes [JRuby-4] (patch by Tim Azzopardi)
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2125 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit c43a37a024b1b667faac0f9af4dea5874ac0330f
+Author: David Corbin <dcorbin@users.sourceforge.net>
+Date:   Thu Jun 23 21:47:02 2005 +0000
+
+    Fixed compiler warnings.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1725 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 06fd3a0cc83f264aae38f64564fa24de5d5fe4ac
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Wed Apr 27 01:32:26 2005 +0000
+
+    Make RubyHash implement java.util.Map
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1681 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit cf93c317059add441fa29386dfb5c9d604b06644
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Fri Apr 22 15:31:31 2005 +0000
+
+    Ruby Arrays implement java.util.List
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1679 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 8c54b93def4895b998d669a089420d5925274ea0
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sun Apr 17 21:00:19 2005 +0000
+
+    Land Kiel's Java interface defines 'initialize' versus 'new' patch
+    Change primitive_to_java so that Arrays and Hashes automap to java.util.List and java.util.Map (plus primitive_to_java their children)
+    Remove RubyProxy and friends
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1676 961051c9-f516-0410-bf72-c9f7e237a7b7

@@ -1,0 +1,29 @@
+commit 411996dc4c828fe577b43d638f523fb3ba6f5b86
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Wed Dec 2 17:21:40 2009 -0600
+
+    - Got rid of a few fixmes, fixed some code, removed unused operation types, added some more comments.
+
+commit b2852d3f64a2679a1c6a3b8d75cb19d9afb35c85
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Sat Aug 8 01:19:01 2009 -0500
+
+    - Fixed problem with non-atomic values.  I think i have it fixed.
+
+commit d7e29b3be44236fca6f412886f65bcdac025baf5
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Thu Aug 6 19:45:39 2009 -0500
+
+    - First pass of copy & constant propagation peephole opt. in place.  Compound values are not handled correcty yet.  I can only propagate the reference to the compound value, not the entire value.  Will fix this in next round of fixes.
+
+commit dd945066f2ddaeef7abb5d5b10c6fe6efc84b890
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Thu Aug 6 16:55:55 2009 -0500
+
+    - Cleaned up code some more and added operand simplification methods for use in peephole opts. and later sccp passes.
+
+commit ddaf4c565c871ce4a59cf23683c59bcc2429fec9
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Thu Jul 23 17:37:09 2009 -0500
+
+    - Moved all operands to operands/ and instructions to instructions/ and fixed up imports.  Added some commented out code to start running peephole opts on the IR -- which will also serve as a basis for SCCP passes later on.

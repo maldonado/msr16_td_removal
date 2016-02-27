@@ -1,0 +1,240 @@
+commit 55e0d93f6dc2682b720b3061fa6ea5f997957fec
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Oct 4 09:09:12 2013 -0500
+
+    Restore RubyDateFormat and TimeOutputFormatter. Closes #1081
+
+commit 497eae45771fdd2783e3d0899e4daa2652775b0e
+Author: Benoit Daloze <eregontp@gmail.com>
+Date:   Thu Sep 19 17:44:01 2013 +0200
+
+    taint resulting String in Date#strftime
+
+commit ae6188d149d3559369b394901052faa049f31349
+Author: Benoit Daloze <eregontp@gmail.com>
+Date:   Thu Sep 19 17:27:10 2013 +0200
+
+    give Date#strftime's output the same encoding as the format String
+
+commit 5b40997a333d2829f3d592ead3b393fbe4976cdc
+Author: Benoit Daloze <eregontp@gmail.com>
+Date:   Thu Sep 19 01:30:23 2013 +0200
+
+    use Date arbitrary precision in #strftime (%N,%L) output
+    
+    * need ThreadContext, use constructor to pass it
+    * pass all related Date/DateTime tests
+    * more arguments, but casting from Object (long versus Rational) seems bad
+
+commit 59823cbc0a6349ffde2004b892a10cbd516ffca0
+Author: Benoit Daloze <eregontp@gmail.com>
+Date:   Wed Sep 18 17:59:50 2013 +0200
+
+    stop depending on Ruby version in RubyDateFormat
+    
+    * nsec will be 0 in 1.8 anyway
+
+commit ce87c2c31803953b2ca196d8c3c5c30f8b786320
+Author: Benoit Daloze <eregontp@gmail.com>
+Date:   Thu Sep 5 17:23:18 2013 +0200
+
+    reuse StrftimeLexer in RubyDateFormat, creating a new one is expensive
+
+commit 87ee6329df54c5e16e6429e5129391f2c50b4a4c
+Author: Benoit Daloze <eregontp@gmail.com>
+Date:   Thu Sep 5 14:01:19 2013 +0200
+
+    rename RubyDateFormat.Token.fmt() to format()
+
+commit 1f9d4d8d0fab5c810eeab2aa5e006dc1a9d9b95b
+Author: Benoit Daloze <eregontp@gmail.com>
+Date:   Thu Sep 5 13:49:44 2013 +0200
+
+    add a proper lexer width JFlex for {Time,Date}#strftime !
+    
+    * Tokenize exactly as the old one but in a much more proper way
+    * Should handle every edge case, with only a grammar of a dozen lines
+    * Remove massive amount of code from TimeOutputFormatter and RubyDateFormat
+    * Add a helper for composed formats to enhance readability
+
+commit 7b57571f27407b277306f58b70ec454e17ace459
+Author: Benoit Daloze <eregontp@gmail.com>
+Date:   Tue Sep 3 01:13:11 2013 +0200
+
+    use Token.str() to create FORMAT_STRING Token in RubyDateFormat
+
+commit 57beb380fcd1cbd66a09c70b01500bf013a3d401
+Author: Benoit Daloze <eregontp@gmail.com>
+Date:   Tue Sep 3 00:55:24 2013 +0200
+
+    faster way to append String to ByteList: list.append(str.charAt(i))
+    
+    before
+    Date#strftime("%Y-%m-%d") 5.300 µs/i ± 0.020 ( 0.4%) <=>    188668 ips
+    after
+    Date#strftime("%Y-%m-%d") 3.624 µs/i ± 0.009 ( 0.3%) <=>    275922 ips
+
+commit d45754bba69a808acaab0faa05e07c181e9c8ce4
+Author: Benoit Daloze <eregontp@gmail.com>
+Date:   Tue Sep 3 01:03:05 2013 +0200
+
+    add convenience and efficient method RubyDateFormat.compileAndFormat()
+    
+    * compileAndFormat() improves from 8.198 µs to 5.321 µs for Date#strftime("%Y-%m-%d")
+
+commit 6c50ba5c4a4c8d8d91c3b3b0b33a845deb6dcc77
+Author: Benoit Daloze <eregontp@gmail.com>
+Date:   Mon Sep 2 23:07:28 2013 +0200
+
+    use ByteList in RubyDateFormat and TimeOutputFormatter
+
+commit 0e76f6ed25281fd41700fe011aba588fe87097d7
+Author: Benoit Daloze <eregontp@gmail.com>
+Date:   Mon Sep 2 19:24:31 2013 +0200
+
+    remove serialVersionUID since RubyDateFormat is no more Serializable
+
+commit 951cd430d886d1a3a845268eaa3cee930a3218c3
+Author: Benoit Daloze <eregontp@gmail.com>
+Date:   Mon Sep 2 19:12:50 2013 +0200
+
+    use a Java enum instead of self-defined constants in RubyDateFormat
+    
+    * reorder them alphabetically by their %<format> notation
+    * remove unused FORMAT_DATE_1
+
+commit 9e6bbbf829e3c8b48adbbb7bf2ec73f5f79f390e
+Author: Benoit Daloze <eregontp@gmail.com>
+Date:   Fri Aug 23 13:41:12 2013 +0200
+
+    do not pretend to fit RubyDateFormat in Java's DateFormat
+    
+    * we want ByteList support
+    * Locale is not a concern
+    * having the pattern and data as internal state is bad for caching and usage
+    * only depends on ruby_1_9, might worth be moved in Runtime or even singleton if the context is passed
+
+commit 7ad148a623075ed02d3be43f3e96c93b6b409562
+Author: Benoit Daloze <eregontp@gmail.com>
+Date:   Thu Aug 1 16:33:35 2013 +0200
+
+    default width of year is varying between 4 and 5 depending on the sign in MRI
+
+commit 8abe56df8d7f6ec1b15e78ccf1b5fe53e0dfcd3b
+Author: Benoit Daloze <eregontp@gmail.com>
+Date:   Tue Jul 23 17:55:27 2013 +0200
+
+    handle Astronomical year numbering within RubyDateFormat too
+    
+    * from logic in date.rb (which is way simpler)
+    * tests coming in RubySpec
+
+commit b8b60de0c1367c60923cdc9461c242bdf144e4ba
+Author: Benoit Daloze <eregontp@gmail.com>
+Date:   Tue Jul 23 15:57:42 2013 +0200
+
+    handle %L as a special case of %N and fix 1.8/1.9 conditions
+
+commit 01e299dd97f16a66b358f690de7c84915e7a2f31
+Author: Benoit Daloze <eregontp@gmail.com>
+Date:   Tue Jul 23 15:52:25 2013 +0200
+
+    %v in Time is %e-%^b-%Y and is %e-%b-%Y for Date/DateTime
+
+commit 6fb734f961b4a24d914ceb062b2484cb8e268f35
+Author: Benoit Daloze <eregontp@gmail.com>
+Date:   Sat Jul 20 22:58:30 2013 +0200
+
+    handle extra date formats in RubyDateFormat
+
+commit be55dc2bbfab5605315555581d588ea98bb22670
+Author: Benoit Daloze <eregontp@gmail.com>
+Date:   Sat Jul 20 22:57:57 2013 +0200
+
+    RubyDateFormat: handle ignored POSIX modifiers as MRI
+
+commit 1fcf3253e58a3268aabfb01b9813add82d730815
+Author: Benoit Daloze <eregontp@gmail.com>
+Date:   Sat Jul 20 22:55:16 2013 +0200
+
+    fix RubyDateFormat FORMAT_CENTURY: use getYear() so it does not depend on Chronology
+    
+    * In ISOChronology, it is fine, but in GJChronology, it's century + 1.
+    * Still a problem for the year right now with GJChronology (but no test!)
+
+commit 3d1d48052b4d98c5ee75e055b74e9bb5f6b97ae5
+Author: Benoit Daloze <eregontp@gmail.com>
+Date:   Sat Jul 20 22:54:06 2013 +0200
+
+    fix RubyDateFormat %c, blank-padded day, not zero-padded
+
+commit 18dfb672e6b5ea3951001a7b693485da4e016f95
+Author: Benoit Daloze <eregontp@gmail.com>
+Date:   Sat Jul 20 22:53:12 2013 +0200
+
+    add missing format %g (short weekyear) to RubyDateFormat
+
+commit 16452f5160bcb86b7d8311f84b7d5c6f9f350f76
+Author: Benoit Daloze <eregontp@gmail.com>
+Date:   Sat Jul 20 22:49:49 2013 +0200
+
+    add formatting letters in javadoc to RubyDateFormat formats
+
+commit d13a4eff315cb0d1f42af1a717a7095da5f59b44
+Author: Benoit Daloze <eregontp@gmail.com>
+Date:   Fri Aug 30 19:32:12 2013 +0200
+
+    All shall be curly!
+    
+    * if/for/... should always have { } unless one-liners.
+
+commit e4d2d4b0aa2c0a3d6f2212e7a335ce1722cb2bb2
+Author: Benoit Daloze <eregontp@gmail.com>
+Date:   Wed Jul 17 22:40:40 2013 +0200
+
+    Refactor the whole Time/Date formatting (strftime): RubyDateFormat
+    
+    * Also fix negative timezone in getlocal19()
+    * And handle negative timezone with 0 hours
+    * Pass all sensible tests of MRI test_time.rb#test_strftime !!
+      (was not passing half before)
+    * No null checks in TimeOutputFormatter, use a DEFAULT_FORMATTER
+    * Specify type of argument with an enum: FieldType
+    * Handle # (change case), padding with changed default padder and others
+    * Enjoy much cleaner code
+    * Generic useful methods in TimeOutputFormatter:
+      formatNumber(), formatSignedNumber(), padding()
+    * Might need a little micro-optimization for padding()
+
+commit 567ce285822a89243c1d23e0c1cb5ace702eda70
+Author: Benoit Daloze <eregontp@gmail.com>
+Date:   Wed Jul 17 15:38:01 2013 +0200
+
+    fix Date#strftime %Y and %G: handle negative values in fourCharDigit()
+
+commit e633042af61f2a14ff6fbf71b7a246c8de53e411
+Author: Benoit Daloze <eregontp@gmail.com>
+Date:   Wed Jul 17 15:14:48 2013 +0200
+
+    Precision of Time zone is seconds, so express it in seconds directly and avoid needless divisions
+    
+    * RubySpec "Time#strftime with %z rounds fixed offset to the nearest second"
+      can therefore only fail.
+
+commit 63518adf6a868c175c8aa8386e5a575fb8f1ec2b
+Author: Benoit Daloze <eregontp@gmail.com>
+Date:   Tue Jul 16 20:31:27 2013 +0200
+
+    use twoCharDigit() helper instead of inlined logic
+
+commit 34ac2d3169d57af08f03628cf1d3c76c502ce168
+Author: Benoit Daloze <eregontp@gmail.com>
+Date:   Tue Jul 16 18:02:02 2013 +0200
+
+    fix logic of RubyDateFormat for %N, it is right zero-padded (String.format() cannot do that)
+
+commit 28c6fbc4e883bc1c9e9242d1da1cb2b785f55339
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 3 12:46:45 2013 -0500
+
+    Move to @mkristian's proposed layout, with some modifications.

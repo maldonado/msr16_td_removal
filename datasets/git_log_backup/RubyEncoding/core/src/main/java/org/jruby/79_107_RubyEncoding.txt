@@ -1,0 +1,163 @@
+commit 755519e368893a004a4edcddcb2479ae4bff0976
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Jul 15 14:41:27 2015 -0500
+
+    Fixes #2559. NoSuchMethodError in pg_jruby gem
+
+commit e864e4962cddfc2e138d795ed1f53aecc7887054
+Author: Kevin Menard <kevin@nirvdrum.com>
+Date:   Mon Feb 16 11:13:46 2015 -0500
+
+    [Truffle] Implemented the :string_equal Rubinius primitive.
+    
+    This helps round out some cases in String#== as well.
+
+commit 752dd2621e5c9a97f720a83e902066f74ca7bba1
+Author: Kevin Menard <kevin@nirvdrum.com>
+Date:   Fri Jan 16 13:53:38 2015 -0500
+
+    [Truffle] Partial implementation of Encoding.compatible?.
+
+commit 2a65f1a683644409a18f2a84196bfce111d6fa8c
+Author: Kevin Menard <kevin@nirvdrum.com>
+Date:   Tue Jan 13 19:54:12 2015 -0500
+
+    Moved the core of RubyString#replaceInternal19 to StringSupport.replaceInternal19.
+
+commit ca99b12e2cd13fb4f3b29d1a857d76aff4da76dd
+Author: Kevin Menard <kevin@nirvdrum.com>
+Date:   Thu Dec 11 16:48:27 2014 -0500
+
+    Removed unused constructors.
+
+commit c34b8dbd98c5ddfd61f69375058b32cd99aeb9fe
+Author: Kevin Menard <kevin@nirvdrum.com>
+Date:   Thu Dec 11 14:48:17 2014 -0500
+
+    Removed a bunch of unused, deprecated RubyEncoding methods.
+
+commit 8bd0df25b47adb4250f3e34a1dfb006d82bd2206
+Author: Kevin Menard <kevin@nirvdrum.com>
+Date:   Thu Dec 11 14:46:20 2014 -0500
+
+    Removed unused RubyEncoding factories.
+
+commit bffdb0a7eb1ac61f62eb915d007784ddcbed397d
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Wed Nov 5 01:41:38 2014 +0000
+
+    [Truffle] Array#permutation.
+
+commit 147a7cbcf025902a0e171aae9b70b3b0e3229c5b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Oct 21 15:20:36 2014 -0500
+
+    HEADIUS
+
+commit efabe068af794db64902e920453165bb11b957ff
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Oct 20 10:36:43 2014 -0500
+
+    Lift constant handle caching to all objects and wire it up.
+    
+    Added handle reuse for:
+    
+    * true/false
+    * nil
+    * runtime
+    
+    And fixed handling for fixnums and symbols.
+    
+    See #2058.
+
+commit f0d2c9b4956e202bf4fffe6f624f139c978bfe93
+Merge: 1d1938f bbf8e8f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Feb 20 14:30:38 2014 -0600
+
+    Merge remote-tracking branch 'origin/jruby-1_7'
+
+commit bbf8e8fc243ab92fff0840f4fc80ded5bbd155d2
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Feb 20 14:28:55 2014 -0600
+
+    Fix #1511 by choosing original encoding appropriately.
+    
+    The new logic here chooses the original (format) string's encoding
+    when appending a US-ASCII string if the format string contains
+    non-ASCII characters or its encoding is not ASCII compatible.
+
+commit d3c07143fef64cf3d04962089e944e150b6bb3b5
+Merge: 3ca2a90 17cb0b2
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Nov 21 20:02:16 2013 -0600
+
+    Merge branch 'jruby-1_7'
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/ext/pathname/RubyPathname.java
+
+commit 5098c2d0dc894cd364574271f9df09c40612a0ce
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Nov 21 19:44:58 2013 -0600
+
+    Add RubyEncoding.encodeUTF16 using Unsafe tricks.
+    
+    Converting a Java String to UTF-16 Ruby String appears to be 2x
+    faster using this method than converting to UTF-8 using Charset
+    encoders. However, we can't simply make all Java Strings entering
+    Ruby suddenly be UTF-16.
+
+commit 1cce8799e759517419c0802b027b9e27dca1ca75
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Oct 8 11:31:11 2013 -0500
+
+    Encoding.compatible? Typo where very uncommon case was not swaping obj1 for obj2 is obj1 is not a string.  Fixed case where obj1 is  and ob2 is only 7bit ascii
+
+commit 32d65304ecf24f7cc22780f2a4ef095e590e8f49
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Oct 8 11:31:11 2013 -0500
+
+    Encoding.compatible? Typo where very uncommon case was not swaping obj1 for obj2 is obj1 is not a string.  Fixed case where obj1 is  and ob2 is only 7bit ascii
+
+commit 468ff13e145d6075606d1676c271f6dc013ce9db
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Oct 8 10:45:03 2013 -0500
+
+    De-version Encoding
+
+commit d1f89e004fdc78dff75407c82123e6c9e8b406bb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Sep 12 18:48:16 2013 +0200
+
+    Make ClassIndex into an enum, to prevent issues like #1004.
+
+commit d87f1fe892093beae7fd15fb30daaf584f3dd478
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Oct 3 07:52:39 2013 -0500
+
+    Restore some lost RubyEncoding methods being used in the wild.
+
+commit 6ef169c3ce65a1afd781c416e40b66886627edb4
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Aug 20 16:15:22 2013 -0500
+
+    Two steps forward, one step back. Re-fix unit test failures.
+
+commit b1d9cb5b850eab6935b50dd77983b45be1da61de
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Aug 9 00:11:14 2013 -0500
+
+    Edging closer to everything passing again.
+
+commit 121831294513cc4e34e2e7acbe42bd47a063a5a9
+Author: Alex Tambellini <atambellini@gmail.com>
+Date:   Sun Jul 21 00:32:35 2013 -0400
+
+    Implement Encoding#replicate
+
+commit 28c6fbc4e883bc1c9e9242d1da1cb2b785f55339
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 3 12:46:45 2013 -0500
+
+    Move to @mkristian's proposed layout, with some modifications.

@@ -1,0 +1,51 @@
+commit 155c446a806df981e5ea5b259c44455584ee3f61
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Dec 29 02:29:37 2009 -0600
+
+    Move JavaCallable construction logic up into RubyToJavaInvoker using abstract creator/accessors in the method/constructor-related subclasses.
+
+commit af31aebf97bc3a976b30b84b49bde9c4df1609b2
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Dec 28 21:24:44 2009 -0600
+
+    Varargs support for method dispatch! Should fix JRUBY-195, but I don't like the impl much so far. Needs additional cleanup.
+
+commit c56bba4bf76191004ed284b4ba61b2c1e3ece038
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Dec 10 11:09:42 2009 -0600
+
+    Eliminate some and reduce other setAccessible calls for JRUBY-4246.
+    
+    * For all methods in all classes encountered by JRuby, we were doing setAccessible one at a time. This meant that even if the class was never directly used (and lazily initialized) we still called setAccessible for all methods. For classes that were directly used, we ended up doing a second round of setAccessible calls for each named group of methods. The latter remains, but is now the only setAccessible for methods and constructors.
+    * All fields were being setAccessible. In the case of static public final fields, which we create constants for, this was obviously unnecessary. In the case of regular fields, we only ever retrieved the list of public fields, so it was again unnecessary. Also note that in both cases we did the setAccessible calls eagerly.
+
+commit 74792d770c0b4b1bcddaeb51390d2b16ea821e36
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Sep 27 20:02:18 2009 -0500
+
+    Add java_method to peel out a specific overloaded Java method for later selection-free invocation. Only for instance methods atm.
+
+commit 7c66de78a91d12da1989fce526aa92ef9ceaf9ae
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Mon Mar 9 16:18:48 2009 +0000
+
+    Fix more issues where a restricted security environment can be problematic
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9385 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 8f47cc9d9fb3bdc54072bed4a8720d5c62dfc465
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Tue Aug 26 01:38:00 2008 +0000
+
+    JRUBY-2833: Can't reference Java's constants that start with a lower case character
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7538 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit cccee6a71b44aceff3680d5970584f676ba0118e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Aug 8 03:10:54 2008 +0000
+
+    More "new JI" class moves: all new Invoker classes to org.jruby.java.invokers
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7408 961051c9-f516-0410-bf72-c9f7e237a7b7

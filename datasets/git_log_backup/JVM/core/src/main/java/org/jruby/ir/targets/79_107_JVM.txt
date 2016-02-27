@@ -1,0 +1,156 @@
+commit 6196101068064c998ee9adaf6802d49354bd6e4b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Apr 8 16:30:48 2015 -0500
+
+    Wire up minimal logic for jitted refinements.
+
+commit 31f79261bfd3996e72ab4725e5bea43c137e867d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Oct 22 21:12:34 2014 -0500
+
+    Dirt simple fixed-arity support in new JIT.
+    
+    In order to bring the new JIT in line with the old JIT in terms of
+    performance, this commit makes the JIT emit a second version of a
+    given method with exactly the number of required arguments rather
+    than just an array-boxed version. This second handle is used by
+    CompiledIRMethod and Bootstrap to wire matching-arity calls
+    straight through to the right target.
+    
+    This brings the performance of several benchmarks within throwing
+    distance of the 1.7 JIT.
+    
+    Caveats:
+    
+    * No checking for maximum supported arity. We try to patch through
+      any number of arguments. This is good, because it means we can
+      escape the 0-3 arity splitting for Ruby code, but it also means
+      we're missing some verification that there's not too many args
+      to handle in the intermediate MethodHandles.
+    * CompiledIRMethod.call now has overloads for other arities, but
+      this is the only benefit to JVM6 support right now. JVM6 will
+      need to emit DynamicMethod.call invocations that match 0-3 args
+      rather than boxing all the time.
+    * This is not as generic as I'd like it to be to support multiple
+      method entry points. The approach may extend well to methods
+      with N..M arguments.
+    
+    I have only done a bit of testing with this, but many different
+    fixed-arity and variable-arity methods appear to bind correctly.
+
+commit cc2c0fb03eaf66a60a517811d6115df5d61e68f1
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Sep 29 11:11:37 2014 -0700
+
+    Mostly-complete non-indy support for JIT.
+
+commit f38c310f8b05e1dace4185d6d744c40244e1a97d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Sep 12 10:31:07 2014 -0500
+
+    Refactor arg-receiving instrs and reimpl JIT logic for them.
+
+commit 57de8506bd525db0e68f0248aa8d9d077a135eba
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Sep 11 19:49:26 2014 -0500
+
+    Pass impl class into methods and clean up arg offset logic.
+
+commit a06f6a480e78cef7a7ed1bfda9f06f2139c281b6
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Feb 6 16:29:03 2014 +0100
+
+    Basic closure logic working in IR JIT.
+    
+    Still not handling non-local flow correctly, since it is bound up
+    in RuntimeHelperCall instruction.
+
+commit 9e60ae9c68223c96458277be98f53d60bc327490
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Jan 25 18:17:57 2014 +0100
+
+    Revert IR JIT to using boxed arg arrays, to enable more arg forms.
+
+commit 5b0dd773ecb50a335c0b292d6ab1f7320462c1e3
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Sat Jan 18 12:37:59 2014 -0600
+
+    [IR] Bunch of trivial cleanup - testing some vim plugins :)
+    
+    * Removed unused imports, whitespace, etc.
+
+commit acabaf1594a9f1379998a8e5d760da6c823acfe3
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Thu Jan 16 12:11:52 2014 -0600
+
+    [IR] Additional cleanup + generalization of unboxing pass.
+    
+    * Cleaned up unboxing analysis a bit more by removing hardcoded
+      assumptions about float-type unboxing. Should be easier to add
+      unboxing for additional types in the future.
+    
+    * Added ability to store booleans in "unboxed form" for use in
+      branches without calling isTrue/isFalse on boxed ruby values.
+    
+      For the interpreter, we continue to use "boxed booleans" since
+      they are cached one-time true/false objects to prevent
+      proliferation of temp-var arrays in the interpreter loop.
+    
+    * More rubyspecs now pass with unboxing turned on -- still several
+      failures that need working through.
+
+commit 5a005f5cf4ca04f69c46700eacdbb1d6b5b59736
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Tue Jan 7 20:33:56 2014 -0600
+
+    [IR] Experimental: First pass implementing unboxing of floats.
+    
+    * Added a pass to detect unboxable floating-point operations
+      and perform them with Java primitives directly without
+      incurring call overheads.
+    * This code doesn't yet add inlining/type guards for dealing
+      with monkeypatching or type changes along optimized paths.
+    * Added -Xir.unboxing=true commandline option for enabling
+      the pass.
+    * This code hasn't been tested extensively for correctness or
+      performance, but it is meant to be correct (modulo missing
+      type guards). It should work in the presence of closures by
+      adding any required boxing/unboxing instructions at boundaries.
+    * Added support for float ALU, box, and unboxing instructions
+      in IR JIT as well.
+    * Analysis now works correctly on loop-based and closure-based
+      versions of mandelbrot (type-guards are still missing). Some
+      more tweaks are required for the closure version to get rid of
+      some spurious boxing instructions.
+    * Preliminary results:
+      - Over 5x speedup with JIT on the while-loop version of mandelbrot
+        (all fixnum ops still go through boxed calls).
+      - Over 20% speedup with interpreter on the closures version of
+        mandelbrot (when DCE is enabled). JIT doesn't support closures
+        yet.
+      - But, meaningless numbers in the absence of safety guards, but
+        just an indication of potential in fp-heavy code.
+    * To be done:
+      - Additional tweaks to analysis.
+      - Retain exception edge info better in IR and exploit it in
+        analysis.
+      - Fix ToAryInstr to not lose information about safety in most
+        cases where its operand is an Array.
+      - Exploit Fixnum information where it is obvious it won't
+        overflow boundaries (ex: 50.times {..})
+      - Exploit inlining opportunities on simple iterators like
+        (n.times {..}).
+      - Exploit information from Constants and Math.* methods.
+      - A lot of this requires appropriately placed safety guards.
+
+commit ce51ec3196d14657e94c1b8063e2120638ab7695
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Fri Sep 27 16:07:17 2013 -0500
+
+    Cleanup: Deleted trailing whitespace on lines in ir/ directory
+
+commit 28c6fbc4e883bc1c9e9242d1da1cb2b785f55339
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 3 12:46:45 2013 -0500
+
+    Move to @mkristian's proposed layout, with some modifications.

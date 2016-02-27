@@ -1,0 +1,46 @@
+commit 378c870ea9f2395c923c9ce67e6b840fac0aab68
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Thu Dec 20 18:08:58 2007 +0000
+
+    JRUBY-382: Better error output from parser (less garbage == better)
+    JRUBY-1743: =begin and =end should not be case insensitive
+    JRUBY-1744: END { } in method should generate a warning and not an error
+    JRUBY-1621: rss/maker doesn't compile
+    - A mixed up error between global and instance variables
+    
+    My ByteListLexerSource is now disabled, but it shall return...
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5314 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 7467c51f616191255cfd7de6bc01c8451bc573cb
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Sun Nov 4 17:21:46 2007 +0000
+
+    JRUBY-1517: Fix embedded null character issue.
+    - change read to read ints instead of chars
+    - use EOF constant everywhere
+    - change EOF constant to -1 instead of 0
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4857 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 16e5550655d971eca1eeea0a2fe8794b86928b97
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Thu Oct 25 18:14:24 2007 +0000
+
+    Lexer jumbo patch.  Speeds up general parsing 10-15%.  Cold parses are about 30% faster.   Code has been refactored to the point that additional optimizations can be considered (like bytelist identifiers for alloc-less identifiers; same for uninterpolated string nodes).
+    
+    intern'ing of identifiers now happen in lexer rather than being smattered through AST
+    Reader -> InputStream for LexerSource
+    A new ByteList LexerSource for evals
+    
+    Additional bugs fixed:
+    JRUBY-1408: JRuby crashes with error: can't find string "EOF" anywhere before EOF (SyntaxError)
+    JRUBY-1443: Wrong position information for a CallNode with parentheses
+    JRUBY-1435: YieldNodes sometimes have wrong position information
+    JRUBY-1416: eval of a "proc" with setting the line number for something lower than 1 to adjust the line number causes "java.lang.ArrayIndexOutOfBoundsException: -1 (NativeException)"
+    JRUBY-1432: NFE from RubyYaccLexer.yylex
+    
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4731 961051c9-f516-0410-bf72-c9f7e237a7b7

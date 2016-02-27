@@ -1,0 +1,558 @@
+commit 2008589a8aa27ff7ac01938974c128f2e08730ed
+Author: kares <self@kares.org>
+Date:   Wed Aug 26 10:46:54 2015 +0200
+
+    return correct superclass when there's a prepended module in the hierarchy
+    
+    fixes #3276 (spec was added to rubyspecs thus should land with next merge)
+
+commit d8a6401ebaf9e75db4c111518c1d6c472c4c0300
+Merge: 3efcd1d e92030e
+Author: kares <self@kares.org>
+Date:   Tue Aug 18 13:24:28 2015 +0200
+
+    Merge branch 'jruby-1_7'
+    
+    * jruby-1_7:
+      some more comparable asserts including for the Java compareTo part
+      native RubySymbol#compareTo since we expect to always be able to sort
+      should not-rewrite jump exceptions twice as well (not just raise ones)
+      delete un-used imports
+      [ji] do not rewrite stack-trace twice for Ruby (raise) exceptions
+      base compareTo should not silence all Ruby raised exceptions (fixes #2232)
+      re-arrange rescue spec (we're about to spec some more behavior)
+      only test nil return from Object cmp on 1.9 (on 1.8.7 its expected to raise)
+      more of correct $! restore + use get/setErrorInfo for better predictability
+      another incorrect $! with numeric coercion on <=> + cleanup getRuntime()
+      Fix some consumers for #1601.  Don't leak out  if we are swallowing the raised exception
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/Main.java
+    	core/src/main/java/org/jruby/RubyBasicObject.java
+    	core/src/main/java/org/jruby/RubyClass.java
+    	core/src/main/java/org/jruby/RubyComparable.java
+    	core/src/main/java/org/jruby/RubyNumeric.java
+    	core/src/main/java/org/jruby/RubySymbol.java
+    	core/src/main/java/org/jruby/RubyTime.java
+    	core/src/main/java/org/jruby/javasupport/JavaCallable.java
+
+commit adda8552d84c217886c0dfb40ea38b8a6906c326
+Author: kares <self@kares.org>
+Date:   Mon Aug 17 11:54:42 2015 +0200
+
+    more of correct $! restore + use get/setErrorInfo for better predictability
+    
+    semi-picked from 78e968ef4da7880c2f9f2c31098fc0d7d5eb39db (#1601)
+
+commit df6cf576a9e1dbb70e4415286c3bae97e0d01374
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Aug 6 13:12:26 2015 -0500
+
+    Add respond_to-aware hashCode and equals to RubyBasicObject.
+    
+    We use Object#hashCode and #equals in our Hash impl among other
+    places. When the object key is RubyObject or a descendant, we
+    would dispatch dynamically to the appropriate methods in Ruby.
+    However, RubyBasicObject did not override either method, so they
+    both just used base JVM impls and ignored user-defined #hash and
+    
+    This patch adds "checked" versions of these methods to
+    RubyBasicObject and fixes #3227.
+
+commit edc0cb5fd7696dd6072645fc812bc337d93009fe
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Aug 2 12:20:40 2015 +0200
+
+    Move NativeCall stuff down to JavaMethod.
+    
+    Only methods down-hierarchy from JavaMethod ever actually have
+    NativeCall so the extra size in all DynamicMethod subclasses is
+    unnecessary.
+
+commit 029e620784b30bc79469853801e6bfb45cd38c74
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Jun 1 15:41:03 2015 -0500
+
+    respond_to? dispatch should only send one argument if defined respond_to? method only expends one argument
+
+commit 02c3dd8dfe38b4c429ec9db167cdd5581f2143e7
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Jun 1 15:26:03 2015 -0500
+
+    arity.toString() was printing extra crap and not just its value.  Switch to using value in error message
+
+commit 2dcb163bc1cb245e24c90a8ac6b50c38f2c54d4f
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Jun 1 15:22:14 2015 -0500
+
+    respond_to? should always pass symbol as method name
+
+commit f9d652bd5d86c91230598deeae61cce548bae41f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri May 22 09:37:11 2015 -0500
+
+    Add some doco for check_funcall logic.
+
+commit b27868aa7137ab68eec2076b3ae9b9e8d42d6129
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Sat Feb 14 09:51:40 2015 -0600
+
+    Some more $! save/restore fixes + add comments for all of them
+
+commit 78e968ef4da7880c2f9f2c31098fc0d7d5eb39db
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Fri Feb 13 23:43:16 2015 -0600
+
+    Save/restore $! properly in the JRuby runtime
+    
+    * Whenever a RaiseException is caught and handled, the $! should
+      be the restored to the previous value of the exception before
+      the try-catch was entered.
+    
+    * This fixes #1601 and #2491 but additional code auditing and
+      discussion will be helpful.
+
+commit 98ee132a08c414e00051a719d3c31a34a563ccae
+Merge: 08ce901 81879f1
+Author: Christian Meier <m.kristian@web.de>
+Date:   Fri Dec 12 14:32:39 2014 +0100
+
+    Merge branch 'jruby-1_7'
+    
+    Conflicts:
+    	.travis.yml
+    	VERSION
+    	core/pom.xml
+    	core/src/main/java/org/jruby/Ruby.java
+    	core/src/main/java/org/jruby/RubyClass.java
+    	core/src/main/java/org/jruby/RubyFile.java
+    	core/src/main/java/org/jruby/RubyRegexp.java
+    	core/src/main/java/org/jruby/ast/SymbolNode.java
+    	core/src/main/java/org/jruby/common/RubyWarnings.java
+    	core/src/main/java/org/jruby/compiler/ASTCompiler.java
+    	core/src/main/java/org/jruby/compiler/BodyCompiler.java
+    	core/src/main/java/org/jruby/compiler/CacheCompiler.java
+    	core/src/main/java/org/jruby/compiler/impl/BaseBodyCompiler.java
+    	core/src/main/java/org/jruby/compiler/impl/InheritedCacheCompiler.java
+    	core/src/main/java/org/jruby/compiler/impl/InvokeDynamicCacheCompiler.java
+    	core/src/main/java/org/jruby/ext/tempfile/Tempfile.java
+    	core/src/main/java/org/jruby/parser/ParserSupport.java
+    	core/src/main/java/org/jruby/parser/Ruby19Parser.java
+    	core/src/main/java/org/jruby/parser/Ruby19Parser.y
+    	core/src/test/java/org/jruby/embed/ConstantCompilationTest.java
+    	default.build.properties
+    	docs/man/pom.xml
+    	docs/pom.xml
+    	ext/pom.xml
+    	ext/readline/pom.xml
+    	ext/ripper/pom.xml
+    	lib/pom.xml
+    	lib/ruby/1.9/rexml/entity.rb
+    	lib/ruby/2.0/net/http.rb
+    	lib/ruby/2.0/rexml/document.rb
+    	lib/ruby/2.0/rexml/entity.rb
+    	lib/ruby/shared/gauntlet_rubygems.rb
+    	lib/ruby/shared/rubygems.rb
+    	lib/ruby/shared/rubygems/available_set.rb
+    	lib/ruby/shared/rubygems/basic_specification.rb
+    	lib/ruby/shared/rubygems/command.rb
+    	lib/ruby/shared/rubygems/command_manager.rb
+    	lib/ruby/shared/rubygems/commands/cert_command.rb
+    	lib/ruby/shared/rubygems/commands/cleanup_command.rb
+    	lib/ruby/shared/rubygems/commands/contents_command.rb
+    	lib/ruby/shared/rubygems/commands/dependency_command.rb
+    	lib/ruby/shared/rubygems/commands/environment_command.rb
+    	lib/ruby/shared/rubygems/commands/generate_index_command.rb
+    	lib/ruby/shared/rubygems/commands/help_command.rb
+    	lib/ruby/shared/rubygems/commands/install_command.rb
+    	lib/ruby/shared/rubygems/commands/list_command.rb
+    	lib/ruby/shared/rubygems/commands/mirror_command.rb
+    	lib/ruby/shared/rubygems/commands/outdated_command.rb
+    	lib/ruby/shared/rubygems/commands/owner_command.rb
+    	lib/ruby/shared/rubygems/commands/pristine_command.rb
+    	lib/ruby/shared/rubygems/commands/push_command.rb
+    	lib/ruby/shared/rubygems/commands/query_command.rb
+    	lib/ruby/shared/rubygems/commands/search_command.rb
+    	lib/ruby/shared/rubygems/commands/setup_command.rb
+    	lib/ruby/shared/rubygems/commands/specification_command.rb
+    	lib/ruby/shared/rubygems/commands/uninstall_command.rb
+    	lib/ruby/shared/rubygems/commands/unpack_command.rb
+    	lib/ruby/shared/rubygems/commands/update_command.rb
+    	lib/ruby/shared/rubygems/commands/which_command.rb
+    	lib/ruby/shared/rubygems/commands/yank_command.rb
+    	lib/ruby/shared/rubygems/compatibility.rb
+    	lib/ruby/shared/rubygems/config_file.rb
+    	lib/ruby/shared/rubygems/core_ext/kernel_gem.rb
+    	lib/ruby/shared/rubygems/core_ext/kernel_require.rb
+    	lib/ruby/shared/rubygems/defaults.rb
+    	lib/ruby/shared/rubygems/dependency.rb
+    	lib/ruby/shared/rubygems/dependency_installer.rb
+    	lib/ruby/shared/rubygems/deprecate.rb
+    	lib/ruby/shared/rubygems/doctor.rb
+    	lib/ruby/shared/rubygems/errors.rb
+    	lib/ruby/shared/rubygems/exceptions.rb
+    	lib/ruby/shared/rubygems/ext.rb
+    	lib/ruby/shared/rubygems/ext/builder.rb
+    	lib/ruby/shared/rubygems/ext/cmake_builder.rb
+    	lib/ruby/shared/rubygems/ext/configure_builder.rb
+    	lib/ruby/shared/rubygems/ext/ext_conf_builder.rb
+    	lib/ruby/shared/rubygems/ext/rake_builder.rb
+    	lib/ruby/shared/rubygems/gemcutter_utilities.rb
+    	lib/ruby/shared/rubygems/install_update_options.rb
+    	lib/ruby/shared/rubygems/installer.rb
+    	lib/ruby/shared/rubygems/installer_test_case.rb
+    	lib/ruby/shared/rubygems/local_remote_options.rb
+    	lib/ruby/shared/rubygems/name_tuple.rb
+    	lib/ruby/shared/rubygems/package.rb
+    	lib/ruby/shared/rubygems/package/old.rb
+    	lib/ruby/shared/rubygems/package/tar_header.rb
+    	lib/ruby/shared/rubygems/package/tar_reader/entry.rb
+    	lib/ruby/shared/rubygems/platform.rb
+    	lib/ruby/shared/rubygems/psych_additions.rb
+    	lib/ruby/shared/rubygems/rdoc.rb
+    	lib/ruby/shared/rubygems/remote_fetcher.rb
+    	lib/ruby/shared/rubygems/request.rb
+    	lib/ruby/shared/rubygems/request_set.rb
+    	lib/ruby/shared/rubygems/request_set/gem_dependency_api.rb
+    	lib/ruby/shared/rubygems/requirement.rb
+    	lib/ruby/shared/rubygems/resolver/current_set.rb
+    	lib/ruby/shared/rubygems/security.rb
+    	lib/ruby/shared/rubygems/security/policy.rb
+    	lib/ruby/shared/rubygems/security/trust_dir.rb
+    	lib/ruby/shared/rubygems/server.rb
+    	lib/ruby/shared/rubygems/source.rb
+    	lib/ruby/shared/rubygems/source/installed.rb
+    	lib/ruby/shared/rubygems/source/local.rb
+    	lib/ruby/shared/rubygems/source/specific_file.rb
+    	lib/ruby/shared/rubygems/source_list.rb
+    	lib/ruby/shared/rubygems/spec_fetcher.rb
+    	lib/ruby/shared/rubygems/specification.rb
+    	lib/ruby/shared/rubygems/ssl_certs/AddTrustExternalCARoot.pem
+    	lib/ruby/shared/rubygems/stub_specification.rb
+    	lib/ruby/shared/rubygems/syck_hack.rb
+    	lib/ruby/shared/rubygems/test_case.rb
+    	lib/ruby/shared/rubygems/test_utilities.rb
+    	lib/ruby/shared/rubygems/text.rb
+    	lib/ruby/shared/rubygems/uninstaller.rb
+    	lib/ruby/shared/rubygems/uri_formatter.rb
+    	lib/ruby/shared/rubygems/user_interaction.rb
+    	lib/ruby/shared/rubygems/util/list.rb
+    	lib/ruby/shared/rubygems/validator.rb
+    	lib/ruby/shared/rubygems/version.rb
+    	maven/jruby-complete/pom.xml
+    	maven/jruby-dist/pom.xml
+    	maven/jruby-jars/lib/jruby-jars/version.rb
+    	maven/jruby-jars/pom.xml
+    	maven/jruby-noasm/pom.xml
+    	maven/jruby-rake-plugin/pom.xml
+    	maven/jruby-stdlib/pom.xml
+    	maven/jruby/pom.xml
+    	maven/jruby/src/templates/osgi_all_inclusive/src/test/java/org/jruby/embed/osgi/test/JRubyOsgiEmbedTest.java
+    	maven/pom.rb
+    	maven/pom.xml
+    	pom.xml
+    	spec/tags/ruby/core/symbol/length_tags.txt
+    	spec/tags/ruby/core/symbol/size_tags.txt
+    	spec/tags/ruby/core/symbol/versions/encoding_1.9_tags.txt
+    	test/pom.rb
+    	test/pom.xml
+    	test/test_file.rb
+    	tool/globals_1_9_3.rb
+
+commit 91bc48738af38af75c80a8961151544dff6172cf
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Dec 8 09:37:39 2014 -0600
+
+    Include appropriate visibility check for checkFuncallCallable.
+
+commit 5ee083231860a41e352ecbb93297457b7efea3ca
+Merge: c7a3739 1f13c08
+Author: Christian Meier <m.kristian@web.de>
+Date:   Mon Sep 29 11:22:29 2014 +0100
+
+    Merge branch 'jruby-1_7'
+    
+    Conflicts:
+    	.travis.yml
+    	VERSION
+    	core/pom.xml
+    	core/src/main/java/org/jruby/RubyClass.java
+    	core/src/main/java/org/jruby/util/TypeConverter.java
+    	core/src/main/java/org/jruby/util/URLResource.java
+    	docs/man/pom.xml
+    	docs/pom.xml
+    	ext/pom.xml
+    	ext/readline/pom.xml
+    	ext/ripper/pom.xml
+    	lib/pom.xml
+    	maven/jruby-complete/pom.rb
+    	maven/jruby-complete/pom.xml
+    	maven/jruby-core-complete/pom.rb
+    	maven/jruby-core-complete/pom.xml
+    	maven/jruby-dist/pom.rb
+    	maven/jruby-dist/pom.xml
+    	maven/jruby-dist/src/main/assembly/jruby.xml
+    	maven/jruby-jars/Mavenfile
+    	maven/jruby-jars/jruby-jars.gemspec
+    	maven/jruby-jars/lib/jruby-jars.rb
+    	maven/jruby-jars/lib/jruby-jars/version.rb
+    	maven/jruby-jars/pom.xml
+    	maven/jruby-jars/src/it/helloworld/pom.xml
+    	maven/jruby-jars/src/it/integrity/pom.xml
+    	maven/jruby-noasm/pom.rb
+    	maven/jruby-noasm/pom.xml
+    	maven/jruby-rake-plugin/pom.rb
+    	maven/jruby-rake-plugin/pom.xml
+    	maven/jruby-stdlib-complete/pom.rb
+    	maven/jruby-stdlib-complete/pom.xml
+    	maven/jruby-stdlib/pom.rb
+    	maven/jruby-stdlib/pom.xml
+    	maven/jruby/pom.rb
+    	maven/jruby/pom.xml
+    	maven/pom.rb
+    	maven/pom.xml
+    	pom.xml
+    	spec/regression/GH-1963_Array_product_coercion_spec.rb
+    	test/pom.xml
+    	test/test_command_line_switches.rb
+
+commit ed54aab184bed0dc9dbaaf90b357c8f793c33696
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Sep 17 13:40:36 2014 -0500
+
+    Rip out the guts! Removing many non-9k runtime classes.
+    
+    * ClassCache is gone; it was hacky and problematic when compiled
+      code held classloader-level (static) data, as when using indy
+      call sites. Java 8 has also eliminated permgen, greatly reducing
+      the hassle and overhead of loading jitted code. Finally, Rails
+      and the other Ruby frameworks are now officially "thread safe"
+      (or the teams are committed to them being so) and the multiple
+      JRuby model of deployment is discouraged (or even deprecated).
+    * All old JIT code is gone. It won't be useful for the new
+      JIT.
+    * Removed the last vestiges of Callback-based functions. If I
+      remember right, there's some ext out there using them...we must
+      find it.
+    * Rewired JITCompiler to use the new JIT.
+    * Rewired InterpretedIRMethod to use JITCompiler.
+    * Moved OneShotClassLoader out of ClassCache (in org.jruby.util)
+
+commit 769b2c31decf659e430d617946542e0933692184
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Sep 16 10:25:18 2014 -0500
+
+    Fill out port of check_funcall logic more completely.
+    
+    This may fix #1976.
+
+commit bad0fed920243b1f4bfd5e91aa323efbd0593ba8
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Sep 15 13:40:03 2014 -0500
+
+    Remove some unused imports.
+
+commit bcb285f2596259b8655c9528f50d2262cbb76abf
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Sep 15 13:39:36 2014 -0500
+
+    Split "booting" flag and do not JIT during boot of runtime.
+
+commit 1ad4a59969b9d45db52f2bb71f6ee5b212a77c85
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Sep 11 11:33:42 2014 -0500
+
+    Reduce exception-handling in checked funcall and clear $!.
+
+commit f4f1e596854a720b2c63c1b4d95b6be991c7a442
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Sep 11 09:15:18 2014 -0500
+
+    Fix new coercion logic.
+    
+    MRI's tests for respond_to? also included a test for NOEX_BASIC,
+    which appears to be a flag only added to respond_to?,
+    respond_to_missing?, and method_missing. We do not have this flag,
+    so instead we just check that respond_to? is not the builtin
+    version.
+
+commit 0513c951389c015200e7553c515c43b130d64bc9
+Merge: b707c91 5f0e17b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Sep 10 20:55:35 2014 -0500
+
+    Merge remote-tracking branch 'origin/jruby-1_7'
+    
+    Conflicts:
+    	core/pom.xml
+    	core/src/main/java/org/jruby/RubyFile.java
+    	core/src/main/java/org/jruby/RubyFileTest.java
+    	core/src/main/java/org/jruby/RubyKernel.java
+    	core/src/main/java/org/jruby/util/RegularFileResource.java
+    	core/src/main/java/org/jruby/util/TypeConverter.java
+    	docs/man/pom.xml
+    	docs/pom.xml
+    	ext/pom.xml
+    	ext/readline/pom.xml
+    	ext/ripper/pom.xml
+    	lib/pom.xml
+    	maven/jruby-complete/pom.xml
+    	maven/jruby-dist/pom.xml
+    	maven/jruby-jars/pom.xml
+    	maven/jruby-noasm/pom.xml
+    	maven/jruby-rake-plugin/pom.xml
+    	maven/jruby-stdlib/pom.xml
+    	maven/jruby/pom.xml
+    	maven/pom.xml
+    	pom.xml
+    	test/jruby/test_system_error.rb
+    	test/pom.xml
+
+commit 5f0e17be8cd61faa06d7e51855c5537134f88bec
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Sep 10 20:47:53 2014 -0500
+
+    Port MRI logic for "check funcall" used by type conversion.
+
+commit 2676a1ce936a89deaab7db9f11a6a0d63fdf8610
+Merge: c8d269d c57ad62
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 9 12:55:04 2014 -0500
+
+    Merge remote-tracking branch 'origin/master' into new_transcoder
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/RubyConverter.java
+    	test/mri/excludes/TestMethod.rb
+    	test/mri/excludes/TestModule.rb
+
+commit 164dd8eb0041a6eaaf04cfbee746a90722ae0b59
+Author: tduehr <tduehr@gmail.com>
+Date:   Thu Jun 12 16:24:38 2014 -0500
+
+    Module#prepend
+    
+    abstracts included modules a little more and adds prepending modules
+
+commit 5c9cdfe905bad8cc3c469276ca2bbd8aad9b4f67
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri May 16 12:51:44 2014 -0500
+
+    Start porting IO open/initialize logic.
+
+commit ea920f9bfdbff8b6e57426621b9666e813ea9029
+Merge: 650fcc6 bc4b4ce
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Nov 27 16:39:33 2013 -0600
+
+    Merge branch 'jruby-1_7'
+
+commit bc4b4ce3d2c8d69cedff18cc47da60063dfba506
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Nov 27 16:39:16 2013 -0600
+
+    Flip logic to detect naming collision during reification. #1229.
+
+commit 413f5dd19f861fea53d2a3e7133e852db69aea5f
+Merge: 7ca30d0 c50fb9b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Nov 27 15:54:01 2013 -0600
+
+    Merge branch 'jruby-1_7'
+
+commit c50fb9b993831f952d0ea371daf03f31664b7f06
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Nov 27 15:23:29 2013 -0600
+
+    Bail out of reification if a class would collide with another.
+    
+    For this bug, we had the unusual case where a child class had the
+    same name as its parent. This caused the class reification to fail
+    since the parent class had to be reified first, and then the child
+    conflicted with that name.
+    
+    A reproduction case looks like this:
+    
+    module Bar
+      class Foo; end
+    end
+    
+    foo = Bar::Foo
+    Bar.send :remove_const, :Foo
+    Bar.const_set :Foo, Class.new(foo)
+    
+    Bar::Foo.new
+    
+    Here, the new Bar::Foo extends the old Bar::Foo, but takes on its
+    name when assigned to the Foo constant. As a result, we have two
+    classes in the same class hierarchy with the same fully-qualified
+    name.
+    
+    A few options were considered to fix this:
+    
+    * Bail out when there's such a conflict, since they should be rare
+      occurences. That's this commit.
+    * Attach the class's ID to all reified class names. That also
+      fixes this issue, but make all reified classes suddenly have a
+      potentially unpredictable ID number attached.
+    * Only attach the class's ID to the reified class name in the case
+      of this unusual collision. The ID would still be unpredictable,
+      but under most normal circumstances it would not be used.
+    
+    I opted for the first case, since these peculiar child classes
+    will still use their reified parent (of the same name) and this
+    change does not introduce any unpredictable aspect to the reified
+    class names. We may revisit this in the future.
+
+commit 91277a0b220d47821647c670ab40eaa66ff246a8
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Nov 7 12:39:33 2013 -0600
+
+    Remove Cext support.
+
+commit 4f3f43a8392847fe982bd251776ed37f6e799337
+Merge: 205cc7a f9da801
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Oct 22 16:10:29 2013 -0500
+
+    Merge branch 'jruby-1_7'
+
+commit f9da801bd0e04980ec8c8e705ff81fe63fe2b0c5
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Oct 22 16:08:30 2013 -0500
+
+    Double-check reification before proceeding, due to races.
+    
+    The reification logic is mostly synchronized, but there are some
+    paths like reifyWithAncestors that are unsynchronized. I have
+    concerns about blindly synchronizing them since there would end up
+    being many locks acquired, which screams deadlock to me.
+    
+    To fix #188 I instead opted to just re-check whether the class has
+    been reified already within the synchronized reify method. This is
+    a form of double-checking, but it should be safe here and should
+    prevent a double-generate + double-load of the reified class.
+
+commit 1bdac630e554d73c28ba9f9742577b90467d8e95
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Oct 8 09:44:39 2013 -0500
+
+    De-version Class
+
+commit 697e6895affa646849a685ed58f6f84795c853aa
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Oct 4 23:37:52 2013 -0500
+
+    Eliminate calls to Ruby.is1_8 and is1_9.
+
+commit d1f89e004fdc78dff75407c82123e6c9e8b406bb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Sep 12 18:48:16 2013 +0200
+
+    Make ClassIndex into an enum, to prevent issues like #1004.
+
+commit 28c6fbc4e883bc1c9e9242d1da1cb2b785f55339
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 3 12:46:45 2013 -0500
+
+    Move to @mkristian's proposed layout, with some modifications.

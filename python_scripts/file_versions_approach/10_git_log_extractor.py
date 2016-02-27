@@ -13,7 +13,7 @@ def get_repository_directory (project_name):
     switcher = {
         "jruby": "/Users/evermal/git/mined_repos/jruby/",
         "apache-ant": "/Users/evermal/git/mined_repos/ant/",
-        "apache-jmeter": "/Users/evermal/mined_repos/git/jmeter/",
+        "apache-jmeter": "/Users/evermal/git/mined_repos/jmeter/",
     }
     return switcher.get(project_name)
 
@@ -59,7 +59,7 @@ for project_and_file_name in all_files:
         git_log_file_name = str(oldest_version) + '_' + str(newest_version) + "_" + file_name.replace('.java', '.txt')
 
         git_checkout = "git checkout " + tag[0]
-        git_log = "git log -- " + repository_directory[0] + " > " + git_log_file_path + git_log_file_name
+        git_log = "git log -a -- " + repository_directory[0] + " > " + git_log_file_path + git_log_file_name
         command = git_checkout +";"+ git_log
         
         print git_checkout

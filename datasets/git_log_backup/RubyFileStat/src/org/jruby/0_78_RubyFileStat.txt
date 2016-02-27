@@ -1,0 +1,598 @@
+commit 36c0388f99541313f6834355f178c97303ba3d3d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Apr 29 15:22:38 2013 -0500
+
+    Use sticky bit logic for finding appropriate tmpdir.
+    
+    The logic added here includes an additional check for sticky bit
+    which would make world writable dirs ok to use for tmp location.
+    The sticky bit will default to false on JRuby when native support
+    is not available, but world_writable also returns false (nil) at
+    the moment. This means on non-native JRuby the normal given temp
+    dir will be use if it's a dir and writable, but this is not a
+    change from before this commit. On native JRuby, a world writable
+    dir is acceptable if sticky bit is set, which fixes #405.
+
+commit 61678ac1a2514a9932276f8d527816a5980a94b3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Feb 25 20:41:40 2013 +1100
+
+    Fix more references to CPL.
+    
+    The phrase "Common Public License" was split across two lines in
+    our default header, which caused it to be missed during earlier
+    search/replace. Also, we did not replace the CPL URL in the
+    header with the EPL URL.
+
+commit 330fef3b0fc18af477ccea19bd278669667f31bb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 12 14:49:29 2013 -0600
+
+    Switch JRuby's CPL license to EPL.
+    
+    Governance of the CPL license was moved to the Eclipse Foundation
+    at some point in the past, and Eclipse blessed the EPL (Eclipse
+    Public License v1.0) as the successor to CPL. Because the CPL
+    contains a clause allowing transparent upgrades to future blessed
+    successor licenses, we can make the move to EPL without
+    re-contacting past contributors.
+    
+    The change in going from CPL to EPL largely just removes some
+    punitive language that apparently made many companies nervous. All
+    other language in the license remains identical.
+    
+    Several documents about Eclipse's move from CPL to EPL are here:
+    
+    http://www.eclipse.org/legal/cpl2epl/
+    
+    Note that Eclipse's move came before the blessing of EPL as the
+    upgrade path for CPL, so they had to do a bit more legal juggling.
+    With Eclipse now the administrator of CPL and with their blessing
+    of EPL as the upgrade path for CPL, all we need to do is make the
+    move.
+
+commit be5db511473ee82d41c80c67b4dc54d5fcebced7
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Nov 19 15:14:39 2012 +0100
+
+    Update FileStat to use get_path
+
+commit b8181cda909f6e42d7c0b7fffaabbe2a502f273b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jul 27 02:19:54 2012 -0500
+
+    Inline all calls to ThreadContext.getRuntime to access the field.
+
+commit 19daa15fabddbb3ba2c3fca19274c6176b32c004
+Author: Deepak Giridharagopal <deepak@brownman.org>
+Date:   Wed Dec 21 11:21:58 2011 -0800
+
+    Comparing a RubyFileStat object with an object which is not a RubyFileStat should return 'nil'.
+    
+    Otherwise, we get a ClassCastException when we attempt to cast "other" to a RubyFileStat.
+
+commit ae5f6af748a9f386c50fb1872b243e7b62214ed4
+Author: Nick Klauer (a03182) <nicholasklauer@alliantenergy.com>
+Date:   Sat Dec 10 22:57:33 2011 -0600
+
+    fix test/test_file#test_file_uri_stat on WinXP
+    
+    The if statement should be broken down into two parts so an else clause
+    can throw an exception for file not found errors as it does throughout the
+    rest of the method.
+    
+    Fixes the following test failures on WinXP:
+    
+      2) Failure:
+    test_file_stat_uri_prefixes(TestFile) [.\test\test_file.rb:556]:
+    [Errno::ENOENT] exception expected, not
+    Class: <SystemCallError>
+    Message: <"Unknown error - Unknown Error (20047) - C:/klauer-jruby/file:">
+    ---Backtrace---
+    org/jruby/RubyFile.java:1516:in `lstat'
+    .\test\test_file.rb:557:in `test_file_stat_uri_prefixes'
+    ---------------
+    
+      3) Failure:
+    test_file_time_uri_prefixes(TestFile) [.\test\test_file.rb:573]:
+    [Errno::ENOENT] exception expected, not
+    Class: <SystemCallError>
+    Message: <"Unknown error - Unknown Error (20047) - C:/klauer-jruby/file:">
+    ---Backtrace---
+    org/jruby/RubyFile.java:1528:in `atime'
+    .\test\test_file.rb:574:in `test_file_time_uri_prefixes'
+    ---------------
+
+commit a9a34bea45d70560acc11aa609ff3ef8b34449a4
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Fri Dec 9 12:36:49 2011 -0600
+
+    Missed import of JRubyNonExistentFile
+
+commit a043568fa5365efc4b1f9bbdaa0c6da41f47bae2
+Author: Nick Klauer <klauer@gmail.com>
+Date:   Thu Dec 8 16:22:15 2011 -0600
+
+    File::Stat.new("") doesn't return the right error on WinXP.
+
+commit 0f7c9ce8261d46ebfb7ef6e17e7da2f86f5d5ba5
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Sep 12 12:48:51 2011 -0500
+
+    Update to ASM 4.0 RC2 and master builds of jnr-{ffi,posix,constants,netdb}.
+    
+    Squashed commit of the following:
+    
+    commit ce02afcf40ede2c485ab357435866ce754cd2671
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Mon Sep 12 12:46:44 2011 -0500
+    
+        Fix group id for jnr-posix and version numbers for modified libs.
+    
+    commit 0b5632be85dce5500c35d3533fa5d7cd240bf515
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Mon Sep 12 12:39:24 2011 -0500
+    
+        Fixes to get ASM 4.0 RC2 passing tests.
+    
+        * Update jnr-* to master versions, since some depend on ASM and had to be updated too.
+        * Fix ASM-related errors due to new class hierarchy.
+        * fix skinnymethodadapter_spec to use new h_ prefix for handles and to filter "asm" constants.
+    
+    commit 4ac391fb3bf2f53dd42f8e4c5f3a0e36ca638e1b
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Mon Sep 12 10:35:08 2011 -0500
+    
+        Remaining tweaks to get jruby compiling with ASM 4.0 RC2.
+    
+    commit 3801518505d0d38bf045a39fd8ca6eb80ef50126
+    Author: Douglas Campos <qmx@qmx.me>
+    Date:   Mon Sep 12 00:21:54 2011 -0300
+    
+        updated InvokeDynamicSupport
+    
+    commit 2aabc1894d38b717cca2b4546f51596b8b03db6e
+    Author: Douglas Campos <qmx@qmx.me>
+    Date:   Sun Sep 11 12:43:39 2011 -0300
+    
+        updating asm version
+
+commit 6f159fe5dd51c062a5b1aab64a8ede916990877a
+Author: Hiroshi Nakamura <nahi@ruby-lang.org>
+Date:   Mon Jul 11 03:36:17 2011 +0900
+
+    Deprecation of fast constant access paths.
+    
+    Each os those has the same definition as non-fast verision.
+
+commit a0b505c49f89be9f54cea2a9eeb11ae4177e8555
+Author: David Calavera <david.calavera@gmail.com>
+Date:   Tue Jan 4 20:27:05 2011 +0100
+
+    fix File.stat.inspect to ensure it's generated properly for each platform
+
+commit dbec3f52e5578a92fd318610f90435d4a5d5f60c
+Author: David Calavera <david.calavera@gmail.com>
+Date:   Sun Sep 19 01:56:16 2010 +0200
+
+    [1.9] define method File::Stat#world_writable?
+
+commit 4660e589fc595d5b402277acead348166a50aadd
+Author: David Calavera <david.calavera@gmail.com>
+Date:   Sun Sep 19 01:51:55 2010 +0200
+
+    [1.9] define method File::Stat#world_readable?
+
+commit 7ad2e67b8289c050dfe3375441459263afa186b8
+Author: David Calavera <david.calavera@gmail.com>
+Date:   Mon Jun 28 00:14:40 2010 +0200
+
+    [1.9] fix some File methods that use 'to_path' to coerce objects
+
+commit 1a004d74f71d3f484522f616410fd662488a4d06
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Apr 27 12:58:07 2010 -0500
+
+    Fix for JRUBY-4760: File.open throws Errno::ENOENT when file inside jar is accessed using ".." (doubledot) in the path
+
+commit a5de3f89ccd49c2c51fbe6e395dfe7f4d6eef748
+Author: David Calavera <david.calavera@gmail.com>
+Date:   Thu Apr 22 11:45:43 2010 +0200
+
+    JRUBY-4742: fix NPE when File::Stat doesn't find a file into a jar
+    
+    Signed-off-by: Nick Sieger <nick@nicksieger.com>
+
+commit 9df875b410c332a15a5c456b3463fb866f81d296
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Mar 26 03:15:51 2010 -0500
+
+    Fix regression from 7f52685: reinstate ENOENT for bad file: URLs.
+
+commit 7f52685ef6652c270912f8105a23fabc8004b415
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Mar 25 22:17:30 2010 -0500
+
+    Modified stat logic to work better for in-jar files for JRUBY-4594.
+
+commit 5192c02a3c0e250f0cf864cc180ce04bd2ce6821
+Author: Vladimir Sizikov <vsizikov@gmail.com>
+Date:   Wed Oct 28 13:37:26 2009 +0100
+
+    JRUBY-4149: JRuby reports wrong file sizes when native support is enabled
+    
+    Added new regression tests, unexcluded now passing ones.
+
+commit 261fd2075779eb08c928c72125b1fdce1883052d
+Author: Vladimir Sizikov <vsizikov@gmail.com>
+Date:   Sat Apr 26 13:15:57 2008 +0000
+
+    Fixed RubySpec failure: "File::Stat#inspect produces a nicely
+    formatted description of a File::Stat object"
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6568 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a972457fdd165362869e6640b27f2b794e94997f
+Author: Vladimir Sizikov <vsizikov@gmail.com>
+Date:   Tue Apr 15 11:33:43 2008 +0000
+
+    JRUBY-2394: File.stat should follow the symbolic link and report the
+    stat for the file pointed by the link.
+    
+    This fixes one rubyspec failure.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6497 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 493c43fb8eac0a22425d375b15e8663d4c0ce74a
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Wed Mar 19 12:20:01 2008 +0000
+
+    Make creation of RI much smarter and add basic type tags to loads of places.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6289 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 8dd4776340e89a0b4037475cb34117586371fba4
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Fri Feb 29 00:57:09 2008 +0000
+
+    JRUBY-2132: introduce a jruby.util.Platform class to begin isolating platform-specific tests (patch by Robert Jay Osborne with transmogrifying by me to put it in posix package)
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6066 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 2fa81574ffeaf58d286a02c797146705b0d8de12
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sat Jan 19 20:03:31 2008 +0000
+
+    JRUBY-1896: Missing method: IO#stat
+    JRUBY-2000: IO#tty? returns false for "/dev/tty"
+    Fixed error in build.xml for all specs
+    Fixes provided script of JRUBY-1608, but the issues main description
+    
+    IO/File still has issue that fileno is not file descriptor.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5668 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit e4b20bafd8ec5e0b80afde2804b5a254ddcb14c4
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sun Dec 9 02:43:21 2007 +0000
+
+    JRUBY-1516: FileTest#chardev? is not currently implemented.
+    JRUBY-15: Implement File::Stat.ino and File::Stat.dev
+    JRUBY-1438: Create JNA-based implementations of fstat/lstat
+    JRUBY-1580: Pathname#unlink complains "<file> is not a directory"
+    JRUBY-1433: File::Stat.uid needed for rubyzip
+    
+    This patch implements more than the above.  It also implements all of File::Stat, File::Test, Kernel#test, and all File posix methods (sans File.umask and File.readlink).  This is done via JNA and will work on Linux, Windows, and MacOS (32 bits).  64 bit systems require a little more work and Windows may be spotty (e.g. not as solid and Linux/MacOS).
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5198 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 4c28dd3f1bbd314c812778500d1091b705d93d2d
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Wed Oct 31 03:39:46 2007 +0000
+
+    JRUBY-1401 (File.basename, Pathname#realpath issues on windows) fixed on trunk
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4829 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit b952155c34315276b36dbd1a53c018be6f8fe4f3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Oct 15 22:17:20 2007 +0000
+
+    A bogus File::Stat.uid impl to allow rubyzip to work for JRUBY-1433. JRUBY-1433 will remain open until we can do a real stat impl (JRUBY-1438).
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4591 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 95c346df5368a3f5f06fa9d14022efb85eaa6809
+Author: Bill Dortch <bill.dortch@gmail.com>
+Date:   Mon Oct 15 07:45:22 2007 +0000
+
+    Vars have landed. Does not include concurrent SymbolTable (will follow in the next day or so). Also need multi-threaded unit tests, work in progress.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4588 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 0b7a2dae2ec0baa531f313568ffc9b7382f89592
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Oct 12 01:50:08 2007 +0000
+
+    Migrate annotation-based method binding to generate DynamicMethod implementations directly, with arity checking built-in
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4575 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 95cd7bf353b79576baa36fdca3ddfd333e0d7f38
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Oct 11 07:14:27 2007 +0000
+
+    Adding more APIs, fixing a few bugs shown by the API diff script
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4566 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d80b446edecbc40f8b93d2b10bee0eed2a942280
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Oct 9 04:38:29 2007 +0000
+
+    Migrate FileTest and FileStat to annotation bindings
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4531 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 3e88cfab0d224fb9efa8d18336993e2c78ce495e
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Thu Sep 27 16:40:57 2007 +0000
+
+    - Identified and extracted construction paths for class/module/singleton/IncludedModuleWrapper, now there's no unnecessary null checks or assignments in their constructors (they take very few arguments so even asserts are not needed).
+    Each of those constructors have a comment what is it the responsible for, also, two RubyClass.newClass() and two RubyModule.newModule() methods have been extracted.
+    - Fixed logic that sets the parent/constant for Modules, now matches MRI (only setConstant/getConstantAt are used here).
+    - RubyClass rewritten, special attention has been put on allocation logic, now Class.new(...) doesn't fire a separate allocator class. (btw, logic of "class B < A;end" and "Class.new(A)" must be split since in second case superclass and allocator are not known until initialize is called). Class/Object allocation implementation mimics MRI's weirdest quirks in behavior, is _much_ simpler that it has been and much faster. This also allowed creation of generalized clone/dup implementations matching MRI. (only our special ivars need a care here).
+    - Rewritten bootstrapping of Object/Class/Module.
+    - Core classes (except Exception hierarchy, they should also be in future) are now cached in runtime (MRI caches them in static VALUE's like rb_cObject) Ruby.getClass(String), Ruby.getModule(String) and Ruby.getClassFromPath(String) should be used only by either interpreter or compiler and when the class name is not known at compile time.
+    - Fixed and simplified nodes: classNode, moduleNode, sclassNode, defsNode. Compiler has been synchronized here as well.
+    - No more __attached__ as ivar, it is now MetaClass field (which means lazy ivars for singletons). Compiler also updated.
+    - added and dosumented isModule() to IRubyObject (isClass(), isSintleton() documented).
+    - Fixed test_autoload test (Object.class_eval do;autoload :SomeClass, 'somefile';class SomeClass; end;end) should raise LoadError, now matches MRI.
+    
+    - Fixed a number of minor bugs:
+       1.instance_eval, was creating a metaclass for Fixnum instances (also affected Symbol/FalseClass/TrueClass/NilClass)
+       marshaler objects were kept in singleton classes
+       Range.inspect, was modifying the begin field (when it was a String)
+       Many bulletproofings in Marshal/Unmarshal (like unmarshaling an instance of nonexistant class), TypeErrors/ArgumentErrors matching MRI.
+       Fiber.new in 1.9, doesn't call #initialize method by funcall, fixed
+       number of method arity fixes and many methods are made fast now
+       fixed initialize/initialize_copy logic, further simplification, no ClassCastExceptions possible now
+       Fixed defineClass(under)/defineModule(under) logic
+       bulletproofed cases such: class A;end;module A;end
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4409 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 3a84606d084fcabbe6a70f43e44bf411fbbfb8aa
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Wed Sep 19 16:05:11 2007 +0000
+
+    JRUBY-1231, JRUBY-1372: fixes for File.directory? and Regexp.quote
+    merged from branch
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4359 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a2107e60085a5063bca76d897783a512bbd7eddc
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sun Feb 18 15:18:18 2007 +0000
+
+    JRUBY-606: Get rid of un/under-used IRuby interface
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3022 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 06cd42189f05a92f59d309a600820d466bd21854
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Thu Feb 8 13:48:39 2007 +0000
+
+    Improve startup by not using .class for IRubyObject. (since .class calls Class.forName)
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2966 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 5c0789044de8703f41bdf83f29552ba29ad048f6
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sat Jan 27 17:31:22 2007 +0000
+
+    JRUBY-484: Reverse Iter Call relationship in AST and also pass block via Java frame versus maintaining blocks in TC
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2851 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 8d7f2f4f78a2264f1933e0648a52f90017b4e328
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Fri Jan 12 19:47:16 2007 +0000
+
+    Fix for JRUBY-412: Make File::Stat a good citizen of the new allocator world.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2721 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit b390103c285ce373130c474193f69b87f98fb013
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jan 9 01:04:33 2007 +0000
+
+    Damn the torpedos...full steam ahead! Committing fixes for JRUBY-408 to get them out in the wild. There are remaining fixes to be made, but ant test passes, gems install, rails starts, handles requests, and generates.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2700 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit db927d0f8052fec1317048dae388e846fdbe97de
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Tue Jan 2 10:09:48 2007 +0000
+
+    Fix for JRUBY-312, adding File::Stat#ctime too
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2644 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 4a81f9c2f404dbffd6c2b6cca5b55a34a9c6be7c
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Tue Jan 2 09:22:41 2007 +0000
+
+    Fix for JRUBY-378: Octal permissions should be 0222 and 0444, not 222 and 444, which actually is something entirely different in octal...
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2641 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 32e3222d3defac9ee5f76c3651f4699f62271215
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Dec 30 22:00:22 2006 +0000
+
+    merging refactored method stuff plus fast/simple invocation changes to trunk
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2623 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 7c9ec57d0ce44adc41c27cdfce89439cec7da0ed
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Fri Jun 2 17:41:40 2006 +0000
+
+    - File#mtime and File::State.mtime should return Time and not Fixnum
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2049 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit fa2a7d11da5062fb1331d232bbc34b245d6bdc0a
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Tue May 30 17:52:47 2006 +0000
+
+    Make Ruby File stuff keep original value versus morph on CWD changes
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2047 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit db7eecb204eb6e02a0ea3a1cfc911f029e69a2a7
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Wed Apr 26 01:59:23 2006 +0000
+
+    - Add File::Stat.mtime
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2018 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit dc86a8e5cbe5f0c454cf0bf0fd230f6f14ad1e27
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sun Apr 23 13:45:51 2006 +0000
+
+    Fix typo in ftype
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2012 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 3a2a034c1eef90f5210618fe2e132c6ffbf1772a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Apr 22 05:02:38 2006 +0000
+
+    added a couple more methods to File::Stat
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2007 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit c3af18ad1a172547f99265449070b1ba01b70fa1
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Mar 26 21:21:40 2006 +0000
+
+    multiple fixes to make RubyGems work:
+    - YAML is looking for an IO to come in, but GzipReader does not === with IO. I think perhaps it's an issue with IO not ==='ing correctly. Commenting out this check allows YAML to continue. This is temporary. (credit to Tom for noticing this)
+    - in a "readline" method in yaml.rb, an IOError is rescued and ignored; at this point, nil should be returned, but because of a bug in the interpreter (unfixed as yet) the IOError is returned. I modified it to explicitly return nil for the moment. This is temporary.
+    - Zlib::ZStream#finish doesn't appear to work correctly, because the underlying @stream doesn't have a finish method. I only ran into this during some other testing, but I commented it out for now.
+    - A couple style and grammatical fixes in zlib.rb
+    - A rogue "1" in GzipReader.readchar (I'm guessing it was a typo)
+    - Comparable#== can also return nil if <=> returns nil (like if one of the compared objects is nil)
+    - Dummy implementations of File::Stat#symlink? and File::Stat#blksize, used within FileUtils for copying files
+    - String#oct needs to return 0 for empty strings
+    - Time#<=> needs to return nil if the object compared to is nil
+    - Time#utc and at can accept floats
+    - GzipReader#gets separator now sorta works (only for single-char seps right now)
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1943 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 1dd061e800c87a70038a6459ff6e9ca519dad5e8
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jan 25 05:46:27 2006 +0000
+
+    normalizing all file paths to use forward-slash as path separator
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1867 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 4dfdacd80c56018084c618f3bbab7b542653d95e
+Author: David Corbin <dcorbin@users.sourceforge.net>
+Date:   Sat Oct 8 13:07:06 2005 +0000
+
+    Introduced IRuby interface for Ruby runtime object.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1798 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit ca6b16e996ea9af83ce593594b9c69b9364a9924
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sun Aug 28 13:29:33 2005 +0000
+
+    Kill RubyClasses (core class/modules now initialized in Ruby)
+    Store all top-level classes as constants within Object (fixes things like Object.constants) instead of second datastore
+    Always load all core classes (remove lazy loading)
+    Convenience function RubyModule#getClass added
+    Convenience function Ruby#getObject added
+    JavaObject and JavaArray are now Java::JavaObject and Java::JavaArray to be consistent
+    classes defined under another class/module are now defined in the parents creation routine
+    Removed some masking warnings
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1739 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 9b58fa31e2977cb136a10c0e2813c4e55763d78a
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Tue May 10 15:35:38 2005 +0000
+
+    - Dir#rmdir now throws ENOENT
+    - Dir#mkdir now throws EEXIST
+    - ENV['HOME'] added
+    - ENV global moved to better location
+    - Dir#chdir can have no arg version now
+    - Dir#chdir now chdirs in the correct location
+    - File#expand_path now understands '~'
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1689 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 20be395d2bd5a9a39e5aa06abe8667d9d3bed68a
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Thu Mar 31 04:52:28 2005 +0000
+
+    File::Stat was not defined under File and was not called Stat (Fixes rubicon error)
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1655 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit ee783df67f762c47c042d11a664ca042c353c845
+Author: David Corbin <dcorbin@users.sourceforge.net>
+Date:   Wed Mar 23 01:58:56 2005 +0000
+
+    Add file? support to numerous classes.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1631 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 7a83c48af56081c1c2132111d535f28d10cf3afb
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Fri Dec 31 20:55:52 2004 +0000
+
+    Update license to GPL/LGPL/CPL
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1574 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 784dc932e0de71e3b2bc8897575ad850636afd04
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Dec 20 00:28:02 2004 +0000
+
+    renamed from FileStatClass, implemented mode, size, and writable
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1507 961051c9-f516-0410-bf72-c9f7e237a7b7

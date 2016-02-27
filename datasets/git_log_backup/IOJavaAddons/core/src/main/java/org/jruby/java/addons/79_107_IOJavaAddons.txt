@@ -1,0 +1,47 @@
+commit 7f4fee06f6ef371fccb44ca5bb1989494a638384
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jul 15 15:40:39 2014 -0500
+
+    Dead code.
+
+commit 1f60d7526d720064892a1d857dc89b0eb3bb70f6
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Jun 15 19:02:28 2014 +0100
+
+    More fixes to get test_io passing with excludes.
+
+commit 78b66c2c8049bb874e9620ae6b17d8f04b5f3d25
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue May 13 10:45:19 2014 -0500
+
+    Wire up static IO.read logic, eliminate old read logic, cleanup.
+
+commit 238a5e1a816ce922b43602a90a7a3a543c5654ea
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri May 9 09:41:04 2014 -0500
+
+    Implement IO#gets all the way down to actual IO operations.
+    
+    This logic forced me to implement all the MRI functions for doing
+    buffered, possibly-transcoded reads from a stream. I also had to
+    implement some of the write logic.
+    
+    As other IO methods all out, we should start to move away from our
+    flawed ChannelStream abstraction and toward the MRI way. Later,
+    we can look at doing a better abstraction of the MRI way.
+    
+    What's wrong with ChannelStream, you ask? Nothing, provided all
+    you want to do is POSIX-like FILE* IO. MRI stopped using FILE*'s
+    style buffering at some point -- probably when adding character
+    transcoding -- and as a result we started mixing encoding logic
+    into ChannelStream. This caused the code to become rather confused
+    and no longer useful as a bare FILE* mechanism...while also
+    preventing us from implementing IO+transcoding as efficiently as
+    MRI (which does unbuffered reads into its own buffers and
+    transcodes in place).
+
+commit 28c6fbc4e883bc1c9e9242d1da1cb2b785f55339
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 3 12:46:45 2013 -0500
+
+    Move to @mkristian's proposed layout, with some modifications.

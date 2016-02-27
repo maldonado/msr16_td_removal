@@ -1,0 +1,61 @@
+commit 61678ac1a2514a9932276f8d527816a5980a94b3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Feb 25 20:41:40 2013 +1100
+
+    Fix more references to CPL.
+    
+    The phrase "Common Public License" was split across two lines in
+    our default header, which caused it to be missed during earlier
+    search/replace. Also, we did not replace the CPL URL in the
+    header with the EPL URL.
+
+commit 330fef3b0fc18af477ccea19bd278669667f31bb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 12 14:49:29 2013 -0600
+
+    Switch JRuby's CPL license to EPL.
+    
+    Governance of the CPL license was moved to the Eclipse Foundation
+    at some point in the past, and Eclipse blessed the EPL (Eclipse
+    Public License v1.0) as the successor to CPL. Because the CPL
+    contains a clause allowing transparent upgrades to future blessed
+    successor licenses, we can make the move to EPL without
+    re-contacting past contributors.
+    
+    The change in going from CPL to EPL largely just removes some
+    punitive language that apparently made many companies nervous. All
+    other language in the license remains identical.
+    
+    Several documents about Eclipse's move from CPL to EPL are here:
+    
+    http://www.eclipse.org/legal/cpl2epl/
+    
+    Note that Eclipse's move came before the blessing of EPL as the
+    upgrade path for CPL, so they had to do a bit more legal juggling.
+    With Eclipse now the administrator of CPL and with their blessing
+    of EPL as the upgrade path for CPL, all we need to do is make the
+    move.
+
+commit b8181cda909f6e42d7c0b7fffaabbe2a502f273b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jul 27 02:19:54 2012 -0500
+
+    Inline all calls to ThreadContext.getRuntime to access the field.
+
+commit 8b22798f7230a64eebee7eba2b8bbe2ca9703423
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Feb 6 10:19:49 2012 -0600
+
+    Deprecate and remove uses of defunct JRubyMethod.backtrace flag.
+
+commit 4d7b234941915f070eff5c295fd4136c5d37b2b5
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Sep 12 14:40:08 2011 -0500
+
+    Move iconv bits under org.jruby.ext.iconv.
+
+commit bc21084cee97805c1083d69774914f1f7ab47975
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Sep 12 14:37:57 2011 -0500
+
+    Move zlib bits under org.jruby.ext.zlib.

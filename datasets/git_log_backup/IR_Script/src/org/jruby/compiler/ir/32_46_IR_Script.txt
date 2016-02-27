@@ -1,0 +1,138 @@
+commit 5a08b5476f504d5f0cbbc628a85d88816f9df97b
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Jan 26 15:59:21 2010 -0600
+
+    Trivial IR changes littering my tree
+
+commit fd5db54803738633dbed63308d1a712b8d07941e
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Jan 7 14:17:14 2010 -0600
+
+    Very minor style changes except for internal variable logic on scope impl
+
+commit a9819ccf07d7091f3b402502b00a93261d18eed7
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Fri Dec 18 01:42:58 2009 -0600
+
+    - More cleanup of scoping and removing old crud from when I didn't understand some of the scoping semantics properly; Added a metaclass object to encapsulate construction of the metaclass and keep some code clean.  All of this will need couple more passes and some more fixup.
+
+commit f426951fb2a525a24d22cb99f6f89271a7aada31
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Wed Oct 28 06:55:48 2009 -0500
+
+    - Added some more code for frame load/store placement analyses +
+      additional testing and bug fixes; requires more testing + bug fixing.
+
+commit e60f8666aabc8496bb40dd03498d08a1b343cdcd
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Sun Oct 18 01:36:20 2009 -0500
+
+    - Replaced tabs with spaces.
+
+commit a6996526b87550659f9e1ff43bc05df3cc5dc1dc
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Thu Aug 27 13:43:46 2009 -0500
+
+    - Bug fixes in constant put/get (for class definitions).
+
+commit b802028b86902e552c7e453719043abaf4cc603b
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Thu Aug 27 01:46:01 2009 -0500
+
+    - [ Hmm .. git newbie here .. somehow lost the commit .. trying again ] Fixed couple bugs with scope canonicalization; implemented ir output as a compiler pass; added code-version-token for IR_Method and added several method stubs to start optimizing calls
+
+commit de4bbdb33fcd601dc1a837a768cd84eda6509788
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Tue Aug 25 00:35:15 2009 -0500
+
+    - Cleaned up code to enable running compiler passes without having to write a lot of same boilerplate code all the time.  This will keep evolving and changing.  Just the first pass.
+
+commit d7e29b3be44236fca6f412886f65bcdac025baf5
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Thu Aug 6 19:45:39 2009 -0500
+
+    - First pass of copy & constant propagation peephole opt. in place.  Compound values are not handled correcty yet.  I can only propagate the reference to the compound value, not the entire value.  Will fix this in next round of fixes.
+
+commit f7751803e0d5eeadee218a995b48e062c257fedc
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Thu Aug 6 15:06:13 2009 -0500
+
+    - Committing some code that I forgot to commit from 2 weeks back -- mostly code cleanup.
+
+commit ddaf4c565c871ce4a59cf23683c59bcc2429fec9
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Thu Jul 23 17:37:09 2009 -0500
+
+    - Moved all operands to operands/ and instructions to instructions/ and fixed up imports.  Added some commented out code to start running peephole opts on the IR -- which will also serve as a basis for SCCP passes later on.
+
+commit c401b85047857427a7b421d4bcadc480364afc97
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jul 17 00:54:34 2009 -0500
+
+    Add the beginnings of a JVM emitter.
+
+commit 754815517e1238162cd18eb27f24ee6cfaf3fdc6
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Jul 5 19:08:32 2009 -0500
+
+    Numerous tweaks to get some basic toString working for a number of IR nodes.
+
+commit 161d7104fb65755ca88e6b64a177adf8815918f7
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Sat Jul 4 23:01:15 2009 -0500
+
+    - More compiler errors fixed; 5 left
+
+commit 93b30b35e99723717b2adea7e611eec80476e7e5
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Thu Jul 2 19:04:34 2009 -0500
+
+    - Fixed scope implementations so that the parent scope can be a dynamic operand rather than a static scope!
+
+commit 946699ed39373dfb0f6448405c2326c5d8803aac
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Wed Jun 24 16:50:17 2009 -0500
+
+    - More nodes translated; did some cleanup of buildRoot and added code to the various scopes to handle buildRoot.
+
+commit 52d8e906327c15925d2feb3be2f3b658eac439d9
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Wed Jun 17 22:59:56 2009 -0500
+
+    - Renamed IR_BuilderContext to IR_Scope, added THREAD_POLL instruction and added them in place of the FIXMEs
+
+commit d9c49219b0922666c08c25363b2f746ddb8645e4
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Wed Jun 17 19:17:23 2009 -0500
+
+    - Made more fixes to the IR builder contexts & translated more nodes
+
+commit ffb191be27c66d541ceaf8d67885af74dbccf813
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Wed Jun 17 12:29:32 2009 -0500
+
+    - Added closure and added a base context from which class, script, method, module, class derive; Translated Array and Break nodes
+
+commit 07e0b284cb13fb0311fa2ac53dde6e8922b3f7fb
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Wed Jun 17 10:42:53 2009 -0500
+
+    - Removed tabs and replaced with spaces (I need to figure out how to set tab width and expandtab settings on a per-project basis in vim).
+
+commit 9f9a147f3946116eb703d00c30c93eb86ac5e7f2
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Tue Jun 16 18:39:05 2009 -0500
+
+    - More nodes translated + added compound string + updated builder context code
+
+commit c43a86d8ca6c09f73f5a01d3e3cd5ed189ca4fb2
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jun 12 00:02:28 2009 -0500
+
+    Some package and import fixes to get IDEs slightly happier with the ir source.
+
+commit dfa3f8635f6293f8c65b6506df4904cc9e2bfedf
+Author: Subramanya Sastry <subbu@earth.(none)>
+Date:   Tue Jun 9 01:48:38 2009 -0500
+
+    - First commit: incomplete, will not compile, and some files are just outlines

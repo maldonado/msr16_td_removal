@@ -1,0 +1,330 @@
+commit 61678ac1a2514a9932276f8d527816a5980a94b3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Feb 25 20:41:40 2013 +1100
+
+    Fix more references to CPL.
+    
+    The phrase "Common Public License" was split across two lines in
+    our default header, which caused it to be missed during earlier
+    search/replace. Also, we did not replace the CPL URL in the
+    header with the EPL URL.
+
+commit 330fef3b0fc18af477ccea19bd278669667f31bb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 12 14:49:29 2013 -0600
+
+    Switch JRuby's CPL license to EPL.
+    
+    Governance of the CPL license was moved to the Eclipse Foundation
+    at some point in the past, and Eclipse blessed the EPL (Eclipse
+    Public License v1.0) as the successor to CPL. Because the CPL
+    contains a clause allowing transparent upgrades to future blessed
+    successor licenses, we can make the move to EPL without
+    re-contacting past contributors.
+    
+    The change in going from CPL to EPL largely just removes some
+    punitive language that apparently made many companies nervous. All
+    other language in the license remains identical.
+    
+    Several documents about Eclipse's move from CPL to EPL are here:
+    
+    http://www.eclipse.org/legal/cpl2epl/
+    
+    Note that Eclipse's move came before the blessing of EPL as the
+    upgrade path for CPL, so they had to do a bit more legal juggling.
+    With Eclipse now the administrator of CPL and with their blessing
+    of EPL as the upgrade path for CPL, all we need to do is make the
+    move.
+
+commit f021dd7ef65b113db1b0251b741d73dbf9dec361
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Jul 26 17:07:29 2012 -0500
+
+    Split zlib into multiple source files
+
+commit b8181cda909f6e42d7c0b7fffaabbe2a502f273b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jul 27 02:19:54 2012 -0500
+
+    Inline all calls to ThreadContext.getRuntime to access the field.
+
+commit 971549d228501ee9f5304748a63d232951e08e16
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri Jun 29 14:39:45 2012 -0500
+
+    Use util instead of RubyString method
+
+commit 9f10e9e7a810b3456e98fb8e0d19e61a66f5cb55
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu May 3 13:59:43 2012 -0500
+
+    Add missing 1.9 Zlib.inflate/deflate methods.
+
+commit 387d8ad9b75da7c907d3629033913734155678fe
+Author: Atsuhiko Yamanaka <atsuhiko.yamanaka@gmail.com>
+Date:   Mon Mar 26 11:14:24 2012 -0700
+
+    using com.jcraft.jzlib.Inflater#getTotalIn and its getAvailIn methods.
+    
+      In the futuer jzlib version, com.jcraft.jzlib.InflaterInputStream#getTotalIn
+      may be changed, or deprecated, so I recomend to use methods of Inflater to
+      be free from such a change.
+
+commit 539f45c3e3c59ca9ec7970cf6e81f8500cc9b4d7
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri Mar 23 10:36:54 2012 -0500
+
+    JRUBY-4502: Wrong gzip data crashes JRuby (collab w/ nahi...thanks nahi!)
+
+commit d3f71e89b42a3bfaf7b76896a93cf9c42cd67fa7
+Author: Hiroshi Nakamura <nahi@ruby-lang.org>
+Date:   Mon Feb 20 18:02:47 2012 +0900
+
+    Refix JRUBY-6208: GzipWriter#write should honor writeEncoding, not readEncoding
+    
+    Title says all.  The regression spec I added before wrongly used
+    GzipReader#read() without size parameter.  GzipReader#read() uses the
+    specified read encoding (it is Encoding.default_external if not
+    specified) and it hides this bug.
+
+commit 8b22798f7230a64eebee7eba2b8bbe2ca9703423
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Feb 6 10:19:49 2012 -0600
+
+    Deprecate and remove uses of defunct JRubyMethod.backtrace flag.
+
+commit 4a09d081fa10b293f65d0ca058605a5b6b4ba04f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jan 31 10:34:29 2012 -0600
+
+    First large-scale refactoring to better support IO encodings.
+
+commit 660145112c2f082d1c6db7be1910fe08ca4b5c97
+Author: Hiroshi Nakamura <nahi@ruby-lang.org>
+Date:   Fri Feb 3 11:33:22 2012 +0900
+
+    JRUBY-6419: GzipReader encodings still not right; breaks "gem install"
+    
+    Having scanned zlib.c of CRuby again, I found that GzReader#read()
+    (without size parameter) sets Encoding but GzReader#read(size) does
+    not.  So make JRuby version do the same as CRuby.
+    
+    It could be a bug of CRuby. (It should not set Encoding for read() as
+    well.)
+
+commit 84e3e3fe2f6013c844fb8fff471ede36aca51f46
+Author: Hiroshi Nakamura <nahi@ruby-lang.org>
+Date:   Wed Feb 1 13:37:00 2012 +0900
+
+    Fix GzipReader encoding on 1.9 mode (produced encoding == null String)
+    
+    It's a fix for "-J-ea pointed out we were creating a bad ByteList with
+    no encoding in 1.9 mode..." reported by Tom.
+    
+    The actual bug is from 1 line, that I forgot to set default
+    externalEncoding to runtime.getDefaultExternalEncoding()
+    But the problem is from name confusion.  Use proper names, readEncoding
+    and writeEncoding for enc, enc2 in Ruby's IO subsystem.
+
+commit f53a857653a34b2e26efc9770ea7412faef628bb
+Author: Hiroshi Nakamura <nahi@ruby-lang.org>
+Date:   Wed Feb 1 13:33:08 2012 +0900
+
+    Revert "-J-ea pointed out we were creating a bad ByteList with no encoding in 1.9 mode..."
+    
+    This reverts commit 07afe59881f9c8f8947a98bfd7ea4e020de28683.
+    
+    Of course it's me who introduced the original bug... Fix is coming at
+    the next.
+
+commit 07afe59881f9c8f8947a98bfd7ea4e020de28683
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri Jan 27 13:40:05 2012 -0600
+
+    -J-ea pointed out we were creating a bad ByteList with no encoding in 1.9 mode...
+
+commit 773a1553da4a8b7a7b736480e04ec4b291ce64f4
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jan 9 02:40:33 2012 -0600
+
+    Actually set new bytelists to external encoding in GzipReader.
+
+commit e11f2d9752e1cc0aeb7c67fa167de5b64be1d9b8
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jan 9 01:50:46 2012 -0600
+
+    Add null check for encoding options in zlib.
+
+commit 80a11b9a0078e364b81057836c588b5021f03e7a
+Author: Hiroshi Nakamura <nahi@ruby-lang.org>
+Date:   Fri Nov 18 13:49:25 2011 +0900
+
+    JRUBY-6208: GzipWriter creates corrupted gzip stream for binary data
+    
+    default_external for GzipWriter IO stream is not specified by default.
+
+commit 3f637cea1c486340101ad65332ea2f91ac49b01d
+Author: Atsuhiko Yamanaka <atsuhiko.yamanaka@gmail.com>
+Date:   Wed Oct 12 16:02:02 2011 +0900
+
+    deflate+FULL_FLUSH will generate redundant markers(0x0000ffff).
+    
+    Without this change, the following code
+        z = Zlib::Deflate.new(8, 15)
+        s = z.deflate("f", Zlib::FULL_FLUSH)
+        s << z.deflate("b", Zlib::FINISH)
+        p s
+    had generated
+     "x\332J\003\000\000\000\377\377J\002\000\000\000\377\377\003\000\0010\000\311"
+    The expected result is
+     "x\332J\003\000\000\000\377\377K\002\000\0010\000\311"
+
+commit 17da60e66de4339fac29174c2f80c1551e1eb6e1
+Author: Atsuhiko Yamanaka <atsuhiko.yamanaka@gmail.com>
+Date:   Wed Oct 12 15:21:09 2011 +0900
+
+    fixing a bug reported in http://twitter.com/#!/nahi/status/122294860777656320
+    
+    Whenever changing "collectedIdx",  "flater.next_out_index" and
+    "flater.avail_out" must be also changed.
+
+commit 53455a6a1f98afd7103a681bdaa1ce0a080b7b27
+Author: Hiroshi Nakamura <nahi@ruby-lang.org>
+Date:   Fri Oct 7 21:30:35 2011 +0900
+
+    Pass output buffer directly to JZlib in/deflater
+    
+    As a challenge to reduce memory usage, this commit handles byte[]
+    directly as an output buffer instead of ByteList. The original
+    implementation utilized ByteList as an output buffer for Zlib::Inflate
+    and Zlib::Deflate, and generated byte[] temporal buffer for every run()
+    cycle. This commit removes this temporarl buffer.
+    
+    Unfortunately, I cannot see any visible remediation of memory usage.
+    It's because the temporal buffer RubyZlib.java were generating is not
+    huge I guess.
+    
+    Even worth, this commit adds 1 error about buffer handling. I'm
+    suspecting that it hits a bug of JZlib under setOutput() with offset !=
+    0 AND FULL_FLUSH mode.
+    
+    Next, I'll try to investigate JZlib itself.
+    
+    % jruby test_zlib_18.rb
+    Loaded suite test_zlib_18
+    Started
+    ................E............................
+    Finished in 0.861 seconds.
+    
+      1) Error:
+    test_params(TestZlibDeflate):
+    Zlib::DataError: invalid stored block lengths
+        test_zlib_18.rb:139:in `test_params'
+        org/jruby/RubyKernel.java:1945:in `send'
+        org/jruby/RubyArray.java:1596:in `each'
+        org/jruby/RubyArray.java:1596:in `each'
+    
+    45 tests, 91 assertions, 0 failures, 1 errors
+    zsh: exit 1     /home/nahi/git/jruby/bin/jruby test_zlib_18.rb
+
+commit 908cd0818635a09883db397a05469989df138908
+Author: Hiroshi Nakamura <nahi@ruby-lang.org>
+Date:   Wed Oct 5 06:13:09 2011 +0900
+
+    Squashed commit of the following:
+    
+    commit 1af2514b1fa42b7f4dc243276dec30e6ed512678
+    Author: Hiroshi Nakamura <nahi@ruby-lang.org>
+    Date:   Tue Oct 4 17:01:58 2011 +0900
+    
+        Add TODO for crc_table
+    
+        crc_table is also in JZlib. We don't want to have it by ourselves.
+    
+    commit 3a59213a55277549c1126dc7d24953b81ccd8be2
+    Author: Hiroshi Nakamura <nahi@ruby-lang.org>
+    Date:   Tue Oct 4 16:57:48 2011 +0900
+    
+        Update tags for new zlib implementation
+    
+         * Add mtime tag for 1.9 as well as 1.8
+         * Remove tags which now get green with new zlib
+    
+    commit 21eaa91f274abce9f494a783765dc876cb749c9f
+    Author: Hiroshi Nakamura <nahi@ruby-lang.org>
+    Date:   Tue Oct 4 14:51:53 2011 +0900
+    
+        Prepare for merging new zlib impl by ymnk
+    
+         * Remove unused implementation for Inflate, Deflate, GzipReader and
+           GzipWriter (all replaced by ymnk with helps from JZlib)
+    
+         * Remove duplicated constant definitions in Zlib.java
+    
+         * Move RaiseException helper methods from Util.java to RubyZlib.java
+           (We can remove Util.java now)
+    
+         * Fix a bug to avoid IndexOutOfBoundException raised from
+           GzipWriter#write when the argument is empty String.
+    
+         * Tag 1 RubySpec failure which expects following code to fail with
+           'header already written'. It's JZlib's incompatibility but I (NaHi)
+           don't think it's a 'bug' of JZlib.
+             Zlib::GzipWriter.wrap(StringIO.new) { |io| io.write("a"); io.mtime = nil }
+    
+         * Update Eclipse classpath setting
+    
+    commit a87ad3ea4779d0e031c1bc5ffd1478dfa99cce96
+    Author: Atsuhiko Yamanaka <atsuhiko.yamanaka@gmail.com>
+    Date:   Tue Sep 20 12:38:39 2011 +0900
+    
+        Re-implement Zlib::GzipReader and Zlib::GzipWriter with jzlib.
+    
+          * using JZlib 1.1.0
+            build_lib/jzlib-1.1.0.jar is built from
+            https://github.com/ymnk/jzlib/tree/1.1.0
+    
+          * working around JRUBY-6073 (61633af)
+    
+          * GzipReader will throw appropieate exceptions for broken input. (1cd2f52)
+            * NoFooter if not enough trailer data exits,
+            * CRCError if incorrect checksum data is found,
+            * LengthError if incorrect length data is found,
+            * GzipFile::Error if header is broken or EOF is countered before trailer,
+            * DataError if invalid compression data is found.
+            * Note that the previous JRuby had thrown IOError instead of DataError.
+    
+          * Fix 'Zlib::Inflate#<< properly handles incomplete data ERROR' on RubySpec. (710dbba)
+    
+          * Support Zlib::File:Error#input (41eff81)
+            * Since Ruby 1.9, Zlib::File:Error#input has been introduced.
+              According to the source code of CRuby, it will be setted at the failure
+              in parsing the gzip header.
+    
+          * Support some methods additionaly (90dc869)
+            * GzipReader#unused,
+            * GzipWriter#sync, GzipWriter#sync=
+            * GzipWriter#flush
+
+commit 5e924b0d4a42abd2ce549ae2b01468c7a5812ede
+Author: Atsuhiko Yamanaka <atsuhiko.yamanaka@gmail.com>
+Date:   Sat Sep 17 09:27:18 2011 +0900
+
+    Fix 'Zlib::Inflate#<< properly handles incomplete data ERROR' on RubySpec
+    
+      * Inflater#end should not try the finish operation.
+        According to the source code of CRuby, it will just reset and free resources.
+    
+    Signed-off-by: Hiro Asari <asari.ruby@gmail.com>
+
+commit b683ba9f75b6997eba847963954f369818bbfd93
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Sep 12 14:44:30 2011 -0500
+
+    Move stringio bits under org.jruby.ext.stringio
+
+commit bc21084cee97805c1083d69774914f1f7ab47975
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Sep 12 14:37:57 2011 -0500
+
+    Move zlib bits under org.jruby.ext.zlib.

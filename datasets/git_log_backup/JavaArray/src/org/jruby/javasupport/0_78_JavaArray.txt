@@ -1,0 +1,435 @@
+commit 61678ac1a2514a9932276f8d527816a5980a94b3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Feb 25 20:41:40 2013 +1100
+
+    Fix more references to CPL.
+    
+    The phrase "Common Public License" was split across two lines in
+    our default header, which caused it to be missed during earlier
+    search/replace. Also, we did not replace the CPL URL in the
+    header with the EPL URL.
+
+commit 330fef3b0fc18af477ccea19bd278669667f31bb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 12 14:49:29 2013 -0600
+
+    Switch JRuby's CPL license to EPL.
+    
+    Governance of the CPL license was moved to the Eclipse Foundation
+    at some point in the past, and Eclipse blessed the EPL (Eclipse
+    Public License v1.0) as the successor to CPL. Because the CPL
+    contains a clause allowing transparent upgrades to future blessed
+    successor licenses, we can make the move to EPL without
+    re-contacting past contributors.
+    
+    The change in going from CPL to EPL largely just removes some
+    punitive language that apparently made many companies nervous. All
+    other language in the license remains identical.
+    
+    Several documents about Eclipse's move from CPL to EPL are here:
+    
+    http://www.eclipse.org/legal/cpl2epl/
+    
+    Note that Eclipse's move came before the blessing of EPL as the
+    upgrade path for CPL, so they had to do a bit more legal juggling.
+    With Eclipse now the administrator of CPL and with their blessing
+    of EPL as the upgrade path for CPL, all we need to do is make the
+    move.
+
+commit bb4931a61cae05f0b595938a0d172259e562e56f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Dec 12 02:20:15 2012 -0600
+
+    Move new array-related utility methods to a common location.
+
+commit fc5de3efd64a3a9e672f5763d5843178413b28a8
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Dec 12 01:17:07 2012 -0600
+
+    Eliminate creation of JavaArray through normal operations.
+
+commit 33d329a9ef30d973b90d5aef054ad176486558f3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Dec 12 00:49:54 2012 -0600
+
+    Start moving away from dependence on JavaArray objects.
+    
+    All Java arrays that are proxied into Ruby get wrapped with an
+    ArrayJavaProxy instance. However, the paths to create that wrapper
+    usually involve constructing an intermedate JavaArray wrapper as
+    well, slowing down allocation. This change makes the following
+    changes to Java array proxies:
+    
+    * ArrayJavaProxy and subclasses are no longer allocatable.
+    
+    * All paths that created array proxies indirectly now create
+    ArrayJavaProxy instances directly, avoiding the intermediate
+    JavArray object
+    
+    * The JavaArray wrapper is created lazily only when needed.
+    
+    Additional fixes are coming that will do more to avoid standing up
+    the JavaArray object.
+
+commit 455a3923a1c35689c94dea28e79051ef2643b334
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 7 10:22:02 2012 -0600
+
+    More minor improvements to Java array access.
+
+commit 532d625e814b091f6e2f11746e644ea65e5747cc
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Feb 6 10:28:46 2012 -0600
+
+    Modest speedup for Java array sets.
+
+commit 7d104a9d08d673a10496b367c168ce235ede32a8
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Aug 13 14:14:57 2011 -0500
+
+    Improve inspect output for Java arrays.
+
+commit 6f159fe5dd51c062a5b1aab64a8ede916990877a
+Author: Hiroshi Nakamura <nahi@ruby-lang.org>
+Date:   Mon Jul 11 03:36:17 2011 +0900
+
+    Deprecation of fast constant access paths.
+    
+    Each os those has the same definition as non-fast verision.
+
+commit 1b919d492bd5cf2132383d291369c14972f47f63
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Apr 23 14:31:57 2010 -0500
+
+    Fixes (and more) for JRUBY-4737: Compatibility issue with Spring property from 1.4.0 to 1.5.0.RC1
+    
+    It appears that JRuby 1.4.0 allowed various objects to coerce to "void" by returning null, so this commit fixes that.
+    
+    In addition, I've tried to unify some of the toJava logic, making most implementations call super.toJava if they can't coerce to the requested type (allowing RubyBasicObject's implementation to try some other avenues or error out). I also added some additional coersion cases for Time to java.util.Calendar, java.sql.Date/Time/TimeStamp, and joda's DateTime (it already did java.util.Date).
+
+commit 7a8e6611357eda632c02f7c968813718bb00894f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Apr 22 19:19:16 2010 -0500
+
+    Fixes for JRUBY-4732: Clean up anything that calls dataGetStruct on a wrapped Java object to get the object
+
+commit d7e5666becc3d3008f9f388f1e661d160749e402
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Oct 30 15:38:16 2009 -0500
+
+    Fix for JRUBY-4189: calling to_java(:string) on a ruby array with a symbol in it now causes java exception
+
+commit f26816a48bef76948639094e7c9e01fa0260d092
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Oct 24 16:59:27 2009 -0500
+
+    Improvements to JavaProxy-wrapped Java objects:
+    
+    * Lazily allocate the inner JavaObject, so if we don't use it we never create it.
+    * Don't enter newly-constructed Objects into the proxy cache immediately.
+
+commit b03e892d3cbb7511aea24e39260ad29e821879b0
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Sep 23 18:28:29 2009 -0500
+
+    Remove the crazier coercion support for array elements and use the newly cleaned-up logic. Two tests had to be modified or disabled, but otherwise everything seems to work.
+
+commit 0b0fdaf69afc9b02760421fb21aaab3fa52e9509
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Sep 22 18:22:52 2009 -0500
+
+    Deprecate a bunch more stuff in JavaUtil that's no longer being used.
+
+commit 61219265cb4eedcbfbf191eb457e0d22c1e7eedb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat May 2 12:47:00 2009 -0500
+
+    Add faster paths for accessing Java array elements when they are known types with known conversions.
+
+commit 2c61e300501401eb06c083216df4a5b9f3b42add
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri May 1 00:08:21 2009 -0500
+
+    Perf improvements for JI:
+    
+    * Java array access nearly 10x faster. This was probably why JetBrains' in-conference language benchmarks put JRuby last.
+    * Wrapped Java object access avoids hashing, using new ivar table stuff
+
+commit 6fdccd9d3b033d1eb17ac2ee38bcf83e6fc5c879
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Aug 7 06:51:56 2008 +0000
+
+    One-two, one-two, and through and through,
+    the vorpal blade went snicker-snack.
+    He left it dead, and with its head,
+    he went galumphing back.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7401 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 4f3e017a61fae1943f837b82be4ecfbb0cb7e492
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Jul 26 09:33:17 2008 +0000
+
+    Port the copy_data method from utilities/array.rb to Java to speed up population of a new Java array from an existing Ruby array. Not super fast, but probably a good 4x faster already. More to do.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7304 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 424a1cbff5aea37f2f92cc208d29d2544f092828
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Wed Mar 19 12:21:15 2008 +0000
+
+    Annotate the rest of the Java classes with names, parents and inclusions. Also add a warning to install_doc.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6291 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit f280ea465ee687669a1a235d298c6c776b90a5e9
+Author: Bill Dortch <bill.dortch@gmail.com>
+Date:   Fri Feb 8 08:05:59 2008 +0000
+
+    Fix for fix for JRUBY-2069: undo Eclipse's overly-helpful copying of imports.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5863 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 442afa575bd231320193a75f4c73e9000135ea4a
+Author: Bill Dortch <bill.dortch@gmail.com>
+Date:   Fri Feb 8 07:38:47 2008 +0000
+
+    Fix for JRUBY-2069.  Problems with equals() and hashCode() methods caused every instantiation of a Ruby-defined Java subclass to add a new entry to the method match cache (in the same bucket!), since returned hashCode was that of the class, new constructors were returned on every call, and equals() would never return true.  So if you created 1000 instances, then 1000 entries were searched for the 1001st instantiation, and so on.
+    
+    Fixed equals/hashCode for other types as well, should improve method-matching speed in general.  (The new versions no longer call out to the Ruby hash and == methods; these are internal classes, after all.) I still plan to rework matching_method, as there are other issues.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5862 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 95c346df5368a3f5f06fa9d14022efb85eaa6809
+Author: Bill Dortch <bill.dortch@gmail.com>
+Date:   Mon Oct 15 07:45:22 2007 +0000
+
+    Vars have landed. Does not include concurrent SymbolTable (will follow in the next day or so). Also need multi-threaded unit tests, work in progress.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4588 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 3e88cfab0d224fb9efa8d18336993e2c78ce495e
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Thu Sep 27 16:40:57 2007 +0000
+
+    - Identified and extracted construction paths for class/module/singleton/IncludedModuleWrapper, now there's no unnecessary null checks or assignments in their constructors (they take very few arguments so even asserts are not needed).
+    Each of those constructors have a comment what is it the responsible for, also, two RubyClass.newClass() and two RubyModule.newModule() methods have been extracted.
+    - Fixed logic that sets the parent/constant for Modules, now matches MRI (only setConstant/getConstantAt are used here).
+    - RubyClass rewritten, special attention has been put on allocation logic, now Class.new(...) doesn't fire a separate allocator class. (btw, logic of "class B < A;end" and "Class.new(A)" must be split since in second case superclass and allocator are not known until initialize is called). Class/Object allocation implementation mimics MRI's weirdest quirks in behavior, is _much_ simpler that it has been and much faster. This also allowed creation of generalized clone/dup implementations matching MRI. (only our special ivars need a care here).
+    - Rewritten bootstrapping of Object/Class/Module.
+    - Core classes (except Exception hierarchy, they should also be in future) are now cached in runtime (MRI caches them in static VALUE's like rb_cObject) Ruby.getClass(String), Ruby.getModule(String) and Ruby.getClassFromPath(String) should be used only by either interpreter or compiler and when the class name is not known at compile time.
+    - Fixed and simplified nodes: classNode, moduleNode, sclassNode, defsNode. Compiler has been synchronized here as well.
+    - No more __attached__ as ivar, it is now MetaClass field (which means lazy ivars for singletons). Compiler also updated.
+    - added and dosumented isModule() to IRubyObject (isClass(), isSintleton() documented).
+    - Fixed test_autoload test (Object.class_eval do;autoload :SomeClass, 'somefile';class SomeClass; end;end) should raise LoadError, now matches MRI.
+    
+    - Fixed a number of minor bugs:
+       1.instance_eval, was creating a metaclass for Fixnum instances (also affected Symbol/FalseClass/TrueClass/NilClass)
+       marshaler objects were kept in singleton classes
+       Range.inspect, was modifying the begin field (when it was a String)
+       Many bulletproofings in Marshal/Unmarshal (like unmarshaling an instance of nonexistant class), TypeErrors/ArgumentErrors matching MRI.
+       Fiber.new in 1.9, doesn't call #initialize method by funcall, fixed
+       number of method arity fixes and many methods are made fast now
+       fixed initialize/initialize_copy logic, further simplification, no ClassCastExceptions possible now
+       Fixed defineClass(under)/defineModule(under) logic
+       bulletproofed cases such: class A;end;module A;end
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4409 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit f3c6fe2fb3f528ea4ebc2c761b2e6db694dc5b1e
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Thu May 10 00:35:47 2007 +0000
+
+    Checkin Bill's excellent patch for JRUBY-875 (easy support for turning bytes into string and converse). (Bill, why didn't you do it yourself?
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3641 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a2107e60085a5063bca76d897783a512bbd7eddc
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sun Feb 18 15:18:18 2007 +0000
+
+    JRUBY-606: Get rid of un/under-used IRuby interface
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3022 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 4dd71fa09bc5c81e2cac579518da2afb8979107f
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Sun Feb 18 10:41:55 2007 +0000
+
+    Fix for JRUBY-510, improved Java array support, by Bill Dortch
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3020 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit b390103c285ce373130c474193f69b87f98fb013
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jan 9 01:04:33 2007 +0000
+
+    Damn the torpedos...full steam ahead! Committing fixes for JRUBY-408 to get them out in the wild. There are remaining fixes to be made, but ant test passes, gems install, rails starts, handles requests, and generates.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2700 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 4dfdacd80c56018084c618f3bbab7b542653d95e
+Author: David Corbin <dcorbin@users.sourceforge.net>
+Date:   Sat Oct 8 13:07:06 2005 +0000
+
+    Introduced IRuby interface for Ruby runtime object.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1798 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 4cc57dc7fe7f7d6b6b94ec0ee5aeadb55c6cd468
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Wed Aug 31 19:51:19 2005 +0000
+
+    Simple consitency in how Java Support Classes are created
+    Because of how RubyArray and RubyHash convert from Ruby to Java we were missing a call (java integration needs some major cleanup)
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1743 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit ca6b16e996ea9af83ce593594b9c69b9364a9924
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sun Aug 28 13:29:33 2005 +0000
+
+    Kill RubyClasses (core class/modules now initialized in Ruby)
+    Store all top-level classes as constants within Object (fixes things like Object.constants) instead of second datastore
+    Always load all core classes (remove lazy loading)
+    Convenience function RubyModule#getClass added
+    Convenience function Ruby#getObject added
+    JavaObject and JavaArray are now Java::JavaObject and Java::JavaArray to be consistent
+    classes defined under another class/module are now defined in the parents creation routine
+    Removed some masking warnings
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1739 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 7a83c48af56081c1c2132111d535f28d10cf3afb
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Fri Dec 31 20:55:52 2004 +0000
+
+    Update license to GPL/LGPL/CPL
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1574 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit b72a2862ae5b2f01f9a767ef2ce248fd785857c4
+Author: Jan Arne Petersen <jpetersen@uni-bonn.de>
+Date:   Mon Dec 13 00:26:02 2004 +0000
+
+    Replaced org.jruby.util.Asserts with Java 1.4 assert.
+    Fixed String#capitalize.
+    Replaced RubyString.nilString(getRuntime()) with getRuntime().getNil().
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1482 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 870e1da9b41bfdbae259e1fc5f18fc8b76686998
+Author: Stefan Matthias Aust <sma@3plus4.de>
+Date:   Sun Dec 12 09:25:42 2004 +0000
+
+    removes the instance variable runtime in RubyObject
+    reintroduces the variable in RubyNil, RubyBoolean, and RubyClass
+    delegates all calls to Fixnum,Array,Boolean,String,ArgumentError,IndexError and TypeError.newXXX to Ruby
+    fixes all imports
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1469 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a16b4a3596853f2153bfe0df0a8cbe54382d5d58
+Author: Anders Bengtsson <ndrsbngtssn@yahoo.se>
+Date:   Sat Feb 28 23:00:58 2004 +0000
+
+    Removed a lot of old IndexedCallback stuff.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1254 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit f28356ef15a613e347d13729ec357775ebc77aae
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Thu Feb 19 15:42:10 2004 +0000
+
+    Remove index callbacks from javasupport
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1241 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit f84d4a62b356c574d5d62c4c19366dbb373475c7
+Author: Anders Bengtsson <ndrsbngtssn@yahoo.se>
+Date:   Thu Oct 31 13:26:28 2002 +0000
+
+    Converted JavaArray to use reflection, so that it can handle primitive-value arrays.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1060 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit f69685259dcfbf88d8ea330c6ecea4b59b7f9dbd
+Author: Anders Bengtsson <ndrsbngtssn@yahoo.se>
+Date:   Thu Oct 31 12:50:02 2002 +0000
+
+    Added support for java array types.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1059 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 85f3aab3fdca33e56bee99e5e60039b41b178511
+Author: Anders Bengtsson <ndrsbngtssn@yahoo.se>
+Date:   Tue Sep 24 20:59:30 2002 +0000
+
+    Low-level support for writing to java arrays.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@896 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 82175ea5817f6119e3a032cc4c6d73546ceac23d
+Author: Anders Bengtsson <ndrsbngtssn@yahoo.se>
+Date:   Tue Sep 24 20:10:45 2002 +0000
+
+    Support for getting length and access values in Java arrays.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@895 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit cbbff215ddc8c168eaed4bd8d49160c696d116cf
+Author: Jan Arne Petersen <jpetersen@uni-bonn.de>
+Date:   Sat Sep 21 16:16:37 2002 +0000
+
+    - Add JavaObject cache
+    - Add simple Interface support
+    - Update swing examples.
+    - Fix some bugs.
+    - Some refactorizations.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@876 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 1dd2d63c772b605bffc0c1be9827385d91802ab2
+Author: Anders Bengtsson <ndrsbngtssn@yahoo.se>
+Date:   Thu Sep 19 10:54:11 2002 +0000
+
+    Removed dead code.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@861 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit ae26e4c95af768e0c52fdae5f623e856eeb94ad7
+Author: Anders Bengtsson <ndrsbngtssn@yahoo.se>
+Date:   Wed Sep 18 21:10:34 2002 +0000
+
+    Basic support for referencing java arrays.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@855 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 6ec340cf1a38aa631f7a0b25502b3a2fc028c21b
+Author: Anders Bengtsson <ndrsbngtssn@yahoo.se>
+Date:   Wed Sep 18 15:23:20 2002 +0000
+
+    Added the files I just moved... oops.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@850 961051c9-f516-0410-bf72-c9f7e237a7b7

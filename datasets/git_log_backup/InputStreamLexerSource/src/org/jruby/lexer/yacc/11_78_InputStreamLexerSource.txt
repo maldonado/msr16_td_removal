@@ -1,0 +1,88 @@
+commit 892cbf4e68c63c53147915a85c727c0a163eed14
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Feb 26 16:49:38 2013 -0600
+
+    toString was mildly destructive to stream plus some other useful cosmetic changes
+
+commit 0b02e80b99486b97f3540c4da29b595fa6828323
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Sep 12 15:39:46 2012 -0500
+
+    toString should work under normal conditions
+
+commit efa493146a438dee16efeb67b52c20d184480973
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Fri Jan 27 22:53:41 2012 -0500
+
+    Fix JRUBY-6344: Embedded \r should not be treated as end of comment line
+    
+    Previously, we substituted '\r[^\n]' with '\n', to account for the Classic Mac OS's
+    newline character. This is year 2012. It seems highly unlikely that anyone would be running JRuby on that OS.
+
+commit c94ddf372f32e01d5895d730a2824787d66c92bf
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri Feb 19 16:32:17 2010 -0600
+
+    Unbreak regression which was closing main file's inputstream after parse (we now copy end of stream input bytearrayinputstream)
+
+commit 7c990d43c30f8634567224c7fb92801b5ed9f880
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Wed Dec 9 20:15:14 2009 -0600
+
+    JRUBY-4341: Byte-array-based LexerSource implementation
+
+commit aeab6d30e7c8c28f86085ec526f6c0347bfe942c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Jun 5 23:57:24 2008 +0000
+
+    Various minor refactorings to shrink methods in the parser chain and elsewhere that HotSpot reported as "too big" to inline. Minimal performance boost, if any, but it's also somewhat cleaner code.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6897 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 378c870ea9f2395c923c9ce67e6b840fac0aab68
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Thu Dec 20 18:08:58 2007 +0000
+
+    JRUBY-382: Better error output from parser (less garbage == better)
+    JRUBY-1743: =begin and =end should not be case insensitive
+    JRUBY-1744: END { } in method should generate a warning and not an error
+    JRUBY-1621: rss/maker doesn't compile
+    - A mixed up error between global and instance variables
+    
+    My ByteListLexerSource is now disabled, but it shall return...
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5314 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 7467c51f616191255cfd7de6bc01c8451bc573cb
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Sun Nov 4 17:21:46 2007 +0000
+
+    JRUBY-1517: Fix embedded null character issue.
+    - change read to read ints instead of chars
+    - use EOF constant everywhere
+    - change EOF constant to -1 instead of 0
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4857 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 16e5550655d971eca1eeea0a2fe8794b86928b97
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Thu Oct 25 18:14:24 2007 +0000
+
+    Lexer jumbo patch.  Speeds up general parsing 10-15%.  Cold parses are about 30% faster.   Code has been refactored to the point that additional optimizations can be considered (like bytelist identifiers for alloc-less identifiers; same for uninterpolated string nodes).
+    
+    intern'ing of identifiers now happen in lexer rather than being smattered through AST
+    Reader -> InputStream for LexerSource
+    A new ByteList LexerSource for evals
+    
+    Additional bugs fixed:
+    JRUBY-1408: JRuby crashes with error: can't find string "EOF" anywhere before EOF (SyntaxError)
+    JRUBY-1443: Wrong position information for a CallNode with parentheses
+    JRUBY-1435: YieldNodes sometimes have wrong position information
+    JRUBY-1416: eval of a "proc" with setting the line number for something lower than 1 to adjust the line number causes "java.lang.ArrayIndexOutOfBoundsException: -1 (NativeException)"
+    JRUBY-1432: NFE from RubyYaccLexer.yylex
+    
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4731 961051c9-f516-0410-bf72-c9f7e237a7b7

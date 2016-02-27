@@ -1,0 +1,183 @@
+commit bb98e4b8decffc0361b70a6c99c1ade5fed0abcb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Mar 28 10:02:33 2013 +0000
+
+    Move RuntimeHelpers to org.jruby.runtime.Helpers.
+
+commit 56c3053a15fa9d753b2c6c8c57f3aa1356eb86a2
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Mar 11 16:48:43 2013 -0500
+
+    Incorporate substantive code from 2.0 stdlib.
+    
+    This commit only pulls in the parts of 2.0 stdlib that differ
+    functionality-wise from their 1.9.3 equivalents. When running in
+    2.0 mode, the 2.0 dir will be searched before the 1.9 dir,
+    picking up the differing files. We opted to do this to reduce the
+    amount of duplicate content in our repository.
+    
+    JRuby 9000 will likely incorporate 2.0 stdlib en masse, and may
+    only be 2.0 compatible.
+    
+    Note that 2.0 stdlib is *not* included in jruby-complete or
+    jruby-jars, since it is still an unsupported mode and we don't
+    want to bloat up those artifacts any more than necessary.
+
+commit 1a69bc089398db6f0c35cac2bf00ce712487ff91
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Feb 28 09:50:25 2013 -0600
+
+    Add missing from 1.8.7+ Rbconfig.expand method (fixes #556)
+
+commit 61678ac1a2514a9932276f8d527816a5980a94b3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Feb 25 20:41:40 2013 +1100
+
+    Fix more references to CPL.
+    
+    The phrase "Common Public License" was split across two lines in
+    our default header, which caused it to be missed during earlier
+    search/replace. Also, we did not replace the CPL URL in the
+    header with the EPL URL.
+
+commit 330fef3b0fc18af477ccea19bd278669667f31bb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 12 14:49:29 2013 -0600
+
+    Switch JRuby's CPL license to EPL.
+    
+    Governance of the CPL license was moved to the Eclipse Foundation
+    at some point in the past, and Eclipse blessed the EPL (Eclipse
+    Public License v1.0) as the successor to CPL. Because the CPL
+    contains a clause allowing transparent upgrades to future blessed
+    successor licenses, we can make the move to EPL without
+    re-contacting past contributors.
+    
+    The change in going from CPL to EPL largely just removes some
+    punitive language that apparently made many companies nervous. All
+    other language in the license remains identical.
+    
+    Several documents about Eclipse's move from CPL to EPL are here:
+    
+    http://www.eclipse.org/legal/cpl2epl/
+    
+    Note that Eclipse's move came before the blessing of EPL as the
+    upgrade path for CPL, so they had to do a bit more legal juggling.
+    With Eclipse now the administrator of CPL and with their blessing
+    of EPL as the upgrade path for CPL, all we need to do is make the
+    move.
+
+commit 8fb299e3d0be334cff23ff2f3244df8348f7b2a5
+Author: Bohuslav Kabrda <bkabrda@redhat.com>
+Date:   Fri Dec 7 10:09:00 2012 +0100
+
+    Include runtime version in site dir
+    
+    I forgot this during doing the path rework, I think it's not used by anyone except me for Fedora packaging, so it can safely be merged into 1.7 tree.
+
+commit d23deb1f4eeec2679ca3bf9a2243788ce55d3e85
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Sat Nov 24 22:45:58 2012 -0500
+
+    Refactor one more time
+
+commit 8b9723a58a2a2fae65f8bbc4aad34a5a3fb1bdf3
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Sat Nov 24 22:43:50 2012 -0500
+
+    Refactor "sysconfdir" handling
+
+commit f96b28ab68b0f6041be086aa224615e05e19e5aa
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Sat Nov 24 22:03:34 2012 -0500
+
+    Implement Etc.sysconfdir and Etc.systmpdir for non-Windows systems.
+
+commit 781ef4df523177a71fecba2e54aa4951854881e9
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Sep 19 01:19:18 2012 -0500
+
+    Fix JRUBY-6890
+    
+    Rework paths to be similar to MRI + redefinable + defined in one place only
+    
+    Patch by Bohuslav Kabrda.
+
+commit b8181cda909f6e42d7c0b7fffaabbe2a502f273b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jul 27 02:19:54 2012 -0500
+
+    Inline all calls to ThreadContext.getRuntime to access the field.
+
+commit 32b2db6d3e1cf404eb37848b7131d8d489dcf4db
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Mar 15 16:03:04 2012 -0500
+
+    Allow cexts to build under OpenJDK on OS X, where os.arch == 'amd64'
+
+commit cdcb95c29eca85d25522b8ec0e0dbcc4bbf100e4
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Mar 2 07:40:22 2012 -0500
+
+    Extra fix for JRUBY-6502.
+
+commit 63d267b004e21da7507cb0e46ef6c7cfe3965020
+Author: Wayne Meissner <wmeissner@gmail.com>
+Date:   Tue Feb 28 21:16:08 2012 +1000
+
+    Remove LDFLAGS on MacOSX.  Fixes JRUBY-6509.
+
+commit 19e94161e0e09e2b354e1f6bc3bed2909b6f89df
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Feb 27 10:31:35 2012 -0600
+
+    RbConfig and 1.9 stdlib cleanup.
+    
+    * Add autoloaded warning for "Config" constant
+    * Clean up references to "Config" in files potentially touched in 1.9 mode
+    * Update missing/divergent stdlib files
+    * Remove all 'syck' code from 1.9 stdlib
+    * Add warning to 'ripper' lib
+    * Copy over missing matrix/ files
+
+commit 556cceb92102b61aaee80ed26d2ecc3c05bfcf07
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jan 25 11:22:12 2012 -0600
+
+    Really fix JRUBY-6361
+    
+    RbConfig reports wrong OS type on Solaris
+
+commit a71fafd80751481295105fd42f1dbdcf7b5548a1
+Author: Matthew Denner <md12@sanger.ac.uk>
+Date:   Wed Nov 9 12:47:48 2011 +0000
+
+    Bump macosx-version-min from 10.4 to 10.5.
+    
+    With this set at 10.4 the MacOS X compiler complains about '-rpath' only
+    being applicable to 10.5 and above (noticed during 'gem install
+    mysql2').  Bump it to 10.5 and the error is gone.
+    
+    Signed-off-by: Hiro Asari <asari.ruby@gmail.com>
+
+commit e3613d5a797e59837472dd4df24e31b57f6da255
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Sat Nov 12 21:45:42 2011 -0500
+
+    Revert "Override certain RbConfig::MAKEFILE_CONFIG values with environment variables. This resolves JRUBY-6199 in a more general way."
+    
+    Since MRI doesn't allow this, I'm going to revert this in this branch.
+    
+    This reverts commit 3d119a53cbb8b6222633e7dab1f734448556aea2.
+
+commit 3d119a53cbb8b6222633e7dab1f734448556aea2
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Wed Nov 9 13:14:20 2011 -0500
+
+    Override certain RbConfig::MAKEFILE_CONFIG values with environment variables. This resolves JRUBY-6199 in a more general way.
+
+commit 17b117bcfe17ebf63a02e68b37a94d07c6d5bd06
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Sep 12 15:25:59 2011 -0500
+
+    Move 'rbconfig' library under org.jruby.ext.rbconfig.

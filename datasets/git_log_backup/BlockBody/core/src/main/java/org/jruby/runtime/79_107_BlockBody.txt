@@ -1,0 +1,260 @@
+commit 72c6c0b8226893575df7dd0d19912011541d7106
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri May 8 19:01:18 2015 -0500
+
+    Refactor argument metadata representation and rendering.
+
+commit 55376a00175725027e941df3bdcd5414a0904408
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu May 7 11:53:33 2015 -0500
+
+    Kill off argumentType from BlockBody
+
+commit 4b213d7938e2950f970bdb9403d3205dc5cfe137
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu May 7 10:45:44 2015 -0500
+
+    Reduce usage of ZERO_ARGS by replacing with Signature.NO_ARGS checks.  Eliminate null checks for signature by passing in one to NullBlockBody
+
+commit 3c352e3e8aff19952b9f61aeab1e6262737ffd38
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu May 7 10:17:39 2015 -0500
+
+    Remove some Arity passing from BlockBody and IRBlockBody
+
+commit 56ae944e91f10893a155064f9beb62448522666a
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu May 7 09:53:31 2015 -0500
+
+    Consolidate IR block call logic and use it for all block types.  This is also part of argumentType removal.
+
+commit ac66e64948ef37185de89e91e4703817c7692e2a
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed May 6 14:35:24 2015 -0500
+
+    Start of argumentType removal
+
+commit 3827161d0261ec5edd08076721f7ef9bd07a964f
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed May 6 14:11:49 2015 -0500
+
+    Move signature up to base BlockBody class
+
+commit c3fe1a263acfe1ae6b1089bb4a540edb794ff212
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed May 6 13:32:53 2015 -0500
+
+    Whoops forgot @Deprecations
+
+commit a6798526533eef40ea3985bff2d5085d1c23b06e
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed May 6 11:27:54 2015 -0500
+
+    More arity -> signature conversion on blockbody
+
+commit 9425fbd35c7d770f909f822ea8c6f3570ca8199e
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue May 5 15:51:17 2015 -0500
+
+    MultipleAsgnNode is dead.  Long live MultipleAsgnNode!
+
+commit c3a18b3b18b5799a9b8c9b3e6c22fa8867e4aa61
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue May 5 15:45:12 2015 -0500
+
+    More MAsgnNode removal
+
+commit 512b0a5ab4e129a2e05e6ca83113520252a0048a
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Apr 16 10:49:28 2015 -0500
+
+    StaticScope now has Signature instead of three individual fields.  All other
+    changes were made to support this.  We encode/decode scopes with a full
+    Signature.  Blocks are all rooted in providing a Signature.  All IR*Method
+    will provide a Signature.  Unfortunately, I stopped at IR level for method
+    types.  Over time those should get converted.
+    
+    This corrects all arity issues involving methods and blocks in interp.  JIT
+    is still somewhere passing in the wrong values but I will correct that in
+    a followup (this is not a regression).
+    
+    spec:fast:ruby and test:mri both pass so do JIT variants of those tests
+    but I strong suspect we are shelling out in some way and running some of
+    these tests in interp mode.
+    
+    On other note of distinction is that for builtin functions we only construct
+    a subset of information that Signature wants because Arity is only a subset
+    of the info Signature needs.  Since there are no exotic signatures in builtins
+    there is a Signature.from(Arity) which will convert to a reasonable analogue
+    or throw if it is special in some way.
+    
+    I tried to leave all deprecated versions of methods and constructors but
+    I might have spaced out a few.
+
+commit 2025534e876f655ea00daff9d0251a0d072e800d
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Jan 19 13:45:37 2015 -0600
+
+    Make sure call19 path uses new Signature class for LAMBDA arity checking.
+
+commit 35141a4aa462575044d540f9c23b9301ae8516c8
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Sep 18 14:27:47 2014 -0500
+
+    Clean up block cloning for instance_eval and friends.
+
+commit 6225d60e792b3f60adbd76b15958ba3b221f2279
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Mon Jun 30 23:59:03 2014 -0500
+
+    Death to rubyclass stack: Part 2 of 2
+    
+    * This patch builds on the previous commit and eliminates all
+      traces of rubyclass stack from the codebase.
+    
+      - Remove the push/pop/get from thread-context and use sites.
+      - Removed klass arg from method calls.
+    
+    * TODO: embed used to inject values into the current-module obtained
+      from the rubyclass stack. That code needs investigation.
+    
+    * Replaced the hacky if (klass==null) prepareSelf(binding) calls
+      with information about actual execution context. The primary reason
+      to use binding.self instead of self argument in blocks is when
+      the block is being used in a binding-eval context. The same soln.
+      is applicable in other contexts where this pattern was used (and
+      currently marked with SSS FIXME annotations in code comments).
+    
+    * All tests continue to pass.
+
+commit 4fd036b2c3d515db5a9c5ab7e249b59f8ea79692
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Mon Jun 30 23:10:57 2014 -0500
+
+    Death to rubyclass stack: Part 1 of 2
+    
+    * When methods are defined, aliased, undefined, the runtime has to
+      determine the method container that is affected by the changes.
+    
+      Thus far, this was done by manipulating a rubyclass stack that
+      is updated at several places in the runtime and weaves its way
+      through frame, binding, yield, instance/module/binding evals,
+      and is updated on every call.
+    
+    * This patch implements a fairly straightforward algorithm for
+      determining the method container at the time it is needed by
+      examining the contents of the lexical scoping tree starting at
+      the scope where the method is manipulated. This examination is
+      affected by runtime flags set on lexical scopes (always blocks)
+      based on whether any of them are being executed in the context of
+      instance/module/binding evals. There are couple special cases to
+      this algorithm. Nevertheless, it is far more straightforward and
+      easy to grok than the existing runtime implementation.
+    
+      In this patch, the rubyclass stack manipulation code is turned off
+      in ThreadContext.java but the rubyclass stack and its traces in
+      the various parts of the runtime are left behind.
+    
+      The algorithm relies on annotation of block scopes when they are
+      being executed in the context of evals. The bulk of this patch
+      involves setting up these annotations in RubyModule, RubyObject,
+      RubyBasicObject and passing them to DynamicScope via Block, BlockBody,
+      IRBlockBody, and InterpretedIRBlockBody.
+    
+      The algorithm also relies on annotation of static scopes with the
+      IR scope type. The other bulk of this patch is in setting up those
+      annotations on IR static scopes.
+    
+    * The algorithm itself is in ir/runtime/IRRuntimeHelpers.java
+      - findInstanceMethodContainer(..)
+    
+      It is easy to split this up into static/dynamic since there are
+      scenarios where the container is statically determined. But, there
+      is no real benefit that we foresee from the static resolution
+      scenarios, and the algorithm is simpler the way it is currently
+      coded up.
+    
+    * This passes all MRI tests and Rubyspecs plus other contrived
+      tests (they need cleaning up -- will probably add them in a later
+      patch).
+
+commit f7139de11fb6abae4a96e6b73d18859574454752
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed May 7 17:39:03 2014 -0500
+
+    Remove use o getArgumentTypeWackyHack from everything but 'for' in AST and IR (other runtimes will be deleted so I did not bother)
+
+commit 0295faeefde58d2eb3cd27d47086494508a1bb5f
+Author: Daniel Marcotte <dmarcotte@gmail.com>
+Date:   Sat Nov 16 07:03:04 2013 -0800
+
+    Remove "aValue" param
+    
+    Since it's now always clear when we have an array of args (because the
+    types were recently refactored to use IRubyObject[] rather than an
+    IRubyObject that was sometimes a RubyArray), we can delete the flag
+    that was being used to track whether given arguments should be treated
+    as an array or not.
+
+commit a6afbfbc2d1d22d3c48a8ba0f1f9304bcf229ed9
+Author: Daniel Marcotte <dmarcotte@gmail.com>
+Date:   Tue Nov 5 08:06:09 2013 -0800
+
+    Centrally prep args for calls/yields
+    
+    Refactor to ensure at the BlockBody level that args are properly prepped
+    for calls and yields (arity checking for lambdas, arity trimming
+    for other blocks).  This doesn't guarantee all calling codepaths are
+    covered (an irresponsible override of some of BlockBody's methods can
+    get around it), but definitely moves in the right direction.
+    
+    This lets us delete some ad-hoc prepping we were doing, and fills some
+    gaps where args should have been prepped but were not (so, for instance,
+    we can untag the Enumerable#any test now that its block args are being
+    treated correctly).
+
+commit 3e3a023c54b6a5cd773c4da2cfd730428b235371
+Author: Daniel Marcotte <dmarcotte@gmail.com>
+Date:   Tue Oct 22 08:57:12 2013 -0700
+
+    Do not wrap arg arrays in RubyArrays prematurely
+    
+    This refactor makes it easier for deeper calls to determine exactly
+    what their args looks like (when transformed into a RubyArray too soon,
+    it was hard for yielders to tell if you have multiple args,
+    or one array arg)
+    
+    This lets us clean up a few places which were adding extra logic to deal
+    with that ambiguity, and positions us to start applying
+    RubyProc.prepareProcArgs more centrally (all proc calls need that logic
+    applied, but it is currently not enforced in some places)
+
+commit d87b1e769fee63ba233137d7d3a1fac13e3d8fe8
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Oct 21 14:34:49 2013 -0500
+
+    Reverting #1143. This has too many changes in one commit.  I will add some comments in #1143
+
+commit 7ad21e106453547cf8caa9e74f532db2bd45b833
+Author: Daniel Marcotte <dmarcotte@gmail.com>
+Date:   Sun Oct 20 14:39:59 2013 -0700
+
+    Improve consistency/correctness of arg handling
+    
+    Employ RubyProc.prepareArgs in a very central place, improving
+    consistency of how args are handled between both yield and block.call.
+    
+    This involves migrating many calls to pass an IRubyObject[] of args
+    rather than prematurely wrapping that array in a RubyArray (which makes
+    it impossible for deeper calls to determine if they have one Array arg,
+    or multiple args).
+    
+    As an added side effect, JavaInternalBlockBody now gets correct arg
+    treatment, and can be used to get RubyEnumerable cleaner and fully
+    rubyspec-compliant.
+
+commit 28c6fbc4e883bc1c9e9242d1da1cb2b785f55339
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 3 12:46:45 2013 -0500
+
+    Move to @mkristian's proposed layout, with some modifications.

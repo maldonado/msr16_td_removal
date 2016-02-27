@@ -1,0 +1,934 @@
+commit ade33541dcd30fdab79bf038c969872a613ab487
+Author: Alex Tambellini <atambellini@gmail.com>
+Date:   Tue Jun 4 20:27:31 2013 -0400
+
+    String#unpack('w') should return fixnum when able. Fixes #786
+
+commit ed1009561ec8e5c0bdfb8d270fe1b89ff8da6f1e
+Author: Sébastien Le Callonnec <sebastien@weblogism.com>
+Date:   Mon Apr 29 10:58:11 2013 +0100
+
+    Support '_' and '!' after '<' and '>'.
+
+commit df8ebec2ed60ff548c0f427410cc0423edc17d1b
+Author: Sébastien Le Callonnec <sebastien@weblogism.com>
+Date:   Mon Apr 29 10:18:11 2013 +0100
+
+    MRI does add trailing nils for Q in String#unpack.
+
+commit 46da9c3d4de8c0e408200e7c6cd3c7841263d24b
+Author: Sébastien Le Callonnec <sebastien@weblogism.com>
+Date:   Mon Apr 29 10:17:22 2013 +0100
+
+    Support '#' in String#unpack.
+
+commit 61678ac1a2514a9932276f8d527816a5980a94b3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Feb 25 20:41:40 2013 +1100
+
+    Fix more references to CPL.
+    
+    The phrase "Common Public License" was split across two lines in
+    our default header, which caused it to be missed during earlier
+    search/replace. Also, we did not replace the CPL URL in the
+    header with the EPL URL.
+
+commit 330fef3b0fc18af477ccea19bd278669667f31bb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 12 14:49:29 2013 -0600
+
+    Switch JRuby's CPL license to EPL.
+    
+    Governance of the CPL license was moved to the Eclipse Foundation
+    at some point in the past, and Eclipse blessed the EPL (Eclipse
+    Public License v1.0) as the successor to CPL. Because the CPL
+    contains a clause allowing transparent upgrades to future blessed
+    successor licenses, we can make the move to EPL without
+    re-contacting past contributors.
+    
+    The change in going from CPL to EPL largely just removes some
+    punitive language that apparently made many companies nervous. All
+    other language in the license remains identical.
+    
+    Several documents about Eclipse's move from CPL to EPL are here:
+    
+    http://www.eclipse.org/legal/cpl2epl/
+    
+    Note that Eclipse's move came before the blessing of EPL as the
+    upgrade path for CPL, so they had to do a bit more legal juggling.
+    With Eclipse now the administrator of CPL and with their blessing
+    of EPL as the upgrade path for CPL, all we need to do is make the
+    move.
+
+commit 82eeacd9428f27372286f5bac300df8f344cc727
+Author: John F. Douthat <johndouthat@gmail.com>
+Date:   Sat Dec 15 15:24:34 2012 -0600
+
+    Fix javadoc html
+
+commit a57a324c7fface8ad1ef9592f11c6e8a77505dfe
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Mar 9 17:06:30 2012 -0600
+
+    More BasicSocket work.
+    
+    * Add Socket::Option class
+    * Rewrite getsockopt
+    * Add option-getting to SocketType
+    * Propagate jnr-constants enums more places
+
+commit 7c689b255d3739788224977064ccf80a8a4a8244
+Author: Tim Felgentreff <timfelgentreff@gmail.com>
+Date:   Fri Jan 13 12:25:06 2012 +0100
+
+    add explicit endianess format support to Pack util
+
+commit 0a0b03f42348eebcffe7b3b09b5ef572cd5df798
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Sep 12 18:42:23 2011 -0500
+
+    Match 1.8.7 argument error on pack instead of typeerror
+
+commit 877199caaf79a8d861669a60a1e62f0244685863
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Sep 12 18:22:44 2011 -0500
+
+    Use more strict double and float creation in 1.9
+
+commit dfbbf05021a9df386d0b056b1d59335e4c86e49c
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Sep 12 16:33:53 2011 -0500
+
+    Fix nil array elements not giving a type error for various pack directives.  Fix nul in directives not being ignored
+
+commit e49e77273b3c4d297a5afae46d2726dc9cbf2c97
+Author: Hiroshi Nakamura <nahi@ruby-lang.org>
+Date:   Mon Sep 12 23:34:16 2011 +0900
+
+    JRUBY-6053: Fix Array#pack b/B format length handling
+
+commit 4388ed3f473abf0746db3a7db7a099a7953ee1ff
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Sat Sep 10 18:41:38 2011 +0200
+
+    JRUBY-6052: ''.unpack('u') blows up
+
+commit 1efe46804bf9e80f16b6aaf8059ae574b6856091
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Apr 27 16:46:34 2011 -0500
+
+    Fix JRUBY-5728: Array#pack is no longer threadsafe
+    
+    Patch by Rich Liebling.
+
+commit eaff3cf5efd40a5c72b83e9d64fe0b38c025ee32
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Apr 27 16:31:42 2011 -0500
+
+    Fix JRUBY-5733: String#unpack: @ directive doesn't work on substrings
+    
+    Patch by Matt Woenker.
+
+commit 891409e4b2333d9b73ad9db8ab9faadb6892e53b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jan 26 22:21:47 2011 -0600
+
+    Improve and expand fix for JRUBY-5406 and centralize encoding lookup logic in EncodingService.
+
+commit 14e2788007275eb9c249a52a14a0f2804c9b556e
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri Jan 7 14:12:17 2011 -0600
+
+    Assume ASCII-8BIT for strings unpacking with 'm'
+
+commit e75650d587fa224505b90b86014bfe8e0d3b79a2
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Dec 14 00:24:36 2010 -0600
+
+    Fix String#pack not passing encoding along.
+
+commit 854e1e8189216d24f1932f3d4d9baf195ba53a02
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Dec 8 14:37:22 2010 -0600
+
+    Remove deprecation from taintless RubyArray#pack.
+
+commit 1f7ae2094ab18e0045e7938f4b3fbe132df7b089
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Dec 8 14:24:28 2010 -0600
+
+    Fix tainting, coercion for Array#pack. RubySpecs will arrive soon.
+
+commit e055dbe2e6a793916c7a8383d5a6f6aa0d1e6e7f
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Thu Oct 14 15:51:53 2010 -0400
+
+    Formatting change. Avoid dangling 'if' clause on a line by itself. Also, reformat multi-line boolean conditions so that it is clearer that they indeed span multiple lines.
+
+commit 5c0eaa2bf483d56c3600f82581c1e060bb923b95
+Author: David Calavera <david.calavera@gmail.com>
+Date:   Sun Sep 19 01:11:10 2010 +0200
+
+    remove a condition that's no longer needed
+
+commit e8759b73ea6e36c673ee9e7a213ba152fc1d1a71
+Author: David Calavera <david.calavera@gmail.com>
+Date:   Sun Sep 19 01:03:33 2010 +0200
+
+    [1.9] Array#pack returns strings in the right encoding
+
+commit 03d8c318d0c1a1674204d1a69edf4acb416f5aca
+Author: David Calavera <david.calavera@gmail.com>
+Date:   Sun Sep 19 00:06:10 2010 +0200
+
+    [1.9] Array#pack with the empty format returns an empty String in US-ASCII
+
+commit 4003ee54a376c24af5c2050c67a6f323f63d8f48
+Author: David Calavera <david.calavera@gmail.com>
+Date:   Sat Sep 18 23:46:16 2010 +0200
+
+    [1.9] Array#pack with format 'm' ignores star parameter
+
+commit 955aae106deabc2d69afb1f7a2d93d82654cba37
+Author: David Calavera <david.calavera@gmail.com>
+Date:   Mon Jul 26 19:17:39 2010 +0200
+
+    fix JRUBY-4967: Array#pack fails to raise ArgumentError when called with a wrong number of parameters
+
+commit b7f083a1d91905d96551b31c6e61ef37037a35c5
+Author: David Calavera <david.calavera@gmail.com>
+Date:   Wed Jul 14 11:01:52 2010 +0200
+
+    fix JRUBY-4933: Array#pack and String#unpack failures
+
+commit 46db3a14cae8ae807c4eedf992bdb0762753fa83
+Author: David Calavera <david.calavera@gmail.com>
+Date:   Sun Jun 27 19:41:45 2010 +0200
+
+    [1.9] Array#pack does not raise a RangeError even when a pack argument is <= -2**64
+
+commit 19cfc5eb03050ed7fb208697dfe794f9494f8cfc
+Author: David Calavera <david.calavera@gmail.com>
+Date:   Sun Jun 27 18:45:43 2010 +0200
+
+    [1.9] Array#pack returns a string infected by the format string and the elements into the array
+
+commit 1d359c15fbe0021d17cb7c442ecb0186e635d715
+Author: Hiroshi Nakamura <nahi@ruby-lang.org>
+Date:   Thu Apr 15 20:56:09 2010 +0900
+
+    Fix JRUBY-4741: Added 'm0' Array#pack format in 1.9.
+    
+    Array#pack('U') appears to have been fixed previously.
+    
+    Signed-off-by: Hiro Asari <asari.ruby@gmail.com>
+
+commit c5de5bbfa8a923061bf3dc6f48dd9c6b3f1ededf
+Author: Vladimir Sizikov <vsizikov@gmail.com>
+Date:   Fri Apr 2 14:33:55 2010 +0200
+
+    Follow-up fix for String#unpack CI failure
+    
+    (By David)
+
+commit 4eb48a5601aafed0116a3453d1504492854c206a
+Author: David Calavera <david.calavera@gmail.com>
+Date:   Fri Mar 19 20:47:48 2010 +0100
+
+    fixes JRUBY-4647: String#unpack(M) produces wrong results when multiple lines are involved
+    
+    Signed-off-by: Vladimir Sizikov <vsizikov@gmail.com>
+
+commit 2f3802343d0de9440a71e099002d3b66f51c0a51
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Dec 23 00:40:00 2009 -0600
+
+    Use accessors for those pesky ByteList fields and update bytelist.jar to a current version with accessors and deprecated fields (for compile warnings and because we'll want to privatize them some day).
+
+commit b7f0ee1edcf02ea0a90a92db67283201364a0554
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Mon Aug 17 15:42:39 2009 -0500
+
+    JRUBY-3879: Fix native-endian issues in Array#pack (thanks Aman Gupta)
+
+commit 2c7c9afdd6c12fbba4d22576aad8d1969b771eea
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu May 21 01:07:28 2009 -0500
+
+    Fix by Colon Jones for JRUBY-3677: Array#pack problem
+
+commit f51f05b78d15349703940d58dd743e17c6ec8dbd
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Feb 14 21:29:41 2009 +0000
+
+    Fix, test, and spec update for JRUBY-2830: String#unpack with 'w' is completely unimplemented
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9148 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 919a1b6b5c3297a91015cf05e7fb52a5bf639646
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Jan 31 18:27:34 2009 +0000
+
+    Pack fixes for JRUBY-3339: java.lang.ArrayIndexOutOfBoundsException in RubyArray.java
+    
+    Another hit from Josephh LaFata. Thanks!
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8958 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 4c79b5dbdd931620fd66b590ac28cb463fc608a2
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Jan 10 17:39:15 2009 +0000
+
+    JRUBY-3274: Many new Array#pack failures in updated RubySpecs
+    
+    Thanks to Joseph LaFata for his fixes! There are some pending updates to RubySpec before we can remove tags, so I'll leave JRUBY-3274 open, but resolve the two other bugs this fixes as well (JRUBY-2826 and JRUBY-3116).
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8690 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 206a772b10d41ed4591b8d86e1c7d03694934dbc
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Mon Jan 5 01:18:04 2009 +0000
+
+    Faster pack('U') by not using temporaries.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8591 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a473392cfff865792b60987456d1b230fd0938ab
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Sun Jan 4 22:58:48 2009 +0000
+
+    Ugh, RubyRegexp.preprocess().
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8589 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit dccbfb3b053b9ec422270a43dd3c9e1de2c344fd
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Sat Jan 3 19:48:41 2009 +0000
+
+    Use proper masking for ByteBuffer.get() in Pack so correct code point is produced.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8580 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit e0a727c1fdb8fd820b52c2a93be3166354185fab
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Sun Nov 30 19:04:36 2008 +0000
+
+    Make KCode use non strict encoding versions. Vanilla mode finally disabled.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8220 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a7fabe312fa54aa0a8f1efe22970fec6b951b067
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Tue Sep 9 20:39:21 2008 +0000
+
+    Fix for JRUBY-2686: Truncated ActionMailer emails when using JRuby 1.1.2
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7668 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a79267d89e70f291934f734920a6500190a19d09
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Mon Sep 8 20:28:13 2008 +0000
+
+    Sync trunk with split joni/jcodings, also make String#split use Encoding.length(byte[]bytes, int p, int end) routine.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7660 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 52769ea2fc33f2e70c0c92584d9bfe1b58b381ae
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Fri May 9 16:00:36 2008 +0000
+
+    Remove unused code.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6653 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 9b0938aff9466697852015d328aafefcc5017f77
+Author: Vladimir Sizikov <vsizikov@gmail.com>
+Date:   Fri May 9 10:44:28 2008 +0000
+
+    Second part of the fix for JRUBY-2502: Major regression in Array#pack.
+    
+    Regression test added.
+    All Rubyspecs pass.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6652 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d9e25e3faa3104ced8d0b7d0d90f81796b37dd6c
+Author: Vladimir Sizikov <vsizikov@gmail.com>
+Date:   Fri May 9 09:38:36 2008 +0000
+
+    Partial fix JRUBY-2502: Major regression in Array#pack.
+    
+    Regression tests added.
+    
+    At least, JRuby doesn't crash anymore, but some
+    rubyspec failures remain.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6651 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d8f8fa571b500dc8092b9771b4f4a03f3d941416
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Fri May 9 01:31:12 2008 +0000
+
+    Reuse BigInteger value.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6650 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a799d6cc926eb4a851002f9e61664b9d5c4df098
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Fri May 9 01:07:00 2008 +0000
+
+    No more StringBuffer in Array#pack. Up to 10x improvement for large strings.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6649 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 88ccd14ea96937a56283817ceedfa6998ad88b22
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Feb 29 01:20:37 2008 +0000
+
+    Fix for JRUBY-2200: O(n^2) performance for pack('m'). Also included a benchmark.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6067 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 290f7a1915ead5a55e1413d2fad1f3cfb1ab7b16
+Author: Vladimir Sizikov <vsizikov@gmail.com>
+Date:   Sun Feb 24 21:13:15 2008 +0000
+
+    JRUBY-2173: String#pack with 'Q', 'q' patterns should treat 64bit
+    numbers as big-endian. This fixes recent rubyspec failures.
+    
+    Also, rubyspecs are updated. Spec changes summary:
+       8.4% spec/ruby/1.8/core/file/
+       0.1% spec/ruby/1.8/core/process/
+       0.4% spec/ruby/1.8/core/regexp/shared/
+      12.2% spec/ruby/1.8/core/string/
+       0.8% spec/ruby/1.8/language/
+       0.1% spec/ruby/1.8/library/digest/md5/
+       3.8% spec/ruby/1.8/library/digest/sha256/shared/
+      21.8% spec/ruby/1.8/library/digest/sha256/
+       3.9% spec/ruby/1.8/library/digest/sha384/shared/
+      21.8% spec/ruby/1.8/library/digest/sha384/
+       3.8% spec/ruby/1.8/library/digest/sha512/shared/
+      21.8% spec/ruby/1.8/library/digest/sha512/
+       0.2% spec/ruby/1.8/library/socket/
+    60 files changed, 980 insertions(+), 73 deletions(-)
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6016 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 112ce0068da44eab9f3a4b9da1feed67557a0f1b
+Author: Vladimir Sizikov <vsizikov@gmail.com>
+Date:   Fri Jan 25 12:52:47 2008 +0000
+
+    JRUBY-2037: String#unpack with "Q/q" patterns always returns
+    Bignums evenfor small values.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5729 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit c345e7007366f8ad167bd5c896a2dd02dff0f7a5
+Author: Vladimir Sizikov <vsizikov@gmail.com>
+Date:   Mon Jan 14 16:41:57 2008 +0000
+
+    JRUBY-1959: Rubyspecs failures for Array#pack with 'ils' patterns.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5604 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit cfc7a86655f18457f776bbc14b01e558d41c0378
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Wed Jan 9 19:30:32 2008 +0000
+
+    Fix for JRUBY-1899: Array#pack + "U" + negative value should raise an RangeError (patch by Vladimir).
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5542 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 25504fd46562b0c0eba6d582fe9930ddf430a5b3
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Wed Jan 9 19:24:10 2008 +0000
+
+    Fix for JRUBY-1912: Array#pack with "w' pattern breaks with NPE (patch by Vladimir).
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5541 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 8554f1d4f7266b96d62f612fd7345bdda5d6750b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Dec 29 21:28:24 2007 +0000
+
+    Fix for JRUBY-1834 from Vladimir.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5428 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 605600b8312ce2ba60e3d8146978ee38291483a1
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Thu Dec 27 12:36:58 2007 +0000
+
+    Fix for JRUBY-1791: String#unpack with "M" pattern is incorrect (patch by Vladimir).
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5375 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 14cc168746ca6c949cf97d926380d048e7d4372a
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Wed Dec 26 19:44:59 2007 +0000
+
+    Fix for JRUBY-1790: String#unpack with "@" pattern works incorrectly (patch by Vladimir).
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5368 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 97be33dea9b656d3563abbdc4879e1b8be83a80d
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Wed Dec 26 18:38:11 2007 +0000
+
+    Fix for JRUBY-1789: Array#pack with "U" pattern is broken with values bigger than 65536 (patch by Vladimir).
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5364 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 4e8128dba8c9c04883ed2ce2c4be392941b5df14
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Wed Dec 26 16:26:48 2007 +0000
+
+    Fix for RUBY-1788: String#unpack with U pattern is broken with multi-byte sequences (patch by Vladimir).
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5363 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit cad9136d97cdac1fab289b4451f4cde69e7bef9c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Dec 24 20:28:46 2007 +0000
+
+    Fixes for JRUBY-1780, from Vladimir
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5348 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 099730f4569e8ba30d26a67685b12491a2df4c3f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Dec 24 20:20:47 2007 +0000
+
+    Fixes for JRUBY-1779 from Vladimir
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5347 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d9947d346d315aa536c0e40334c5553323d1778d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Dec 20 11:13:12 2007 +0000
+
+    Fixes for JRUBY-1748 from Vladimir
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5306 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a40751b3626ab0217077d08a725fa35af5ae25fd
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Oct 28 05:34:37 2007 +0000
+
+    Fix for JRUBY-1005, implement pack for Q/q
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4776 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 09d1bc29c4a67208f9332e6a83790b1cbb926ceb
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Wed Sep 26 11:40:58 2007 +0000
+
+    stringio: 30+ fixed spec error, pack: fixed 8 spec errors.  Rubinius spec updated coming in a future commit
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4403 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 02a7a3ac5832b2465094fe870109edba84a84d01
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Mon Sep 10 16:44:22 2007 +0000
+
+    JRUBY-1336: unpack(M) loses last character
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4287 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 6a9a8771ac9c036d5bc2b2718bcf61b9de846e81
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Mon Sep 10 14:11:34 2007 +0000
+
+    JRUBY-1333: unpack(M*) does not read encoded value if it is last in the packed value
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4283 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 055b81c987465ebcb4869fa32d6ac7ab19f39ece
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Tue May 29 20:19:14 2007 +0000
+
+    JRUBY-998: Array#pack("M") failures
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3760 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit b1742e48d5561cdc2e90fca3b335c89a0f3d9a84
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Fri Apr 20 02:08:54 2007 +0000
+
+    JRUBY-840: Cow fixes, Enumerable rewrite and arraycopy hunt (Marcin)
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3511 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 424b7086c338c918e7aa64540cab5eea70a1fa7b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Apr 16 20:03:22 2007 +0000
+
+    Fixes for JRUBY-813 from Hawk Newton
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3477 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 7a77daca5662ec40025900d080e4e71c7271a278
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Apr 15 01:44:36 2007 +0000
+
+    Committing Marcin's excellent Hash and String copy-on-write work for JRUBY-818. ant test is solid, mephisto appears to work well, and with one small bug fix, activesupport, actionpack, and actionmailer appear to run the same as on trunk (maybe a little better?). Also, I found and fixed a small bottleneck that now shows patched JRuby rdoc'ing faster than trunk. So we're gonna go for it.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3462 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit f4c15912b1d4edc84b06c882195d27df371d1023
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Apr 6 23:13:04 2007 +0000
+
+    More cleanup of STI and expanding it to conversion methods and hash.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3404 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 0320b51ff913c6fcd25a386065cac05f57cc12c2
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Wed Apr 4 17:44:27 2007 +0000
+
+    Merging non-specific things from my sandbox to get diff smaller:
+    
+    - remove unused imports
+    - remove deprecated methods convertToType and convertToTypeWithCaller and converted all consumers
+       [Note: If extensions were using these functions they are broken now]
+    - attr_accessor was checking Frame args when it could just use the args it is given
+    - removed unused variables
+    - comment out some debugging methods so they are not reported as a warning
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3385 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit c71592e79c2f4867db7eab55cfad48cddb3aa634
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Thu Feb 22 14:08:37 2007 +0000
+
+    Fix for JRUBY-603. Pack fixes.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3058 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a2107e60085a5063bca76d897783a512bbd7eddc
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sun Feb 18 15:18:18 2007 +0000
+
+    JRUBY-606: Get rid of un/under-used IRuby interface
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3022 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d8424d42a02b1ba5b8b47c8f53bb4e3c6dcf56ac
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Sun Feb 18 10:24:55 2007 +0000
+
+    Fix for JRUBY-600. Compilation with 1.4 should work.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3018 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 9fc274f4addb651ecb38f66b9a989248cdf1946e
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Fri Feb 16 06:18:39 2007 +0000
+
+    JRUBY-570: a little cleanup; some copyrights inadvertently changed, and avoid
+    extraneous StringBuffer.toString in a couple places
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3009 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit ba941779cfc4123140eb4dc085f3d6ec561ab8f2
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Fri Feb 16 05:32:51 2007 +0000
+
+    JRUBY-570: nuke plaincharset.jar!
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3008 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 1fd378cae8bf2c203a6e39bd36cf31d975775ee9
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Thu Feb 8 13:11:04 2007 +0000
+
+    Improve performance in various parts of the system by never cloning a byte array that will go out of scope immediatly. These are safe to retain. Also, new implementation for StringIO that uses ByteList directly.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2965 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 8c2cdaf024c051bc2cda4adcf1f3d80343ea5ba3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Feb 7 10:30:14 2007 +0000
+
+    Modify RubyString to use the more efficient ByteList rather than mercilessly reallocating byte[] for every mutation. Allows gem source index to update correctly and improves performance close to what it was before.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2955 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d1e187ee1a48a02764375e108a6f62ab580de2ad
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 6 04:18:52 2007 +0000
+
+    First round of changes for JRUBY-565, converting RubyString's internals to byte[] and using PLAIN encoding for most uses of Java strings internally. More to come, including improving (and re-fixing) UTF8 support.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2951 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit ff9a3a7cf7a90fae99447aa308860bec01c5cfbf
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jan 22 06:34:50 2007 +0000
+
+    Fixes for JRUBY-471. each_byte now uses "& 0xFF" to unsign the bytes and split falls back on raw bytes if unicode fails.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2813 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 5f8ff2856e5257bc01b5e06911dfeb112feda6f3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Jan 21 15:51:05 2007 +0000
+
+    Fix for JRUBY-469, raise ArgumentError when unpack("U*")ing a string that's not valid UTF8.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2810 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 4eb85a4aa5b1c369fedbce19adcc69a844fc7c69
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Wed Oct 4 16:42:09 2006 +0000
+
+    Landing charlies latest perf changes from his branch to trunk
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2280 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 524049357e360ba81a21756f54071c67d3796180
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Sep 7 01:40:03 2006 +0000
+
+    merging headius to trunk
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2232 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 7267f4fa96d07007cab8b8de87753fd877169e12
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Fri Jul 7 00:32:20 2006 +0000
+
+    unpack 'm' was not working with three chars (patch from Evan Buswell) [first SVN commit?]
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2105 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 9f2efc63a858fa0507245b207025eab027840a04
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sun Apr 9 20:58:31 2006 +0000
+
+    Make RubyString use a StringBuffer instead of a String as its internal representation.  This change makes one test case go from 262 s to 0.7s.  Various other function fixes thrown in (with quite a few new unit tests) and some conversion to make more mutable functions use StringBuffer APIs more.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1974 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 415b1e0db282c02d672a7e34a34a2bea0f69ccb2
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Thu Dec 22 03:19:59 2005 +0000
+
+    unpack 'u', 'm', and 'M' (patch by Derek Berner)
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1846 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 4dfdacd80c56018084c618f3bbab7b542653d95e
+Author: David Corbin <dcorbin@users.sourceforge.net>
+Date:   Sat Oct 8 13:07:06 2005 +0000
+
+    Introduced IRuby interface for Ruby runtime object.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1798 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit ca6b16e996ea9af83ce593594b9c69b9364a9924
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sun Aug 28 13:29:33 2005 +0000
+
+    Kill RubyClasses (core class/modules now initialized in Ruby)
+    Store all top-level classes as constants within Object (fixes things like Object.constants) instead of second datastore
+    Always load all core classes (remove lazy loading)
+    Convenience function RubyModule#getClass added
+    Convenience function Ruby#getObject added
+    JavaObject and JavaArray are now Java::JavaObject and Java::JavaArray to be consistent
+    classes defined under another class/module are now defined in the parents creation routine
+    Removed some masking warnings
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1739 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 803c66ee682936beecc8a43fe2cfc90fe5645b22
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Tue Jun 21 14:03:26 2005 +0000
+
+    My Laptop drive is sounding funny (dropping a little earlier than normal -- but completely safe)
+    ReflectionCallback is simpler - removed some indirection levels and split out new dispatch mechanism as...
+    new ReflectedMethod which has less levels of indirection than reflectioncallback and will replace it entriely once all builtin classes use MetaClasses.
+    Many protocol conversion protocols are being followed.  Almost all in numerical methods and a few in array, pack.
+    Several classes have been changed to have a FooMetaClass.
+    'ant test' is running between 25-20% faster right now and this should increase as I convert more builtin classes
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1716 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 7a83c48af56081c1c2132111d535f28d10cf3afb
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Fri Dec 31 20:55:52 2004 +0000
+
+    Update license to GPL/LGPL/CPL
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1574 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit b72a2862ae5b2f01f9a767ef2ce248fd785857c4
+Author: Jan Arne Petersen <jpetersen@uni-bonn.de>
+Date:   Mon Dec 13 00:26:02 2004 +0000
+
+    Replaced org.jruby.util.Asserts with Java 1.4 assert.
+    Fixed String#capitalize.
+    Replaced RubyString.nilString(getRuntime()) with getRuntime().getNil().
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1482 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit fd54bbbd558923b55daa14829e2de69db42bf138
+Author: Stefan Matthias Aust <sma@3plus4.de>
+Date:   Sun Dec 12 09:40:49 2004 +0000
+
+    get rid of some malformed javadoc comments and some other annoying Eclipse warnings
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1470 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 870e1da9b41bfdbae259e1fc5f18fc8b76686998
+Author: Stefan Matthias Aust <sma@3plus4.de>
+Date:   Sun Dec 12 09:25:42 2004 +0000
+
+    removes the instance variable runtime in RubyObject
+    reintroduces the variable in RubyNil, RubyBoolean, and RubyClass
+    delegates all calls to Fixnum,Array,Boolean,String,ArgumentError,IndexError and TypeError.newXXX to Ruby
+    fixes all imports
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1469 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit c15ab526440e25745b45a2ab3aaab1b5a7334d1f
+Author: Stefan Matthias Aust <sma@3plus4.de>
+Date:   Sun Nov 28 14:54:57 2004 +0000
+
+    code cleanup
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1428 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit b1562832239a5e5d73b1ee98dade51601e343257
+Author: Jan Arne Petersen <jpetersen@uni-bonn.de>
+Date:   Tue Nov 16 20:30:04 2004 +0000
+
+    Rename references of org.jruby.Ruby from ruby to runtime.
+    Remove unused methods from the IRubyErrorHandler interface.
+    Add "same" method to RubyObject to fix "equal?"
+    Fix JavaObject cache.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1408 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 77aba0783765c270d450010571e1e0db2b617285
+Author: Jan Arne Petersen <jpetersen@uni-bonn.de>
+Date:   Tue Nov 9 20:49:39 2004 +0000
+
+    Removed unused imports.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1404 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit dd42ddbe77ba55631a2936752dc4e615f9821e80
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Oct 30 21:58:12 2004 +0000
+
+    Modified RubyArray to use List instead of ArrayList
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1371 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a16b4a3596853f2153bfe0df0a8cbe54382d5d58
+Author: Anders Bengtsson <ndrsbngtssn@yahoo.se>
+Date:   Sat Feb 28 23:00:58 2004 +0000
+
+    Removed a lot of old IndexedCallback stuff.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1254 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 4e8afef0dba3b66a390c9ba70b997174b975fc0e
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sun Feb 15 16:31:46 2004 +0000
+
+    RubyString rubicon fixups
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1239 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit f57e5a2e4f599007a7e7c7b4763e0ec7b6047ec8
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Tue Feb 3 17:21:40 2004 +0000
+
+    Added to index, when should be assignment
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1227 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 9c344d5808710a795120c3c8e50cecca022b1158
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Tue Jan 20 15:59:27 2004 +0000
+
+    Add X,x,d,E,G,g,f,e.  Various refactoring.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1226 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit dceb86323135c09b9f593be11b58b90baef104d8
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Fri Dec 5 20:04:47 2003 +0000
+
+    Add 'd' support to pack/unpack
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1205 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 9a5280f99830184dee2643c7c6579dad4d36f512
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Fri Dec 5 17:53:06 2003 +0000
+
+    Add support for 'x' in unpack()
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1202 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 06f34f3a6e4941994e00090d1365045e229680be
+Author: Jan Arne Petersen <jpetersen@uni-bonn.de>
+Date:   Sat Sep 21 23:05:19 2002 +0000
+
+    - Some MetaClass refactorizations,
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@881 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit c77b91f42c4f3810140d44cbe603248a1d52b7ee
+Author: Jan Arne Petersen <jpetersen@uni-bonn.de>
+Date:   Tue Sep 10 15:18:12 2002 +0000
+
+    - restructure of the code tree.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@782 961051c9-f516-0410-bf72-c9f7e237a7b7

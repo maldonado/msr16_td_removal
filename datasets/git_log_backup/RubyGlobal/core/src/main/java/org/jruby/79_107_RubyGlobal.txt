@@ -1,0 +1,243 @@
+commit a9557fffd26a63191d73db44fcfaefb76d758db2
+Merge: 2187665 5df5491
+Author: kares <self@kares.org>
+Date:   Thu Aug 6 16:58:56 2015 +0200
+
+    Merge branch 'jruby-1_7'
+    
+    * jruby-1_7:
+      avoid (expensive) replaceAll when char replace is possible
+      little BacktraceData#transformBacktrace cleanup
+      avoid Pattern compiling on every BacktraceData construction - use startsWith
+      use static helpers in OSEnvironment for slightly less empty map garbage
+      Hack --2.0 net/http gzip problem to avoid multiple version refactoring hell (Fixes #1595, #1216)
+      Revert "[build] do not use maven-rc"
+      use EMPTY_MAP instead of new (temporary) HashMap instance
+      avoid getRuntime() in RubyHash#to_h
+      minor cleanup at RubyGlobal
+      for better ENV compatibility we should not respond to `to_h` on <= 1.9.3
+      ensure that ENV.to_h duplicates the env per MRI ruby
+      add failing spec for to_h not duplicating
+      [build] do not use maven-rc
+      improve test on whether jrubyHome is inside a jar
+      Fix NPE when getting parameter.
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/RubyGlobal.java
+    	core/src/main/java/org/jruby/runtime/backtrace/BacktraceData.java
+    	core/src/main/java/org/jruby/util/OSEnvironment.java
+    	ext/readline/src/main/java/org/jruby/JRubyApplet.java
+    	lib/ruby/2.0/net/http/response.rb
+
+commit d6d115153093b247df49a103a2de3344757085d9
+Author: kares <self@kares.org>
+Date:   Thu Aug 6 11:11:12 2015 +0200
+
+    use static helpers in OSEnvironment for slightly less empty map garbage
+
+commit 9a784f0f9a7e7d1929592caa338be89048f6b844
+Author: kares <self@kares.org>
+Date:   Thu Aug 6 10:16:18 2015 +0200
+
+    use EMPTY_MAP instead of new (temporary) HashMap instance
+
+commit 41f0a8836a2b182c71dfe6535305c80b0e2f95ae
+Author: kares <self@kares.org>
+Date:   Thu Aug 6 08:51:51 2015 +0200
+
+    minor cleanup at RubyGlobal
+
+commit 6cf8d01a14592eb8d3d82b6e172da1c403fa26a2
+Author: kares <self@kares.org>
+Date:   Thu Aug 6 08:22:36 2015 +0200
+
+    for better ENV compatibility we should not respond to `to_h` on <= 1.9.3
+    
+    (only available since Ruby 2.0)
+
+commit 411ca6a526a51fdbbc96597b223ce6165a625ce8
+Author: Reuben Sutton <reuben.sutton@artirix.com>
+Date:   Wed Aug 5 18:01:39 2015 +0100
+
+    ensure that ENV.to_h duplicates the env per MRI ruby
+
+commit cbd7296a4ea25985f77efca64546e1ac4a2fe668
+Author: Reuben Sutton <reuben.sutton@artirix.com>
+Date:   Wed Aug 5 18:01:39 2015 +0100
+
+    ensure that ENV.to_h duplicates the env per MRI ruby
+
+commit 727f65bc0daffeda87cdb89a190c385edae8a384
+Author: Benoit Daloze <eregontp@gmail.com>
+Date:   Fri Jun 19 17:32:05 2015 +0200
+
+    Propagate OSEnvironment type information to StringOnlyRubyHash.
+
+commit bf831a91b99cfaeb61f85bcc01ee8485a96f803c
+Author: Benoit Daloze <eregontp@gmail.com>
+Date:   Fri Jun 19 17:21:59 2015 +0200
+
+    Propagate type information of OSEnvironment methods.
+
+commit 3a5dda7b4dede7ed8ed480baca8ba06f135d89d8
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu May 28 14:11:01 2015 +0000
+
+    Fix gets on Windows. Fixes #2959
+    
+    * Don't unwrap stdin streams; the direct FileChannel does not seem
+      to be usable and reads result in IOException: Not enough storage
+      is available to process this command.
+    * Tweaks for argf logic.
+    * Always treat FileChannel as ready for read, since files always
+      select immediately and processes can't be selected without
+      native support.
+
+commit acc4aa1f7f1d66dec4f6100faacfdba7ef8ad525
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue May 5 10:38:49 2015 -0500
+
+    Treat bogus IO as opaque dynamic object in case it's borked.
+    
+    Fixes #2373.
+
+commit 732db6415722d0764260ed4a5b402f7d73cb0582
+Merge: dc696aa a7bfa0d
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Mar 24 09:24:18 2015 -0500
+
+    Merge branch 'jruby-1_7'
+    Fixes #2751
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/RubyGlobal.java
+    	core/src/main/java/org/jruby/ext/bigdecimal/RubyBigDecimal.java
+    	test/test_big_decimal.rb
+    	test/test_bignum.rb
+
+commit a7bfa0d2606f19dea301af4cbc2c7f9f18cf90a3
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Mar 24 09:14:11 2015 -0500
+
+    Fixes #2751. Make RUBY_ENGINE_VERSION as companion to RUBY_ENGINE
+
+commit 1345982aec14e9894dbf784ded5f58cbd2face47
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 24 23:01:45 2015 +0000
+
+    Logic in prepare needs original streams, so don't unwrap early.
+
+commit b881f9f3a9e8e0c554f918ebc9202e65e44e96f2
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 24 17:18:17 2015 +0000
+
+    If we have actual stdio channels, use them and correct fileno.
+    
+    Relates to #2598.
+
+commit 2e56c517a5e27ef631d9700dd1b1eaeb66f378d1
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Feb 23 23:40:16 2015 +0000
+
+    Always try to unwrap stdio streams.
+    
+    In order to have stdio streams report their actual file descriptor
+    (usually 0, 1, 2, but possibly different on Windows), we need to
+    always try to unwrap the FilterInput/OutputStream that wraps them
+    on OpenJDK class-library-based JDKs. We do not want to do this
+    for all processes, since as patched previously some JVMs attempt
+    to drain subprocess streams. This is not necessary for stdio
+    streams (as far as we know) so this commit adds a direct unwrap
+    path we can use when setting up the globals.
+    
+    Fixes #2598
+
+commit 9f4d9a498be12a4a568c42b0e781f1761cdb736e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jan 14 16:48:42 2015 +0000
+
+    Add Windows platform masks to get JRuby + RubyGems booting again.
+
+commit 088e62c74f95b40e8a24703748f56c2a3d675e68
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Oct 27 12:03:51 2014 -0500
+
+    Support the highly desired $-0
+
+commit 74c65d077d029cc03c6557840dc18b729cb5d120
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Jul 20 17:43:47 2014 -0500
+
+    Only use native channels 0, 1, 2 if streams are JVM default.
+
+commit 16c9890106eb4b27bfa54c80fe95fc7650dc0b61
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jun 2 17:22:47 2014 -0500
+
+    Fix seek logic for various channels and fill in a few small blanks
+
+commit 94207aff253e631a5043d4c500dd1a5cbe8ba47c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri May 30 02:07:55 2014 -0500
+
+    Loosen restriction on $stderr to just #write.
+
+commit 426dc691b76bba73e6f9471aca90a381a5704e33
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue May 20 14:37:34 2014 -0500
+
+    Start building up Channel FD abstraction. IRB works again.
+
+commit 222a48b492d61c2ceff729207bbce2119099aad6
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri May 16 14:30:09 2014 -0500
+
+    Continue implementing open logic. Stdio are properly sync now.
+    
+    Lots of extra cleanup in here as old code starts to fall off.
+
+commit 4981d37b3a09a2f156b72581400a887e1fba3257
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed May 14 09:52:39 2014 -0500
+
+    Implement rest of print, printf, puts, putc in IO and Kernel.
+
+commit 031d58e95b21e1d15f43e79ca9509cf2dda8ce02
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Oct 30 23:52:03 2013 -0500
+
+    Remove most non-parser references to CompatVersion.
+    
+    This also removes compat logic from annotation-based method
+    binding and invoker generation. I believe only the parser remains
+    to be de-versioned.
+
+commit 6d5ddacf7ef3011b3e6856df4d7c430a33cedd9e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Oct 8 15:21:32 2013 -0500
+
+    Bump up execution mode and stdlib to 2.1 (head).
+
+commit 4b6dfbcf361f1d00f13b1a8e3e05c9d0d9218f20
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Oct 7 01:29:08 2013 -0500
+
+    Get all suites in test:extended passing.
+
+commit 697e6895affa646849a685ed58f6f84795c853aa
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Oct 4 23:37:52 2013 -0500
+
+    Eliminate calls to Ruby.is1_8 and is1_9.
+
+commit 32aa90f491088311b51cd129759c3269a4e1b172
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jul 9 11:32:28 2013 -0500
+
+    Remove most deprecation warnings.
+
+commit 28c6fbc4e883bc1c9e9242d1da1cb2b785f55339
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 3 12:46:45 2013 -0500
+
+    Move to @mkristian's proposed layout, with some modifications.

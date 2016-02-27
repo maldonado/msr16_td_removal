@@ -1,0 +1,39 @@
+commit 5fa2cb144e53dd6d4532f3b8ea1446515ce9a49b
+Author: kares <self@kares.org>
+Date:   Fri Mar 27 15:26:21 2015 +0100
+
+    handle Ruby super -> Java constructor with var-args correctly (fixes cases in #2375)
+    
+    ... since we're storing an annotation "flag" on the gen constructor thus can support this
+    should be safe to land on JRuby 1.7 since users should not assume raising behaviour !
+
+commit dd9cf5f96b43f75d7fc9c4f3b9c7ac1c1d072e2e
+Author: kares <self@kares.org>
+Date:   Thu Mar 26 09:35:27 2015 +0100
+
+    align added JavaSupport method name with convention
+
+commit 18f91f7ec60dc309871d74c72af39dffde204798
+Author: kares <self@kares.org>
+Date:   Thu Mar 19 12:20:49 2015 +0100
+
+    explicit inspect() method for JavaProxyConstructor + annotate with JRubyClass
+
+commit dbc79540fada29138a5ef2d1871224ff440f8115
+Author: kares <self@kares.org>
+Date:   Thu Mar 19 08:59:09 2015 +0100
+
+    extract another (in-line) invocation handler impl into an inner static class + better naming
+
+commit f22aed3bfbabcf2c679d2d101aaacd70f5330a52
+Author: kares <self@kares.org>
+Date:   Thu Mar 19 08:34:45 2015 +0100
+
+    cleanup JavaProxyConstructor - share invocation handler + no fixnums on arg conversion
+    ... also added getJavaProxyConstructor onto JavaSupport - so there's less lookup going on
+
+commit 28c6fbc4e883bc1c9e9242d1da1cb2b785f55339
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 3 12:46:45 2013 -0500
+
+    Move to @mkristian's proposed layout, with some modifications.

@@ -1,0 +1,381 @@
+commit 9caeed5081071d6a2de28844d0a724918f8c6d86
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Wed Aug 22 12:32:43 2012 +0000
+
+    Java 1.5, continued
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1376015 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6b7bc9e53500d2347a555dea2988788a922f3101
+Author: Jacobus Martinus Kruithof <jkf@apache.org>
+Date:   Sat May 26 13:33:54 2012 +0000
+
+    Bug 53291 - Several spell checker findings in apache ant 1.8.3 documentation
+    -- api --
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1342897 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 996e3e6ff92ae37c0476e206df9f07118b675141
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Sep 4 10:10:16 2009 +0000
+
+    fix some javadoc warnings
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@811335 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 4dbe4dd92b5ec3dad9b357bffba330ad79d3895b
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Wed Oct 29 17:05:23 2008 +0000
+
+    simplify(?); use constants
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@708942 13f79535-47bb-0310-9956-ffa450edef68
+
+commit be9a9286654ae67726b1c9c8512f0ae41c63dc6c
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Sep 17 15:53:45 2008 +0000
+
+    cleanup
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@696348 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 2c4faa154f069f3f69d6c3c95629409a7b8b0cc4
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Sep 17 15:11:28 2008 +0000
+
+    avoid redundant tokenization. this is almost complete except for non-wildcard include patterns, will take care of them next.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@696336 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 2b925503d71972d8b782eedd6cdf75711377d7b0
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Sep 17 13:52:40 2008 +0000
+
+    avoid some tokenization (should really pay of in the next iteration/s) and replace recursion with iteration in findFile/isSymLink - right now we lose memoization of File.list but I'll reintroduce this later.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@696298 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c13dba6d524fe74b1518e3442429ba6e97592edd
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Sep 15 09:54:06 2008 +0000
+
+    Avoid repeated tokenization, make DefaultExcludesTest happy.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@695402 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 4c6cba963c27dec6f39e46f26043ad8d528bbc84
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Sep 15 08:28:44 2008 +0000
+
+    extract constant
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@695379 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1f06891d003a6f39cd3b456c797bb8ed5a1708ac
+Author: Scokart Gilles <gscokart@apache.org>
+Date:   Thu Aug 21 14:18:59 2008 +0000
+
+    Enhance performance of DirectoryScanner by parsing the patterns only once.  Introduce a PathPattern to do that. (# 44226)
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@687768 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d8a7e0bbb6e6c83e4defa456b03db39386638c34
+Author: Jan Materne <jhm@apache.org>
+Date:   Wed Oct 10 06:06:39 2007 +0000
+
+    typo
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@583364 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 664a8fd424e1df821e92e25c9e31f1cb4825bbcc
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Fri Oct 5 09:30:14 2007 +0000
+
+    fix for SelectorUtils.isOutOfDate for non-file resources
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@582160 13f79535-47bb-0310-9956-ffa450edef68
+
+commit cafa34ca0878175f8c8ab1bf7fcfaba70c2b1368
+Author: Jesse N. Glick <jglick@apache.org>
+Date:   Wed Oct 3 23:44:10 2007 +0000
+
+    Various microoptimizations to reduce I/O load of common tasks, esp. no-op <javac> and <depend>.
+    Many inner loops altered to make just 1-2 system calls rather than 4-5.
+    You can easily see how wasteful the previous code was, and find the culprits,
+    by patching r/o java.io.File methods and adding to -Xbootclasspath/p (or use AspectJ). E.g.:
+    
+    public boolean isDirectory() {
+      System.err.println("isDirectory: " + this); if (Math.random() < .01) Thread.dumpStack();
+      // as before...
+    }
+    
+    Ant still makes an order of magnitude more system calls to do what seem like simple operations
+    than you would think necessary, but this patch should at least improve the situation.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@581748 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 48c3492303350febdfc637a4c4a2e681f15f1867
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Wed Oct 3 15:22:59 2007 +0000
+
+    remove inner assignments, functionize some code
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@581623 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f3bbfa14c793d748e3c2fb37e1f02d6a8eae4617
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Sun Aug 12 18:11:41 2007 +0000
+
+    checkstyle
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@565093 13f79535-47bb-0310-9956-ffa450edef68
+
+commit bbb8480014c9ea0cd93f136054ffa6836bed787e
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Sun Nov 5 22:51:37 2006 +0000
+
+    checkstyle
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@471555 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 2e897819a83981a1f4de2e1cc72e33f080fcf573
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Sep 1 18:49:27 2006 +0000
+
+    copy2license.pl
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@439418 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 19397fb959cb8afa2a87b3e68eaf23994384aab4
+Author: Kevin Jackson <kevj@apache.org>
+Date:   Fri Aug 25 08:51:52 2006 +0000
+
+    use array version of tokenize path for rtrim
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@436720 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 33e3b2533d5782e539cba766f178da3ce2c27d24
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Wed Sep 21 19:52:41 2005 +0000
+
+    overload isOutOfDate with long granularity for consistency's sake.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@290810 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d716a8309d5c15e4786d581d5006177a55ed5ae4
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue May 24 08:19:45 2005 +0000
+
+    2005
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@278348 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b92e6b644f97b87083602a8ce4029cce01725674
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Mon May 23 19:31:14 2005 +0000
+
+    allow absolute include paths & no basedir for Directory scanning
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@278334 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c885f568369156a62e3ccb5b4b93b73b9d054443
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Tue Mar 9 16:49:09 2004 +0000
+
+    remove authors from files
+    PR: 27177
+    Obtained from: J.M. (Martijn) Kruithof
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276208 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 278781dcd669412e5e35cc95d8a96e0b2a278f50
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Mon Feb 9 21:05:47 2004 +0000
+
+    Copyright owner is The Apache Software Foundation
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276065 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 66555ca10d24bbfc55e710b9d65f809cfe713dab
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Wed Feb 4 20:38:09 2004 +0000
+
+    Remove trailing spaces in all java files
+    in order to make checkstyle happy
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276017 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ca1513552f7af7fc19de490fbe2d88adb6c993ad
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Tue Feb 3 22:44:50 2004 +0000
+
+    Switch to Apache Software License 2.0
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276010 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d70354a61742e84582d0bb8b67a4c09760426c3f
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Tue Jul 29 08:37:18 2003 +0000
+
+    style
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274971 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 24eb5693d6b7363262ea941cac63d15230aa1aab
+Author: Conor MacNeill <conor@apache.org>
+Date:   Sat Jul 19 11:20:23 2003 +0000
+
+    Coding conventions
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274859 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3a35c7d914d8b5a1f203561ae6f89afb5d2b80ec
+Author: Conor MacNeill <conor@apache.org>
+Date:   Sat Jul 19 08:11:10 2003 +0000
+
+    style
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274858 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 9e66320fa042c82cebde8ed6d9c3a16b23dabfa9
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Jul 15 14:18:07 2003 +0000
+
+    Only whitespace changes
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274823 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 787728897a6052af385456788bc4e578ba170ba5
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Mon Jul 14 20:21:11 2003 +0000
+
+    Optimize DirectoryScanner to take advantage of include patterns which are
+    not beginning with wildcards
+    PR: 20103
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274819 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f83f5c68c975f31a384cc24e94be4e5ebfa2da4d
+Author: Bruce Atherton <bruce@apache.org>
+Date:   Fri Jul 4 23:18:49 2003 +0000
+
+    First pass at fixing checkstyle issues by using IDEA to reformat code and identify problem spots
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274773 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1c3f4b1664951bb5e4c28de46b01dc50b0ee74bd
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Jul 4 08:43:39 2003 +0000
+
+    Speed up Path tokeinzation.
+    PR: 21296
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274757 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 686d04d125202806c4f41a9a76ef614d6f5d6966
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Feb 17 14:35:44 2003 +0000
+
+    Add a Resource version of isOutOfDate
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274105 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1dc8a079057e191ca4c158f36843c2c9e9f9be52
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Feb 10 14:15:00 2003 +0000
+
+    Remove Jakarta Project from license
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274040 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f245585ec3788296495c9f1f9dbf40c4ff4e2464
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Feb 4 13:13:38 2003 +0000
+
+    2003
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273971 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 63ec7ba4cab73e0710f2613a0a4ab35e99754afe
+Author: Bruce Atherton <bruce@apache.org>
+Date:   Mon Feb 3 23:03:03 2003 +0000
+
+    Added an option to the ContainsSelector to ignore whitespace.
+    
+    Submitted by Elizabeth Cooper (with some modifications)
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273967 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3c2bbbcda3cfbe3aff8b17b766538149385ceed2
+Author: Magesh Umasankar <umagesh@apache.org>
+Date:   Wed Dec 4 16:42:34 2002 +0000
+
+    Real tired of seeing email address being abused.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273610 13f79535-47bb-0310-9956-ffa450edef68
+
+commit dba647572b6c00d5971f75fc13ca4d0912c97b3c
+Author: Magesh Umasankar <umagesh@apache.org>
+Date:   Thu Nov 21 22:00:29 2002 +0000
+
+    Patch that fix memory leaks in SelectorUtils.java
+    
+    The method matchPatternStart generates memory leaks due to the 2 Vectors:    patDirs and strDirs,  used to hold tokenizedPaths.
+    
+    Submitted by: "Francis ANDRE" <francis.andre@e-xmlmedia.fr>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273571 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8f413c12084a80db24f4cdfd6b8f908d4e75556f
+Author: Peter Donald <donaldp@apache.org>
+Date:   Thu Jul 25 15:21:25 2002 +0000
+
+    Remove unused imports, remove glob imports, sort imports.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273169 13f79535-47bb-0310-9956-ffa450edef68
+
+commit da5a13f8e4e0e4475f942b5ae5670271b711d423
+Author: Magesh Umasankar <umagesh@apache.org>
+Date:   Tue Jul 9 21:06:15 2002 +0000
+
+    Merge differences between the ANT_15_FINAL branch and the trunk into the trunk.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273081 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f61c1bcd3a4a540bac7ae97559f37c49bfee75d8
+Author: Magesh Umasankar <umagesh@apache.org>
+Date:   Tue Apr 30 22:38:36 2002 +0000
+
+    Selectors feature to specify sophisticated selection criteria to create filesets.
+    
+    Got it in in the 11(and a half)th hour ;-)
+    
+    Submitted by: Bruce Atherton <bruce@callenish.com>
+    
+    Docs and testcases to follow in the next few days.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@272630 13f79535-47bb-0310-9956-ffa450edef68

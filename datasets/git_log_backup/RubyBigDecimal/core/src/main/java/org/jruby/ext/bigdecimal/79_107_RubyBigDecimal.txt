@@ -1,0 +1,513 @@
+commit fc5be9833499f14f851f6ae7bce5ffc1078157c0
+Author: Pavel Rosický <pavel.rosicky@easy.cz>
+Date:   Fri Aug 21 14:19:15 2015 +0200
+
+    fix exception message for a Float
+
+commit 73764ea86fda0f17827b50a19b28e1de04295ef4
+Author: Pavel Rosický <pavel.rosicky@easy.cz>
+Date:   Fri Aug 21 13:19:56 2015 +0200
+
+    BigDecimal('0.1').coerce(0.1) returns two bigdecimals not floats
+    BigDecimal('0.1').coerce(10**(-1)) fix type error
+    BigDecimal('0.1') == ((10**(-1))) should be true
+
+commit b0dac009529e92d023be3013a18a7232bd4064a6
+Author: Pavel Rosický <pavel.rosicky@easy.cz>
+Date:   Fri Aug 21 13:10:00 2015 +0200
+
+    should throw FloatDomainException not Java::JavaLang::NumberFormatException
+
+commit d2a1a9374be3297cbb3c75e73c2cfcf30311d864
+Author: Pavel Rosický <pavel.rosicky@easy.cz>
+Date:   Fri Aug 21 12:59:13 2015 +0200
+
+    implement bigdecimal .to_r
+
+commit a4843e50e0a0b1661e77852bbf5e2b7201aac9fa
+Author: Pavel Rosický <pavel.rosicky@easy.cz>
+Date:   Tue Aug 4 16:36:20 2015 +0200
+
+    big decimal
+
+commit 908ecddb4696c735b14359979fc3fa287a4a3026
+Author: kares <self@kares.org>
+Date:   Fri Jun 5 15:49:48 2015 +0200
+
+    caused BigDecimal regression after jruby-1_7 merge - missed a isNaN() check in div
+    ... also return from getVpValueWithPrec19 from an cannotBeCoerced() invocation
+
+commit 7df3e56395cf4dbd1d22089726680bb890adfcd9
+Merge: e810614 967ca40
+Author: kares <self@kares.org>
+Date:   Fri Jun 5 14:20:44 2015 +0200
+
+    Merge branch 'jruby-1_7'
+    
+    * jruby-1_7: (38 commits)
+      basic BigDecimal sub-class test ... all working the same as MRI 1.8/1.9
+      avoid deprecated newInstance + one less pattern to match on BigDecimal.new
+      [bigdecimal] keep the simplified newInstance backport 1.8 compatible
+      [bigdecimal] backport simplified newInstance impl from master
+      minor BigDecimal code cleanup
+      handle big decimal ** float value calculation (with Java double math) ... since we're now not raising users should get ~ the value they expect (closing #1967)
+      static-ize and simplify private helpers
+      BigDecimal should not raise error on pow/** with float arg (under 1.9 #1967)
+      some more (internal) RubyBigDecimal dry-ing / tidy-ing
+      do coercion on * and / (same as MRI has been doing since 1.8) ... fixes #2538
+      handle BigDecimal cmp failure compatibly with MRI (fixes #2539)
+      pass around context in BigDecimal impl + simplify cmp method's code
+      move JI java.mat.BigDecimal test out of Ruby's BigDecimal tests
+      [travis-ci] test-extended on jdk8
+      if current directory is inside the classloader a spawn jruby process should do the same
+      use the new bin stubs from new rubygems
+      set ENV['RUBY'] when jruby.home is not regular directory
+      Add support for http.nonProxyHosts and rework ENV_JAVA support.
+      pik the right class in URLResourceTest
+      use new JRuby.create to load script from command line script source
+      ...
+    
+    Conflicts:
+    	.travis.yml
+    	core/src/main/java/org/jruby/RubyDir.java
+    	core/src/main/java/org/jruby/RubyEnumerable.java
+    	core/src/main/java/org/jruby/RubyEnumerator.java
+    	core/src/main/java/org/jruby/RubyHash.java
+    	core/src/main/java/org/jruby/RubyInstanceConfig.java
+    	core/src/main/java/org/jruby/RubyModule.java
+    	core/src/main/java/org/jruby/ext/bigdecimal/RubyBigDecimal.java
+    	core/src/main/java/org/jruby/util/ClasspathResource.java
+    	core/src/main/java/org/jruby/util/URLResource.java
+    	core/src/test/java/org/jruby/util/URLResourceTest.java
+    	lib/ruby/2.0/net/http.rb
+    	lib/ruby/2.0/uri/generic.rb
+    	maven/jruby/src/it/runnable/spec/one_spec.rb
+    	test/test_backquote.rb
+    	test/test_big_decimal.rb
+    	test/test_dir.rb
+    	test/test_file.rb
+    	test/test_higher_javasupport.rb
+    	test/test_load.rb
+
+commit e492b3a4ac42857e9cfa374334cc9706db3a3f36
+Author: kares <self@kares.org>
+Date:   Thu Jun 4 21:15:41 2015 +0200
+
+    avoid deprecated newInstance + one less pattern to match on BigDecimal.new
+
+commit 4ac1c5d8b9f9f15924a0004a8fc1a9c43d870a21
+Author: kares <self@kares.org>
+Date:   Thu Jun 4 15:36:58 2015 +0200
+
+    [bigdecimal] keep the simplified newInstance backport 1.8 compatible
+
+commit 2b990bc976e9486ae583879a91c2e39f4ccfdbd1
+Author: kares <self@kares.org>
+Date:   Thu Jun 4 15:33:26 2015 +0200
+
+    [bigdecimal] backport simplified newInstance impl from master
+
+commit fdf520197893de7634d3f5d3587b9335d24b3b44
+Author: kares <self@kares.org>
+Date:   Thu Jun 4 13:57:48 2015 +0200
+
+    minor BigDecimal code cleanup
+
+commit 5c5b5cb3e24f507b4a03f1e67ea99b1307c3e85e
+Author: kares <self@kares.org>
+Date:   Thu Jun 4 13:09:55 2015 +0200
+
+    handle big decimal ** float value calculation (with Java double math) ...
+    since we're now not raising users should get ~ the value they expect (closing #1967)
+
+commit 7daf537f5d82c598f860583104bfdee359e3b585
+Author: kares <self@kares.org>
+Date:   Thu Jun 4 12:32:20 2015 +0200
+
+    static-ize and simplify private helpers
+
+commit 46ae07bb97cd99ce5db80f6941dd8b2acbf969c3
+Author: kares <self@kares.org>
+Date:   Thu Jun 4 10:57:49 2015 +0200
+
+    BigDecimal should not raise error on pow/** with float arg (under 1.9 #1967)
+
+commit fb4d26b1eb232081d9100698ecc1575c445652df
+Author: kares <self@kares.org>
+Date:   Thu Jun 4 10:27:41 2015 +0200
+
+    some more (internal) RubyBigDecimal dry-ing / tidy-ing
+
+commit 8c2b5f587df4d8453eb60ef1b48cacd9431f9bc2
+Author: kares <self@kares.org>
+Date:   Thu Jun 4 01:16:36 2015 +0200
+
+    do coercion on * and / (same as MRI has been doing since 1.8) ... fixes #2538
+
+commit 0ab74b735763fee50c407e184afb4a49376f5078
+Author: kares <self@kares.org>
+Date:   Thu Jun 4 00:31:44 2015 +0200
+
+    handle BigDecimal cmp failure compatibly with MRI (fixes #2539)
+
+commit a11eb7a602c6cb38f8f9b1764cd681986c2b69a0
+Author: kares <self@kares.org>
+Date:   Wed Jun 3 23:55:46 2015 +0200
+
+    pass around context in BigDecimal impl + simplify cmp method's code
+
+commit 003c47a19a9079e76ee0d4392f149dfa0a8c486d
+Author: Alexey Noskov <alexey.noskov@gmail.com>
+Date:   Sun Apr 26 21:40:45 2015 +0300
+
+    Implement initialize_copy for BigDecimal (fix #2868)
+
+commit e66cbd5d47d19359d33a75ce996d11969b7c40f5
+Author: Christian Meier <m.kristian@web.de>
+Date:   Fri Mar 20 19:54:00 2015 +0100
+
+    adjust the big-decimal fix
+
+commit 9b8aa73e2b54a9c166b0263afc4dca47a74fe5e2
+Author: Christian Meier <m.kristian@web.de>
+Date:   Fri Mar 20 15:54:02 2015 +0100
+
+    fix the creation of BigDecimal from a String
+    
+    follow what MRI is doing and ignore the precision
+    
+    fixes #2650
+    
+    Sponsored by Lookout Inc.
+
+commit a07774e67bf5d4f347229162d9868569208a38cd
+Merge: 944a8b7 b6f907f
+Author: Christian Meier <m.kristian@web.de>
+Date:   Mon Feb 9 21:39:34 2015 +0100
+
+    Merge branch 'jruby-1_7'
+    
+    Conflicts:
+    	VERSION
+    	core/pom.xml
+    	core/src/main/java/org/jruby/RubyString.java
+    	core/src/main/java/org/jruby/RubyStruct.java
+    	core/src/main/java/org/jruby/ext/bigdecimal/RubyBigDecimal.java
+    	docs/man/pom.xml
+    	docs/pom.xml
+    	ext/pom.xml
+    	ext/readline/pom.xml
+    	ext/ripper/pom.xml
+    	lib/pom.rb
+    	lib/pom.xml
+    	maven/jruby-complete/pom.xml
+    	maven/jruby-complete/src/it/integrity/verify.bsh
+    	maven/jruby-dist/pom.xml
+    	maven/jruby-dist/src/it/integrity/verify.bsh
+    	maven/jruby-jars/pom.xml
+    	maven/jruby-jars/src/it/integrity/verify.bsh
+    	maven/jruby-noasm/pom.xml
+    	maven/jruby-noasm/src/it/integrity/verify.bsh
+    	maven/jruby-rake-plugin/pom.xml
+    	maven/jruby-stdlib/pom.xml
+    	maven/jruby/pom.rb
+    	maven/jruby/pom.xml
+    	maven/jruby/src/it/integrity/verify.bsh
+    	maven/jruby/src/it/runnable/pom.xml
+    	maven/pom.xml
+    	pom.xml
+    	rakelib/test.rake
+    	spec/regression/GH-2524_bigdecimal_loss_of_precision_with_different_excution_order_spec.rb
+    	test/externals/ruby1.9/excludes/OpenSSL/TestASN1.rb
+    	test/externals/ruby1.9/excludes/OpenSSL/TestCipher.rb
+    	test/externals/ruby1.9/excludes/OpenSSL/TestDigest.rb
+    	test/externals/ruby1.9/excludes/OpenSSL/TestX509Name.rb
+    	test/externals/ruby1.9/excludes/OpenSSL/TestX509Request.rb
+    	test/externals/ruby1.9/openssl/test_asn1.rb
+    	test/pom.xml
+    	test/test_adding_pem_to_x509store.rb
+
+commit b3342e77528bc6f84634ccc8ed0bb379cc41141b
+Author: kiichi <k77ch7@gmail.com>
+Date:   Tue Feb 3 23:18:40 2015 +0900
+
+    fix GH-2524 on jruby-1_7: improved algorithm to set the precision
+
+commit 8fec7f43fd2b4ed8e18f07de1e2750814c9a6f84
+Author: kiichi <k77ch7@gmail.com>
+Date:   Fri Jan 30 00:13:12 2015 +0900
+
+    fix GH-2524 on master: improved algorithm to set the precision
+
+commit 225d6268dbcbd80df43eadc24915ed73f321aba5
+Author: kiichi <k77ch7@gmail.com>
+Date:   Thu Dec 11 23:20:31 2014 +0900
+
+    fix GH-1695 on master
+
+commit 2828c5c4838484a9d13026d92ae54c9768c6113d
+Author: kiichi <k77ch7@gmail.com>
+Date:   Fri Nov 14 00:04:54 2014 +0900
+
+    add null check and change error type
+
+commit cf35c9e42f13c90ab18279737c000768ab91c0c0
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Nov 12 23:27:15 2014 -0600
+
+    Wrong value passed in for coersion error. Fixes #2050.
+
+commit bb849026d8bb8888efef051f7df6663ec930c2d3
+Author: kiichi <k77ch7@gmail.com>
+Date:   Fri Nov 7 00:06:00 2014 +0900
+
+    fixed issue 2050: add null check
+
+commit 174117dd90186f955e20aaa3f983c454e231de7b
+Author: kiichi <k77ch7@gmail.com>
+Date:   Mon Sep 29 23:28:55 2014 +0900
+
+    fixed issue 1695
+
+commit 6ef20f4d23ef0f49343c50f7e6c816749ca6ecdc
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Sep 3 23:23:32 2014 -0500
+
+    Remove is1_8 check.
+
+commit 69fa5fea15f288f5a39987aa3a6743183f1bfac2
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Aug 11 11:44:05 2014 -0500
+
+    Actually implement RubyNumeric.getIntValue and document behavior.
+
+commit 621d58be52c2c0c451daf9f7efef8734e052c005
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jul 25 11:29:44 2014 -0500
+
+    Fix compile/bind flaws in merged BigDecimal patch.
+
+commit 7e4056b7b94c9c5426ed4fa7f56d064209a45ea5
+Merge: d6612af 8ef711f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jul 25 10:17:21 2014 -0500
+
+    Merge remote-tracking branch 'github/jruby-1_7'
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/ext/bigdecimal/RubyBigDecimal.java
+
+commit faae599872672d6636314cca1cd0a9eb8b896a2e
+Author: Robin Dupret <robin.dupret@gmail.com>
+Date:   Sat Jul 12 19:01:26 2014 +0200
+
+    Fix BigDecimal#round behavior with NAN and INFINITY
+    
+    When we call round without any argument on BigDecimal::NAN or
+    BigDecimal::INFINITY, a FloatDomainError should be raised.
+    
+    Otherwise, the number shouldn't be altered. The problem is that JRuby
+    defines these constants according to BigDecimal.ZERO so when we apply
+    the rounding on it, it returns a float form of 0. Thus, we need to
+    short-circuit that and return the constant itself.
+
+commit f089aaf97bd742b4f9840df4308033363ebe2c38
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Jun 26 16:45:13 2014 -0500
+
+    Hmm revert on jruby1_7 did not get picked up master
+
+commit ec1a2ca1ffab3aed6c23cd518f2cb3a4b68a7cc2
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Jun 19 16:33:25 2014 -0500
+
+    This reverted several bigdecimal + rational math tests in test-extended
+
+commit 98d66f6c8cb5d6de30f19d49d0e192e6754eecba
+Merge: 67d8a16 059e90f
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Sat Jun 14 08:11:40 2014 -0500
+
+    Merge with jruby-1_7
+
+commit 38afc8c0c0bb093d05cce2460af3804710f29ba6
+Author: kiichi <k77ch7@gmail.com>
+Date:   Sat May 17 01:45:50 2014 +0900
+
+    fixed issue 1695
+
+commit b1aa813430ba6b127f24a112f52fa7da51683fba
+Author: Daniel Marcotte <dmarcotte@gmail.com>
+Date:   Mon May 5 22:25:44 2014 -0700
+
+    Proper BigDecimal#mode error for bad args
+    
+    Raise ArguementError (not TypeError) for non-boolean second argument for
+    BigDecimal#mode.
+
+commit 1895936ec28ed1c21833deae94a8f1b40d8645d8
+Author: Daniel Marcotte <dmarcotte@gmail.com>
+Date:   Mon May 5 21:28:38 2014 -0700
+
+    Fix BigDecimal rounding
+    
+    BigDecimal should not be to_int'ing when a scale is given.
+
+commit d269590c79eb56175689e1aea710956fa7472786
+Merge: ae5ad64 78d80b5
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu May 1 09:54:27 2014 -0500
+
+    largish merge from jruby-1_7
+
+commit 60cd1208fa128459b3d44dc8e45ecf73abbb657b
+Author: Lucas Allan Amorim <lucas.allan@gmail.com>
+Date:   Sun Apr 20 18:31:30 2014 -0700
+
+    GH-1633 - Fixing issue created by the last commit.
+    
+    BigDecimal operation were throwing a TypeError when the first argument is another BigDecimal.
+
+commit 5d9182ceb3fb5beebf1de78e5f315bfdc4cdb4dc
+Author: Lucas Allan Amorim <lucas.allan@gmail.com>
+Date:   Sun Apr 20 14:52:21 2014 -0700
+
+    GH-1633 - BigDecimal operations should throws TypeError when the first argument is nil.
+
+commit f97bf3082cd0f6966f9395bf1b829242d8122d4a
+Merge: f377d1c 86f0346
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Apr 16 15:27:46 2014 -0500
+
+    Merge
+
+commit d85a413f8544aa6a7268a4b960721aa3535394b6
+Merge: 381a6b6 284eddc
+Author: Thomas E Enebo <tom.enebo@gmail.com>
+Date:   Wed Apr 16 11:15:31 2014 -0500
+
+    Merge pull request #1630 from atambo/symbol_rounding_modes
+    
+    Add support for symbol rounding mode arguments
+
+commit cd08f5a4275d7d6a8df915aabc43a55a89ffe02c
+Author: Alex Tambellini <atambellini@gmail.com>
+Date:   Tue Apr 15 00:27:20 2014 -0400
+
+    BigDecimal#{round,truncate,floor,ceil} with no args returns to_i
+    
+    Fixes #1578
+
+commit 284eddc9d440f2968d9bd4b6989c24ab4c4e8555
+Author: Alex Tambellini <atambellini@gmail.com>
+Date:   Mon Apr 14 22:24:31 2014 -0400
+
+    Add support for symbol rounding mode arguments
+
+commit eea750b1afe5575df60f761d6965d98c984deaad
+Author: Steven Cook <steve.j.cook@gmail.com>
+Date:   Sat Jan 25 21:18:32 2014 +1000
+
+    Merge big decimal type error fix to 1.7
+
+commit 7a31a1cca663b5adaacf231da529fd16e82b243e
+Author: Steven Cook <steve.j.cook@gmail.com>
+Date:   Sat Jan 25 21:18:32 2014 +1000
+
+    Fixed issue 1441. Forced check that value was of an appropriate type.
+
+commit 911b3512a3de0f43d5b975b052163a71c578ad8c
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Sat Oct 12 17:03:47 2013 -0500
+
+    Fixed #1122. BigDecimal 1.9+: exponent for Nan,-Infinity,Infinity should be 0, not 1
+
+commit cc76149d18601562368befc53dc0ab0d01044133
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Sat Oct 12 16:59:11 2013 -0500
+
+    Fixes 1121. Bigdeciment 1.9+: to_s sometimes has extra trailing zeroes
+
+commit 72834f63863a6e937aff460677f59b7078cc3b4f
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Sat Oct 12 16:37:32 2013 -0500
+
+    Fixed to_s and some other small refactorings
+
+commit 306213dce3bdbebecc0ef0bb116c6cf7ec836a98
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Sat Oct 12 15:19:44 2013 -0500
+
+    Add missing special cases.  inf and nan were return 1 instead of 0.  I will send a patch to mri
+
+commit 1a34a5e4a2ba63e63fdd1a8d0403b6d1ed0ed136
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Sat Oct 12 14:46:39 2013 -0500
+
+    Wow...I went too far but I am not turning back.  Refactoring of Bigdecimal + De-versioning
+
+commit 9ffe8821d51ba29e3cb128bdafa2ae2b7d36228e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Oct 8 00:16:09 2013 -0500
+
+    De-version BigDecimal
+
+commit 697e6895affa646849a685ed58f6f84795c853aa
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Oct 4 23:37:52 2013 -0500
+
+    Eliminate calls to Ruby.is1_8 and is1_9.
+
+commit ff955f63f6f71323d85e2e9d684198aa388eae43
+Author: Alex Tambellini <atambellini@gmail.com>
+Date:   Sun Sep 8 20:04:54 2013 -0400
+
+    Allow BigDecimal operations against Rationals. #992
+
+commit f87088b25dbd5711fd21c28a4fcae1ad69383297
+Author: Alex Tambellini <atambellini@gmail.com>
+Date:   Sat Sep 7 15:12:07 2013 -0400
+
+    BigDecimal#divmod should return array of BigDecimals in 1.9 mode. #992
+
+commit 332e0d4e7f9cc5d555f53a3e3673e90b63c2b750
+Author: Alex Tambellini <atambellini@gmail.com>
+Date:   Sat Sep 7 15:04:38 2013 -0400
+
+    BigDecimal#remainder should return BigDecimal in 1.9 mode. #992
+
+commit 662eff349ad5558ebdb22b2d2e48ab00a191fdfc
+Author: Alex Tambellini <atambellini@gmail.com>
+Date:   Sat Sep 7 14:54:50 2013 -0400
+
+    BigDecimal#% should return BigDecimal in 1.9 mode. #992
+
+commit 67bf15f35e6a753a50bee6f28c947e628c72a458
+Author: Alex Tambellini <atambellini@gmail.com>
+Date:   Sat Sep 7 14:46:29 2013 -0400
+
+    BigDecimal#- should return BigDecimal in 1.9 mode. #992
+
+commit fd11ed61a78782822c312b708367c51ff56483fb
+Author: Alex Tambellini <atambellini@gmail.com>
+Date:   Sat Sep 7 14:31:09 2013 -0400
+
+    BigDecimal#+ should return BigDecimal in 1.9 mode. #992
+
+commit 2f1bb992f1b3e59d7e9e245fc17785f1548646d5
+Author: Alex Tambellini <atambellini@gmail.com>
+Date:   Sat Sep 7 14:04:17 2013 -0400
+
+    Fixup infinitySign TODO's
+
+commit 4d616061336074526e12c1717f329dd928da6a81
+Author: Alex Tambellini <atambellini@gmail.com>
+Date:   Sat Sep 7 13:40:41 2013 -0400
+
+    BigDecimal#* should return BigDecimal in 1.9 mode. #992
+
+commit 28c6fbc4e883bc1c9e9242d1da1cb2b785f55339
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 3 12:46:45 2013 -0500
+
+    Move to @mkristian's proposed layout, with some modifications.

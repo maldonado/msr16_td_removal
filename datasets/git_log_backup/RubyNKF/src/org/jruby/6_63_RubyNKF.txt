@@ -1,0 +1,171 @@
+commit 814c165b489afcf02d3265bea8ed3a96105b3175
+Author: Hiroshi Nakamura <nahi@ruby-lang.org>
+Date:   Tue Sep 13 13:20:26 2011 +0900
+
+    UTF-16 is supported by NKF
+    
+    Merge pull request #75 from koichiroo/fix_utf-16_error.
+    
+    It's already fixed by Charles at 32ac3b43 but the fix by Koichiroo looks
+    slightly better, though it might have some map in the future.
+
+commit 3e55364bccb523e6fee88769df42b9349a205108
+Author: Koichiro Ohba <koichiro@meadowy.org>
+Date:   Fri Sep 9 16:08:58 2011 +0900
+
+    Fix ByteList encoding in ruby1.9
+
+commit b637df51ff8e27e7a6c1c064e1b605440091d973
+Author: Koichiro Ohba <koichiro.ohba@ctc-g.co.jp>
+Date:   Fri Aug 12 17:51:29 2011 +0900
+
+    Extract class from NKF
+
+commit cecc895def0c4b02276d23ef63201c269a88f1dc
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Aug 9 12:38:32 2011 -0500
+
+    JRUBY-5975: Support for --oc and --ic option in NKF
+
+commit 69fd044039d7582ab086e8cfc284c4512b8ac662
+Author: Koichiro Ohba <koichiro@meadowy.org>
+Date:   Wed Aug 3 22:33:19 2011 +0900
+
+    Implement for new commandline parser in NKF
+    
+    Signed-off-by: Hiro Asari <asari.ruby@gmail.com>
+
+commit 0d3adfa7fffc7cd2a848369ec85b6a3c59b30d24
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Mar 25 15:47:37 2011 -0500
+
+    Fix JRUBY-5591: Kconv.kconv throws an NPE
+    
+    * Modified NKFCharset to store a jcodings encoding, so we're not trying to look it up.
+
+commit 61b6a62859650242d1acf8faf4a18ecb13e937f0
+Author: Koichiro Ohba <koichiro@meadowy.org>
+Date:   Sat Oct 16 18:51:10 2010 +0900
+
+    NKF and Iconv to set ByteList encoding.
+
+commit 738248eae09654dd8ac350c8a2305814578d7d92
+Author: Koichiro Ohba <koichiro@meadowy.org>
+Date:   Sat Oct 16 16:59:03 2010 +0900
+
+    cleanup
+
+commit e055dbe2e6a793916c7a8383d5a6f6aa0d1e6e7f
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Thu Oct 14 15:51:53 2010 -0400
+
+    Formatting change. Avoid dangling 'if' clause on a line by itself. Also, reformat multi-line boolean conditions so that it is clearer that they indeed span multiple lines.
+
+commit bc6ade404b8e530f823c7e88609db58c23110664
+Author: Koichiro Ohba <koichiro@meadowy.org>
+Date:   Tue Oct 12 00:01:49 2010 +0900
+
+    Made NKF to decode all diffirent MIME-encoded parts in a string. fix JRUBY-5130
+    
+    Signed-off-by: Hiroshi Nakamura <nahi@ruby-lang.org>
+
+commit 68f8afcb6c7b1807e2cec665a7e699fb168585bd
+Author: takeru <sasaki.takeru@gmail.com>
+Date:   Sat Mar 6 14:30:38 2010 +0900
+
+    JRUBY-4644: ignore invalid char input in NKF
+    
+    Signed-off-by: Hiro Asari <asari.ruby@gmail.com>
+
+commit 26323269fcfb2341ff8fa3b198037e1290982926
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Mar 10 16:21:23 2010 -0600
+
+    Fixes for JRUBY-4553: Scalability: JRuby suffers from Java Charset lock contention
+
+commit b09be054ff5f021e5b647109329bb4c3578792f0
+Author: Koichiro Ohba <koichiro@meadowy.org>
+Date:   Mon Jan 11 19:44:05 2010 +0900
+
+    JRUBY-4417: NKF.guess crashes JRuby in some cases
+    
+    Signed-off-by: Vladimir Sizikov <vsizikov@gmail.com>
+
+commit 2f3802343d0de9440a71e099002d3b66f51c0a51
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Dec 23 00:40:00 2009 -0600
+
+    Use accessors for those pesky ByteList fields and update bytelist.jar to a current version with accessors and deprecated fields (for compile warnings and because we'll want to privatize them some day).
+
+commit 19adbf64d1d489c03c7f105cfd901d912a3a5ff8
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Nov 5 19:21:21 2009 -0800
+
+    Fix newArrayLight cases that pass 0 to use newEmptyArray, and reduce newArray long paths to int constructors.
+
+commit a34a9f987699e5d212c17f9697d631795c6015f7
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 17 10:01:18 2009 +0000
+
+    Fix for JRUBY-3061: NKF(unsupported Q encode stream)
+    
+    Many thanks to Koichiro Ohba for another excellent patch :)
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9214 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 72975c6c9467ac11677b86f3886e555911e50299
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Wed Jul 9 00:34:32 2008 +0000
+
+    lots of RO.getRuntime removal
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7131 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 424a1cbff5aea37f2f92cc208d29d2544f092828
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Wed Mar 19 12:21:15 2008 +0000
+
+    Annotate the rest of the Java classes with names, parents and inclusions. Also add a warning to install_doc.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6291 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a694709e87e269be436ed1d176a688712beb9d5d
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Tue Jan 1 05:09:53 2008 +0000
+
+    Remove unused callbackfactorys
+    Add partial impl of Etc with some cooler pieces of it still commented
+    Remove many warnings
+    Some generics to lessen warnings
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5456 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 0b7a2dae2ec0baa531f313568ffc9b7382f89592
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Oct 12 01:50:08 2007 +0000
+
+    Migrate annotation-based method binding to generate DynamicMethod implementations directly, with arity checking built-in
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4575 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 8cce9fe1101716b31e810e1cbb40c79970af00c3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Oct 10 05:25:01 2007 +0000
+
+    Migrated NKF, Nil, NameError, and NoMethodError to annotation bindings
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4543 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit ffe36dc64337e1885d5139e5ba8cbe80db45de9a
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Tue May 15 23:49:00 2007 +0000
+
+    JRUBY-936: The argumentsError is required in Struct.new (Koichiro Ohba)
+    JRUBY-934: Unsupported NKF module (Koichiro Ohba)
+    Various escaping JumpException errors we have seen in apps like Typo (which now works!)
+    Remove some dead code
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3659 961051c9-f516-0410-bf72-c9f7e237a7b7

@@ -1,0 +1,1625 @@
+commit 498e850366105852cb8e6a2c0d2c602823f9d51c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Aug 18 16:40:28 2015 -0500
+
+    Dup+freeze incoming string for IO#syswrite. Fixes #3249.
+
+commit de7597be35201f557b8db9c261be3af3ad459d24
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jul 13 16:25:40 2015 -0500
+
+    Bind builtin popen3 as in 1.7 until #3116. Fixes #3125.
+
+commit da5dad6a960425375a2921c54fccd55971250076
+Merge: dfdfb54 ec3fc6b
+Author: Christian Meier <m.kristian@web.de>
+Date:   Mon Jul 6 15:51:02 2015 +0200
+
+    Merge branch 'jruby-1_7' into work
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/RubyBignum.java
+    	core/src/main/java/org/jruby/RubyIO.java
+    	core/src/main/java/org/jruby/ext/socket/Addrinfo.java
+    	lib/ruby/1.8/pathname.rb
+    	lib/ruby/1.9/pathname.rb
+    	test/jruby.1.8.index
+    	test/jruby.1.9.index
+    	test/test_file.rb
+    	test/test_load_gem_extensions.rb
+
+commit f847a3e09972166a30122f20288f4ae81c417a72
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Jul 2 14:53:56 2015 -0500
+
+    Alternative to #3093 that avoids unnecessarily triggering errors.
+
+commit 40beb472cb17c6c0cbf46ba199a9461e0e7bd877
+Merge: c0c086e e237201
+Author: kares <self@kares.org>
+Date:   Mon May 25 16:54:09 2015 +0200
+
+    Merge branch 'jruby-1_7'
+    
+    * jruby-1_7: (54 commits)
+      [travis-ci] re-try sudo: false
+      dry out the two (Java helper) respond_to_p19 methods
+      respondsTo JRuby API under 1.9.3 does not do respond_to_missing? like MRI does
+      sleep should convert it's "time interval" argument the same way as MRI
+      respond_to_missing? should always get a symbol name passed (fixes #2946)
+      add a respond_to_missing unit test (on 1.9)
+      introduce and use conversion( just like MRI does) on #timeout's sec argument
+      add missing ' ' (space) in exception message ... TypeError from `sleep('invalid')`
+      DateTime.iso8601 fails with an error if a second fraction is present
+      [build] switch to 1.7.21-SNAPSHOT for test-jruby-jars
+      refactor Timeout's scheduled tasks to an inner class (for easier identification)
+      further hand drying of the Timeout module impl
+      less (int) casting noiz
+      add some (internal) generics for an improved readability xp
+      inner class' Finalizer fields id and finalized can be final
+      generix-ize the environment field (at least internally) + use a StringBuilder
+      unnecessary (int) cast
+      missing throw statement in RubyString's concat
+      tune timeout to work when scheduling or argument convenrsion throws (see #2940)
+      return empty Ruby array for empty dir list
+      ...
+    
+    Conflicts:
+    	.gitignore
+    	.travis.yml
+    	VERSION
+    	core/pom.xml
+    	core/src/main/java/org/jruby/RubyArray.java
+    	core/src/main/java/org/jruby/RubyBasicObject.java
+    	core/src/main/java/org/jruby/RubyDir.java
+    	core/src/main/java/org/jruby/RubyEnumerable.java
+    	core/src/main/java/org/jruby/RubyFile.java
+    	core/src/main/java/org/jruby/RubyGlobal.java
+    	core/src/main/java/org/jruby/RubyIO.java
+    	core/src/main/java/org/jruby/RubyKernel.java
+    	core/src/main/java/org/jruby/RubyModule.java
+    	core/src/main/java/org/jruby/RubyString.java
+    	core/src/main/java/org/jruby/RubyTime.java
+    	core/src/main/java/org/jruby/ext/timeout/Timeout.java
+    	core/src/main/java/org/jruby/java/proxies/JavaProxy.java
+    	core/src/main/java/org/jruby/util/Dir.java
+    	core/src/main/java/org/jruby/util/encoding/CharsetTranscoder.java
+    	docs/man/pom.xml
+    	docs/pom.xml
+    	ext/pom.xml
+    	ext/readline/pom.xml
+    	ext/ripper/pom.xml
+    	lib/pom.xml
+    	lib/ruby/1.9/date/format.rb
+    	lib/ruby/1.9/io/linux_console.rb
+    	lib/ruby/shared/gauntlet_rubygems.rb
+    	lib/ruby/shared/rubygems.rb
+    	lib/ruby/shared/rubygems/available_set.rb
+    	lib/ruby/shared/rubygems/basic_specification.rb
+    	lib/ruby/shared/rubygems/command.rb
+    	lib/ruby/shared/rubygems/command_manager.rb
+    	lib/ruby/shared/rubygems/commands/cert_command.rb
+    	lib/ruby/shared/rubygems/commands/cleanup_command.rb
+    	lib/ruby/shared/rubygems/commands/contents_command.rb
+    	lib/ruby/shared/rubygems/commands/dependency_command.rb
+    	lib/ruby/shared/rubygems/commands/environment_command.rb
+    	lib/ruby/shared/rubygems/commands/generate_index_command.rb
+    	lib/ruby/shared/rubygems/commands/help_command.rb
+    	lib/ruby/shared/rubygems/commands/install_command.rb
+    	lib/ruby/shared/rubygems/commands/list_command.rb
+    	lib/ruby/shared/rubygems/commands/mirror_command.rb
+    	lib/ruby/shared/rubygems/commands/outdated_command.rb
+    	lib/ruby/shared/rubygems/commands/owner_command.rb
+    	lib/ruby/shared/rubygems/commands/pristine_command.rb
+    	lib/ruby/shared/rubygems/commands/push_command.rb
+    	lib/ruby/shared/rubygems/commands/query_command.rb
+    	lib/ruby/shared/rubygems/commands/search_command.rb
+    	lib/ruby/shared/rubygems/commands/setup_command.rb
+    	lib/ruby/shared/rubygems/commands/specification_command.rb
+    	lib/ruby/shared/rubygems/commands/uninstall_command.rb
+    	lib/ruby/shared/rubygems/commands/unpack_command.rb
+    	lib/ruby/shared/rubygems/commands/update_command.rb
+    	lib/ruby/shared/rubygems/commands/which_command.rb
+    	lib/ruby/shared/rubygems/commands/yank_command.rb
+    	lib/ruby/shared/rubygems/compatibility.rb
+    	lib/ruby/shared/rubygems/config_file.rb
+    	lib/ruby/shared/rubygems/core_ext/kernel_gem.rb
+    	lib/ruby/shared/rubygems/core_ext/kernel_require.rb
+    	lib/ruby/shared/rubygems/defaults.rb
+    	lib/ruby/shared/rubygems/dependency.rb
+    	lib/ruby/shared/rubygems/dependency_installer.rb
+    	lib/ruby/shared/rubygems/dependency_list.rb
+    	lib/ruby/shared/rubygems/deprecate.rb
+    	lib/ruby/shared/rubygems/doctor.rb
+    	lib/ruby/shared/rubygems/errors.rb
+    	lib/ruby/shared/rubygems/exceptions.rb
+    	lib/ruby/shared/rubygems/ext.rb
+    	lib/ruby/shared/rubygems/ext/builder.rb
+    	lib/ruby/shared/rubygems/ext/cmake_builder.rb
+    	lib/ruby/shared/rubygems/ext/configure_builder.rb
+    	lib/ruby/shared/rubygems/ext/ext_conf_builder.rb
+    	lib/ruby/shared/rubygems/ext/rake_builder.rb
+    	lib/ruby/shared/rubygems/gemcutter_utilities.rb
+    	lib/ruby/shared/rubygems/indexer.rb
+    	lib/ruby/shared/rubygems/install_update_options.rb
+    	lib/ruby/shared/rubygems/installer.rb
+    	lib/ruby/shared/rubygems/installer_test_case.rb
+    	lib/ruby/shared/rubygems/local_remote_options.rb
+    	lib/ruby/shared/rubygems/name_tuple.rb
+    	lib/ruby/shared/rubygems/package.rb
+    	lib/ruby/shared/rubygems/package/old.rb
+    	lib/ruby/shared/rubygems/package/tar_header.rb
+    	lib/ruby/shared/rubygems/package/tar_reader/entry.rb
+    	lib/ruby/shared/rubygems/package/tar_writer.rb
+    	lib/ruby/shared/rubygems/path_support.rb
+    	lib/ruby/shared/rubygems/platform.rb
+    	lib/ruby/shared/rubygems/psych_additions.rb
+    	lib/ruby/shared/rubygems/rdoc.rb
+    	lib/ruby/shared/rubygems/remote_fetcher.rb
+    	lib/ruby/shared/rubygems/request.rb
+    	lib/ruby/shared/rubygems/request_set.rb
+    	lib/ruby/shared/rubygems/request_set/gem_dependency_api.rb
+    	lib/ruby/shared/rubygems/requirement.rb
+    	lib/ruby/shared/rubygems/resolver/current_set.rb
+    	lib/ruby/shared/rubygems/security.rb
+    	lib/ruby/shared/rubygems/security/policy.rb
+    	lib/ruby/shared/rubygems/security/signer.rb
+    	lib/ruby/shared/rubygems/security/trust_dir.rb
+    	lib/ruby/shared/rubygems/server.rb
+    	lib/ruby/shared/rubygems/source.rb
+    	lib/ruby/shared/rubygems/source/installed.rb
+    	lib/ruby/shared/rubygems/source/local.rb
+    	lib/ruby/shared/rubygems/source/specific_file.rb
+    	lib/ruby/shared/rubygems/source_list.rb
+    	lib/ruby/shared/rubygems/spec_fetcher.rb
+    	lib/ruby/shared/rubygems/specification.rb
+    	lib/ruby/shared/rubygems/ssl_certs/AddTrustExternalCARoot.pem
+    	lib/ruby/shared/rubygems/stub_specification.rb
+    	lib/ruby/shared/rubygems/syck_hack.rb
+    	lib/ruby/shared/rubygems/test_case.rb
+    	lib/ruby/shared/rubygems/test_utilities.rb
+    	lib/ruby/shared/rubygems/text.rb
+    	lib/ruby/shared/rubygems/uninstaller.rb
+    	lib/ruby/shared/rubygems/uri_formatter.rb
+    	lib/ruby/shared/rubygems/user_interaction.rb
+    	lib/ruby/shared/rubygems/util/list.rb
+    	lib/ruby/shared/rubygems/validator.rb
+    	lib/ruby/shared/rubygems/version.rb
+    	maven/jruby-complete/pom.xml
+    	maven/jruby-dist/pom.xml
+    	maven/jruby-jars/pom.xml
+    	maven/jruby-noasm/pom.xml
+    	maven/jruby-rake-plugin/pom.xml
+    	maven/jruby-stdlib/pom.xml
+    	maven/jruby/pom.xml
+    	maven/pom.xml
+    	pom.xml
+    	test/pom.xml
+    	test/test_dir.rb
+    	test/test_kernel.rb
+    	test/test_respond_to.rb
+    	test/test_timeout.rb
+
+commit ca2f5f7650607b94907f10731961a2d54e3f3d2d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Apr 28 10:44:13 2015 -0500
+
+    Tweak fixes for popen that changed sh use given array of strings.
+
+commit 0b01058f3964dec60a68c08f0c198ea3d7384925
+Merge: eab2354 ab3b1d5
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Apr 22 02:24:22 2015 -0500
+
+    Merge remote-tracking branch 'origin/jruby-1_7'
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/RubyIO.java
+    	core/src/main/java/org/jruby/runtime/ThreadContext.java
+    	core/src/main/java/org/jruby/runtime/load/LoadService.java
+    	core/src/main/java/org/jruby/util/TypeConverter.java
+    	lib/pom.rb
+
+commit ab3b1d5a0115e7cfa04afd6c479713f70595e3d8
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Apr 21 18:15:15 2015 -0500
+
+    Re-assign null so it can cast to RubyHash below.
+
+commit 7d240aa18018a54dc3362f214878428949552d20
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Apr 21 12:49:56 2015 -0500
+
+    Minor reformat.
+
+commit 30cd6e82552d2fb896d7da8fdff7c527ded2174e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Apr 21 12:48:25 2015 -0500
+
+    Better argument processing.
+    
+    * Peel off leading env hash
+    * Peel off options
+    * Process coercions correctly
+    
+    Helps get the case from rails/rails#19777 running right.
+
+commit 9fd77277bd43302793967b81093aae1198b0e380
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Apr 17 14:33:14 2015 +0000
+
+    MRI does not redispatch here.
+
+commit edce1da795b319589feae9ebf3036bc658978e1d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Apr 15 20:13:45 2015 -0500
+
+    Dedup checkExecEnv logic.
+
+commit f41b6d9e38741292a3b274be54b1686b1dc4bd5d
+Author: Teemu <teemu@aikais.in>
+Date:   Mon Feb 9 19:52:18 2015 +0200
+
+    Make filepaths with null byte fail
+    
+    This patch applies to several methods that deal with filepaths in Dir,
+    File, File::Stat, IO, and Kernel. All of these methods now raise an
+    argument error if a null byte is detected in a path argument.
+    
+    Some of these methods are also slightly refactored, mostly by replacing
+    context.runtime with just runtime where applicable.
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/RubyDir.java
+    	core/src/main/java/org/jruby/RubyFile.java
+    	core/src/main/java/org/jruby/RubyFileStat.java
+    	core/src/main/java/org/jruby/RubyIO.java
+    	core/src/main/java/org/jruby/RubyKernel.java
+    	test/mri/excludes/TestFile.rb
+
+commit e9fb65c64894c7811e56942f8b7cf17a6f296891
+Author: Christian Meier <m.kristian@web.de>
+Date:   Mon Feb 16 15:09:02 2015 +0100
+
+    make sure URLResource always gets a runtime
+
+commit 4d05b2aa0dce25050581eb80ca00b66befd6df15
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Mar 12 15:54:29 2015 -0500
+
+    Properly report tty for all streams that have a real native fd.
+    
+    Fixes #2627.
+
+commit b881f9f3a9e8e0c554f918ebc9202e65e44e96f2
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 24 17:18:17 2015 +0000
+
+    If we have actual stdio channels, use them and correct fileno.
+    
+    Relates to #2598.
+
+commit b27868aa7137ab68eec2076b3ae9b9e8d42d6129
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Sat Feb 14 09:51:40 2015 -0600
+
+    Some more $! save/restore fixes + add comments for all of them
+
+commit b520b4d0626c0b5ee449ef26774f4fa21a00a450
+Author: Teemu <teemu@aikais.in>
+Date:   Thu Feb 12 21:31:26 2015 +0200
+
+    Fix IO#write frozen string issue in textmode
+    
+    The bug affects write operations at least when Tempfile.create is
+    used in text mode. This patch aims to make IO#write consistent with
+    MRI's io_write.
+
+commit 6bd5f8d4919389fe4c7fe8ff91f2a577abebb04a
+Author: Teemu <teemu@aikais.in>
+Date:   Mon Feb 9 19:52:18 2015 +0200
+
+    Make filepaths with null byte fail
+    
+    This patch applies to several methods that deal with filepaths in Dir,
+    File, File::Stat, IO, and Kernel. All of these methods now raise an
+    argument error if a null byte is detected in a path argument.
+    
+    Some of these methods are also slightly refactored, mostly by replacing
+    context.runtime with just runtime where applicable.
+
+commit b77c233895741aa29855f0b4fc1b89d95a4ffd55
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jan 19 11:47:55 2015 -0600
+
+    Set streams sync in TextAreaReadline. Fixes #2472.
+
+commit 143678657001933b7a3ec505e2d4d3691d4e7b94
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jan 7 18:27:25 2015 -0600
+
+    As in MRI, don't attempt to set blocking after nonblock calls.
+
+commit b3dad6e40adbc5e295d04411e55f5d6f8cc82001
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jan 7 16:03:09 2015 -0600
+
+    IO#read_nonblock has two optional arguments.
+
+commit 56b52eaa692881da0920747fcf924a927de62d8a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jan 6 18:00:39 2015 -0600
+
+    Implement io/nonblock library.
+
+commit 5c47af705cbd57ef5410234836022f34fc723966
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Dec 24 02:42:43 2014 -0600
+
+    1.8 does not have this read(0) short-circuit.
+
+commit 287cb36d78cc53189342e0a3c8a005d264532f3a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Dec 22 16:23:15 2014 -0600
+
+    Never block for read(0), return blank string. Fixes #1637.
+
+commit fc05939ca6739f0f70ec1695fe9579a7de6f2270
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Dec 15 13:02:29 2014 -0600
+
+    Clear code range when modify/expanding string for IO.read(..,buf).
+    
+    Fixes #2316.
+    
+    Test added to MRI in http://mla.n-z.jp/~w3ml/w3ml.cgi/ruby-changes/msg/36766
+
+commit fe491f8e96ff77d61f36fda32bfa0bb06d8a3b24
+Author: kiichi <k77ch7@gmail.com>
+Date:   Thu Nov 27 23:38:44 2014 +0900
+
+    fix GH-1726 on master. change rspec file name
+
+commit 0695f3aa2c3d47ec2c46d67bf2793aab9c896219
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Nov 9 10:18:05 2014 -0600
+
+    More IO lock-auditing and a bit of cleanup.
+
+commit 80e475f4b8b8e8209eebc9541bce52ce1ccfb879
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Nov 8 22:07:32 2014 -0600
+
+    *All* uses of OpenFile that would mutate or do IO must lock.
+
+commit 1148ce440b1a5adbc94871d3ad31b257f3f34d81
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Nov 8 21:36:33 2014 -0600
+
+    Just use a normal reentrant lock. read + write acquire hangs.
+
+commit 4b305ae665bd032c44034e4a4bfa473cf28660a7
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Nov 8 16:32:33 2014 -0600
+
+    checkCallMethod returns null if it doesn't exist.
+
+commit 01add71cd0978570ec4422ae8f457c364877ed09
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Nov 7 17:47:44 2014 -0600
+
+    Restore $! if we ignore the close error after block yield.
+
+commit de133c9d1c89d4519e5807d0235e8e781a8bb845
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Nov 7 17:23:32 2014 -0600
+
+    Make RubyIO.toString use inspect output.
+
+commit 76242f49c55495eb9d288d00080188812e569adb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Nov 7 17:21:35 2014 -0600
+
+    Try to use an existing ChannelFD for native FDs, for close logic.
+    
+    If we create a new NativeDeviceChannel and ChannelFD, we lose the
+    closed flag on the NIO channel that would raise an IOException.
+    Instead, the lower levels of NIO close logic must swallow the
+    EBADF we expect, and it never gets raised. This is likely a bad
+    expectation on the part of NIO channel close logic, since the
+    underlying fd *is* closed, but the channel does not know it.
+
+commit a7878d0e461769f09dc3cd8dfed643811f8ec7fb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Nov 7 17:21:01 2014 -0600
+
+    Additional cleanup for IO#close exception handling after blocks.
+
+commit d183f8daf7905c384424fc86a390bbc8a0c89aea
+Merge: 8335011 5a2d482
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Nov 7 08:08:05 2014 -0600
+
+    Merge pull request #2141 from cheald/update_io_ensure_close
+    
+    Update RubyIO#ensureYieldClose to match ruby-bug 10153 behavior
+
+commit 5a2d482f7e852d2d8c045c3bf44ab99bec9bb83f
+Author: Chris Heald <cheald@gmail.com>
+Date:   Fri Nov 7 00:49:04 2014 -0700
+
+    Update RubyIO#ensureYieldClose to match ruby-bug 10153 behavior
+    
+    2.2.0 now only swallows "closed stream" errors on IO close, and explicitly
+    checks for both respond_to?(:closed?) (and tests it) and respond_to?(:close)
+    before attempting to close an IO.
+    
+    Added ENOSPC helper; the un-swallowing of errors exposed another bug where
+    JRuby was throwing an unknown SystemCallError on a full disk due to lack of
+    a string check for the ENOSPC IO error.
+
+commit 5145b4764e100ade6cafa84646fb01f3c4b36a12
+Author: Chris Heald <cheald@gmail.com>
+Date:   Thu Nov 6 21:29:19 2014 -0700
+
+    Fix ruby-bug 8625 and ruby-bug 9847
+    
+    Bug 9847 caused backing strings to be erroneously re-used when reading via IO
+    Bug 8625 caused buffers to be errouneously sized, resulting in data loss
+    
+    Both patches are effectively direct ports of the MRI fixes
+
+commit 8cd8901f156b505504138177ffe10a61befb878e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Nov 5 15:24:53 2014 -0600
+
+    Introduce finer-grained monitor-style locking for IO.
+    
+    OpenFile now aggregates a ReentrantReadWriteLock. We are not using
+    it reentrantly because we need to be able to release the lock deep
+    in the call stack around blocking operations. There may be a
+    better pattern for this.
+    
+    All uses of OpenFile#lock must check the return value to see if
+    the lock was locked, and only unlock it in (in a finally, of
+    course) if that was the case.
+
+commit 8abdf4fa49b44533b8291ff94ccb21b07c0bd71e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Nov 5 08:51:27 2014 -0600
+
+    Clean up imports.
+
+commit 0017c8cc4423aac30d4ca8ca0433e1ac1bf892f4
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Nov 5 08:51:16 2014 -0600
+
+    Deprecate SelectBlob.
+
+commit 4a6e40c7212da8f579a2d8b41ff393bd5a2b1b85
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Nov 5 08:43:44 2014 -0600
+
+    Clean up uses of old select logic.
+
+commit 4f79ed354e52f65cca4535f7f56d050f50319796
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Nov 5 08:16:05 2014 -0600
+
+    Only query realFileno once here.
+
+commit 0308b80c7dace44b5051861d4f82a4c3a7919fbd
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Nov 5 08:15:58 2014 -0600
+
+    Bit of RubyIO cleanup.
+
+commit 7b4d45e3452dad66fca12e307e9f94a71cdbff78
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Nov 5 08:15:18 2014 -0600
+
+    Add back synchronization around IO methods that touch the file.
+    
+    Part of fixes for #2102.
+
+commit 4312f42eff4f40a1fe010bf735b7c15d8e248555
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Oct 16 15:12:58 2014 -0500
+
+    Commenting.
+
+commit 4768e02b3778e8d4439f0e3ce1616b4fa0c0a2ff
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Sep 9 15:18:48 2014 -0500
+
+    Make RubyIO.get*Stream return buffer-aware stream impls.
+    
+    Because RubyIO has its own internal buffers, which are often used
+    at construction time to check a stream's BOM, we need to make sure
+    these pseudo-streams reflect those buffers by calling through the
+    same IO logic as Ruby.
+    
+    I am unsure if we should do the same for getChannel, since there
+    are a number of consumers (socket subsystem, SSL subsystem) that
+    depend on getting the actual, unbuffered channel from the IO. For
+    now, added javadoc indicating that the channel returned should not
+    be used at the same time as the IO it came from.
+    
+    Fixes #1824.
+
+commit 924d736969bab4c3c8bd0328047b8cb0392030f5
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Sep 4 11:39:35 2014 -0500
+
+    Don't code and drink.
+
+commit 31f2c1102b1309cd805cc2f8d6eb21bec4275d9c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Aug 18 14:18:52 2014 -0500
+
+    Use MRI lib for open3, deprecate our hidden impls.
+    
+    We provided IO.popen3 and popen4 previously because open3.rb used
+    forking. Now that it uses spawn, which is fully supported in 9k,
+    we can go back to the regular open3.rb. This provides better
+    compatibility with MRI.
+    
+    popen4 will be removed. It was never officially available for
+    users, and it can be achieved by using Open3 and getting the pid
+    off the IO objects.
+    
+    The internal implementations of popen3/4 also tried to unwrap the
+    subprocess's streams from java.lang.Process. This is broken on
+    Java 7+ because Process logic now eagerly attempts to drain the
+    child streams in a separate thread, making the unwrapped inner
+    stream/channel useless. Because 9k currently only supports Java
+    7+, and because the internal popen3/4 are now deprecated and
+    unused, I have removed this wrapping.
+
+commit 857b76f461acb5cbb67d582b864145e617ccaee8
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Aug 18 13:48:47 2014 -0500
+
+    IO#sysread should block regardless of nonblocking status.
+
+commit 46fee16e0d53e89bb3ef7a5491e831ece740831e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Aug 18 13:21:09 2014 -0500
+
+    Raise proper errno in IO#sysread if possible.
+
+commit 06e6bffaaaaca3dcf82d7a3c723d008a35c9108f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Aug 18 11:45:56 2014 -0500
+
+    Actually honor passed-in mode for IO#reopen. Porting oops.
+    
+    This commit also makes the spec run better in MRI...using full
+    path in the temp file name caused it to exceed maximum path length
+    in MRI.
+
+commit 2bf60731ab007bb060b3cf18b1b888203985f92f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Aug 12 18:45:41 2014 -0500
+
+    IO.copy_stream needs to dig out write IO if present.
+
+commit a6f20b63a56aff2e1bce74f89078234bc4c34446
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Aug 12 17:46:03 2014 -0500
+
+    Eliminate remnants of old IO backend and localize fileno map.
+    
+    The old Stream/ChannelStream/ChannelDescriptor code is no more.
+    Instead, JRuby 9000 uses a fresh port of MRI's IO and transcoding
+    logic, which then builds off a much thinner fileno shim using NIO
+    channels. This comment removes the old logic, which is no longer
+    used.
+    
+    Utility methods and constants from those classes have been moved
+    to more appropriate places, and the old internal/external fileno
+    map -- which used to be static -- is now managed on a per-runtime
+    basis. For most users running a single JRuby instance with full
+    native-call capabilities, this map will not come into play much,
+    but it is still used to find existing ChannelFD wrappers around a
+    given channel, and must be managed independently from runtime to
+    runtime.
+
+commit 10750bea7a1fbd1589077a6e5acc723f459b57ad
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jul 22 02:14:08 2014 -0500
+
+    Use new spawn logic for backquote, when possible.
+    
+    This allows us to get proper exit status and full behavioral
+    compatibility with MRI's backquote.
+
+commit 09c3669bb7fa05ddf4d508c099349d186c5a847b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jul 21 23:09:38 2014 -0500
+
+    I am dum.
+
+commit 193bd65fddef8b41fb3e2dec17281eec9f6df5ed
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Jul 20 18:03:43 2014 -0500
+
+    Use shortcut method for setSync.
+
+commit b72188ad319868975fd9ea37798cec7cf6c62c9d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Jul 20 15:23:58 2014 -0500
+
+    Updates and fixes for Process::Status
+    
+    * Define best-guess equivalents to W macros for process status
+    * Use real native status in Proces::Status
+    * Re-port existing Status methods to use native status
+    * Add missing #signame method
+    * Cleanup and reorg Process::Status code
+
+commit 68dd023300a369910d5c0699519271d41a67743e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jul 18 13:59:42 2014 -0500
+
+    Sprinkle a little fairy dust and synchronization on IO.
+
+commit 89f7905c2d2b780cb18f2bb0b94a60159d3ce80d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Jul 17 17:25:09 2014 -0500
+
+    Fix RubyIO stream constructors.
+
+commit 987eb09e9b04147f23d6e12238aac006bf11eaf7
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Jul 17 17:14:41 2014 -0500
+
+    Fix test for JRUBY-5876 and make us pass it.
+
+commit dc4248b92f6564b80473cfdae97ffb7f6b0836b3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jul 15 18:23:20 2014 -0500
+
+    Minor cleanup.
+
+commit d810e32f1df4af41b40f1701bb6f24fcef3f7786
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jul 15 18:22:13 2014 -0500
+
+    Fix IO#initialize_copy to flush the right stream.
+
+commit a8f2be5691f28bbfcc310c4286ba601273d58d7e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jul 15 16:39:57 2014 -0500
+
+    This should be an EOF, I believe.
+
+commit 1689d53eb3a928a4f346ccba8efecbf49dc310b3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jul 15 15:40:18 2014 -0500
+
+    Do proper readable check for IO#read.
+
+commit 3fa6d0d1386fde36fb39d8624c198683b9439947
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jul 15 15:40:04 2014 -0500
+
+    Add MRI name.
+
+commit 46eb75de38707d62231150e56d34550ce1255720
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jul 15 15:31:04 2014 -0500
+
+    Zero-sum commenting and reformat.
+
+commit 6561fb92a7c4a896b8fdc7a7d2935f74e8f58f63
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jul 15 15:22:13 2014 -0500
+
+    Bad cast.
+
+commit 13943c0a1ef94b8db9abb935b175c161837ef5ce
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jun 23 18:56:55 2014 -0500
+
+    Fix textmode/binmode handling in IO character conversion.
+
+commit cd2f5204561f95d8cbb53fa59f51c48c0f972a2c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jun 23 17:36:07 2014 -0500
+
+    Cleanup.
+
+commit d6a40dcf6a637a10bc2f1eee52b148ec445f5423
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jun 23 16:24:54 2014 -0500
+
+    Fix separator resolution and encoding for gets.
+
+commit 28588ed678aa94b85a71cf41d555c00fbf76dff0
+Merge: 02eb2f4 1d03c28
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jun 23 14:16:24 2014 -0500
+
+    Merge remote-tracking branch 'origin/master' into new_transcoder
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/RubyBasicObject.java
+    	core/src/main/java/org/jruby/RubyIO.java
+
+commit 1f60d7526d720064892a1d857dc89b0eb3bb70f6
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Jun 15 19:02:28 2014 +0100
+
+    More fixes to get test_io passing with excludes.
+
+commit d51e4a60a906e6b20e2f1e2fc388428a00265b01
+Merge: 2ba2465 d08e10f
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Sat Jun 14 08:25:34 2014 -0500
+
+    Merge with jruby-1_7
+
+commit 7dbfaef658122ad51910ce8d8d4fd94f99575254
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jun 9 08:47:42 2014 +0100
+
+    Slowly zeroing in on blocking IO that's interruptible.
+
+commit e51aaad73b5fba403454f2c2210bee87945a23a9
+Author: Lucas Allan Amorim <lucas.allan@gmail.com>
+Date:   Sat Jun 7 18:31:35 2014 -0700
+
+    [GH-1726] - File.read should raise an Errno::ENOENT when the file is an empty String.
+    
+    File.read it's currently raising EncodingUtils.java:597:in `encAscget':
+    java.lang.ArrayIndexOutOfBoundsException: 0
+    
+    But it should raise an Errno::ENOENT to keep the MRI compatibility.
+
+commit 058f592f41e2d027a43f2895eb4a040d874314b6
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Jun 5 16:57:29 2014 -0500
+
+    More minor tweaks to get Tempfile working better as File subclass.
+
+commit 52220cfb737deea2a0280853c81d39f39e1ef53f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Jun 5 13:57:35 2014 -0500
+
+    Fixes to get MRI's test_tempfile back up to snuff.
+
+commit 11281db562d4bd3aa974ac863f47236102c9d12b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jun 4 21:37:55 2014 -0500
+
+    Numerous fixes to get CI specs 100% again.
+    
+    * OpenFile needs to register as finalizable to flush on exit
+    * Kernel#p needed some port cleanup
+    * String#gsub's logic needed port cleanup
+    * Removed passing tags for String#inspect and String#scrub.
+
+commit d6c7c46243d50c1bb301e56f396a76b5f8cabbdf
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jun 3 17:25:37 2014 -0500
+
+    Rewrite select logic to match MRI. IO and File CI specs 100%.
+
+commit e96d6723ea46fb1902df33f0d1b1b6b0af31b3e5
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jun 3 11:26:51 2014 -0500
+
+    Fixes to get copy_stream working with native channels.
+
+commit 580ef1e1d37ddfb67f4709364b8e044d6aa58d7c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jun 3 10:14:48 2014 -0500
+
+    Re-port IO.binwrite/write logic
+
+commit d981cf02c75d95f790ea6ee8e89760bc6ffe91c8
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jun 3 10:14:27 2014 -0500
+
+    Start using native IO for files when possible.
+
+commit d9509d5a9940e0fd514853b78db0ea884cf4b8d0
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jun 3 07:41:34 2014 -0500
+
+    More disentangling File from ChannelDescriptor, plus umask fix.
+
+commit 16c9890106eb4b27bfa54c80fe95fc7650dc0b61
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jun 2 17:22:47 2014 -0500
+
+    Fix seek logic for various channels and fill in a few small blanks
+
+commit fb179d47972de14e9b21b9523e4c77cf1657c6d6
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jun 2 13:07:23 2014 -0500
+
+    More fixes surrounding chFile == null logic.
+    
+    mvn clean package completes now, so we're back to good enough for
+    the Tesla Ruby stuff.
+
+commit 2c07f49dec684724c41e42443e71db8aa339e80d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri May 30 16:00:52 2014 -0500
+
+    Unport IO#puts to get it green again.
+    
+    When I ported puts, it switched from using Ruby.registerInspecting
+    to using Ruby.execRecursive. However I may not be using
+    execRecursive correctly, or there might be a bug...either way, the
+    RubySpec that checks recursive execution does not seem to fire
+    within the spec, where the IO class has been decorated with
+    special methods. My theory is that it is losing the recursive
+    exec state somewhere along the way, or not registering it
+    correctly.
+    
+    In any case, since puts is just implemented in terms of dyncalls
+    to write, and the old implementation passes all puts specs, I'm
+    opting to just restore it.
+
+commit f2e5e9a5babad6e3cf09147fdfa86498ab6ab6ec
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri May 30 11:08:21 2014 -0500
+
+    Fix mode checking during IO.new/for_fd/open.
+
+commit 85b4b41379d79f3f45e149cf586cb6fef3a982cf
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri May 30 02:12:16 2014 -0500
+
+    Pass given class through to popen.
+
+commit 01e7d6ccb61e0d01209421fb09c54cca155f9b9c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri May 30 02:10:43 2014 -0500
+
+    In contrast to MRI, set streams blocking again.
+
+commit 04dd65c23bd33402886137b7e6dd084d75d0257e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri May 30 02:10:00 2014 -0500
+
+    Reimplement IO#write_nonblock. 100% on CI specs.
+
+commit c12dd41569330b8826ffed93179f0bf0d43a3992
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu May 29 23:52:49 2014 -0500
+
+    Fix IO/File.open to return the block value rather than the IO.
+    
+    This makes isatty/tty specs 100%.
+
+commit 22242af0b98d637eece47475bf37f184729749e4
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu May 29 21:32:54 2014 -0500
+
+    IO.new, IO.for_fd, and IO#initialize fixes.
+
+commit 88d70c2c6f48da844e0d78eca0e0c5bc31da7dab
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu May 29 14:26:05 2014 -0500
+
+    Tweak IO#copy_stream to pass as well as it did before.
+
+commit ea76cbfd9475f94870c03997cfcaeaaf26331108
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu May 29 14:00:35 2014 -0500
+
+    Fix close_write to only close write side throughout.
+    
+    IO#close_write 100%.
+
+commit 21235e54e4a383a2c6229b3c509bdb9f053985df
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu May 29 13:38:52 2014 -0500
+
+    Fix popen streams staying open in child and wrong process result.
+    
+    IO#close 100%.
+
+commit f6228602b554e9a6fa2036d7b55bef66269d103d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu May 29 11:34:15 2014 -0500
+
+    Minor tweaks.
+
+commit ce617317603bf9ef00c4272320b3888945cff0e9
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu May 29 11:30:37 2014 -0500
+
+    Reinstated OpenFile.stdio_file as a Closeable.
+
+commit 524300123e3c8e714b42f2924134bac67bcf297f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed May 28 20:11:45 2014 -0500
+
+    IO#close_read 100%.
+
+commit 3192441300a924bdb51cd83d8831c424de9ab874
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed May 28 19:55:09 2014 -0500
+
+    Stub out IO#close_on_exec* for now.
+
+commit a679b1cef40e51d9b17f5754290a1292237a92ae
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed May 28 19:47:39 2014 -0500
+
+    Insert dup logic into IO#initialize_copy. IO#binmode* 100%.
+
+commit 3281be282c867f6f0a951a940dd6d1ef739ee7be
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed May 28 19:33:18 2014 -0500
+
+    Fix up IO#autoclose= and IO#autoclose? to match MRI.
+
+commit 0dd015c971649656127fc48947d6b4f45d0ed52b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed May 28 19:32:48 2014 -0500
+
+    Stub out IO#advise so it's at least there. Still needs impl.
+
+commit c83929f6a3a4617693b40d7166b6ec6325c8fdbe
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed May 28 19:32:18 2014 -0500
+
+    Fix up IO#binmode and IO#binmode? to match MRI.
+
+commit 8ff6a8c793292d39b02c401e4ee11d3fa799f07e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed May 28 15:43:40 2014 -0500
+
+    Implement appropriate /bin/sh logic for spawn-based popen.
+
+commit 3f79ea8b60c76c8c2b4a59651208c439275c8b22
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed May 28 13:41:27 2014 -0500
+
+    IO.pipe specs 100%.
+
+commit 4d64f354d8859440517bf56aa3d0e1f13afb8a08
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed May 28 12:05:17 2014 -0500
+
+    Fix sysopen to actually use ChannelFD logic.
+
+commit 2532a2a9d42c6fd7594df2852c21e689fa596fde
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed May 28 10:18:25 2014 -0500
+
+    Fix popen and process shutdown logic and update jnr-ffi.
+
+commit 504738a4306f865fd33afa4b3e2428f105ec0b9c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed May 28 08:58:51 2014 -0500
+
+    Remove all references to getMainStream[Safe].
+
+commit ecc42a6c13d6884dd52e2dcbae8c592c682d6d92
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue May 27 20:18:59 2014 -0500
+
+    IO work continues.
+    
+    * Reopen work and refactorign to support it.
+    * PosixShim class to make POSIX and NIO both look like POSIX.
+    * FilenoUtil class to handle fileno (real/fake) management.
+    * Myriad minor refactorings and cleanups.
+
+commit d4495e5af9eb805e158f1bee2e41019e3eddd9a6
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri May 23 21:47:57 2014 -0500
+
+    Fixes for popen progname, env, and other misc.
+
+commit 62a5a3fd18337f9266644a0b5aa7d55b672e64be
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri May 23 14:41:02 2014 -0500
+
+    Hook up IO.popen to popen subsystem.
+
+commit eaa468c975740200cd742e884998f17d2377256a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri May 23 14:32:10 2014 -0500
+
+    Fix IO.select to fit new IO model better.
+
+commit 1a2daf7bb76fe23ef7a12b7dc5ee45286f605a2d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri May 23 13:39:23 2014 -0500
+
+    Port logic for popen (native version).
+
+commit 239a6bfa4f5a38b379983c864e476855faea4a26
+Merge: fda9e60 ea1d6ff
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed May 21 10:18:48 2014 -0500
+
+    Merge remote-tracking branch 'origin/master' into new_transcoder
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/RubyFile.java
+    	core/src/main/java/org/jruby/RubyIO.java
+
+commit fda9e60f7240ce84b96c066772fa8228c854bb88
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed May 21 10:07:14 2014 -0500
+
+    More work getting real fileno and abstracting channel/fd.
+
+commit 426dc691b76bba73e6f9471aca90a381a5704e33
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue May 20 14:37:34 2014 -0500
+
+    Start building up Channel FD abstraction. IRB works again.
+
+commit 3b3fbe198fa0ee44887ba2ce4c6d3c5e005b1069
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue May 20 13:51:24 2014 -0500
+
+    Clean out a bunch more uses of ChannelStream.
+
+commit 78f196d80559e5927c24ce8cf146330399f6f039
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon May 19 19:37:16 2014 -0500
+
+    Working through more logic... sysopen, seek, reopen, init_copy.
+
+commit 564bb6567dea7575f138b0966a7beaccf16a4f0b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri May 16 14:40:26 2014 -0500
+
+    Fix TTY calculation, at least for terminals we consider stdio.
+
+commit 222a48b492d61c2ceff729207bbce2119099aad6
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri May 16 14:30:09 2014 -0500
+
+    Continue implementing open logic. Stdio are properly sync now.
+    
+    Lots of extra cleanup in here as old code starts to fall off.
+
+commit 5c9cdfe905bad8cc3c469276ca2bbd8aad9b4f67
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri May 16 12:51:44 2014 -0500
+
+    Start porting IO open/initialize logic.
+
+commit 953d5d65f254e48911a34a6aef45fa5fb25d11fe
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu May 15 08:29:12 2014 -0500
+
+    Implement Kernel#p, start adding errno and nonblock logic.
+
+commit 21e096f9ec7ed78d279102c24f6aeeb9687df311
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed May 14 13:10:47 2014 -0500
+
+    IO#read_nonblock and readpartial.
+    
+    Still work to be done to make these work reasonably against non-
+    file, non-selectable channels.
+
+commit d8ef3bd7225436f06a554004df9bd344d0c28971
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed May 14 11:33:14 2014 -0500
+
+    IO#sysread and syswrite.
+    
+    Some other misc cleanup came along for the ride.
+
+commit ff08dbce3553e97df65de015e7473a7ac6001db7
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed May 14 10:33:30 2014 -0500
+
+    IO iteration methods.
+    
+    * each, each_line, each_byte, each_char, each_codepoint
+    * lines, bytes, chars, codepoints
+    * readlines confirmed working
+
+commit 4981d37b3a09a2f156b72581400a887e1fba3257
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed May 14 09:52:39 2014 -0500
+
+    Implement rest of print, printf, puts, putc in IO and Kernel.
+
+commit 36140802e31179f0806954c89fcd81e499eef2e1
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed May 14 07:50:39 2014 -0500
+
+    Implement putc and clear out a bunch of unused RubyIO code.
+
+commit 1c09ad7a3d65189776c13de9c6cd6a6aebbf5fa8
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Tue May 13 19:10:26 2014 -0500
+
+    ISSUE 1601: save/restore $! properly in the runtime
+    
+    * Eliminates one more rubyspec error -- now down to to one
+      failure before rubyspec run is green in IR mode.
+    
+    * This also fixes the error with "bundle exec rake" with the
+      gem "analytics-ruby" line in Gemfile in IR mode (reported
+      by nirvdrum on IRC).
+    
+    * This still requires another set of eyes going over all the
+      files and see if other instances have been missed.
+
+commit de7dba387a965b41ace1f60f7d7f36a7d163a14e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue May 13 15:48:18 2014 -0500
+
+    Implement rest of write plus more.
+    
+    * sync, sync=, fsync
+    * foreach, readlines
+    * binread
+    * proper logic for close and IO shutdown
+
+commit 1d491712e40506cb45182747411b0bd2052b0fa4
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue May 13 13:04:46 2014 -0500
+
+    Start port of write logic plus fixing flush and more cleanup.
+
+commit 1a694582500f8a632d36c1d1b9d088feb5bdd749
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue May 13 11:23:00 2014 -0500
+
+    Tidy up binread, which was almost right already.
+
+commit 04ddb1d4f874c08417b220f90d717c5de34faf42
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue May 13 11:10:43 2014 -0500
+
+    Port IO#foreach.
+
+commit 78b66c2c8049bb874e9620ae6b17d8f04b5f3d25
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue May 13 10:45:19 2014 -0500
+
+    Wire up static IO.read logic, eliminate old read logic, cleanup.
+
+commit f38e7fd38a64269b58be83ab4c6f659c56d666b2
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue May 13 08:53:45 2014 -0500
+
+    Fix most seek logic, cleanup old gets remnants, minor cleanup.
+
+commit ff52b15efd88f06fbebc054abdd09cb4f7387f64
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon May 12 18:27:03 2014 -0500
+
+    Implement logic for IO#read, getbyte, ungetbyte, ungetc.
+    
+    read specs are nearly passing now. It will be a long tail, since
+    any methods using ChannelStream will lose or steal data from the
+    new way, and there aren't many tests for various combinations of
+    read and write.
+
+commit 55820692d133b4460a2846da45f9d19c07afe9ec
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon May 12 13:36:05 2014 -0500
+
+    Port completed of all gets paths other than read_all. Specs pass.
+
+commit 8b78bb8993ce8403b6a72e5bc7bc85b1a5855297
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon May 12 10:54:14 2014 -0500
+
+    Fix buffer handling for gets call to appendline.
+
+commit 927232002c5ca3a624989525813e27ec10219f54
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri May 9 12:37:48 2014 -0500
+
+    Fixes and unfixes to get IO#gets more functional.
+
+commit bf6430c4bf005e298ed15674f1f35991b73c9820
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri May 9 10:30:20 2014 -0500
+
+    Fix a couple places trying to access OpenFile too early.
+
+commit 238a5e1a816ce922b43602a90a7a3a543c5654ea
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri May 9 09:41:04 2014 -0500
+
+    Implement IO#gets all the way down to actual IO operations.
+    
+    This logic forced me to implement all the MRI functions for doing
+    buffered, possibly-transcoded reads from a stream. I also had to
+    implement some of the write logic.
+    
+    As other IO methods all out, we should start to move away from our
+    flawed ChannelStream abstraction and toward the MRI way. Later,
+    we can look at doing a better abstraction of the MRI way.
+    
+    What's wrong with ChannelStream, you ask? Nothing, provided all
+    you want to do is POSIX-like FILE* IO. MRI stopped using FILE*'s
+    style buffering at some point -- probably when adding character
+    transcoding -- and as a result we started mixing encoding logic
+    into ChannelStream. This caused the code to become rather confused
+    and no longer useful as a bare FILE* mechanism...while also
+    preventing us from implementing IO+transcoding as efficiently as
+    MRI (which does unbuffered reads into its own buffers and
+    transcodes in place).
+
+commit 706b4539517e1c444250334ea261ac56542d02cf
+Merge: 75887be c3e7c29
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu May 8 04:54:10 2014 -0500
+
+    Merge branch 'master' into new_transcoder
+    
+    Conflicts:
+    	core/pom.xml
+    	core/src/main/java/org/jruby/RubyFile.java
+    	core/src/main/java/org/jruby/util/TypeConverter.java
+
+commit d269590c79eb56175689e1aea710956fa7472786
+Merge: ae5ad64 78d80b5
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu May 1 09:54:27 2014 -0500
+
+    largish merge from jruby-1_7
+
+commit d88007e6aa4dc408519fdf16ddd839a8644ac6d9
+Author: Alex Tambellini <atambellini@gmail.com>
+Date:   Sun Apr 27 17:19:36 2014 -0400
+
+    Process#spawn can accept arrays
+    
+    This doesn't exactly fix the issue in #1651 but it at least allows it
+    to run now.
+
+commit 9c758b4f31c0eeb50d77b3dad28438aca365e857
+Author: tduehr <tduehr@gmail.com>
+Date:   Thu Feb 27 21:54:56 2014 -0600
+
+    fix initialize visibility
+
+commit f97bf3082cd0f6966f9395bf1b829242d8122d4a
+Merge: f377d1c 86f0346
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Apr 16 15:27:46 2014 -0500
+
+    Merge
+
+commit 67f78925c4bc9b6202d15a0e3492d9ea8bd8a9d3
+Author: Dmitry Ratnikov <ratnikov@google.com>
+Date:   Fri Apr 11 18:09:04 2014 -0400
+
+    Move descriptor interaction logic to resources.
+
+commit 77c398f9f79f0c477c78515aacc791a18bb3ad48
+Author: Dmitry Ratnikov <ratnikov@google.com>
+Date:   Wed Apr 16 13:41:14 2014 -0400
+
+    Replace custom ChannelDescriptor exceptions to use ResourceException
+
+commit 75887be71fee126d82eed0e7abfb9acbf0a03961
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Mar 17 15:12:46 2014 -0500
+
+    Start dropping the full IO bomb.
+
+commit f10be8ca15596bfeea13e33398dee2016857451e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Mar 17 09:21:54 2014 -0500
+
+    More accurate (but maybe less efficient) encoded getc logic.
+
+commit cd23ab1d43bf1c8536fcf917a97fc58932cffec6
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Mar 11 11:45:52 2014 -0500
+
+    Many more fixes and removed excludes for new transcoder.
+    
+    * Moved ECONV flags to use those from jcodings
+    * Many port fixes and tweaks.
+    
+    Nearly there!
+
+commit 5db52236b55a19abe3f9dfac0bfd13ca3dc86ea8
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 25 15:37:44 2014 -0600
+
+    Switch over to using jcodings for transcode.
+
+commit 199164d5ac38515e25bc7b8f74e2a9eef65dd1c5
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Feb 22 15:37:13 2014 -0600
+
+    Rename Transcoder and move some state up in prep for porting.
+
+commit f8f16cc725d8cd907261ffa72bb91c4be8282806
+Merge: 2fca72c c4aa019
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Mar 4 16:28:29 2014 -0600
+
+    Merging with jruby-1_7
+
+commit cfee0e7de6a7c2ddfa724cdc238831395394404b
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Mar 3 12:19:47 2014 -0600
+
+    Do not depend on console to properly encode to proper tty-friendly chars on windows if the JVM was started without a console.
+
+commit acf5d258db69e9ba73f329b809c0924d7e843c82
+Author: tduehr <tduehr@gmail.com>
+Date:   Thu Feb 20 16:22:22 2014 -0600
+
+    correct visibility of initialize* and respond_to_missing? methods
+
+commit 7716670abaf5248fc3fd6dc940a4bcea67bdd148
+Merge: c356855 5bd0798
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Dec 4 17:35:42 2013 -0600
+
+    Merge with jruby-1_7
+
+commit 5bd07983d52bd886cc2bb292d60de0826c7f2b2c
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Dec 4 17:34:01 2013 -0600
+
+    Fixes #1198. Strings not printed properly to windows console
+
+commit 1bb6298040457cdf096d92ddef293ba1b69217b2
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Nov 21 01:04:08 2013 -0600
+
+    Remove more compat version references and deprecate some stuff.
+
+commit 89c19b0fb546d6d01b1aede73f2502976e7f3044
+Merge: b8e77b0 eeedb4c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Nov 21 00:05:10 2013 -0600
+
+    Merge branch 'jruby-1_7'
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/ext/stringio/RubyStringIO.java
+
+commit 61014cfb527749b2b6f2363931f4c27d7b89a93a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Nov 20 22:06:55 2013 -0600
+
+    Re-port StringIO and methods required for it.
+    
+    This incorporates missing flags, string modification, and encoding
+    logic into StringIO by doing a line-by-line behavior port from
+    MRI.
+    
+    Fixes #1204.
+    Fixes #1242.
+
+commit 0a95daab3364744dde6463b6e6aa1add9bb7fc2b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Nov 13 13:14:11 2013 -0600
+
+    Propagate keyrest through Open3.popen3 to internal version.
+    
+    This also includes a fix to remove the keyword args from the arg
+    list when processing the command. If we don't remove it, the arg
+    list appears to be length > 1 and a single space-embedded command
+    line will not be split into its component arguments.
+
+commit e3614ced7d5517f690a6c658494cb664ec86b3fe
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Oct 30 21:09:05 2013 -0500
+
+    Missed some annotation edits.
+
+commit a5bd233f85fcca055b1a1d07d8ac5865faab2294
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Oct 30 21:04:55 2013 -0500
+
+    Remove last two version-split methods in RubyIO.
+
+commit 1c13c578514770367cde43b391e7aba8105808de
+Merge: 8622a2b 728fd53
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Oct 10 15:56:50 2013 -0500
+
+    Merge remote-tracking branch 'origin/jruby-1_7'
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/RubyIO.java
+
+commit 728fd533f6a94d419f7849b4441eb283509e1258
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Oct 10 15:48:56 2013 -0500
+
+    Implement IO.copy_stream for non-file input. Fixes #1103.
+    
+    This implementation is still pretty naive, just expecting -1 to
+    indicate that the incoming channel has reached a terminating
+    point. With the amount of wrapping the JDK does around the
+    actual file descriptors, it may be the best we can do without
+    building more of our IO layer using native calls.
+
+commit 24406b237e1a851d7f440f2f45dedc24dba29d3e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Oct 9 22:18:15 2013 -0500
+
+    Partial re-port of reopen to handle modes better. Fixes #1104.
+    
+    This is only a partial re-port of MRI reopen logic, but it does
+    a better job of propagating the incoming IO's modes to the new
+    stream/descriptor under the covers. The cases given in the bug now
+    pass and I will try to come up with a good test case for them.
+
+commit a2f302fbd098df2d8793f09024bfe1ff098a420c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Oct 9 22:18:15 2013 -0500
+
+    Partial re-port of reopen to handle modes better. Fixes #1104.
+    
+    This is only a partial re-port of MRI reopen logic, but it does
+    a better job of propagating the incoming IO's modes to the new
+    stream/descriptor under the covers. The cases given in the bug now
+    pass and I will try to come up with a good test case for them.
+
+commit e420ce8c7350b1b599725598492816533edaf3c3
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Oct 9 09:52:43 2013 -0500
+
+    Missed 1.8 impls of gets
+
+commit dec952b4762fa9599c4af163f91643abc0d780d3
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Oct 9 09:42:33 2013 -0500
+
+    De-version IO
+
+commit 697e6895affa646849a685ed58f6f84795c853aa
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Oct 4 23:37:52 2013 -0500
+
+    Eliminate calls to Ruby.is1_8 and is1_9.
+
+commit d1f89e004fdc78dff75407c82123e6c9e8b406bb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Sep 12 18:48:16 2013 +0200
+
+    Make ClassIndex into an enum, to prevent issues like #1004.
+
+commit 38a91a4a70aa4fed0062c1c43d3d8ef6bd275868
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Sep 12 12:56:17 2013 +0200
+
+    Remove logging of null ecopts that snuck in.
+
+commit 9eab8e7b9afb5ace8486c0fc05064155255b1b62
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Sep 12 12:55:07 2013 +0200
+
+    Additional fix for #1007 to avoid null ecopts.
+
+commit a9415db3cff112c283fbed50aa1bc87376c8e718
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Aug 21 09:31:20 2013 -0500
+
+    Guard RubyString.makeShared with 1_9 checks, so encoding is set.
+    
+    We have a number of places in 1.9 logic where it eventually falls
+    back into 1.8 logic due to lack of version-splitting. In the case
+    of JRUBY-7195, the element grab from a MatchData shared the logic
+    in RubyRegexp.nth_match between 1.8 and 1.9 modes. However, the
+    logic there does not properly create new strings, leaving their
+    encoding set to default.
+    
+    This commit modifies all paths to RubyString.makeShared I could
+    find with logic to use the "19" version if in 1.9 mode.
+    
+    Fixes JRUBY-7195.
+
+commit 6ef169c3ce65a1afd781c416e40b66886627edb4
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Aug 20 16:15:22 2013 -0500
+
+    Two steps forward, one step back. Re-fix unit test failures.
+
+commit e5ffaaf0b6b99209cab82f5f7066f27067561201
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Aug 20 13:27:35 2013 -0500
+
+    Fixes to get all 1.9 specs passing again.
+
+commit b1d9cb5b850eab6935b50dd77983b45be1da61de
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Aug 9 00:11:14 2013 -0500
+
+    Edging closer to everything passing again.
+
+commit 541c29af716ddab3b9438d28ef0ab37fb7ce3a35
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Aug 8 16:42:26 2013 -0500
+
+    Fixes and a few additional ports to get test:mri19 green.
+    
+    Additional fixes to get test:mri18 green.
+
+commit 1158df5a7ad82af49c031104b6e652924ebc9368
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Aug 8 01:21:50 2013 -0500
+
+    Large port of MRI IO transcoding logic, to fill in our gaps.
+
+commit dbdbfb31583dab0d14e31dbdd505b2e71d781f21
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Aug 6 12:19:15 2013 -0500
+
+    Patch up things that broke from my mega-port.
+    
+    * GzipReader#read always returns ASCII-8BIT strings when given a
+      length.
+    * String#encode needed some ported logic to fit other pieces.
+    * Get ECONV constants propagated into RubyConverter.
+    * Encoding 7-bit strings from/to ASCII-compat encs is a no-op.
+
+commit c0ed12f7dab4be63c3e7d590e87ed1ae48a5f77e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Aug 6 08:00:30 2013 -0500
+
+    Port over a bunch more transcoding stuff + gzip encoding logic.
+
+commit 922313ce1a5fecb36d64f3d4c6f23ed19d1d658e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jul 22 19:31:12 2013 -0500
+
+    Move XML transliteration into transcoder logic.
+
+commit 991f905f9eefa3cfc68df48c382f231a3e06db1a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jul 22 19:00:55 2013 -0500
+
+    More compatibility fixes for transcoding, including crlf logic.
+    
+    * crlf transcoding modes for Converter
+    * More complete errors with error bytes, encodings, etc
+    * Error conditions more consistent with MRI
+    * Partial unification of encoding flag logic
+    * Many miscellaneous fixes
+
+commit b409980a9055f2c770b65fb608d258db0553ab37
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jul 15 16:24:05 2013 -0500
+
+    Refactor more of RubyConvert into CharsetTranscoder to share.
+
+commit 34d5d330f5384ebdb3c3d8f1f9d2e847e2bad8ad
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Jul 13 20:41:20 2013 -0500
+
+    Revert "Must pass encoding into getCodingErrorActions after 7c53e5bc"
+    
+    This reverts commit 0b6f1aa9510057a1b89292c5e43ebb4c76b935f6.
+
+commit 0b6f1aa9510057a1b89292c5e43ebb4c76b935f6
+Author: Alex Tambellini <atambellini@gmail.com>
+Date:   Sat Jul 13 19:17:23 2013 -0400
+
+    Must pass encoding into getCodingErrorActions after 7c53e5bc
+
+commit d71672054518ba8845ed80c8563b9ce5cb0bceb6
+Merge: 88c52f9 10d22da
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Jul 6 03:01:02 2013 -0500
+
+    Merge branch 'native_pathname' of github.com:eregon/jruby into eregon-native_pathname
+
+commit 28c6fbc4e883bc1c9e9242d1da1cb2b785f55339
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 3 12:46:45 2013 -0500
+
+    Move to @mkristian's proposed layout, with some modifications.

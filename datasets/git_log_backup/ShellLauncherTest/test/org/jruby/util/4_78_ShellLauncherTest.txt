@@ -1,0 +1,195 @@
+commit 0f7c9ce8261d46ebfb7ef6e17e7da2f86f5d5ba5
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Sep 12 12:48:51 2011 -0500
+
+    Update to ASM 4.0 RC2 and master builds of jnr-{ffi,posix,constants,netdb}.
+    
+    Squashed commit of the following:
+    
+    commit ce02afcf40ede2c485ab357435866ce754cd2671
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Mon Sep 12 12:46:44 2011 -0500
+    
+        Fix group id for jnr-posix and version numbers for modified libs.
+    
+    commit 0b5632be85dce5500c35d3533fa5d7cd240bf515
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Mon Sep 12 12:39:24 2011 -0500
+    
+        Fixes to get ASM 4.0 RC2 passing tests.
+    
+        * Update jnr-* to master versions, since some depend on ASM and had to be updated too.
+        * Fix ASM-related errors due to new class hierarchy.
+        * fix skinnymethodadapter_spec to use new h_ prefix for handles and to filter "asm" constants.
+    
+    commit 4ac391fb3bf2f53dd42f8e4c5f3a0e36ca638e1b
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Mon Sep 12 10:35:08 2011 -0500
+    
+        Remaining tweaks to get jruby compiling with ASM 4.0 RC2.
+    
+    commit 3801518505d0d38bf045a39fd8ca6eb80ef50126
+    Author: Douglas Campos <qmx@qmx.me>
+    Date:   Mon Sep 12 00:21:54 2011 -0300
+    
+        updated InvokeDynamicSupport
+    
+    commit 2aabc1894d38b717cca2b4546f51596b8b03db6e
+    Author: Douglas Campos <qmx@qmx.me>
+    Date:   Sun Sep 11 12:43:39 2011 -0300
+    
+        updating asm version
+
+commit e56d926dda0b82fa3a27d9f0aaac1b8c033b539f
+Author: Hiroshi Nakamura <nahi@ruby-lang.org>
+Date:   Mon Jul 11 13:32:59 2011 +0900
+
+    Test update to avoid using deprecated method.
+
+commit b412fceeff2a7b289af4b02f06b876086ecc63a0
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Apr 1 03:44:08 2011 -0500
+
+    Fix bad test that attempted to mutate ENV values, now frozen.
+
+commit 095a36a4798e627dd7004c46aedafe71716edd41
+Author: Hiroshi Nakamura <nahi@ruby-lang.org>
+Date:   Mon Jan 3 23:59:17 2011 +0900
+
+    JRUBY-5004: remove unused imports
+    
+    This commit is based on the patch from Douglas Campos <qmx@qmx.me>.
+
+commit f5da078d6368cb0dd213951f1666754611b62bec
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Wed Nov 17 13:13:51 2010 -0600
+
+    Change ShellLauncherTest to go through ruby api for case-insensitivity
+
+commit 4936156e82a65f7b4027a0bfa99c23233c4cf73c
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Tue Sep 21 15:17:53 2010 -0700
+
+    JRUBY-5098: Make sure to use ENV['PATH'] and not System.getenv("PATH")
+    
+    Conflicts:
+    
+    	src/org/jruby/util/ShellLauncher.java
+
+commit 41139e2b7dffebb0a46783097cd6f96f79d3196b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Oct 30 06:25:26 2008 +0000
+
+    Disabling some tests for JRUBY-3097.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7956 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 211e835e0cbddbf38aab6ed3d1838988ab6f2e8c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Mar 16 23:01:28 2008 +0000
+
+    Remove state from ShellLauncher, make all its methods static; not really any reason for it to be stateful.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6224 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 93e18c4bcb111662eef510204c0b6675a95f51d6
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Wed Mar 5 22:10:32 2008 +0000
+
+    JRUBY-1557: Fix shell command handling on non-windows platforms to
+    always go to the shell
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6111 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 66b024fedbb2ee32316ccd9de8387931d07993ec
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 5 05:57:53 2008 +0000
+
+    Merging the new IO implementation to trunk to give it appropriate burn-in time. Give it a go, friends!
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5821 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit b3892cf8056b772e5fbefe7d18772969ce62ff7c
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Fri Dec 14 04:56:24 2007 +0000
+
+    Copy windows-related test case fix to trunk
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5257 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit e91a1f3632646a1896d0dae0aa1602857987e1f6
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Tue Dec 11 00:46:14 2007 +0000
+
+    JRUBY-1699: Fix system ignoring extra args
+    - this was affecting e.g., Warbler when it ran the jar command
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5205 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 914eb5234b11d32a5e00542abbefe0587be75e81
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Wed Nov 28 17:36:07 2007 +0000
+
+    Bunch of test case cleanup; fix @Override and setUp/tearDown stuff
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5091 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit eb1b43182f28038c526225f8a8a63a563cf55123
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Sat Nov 3 23:16:20 2007 +0000
+
+    Deprecate getDefaultInstance in favor of (simply) newInstance
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4852 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a67f7458b4d29eb2715e8a10f23b3d970c322da0
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Sat Oct 6 12:58:30 2007 +0000
+
+    JRUBY-1406: improve stream performance of ShellLauncher (Nathan Fiedler)
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4493 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 2af7887e1cca6351faebc3c1b714a412c8b18f34
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Wed Aug 22 01:42:13 2007 +0000
+
+    Fix JRUBY-1080 and JRUBY-1247 on trunk
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4191 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit eb2f03b86c92375704124dad9462ddaa28d366e9
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Thu May 31 22:18:29 2007 +0000
+
+    Fix a couple of tests to be friendlier to windows
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3796 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d976da595b89736ebc4d961cf8256e466424fabc
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue May 29 01:25:55 2007 +0000
+
+    Fix for JRUBY-1014, revert ShellLauncher.StreamCopier to previous version.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3757 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a974fe5a045d94863b9de58d4563ca4a261a61c6
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Wed Mar 14 04:27:10 2007 +0000
+
+    - JRUBY-692: clean up subprocess launching code
+    - add compareTo method to appease eclipse (generates warning in ant build)
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3196 961051c9-f516-0410-bf72-c9f7e237a7b7

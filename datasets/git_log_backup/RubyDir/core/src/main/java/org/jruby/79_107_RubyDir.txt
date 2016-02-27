@@ -1,0 +1,560 @@
+commit 449377cf55576e08cc679843e6cc7782454f532d
+Merge: 0be4796 83c47ba
+Author: kares <self@kares.org>
+Date:   Sat Jul 25 22:28:18 2015 +0200
+
+    Merge branch 'jruby-1_7'
+    
+    * jruby-1_7: (40 commits)
+      keep the provider in a local while terminating + missing @Override
+      un-used imports
+      close (URLClassLoader's) resources on JRubyClassLoader#tearDown on Java 7+
+      only re-wrap non-runtime exceptions in getJDBCDriverUnloader
+      depreacate JRubyClassLoader's getJDBCDriverUnloader (its un-used - but still should not be part of public API)
+      review the WeakHashSet impl + add missing (useful) methods: equals, toString, ...
+      correct javadoc and generix-ize the guts of WeakValued map-like collections
+      JavaMethod's (redundant) arityValue field is only used in ReflectedJavaMethod
+      Add test for packages of classes in nested JARs
+      Define packages for classes in nested JARs
+      fixes expand_path on relative reference and inside uri:classloader: as CWD
+      detect uri-like paths better for File.expand_path
+      fixes commandline execution of internal java -cp ... org.jruby.Main command
+      get classloader root url right without an trailing slash
+      added nested IsolatedScriptingContainer via jruby-mains test
+      make it 1.8 compatible
+      you can not close classloaders on jdk6
+      extracted the classloader to uri-like path into helper class
+      have no side effects when creating instance of IsolatedScriptingContainer
+      remove some import jul left-overs + finalize accessibleObject() on JavaMethod
+      ...
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/Ruby.java
+    	core/src/main/java/org/jruby/RubyInstanceConfig.java
+    	core/src/main/java/org/jruby/compiler/JITCompiler.java
+    	core/src/main/java/org/jruby/embed/IsolatedScriptingContainer.java
+    	core/src/main/java/org/jruby/embed/ScriptingContainer.java
+    	core/src/main/java/org/jruby/internal/runtime/methods/JavaMethod.java
+    	core/src/main/java/org/jruby/internal/runtime/methods/ReflectedJavaMethod.java
+    	core/src/main/java/org/jruby/javasupport/JavaEmbedUtils.java
+    	core/src/main/java/org/jruby/util/ClassCache.java
+    	core/src/main/java/org/jruby/util/JRubyClassLoader.java
+    	core/src/main/java/org/jruby/util/cli/Options.java
+    	core/src/main/ruby/jruby/kernel19/kernel.rb
+    	lib/ruby/1.9/date.rb
+    	lib/ruby/shared/rubygems/defaults/jruby.rb
+    	maven/jruby-complete/src/it/integrity/pom.xml
+    	maven/jruby-complete/src/templates/osgi_many_bundles_with_embedded_gems/test/src/test/java/org/jruby/embed/osgi/test/JRubyOsgiEmbedTest.java
+    	maven/jruby/src/it/runnable/spec/one_spec.rb
+    	maven/jruby/src/templates/osgi_all_inclusive/src/test/java/org/jruby/embed/osgi/test/JRubyOsgiEmbedTest.java
+    	test/test_file.rb
+    	test/test_load.rb
+
+commit 0aad2b415876214e580462ad098d184ba225912a
+Author: Joe Kutner <jpkutner@gmail.com>
+Date:   Fri Jul 10 09:38:46 2015 -0500
+
+    Added PROTOCOL_PATTERN to RubyDir to mimic RubyFile
+
+commit 07987e57ffc0b0bcb5c3c14c75f30fb2f06ff5cb
+Author: Joe Kutner <jpkutner@gmail.com>
+Date:   Thu Jul 9 22:05:23 2015 -0500
+
+    Added uri to path when using file protocol to chdir. See jruby/warbler#323
+
+commit 63d83769b0845240f210899b0f5936c814659613
+Author: Christian Meier <m.kristian@web.de>
+Date:   Fri May 29 23:47:30 2015 +0200
+
+    keep mkdir consistent when using uri-like paths
+    
+    * there was a problem with file:////path/to/dir where the extra slashes
+      did confuse the logic
+    * all pathes starting with uri: can not create any directories
+    
+    fixes #2972
+    
+    Sponsored by Lookout Inc.
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/RubyDir.java
+    	core/src/main/java/org/jruby/util/URLResource.java
+    	test/test_dir.rb
+    	test/test_file.rb
+
+commit 0137667b235784476559ade524bf1ee85100f7aa
+Author: Christian Meier <m.kristian@web.de>
+Date:   Fri May 29 23:47:30 2015 +0200
+
+    keep mkdir consistent when using uri-like paths
+    
+    * there was a problem with file:////path/to/dir where the extra slashes
+      did confuse the logic
+    * all pathes starting with uri: can not create any directories
+    
+    fixes #2972
+    
+    Sponsored by Lookout Inc.
+
+commit 40beb472cb17c6c0cbf46ba199a9461e0e7bd877
+Merge: c0c086e e237201
+Author: kares <self@kares.org>
+Date:   Mon May 25 16:54:09 2015 +0200
+
+    Merge branch 'jruby-1_7'
+    
+    * jruby-1_7: (54 commits)
+      [travis-ci] re-try sudo: false
+      dry out the two (Java helper) respond_to_p19 methods
+      respondsTo JRuby API under 1.9.3 does not do respond_to_missing? like MRI does
+      sleep should convert it's "time interval" argument the same way as MRI
+      respond_to_missing? should always get a symbol name passed (fixes #2946)
+      add a respond_to_missing unit test (on 1.9)
+      introduce and use conversion( just like MRI does) on #timeout's sec argument
+      add missing ' ' (space) in exception message ... TypeError from `sleep('invalid')`
+      DateTime.iso8601 fails with an error if a second fraction is present
+      [build] switch to 1.7.21-SNAPSHOT for test-jruby-jars
+      refactor Timeout's scheduled tasks to an inner class (for easier identification)
+      further hand drying of the Timeout module impl
+      less (int) casting noiz
+      add some (internal) generics for an improved readability xp
+      inner class' Finalizer fields id and finalized can be final
+      generix-ize the environment field (at least internally) + use a StringBuilder
+      unnecessary (int) cast
+      missing throw statement in RubyString's concat
+      tune timeout to work when scheduling or argument convenrsion throws (see #2940)
+      return empty Ruby array for empty dir list
+      ...
+    
+    Conflicts:
+    	.gitignore
+    	.travis.yml
+    	VERSION
+    	core/pom.xml
+    	core/src/main/java/org/jruby/RubyArray.java
+    	core/src/main/java/org/jruby/RubyBasicObject.java
+    	core/src/main/java/org/jruby/RubyDir.java
+    	core/src/main/java/org/jruby/RubyEnumerable.java
+    	core/src/main/java/org/jruby/RubyFile.java
+    	core/src/main/java/org/jruby/RubyGlobal.java
+    	core/src/main/java/org/jruby/RubyIO.java
+    	core/src/main/java/org/jruby/RubyKernel.java
+    	core/src/main/java/org/jruby/RubyModule.java
+    	core/src/main/java/org/jruby/RubyString.java
+    	core/src/main/java/org/jruby/RubyTime.java
+    	core/src/main/java/org/jruby/ext/timeout/Timeout.java
+    	core/src/main/java/org/jruby/java/proxies/JavaProxy.java
+    	core/src/main/java/org/jruby/util/Dir.java
+    	core/src/main/java/org/jruby/util/encoding/CharsetTranscoder.java
+    	docs/man/pom.xml
+    	docs/pom.xml
+    	ext/pom.xml
+    	ext/readline/pom.xml
+    	ext/ripper/pom.xml
+    	lib/pom.xml
+    	lib/ruby/1.9/date/format.rb
+    	lib/ruby/1.9/io/linux_console.rb
+    	lib/ruby/shared/gauntlet_rubygems.rb
+    	lib/ruby/shared/rubygems.rb
+    	lib/ruby/shared/rubygems/available_set.rb
+    	lib/ruby/shared/rubygems/basic_specification.rb
+    	lib/ruby/shared/rubygems/command.rb
+    	lib/ruby/shared/rubygems/command_manager.rb
+    	lib/ruby/shared/rubygems/commands/cert_command.rb
+    	lib/ruby/shared/rubygems/commands/cleanup_command.rb
+    	lib/ruby/shared/rubygems/commands/contents_command.rb
+    	lib/ruby/shared/rubygems/commands/dependency_command.rb
+    	lib/ruby/shared/rubygems/commands/environment_command.rb
+    	lib/ruby/shared/rubygems/commands/generate_index_command.rb
+    	lib/ruby/shared/rubygems/commands/help_command.rb
+    	lib/ruby/shared/rubygems/commands/install_command.rb
+    	lib/ruby/shared/rubygems/commands/list_command.rb
+    	lib/ruby/shared/rubygems/commands/mirror_command.rb
+    	lib/ruby/shared/rubygems/commands/outdated_command.rb
+    	lib/ruby/shared/rubygems/commands/owner_command.rb
+    	lib/ruby/shared/rubygems/commands/pristine_command.rb
+    	lib/ruby/shared/rubygems/commands/push_command.rb
+    	lib/ruby/shared/rubygems/commands/query_command.rb
+    	lib/ruby/shared/rubygems/commands/search_command.rb
+    	lib/ruby/shared/rubygems/commands/setup_command.rb
+    	lib/ruby/shared/rubygems/commands/specification_command.rb
+    	lib/ruby/shared/rubygems/commands/uninstall_command.rb
+    	lib/ruby/shared/rubygems/commands/unpack_command.rb
+    	lib/ruby/shared/rubygems/commands/update_command.rb
+    	lib/ruby/shared/rubygems/commands/which_command.rb
+    	lib/ruby/shared/rubygems/commands/yank_command.rb
+    	lib/ruby/shared/rubygems/compatibility.rb
+    	lib/ruby/shared/rubygems/config_file.rb
+    	lib/ruby/shared/rubygems/core_ext/kernel_gem.rb
+    	lib/ruby/shared/rubygems/core_ext/kernel_require.rb
+    	lib/ruby/shared/rubygems/defaults.rb
+    	lib/ruby/shared/rubygems/dependency.rb
+    	lib/ruby/shared/rubygems/dependency_installer.rb
+    	lib/ruby/shared/rubygems/dependency_list.rb
+    	lib/ruby/shared/rubygems/deprecate.rb
+    	lib/ruby/shared/rubygems/doctor.rb
+    	lib/ruby/shared/rubygems/errors.rb
+    	lib/ruby/shared/rubygems/exceptions.rb
+    	lib/ruby/shared/rubygems/ext.rb
+    	lib/ruby/shared/rubygems/ext/builder.rb
+    	lib/ruby/shared/rubygems/ext/cmake_builder.rb
+    	lib/ruby/shared/rubygems/ext/configure_builder.rb
+    	lib/ruby/shared/rubygems/ext/ext_conf_builder.rb
+    	lib/ruby/shared/rubygems/ext/rake_builder.rb
+    	lib/ruby/shared/rubygems/gemcutter_utilities.rb
+    	lib/ruby/shared/rubygems/indexer.rb
+    	lib/ruby/shared/rubygems/install_update_options.rb
+    	lib/ruby/shared/rubygems/installer.rb
+    	lib/ruby/shared/rubygems/installer_test_case.rb
+    	lib/ruby/shared/rubygems/local_remote_options.rb
+    	lib/ruby/shared/rubygems/name_tuple.rb
+    	lib/ruby/shared/rubygems/package.rb
+    	lib/ruby/shared/rubygems/package/old.rb
+    	lib/ruby/shared/rubygems/package/tar_header.rb
+    	lib/ruby/shared/rubygems/package/tar_reader/entry.rb
+    	lib/ruby/shared/rubygems/package/tar_writer.rb
+    	lib/ruby/shared/rubygems/path_support.rb
+    	lib/ruby/shared/rubygems/platform.rb
+    	lib/ruby/shared/rubygems/psych_additions.rb
+    	lib/ruby/shared/rubygems/rdoc.rb
+    	lib/ruby/shared/rubygems/remote_fetcher.rb
+    	lib/ruby/shared/rubygems/request.rb
+    	lib/ruby/shared/rubygems/request_set.rb
+    	lib/ruby/shared/rubygems/request_set/gem_dependency_api.rb
+    	lib/ruby/shared/rubygems/requirement.rb
+    	lib/ruby/shared/rubygems/resolver/current_set.rb
+    	lib/ruby/shared/rubygems/security.rb
+    	lib/ruby/shared/rubygems/security/policy.rb
+    	lib/ruby/shared/rubygems/security/signer.rb
+    	lib/ruby/shared/rubygems/security/trust_dir.rb
+    	lib/ruby/shared/rubygems/server.rb
+    	lib/ruby/shared/rubygems/source.rb
+    	lib/ruby/shared/rubygems/source/installed.rb
+    	lib/ruby/shared/rubygems/source/local.rb
+    	lib/ruby/shared/rubygems/source/specific_file.rb
+    	lib/ruby/shared/rubygems/source_list.rb
+    	lib/ruby/shared/rubygems/spec_fetcher.rb
+    	lib/ruby/shared/rubygems/specification.rb
+    	lib/ruby/shared/rubygems/ssl_certs/AddTrustExternalCARoot.pem
+    	lib/ruby/shared/rubygems/stub_specification.rb
+    	lib/ruby/shared/rubygems/syck_hack.rb
+    	lib/ruby/shared/rubygems/test_case.rb
+    	lib/ruby/shared/rubygems/test_utilities.rb
+    	lib/ruby/shared/rubygems/text.rb
+    	lib/ruby/shared/rubygems/uninstaller.rb
+    	lib/ruby/shared/rubygems/uri_formatter.rb
+    	lib/ruby/shared/rubygems/user_interaction.rb
+    	lib/ruby/shared/rubygems/util/list.rb
+    	lib/ruby/shared/rubygems/validator.rb
+    	lib/ruby/shared/rubygems/version.rb
+    	maven/jruby-complete/pom.xml
+    	maven/jruby-dist/pom.xml
+    	maven/jruby-jars/pom.xml
+    	maven/jruby-noasm/pom.xml
+    	maven/jruby-rake-plugin/pom.xml
+    	maven/jruby-stdlib/pom.xml
+    	maven/jruby/pom.xml
+    	maven/pom.xml
+    	pom.xml
+    	test/pom.xml
+    	test/test_dir.rb
+    	test/test_kernel.rb
+    	test/test_respond_to.rb
+    	test/test_timeout.rb
+
+commit 5bc6c5099ac3af79e04fbff6368769119aa6c8fd
+Author: kares <self@kares.org>
+Date:   Wed May 13 22:19:12 2015 +0200
+
+    return empty Ruby array for empty dir list
+
+commit c81e3eb043fe4b34911e3e3e5c9088a80f544b85
+Author: kares <self@kares.org>
+Date:   Wed May 13 21:04:20 2015 +0200
+
+    avoid the intermediate ArrayList ... create the Java array directly
+
+commit c6c9dce655a75bc7f6874b52a0c98b55a83956e2
+Merge: 8ee2817 b6750d2
+Author: Thomas E Enebo <tom.enebo@gmail.com>
+Date:   Fri May 1 12:07:44 2015 -0500
+
+    Merge pull request #2772 from lumeet/errno_eacces_dir
+    
+    Make Dir raise Errno::EACCES
+
+commit 26ed114efb12f1b59a2f3f7915b876e80c349a31
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Apr 17 13:09:45 2015 -0500
+
+    Add encoding parameter for Dir#each and foreach. Fixes #2547.
+
+commit f41b6d9e38741292a3b274be54b1686b1dc4bd5d
+Author: Teemu <teemu@aikais.in>
+Date:   Mon Feb 9 19:52:18 2015 +0200
+
+    Make filepaths with null byte fail
+    
+    This patch applies to several methods that deal with filepaths in Dir,
+    File, File::Stat, IO, and Kernel. All of these methods now raise an
+    argument error if a null byte is detected in a path argument.
+    
+    Some of these methods are also slightly refactored, mostly by replacing
+    context.runtime with just runtime where applicable.
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/RubyDir.java
+    	core/src/main/java/org/jruby/RubyFile.java
+    	core/src/main/java/org/jruby/RubyFileStat.java
+    	core/src/main/java/org/jruby/RubyIO.java
+    	core/src/main/java/org/jruby/RubyKernel.java
+    	test/mri/excludes/TestFile.rb
+
+commit e9fb65c64894c7811e56942f8b7cf17a6f296891
+Author: Christian Meier <m.kristian@web.de>
+Date:   Mon Feb 16 15:09:02 2015 +0100
+
+    make sure URLResource always gets a runtime
+
+commit b6750d276a328ad84e4518716818aae52d21ec09
+Author: Teemu <teemu@aikais.in>
+Date:   Sat Mar 28 18:09:15 2015 +0200
+
+    Make Dir raise Errno::EACCES
+    
+    The change affects at least Dir.new, Dir.open and Dir.entries.
+    Errno::EACCES is now raised unless access to the directory is
+    permitted.
+
+commit ab22fcafed5b1e533046e5d87887e9cb1d572880
+Merge: 8ddd5be 6bd5f8d
+Author: Thomas E Enebo <tom.enebo@gmail.com>
+Date:   Wed Feb 11 08:20:51 2015 -0600
+
+    Merge pull request #2583 from lumeet/filename_with_null_byte
+    
+    Make filepaths with null byte fail
+
+commit b949c59d55929b4532fcae05450fc056f7fcc8e7
+Author: Christian Meier <m.kristian@web.de>
+Date:   Tue Dec 23 13:12:54 2014 +0100
+
+    allow to change directory into the uri:classloader:// space
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/RubyDir.java
+
+commit 6bd5f8d4919389fe4c7fe8ff91f2a577abebb04a
+Author: Teemu <teemu@aikais.in>
+Date:   Mon Feb 9 19:52:18 2015 +0200
+
+    Make filepaths with null byte fail
+    
+    This patch applies to several methods that deal with filepaths in Dir,
+    File, File::Stat, IO, and Kernel. All of these methods now raise an
+    argument error if a null byte is detected in a path argument.
+    
+    Some of these methods are also slightly refactored, mostly by replacing
+    context.runtime with just runtime where applicable.
+
+commit 6718bdff2d1ba97155695628edbe6294231dcbce
+Author: Teemu <teemu@aikais.in>
+Date:   Sat Jan 31 16:21:08 2015 +0200
+
+    Minor fixes to Dir methods
+    
+    * Make Dir#inspect and Dir#path work with empty path.
+    * Remove redundant test exclusions and replace "needs investigation"
+      with a proper description for others.
+
+commit 2ecb4ed8df0061d13d0f94053e7aeace76a67b1f
+Author: Christian Meier <m.kristian@web.de>
+Date:   Sat Dec 27 18:24:22 2014 +0100
+
+    revert part of ef39dd52226b2f57b2fb4464a4c9c24579f948ce
+
+commit ef39dd52226b2f57b2fb4464a4c9c24579f948ce
+Author: Christian Meier <m.kristian@web.de>
+Date:   Tue Dec 23 13:12:54 2014 +0100
+
+    allow to change directory into the uri:classloader:// space
+
+commit c2ea125fc36718935f3bd166f2bde56896ba9d1f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Nov 8 12:23:13 2014 -0600
+
+    Add Dir#fileno as unimplemented method.
+
+commit a88339329d708b9529b924ad4f208ec674f03108
+Merge: df432f4 b4edc3f
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Sep 2 12:10:22 2014 -0500
+
+    The painful merge with jruby-1_7
+
+commit 0163e4b0da86cc3ab4d2426e82979ae5105d0fd2
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Sat Aug 30 10:16:18 2014 -0500
+
+    Use builtin posix vs creating one per regularfileresource.  Besides overhead of lots of new jnr-posix instances we need to push this into resource because we do not know if native is enabled or disabled.  On platforms with native unable to load lstat could not execute.
+
+commit 2d31b2f81812b68b4b7652c3b0431ea2c49ef68b
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Aug 12 09:50:57 2014 -0500
+
+    Reduce Dir by one resource creation and make entries avoid extra boxing of entries
+
+commit 6ab4aabeb150b24ced2701683c5cd8b7d88817fa
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Aug 12 09:50:57 2014 -0500
+
+    Reduce Dir by one resource creation and make entries avoid extra boxing of entries
+
+commit d269590c79eb56175689e1aea710956fa7472786
+Merge: ae5ad64 78d80b5
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu May 1 09:54:27 2014 -0500
+
+    largish merge from jruby-1_7
+
+commit 9c758b4f31c0eeb50d77b3dad28438aca365e857
+Author: tduehr <tduehr@gmail.com>
+Date:   Thu Feb 27 21:54:56 2014 -0600
+
+    fix initialize visibility
+
+commit 4e564789a04fb4e7bf7d26f3623a3c08e350351d
+Author: Lucas Allan Amorim <lucas.allan@gmail.com>
+Date:   Fri Mar 14 18:00:35 2014 -0300
+
+    [Issue-1556] - Dir.home should first try to return the path defined in HOME
+    
+    Dir.home should point to the path defined in HOME and if it's nil then
+    it should point to path defined user.home and if both are nil then
+    should point to the path defined in LOGDIR.
+
+commit 3a1961b0980ed8ceec0eea8703c726cfab28b118
+Author: Lucas Allan Amorim <lucas.allan@gmail.com>
+Date:   Fri Mar 14 14:13:02 2014 -0300
+
+    [Issue-1556] - Dir.home should first try to return the path defined in HOME.
+    
+    Dir.home should point to the path defined in HOME and if it's nil then
+    it should point to path defined user.home and if both are nil then
+    should point to the path defined in LOGDIR.
+
+commit 7a58e62e3d0400160bd46b88922451013ae62c61
+Merge: 79f2a0d cde69f8
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Mar 3 11:29:25 2014 -0600
+
+    Merge with jruby-1_7
+
+commit cde69f8f285e4b86f1ff6d481997d6ca991d971b
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Mar 3 11:17:17 2014 -0600
+
+    Add backwards compat shims in case Java code is calling these methods
+
+commit 7280edab8d97fce5d7a56b5aa762c6b063631f5f
+Author: Dmitry Ratnikov <ratnikov@google.com>
+Date:   Sun Feb 23 22:23:21 2014 -0500
+
+    Switch to use resources to get directory entries.
+    
+    Current jar Dir.entries implementation doesn't return "." and ".." so to keep this behavior in 1.7,
+    I've moved the "." and ".." addition logic to RegularFileResource. Unfortunately fixing the jar files to
+    support such behavior would require and invasive refactor of File/Dir implementations to be able to support
+    expanding '..' in jar file names.
+
+commit 55676c22798d7590c1f0acf699b0677a87976c48
+Author: Dmitry Ratnikov <ratnikov@google.com>
+Date:   Sat Feb 22 19:12:32 2014 -0500
+
+    Make ThreadContext available
+
+commit b78e3fe65d5a4bf06652d7928c58890cc82551aa
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Feb 13 11:14:59 2014 -0600
+
+    Ruby 2.1 Dir.exists? has been deprecated
+
+commit 2814dfa46704994735339335c0a6b5c2f9a43bbf
+Author: Dmitry Ratnikov <ratnikov@google.com>
+Date:   Sat Feb 1 19:32:23 2014 -0500
+
+    Now that regular file globbing handles jar entries well, no need for special parsing logic
+
+commit 7c018a4d913371b0f938f6cbd928e655ba46551e
+Author: Dmitry Ratnikov <ratnikov@google.com>
+Date:   Sat Feb 1 19:32:23 2014 -0500
+
+    Now that regular file globbing handles jar entries well, no need for special parsing logic
+
+commit ca3485f1869ba32726a0fed990bc062ff0bb1c29
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Oct 30 22:53:41 2013 -0500
+
+    De-version Dir
+
+commit babf3c9164d10eb6b4c6d910d1fc20e30fdf3624
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Oct 23 14:27:46 2013 -0500
+
+    Fixes #1154. Pathname.new(Dir.new('dir_name')) raises a TypeError (Dir missing to_path)
+
+commit 4a3b088aa91ecd8b3c033ec895c30f04a748b715
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Oct 23 14:27:46 2013 -0500
+
+    Fixes #1154. Pathname.new(Dir.new('dir_name')) raises a TypeError (Dir missing to_path)
+
+commit d543007defae7c0110252d0aa5eb7cfcc0afd18b
+Merge: 8c07830 02a9d82
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Oct 23 14:32:00 2013 -0500
+
+    Merged 1.7 and then tweaked to make to_path be a proper alias to path since it is in 1.9+
+
+commit 02a9d82b56c205bd418f10a27affe4d8f67737f6
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Oct 23 14:27:46 2013 -0500
+
+    Fixes #1154. Pathname.new(Dir.new('dir_name')) raises a TypeError (Dir missing to_path)
+
+commit 8c0783089efd46d0516f6b953fdd1c7e54bb6694
+Merge: caa6eae 1cce20f
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Oct 23 12:02:06 2013 -0500
+
+    Merge it forward son
+
+commit 1cce20fc1487bd1ec340a660cc4d16ba8dfe9069
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Oct 23 12:01:10 2013 -0500
+
+    Fixes #1153.  Dir[] should accept zero arguments
+
+commit 9c6ecec3b2edf850782bc5697b19296f420b5250
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Oct 8 10:38:36 2013 -0500
+
+    De-version Dir
+
+commit 697e6895affa646849a685ed58f6f84795c853aa
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Oct 4 23:37:52 2013 -0500
+
+    Eliminate calls to Ruby.is1_8 and is1_9.
+
+commit d1f89e004fdc78dff75407c82123e6c9e8b406bb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Sep 12 18:48:16 2013 +0200
+
+    Make ClassIndex into an enum, to prevent issues like #1004.
+
+commit 28c6fbc4e883bc1c9e9242d1da1cb2b785f55339
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 3 12:46:45 2013 -0500
+
+    Move to @mkristian's proposed layout, with some modifications.

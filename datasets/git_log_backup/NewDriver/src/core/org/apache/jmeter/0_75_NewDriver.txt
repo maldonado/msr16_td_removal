@@ -1,0 +1,300 @@
+commit f13a9f949a4651e8c12c1980013fcfecc9a1d1f1
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Dec 5 17:31:47 2014 +0000
+
+    Replace System.getProperty("file.separator") with File.separator throughout (Also "path.separator" with File.pathSeparator)
+    Bugzilla Id: 57310
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1643364 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 65bd9c284c0f2f89b5125e4ce93fdd9cf5bc1628
+Author: Felix Schumacher <fschumacher@apache.org>
+Date:   Mon Nov 24 18:36:36 2014 +0000
+
+    Bug 57193: Add param and return tags to javadoc
+    Bugzilla Id: 57193
+    
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1641439 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 7d8dab36d80a9a196c7706d070b29f56a2514512
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu Aug 29 19:51:53 2013 +0000
+
+    Java 5 generic for loop
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1518785 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 829edbe62d8842ef9a037c1378da8709f07ee48f
+Author: Rainer Jung <rjung@apache.org>
+Date:   Thu Aug 29 19:12:58 2013 +0000
+
+    Improve class loading:
+    - New property "plugin_dependency_paths" for
+      plugin dependency jars. Paths get added to JMeter
+      loader but not the system class path.
+    - Jar files contained in a directory configured
+      in one of the properties "search_paths", "user.classpath"
+      or "plugin_dependency_paths" are automatically added
+      to the same property as well. This is not true for jar
+      files contained in sub directories.
+    Bugzilla Id: 55503
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1518769 13f79535-47bb-0310-9956-ffa450edef68
+
+commit aeb0793e3a2f8f7d494f9cd03f1e0dac1558d193
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Mar 17 23:28:26 2013 +0000
+
+    Tab police - also remove trailing spaces in same files
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1457590 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 9ab6b6240f50d3dae399d46bf207c2a00d14ddee
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Nov 27 00:14:39 2012 +0000
+
+    Move to Java 6
+    add @Override for interface implementations
+    Bugzilla Id: 54199
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1413956 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f27b1351836f4e25b1203207558e337410eff28c
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Sun Sep 2 19:53:23 2012 +0000
+
+    Remove useless brackets
+    very little optimisation toarray
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1380043 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c7f8cdf7cb641883ee03c7f0c7039314060b45a0
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Sun Dec 4 12:22:22 2011 +0000
+
+    Use AccessController#doPrivileged to create classloader (Findbugs)
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1210098 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e923f83e043dbaff6e8bffbe50a2e5eeb63bc544
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Wed Feb 2 16:41:56 2011 +0000
+
+    Bug 50708 - Classpath jar order in NewDriver not alphabetically
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1066521 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f52cf4362f23c38f642b71ec74b8eb135bc5147e
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Oct 10 15:18:56 2009 +0000
+
+    StringBuffer => StringBuilder
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@823869 13f79535-47bb-0310-9956-ffa450edef68
+
+commit fa4d33c97ba2daf030913f34bac1da6bee892858
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Aug 15 10:45:00 2009 +0000
+
+    Fix up some raw types
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@804452 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b2dff2302854bbb5cdffb0235a36c0faaa470980
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Mon Aug 11 10:58:35 2008 +0000
+
+    Allow spaces in JMeter path names (apply work-round for Java bug 4496398)
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@684709 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 15840f7d683fdce7838e763e1c0aeb3559cc57ad
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Jul 6 23:42:12 2008 +0000
+
+    Detab
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@674362 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 68feaaef05f342a9bc8b04a0b9300cedff29fbfd
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Apr 27 20:03:13 2008 +0000
+
+    // Ensure that directory URLs end in "/"
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@652009 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 17bdd2918e284b7e56b147c87cad3657c2ad0da8
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Apr 27 17:28:48 2008 +0000
+
+    Unused import
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@651987 13f79535-47bb-0310-9956-ffa450edef68
+
+commit dc1248013872b9d6442399e0d7f8fa16edf0c6b1
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Apr 27 15:54:11 2008 +0000
+
+    Tidyup; ensure we use ENGLISH Locale for lower-casing
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@651967 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 0d2c7ef53962e4145ced09f8b6670233ea03201e
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Mon Oct 29 17:33:36 2007 +0000
+
+    Exit with error code if cannot start OK
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@589758 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 0cc9c1afb85f4fc8d5dbbcfaefa571135870a5cb
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Jan 19 17:01:25 2007 +0000
+
+    Bug 41414 - Mac OS X may add extra item to -jar classpath
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-2@497877 13f79535-47bb-0310-9956-ffa450edef68
+
+commit bd5d121d68038f3e712ec463a2172dd7026f52f8
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Jan 7 17:46:38 2007 +0000
+
+    Update license (remove copyright)
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-2@493779 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 85aa1c8e4071ed5602d7bfcbd08bba72ee4c6248
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu Jun 1 18:08:17 2006 +0000
+
+    New addPath() utility method
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-1@410903 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d7980533297e4b12d2bb4740be95ff81d4272aae
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu May 4 01:43:43 2006 +0000
+
+    Print JMeter home dir on failure
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-1@399507 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a7d91d8899e528b240ca383a889044659aed7234
+Author: Peter Lin <woolfel@apache.org>
+Date:   Wed Oct 5 19:38:49 2005 +0000
+
+    updating more core classes with changs for the reporting tool.
+    peter
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-1@325814 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d2799febb8a89bcf0f9d70cadabe2cb561e798f2
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu Sep 22 23:02:12 2005 +0000
+
+    New addURL(URL) method
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-1@325794 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d6df03d19dbe09434c7ade34017a1922400134aa
+Author: Peter Lin <woolfel@apache.org>
+Date:   Wed Sep 21 19:38:30 2005 +0000
+
+    checking in the changes for the new Classpath feature. need to update the docs
+    tonight and explain how it works, so that users don't get confused
+    peter
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-1@325784 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 9ded6dc920ce3954f68ed81fba562a0e60a922f3
+Author: Peter Lin <woolfel@apache.org>
+Date:   Fri Sep 2 00:58:06 2005 +0000
+
+    checking in the stuff for JUnit sampler, since HEAD is now jdk1.5. the changes are minor
+    and should not affect things
+    peter
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-1@325709 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 76159a5b953d9dc5518b2ccb03bfbc1c4908837d
+Author: Michael Stover <mstover1@apache.org>
+Date:   Tue Jul 12 20:51:09 2005 +0000
+
+    Formatting Code to basic Java Standard
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@325542 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 85757f397b9b0920d88382945db2d84d971428c6
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Feb 13 02:40:55 2004 +0000
+
+    ASF L V2
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@324283 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 5fa47a62330e941a8f23a095cbc386da241c3a39
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Nov 18 18:12:32 2003 +0000
+
+    Report missing or inaccessible lib and lib/ext directories instead of crashing with NPE
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323701 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a3a883e961707098893d18fc061c5d368e222cf8
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Mon Nov 17 17:58:26 2003 +0000
+
+    Fixup to allow JMeter to run from a UNC directory
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323698 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 0b1faf3b95185b30007315c581f3453d709c5059
+Author: Jeremy Arnold <jeremy_a@apache.org>
+Date:   Sun Jun 15 18:07:26 2003 +0000
+
+    JavaDoc and formatting updates.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323352 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 31ecdbb04d2bc04d4a64ec3274e1ff3fc32e8454
+Author: Michael Stover <mstover1@apache.org>
+Date:   Tue Oct 15 18:53:31 2002 +0000
+
+    Extracting non-JMeter specific classes to separate library
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@322904 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3d180c7d3d2f92f7d721586e7b87c16d884eecb2
+Author: Michael Stover <mstover1@apache.org>
+Date:   Fri Aug 23 19:10:13 2002 +0000
+
+    Fixing logging during unit tests
+    Fixing mail jar availability issue
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@322865 13f79535-47bb-0310-9956-ffa450edef68
+
+commit dd9932a03c9826150ab4c98914a145ba5f3248ae
+Author: Michael Stover <mstover1@apache.org>
+Date:   Sun Aug 11 19:24:54 2002 +0000
+
+    New src directory organization, committing all files
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@322831 13f79535-47bb-0310-9956-ffa450edef68

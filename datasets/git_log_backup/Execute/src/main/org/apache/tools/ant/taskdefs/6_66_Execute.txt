@@ -1,0 +1,1240 @@
+commit 13274215964849487bd1c96f125d6d09967bd22d
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Sun Apr 28 19:53:25 2013 +0000
+
+    simplifying Execute.getEnvironmentVariables since we are now always at least on Java 1.5
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1476822 13f79535-47bb-0310-9956-ffa450edef68
+
+commit da5f3bfd256e383926c6ece58dba15a7d4bd5761
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Tue Aug 21 14:27:46 2012 +0000
+
+    java 5, continued
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1375571 13f79535-47bb-0310-9956-ffa450edef68
+
+commit abec7e48efa22a34d81b78adbfbf44627de85ccd
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Jun 15 04:28:24 2012 +0000
+
+    PR 52706: allow command launcher to be selected via a task.  Submitted by Vimil Saju
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1350460 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c60459738b06451543a97e2f41d8de043ef5478c
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Nov 26 15:27:51 2010 +0000
+
+    keep case of env var keys the user has added
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1039413 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ff41336fc19f549bc995898f4543da6d7e9d9bf9
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Nov 26 15:01:46 2010 +0000
+
+    provide a Map based method to access environment variables and use that.  Don't use System.getenv() on OpenVMS.  PR 49366
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1039400 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 0c20e94ffb2aeb81fcedcd82505a7a7f0e8308fb
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Jun 30 03:25:26 2010 +0000
+
+    revert local change that should never have been committed
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@959175 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 62c16a4a5d7520c7283d10d0c1633ee0a3d2e5d5
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Jun 30 03:21:29 2010 +0000
+
+    address efficiency concerns
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@959173 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 35bcdc15f7d829f94651c334c9ebfb09c0e7cd37
+Author: Jesse N. Glick <jglick@apache.org>
+Date:   Thu May 27 14:46:15 2010 +0000
+
+    Use System.getenv where available. Faster and more reliable than /usr/bin/env and its ilk.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@948853 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 766f1513921d35f7c16b8b962f583dcf508a098a
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Feb 1 05:35:08 2010 +0000
+
+    a few more places where FileUtils.close can be used + a few places where a BufferedWriter might be unflushed when the underlying stream gets closed.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@905179 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 028ba47c8246f510012ef061d879d05240b90c71
+Author: Jesse N. Glick <jglick@apache.org>
+Date:   Wed Aug 26 18:48:21 2009 +0000
+
+    Some miscellaneous updates given that JDK 1.4 can be assumed.
+    The biggest outstanding JDK 1.3 code is in Locator but I am scared to touch it.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@808156 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f62d563414e6848898008af84073651eb83a7959
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Jul 13 05:46:17 2009 +0000
+
+    PrintWriter hides exceptions, avoid it
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@793462 13f79535-47bb-0310-9956-ffa450edef68
+
+commit aaf629b7abe464a3b5727ed9b93582f7628229f4
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Jun 9 13:08:48 2009 +0000
+
+    pass on IOException from Runtime.exec as the old code did - and as promised by the javadocs.  This fixes ant-contrib's tests in Gump.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@782990 13f79535-47bb-0310-9956-ffa450edef68
+
+commit de5ed88e5e59cd9eb7f0c91714b1551635aea835
+Author: Jacobus Martinus Kruithof <jkf@apache.org>
+Date:   Sat Apr 25 10:55:30 2009 +0000
+
+    Remove pre java 1.3 construct.
+    Remove spawn from Execute (spawn from ExecTask is actually used, the one here was never used)
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@768513 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 94dd480d07ac2028fc94d46a253abcd2ddb189a8
+Author: Jacobus Martinus Kruithof <jkf@apache.org>
+Date:   Fri Jan 4 17:45:12 2008 +0000
+
+    request from cactus team, backward incompatible change in FileUtils made backward compatible
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@608939 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c4a771c03a2533241ccccb7f77e6bd9b9bbe3e99
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Wed Sep 19 12:04:42 2007 +0000
+
+    magicnumbers
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@577263 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f3e4a4790e917dbb1ba838de047c6826810e09b9
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Mon Sep 17 11:13:48 2007 +0000
+
+    magic numbers
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@576370 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d5836ac061734031a67a6c3bb5fb2fe1e73e566f
+Author: Jacobus Martinus Kruithof <jkf@apache.org>
+Date:   Sun Apr 8 12:08:27 2007 +0000
+
+    Changes after static code analysis.
+    Code totally equivalent
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@526545 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3fe578a16dfaae9a9bb1f24561e3bba6b9c88830
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Sun Dec 10 22:54:07 2006 +0000
+
+    retain the original casiness when handing replaceing case insensitive env properties
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@485295 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f0e86c70ce9b1818814e6ba38afaf7477c913f8e
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Sun Nov 5 23:03:47 2006 +0000
+
+    checkstyle
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@471562 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f58d3967f08c8cc033ce0af114bb1ed87ca08664
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Wed Nov 1 23:00:52 2006 +0000
+
+    checkstyle
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@470130 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e089347c34431678e39d7ab08e9b2223d4ed7240
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Sat Sep 16 23:48:30 2006 +0000
+
+    bugzilla 28874: make env case insensitive for windows
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@446979 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 2e897819a83981a1f4de2e1cc72e33f080fcf573
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Sep 1 18:49:27 2006 +0000
+
+    copy2license.pl
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@439418 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 82ee6de3c95c68d576e3136cabb4082af50049d0
+Author: Kevin Jackson <kevj@apache.org>
+Date:   Mon May 29 03:05:26 2006 +0000
+
+    remove deprecated code
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@410015 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 35a452e2acdd75faa9596e3a4737f2b495a0b074
+Author: Steve Loughran <stevel@apache.org>
+Date:   Tue May 9 20:25:48 2006 +0000
+
+    Adding a new non-static method, isFailure() to Execute. As well as simplifying a common operation, it is a foundation for instance specific logic to decide if an execute failed, which could be of use in VMS land.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@405524 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b73a6c6b827631e22dd1c671351d9bf2c6233d14
+Author: Jacobus Martinus Kruithof <jkf@apache.org>
+Date:   Sat Mar 25 21:27:51 2006 +0000
+
+    Improved use of MagicNames for ant internal properties
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@388834 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f40b51339c658e3535a184cf869d71482c0665e7
+Author: Steve Loughran <stevel@apache.org>
+Date:   Wed Jul 6 12:26:05 2005 +0000
+
+    opening fencepost error fixed by Knut Wannheden
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@278448 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c5e898eba1186671ae711c74497362310391b6b5
+Author: Jacobus Martinus Kruithof <jkf@apache.org>
+Date:   Sun Jun 12 18:04:16 2005 +0000
+
+    Removed unused private fields
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@278421 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 94b7b6cd05c230253d1538f1f41cdb8ba166f315
+Author: Jesse N. Glick <jglick@apache.org>
+Date:   Mon Mar 28 21:43:18 2005 +0000
+
+    #31928: stop a forked process if the thread running <java> is stopped.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@278066 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 2a291dca9249d6a4958d9898282fa67343bf59b7
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Mar 10 12:50:58 2005 +0000
+
+    Various javadoc and code-style fixes by Kev Jackson
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277868 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 704e2490d33af59280cbe23bc2fb807378fac603
+Author: Jacobus Martinus Kruithof <jkf@apache.org>
+Date:   Wed Mar 9 00:20:42 2005 +0000
+
+    removed lines with $Revision: x.y $ lines (after verification)
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277845 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a5d61d122cd829f341145dd99151964c9898c5d0
+Author: Steve Loughran <stevel@apache.org>
+Date:   Tue Mar 8 11:51:15 2005 +0000
+
+    typo in the javadocs
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277832 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 45088ad68ed89f133b9992c9f64376b9cbed4e8d
+Author: Steve Loughran <stevel@apache.org>
+Date:   Mon Mar 7 15:23:37 2005 +0000
+
+    javadocs
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277813 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 2f6f27f4272a9d4c69cebcb5b23e2f8ceee35a52
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Feb 2 07:59:37 2005 +0000
+
+    Make Jikes happy
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277567 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 296f7cecd0347b79f837be45c671e0fa9054f402
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Fri Jan 28 22:23:30 2005 +0000
+
+    javadoc, some refactorings,
+    attempt to delete VMS command file when process completes.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277558 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 257dadeaf0fb8588b80fa71b24ee3aca38ea19b7
+Author: Jacobus Martinus Kruithof <jkf@apache.org>
+Date:   Thu Jan 6 12:05:10 2005 +0000
+
+    Make use of FileUtils in a uniform way via the getFileUtils method and a static final reference in the using files.
+    Also removed unused/* imports along the way.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277295 13f79535-47bb-0310-9956-ffa450edef68
+
+commit db48fbb829447064857a6b918e78cdab0b0c89b1
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Nov 22 09:23:37 2004 +0000
+
+    Various checkstyle violations
+    
+    Submitted by:	Larry Shatzer
+    
+    And some
+    
+    (untabify (point-min) (point-max))
+    
+    on some files.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277063 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3f31dc8f7a3bfbca7fc1b633742521ce5e4cb6c4
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Nov 12 15:17:12 2004 +0000
+
+    Make Jikes happy
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277030 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c31f5ae25766b6bab90b1d0ac86eab2c7f66b804
+Author: Steve Loughran <stevel@apache.org>
+Date:   Wed Oct 6 22:41:52 2004 +0000
+
+    Somewhat reworked patch for bug# 31106, submitted by Isao Yanagimachi.
+    Took the opportunity to clean up the tasks slightly, such as removing duplication in various methods.
+    We need a unit test for long command line java, and many parameter java, just to see what breaks.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276922 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 74c147ed2ae75824b2c163c41631945f414341bd
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Aug 11 09:37:42 2004 +0000
+
+    Make NetCommand#setDirectory actually do something
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276768 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e8479cb9fc91d4ce8f2afbb4b3c7063d0e6874c6
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Fri Jun 18 13:42:04 2004 +0000
+
+    Exit status fixes.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276590 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c25de77022775eedda72e9eb162b2397aee042a8
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Tue Apr 27 18:14:54 2004 +0000
+
+    Move Process stream closure into a new public static method,
+    closeStreams(Process).
+    PR: 28565
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276419 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 591f197bdd93e2e248f881f572aa0ae782d2aabb
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Tue Apr 27 15:30:56 2004 +0000
+
+    More typo corrections (not mine).
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276418 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e69dbc9413b496f014e9eefc9e1bfb37f2231cfb
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Tue Apr 27 15:24:46 2004 +0000
+
+    Fix typo.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276417 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 08fc13867132195b9d68d31ebb7f549a12937652
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Tue Apr 27 15:23:25 2004 +0000
+
+    Close process streams in waitFor(Process).
+    PR: 28565
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276416 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 14211b597afbfd0bee39c381afe3d681704f7eeb
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Thu Apr 1 19:11:02 2004 +0000
+
+    I/O-intensive processes hung when started by Execute.spawn()
+    PR: 23893/26852.
+    Submitted by: Daniel Spilker
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276272 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1b72f9a64919a7aa775038eaf63d8c4c96109ee3
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Tue Mar 30 23:22:14 2004 +0000
+
+    Add Windows 2003 support to getProcEnvCommand() + minor refactoring.
+    PR:  28067
+    Submitted by:	Irene Rusman
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276263 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c885f568369156a62e3ccb5b4b93b73b9d054443
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Tue Mar 9 16:49:09 2004 +0000
+
+    remove authors from files
+    PR: 27177
+    Obtained from: J.M. (Martijn) Kruithof
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276208 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 278781dcd669412e5e35cc95d8a96e0b2a278f50
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Mon Feb 9 21:05:47 2004 +0000
+
+    Copyright owner is The Apache Software Foundation
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276065 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 66555ca10d24bbfc55e710b9d65f809cfe713dab
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Wed Feb 4 20:38:09 2004 +0000
+
+    Remove trailing spaces in all java files
+    in order to make checkstyle happy
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276017 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ca1513552f7af7fc19de490fbe2d88adb6c993ad
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Tue Feb 3 22:44:50 2004 +0000
+
+    Switch to Apache Software License 2.0
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276010 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6c29f89924a6101cc433f0116dbb62f48346e483
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Jan 30 15:37:08 2004 +0000
+
+    Fail with a useful error message when the user asks us to fork a
+    process in a directory that doesn't exist.
+    
+    PR: 25455
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@275988 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8e7167b58db67939f69baea8692c296a23641761
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Sep 25 14:51:07 2003 +0000
+
+    The user.dir trick doesn't seem to work on OS X anymore, PR 23400
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@275359 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 655ad8f525f6d55fe32cbecdd3ef437b0f5d5fa5
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Sep 25 12:36:19 2003 +0000
+
+    improved OpenVMS support, submitted by Knut Wannheden <knut dot wannheden at paranor dot ch>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@275346 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 2bd38f0df1294b986163ec1ff27d12d0aab9c270
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Sep 19 08:31:06 2003 +0000
+
+    Restart stream reading and writing for each execution in <apply>.
+    
+    PR: 22446
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@275263 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 36accb02b3ab32954df2776151ab418347542658
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Sep 18 14:21:41 2003 +0000
+
+    Treat timeout like a failed execution, fix comments on Execute#getExitCode
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@275258 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8268a3c4e43813becf50d3d892b077d96f519746
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Sat Sep 13 12:58:33 2003 +0000
+
+    Spelling
+    Submitted by: Larry Shatzer (Larry dot Shatzer At Spirent Dot Com)
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@275235 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 0c42e047b2d21916e4aada7ca5f54466cccfdf94
+Author: Jan Materne <jhm@apache.org>
+Date:   Wed Sep 3 16:47:17 2003 +0000
+
+    Checkstyle
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@275180 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3396e7c32132e8bff2d50196131cf641ed8d1fb2
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Fri Aug 22 15:25:45 2003 +0000
+
+    Remove direct call to deprecated project, location, tasktype Task field,
+    replaced by an accessor way into tasks.
+    Remove too some unused variable declaration and some unused imports.
+    PR: 22515
+    Submitted by: Emmanuel Feller ( Emmanuel dot Feller at free dot fr)
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@275133 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e67a40fbb339967749e3c2f6e20d83cccbb22c58
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Aug 1 10:08:12 2003 +0000
+
+    Revert part of the commit that made tasks use Execute#isFailure.
+    
+    On OpenVMS the Java VM will exit with a return code of 0 on success,
+    even though this is going to signal a failure for the OS.  All tasks
+    that spawn new VMs have now been reverted to explicitly check for
+    retCode != 0 instead of Execite.isFailure(retCode).
+    
+    We could as well introduce Execute#isJavaFailure or something like
+    this in case future VM's on OpenVMS will start to do the right thing.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@275005 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 35845f7053e12288a95bf9720532d772ea2fa60b
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Mon Jul 28 10:39:31 2003 +0000
+
+    This change allows exec to start a process which will run independently of ant.
+    I have used the patch prepared by Charles Hudak and Peter Nimmervoll, but made it even
+    simpler, in the sense that I do not connect at all the new process to stream handlers
+    and the ant logging system, disabling input, output, error, and return exec attributes
+    in the case of spawn.
+    Strangely, it works well on Windows if one puts a sleep of one second after having spawned
+    the process. Why ? No idea.
+    PR: 5907
+    Submitted by: Charles Hudak ( CHudak at arrowheadgrp dot com)
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274963 13f79535-47bb-0310-9956-ffa450edef68
+
+commit efb4de409607632a54e6831752edeb5a6adb221b
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Sun Jul 27 23:22:01 2003 +0000
+
+    style
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274960 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 96404f87003ffbf45be88a8da566ee90d89f812f
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Jul 25 14:06:36 2003 +0000
+
+    Add support for OpenVMS logicals as "environment variables".
+    
+    Submitted by:	Knut Wannheden <knut dot wannheden at paranor dot ch>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274952 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d47dfcbc98b247c96b409f811a8a5a045e58cdc7
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Jul 25 12:14:44 2003 +0000
+
+    Use Execute.isFailure
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274951 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f30f3d21cb86225cc13531c5fe463ac1dd78892d
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Jul 25 10:06:32 2003 +0000
+
+    Add OpenVMS support to <exec>.
+    
+    PR: 21877
+    Submitted by:	Knut Wannheden <knut at paranor dot ch>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274949 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3a35c7d914d8b5a1f203561ae6f89afb5d2b80ec
+Author: Conor MacNeill <conor@apache.org>
+Date:   Sat Jul 19 08:11:10 2003 +0000
+
+    style
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274858 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 743a75153a9d68eb97a9d686c9ed46d059d13480
+Author: Conor MacNeill <conor@apache.org>
+Date:   Tue Jul 15 07:19:15 2003 +0000
+
+    Ensure terminated processes are allowed to complete before finishing the
+    Ant shutdown
+    
+    PR:	8510
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274821 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ed475344e72f1fb4d9e19cf627ddf8e67cc23942
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri May 23 13:40:37 2003 +0000
+
+    NonStop Kernel is Unix as far as Ant is concerned.
+    
+    <attrib> doesn't like to be called with parallel.
+    
+    <chgrp> and <chown> should also disable the addsourcefile attribute.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274607 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 078e8aaeaa6472c516882219c9fe8538838fe990
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Apr 23 15:57:43 2003 +0000
+
+    Improve OS/2 support:
+    
+    * Apparently the vmlauncher in OS/2's JDK 1.3 doesn't work properly,
+      disable it.
+    
+    * Add REXX scripts to run Ant.
+    
+    * Add OS/2 specific notes to the docs.
+    
+    Submitted by:	Zdenek Wagner <wagner at cesnet dot cz>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274507 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 006b093ab20fd85da0a95dfa967d3eb4d5d26fe7
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Apr 2 14:53:22 2003 +0000
+
+    Don't hardcode /usr/bin/env for Unix.
+    
+    PR: 17642
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274375 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f624f1bf4dbb8bbb60d0f2c5ceb34dc1ef96627d
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Mar 14 16:01:04 2003 +0000
+
+    Add support for HP's NonStop Server (formerly known by several names,
+    including Tandem).
+    
+    Submitted by:	Mirko Zeibig <Mirko dot Zeibig at t dash systems dot com>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274262 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c89a66172df55665b27e2ef3626453d8958f9767
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Feb 19 07:57:30 2003 +0000
+
+    Preparing merge to 1.5 branch
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274134 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 88251d50a440d83649b7ae5938d57f2228c61fc5
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Feb 11 10:08:39 2003 +0000
+
+    Don't use "cd /d" on OS/2.
+    
+    PR: 16924
+    Submitted by:	Zdenek Wagner <wagner at cesnet dot cz>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274052 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1dc8a079057e191ca4c158f36843c2c9e9f9be52
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Feb 10 14:15:00 2003 +0000
+
+    Remove Jakarta Project from license
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274040 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8e67850ad66cf55fb693bbe2375b64ce96a38459
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Sep 27 08:18:51 2002 +0000
+
+    Add <os> and <exec> support for OS/400.
+    
+    PR: 13047
+    Submitted by:	Brian Farrar <brian_farrar at countrywide.com>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273380 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8f413c12084a80db24f4cdfd6b8f908d4e75556f
+Author: Peter Donald <donaldp@apache.org>
+Date:   Thu Jul 25 15:21:25 2002 +0000
+
+    Remove unused imports, remove glob imports, sort imports.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273169 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 15c3ec9b261891061a7d680d0c04860985b47e9d
+Author: Stephane Bailliez <sbailliez@apache.org>
+Date:   Tue Jul 23 19:33:43 2002 +0000
+
+    Destroy the process in case the thread is interrupted
+    otherwise it may run forever.
+    PR: 10345
+    Submitted by: Hal.Hildebrand@hellblazer.com (Hal Hildebrand)
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273160 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6bd8d6e938a45868902ecd1092858e8372933c7c
+Author: Magesh Umasankar <umagesh@apache.org>
+Date:   Sat Jun 22 23:38:38 2002 +0000
+
+    Merge changes made to 1.5 Beta2.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@272967 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ca91f8cb7e4f2bfe1a191dea6126a32649af9565
+Author: Magesh Umasankar <umagesh@apache.org>
+Date:   Sat Jun 1 12:26:43 2002 +0000
+
+    Merge changes made to 1.5 Beta1.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@272826 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 233ae85c5f835679681ece8d58a279b6bcf50550
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Apr 25 12:14:51 2002 +0000
+
+    Don't tell people we'd execute a given command line when we really do
+    something completely different.
+    
+    I hope this will cut down the "Ant swallows my quotes" reports to
+    those that are real problems in Ant and not just problems of
+    communication.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@272573 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 80080d456c543d039426db35bcf35d90694bbd96
+Author: Conor MacNeill <conor@apache.org>
+Date:   Mon Apr 15 15:33:11 2002 +0000
+
+    Reduce a small number of long lines
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@272443 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 03d0b81deb49fb4b6b87fa7dd648daf8f3bcbf4b
+Author: Conor MacNeill <conor@apache.org>
+Date:   Mon Apr 15 14:56:34 2002 +0000
+
+    Order of modifiers
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@272442 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c4266e92503f9365db8450324de2709fe4ff5423
+Author: Conor MacNeill <conor@apache.org>
+Date:   Mon Apr 15 13:36:22 2002 +0000
+
+    Coding Standard
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@272441 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c51b8ee3856f603a45ddcd068c3bb6b6c235eeb1
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Apr 15 08:39:18 2002 +0000
+
+    Normalize some @since tags
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@272425 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c6c232893c39257745a8f7a618bcdb5c59791cae
+Author: Conor MacNeill <conor@apache.org>
+Date:   Sun Apr 14 11:16:19 2002 +0000
+
+    Various coding standard fixes
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@272418 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b0fcc6e32c4bcff86415474ff407210889213548
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Apr 11 11:54:19 2002 +0000
+
+    Make sure <cvspass> closes its streams.  Cleanup.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@272370 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c2717b6fb34737b64377100b5821f29ebff7d589
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Mar 8 08:20:15 2002 +0000
+
+    give credit to Jeff for his NetWare patches.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@271791 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 2737393e9f982e62dcd84f35a5f342ae9fa07cd7
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Feb 19 17:29:32 2002 +0000
+
+    Fix problems in Linux version of <cab>:
+    
+    (1) it wouldn't use the basedir
+    
+    (2) all diagnostic messages have been swallowed
+    
+    Submitted by:	Ilya A. Kriveshko <ilya@kaon.com>
+    
+    Note that this patch needs the magic of Execute but also access to the
+    processes' standard input - this has been solved by adding a new
+    static method launch to Execute which hands out the Process instance,
+    the proper fix would be to handle input for the spawned processes as
+    well.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@271431 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 44b170125dfa5ee3189c220a433f2c48a4338727
+Author: Erik Hatcher <ehatcher@apache.org>
+Date:   Wed Feb 6 21:47:00 2002 +0000
+
+    Fix for #6288
+    NullPointerException if no environment variables found
+    
+    Patch supplied by jimbuuck@netscape.net
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@271191 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6c242cf4d1db0d610ee3c9e55cb47bd6228db754
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Jan 29 17:36:06 2002 +0000
+
+    a little more cleanup
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@271007 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 7c50981b050f3da4f9ac896fb47fda1dc1ad82d8
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Jan 29 17:26:38 2002 +0000
+
+    superfluos line
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@271006 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 17243cca1dc364a9d0267abf4911d351a91b234d
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Jan 29 17:22:56 2002 +0000
+
+    Add a new "os family" win9x.  If I had a decent name for Windows that
+    is NT or 2000 or XP I would have added a family as well 8-)
+    
+    Take advantage of that new family in Execute.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@271005 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 487989a0592c31de0e39bdb1f0d5aa8971922e57
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Jan 29 16:55:11 2002 +0000
+
+    make Execute support Windows XP.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@271003 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f3577cdb5ce536ebcae232a268d7e01f1897e4e9
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Jan 10 13:59:39 2002 +0000
+
+    License police on task definitions:
+    
+    (1) Make sure there is a Copyright notice on all files.
+    
+    (2) Make sure all years in which a file has been modified are
+    listed.
+    
+    (3) Make sure the format is consistent, i.e. separate consecutive
+    years with a dash, not a comma.
+    
+    (4) Change some references from Tomcat to Ant.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270658 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e3b6d1fe768d87352d3d0348638911045fc4668e
+Author: Stephane Bailliez <sbailliez@apache.org>
+Date:   Tue Jan 8 22:51:39 2002 +0000
+
+    Fix bad coding style.
+    then/else parts of if statement and loop body must always been enclosed
+    in a block statement.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270637 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 03d2b1c05fef9a3b37e4fbe70fffe08cbacf14f8
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Dec 11 14:05:43 2001 +0000
+
+    If running on JDK 1.3 register an exit handler that kills spawned
+    processes when the JVM exits.
+    
+    PR: 5125
+    Submitted by:	mnewcomb@tacintel.com (Michael Newcomb)
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270117 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a1694b917eb1cbec2c952c1ff85490e95e5b31c4
+Author: Steve Loughran <stevel@apache.org>
+Date:   Fri Nov 30 20:43:03 2001 +0000
+
+    new method, killedProcess() which returns true if there is a watchdog and it killed the process
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270055 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 37e1a98039e60853f78615172c19079cf94660ab
+Author: Peter Donald <donaldp@apache.org>
+Date:   Thu Nov 15 08:02:40 2001 +0000
+
+    Added slightly modified version of Execute.
+    
+    Script adds support for Netware in Execute. In the case of a non JVM supported execute (ie when changing dirs pre1.3) will call out to a perl script.
+    
+    Submitted by: "Jeff Tulley" <JTULLEY@novell.com>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269916 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ab9f91736afcdd65e4ca1da6c627f4df71f5289a
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Nov 2 07:56:53 2001 +0000
+
+    Take care of NetWare when searching for "java" and "javadoc", add
+    NetWare case for <property environment=... />.
+    
+    Simplify OS based decisions.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269851 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d17f3c4f2af31dd15b59bc9a2a42fdf2a6854c92
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Oct 31 11:05:00 2001 +0000
+
+    Use locale independent methods to identify OS or match attributes and
+    elements in build files.
+    
+    PR: 4100
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269847 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d12e6411ccc654bc10c102c8a085b6b0e4634f8b
+Author: Stephane Bailliez <sbailliez@apache.org>
+Date:   Sun Oct 28 21:31:01 2001 +0000
+
+    Code clean up:
+     - removed useless/duplicate imports
+     - added explicit imports rather than *
+     - changed specifiers order to be conform to JLS.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269827 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 480e64cc185a50f0038220a063ee2807efc5f7eb
+Author: Nico Seessle <nico@apache.org>
+Date:   Tue Aug 7 22:11:52 2001 +0000
+
+    property environment=.. failed under JDK 1.2 with a NPE because WinNTCommandLauncher.exec() got a null working directory and a null Project -  reported by <Aimee.Ukasick@med.ge.com>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269505 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 198880a644437e0cfb31cb65ee56c3d2d1b2d858
+Author: Sam Ruby <rubys@apache.org>
+Date:   Thu Aug 2 16:15:24 2001 +0000
+
+    Avoid NPE's - seen when running JUnit on Win2K
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269443 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 561a6d3abf96788e9441b46dc3066524bb5d3214
+Author: Conor MacNeill <conor@apache.org>
+Date:   Mon Jul 30 14:07:31 2001 +0000
+
+    Add some better error management for exec errors. By wrapping the real
+    exception in a build exception, hopefully we'll get a stack trace
+    
+    PR:	2542
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269410 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1dfa5ca002e81a1b89dbfd0fdd172bad141b829a
+Author: Conor MacNeill <conor@apache.org>
+Date:   Fri Jul 6 11:14:55 2001 +0000
+
+    Add new vmlauncher attribute to exec. This defaults to true to execute
+    commands using the VM's capabilities, where available. If it is set to false
+    the underlying OS's shell will be used, either directly, or through the
+    antRun scripts. Allows use of some shell features (such as associating scripts
+    with their interpreters under Windows
+    
+    PR:	413
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269273 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 00f96abeb0f095d484796ca6eee9f2494a72a885
+Author: Peter Donald <donaldp@apache.org>
+Date:   Sat Apr 21 02:20:36 2001 +0000
+
+    Made sure OS version is parsed correctly for OSX
+    
+    Submitted By: Archit Shah <ashah@arsdigita.com>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268955 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 4ee2e5c268b44ad68c49168457f64b76e4d64a32
+Author: Nico Seessle <nico@apache.org>
+Date:   Sat Apr 14 07:25:14 2001 +0000
+
+    The completion of the fix for Bug #975: include proper handling of parsing
+    chunks of data returned by the external environment listing program
+    (whose command is returned by getProcEnvCommand()).  UNIX environment
+    variables can contain text with embedded newlines.
+    
+    Submitted by; Daniel Rall <dlr@finemaltcoding.com>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268942 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 73a8298528b981531cc4ff7081f1b60c9c315793
+Author: Peter Donald <donaldp@apache.org>
+Date:   Wed Apr 11 22:44:19 2001 +0000
+
+    Updated ant to get environment from MacOS X
+    
+    Submitted By: Archit Shah <ashah@arsdigita.com>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268940 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 7435b27b914764c3845b4821363ffeb4ddfe89cd
+Author: Conor MacNeill <conor@apache.org>
+Date:   Sun Feb 18 13:44:44 2001 +0000
+
+    Merge 1.3 branch changes into MAIN
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268691 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 5337488612953eb072e38cb99e6b5d60999297da
+Author: Conor MacNeill <conor@apache.org>
+Date:   Tue Feb 13 12:32:01 2001 +0000
+
+    Merge of 1.3 branch changes into the main branch
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268652 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 4ca5683c2a54ff4a141ed562a0f3b431b153b2c2
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Jan 12 14:08:51 2001 +0000
+
+    <javac> rewritten to use a factory.
+    
+    Submitted by:	Jay Glanville <jayglanville@home.com>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268444 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6c287080d460efa63e022407e88a04558b9fdbb6
+Author: Conor MacNeill <conor@apache.org>
+Date:   Wed Jan 3 14:18:52 2001 +0000
+
+    Make licence statements mention Ant in place of Tomcat
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268392 13f79535-47bb-0310-9956-ffa450edef68
+
+commit cc3fb0c926f28067dafd3d52d88d016fc6f8a986
+Author: Peter Donald <donaldp@apache.org>
+Date:   Thu Dec 7 00:45:22 2000 +0000
+
+    Load environment variables either when a task is explictly executed ( <property environment="blah" /> where blah will be prefixed to every variable). Also load it when env elements are specified to exec calls.
+    
+    Submitted By: Jose  Alberto Fernandez <JFernandez@viquity.com>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268325 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6b5745a21d93054c9d1efb9b6782886ba115bf8d
+Author: Peter Donald <donaldp@apache.org>
+Date:   Sat Nov 25 02:38:54 2000 +0000
+
+    Used some elisp magic to remove those tabs and replace with spaces.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268237 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e47b4d5aca65c519f01afabb9479b8443abd2ccf
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Sep 28 13:44:53 2000 +0000
+
+    Make Execute work for arguments containing spaces under JDK 1.1 under
+    Windows (where Runtime.exec() doesn't quote them properly).
+    Submitted by:	Adam Murdoch <adammurdoch@yahoo.com>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268045 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 4fbcfdedafc75b08541c4ad4d54b75d35300d4e7
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Sep 18 09:01:53 2000 +0000
+
+    Treat OS/2 like Win NT with regard to <exec>'s dir attribute.
+    PR: #126 (Bug #33)
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268004 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 10c41029aeaba31241f1a85f9b02591b357e20b6
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Aug 9 09:22:12 2000 +0000
+
+    The real patch for exec and JDK 1.3.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@267903 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 29cf33f78f16638f62f3471816c1879e0a8190f2
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Aug 3 10:29:20 2000 +0000
+
+    Mac patches to Execute (regarding working directory).
+    Submitted by:	beard@netscape.com (Patrick Beard)
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@267881 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c2077d52ddbe15f9357e4609f78f6cd8187b0365
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Aug 1 12:47:55 2000 +0000
+
+    Javadoc doesn't extend Exec any longer.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@267862 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 0b389735d0c74aa546d2ee5af28218a3028d58ae
+Author: Conor MacNeill <conor@apache.org>
+Date:   Tue Aug 1 09:59:39 2000 +0000
+
+    Recognize Windows 2000 for ther purposes of exec (so that it behaves
+    in the same manner as NT)
+    Submitted by:	Robert Watkins <robert.watkins@mincom.com>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@267860 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 61320f305f5ccb78963b3a9fe607f3505ec635e4
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Jul 25 12:03:26 2000 +0000
+
+    Reworked the <exec> and (now so called) <execon> tasks.
+    Submitted by:	Mariusz Nowostawski <mariusz@marni.otago.ac.nz>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@267834 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3e3008a15b43ba87249ec8342bd5c944185ca026
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Jul 19 13:00:46 2000 +0000
+
+    New Execution Framework.
+    
+    This new framework should ease development of tasks that need to
+    execute external processes.
+    
+    <exec> now invokes ExecTask, a reimplementation of Exec that uses the
+    new framework but has some additional features.
+    
+    Submitted by:	Thomas Hass <thomas.haas@softwired-inc.com>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@267799 13f79535-47bb-0310-9956-ffa450edef68

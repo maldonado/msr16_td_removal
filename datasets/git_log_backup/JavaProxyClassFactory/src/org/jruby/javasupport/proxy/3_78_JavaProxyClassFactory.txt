@@ -1,0 +1,263 @@
+commit 61678ac1a2514a9932276f8d527816a5980a94b3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Feb 25 20:41:40 2013 +1100
+
+    Fix more references to CPL.
+    
+    The phrase "Common Public License" was split across two lines in
+    our default header, which caused it to be missed during earlier
+    search/replace. Also, we did not replace the CPL URL in the
+    header with the EPL URL.
+
+commit 330fef3b0fc18af477ccea19bd278669667f31bb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 12 14:49:29 2013 -0600
+
+    Switch JRuby's CPL license to EPL.
+    
+    Governance of the CPL license was moved to the Eclipse Foundation
+    at some point in the past, and Eclipse blessed the EPL (Eclipse
+    Public License v1.0) as the successor to CPL. Because the CPL
+    contains a clause allowing transparent upgrades to future blessed
+    successor licenses, we can make the move to EPL without
+    re-contacting past contributors.
+    
+    The change in going from CPL to EPL largely just removes some
+    punitive language that apparently made many companies nervous. All
+    other language in the license remains identical.
+    
+    Several documents about Eclipse's move from CPL to EPL are here:
+    
+    http://www.eclipse.org/legal/cpl2epl/
+    
+    Note that Eclipse's move came before the blessing of EPL as the
+    upgrade path for CPL, so they had to do a bit more legal juggling.
+    With Eclipse now the administrator of CPL and with their blessing
+    of EPL as the upgrade path for CPL, all we need to do is make the
+    move.
+
+commit dd57bbfb651642994ecaa2689b579aef1584d42c
+Author: Uwe Kubosch <uwe@kubosch.no>
+Date:   Sat Nov 24 22:37:56 2012 +0100
+
+    * Added missing ACC_SUPER flag to proxy class to make dex conversion to Dalvik byte code use invoke-super instead of invoke-direct for invokespecial instance method super calls
+
+commit 88476e1fe67e501d665e213649acfe28b10ae27e
+Author: Douglas Campos <qmx@qmx.me>
+Date:   Thu Mar 17 12:38:19 2011 -0300
+
+    raise exception when subclassing a class with private-only constructors
+    
+    JRUBY-5451
+    
+    Signed-off-by: Douglas Campos <qmx@qmx.me>
+    Signed-off-by: Charles Oliver Nutter <headius@headius.com>
+
+commit 3d65e46c0c226bef3d11ac5be94d8f98cdca164a
+Author: Uwe Kubosch <uwe@kubosch.no>
+Date:   Fri Sep 14 16:24:38 2012 +0200
+
+    * JRUBY-6883 Change System.out/err.println to Logger.info/error to enable log filtering
+
+commit 14133236db5258f8cdf35b411b18b2339092560a
+Author: Uwe Kubosch <uwe@kubosch.no>
+Date:   Fri Sep 14 15:53:02 2012 +0200
+
+    * JRUBY-6883 Enable subclassing of Java classes on Dalvik
+    * Made JavaProxyClassFactory#invokeDefineClass protected to enable overriding it.
+    * Removed unused import.
+    * Added logging of custom proxy class factory.  Quiet for default.
+
+commit 165ec891f5d5557e1cac89884b0776721dee36ef
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Sep 13 16:50:30 2012 -0500
+
+    Allow java proxy class to be overriden for Android support
+
+commit 7b2ca88ece5a76a16b6914c79fabbd94db7b9f91
+Author: Uwe Kubosch <uwe@kubosch.no>
+Date:   Sat Sep 8 01:08:26 2012 +0200
+
+    * Remove unused import to remove compiler warning in Eclipse
+
+commit a40de0ef648c12f9b9284867244a456dd83c375e
+Author: Ben Browning <bbrownin@redhat.com>
+Date:   Mon May 14 22:01:59 2012 -0400
+
+    Store the JavaProxyClass cache in JavaSupport (fixes #164)
+    
+    This keeps the cache of proxies inside an instance of a Ruby runtime
+    versus hanging around in a static map in JavaProxyClassFactory so that
+    the proxies don't prevent the runtime from being garbage collected.
+    
+    Signed-off-by: Charles Oliver Nutter <headius@headius.com>
+
+commit e05b969291d44e3d42e14861e30ce189a52f1b5f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun May 2 02:09:26 2010 -0500
+
+    Miscellaneous cleanup:
+    
+    * A number of findbugs items in the "threadsafe", "performance", "malcious code", and "experimental" warnings
+    * Tidied up all NetBeans "yellows" in the files I touched
+    * Removed now-defunct JRubyServer/Client/Service
+    * Removed now-defunct ssa.rb and DAGBuilder
+
+commit 1d3e1adaf5d4405911bfb81e96c4941c3a0df98b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jan 11 15:17:29 2010 -0600
+
+    Fix and spec for JRUBY-4451: error constructing new Font instance from Ruby class inheriting from Java::java.awt.Font in Java 1.5
+
+commit 29de372d37a64464f87ee0dff1cd7b5c0a81df71
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Fri Nov 27 15:55:47 2009 -0600
+
+    Method invokes inefficient Number constructor; use static valueOf instead
+    
+    Signed-off-by: Nick Sieger <nick@nicksieger.com>
+
+commit 68ed5ba440bf9de6267bdbd645b82c54f35a3ad0
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 10 00:13:29 2009 +0000
+
+    Fix for JRUBY-3011: java classes with non-public constructors are incorrectly instantiated
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9079 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 6f5700d7665bd36376cdca91ef2da45324d2f090
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Aug 25 23:17:59 2008 +0000
+
+    Fix for JRUBY-2865, extending a default package class in Ruby generates a bogus proxy package name.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7532 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 1855c7f12a2cd5493b15c21134746c295435ec23
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Aug 2 20:55:10 2008 +0000
+
+    Fix for JRUBY-2886.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7353 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit b6cf6a1475ce98f4609c5269776cab9fa95d96e9
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Jul 3 02:08:55 2008 +0000
+
+    Add a prefix to all Ruby subclasses of other libraries' classes, to work around security restrictions about creating new classes in possibly secured packages. JRUBY-2439.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7088 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a7b41d876cb677ba653a997002aa397613468d83
+Author: Vladimir Sizikov <vsizikov@gmail.com>
+Date:   Fri Jun 20 13:20:17 2008 +0000
+
+    JRUBY-2682: Replace StringBuffer with StringBuilder.
+    
+    Patch by Wayne Meissner.
+    
+    Signed-off-by: Vladimir Sizikov <vsizikov@gmail.com>
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7004 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 6af2c161880235f73a1218ae95bbef9cd73b5289
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri May 23 06:50:15 2008 +0000
+
+    * Fix for JRUBY-2551, proxy-subclass-thingies not using getDeclaredConstructors and therefore no ability to override protected constructors from parents.
+    * Also twiddled some MiniJava code that didn't make use of the fact that getConstructors only returns public, and still checked public for each.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6755 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 5aca3fa621b65496d9ddec4f13643dec22e5101d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Dec 21 21:14:50 2007 +0000
+
+    Fix for JRUBY-1226 to allow JRuby to work inside a signed webstart app. Patch by Andrew McDowell
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5330 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 28f4ed91a9eb9fe0a644de65c9ccb5c7b1fd844a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Aug 5 16:59:41 2007 +0000
+
+    Migrating trunk to Java 5; added in annotation support for method definition, updated Fixnum to use it, added Retroweaver support in the build, moved to ASM 3.0.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4084 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 71b7b41bdd010c6c16da39e91f5ae63bfde3b822
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jun 1 21:08:02 2007 +0000
+
+    Committing a slightly modified fix for JRUBY-874, to allow overriding any superclass methods that aren't final or private.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3819 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 804628623a9011eea6d895698099a586ae5aa80a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue May 22 21:00:29 2007 +0000
+
+    iFx orf scrabmled emthdo mena ni aJavpotSrup
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3718 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 77a374822cad8808cbbfd9b8426f1716984bae2d
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sun May 6 23:59:03 2007 +0000
+
+    JRUBY-910: Subclasses of generated Java proxy classes don't inherit correctly (by Bill Dotch)
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3630 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 0b9733a01274eca99d4b615d8f2418228932157b
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Mon Apr 30 22:17:55 2007 +0000
+
+    JRUBY-903: Java interface modules (by Bill Dortch)
+    Update some samples to use newer syntax
+    Remove miscellaneous unusied imports
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3601 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 2c44b077e2a1d3e95e4be824c8b78d39921e5e1b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Mar 28 01:33:18 2007 +0000
+
+    Cache method parameter types wherever possible, avoiding the hit from retrieving them repeatedly.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3310 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit cd188d5e8b1e208ce9fff4b66dc84d5e23c38c30
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Sat Mar 3 10:25:41 2007 +0000
+
+    Final fix for JRUBY-579. Make it possible to inherit from classes without a package too.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3110 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 82e541ec0ed5986122fad0433ce1424a796ecaa8
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Sun Feb 25 19:08:53 2007 +0000
+
+    Fix for JRUBY-624. Overloaded Java methods with different arity, overridden from Ruby should work better now.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3075 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 74021949e8b021701844310ef3b11175a9650932
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Sun Feb 4 16:14:14 2007 +0000
+
+    The BIG one. JRUBY-71. Not perfect yet. The code mostly by Kresten Krab Thorup, with corrections by me.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2942 961051c9-f516-0410-bf72-c9f7e237a7b7

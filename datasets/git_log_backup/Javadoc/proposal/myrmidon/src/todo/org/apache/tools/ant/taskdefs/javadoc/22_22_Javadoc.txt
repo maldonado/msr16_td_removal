@@ -1,0 +1,298 @@
+commit b6ed0b49348d6e8f820f4e5590bd71782c111976
+Author: adammurdoch <dev-null@apache.org>
+Date:   Sat Mar 2 04:03:37 2002 +0000
+
+    * Added OsFamily enumerated type, to represents OS groupings.
+    * Replaced all usages of Os.isFamily( String ) with Os.isFamily( OsFamily ).
+    * Replaced all usages of "os.name" system properties with calls to Os.isFamily().
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@271667 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 0da0af073924054328b63e86299b33050b241739
+Author: Peter Donald <donaldp@apache.org>
+Date:   Thu Feb 21 09:41:55 2002 +0000
+
+    Make tasks extend AbstractTask directly not via Task
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@271487 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3946d3183e482916114f5b5126d23cd6bf1c9da3
+Author: Peter Donald <donaldp@apache.org>
+Date:   Mon Feb 18 09:02:41 2002 +0000
+
+    Inlined a large number of methods from AbstractTask
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@271409 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d09fc12e5806f0129b029350af8e7b75ab8743fe
+Author: Peter Donald <donaldp@apache.org>
+Date:   Sun Feb 10 01:01:13 2002 +0000
+
+    Removed throwsIOException from Execute.execute() as it was never thrown.
+    
+    Made some tasks specify expected return code rather than checkin it themselves.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@271266 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ca77bf7cd306d07ef1a37b97a97b1de17f07f701
+Author: Peter Donald <donaldp@apache.org>
+Date:   Sun Feb 10 00:46:51 2002 +0000
+
+    Renamed Execute2 to Execute and moved it into the myrmidon.framework package.
+    
+    Cleaned up its code a little. ALso reworked it so that the user can specify an expectedReturnCode and if the value is not the one expected a TaskException is thrown.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@271265 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e0f1ffa9ba8e92b83f863548d6e9b454f7d4983d
+Author: Peter Donald <donaldp@apache.org>
+Date:   Sun Feb 10 00:25:42 2002 +0000
+
+    No need to setup a Logger for Execute.
+    
+    All logging will be routed via System.err or System.out as appropriate
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@271261 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 36a0800e7ea144680d92d4233585363120643b5d
+Author: Peter Donald <donaldp@apache.org>
+Date:   Wed Feb 6 13:38:45 2002 +0000
+
+    Style touchups
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@271189 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f20fc56a10afd37bcb8af902f0f443324b0b648c
+Author: Peter Donald <donaldp@apache.org>
+Date:   Sun Feb 3 10:28:46 2002 +0000
+
+    Add a constructor to Execute2 that takes the ExecManager service
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@271119 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 26d5ac6cd5264b5bbc6f464aab5aed388a4746ed
+Author: Peter Donald <donaldp@apache.org>
+Date:   Sun Jan 27 09:42:56 2002 +0000
+
+    Update classes for recent changes in fileset/scanner separation
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270938 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ad91082694f9344ae3020e16cf9351e48b751b0b
+Author: Peter Donald <donaldp@apache.org>
+Date:   Sun Jan 27 02:32:05 2002 +0000
+
+    Made Execute2 only take Commandlin objects rather than an arrya of strings
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270932 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 0c7462a17f34651ebc644b89810827a024d0a53f
+Author: Peter Donald <donaldp@apache.org>
+Date:   Sat Jan 26 02:08:58 2002 +0000
+
+    Update tasks to reflect movement of logic from objects to service/utility objects
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270865 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 158172592212491498d6a30ceab0a1b806fde59e
+Author: Peter Donald <donaldp@apache.org>
+Date:   Wed Jan 23 10:21:54 2002 +0000
+
+    Filter through the changes to PatternSet to other tasks/types
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270836 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8ce1de2178a0422105fa437c327b49fb5637ff28
+Author: Stephane Bailliez <sbailliez@apache.org>
+Date:   Sun Jan 20 17:35:02 2002 +0000
+
+    - Fix order of modifiers
+    - Fix duplicate/unecessary imports
+    - Fix single if/else and loop without block
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270813 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 7e5853486c57409e72a3ce3d49d6cfeaa135628f
+Author: Peter Donald <donaldp@apache.org>
+Date:   Sun Jan 20 02:36:21 2002 +0000
+
+    Did some create->add munging
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270798 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 38dce34edfdb4041103530c656e12e6ed61e2bd6
+Author: Peter Donald <donaldp@apache.org>
+Date:   Sun Jan 20 02:11:45 2002 +0000
+
+    Did some create->add munging
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270797 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 29cd889775d70bb1dad99b6bbfb08e826feda1f4
+Author: Peter Donald <donaldp@apache.org>
+Date:   Sat Jan 19 07:26:23 2002 +0000
+
+    The attached patch makes <path> useable as a data-type in myrmidon.
+    
+    * Added a String -> Path converter.
+    
+    * Added the appropriate declarations to ant1-ant-descriptor.xml.
+    
+    * PathLocation is now only used internally by Path.  This means a <path> may
+    not contain nested <pathlocation> elements any more.  Nested <path> elements
+    can be used to do the same thing.
+    
+    * Removed Path.systemClasspath and Path.concatSystemClassPath().  The goal
+    is to add specialised <systemclasspath>, <antruntime>, and <javaruntime>
+    data-types to control this explicitly.  I left it unfinished, because the
+    as-yet-unwritten Java util stuff will determine how it should be done.
+    
+    * Moved Path.addExtdirs() -> DefaultCompilerAdaptor.  This was the only
+    place it was used.
+    
+    * Cleaned out a few more Path createX() methods.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270786 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e24538c3426ad1ef6c10830ee1d326e5b2b797ee
+Author: Peter Donald <donaldp@apache.org>
+Date:   Tue Jan 15 09:51:10 2002 +0000
+
+    Cleanup up Path object by makign PathElement a top level class and by removing the create() methods and replacing them wiuth adder methods.
+    
+    Also moved some of the static methods (particularly path parsing) into FileUtils).
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270770 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f8ab615aea394cd89a8190fa4aa43124030c0c39
+Author: Peter Donald <donaldp@apache.org>
+Date:   Sun Jan 13 00:04:26 2002 +0000
+
+    Move all the generic scanners into types package
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270720 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 69b275e120885474d0d21a78bb6c7f7cb5eca90d
+Author: Peter Donald <donaldp@apache.org>
+Date:   Sat Jan 12 05:01:06 2002 +0000
+
+    Migrate all the ant-independent code for
+    
+    native execution
+    environment loading
+    os detection
+    
+    into a new hierarchy aut.
+    
+    AUT basically being completely independent of Ant.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270681 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a2c15cb080a27a1535b6770628ac0a19655d1885
+Author: Peter Donald <donaldp@apache.org>
+Date:   Sun Jan 6 08:15:13 2002 +0000
+
+    Update to new Execute2 functionality and delete old stream handlers
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270594 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 500d69e18909fb9dc8dc537095aa352e951f61da
+Author: Peter Donald <donaldp@apache.org>
+Date:   Fri Jan 4 09:25:13 2002 +0000
+
+    Removed cruft from tasks that manually worked with references rather than letting the container handle it.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270509 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ce6c8d711c59101ecf7c4bbef534d5d66daec1f7
+Author: Peter Donald <donaldp@apache.org>
+Date:   Tue Jan 1 09:13:47 2002 +0000
+
+    Started to migrate FileSet away from using Project and for implementing references itself (rather than letting container manage references)
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270499 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a6ab0235192d311e0846d196589b71a02e2a7a43
+Author: Peter Donald <donaldp@apache.org>
+Date:   Sun Dec 30 10:46:59 2001 +0000
+
+    Restyled.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270479 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3348a18a7d1cbb552b3e2e09e86d2b4bfba19343
+Author: Peter Donald <donaldp@apache.org>
+Date:   Sun Dec 30 00:50:33 2001 +0000
+
+    Removed uneeded property expansion
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270438 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e2288433da8e8b2fe837d978bf095e8652328183
+Author: Peter Donald <donaldp@apache.org>
+Date:   Sun Dec 30 00:38:44 2001 +0000
+
+    addText() --> addContent()
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270436 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 5205e1bb542f995e3b209edf0cdfbb37374704ca
+Author: Peter Donald <donaldp@apache.org>
+Date:   Sun Dec 30 00:04:21 2001 +0000
+
+    Update to use new format of LogOutputStream where you pass in a Logger
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270408 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 669a7eae15ea1cf4d43f78955eb15a1b757717f5
+Author: Peter Donald <donaldp@apache.org>
+Date:   Sun Dec 23 14:25:02 2001 +0000
+
+    Start updating logging to myrmidon style logging
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270367 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 96f9a81fa679d8e7ef4eb3725d383df9730d49dd
+Author: Peter Donald <donaldp@apache.org>
+Date:   Sun Dec 23 07:07:04 2001 +0000
+
+    Cleaned up code and gradually moving towards myrmidon patterns
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270365 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 898a4c0716c976f77ee8a4d524a26929ef047b40
+Author: Peter Donald <donaldp@apache.org>
+Date:   Sun Dec 23 06:55:55 2001 +0000
+
+    Moved javadoc into package org.apache.tools.ant.taskdefs.javadoc and broken it up to remove all the inner classes.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270363 13f79535-47bb-0310-9956-ffa450edef68

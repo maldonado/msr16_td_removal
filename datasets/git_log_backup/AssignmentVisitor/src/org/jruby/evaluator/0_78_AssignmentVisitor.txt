@@ -1,0 +1,773 @@
+commit 61678ac1a2514a9932276f8d527816a5980a94b3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Feb 25 20:41:40 2013 +1100
+
+    Fix more references to CPL.
+    
+    The phrase "Common Public License" was split across two lines in
+    our default header, which caused it to be missed during earlier
+    search/replace. Also, we did not replace the CPL URL in the
+    header with the EPL URL.
+
+commit 330fef3b0fc18af477ccea19bd278669667f31bb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 12 14:49:29 2013 -0600
+
+    Switch JRuby's CPL license to EPL.
+    
+    Governance of the CPL license was moved to the Eclipse Foundation
+    at some point in the past, and Eclipse blessed the EPL (Eclipse
+    Public License v1.0) as the successor to CPL. Because the CPL
+    contains a clause allowing transparent upgrades to future blessed
+    successor licenses, we can make the move to EPL without
+    re-contacting past contributors.
+    
+    The change in going from CPL to EPL largely just removes some
+    punitive language that apparently made many companies nervous. All
+    other language in the license remains identical.
+    
+    Several documents about Eclipse's move from CPL to EPL are here:
+    
+    http://www.eclipse.org/legal/cpl2epl/
+    
+    Note that Eclipse's move came before the blessing of EPL as the
+    upgrade path for CPL, so they had to do a bit more legal juggling.
+    With Eclipse now the administrator of CPL and with their blessing
+    of EPL as the upgrade path for CPL, all we need to do is make the
+    move.
+
+commit f5c04c88dc4faf7320abcfdec77739ad5cff5082
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Jan 8 16:22:15 2011 -0600
+
+    Renamed misleading "assigned" var to "offset".
+
+commit 193c722ab9f3477f31398314de8446f1f8a967a2
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Jan 8 16:19:35 2011 -0600
+
+    [1.9] Fix remaining language/method_spec failures in interpreter.
+
+commit 19adbf64d1d489c03c7f105cfd901d912a3a5ff8
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Nov 5 19:21:21 2009 -0800
+
+    Fix newArrayLight cases that pass 0 to use newEmptyArray, and reduce newArray long paths to int constructors.
+
+commit 775e758371716b102fdf54e9f464b51120d0b339
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Jul 9 12:51:54 2009 +0900
+
+    Refactor interpreted Block assignment code.
+
+commit ea68cbd5a8faef0b390fb767119aafb26bea135e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Apr 10 17:06:23 2009 -0500
+
+    Propagate 2 and 3-arity calls straight through for interpreted blocks, avoiding the array creation.
+
+commit 38539306c47caec741243f5e15be0e345757f069
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Dec 28 01:52:13 2008 +0000
+
+    Bombs away! Eliinate nodeId field from Node and add a method to all nodes of interest to return the value instead. Probably a little slower, but we're moving away from using NodeType on critical path code and the memory savings are pretty substantial (4-8 bytes per node).
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8485 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 3bf6e9cb545b040ee9b05d77f6f152e1c6d10a7d
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Thu Dec 4 18:08:01 2008 +0000
+
+    JRUBY-3213: for loop broken for 1.9.  Object#singleton_methods in 1.9 should return list of symbols.  Java Integration should return a list of symbols.  Some multi-assignment fixes for 1.9 mode
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8266 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit bf8db0bc4acaeed7900b867e821e959f254be0be
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sat Nov 22 22:57:11 2008 +0000
+
+    Biggest commit eva (1.9 parser+1.9-runtime-related-changes landing)
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8099 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 27438e0e6117ae74e0838c19e4af058b790cb48c
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Wed Jun 18 19:16:13 2008 +0000
+
+    [interp] Unboxed attrassign node (2-3x speedup)
+    assign is now based on same mechanism as interpret
+    FCallOneArgNode has slower ASTInterpreter.getBlock instead of this.getBlock
+    converted consumers of ASTInterpreter.eval to Node.interpret
+    converted all consumers of ASTAssignment.assign to Node.assign
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6993 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 2b1a005a405839ca4eb268288816294e88f20a2b
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sun Feb 3 18:37:14 2008 +0000
+
+    JRUBY-2062: Add ids and convenient data to SyntaxException and IRubyWarning interface to make their life easier
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5806 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 2c0f7fd5bea47c6ae49149c40999affe12ea3c26
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Nov 26 22:49:04 2007 +0000
+
+    Offload instance variable methods to a separate interface to reduce the implementation load for IRubyObject. This also is another step toward making lightweights possible; by separating the ivar logic from the object logic (visibly, anyway) it means we can externally represent that logic for lightweights more easily. Bill pointed out that his larger IRubyObject/Object/lightweight refactoring used a similar decomposition, so this has at least been proven out in one form.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5061 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 3e9c6ccab41022a64edb2c85e5eaf98a8aabfb26
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Nov 24 00:07:31 2007 +0000
+
+    Removing a couple more callMethod implementations; remaining are heavily used, so I may stop here for now and copy-paste then into new IRubyObject impls.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5014 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 0097f930d29e59cc34d915e274ad711838a41329
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Nov 21 06:52:58 2007 +0000
+
+    Removing some limited-use, unnecessary, or badly located methods from IRubyObject
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4981 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 47fc3bf1ebb3d45594f50d9ccc88d56e8aadeba2
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Oct 26 19:26:48 2007 +0000
+
+    Fix for JRUBY-1468, fixes the original issue, adds a whole raft of tests, and fixes a few additional issues discovered.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4747 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 95c346df5368a3f5f06fa9d14022efb85eaa6809
+Author: Bill Dortch <bill.dortch@gmail.com>
+Date:   Mon Oct 15 07:45:22 2007 +0000
+
+    Vars have landed. Does not include concurrent SymbolTable (will follow in the next day or so). Also need multi-threaded unit tests, work in progress.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4588 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit ffb259216dbb64ce9846cbe6c6e6639b9e598532
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Oct 2 06:05:19 2007 +0000
+
+    Rename EvaluationState to ASTInterpreter.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4454 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 47f0d75fbf8f6519ed3527d077e724f0b9264552
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Wed Aug 29 21:20:40 2007 +0000
+
+    NodeTypes now and enum called NodeType
+    Various warning removal
+    Minor Block refactoring
+    More boilerplate fixing
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4233 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit df1ae61d89ae343bb981d2727d29b7379371a310
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Tue Aug 28 20:43:52 2007 +0000
+
+    A couple more callAdapter additions to nodes that can support them
+    Remove annoying generics warnings that IDEs like to give for un typed collections
+    Change boilerplate in ast so that netbeans can have them closed by default (and javadocs will not contain them)
+    Remove last vestiges of serialization from AST
+    MethodIndex moved into DefaultAdapter
+    Smaller smattering and things I cannot remember
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4214 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a29def2b80c5137e88d62339c4ab270ee4e41bf6
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jul 27 13:05:28 2007 +0000
+
+    Fix for JRUBY-1241: Multiple assignment of class variables does not match normal class var assignment logic
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4068 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 66308a41bee1215d2b084c8fde04156bb8707781
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jul 9 23:36:57 2007 +0000
+
+    Merging CRef changes to trunk from enebo branch.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3984 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit b2be092fd7265e3111d8bb5ac7a2537a481eee77
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Jun 30 06:29:42 2007 +0000
+
+    Fix for JRUBY-1178; make multiple assignment always use to_ary on non-array elements being multiassigned
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3923 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit c6d186f33de33ad12960c6fd6f2e927552d2d81a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Apr 24 18:41:24 2007 +0000
+
+    A few minor block optimizations.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3553 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit c45fa942d72c2acc8af3cd2e2bb47dd73e9096e6
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Thu Apr 12 20:53:16 2007 +0000
+
+    Backing out my last commit:
+    class var assignment uses the same logic whether in assignment or general evaluation (merging 'safe' stuff from my sandbox)
+    
+    This works and consolidates logic but does an extra eval.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3448 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 8ce1c7b164068d9418643f5b6fc0daef6500b09e
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Thu Apr 12 20:27:02 2007 +0000
+
+    class var assignment uses the same logic whether in assignment or general evaluation (merging 'safe' stuff from my sandbox)
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3447 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 9b368de1f803eec61076b47d28f9d5b254c84f04
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Apr 4 05:59:07 2007 +0000
+
+    JRUBY-757 fixes
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3378 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 3b56094a521a338e9c42aa70a3c16a45126dddd5
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Apr 3 12:32:31 2007 +0000
+
+    Some cleanups and more objectspace optimizations for multiple assignment.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3360 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 53464ca106582c5ef69040aa27cc005d40b4606c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Apr 3 08:22:02 2007 +0000
+
+    Another couple places we can create "light" arrays
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3357 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit ab2232e0057142d298920f872c34b14bfa717699
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Mar 28 23:48:36 2007 +0000
+
+    Outlined AssignmentVisitor cases
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3317 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit cc145d7e7c8b904a9702059f74e2737669232d5e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Mar 13 06:18:02 2007 +0000
+
+    Simplify evalInternal by pulling some nodes out as methods, and modify ListNode to use a Node[] instead of an ArrayList.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3184 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 55e4a2bf1b6f61baa6b2b3383b40f8e7c046cda5
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Fri Mar 2 14:58:24 2007 +0000
+
+    Don't check bounds unnecessarily. Also other microoptimizations
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3101 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 465030a3f6bc0d369bc0a1d45a38aca822585ecb
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Fri Mar 2 14:43:20 2007 +0000
+
+    Pass runtime around
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3100 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 972877610a58418cc1a3317f59c8f7ae9ef8c1e8
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Tue Feb 20 23:05:11 2007 +0000
+
+    JRUBY-202: ::A = 1 should work
+    
+    Jira issue creation is down so I will explain other changes in detail here:
+    
+    1) Change D*Node (DStrNode, DRegexp, DSymbolNode, ...) to use same logic as
+    MRI and also remove superfluous ArrayNodes + extra DStrNode for all D nodes
+    except DStrNode itself.   This may remove some cannot convert Foo to String
+    errors (though I could not come up with any test cases -- though I know
+    some exist).  This also includes an optimization of just grabbing bytelist data
+    is StrNode is an element (since there is not point in eval'ing that node).
+    
+    2) AST nodes which contain literal String data now hold that data as a
+    ByteList.  The overall benefit of this is that we only need a single clone
+    of the bytelist versus string to bytelist conversion each time we use the
+    literal.  BTW- You may wonder why we need to clone:
+    
+    1.upto(10) do
+      a = "aaaa"
+      # Add destructive op to a  here to screw up literal
+    end
+    
+    Once we get COW strings we can get rid of cloning.
+    
+    The next phase is making the parser/lexer itself fully work with ByteLists.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3033 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a2107e60085a5063bca76d897783a512bbd7eddc
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sun Feb 18 15:18:18 2007 +0000
+
+    JRUBY-606: Get rid of un/under-used IRuby interface
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3022 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit ef423f1b886650195114fe952a1a6407fbb63f82
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Wed Feb 7 22:27:41 2007 +0000
+
+    - Create a NULL_BLOCK to replace null checks against blocks:
+      - Now isGiven() on a block tells you whether it is supplied or not
+      - yield on the NULL_BLOCK throw the correct exception
+        - We were not throwing this correctly by most callers with my landing of
+          the block branch
+        - We were generating NPE in cases where we called something that requires
+          a block and supply none
+    - Block.blockObject => Block.proc
+     - Rename and type since this is just a convenience reference for association
+       from block to what proc it might represent
+    - Remove unused blockAtCreation (this may become relevent for Ruby 2 but why do
+      it now
+    - Remove ThreadContext and IRuby from Frame
+    - Remove Scope
+    - Put Visibility directly on Frame
+    - callingzsuper dead code
+    - Now that modules have a proper superclass we can get rid of special code in
+      callSuper
+    - ArgsPushNode.childNodes should not return null
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2956 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 5c0789044de8703f41bdf83f29552ba29ad048f6
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sat Jan 27 17:31:22 2007 +0000
+
+    JRUBY-484: Reverse Iter Call relationship in AST and also pass block via Java frame versus maintaining blocks in TC
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2851 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 5a60999edf22eeaa371264516c391c57cbe47e17
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Jan 6 03:04:26 2007 +0000
+
+    Added exception throw for unhandled node types, to avoid hard-to-trace bugs as the AST evolves.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2686 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit f00dfc9fcfb4c7a9ffbe605bd4cbf08cd2e9cb60
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Jan 6 01:42:03 2007 +0000
+
+    Committing changes for JRUBY-405. I've accomplished what I set out to do, which was moving all the yield logic into Block and other appropriate classes. Other block refactoring, including adding a block argument to the call pipline, will come in other JIRAs.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2685 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit cc7684b418179fb32878ac5f44c8c0f519b1b8bc
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sat Jan 6 01:20:21 2007 +0000
+
+    JRUBY-407: with JRUBY-387:  Happy together again (missed AttrAssignNode code in AssignmentVisitor)
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2684 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit e0236c82330bb1a9753f7d0b6a9befe82a359362
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Wed Nov 22 04:19:43 2006 +0000
+
+    JRUBY-278: instance vars with ||= does not work
+    Replace defined visitor with stateless case method (like assign and eval already are)
+    Use self from eval versus asking for self from current frame
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2454 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 174e3d01468001668ab299227d4af11aea65341c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Nov 14 03:09:59 2006 +0000
+
+    damn the torpedos! full speed ahead! landing enebo_lexical branch changes plus TC-passing optimizations and a few small compiler updates
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2423 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d754c5ea1e7ecf48249d8a18bb2a3db8877a1a7b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Oct 12 15:15:55 2006 +0000
+
+    optimizations for ThreadContext:
+    - replace ArrayList-based stacks with managed arrays
+    - replace visitor-based AssignmentVisitor with a straight-through version
+    - remove unnecessary setCRef in yieldInternal
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2326 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 3f04b7ea16a8eaf59cf5de721f876360711e6521
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Oct 10 05:18:55 2006 +0000
+
+    cleaning up a large number of looped calls to IRuby.getCurrentContext
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2320 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 6e15491217631472c05c6928672f9c7064a978b3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Oct 9 22:13:11 2006 +0000
+
+    merging new interpreter plus a few minor fixes to trunk. JRUBY-185
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2319 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a629a570985930f1dc88f37bf2c585dfe4ff6fb2
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Aug 17 01:38:04 2006 +0000
+
+    merging headius branch to trunk
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2204 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d84a8ff4be318ffefc992ae169dbf810168d9bb0
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Aug 5 06:59:40 2006 +0000
+
+    optz: avoid multiple calls to EvaluationState.getThreadContext in a single method
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2166 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit e317467da9d979c91e25b86dd22f94b83ff1a27a
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Thu Apr 27 02:38:45 2006 +0000
+
+    - Allow constants to be declared outside module def:
+      class Foo; end; Foo::BAR = 1
+    - Allow constants to be declared outside module def in multiple assignment:
+        class Foo; end; Foo::BAR, a = 1, 1
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2020 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 1d43870a42678f709851fcd9349d32a5f5be0dca
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Feb 2 19:51:50 2006 +0000
+
+    merging cnutter_work1 to HEAD
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1869 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 3bf2648c55082b6253d9b5907b4d310a3b0e271b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Nov 10 15:12:10 2005 +0000
+
+    renamed EvaluateVisitor.createVisitor to getInstance, to more appropriately match its usage pattern
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1826 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 4ede4bfb0b4fcc29ce09b82da5f1164b5894d258
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Nov 10 15:09:14 2005 +0000
+
+    TC method refactoring, renaming, inlining of TC-related IRuby methods
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1825 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit ddd084d66677f4d56386f5657874c3efc265d68b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Nov 4 01:34:25 2005 +0000
+
+    merging refactor/rename changes for machine/instruction stuff
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1822 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 689e4cee8f6335d3271b7d65173d0100dfeb7be5
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Thu Oct 27 17:06:51 2005 +0000
+
+    RubyModule.call -> RubyObject.callMethod (allows instance.callMethod(...)) [Note: Should be renamed RubyObject.call]
+    Remove redundant method_missing
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1813 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 41adc9d73b44b14dd25593e772188d405ec00f2f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Oct 26 05:34:12 2005 +0000
+
+    removing revision keywords
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1810 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit f5643d27aa7a2dd836ef19c758a0a13351434da4
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Oct 21 01:04:27 2005 +0000
+
+    merging cnutter_work2 to HEAD...damn the torpedos! full speed ahead!
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1807 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 4dfdacd80c56018084c618f3bbab7b542653d95e
+Author: David Corbin <dcorbin@users.sourceforge.net>
+Date:   Sat Oct 8 13:07:06 2005 +0000
+
+    Introduced IRuby interface for Ruby runtime object.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1798 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit ca6b16e996ea9af83ce593594b9c69b9364a9924
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sun Aug 28 13:29:33 2005 +0000
+
+    Kill RubyClasses (core class/modules now initialized in Ruby)
+    Store all top-level classes as constants within Object (fixes things like Object.constants) instead of second datastore
+    Always load all core classes (remove lazy loading)
+    Convenience function RubyModule#getClass added
+    Convenience function Ruby#getObject added
+    JavaObject and JavaArray are now Java::JavaObject and Java::JavaArray to be consistent
+    classes defined under another class/module are now defined in the parents creation routine
+    Removed some masking warnings
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1739 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 0db25dd3ae06c744963d9b04bf3465fa3673f030
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Thu Jun 16 14:54:07 2005 +0000
+
+    Move abstract stack users a few steps closer java.util.Stack contract
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1711 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit bf125d5fbc0df90b3725b8aa6ba61235c796f18e
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Tue Feb 8 05:14:38 2005 +0000
+
+    Fixes 'x, (y, z) = 1, 2, 3; test_ok([1,2,nil] == [x,y,z])' and variants
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1603 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 7a83c48af56081c1c2132111d535f28d10cf3afb
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Fri Dec 31 20:55:52 2004 +0000
+
+    Update license to GPL/LGPL/CPL
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1574 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit b72a2862ae5b2f01f9a767ef2ce248fd785857c4
+Author: Jan Arne Petersen <jpetersen@uni-bonn.de>
+Date:   Mon Dec 13 00:26:02 2004 +0000
+
+    Replaced org.jruby.util.Asserts with Java 1.4 assert.
+    Fixed String#capitalize.
+    Replaced RubyString.nilString(getRuntime()) with getRuntime().getNil().
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1482 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 0e219b9865b9d95b287ff161c83df5434039f9b1
+Author: Jan Arne Petersen <jpetersen@uni-bonn.de>
+Date:   Sun Dec 12 23:41:29 2004 +0000
+
+    - Replace IRubyErrorHandler with RubyWarnings and SyntaxException.
+    - Add deprecated warning to Object#type method.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1481 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 6c6d203022d4a6738769b37a6423ca82087317b6
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Wed Dec 1 05:51:15 2004 +0000
+
+    Update $VERBOSE to be nil, true, or false instead of boolean
+    Make when *array work
+    Remove unused import
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1438 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit b1562832239a5e5d73b1ee98dade51601e343257
+Author: Jan Arne Petersen <jpetersen@uni-bonn.de>
+Date:   Tue Nov 16 20:30:04 2004 +0000
+
+    Rename references of org.jruby.Ruby from ruby to runtime.
+    Remove unused methods from the IRubyErrorHandler interface.
+    Add "same" method to RubyObject to fix "equal?"
+    Fix JavaObject cache.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1408 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 035c46fd66ac254cb294f8151bb458a672b46112
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sat Oct 30 22:27:08 2004 +0000
+
+    Remove unlikely to be used soon abstractions and simplify lexing
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1373 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit f5c9a1ebd775712f2dc086acfce1a14a123ec632
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Tue May 25 15:54:04 2004 +0000
+
+    Another round of star arg grammar fixes
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1302 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a16b4a3596853f2153bfe0df0a8cbe54382d5d58
+Author: Anders Bengtsson <ndrsbngtssn@yahoo.se>
+Date:   Sat Feb 28 23:00:58 2004 +0000
+
+    Removed a lot of old IndexedCallback stuff.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1254 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 7cc17377cbd013da3a67c3ddceecd9d4672c5204
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Thu Feb 26 17:18:59 2004 +0000
+
+    Fixes rubicon errors for Module ModulePrivate, and Access.  Minor refactoring.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1250 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit ca769d021f6aa0f56a2bfb23b89ed5700c8d33bd
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Fri Dec 5 16:20:14 2003 +0000
+
+    Remove unused import statement
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1200 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 06e5367e90e48166b55d8b7db5dfb40b4d8b563a
+Author: Anders Bengtsson <ndrsbngtssn@yahoo.se>
+Date:   Tue Nov 19 00:44:50 2002 +0000
+
+    Replaced all uses of getCBase() with getRubyClass().
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1141 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 82ec4b9b5c4588e79a7ebd9845469fd42332e81c
+Author: Anders Bengtsson <ndrsbngtssn@yahoo.se>
+Date:   Wed Nov 13 23:52:35 2002 +0000
+
+    Reverted all namespace changes. Our unit tests are in some cases crap, it turns out. ;)
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1120 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 6f016a73c3a027804fa73be3128c8a0ef8f0bf1b
+Author: Anders Bengtsson <ndrsbngtssn@yahoo.se>
+Date:   Wed Nov 13 21:33:29 2002 +0000
+
+    Replaced some usages of namespaces with the class stack.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1113 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit db825996b1895dae1eb261e8664a736f73cdad4f
+Author: Anders Bengtsson <ndrsbngtssn@yahoo.se>
+Date:   Sat Nov 9 16:59:49 2002 +0000
+
+    Some thread-context refactorings.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1098 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 36b4d0f7943d04e5a880cf6a13afd31dc922577a
+Author: Anders Bengtsson <ndrsbngtssn@yahoo.se>
+Date:   Sat Nov 9 15:48:46 2002 +0000
+
+    Some ThreadContext related refactoring.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1096 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 13e69799e76f1dd3ab5912856ce9b0d9ff6e99af
+Author: Anders Bengtsson <ndrsbngtssn@yahoo.se>
+Date:   Sat Nov 9 15:12:41 2002 +0000
+
+    Moved classStack and wrapper to ThreadContext; Cleanups.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1095 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 06f34f3a6e4941994e00090d1365045e229680be
+Author: Jan Arne Petersen <jpetersen@uni-bonn.de>
+Date:   Sat Sep 21 23:05:19 2002 +0000
+
+    - Some MetaClass refactorizations,
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@881 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 839de5dc5ea6ec9b3608a998c7c727bc12f50218
+Author: Jan Arne Petersen <jpetersen@uni-bonn.de>
+Date:   Mon Sep 16 14:08:45 2002 +0000
+
+    - remove Ruby#getGlobalVar and Ruby#setGlobalVar
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@835 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 1b9762cc35b0eda8c5103611e0c3632d66b40c4a
+Author: Jan Arne Petersen <jpetersen@uni-bonn.de>
+Date:   Sun Sep 15 00:27:00 2002 +0000
+
+    - refactorization
+    - fix mkdir bug in JRubySerialize
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@823 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit c77b91f42c4f3810140d44cbe603248a1d52b7ee
+Author: Jan Arne Petersen <jpetersen@uni-bonn.de>
+Date:   Tue Sep 10 15:18:12 2002 +0000
+
+    - restructure of the code tree.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@782 961051c9-f516-0410-bf72-c9f7e237a7b7

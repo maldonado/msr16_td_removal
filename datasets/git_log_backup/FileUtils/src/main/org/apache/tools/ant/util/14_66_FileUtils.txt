@@ -1,0 +1,1549 @@
+commit 326b38f70193a95c9ef8371a727747fe0a5fecb5
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Jan 2 14:37:32 2014 +0000
+
+    assorted micro-optimizations by Adrian Nistor - 13 different Bugzilla issues
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1554813 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 234c1d9ff4b5e2f04ee8a4fd1cde9c78b9aa3cd8
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Dec 31 11:36:53 2013 +0000
+
+    weed out race-condition in mkdirs calls inspired by PR 55290 and Matthias Bhend's suggestion
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1554403 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b031b8766db70f993b90b1852b6957bc02175f8d
+Author: Nicolas Lalevee <hibou@apache.org>
+Date:   Wed Aug 22 18:10:37 2012 +0000
+
+    getAbsoluteFile is useless since as the javadoc of File.toURI clearly explain, produced URIs are absolute
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1376167 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 62ebdd1f761f1fe826eed90df5f16fbe9a70b6ca
+Author: Nicolas Lalevee <hibou@apache.org>
+Date:   Wed Aug 22 12:30:29 2012 +0000
+
+    organize imports
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1376012 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ececc5c3e332b97f962b94a475408606433ee0e6
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Sep 29 13:40:56 2011 +0000
+
+    Add an option to <delete> to run the GC before retrying a failed build on non-Windows OSes as well.  Might fix the NFS problem described in PR 45786
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1177305 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 5f20b99140fb4ec958a6d540b9df7b3c08312b40
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Feb 3 21:00:00 2011 +0000
+
+    microoptimizations.  PR 50716
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1066963 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a28f64f5cf1b63d9342683d77d79a5cdf9e67f85
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Nov 22 12:27:03 2010 +0000
+
+    fix a bunch of warnings you get when building on Harmony which uses Eclipse's compiler.  There are still lots (more than 100) of deprecation warnings and warnings about missing serialversionids that I have ignored.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1037691 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 38cd07c803eecac97c9238a4e23af3efa353228c
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Oct 25 09:09:52 2010 +0000
+
+    don't rely on IntorspectionHelper normalizing file names in signjar.  PR 50081.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1026982 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 0c08ce1f0e9880b5f3a6c3c37008acccd5f97392
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Aug 17 07:57:18 2010 +0000
+
+    Avoid NPE in createTempFile if no prfix has been specified.  PR 49755
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@986226 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3209b4182fb36ca8eeb764b0f567aee7145dd61b
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Jun 15 10:08:49 2010 +0000
+
+    allow file names to be 'fixed in case' on Windows.  PR 41948
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@954785 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 35e9c976aca460e541e62bd67f88fa8482014f1e
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon May 10 14:35:56 2010 +0000
+
+    be consistent when it comes to overwriting read-only files, add an option to do just that to <copy>.  PR 49261
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@942752 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 38446ae4315ec20bbf8c811721c0cc5c73d8a3b6
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Apr 22 10:05:47 2010 +0000
+
+    looks as if bug 41948 was reappearing on Win7, needs further inverstigation - add some diagnostics
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@936720 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6cb11c4a231c055d9ed5f710f842ee190282c65c
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Dec 15 15:27:11 2009 +0000
+
+    try a bit harder to close the archive when reading a build file.  Since that still doesn't work, add a task to brutally close jars and use it in import-url-test
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@890827 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 028ba47c8246f510012ef061d879d05240b90c71
+Author: Jesse N. Glick <jglick@apache.org>
+Date:   Wed Aug 26 18:48:21 2009 +0000
+
+    Some miscellaneous updates given that JDK 1.4 can be assumed.
+    The biggest outstanding JDK 1.3 code is in Locator but I am scared to touch it.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@808156 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d534f1e1a13cf5182820202aae65688e01aa6182
+Author: Jacobus Martinus Kruithof <jkf@apache.org>
+Date:   Sat Jan 31 16:26:41 2009 +0000
+
+    Math.abs(rand.nextInt()) may yield negative value. rand.nextInt(Integer.MAX_VALUE) seems to be what was meant.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@739575 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3ae69e82c33e0e03941387a3506561accc2697d3
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Tue Nov 11 21:21:57 2008 +0000
+
+    add Appendable interface with echo as first supporting task
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@713173 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d754a20c3fb29379494a2411bbd69ed876fb9e7a
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Nov 6 10:34:11 2008 +0000
+
+    Take advantage of Java 1.4
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@711835 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 167630e641c5e13d07967445cfe9f8b889f41ce8
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Oct 9 12:25:40 2008 +0000
+
+    whitespace
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@703153 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6b265b5612c67b97d9da2c449f706b5f4c6579b0
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Oct 9 12:23:19 2008 +0000
+
+    use the same logic as <delete> if deletion of a recently closed file fails on Windows during rename.  PR 45960.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@703151 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 9f30d0550989766a9ad2032363a5dfdb49ee6932
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Oct 7 05:35:58 2008 +0000
+
+    factor out symlink methods into a separate utils class
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@702350 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f625d964c0d8419a3cf9c1e6766139388f17fd23
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Sep 8 12:23:54 2008 +0000
+
+    delete broken symbolic links.  PR 41285
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@693071 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6352c4ac1c23080a7d0a9b214272a89ac11d3ab7
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Sat Jan 26 14:22:48 2008 +0000
+
+    checkstyle
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@615452 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 46bf9d8c85ecbb62b829e969332d36c03b085df0
+Author: Jacobus Martinus Kruithof <jkf@apache.org>
+Date:   Fri Jan 4 20:48:55 2008 +0000
+
+    improved lay-out + add since ant 1.7.1 instead of 1.8
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@608999 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 94dd480d07ac2028fc94d46a253abcd2ddb189a8
+Author: Jacobus Martinus Kruithof <jkf@apache.org>
+Date:   Fri Jan 4 17:45:12 2008 +0000
+
+    request from cactus team, backward incompatible change in FileUtils made backward compatible
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@608939 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ad82fe67bd51cb1ea5a176ad5c307f84adf0efc2
+Author: Steve Loughran <stevel@apache.org>
+Date:   Mon Oct 29 17:40:51 2007 +0000
+
+    javadoc
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@589762 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ac16a45be3858acd902c8c2286e13480f11b0032
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Thu Sep 27 09:11:21 2007 +0000
+
+    magicnumbers
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@579953 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 95a74e963706a41dd5bfde0e6d8c8e0e6314bdec
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Wed Sep 12 11:35:15 2007 +0000
+
+    checkstyle
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@574889 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 7e05b3d981ceab1b87536eed26f67d82470f1a0c
+Author: Jacobus Martinus Kruithof <jkf@apache.org>
+Date:   Mon Sep 10 19:15:27 2007 +0000
+
+    pr33969: tempfile task / FileUtils.createTempFile now actually creates the file.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@574339 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 529a3f82500986119406dd8c812ef4852e8233e8
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Mon Sep 3 15:29:45 2007 +0000
+
+    revert readfully change, add in safeReadFully
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@572363 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a9592b869e5648b3508ecd855bddf1dc182cb8f6
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Mon Sep 3 12:57:52 2007 +0000
+
+    Bugzilla 43292: filtermapper could throw an NPE. - change FileUtils to return an empty string rather than null for zero-length files
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@572302 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 17137c34f7a911fd5d965286d367ff18b1c2f703
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Sat Aug 11 12:51:20 2007 +0000
+
+    checkstyle
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@564912 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 424bee292b49822b29c4cc583335999e29df2880
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Sat Aug 11 10:45:19 2007 +0000
+
+    checkstyle: remove trailing ws
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@564891 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c0649769e0063616ae46a2e58a57203bb42a7f8e
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Sun Jul 1 19:01:07 2007 +0000
+
+    fix the filename case junk again without relying on OS-level tests; reverting earlier changes
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@552350 13f79535-47bb-0310-9956-ffa450edef68
+
+commit adb161cdc40c45f6f563cdd7816973bc91a75178
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Fri Jun 29 21:50:46 2007 +0000
+
+    fmting; tiny refactorings
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@552042 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c717727548e7807ced7eeff05871f414a6f57413
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Fri Jun 22 03:10:20 2007 +0000
+
+    detect cs
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@549684 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e52412cab9febc288122fc52080a1fc54d84517b
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Thu Mar 29 12:21:36 2007 +0000
+
+    restore detailed import lines
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@523683 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 25b1695de86156e14a75a8f1a3270064740dc3b5
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Thu Mar 29 12:17:54 2007 +0000
+
+    adding since tag for new method
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@523682 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1e4c39fb600cb929e500a67956c62795a4630021
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Thu Mar 29 12:15:21 2007 +0000
+
+    adding a method to find wrong cased files
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@523681 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b73a3b386a4de324ffbafd81ab8862738bf44322
+Author: Steve Loughran <stevel@apache.org>
+Date:   Tue Mar 20 13:31:41 2007 +0000
+
+    no need to mark static methods as final
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@520384 13f79535-47bb-0310-9956-ffa450edef68
+
+commit aa90e61cd6f106951cdb233ec6178af0b92cf79c
+Author: Kevin Jackson <kevj@apache.org>
+Date:   Mon Mar 19 07:02:30 2007 +0000
+
+    -revert to non-reflective close
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@519857 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8a9e8a9034cc1ef7699d76a297ac0194a594d215
+Author: Kevin Jackson <kevj@apache.org>
+Date:   Fri Mar 16 09:17:02 2007 +0000
+
+    -sorry prevent NullPointerException
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@518897 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 08ece01ed6dd8c26f47fd82f990a183bbc373f5d
+Author: Kevin Jackson <kevj@apache.org>
+Date:   Fri Mar 16 09:14:06 2007 +0000
+
+    -use reflection to avoid duplicated code for close (various things that can be closed)
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@518896 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 9dfd03133bf2e960f2eedf76f8292e1c7ba6bdfb
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Thu Nov 16 23:37:30 2006 +0000
+
+    checkstyle
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@475983 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 5e4d3d0c93a57c8ead35236c6e444d78897f427f
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Wed Nov 15 11:33:43 2006 +0000
+
+    do not uppercase systematically drive letters in FileUtils#normalize
+    append drive letter to absolute paths in Locator#fromURI
+    make FileUtilsTest pass under JDK 1.3
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@475206 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 5d029deab91aca432d09d529bfbe29a877cb1c51
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Sun Nov 12 22:39:00 2006 +0000
+
+    checkstyle
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@474079 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e6e70c16c1e7a5ffdcacc8b1830bc73d7b8497d6
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Sun Nov 5 23:00:20 2006 +0000
+
+    checkstyle
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@471560 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 0c318edc8997dafcf22ca1613c32981dfb6446f7
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Wed Sep 20 22:32:24 2006 +0000
+
+    Performace:
+      cache last FileUtils.fromUri() result
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@448377 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c5d57a281a3b28f9d711b3f70e900333faa7c457
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Thu Sep 7 23:16:18 2006 +0000
+
+    Bugzilla 40300: incorrent handling of exceptions in <copy>
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@441294 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 2e897819a83981a1f4de2e1cc72e33f080fcf573
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Sep 1 18:49:27 2006 +0000
+
+    copy2license.pl
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@439418 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 69c95afa02d8a3f629053c2dbef24ff386aabc07
+Author: Jesse N. Glick <jglick@apache.org>
+Date:   Fri Aug 18 20:07:32 2006 +0000
+
+    Some Javadoc corrections.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@432709 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 869b123c0437855adde003d242e4e084e8b35731
+Author: Jesse N. Glick <jglick@apache.org>
+Date:   Thu Aug 17 20:23:44 2006 +0000
+
+    #40281: "Cannot resolve path" error thrown gratuitously.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@432379 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 303b70f86bd394282e39affce9ec2a065b5a4ad1
+Author: Jan Materne <jhm@apache.org>
+Date:   Mon Jul 17 12:03:07 2006 +0000
+
+    Bug 21042 "Setting XSL parameter to input filename when processed whole directory."
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@422692 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ac92e4e6bd1e87f2d689a1588b469dca22316ecd
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Tue Jun 20 15:09:20 2006 +0000
+
+    add tempfile deleteOnExit.  PR# 39842.  Submitted by Patrick Martin (then slightly modified).
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@415695 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 7eb22e8cdc4c161dcf8e89d40a8e072930db5d8f
+Author: Jacobus Martinus Kruithof <jkf@apache.org>
+Date:   Fri Apr 21 21:47:06 2006 +0000
+
+    indicated when methods/classes became deprecated, as to give us the possibility to remove deprecated methods in the future.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@396012 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 27c1d843ca0b5f75261d97603772e77b36ce0bdd
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Wed Apr 19 16:31:30 2006 +0000
+
+    change name of Locator.encodeUri to Locator.encodeURI
+    
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@395304 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 58dfcc03e88c929f04a9f4f89c4716af9cfdc22b
+Author: Jacobus Martinus Kruithof <jkf@apache.org>
+Date:   Sat Mar 25 20:30:10 2006 +0000
+
+    Sorry, copyright update forgotten
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@388818 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f5f6982c88e608482d611018d32219f2f528c045
+Author: Jacobus Martinus Kruithof <jkf@apache.org>
+Date:   Sat Mar 25 20:20:49 2006 +0000
+
+    Refactored translatePath from Project to FileUtils.
+    Project now also fails with explicit message on java 1.1.
+    Added javadoc comment for the ant.java.version property
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@388814 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e12c63a6ee1b0bb45e9821ff84392c9391d76bd9
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Fri Dec 16 06:36:28 2005 +0000
+
+    more systematic handling of URIs, delegation of work to the JDK
+    for toURI and fromURI
+    patches prepared by Jesse Glick, Bugzilla 8031
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@357131 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c3788e23d0df71303bf04558dd167196eff24b2f
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Thu Dec 1 14:56:25 2005 +0000
+
+    Replace try-catch with a preemptive check.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@350260 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 58b30633eeac61fe2fdfa8a71e2e2ae9b758d023
+Author: Jacobus Martinus Kruithof <jkf@apache.org>
+Date:   Thu Dec 1 14:31:09 2005 +0000
+
+    Fix import / removed unused variables
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@350258 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 551b204c245d4861589a0be50f453507e3c72e81
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Wed Nov 30 22:13:24 2005 +0000
+
+    percent encode the relative paths in ManifestClassPath
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@350061 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6a7128309916100dc611f641797b7793ab087a3d
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Mon Nov 28 23:14:24 2005 +0000
+
+    properly convert URIs back to file paths when non ascii characters are percent-encoded
+    matches with the change in FileUtils.toURI recently done
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@349552 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 98f8daca394b68d30e59b684f021097fdd438c8e
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Thu Nov 17 15:08:15 2005 +0000
+
+    add a test case for bugrep 37348 in the xslt task, also remove
+    unneeded imports in FileUtils
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@345256 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c9f87e71681428c3fb4bdceb431e347afef9276a
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Wed Nov 16 23:00:49 2005 +0000
+
+    restore credit for the xerces-j team, sorry ...
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@345144 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c4ad42ed39b270e1752007d643aa4499ed437ef2
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Wed Nov 16 22:45:35 2005 +0000
+
+    fix for bug report 37348
+    encode non ascii characters in FileUtils.toURI()
+    this allows to process XML documents with System entities
+    housed in non ASCII paths.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@345141 13f79535-47bb-0310-9956-ffa450edef68
+
+commit fa84f9f4612033d0b9d171822cc9af6593602f8e
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Thu Sep 29 21:09:44 2005 +0000
+
+    Move Resource-based utility methods in FileUtils to ResourceUtils (static).
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@292553 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ec53cbb02a54af81b299b610acdbdda516f623b1
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Wed Sep 14 21:24:08 2005 +0000
+
+    delete + resource collection support
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@280944 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 653aa05d13887c9fd132707cd92c0ed0af04b210
+Author: Jacobus Martinus Kruithof <jkf@apache.org>
+Date:   Sun Jun 12 15:54:15 2005 +0000
+
+    removed unused imports
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@278418 13f79535-47bb-0310-9956-ffa450edef68
+
+commit fbb9886634198d8377104bef9ec697fadeb134df
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Mon May 23 19:51:58 2005 +0000
+
+    ResourceCollections
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@278337 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 890850c8a89acc9cca096229d1dbe84dd4fd179c
+Author: Bruce Atherton <bruce@apache.org>
+Date:   Thu Apr 7 23:42:46 2005 +0000
+
+    Why not fix the comment while we are at it?
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@278122 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c3018eaa64e6319dd6a03e2bf46e3c1c965b4fd6
+Author: Bruce Atherton <bruce@apache.org>
+Date:   Thu Apr 7 19:59:35 2005 +0000
+
+    Round NTFS Granularity up rather than down
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@278117 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3928b4fa9dfc1cf81de6fe95c7be3c8804a3c87e
+Author: Bruce Atherton <bruce@apache.org>
+Date:   Wed Apr 6 23:14:00 2005 +0000
+
+    Improved heuristics on file timestamp granularity by adding an NTFS category and checking for it
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@278110 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 704e2490d33af59280cbe23bc2fb807378fac603
+Author: Jacobus Martinus Kruithof <jkf@apache.org>
+Date:   Wed Mar 9 00:20:42 2005 +0000
+
+    removed lines with $Revision: x.y $ lines (after verification)
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277845 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 4c83562c6c9f681cdcd17c86f5e3c68c910dd5f8
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Tue Mar 1 22:59:44 2005 +0000
+
+    On DOS and Netware, filenames beginning with a drive letter
+    and followed by a colon but with no directory separator following
+    the colon are no longer (incorrectly) accepted as absolute pathnames
+    by FileUtils.normalize() and FileUtils.isAbsolutePath().  Netware
+    volumes can still be specified without an intervening separator.
+    UNC pathnames on Windows must include a server and share name, i.e.
+    "\\a\b" to be considered valid absolute paths.
+    FileUtils.resolveFile() promised to return absolute files but
+    did not always do so.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277759 13f79535-47bb-0310-9956-ffa450edef68
+
+commit dd91a1732e59858916bcacc63c23447e89e256ac
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Fri Feb 4 16:18:10 2005 +0000
+
+    Javadoc (okay DD? ;) )
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277599 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a5f7ccbe7d296783a847bad8518ccb061de7f85c
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Fri Feb 4 16:12:46 2005 +0000
+
+    Personal taste
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277598 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 79b7beb40009ddef7ef755f2b3e6022a4bb436c5
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Mon Jan 31 22:35:55 2005 +0000
+
+    Fixed isSymbolicLink logic for null parent file; made isAbsolutePath() public.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277564 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 333d594f5ec3ad9addb62a8b9dd806b3fc0196e0
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Wed Jan 26 17:26:33 2005 +0000
+
+    Prepare to merge to 1.6 branch.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277474 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3ca199cab8dfc0449835efa717423d54f1ee1ad6
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Tue Jan 25 19:46:43 2005 +0000
+
+    Various aesthetic changes + isSymbolicLink() works when parent arg is null.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277463 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f5d98f1e2c9d99c04bdb2ceb94025acac06be1cb
+Author: Jacobus Martinus Kruithof <jkf@apache.org>
+Date:   Tue Jan 11 21:56:45 2005 +0000
+
+    Extended FileUtils with a comparison that ignores the kind of line break.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277345 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 7c990891963350e2be9698e53b68f8d87e0c200e
+Author: Jacobus Martinus Kruithof <jkf@apache.org>
+Date:   Fri Jan 7 00:14:06 2005 +0000
+
+    PR: 32979
+    Modification to FileUtils to only accept : on the second position as absolute path for dos-like os.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277306 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 257dadeaf0fb8588b80fa71b24ee3aca38ea19b7
+Author: Jacobus Martinus Kruithof <jkf@apache.org>
+Date:   Thu Jan 6 12:05:10 2005 +0000
+
+    Make use of FileUtils in a uniform way via the getFileUtils method and a static final reference in the using files.
+    Also removed unused/* imports along the way.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277295 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 58cf8485c59126d42e400cf88668448c73acc0d6
+Author: Jacobus Martinus Kruithof <jkf@apache.org>
+Date:   Tue Jan 4 20:20:52 2005 +0000
+
+    Made more consequent use of the method available in FileUtils to get the granularity.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277276 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 0a03dc4b5d65a49b82daa5a695e02d86bf749183
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Dec 15 12:10:43 2004 +0000
+
+    Use close method to close streams, Submitted by Kevin Jackson
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277207 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1ddaea8055b242a63505cf20bc65708000ca5009
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Tue Dec 14 17:56:35 2004 +0000
+
+    touch gets nested mapper plus verbose, mkdirs, and pattern attributes.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277197 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6653c42a77eb0d663817f3112a5631f3bad6bfbe
+Author: Jacobus Martinus Kruithof <jkf@apache.org>
+Date:   Sat Dec 11 22:43:05 2004 +0000
+
+    If we can use File.getParentFile, there is presumably no reason to use FileUtils.getParentFile, right?
+    (Comment re-used from jglick)
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277179 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 13435b6628d6de511f2bea4784a2f8a10c7173cf
+Author: Jesse N. Glick <jglick@apache.org>
+Date:   Fri Dec 10 23:18:22 2004 +0000
+
+    If we can use File.getParentFile, there is presumably no reason to use FileUtils.getParentFile, right?
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277173 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 76122e84beafa3437b38cade58467fca9598f1df
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Tue Dec 7 23:32:31 2004 +0000
+
+    Various changes => fewer LOC
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277146 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 677491b9276e57da76218487af18cfda70aa28af
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Fri Dec 3 16:33:26 2004 +0000
+
+    use the FileUtils#close method
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277121 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 395f3939fc7ab3e1a187f53070dbdfa2ee152a27
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Mon Nov 22 18:18:42 2004 +0000
+
+    checkstyle changes
+    Obtained from: Kevin Jackson
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277070 13f79535-47bb-0310-9956-ffa450edef68
+
+commit db48fbb829447064857a6b918e78cdab0b0c89b1
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Nov 22 09:23:37 2004 +0000
+
+    Various checkstyle violations
+    
+    Submitted by:	Larry Shatzer
+    
+    And some
+    
+    (untabify (point-min) (point-max))
+    
+    on some files.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277063 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c31f5ae25766b6bab90b1d0ac86eab2c7f66b804
+Author: Steve Loughran <stevel@apache.org>
+Date:   Wed Oct 6 22:41:52 2004 +0000
+
+    Somewhat reworked patch for bug# 31106, submitted by Isao Yanagimachi.
+    Took the opportunity to clean up the tasks slightly, such as removing duplication in various methods.
+    We need a unit test for long command line java, and many parameter java, just to see what breaks.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276922 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b6da0f3f129cb8b4a0c37fed0fef05eb127e534d
+Author: Steve Loughran <stevel@apache.org>
+Date:   Tue Aug 3 23:18:35 2004 +0000
+
+    1. some factoring out of the timestamp checks for even more reuse. That way the granularity logic can all go in one place.
+    
+    2. a refactoring of close() to ignore exceptions. I made this static because I want to use it everywhere we close things in a finally clause. NB, note that all four methods would all be unified if the writer/reader/instream/outstream classes had a base class "Closeable" with method void close().
+    
+    No, I have not refactored everything to use these yet.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276747 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 642befb440f22351cef750a8d502b873c74025f5
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Tue May 18 08:14:49 2004 +0000
+
+    Javadoc syntax error corrections
+    PR: 28998
+    Obtained from: Jesse Glick
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276466 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 122c6ddd9ee015a8638b9143815d3289badfdf04
+Author: Steve Loughran <stevel@apache.org>
+Date:   Thu Apr 22 14:03:47 2004 +0000
+
+    A new uptodate test that includes granularity. the
+    intent is to move all date tests to this single place, to eliminate inconsistencies.
+    The only place I use it is signjar, which, by virtue of the fact there is no signjar test, means I know it wont break the tests.
+    Also, cleaned up the reflection hacks for 1.1.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276381 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d8657e9108b613d3cf5b9c266ddcbab24767cb92
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Apr 21 07:12:29 2004 +0000
+
+    One not too much
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276375 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3988c2b07fd29655c037192292c37094651864bd
+Author: Steve Loughran <stevel@apache.org>
+Date:   Tue Apr 20 15:02:38 2004 +0000
+
+    move to the Java1.2 implementation.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276358 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c885f568369156a62e3ccb5b4b93b73b9d054443
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Tue Mar 9 16:49:09 2004 +0000
+
+    remove authors from files
+    PR: 27177
+    Obtained from: J.M. (Martijn) Kruithof
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276208 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 278781dcd669412e5e35cc95d8a96e0b2a278f50
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Mon Feb 9 21:05:47 2004 +0000
+
+    Copyright owner is The Apache Software Foundation
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276065 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 66555ca10d24bbfc55e710b9d65f809cfe713dab
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Wed Feb 4 20:38:09 2004 +0000
+
+    Remove trailing spaces in all java files
+    in order to make checkstyle happy
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276017 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ca1513552f7af7fc19de490fbe2d88adb6c993ad
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Tue Feb 3 22:44:50 2004 +0000
+
+    Switch to Apache Software License 2.0
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276010 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 32276de41913cd9825b22841b72a768f7ced428c
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Tue Feb 3 19:21:05 2004 +0000
+
+    Check if character is in range for special array
+    PR: 26642
+    Obtained from: Jesse Glick
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276008 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 5086d936941d88eb84fbe326c8982bff92887237
+Author: Steve Loughran <stevel@apache.org>
+Date:   Wed Jan 7 17:49:37 2004 +0000
+
+    <touch> to handle filelists. Forced me to add more tests for new and existing touch code, and in the process note that the granularity for unix filesystems is not 0 but 1000 milliseconds. oops.
+    PR: 23526
+    Submitted by:	gudnabrsam@yahoo.com
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@275869 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6cd4baf0a84de6ce7edc5544ed81597fbc5dc7c7
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Thu Nov 20 12:08:17 2003 +0000
+
+    Check if parent file is not null before using it
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@275649 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b3ddeeaa0d25db8feff4ba62d43ad6487d4f1968
+Author: Steve Loughran <stevel@apache.org>
+Date:   Fri Oct 24 05:44:02 2003 +0000
+
+    comment
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@275554 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 655ad8f525f6d55fe32cbecdd3ef437b0f5d5fa5
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Sep 25 12:36:19 2003 +0000
+
+    improved OpenVMS support, submitted by Knut Wannheden <knut dot wannheden at paranor dot ch>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@275346 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 962a59d64f4793a2341196caac2356bd71e5ad4a
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Sun Sep 21 20:20:03 2003 +0000
+
+    Style
+    Submitted by: Larry Shatzer (larry dot shatzer at spirent dot com)
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@275272 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6f50296c910f579f6b9191a372e827842320cbb3
+Author: Steve Loughran <stevel@apache.org>
+Date:   Sat Sep 6 07:03:33 2003 +0000
+
+    factored out the FAT granularity constant into FileUtils, though I am sure it is used in many other places.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@275189 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3396e7c32132e8bff2d50196131cf641ed8d1fb2
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Fri Aug 22 15:25:45 2003 +0000
+
+    Remove direct call to deprecated project, location, tasktype Task field,
+    replaced by an accessor way into tasks.
+    Remove too some unused variable declaration and some unused imports.
+    PR: 22515
+    Submitted by: Emmanuel Feller ( Emmanuel dot Feller at free dot fr)
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@275133 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 149ce34431423cd116e5d7175ff281c30565aa6a
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Wed Jul 23 11:32:13 2003 +0000
+
+    Refactor: move LineTokenizer out of TokenFilter
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274905 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d7b9ddf84d7e438ba2683c8eaf68c1bc792a5c45
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Tue Jul 22 14:58:48 2003 +0000
+
+    there was still a little bone :)
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274888 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e955e3d96162fd17c8bc4a4865b15f2ba11c03f4
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Jul 22 14:53:55 2003 +0000
+
+    removeLeadingPath doesn't work if leading is a filesystem root - found by Antoine
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274887 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 24eb5693d6b7363262ea941cac63d15230aa1aab
+Author: Conor MacNeill <conor@apache.org>
+Date:   Sat Jul 19 11:20:23 2003 +0000
+
+    Coding conventions
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274859 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 02f7f5bc1e0feef4f516ecc8fbbb7084f61b150e
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Jul 16 10:43:15 2003 +0000
+
+    Make toURI and fromURI work correctly on Netware.
+    
+    Submitted by: Jeff Tulley <JTULLEY at novell dot com>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274827 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f3939727d9e11188d266beed7e9dfa8e2fd0bc9a
+Author: Conor MacNeill <conor@apache.org>
+Date:   Wed Jul 9 13:11:16 2003 +0000
+
+    Refactor some code into the Launcher.
+    Update ant script to use new launcher.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274793 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f463bd2cab8b132695d8bf60c889212628eba281
+Author: Conor MacNeill <conor@apache.org>
+Date:   Sat Jul 5 14:34:13 2003 +0000
+
+    More cleanup
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274774 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 4613fe2ba9f847697f1d2e901dc332361ec04d02
+Author: Conor MacNeill <conor@apache.org>
+Date:   Fri Jul 4 13:22:43 2003 +0000
+
+    Remove double-check pattern.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274767 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 4ae976759285d73d6994b282ee195fa50e860143
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Thu Jun 26 15:21:13 2003 +0000
+
+    Make filtersets preserve line endings
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274720 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 7f18b8f61106667917fa5bdd33b885344f2f5221
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Jun 25 10:31:45 2003 +0000
+
+    Make fixcrlf work even with /tmp on a separate filesystem
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274712 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b4cde9dabb9114c00da7dec74c4ca9308cd9cda8
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Tue Jun 24 16:07:26 2003 +0000
+
+    Use java.io.tmpdir as location for temporary files
+    in FileUtils#createTempFile (when the directory parameter is null)
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274706 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b3e94490f541ce66c3c9228e6aa2f78abe899e17
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon May 19 15:55:23 2003 +0000
+
+    removeLeadingPath didn't work as expected when trying to remove a path
+    from itself.
+    PR: 19979
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274596 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e596d350ae9efa7d0aaf51d8f988be6ea3909078
+Author: Magesh Umasankar <umagesh@apache.org>
+Date:   Tue Apr 22 18:23:55 2003 +0000
+
+    filter readers modify lineendings.
+    
+    PR: 18476
+    
+    Submitted by: peter.reilly@corvil.com (peter reilly)
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274499 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c84425e271b6fec1221fd7d742cfe4699b941e98
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Mar 27 16:32:19 2003 +0000
+
+    Add outputencoding attribute to <copy> and friends.
+    
+    PR: 18217
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274328 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 4bdc90bd5ea371107ce5f4fbe0939557e1f5aaa9
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Mar 13 16:15:47 2003 +0000
+
+    misleading @since tag
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274249 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f984f9775a0b921723f9f75569d4a2c16a28aa57
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Mar 13 16:14:51 2003 +0000
+
+    This is supposed to fix bug 17871.
+    
+    The patch looks innocent enough for me to merge it into the 1.5 branch
+    right away, but I cannot really verify it fixes the bug because of my
+    persistent (and self-imposed) lack of a Windows system.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274248 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 24436a1c922162464396caca82dd88c9c04d6d6a
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Mar 7 11:23:16 2003 +0000
+
+    Remove email address from sources
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274203 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1dc8a079057e191ca4c158f36843c2c9e9f9be52
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Feb 10 14:15:00 2003 +0000
+
+    Remove Jakarta Project from license
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274040 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8ca6f54b9ad33f769e4ec781c9416c58515bc3e6
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Jan 17 14:34:55 2003 +0000
+
+    Fix some JDK 1.1 issues - only culprit remaining is Diagnostics with
+    its class locating code.
+    
+    Learned by failing <xmlvalidate> tests that FileUtils.getFileURL
+    wouldn't append slashes where it should (because normalize strips
+    them).
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273824 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 58f3cad4fb9ccc24599af79edc51faa940a27c95
+Author: Conor MacNeill <conor@apache.org>
+Date:   Thu Dec 19 11:20:29 2002 +0000
+
+    Make sure random component of names is always purely numeric - no negative signs
+    
+    PR:	15399
+    Submitted by:	Rob Shafer
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273673 13f79535-47bb-0310-9956-ffa450edef68
+
+commit fb2b9616dc8be39d80b58a0fbdfff5ceecd18d1f
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Dec 10 16:38:26 2002 +0000
+
+    Rumors say that absolute file: URLs on Windows need a third slash.
+    
+    Get rid of some code duplication.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273645 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3c2bbbcda3cfbe3aff8b17b766538149385ceed2
+Author: Magesh Umasankar <umagesh@apache.org>
+Date:   Wed Dec 4 16:42:34 2002 +0000
+
+    Real tired of seeing email address being abused.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273610 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6b5c48061a0409b564f51bcf0717e946a0a41556
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Nov 18 14:31:52 2002 +0000
+
+    Don't stop with encoding # when creating URIs for the XML parser.
+    Code heavily inspired by Xerces-J code.  This version is extremely
+    simplified as it doesn't deal with non-ASCII characters for now.
+    
+    PR: 13679
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273552 13f79535-47bb-0310-9956-ffa450edef68
+
+commit acb441fdfacde4a4b0acb64fba5fb9eb4222a4fd
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Oct 31 15:12:53 2002 +0000
+
+    fix issues reported by PMD
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273480 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8f413c12084a80db24f4cdfd6b8f908d4e75556f
+Author: Peter Donald <donaldp@apache.org>
+Date:   Thu Jul 25 15:21:25 2002 +0000
+
+    Remove unused imports, remove glob imports, sort imports.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273169 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6bd8d6e938a45868902ecd1092858e8372933c7c
+Author: Magesh Umasankar <umagesh@apache.org>
+Date:   Sat Jun 22 23:38:38 2002 +0000
+
+    Merge changes made to 1.5 Beta2.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@272967 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f40cbc60b34a952432e7abfb70181d0feabd4dd6
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Jun 10 06:19:32 2002 +0000
+
+    Merge over a bug-fix needed to get jakarta-tomcat built by Gump.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@272855 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ca91f8cb7e4f2bfe1a191dea6126a32649af9565
+Author: Magesh Umasankar <umagesh@apache.org>
+Date:   Sat Jun 1 12:26:43 2002 +0000
+
+    Merge changes made to 1.5 Beta1.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@272826 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 34528dbf65dff02a0f8705372966b4a92bb0b515
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Apr 23 08:15:52 2002 +0000
+
+    spread the usage of JavaEnvUtils
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@272552 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 5cada6e7215cb96f4492e2e73a7e13508b1d7696
+Author: Conor MacNeill <conor@apache.org>
+Date:   Wed Apr 17 05:50:10 2002 +0000
+
+    Document new methods in XMLLogger
+    Cleanup Javadoc errors.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@272483 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c4266e92503f9365db8450324de2709fe4ff5423
+Author: Conor MacNeill <conor@apache.org>
+Date:   Mon Apr 15 13:36:22 2002 +0000
+
+    Coding Standard
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@272441 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6154080061f869b4e425d608da3bd61fad967564
+Author: Conor MacNeill <conor@apache.org>
+Date:   Mon Apr 15 12:11:52 2002 +0000
+
+    More coding standard fixes
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@272433 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f7c0a7741dae7278cf3ec00c0440548f188a2f59
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Apr 2 08:42:44 2002 +0000
+
+    Add method to FileUtils that emulates File.createNewFile (well, sort
+    of) and use it in Touch as well as BuildNumber.
+    
+    Various JDK 1.1 issues.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@272157 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 5e01ac3c135e9e7f675ca6dcc66abe9e0d0d6005
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Mar 21 08:09:19 2002 +0000
+
+    make sure files get closed during copy.
+    
+    PR: 7302
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@271928 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a5ec3f179dae0cd625f5e28ede525ce538966e0c
+Author: Conor MacNeill <conor@apache.org>
+Date:   Mon Mar 18 02:44:31 2002 +0000
+
+    Ah! cruel ones, leave me alone now
+    While I murmur a little and ponder
+    
+    Anti-Spam
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@271885 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 598017b1cdec8da5d9ac7002f6625561aca80ac7
+Author: Conor MacNeill <conor@apache.org>
+Date:   Mon Mar 11 09:40:21 2002 +0000
+
+    Restore 1.1 operation
+    Refactor context class loader methods into a utility class
+    Add URL method to FileUtils (still need to pick that up in Project)
+    Rename xcatalog to XMLCatalog
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@271813 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c2717b6fb34737b64377100b5821f29ebff7d589
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Mar 8 08:20:15 2002 +0000
+
+    give credit to Jeff for his NetWare patches.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@271791 13f79535-47bb-0310-9956-ffa450edef68
+
+commit bd0662b8fa0d69a8129ea1089518b146e77c6abd
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Mar 7 16:10:40 2002 +0000
+
+    commit the rest of Jeff Tulley's patches for Novell NetWare.
+    
+    Submitted by:	Jeff Tulley <JTULLEY@novell.com>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@271787 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f9c551b16e64afb9541e8e5507b9ac1a8c2eb436
+Author: Magesh Umasankar <umagesh@apache.org>
+Date:   Wed Mar 6 03:25:51 2002 +0000
+
+    Promote Filter Reader proposal to main trunk.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@271759 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 2f31d0c9642d34cb2991356daf4c876d8b5845f9
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Feb 25 11:03:40 2002 +0000
+
+    Add encoding attribute to copy/move so that filtered operations work
+    on encodings different than the platform's default as well.
+    
+    PR: Christopher Taylor <cstaylor@nanshu.com>
+    
+    some year 2002 fixes.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@271540 13f79535-47bb-0310-9956-ffa450edef68
+
+commit fa9eca56a6da096bf979f5509971017d87e4eb23
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Jan 29 17:12:20 2002 +0000
+
+    * refactor <filesmatch> condition to take advantage of FileUtils.
+    
+    * improve FileUtils.contentEquals by adding two additional shortcut
+      tests.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@271004 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 17997f266a2dd6b2a879ea9678086a8a9545a389
+Author: Stephane Bailliez <sbailliez@apache.org>
+Date:   Sun Jan 20 20:45:58 2002 +0000
+
+    - Fix order of modifiers
+    - Fix duplicate/unecessary imports
+    - Fix single if/else and loop without block
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270814 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 86a2654071969a37e3f627b8a19c79036ea8c2c6
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Nov 26 11:03:52 2001 +0000
+
+    JDK 1.1 compatibility.
+    
+    Submitted by:	Finn Bock <bckfnn@worldonline.dk>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270014 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 150b0c8bbac0cf9dae143bfebcf5772a6efa99a0
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Nov 19 14:15:43 2001 +0000
+
+    Make <replace> more robust by:
+    
+    (1) making sure that files will be closed
+    (2) deleting temporary files
+    
+    even if something goes wrong.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269961 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 4db248f63f4583aff79dc9d43cb64d84d4e33eb9
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Nov 19 13:58:52 2001 +0000
+
+    add method that compares file contents to FileUtils, use it in FixCrLf.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269960 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 307c136939d49423c10c698109f0012d9448bfc0
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Nov 2 16:36:49 2001 +0000
+
+    push createTempFile to FileUtils
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269859 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d12e6411ccc654bc10c102c8a085b6b0e4634f8b
+Author: Stephane Bailliez <sbailliez@apache.org>
+Date:   Sun Oct 28 21:31:01 2001 +0000
+
+    Code clean up:
+     - removed useless/duplicate imports
+     - added explicit imports rather than *
+     - changed specifiers order to be conform to JLS.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269827 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 490a7cd05980572aba55fb99fb78b16b8aac1228
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Oct 18 08:25:16 2001 +0000
+
+    remove redundant code from FileUtils, handle Netware case in
+    IntrospectionHelper's testcase.
+    
+    Submitted by:	Jeff Tulley <JTULLEY@novell.com>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269800 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 361eba435593bd43a91322b315136e511eb34cfd
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Oct 1 13:32:36 2001 +0000
+
+    Make FileUtils.resolveFile more robust - modelled after File(File, String).
+    
+    This avoids the explicit checks for null directories in
+    SourceFileScanner as well.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269755 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f66cab0ea7689df54fe51f64018cd3ef8b05cd3d
+Author: Conor MacNeill <conor@apache.org>
+Date:   Sat Aug 18 14:59:40 2001 +0000
+
+    Merge from ANT_145_BRANCH up to Beta 2
+    PR:
+    Obtained from:
+    Submitted by:
+    Reviewed by:
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269587 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 25484253db5920a2b34079a486f15d051503ac1a
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Aug 8 16:13:08 2001 +0000
+
+    Move resolveFile methods to FileUtils, add a normalize method there.
+    
+    Make sure Ant normalizes whatever it takes as its basedir - since
+    we've dropped canonicalPath
+    
+    ant -f foo.xml
+    
+    and
+    
+    ant -f ./foo.xml
+    
+    would have given different results (the . needed to be stripped).
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269522 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 0bcf1432f204e28327dabd2101797bc486407722
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Aug 7 05:49:48 2001 +0000
+
+    give a better name to FileUtil's factory method.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269482 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 21426bf475be13ac5dc846b04b56c19f55d5dea1
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Aug 6 14:10:43 2001 +0000
+
+    Move FileUtils into util package.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269478 13f79535-47bb-0310-9956-ffa450edef68

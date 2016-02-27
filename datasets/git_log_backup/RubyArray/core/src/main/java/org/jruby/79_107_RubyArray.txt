@@ -1,0 +1,806 @@
+commit 962fddd8cdc4e74fab9220dd1dce38ac5d39e5ad
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jul 21 09:41:53 2015 -0500
+
+    Use iteration count for final size in map. Fixes #3155.
+    
+    When the block passed to map makes modifications to the array
+    under iteration, we may prematurely finish the map loop due to the
+    size changing. However our logic for creating the mapped array
+    assumed the new array's size would always be the same as the
+    original array's size, leading to an array with null elements.
+    This fix uses the iteration count as the final size, so we at
+    least know how many elements in the new array were populated.
+    
+    Note that this behavior is officially undefined; modifying the
+    array while performing internal iteration can cause peculiar
+    effects across runtimes and potentially across the different
+    versions of the same runtime. We add a regression spec here to
+    at least make sure we don't produce an invalid array.
+
+commit 0e7d19bc605b312ce618207b72bb4f56a6921a8f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jul 14 14:58:39 2015 -0500
+
+    Handle masgn auto-splat and splat assignment like MRI.
+
+commit 40beb472cb17c6c0cbf46ba199a9461e0e7bd877
+Merge: c0c086e e237201
+Author: kares <self@kares.org>
+Date:   Mon May 25 16:54:09 2015 +0200
+
+    Merge branch 'jruby-1_7'
+    
+    * jruby-1_7: (54 commits)
+      [travis-ci] re-try sudo: false
+      dry out the two (Java helper) respond_to_p19 methods
+      respondsTo JRuby API under 1.9.3 does not do respond_to_missing? like MRI does
+      sleep should convert it's "time interval" argument the same way as MRI
+      respond_to_missing? should always get a symbol name passed (fixes #2946)
+      add a respond_to_missing unit test (on 1.9)
+      introduce and use conversion( just like MRI does) on #timeout's sec argument
+      add missing ' ' (space) in exception message ... TypeError from `sleep('invalid')`
+      DateTime.iso8601 fails with an error if a second fraction is present
+      [build] switch to 1.7.21-SNAPSHOT for test-jruby-jars
+      refactor Timeout's scheduled tasks to an inner class (for easier identification)
+      further hand drying of the Timeout module impl
+      less (int) casting noiz
+      add some (internal) generics for an improved readability xp
+      inner class' Finalizer fields id and finalized can be final
+      generix-ize the environment field (at least internally) + use a StringBuilder
+      unnecessary (int) cast
+      missing throw statement in RubyString's concat
+      tune timeout to work when scheduling or argument convenrsion throws (see #2940)
+      return empty Ruby array for empty dir list
+      ...
+    
+    Conflicts:
+    	.gitignore
+    	.travis.yml
+    	VERSION
+    	core/pom.xml
+    	core/src/main/java/org/jruby/RubyArray.java
+    	core/src/main/java/org/jruby/RubyBasicObject.java
+    	core/src/main/java/org/jruby/RubyDir.java
+    	core/src/main/java/org/jruby/RubyEnumerable.java
+    	core/src/main/java/org/jruby/RubyFile.java
+    	core/src/main/java/org/jruby/RubyGlobal.java
+    	core/src/main/java/org/jruby/RubyIO.java
+    	core/src/main/java/org/jruby/RubyKernel.java
+    	core/src/main/java/org/jruby/RubyModule.java
+    	core/src/main/java/org/jruby/RubyString.java
+    	core/src/main/java/org/jruby/RubyTime.java
+    	core/src/main/java/org/jruby/ext/timeout/Timeout.java
+    	core/src/main/java/org/jruby/java/proxies/JavaProxy.java
+    	core/src/main/java/org/jruby/util/Dir.java
+    	core/src/main/java/org/jruby/util/encoding/CharsetTranscoder.java
+    	docs/man/pom.xml
+    	docs/pom.xml
+    	ext/pom.xml
+    	ext/readline/pom.xml
+    	ext/ripper/pom.xml
+    	lib/pom.xml
+    	lib/ruby/1.9/date/format.rb
+    	lib/ruby/1.9/io/linux_console.rb
+    	lib/ruby/shared/gauntlet_rubygems.rb
+    	lib/ruby/shared/rubygems.rb
+    	lib/ruby/shared/rubygems/available_set.rb
+    	lib/ruby/shared/rubygems/basic_specification.rb
+    	lib/ruby/shared/rubygems/command.rb
+    	lib/ruby/shared/rubygems/command_manager.rb
+    	lib/ruby/shared/rubygems/commands/cert_command.rb
+    	lib/ruby/shared/rubygems/commands/cleanup_command.rb
+    	lib/ruby/shared/rubygems/commands/contents_command.rb
+    	lib/ruby/shared/rubygems/commands/dependency_command.rb
+    	lib/ruby/shared/rubygems/commands/environment_command.rb
+    	lib/ruby/shared/rubygems/commands/generate_index_command.rb
+    	lib/ruby/shared/rubygems/commands/help_command.rb
+    	lib/ruby/shared/rubygems/commands/install_command.rb
+    	lib/ruby/shared/rubygems/commands/list_command.rb
+    	lib/ruby/shared/rubygems/commands/mirror_command.rb
+    	lib/ruby/shared/rubygems/commands/outdated_command.rb
+    	lib/ruby/shared/rubygems/commands/owner_command.rb
+    	lib/ruby/shared/rubygems/commands/pristine_command.rb
+    	lib/ruby/shared/rubygems/commands/push_command.rb
+    	lib/ruby/shared/rubygems/commands/query_command.rb
+    	lib/ruby/shared/rubygems/commands/search_command.rb
+    	lib/ruby/shared/rubygems/commands/setup_command.rb
+    	lib/ruby/shared/rubygems/commands/specification_command.rb
+    	lib/ruby/shared/rubygems/commands/uninstall_command.rb
+    	lib/ruby/shared/rubygems/commands/unpack_command.rb
+    	lib/ruby/shared/rubygems/commands/update_command.rb
+    	lib/ruby/shared/rubygems/commands/which_command.rb
+    	lib/ruby/shared/rubygems/commands/yank_command.rb
+    	lib/ruby/shared/rubygems/compatibility.rb
+    	lib/ruby/shared/rubygems/config_file.rb
+    	lib/ruby/shared/rubygems/core_ext/kernel_gem.rb
+    	lib/ruby/shared/rubygems/core_ext/kernel_require.rb
+    	lib/ruby/shared/rubygems/defaults.rb
+    	lib/ruby/shared/rubygems/dependency.rb
+    	lib/ruby/shared/rubygems/dependency_installer.rb
+    	lib/ruby/shared/rubygems/dependency_list.rb
+    	lib/ruby/shared/rubygems/deprecate.rb
+    	lib/ruby/shared/rubygems/doctor.rb
+    	lib/ruby/shared/rubygems/errors.rb
+    	lib/ruby/shared/rubygems/exceptions.rb
+    	lib/ruby/shared/rubygems/ext.rb
+    	lib/ruby/shared/rubygems/ext/builder.rb
+    	lib/ruby/shared/rubygems/ext/cmake_builder.rb
+    	lib/ruby/shared/rubygems/ext/configure_builder.rb
+    	lib/ruby/shared/rubygems/ext/ext_conf_builder.rb
+    	lib/ruby/shared/rubygems/ext/rake_builder.rb
+    	lib/ruby/shared/rubygems/gemcutter_utilities.rb
+    	lib/ruby/shared/rubygems/indexer.rb
+    	lib/ruby/shared/rubygems/install_update_options.rb
+    	lib/ruby/shared/rubygems/installer.rb
+    	lib/ruby/shared/rubygems/installer_test_case.rb
+    	lib/ruby/shared/rubygems/local_remote_options.rb
+    	lib/ruby/shared/rubygems/name_tuple.rb
+    	lib/ruby/shared/rubygems/package.rb
+    	lib/ruby/shared/rubygems/package/old.rb
+    	lib/ruby/shared/rubygems/package/tar_header.rb
+    	lib/ruby/shared/rubygems/package/tar_reader/entry.rb
+    	lib/ruby/shared/rubygems/package/tar_writer.rb
+    	lib/ruby/shared/rubygems/path_support.rb
+    	lib/ruby/shared/rubygems/platform.rb
+    	lib/ruby/shared/rubygems/psych_additions.rb
+    	lib/ruby/shared/rubygems/rdoc.rb
+    	lib/ruby/shared/rubygems/remote_fetcher.rb
+    	lib/ruby/shared/rubygems/request.rb
+    	lib/ruby/shared/rubygems/request_set.rb
+    	lib/ruby/shared/rubygems/request_set/gem_dependency_api.rb
+    	lib/ruby/shared/rubygems/requirement.rb
+    	lib/ruby/shared/rubygems/resolver/current_set.rb
+    	lib/ruby/shared/rubygems/security.rb
+    	lib/ruby/shared/rubygems/security/policy.rb
+    	lib/ruby/shared/rubygems/security/signer.rb
+    	lib/ruby/shared/rubygems/security/trust_dir.rb
+    	lib/ruby/shared/rubygems/server.rb
+    	lib/ruby/shared/rubygems/source.rb
+    	lib/ruby/shared/rubygems/source/installed.rb
+    	lib/ruby/shared/rubygems/source/local.rb
+    	lib/ruby/shared/rubygems/source/specific_file.rb
+    	lib/ruby/shared/rubygems/source_list.rb
+    	lib/ruby/shared/rubygems/spec_fetcher.rb
+    	lib/ruby/shared/rubygems/specification.rb
+    	lib/ruby/shared/rubygems/ssl_certs/AddTrustExternalCARoot.pem
+    	lib/ruby/shared/rubygems/stub_specification.rb
+    	lib/ruby/shared/rubygems/syck_hack.rb
+    	lib/ruby/shared/rubygems/test_case.rb
+    	lib/ruby/shared/rubygems/test_utilities.rb
+    	lib/ruby/shared/rubygems/text.rb
+    	lib/ruby/shared/rubygems/uninstaller.rb
+    	lib/ruby/shared/rubygems/uri_formatter.rb
+    	lib/ruby/shared/rubygems/user_interaction.rb
+    	lib/ruby/shared/rubygems/util/list.rb
+    	lib/ruby/shared/rubygems/validator.rb
+    	lib/ruby/shared/rubygems/version.rb
+    	maven/jruby-complete/pom.xml
+    	maven/jruby-dist/pom.xml
+    	maven/jruby-jars/pom.xml
+    	maven/jruby-noasm/pom.xml
+    	maven/jruby-rake-plugin/pom.xml
+    	maven/jruby-stdlib/pom.xml
+    	maven/jruby/pom.xml
+    	maven/pom.xml
+    	pom.xml
+    	test/pom.xml
+    	test/test_dir.rb
+    	test/test_kernel.rb
+    	test/test_respond_to.rb
+    	test/test_timeout.rb
+
+commit 65f55612d49596f7162b042070508faa48f73300
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri May 22 09:25:14 2015 -0500
+
+    Use proper coersion protocol in Array#flatten for elts.
+    
+    Fixes #2563.
+
+commit 800554bd58f307cf192b416699cabc5c4325a803
+Author: kares <self@kares.org>
+Date:   Fri May 15 12:41:54 2015 +0200
+
+    less (int) casting noiz
+
+commit 4b213d7938e2950f970bdb9403d3205dc5cfe137
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu May 7 10:45:44 2015 -0500
+
+    Reduce usage of ZERO_ARGS by replacing with Signature.NO_ARGS checks.  Eliminate null checks for signature by passing in one to NullBlockBody
+
+commit 974ddce95e0978b75b62158957b46cc083fadc27
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed May 6 12:24:54 2015 -0500
+
+    More arity -> signature conversion on block
+
+commit f7661d7f95ac09a351bb00695ce6b24d7f1e0c62
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Thu Apr 23 18:42:34 2015 +0100
+
+    [Truffle] Reverse no-content changes to RubyArray.
+
+commit 97079aad8f2ff985cbe3ef6ca8924339d3feed9a
+Merge: 31fba64 2961673
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Mon Apr 20 19:10:34 2015 +0100
+
+    Merge branch 'truffle-head' into truffle-pack
+    
+    Conflicts:
+    	truffle/src/main/java/org/jruby/truffle/nodes/core/ArrayNodes.java
+
+commit 512b0a5ab4e129a2e05e6ca83113520252a0048a
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Apr 16 10:49:28 2015 -0500
+
+    StaticScope now has Signature instead of three individual fields.  All other
+    changes were made to support this.  We encode/decode scopes with a full
+    Signature.  Blocks are all rooted in providing a Signature.  All IR*Method
+    will provide a Signature.  Unfortunately, I stopped at IR level for method
+    types.  Over time those should get converted.
+    
+    This corrects all arity issues involving methods and blocks in interp.  JIT
+    is still somewhere passing in the wrong values but I will correct that in
+    a followup (this is not a regression).
+    
+    spec:fast:ruby and test:mri both pass so do JIT variants of those tests
+    but I strong suspect we are shelling out in some way and running some of
+    these tests in interp mode.
+    
+    On other note of distinction is that for builtin functions we only construct
+    a subset of information that Signature wants because Arity is only a subset
+    of the info Signature needs.  Since there are no exotic signatures in builtins
+    there is a Signature.from(Arity) which will convert to a reasonable analogue
+    or throw if it is special in some way.
+    
+    I tried to leave all deprecated versions of methods and constructors but
+    I might have spaced out a few.
+
+commit dd4f0c32685205a7d3cecc5cd662718f7cc1f274
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Sat Apr 11 21:44:20 2015 +0100
+
+    [Truffle] Remove JRuby integration of pack.
+
+commit 91466b66b5a3d57e6970f1236a57a723f4157327
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Sat Apr 11 19:24:28 2015 +0100
+
+    [Truffle] Simple oldest cache eviction for the Truffle pack cache.
+
+commit 071ad5bbbdcabb568f2c93b9537c5f37f172fc20
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Sat Apr 11 01:15:25 2015 +0100
+
+    [Truffle] Handle JRuby's nil in pack with a float.
+
+commit eee1188156fca71cc276d93ee4753c7ebbea37c4
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Sat Apr 11 00:54:55 2015 +0100
+
+    [Truffle] Improve JRuby's pack for floats.
+
+commit 04d88a605c38d0d7fdbd1ec63ae05b6d5f86aa2c
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Fri Apr 10 21:59:01 2015 +0100
+
+    [Truffle] Document and tidy up pack.
+
+commit 385b961b9f9f948a2218554f3d8d8bb724d27fae
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Mon Apr 6 21:12:37 2015 +0100
+
+    [Truffle] JRuby pack exceptions.
+
+commit 4cdf24de248da2ff88c994bcc33c31d5972dfdd7
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Mon Apr 6 20:49:18 2015 +0100
+
+    [Truffle] Basics of JRuby integration for pack working again.
+
+commit cecae9c09eaa9c879cfb43e52d954ee649f6d3d5
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Mar 23 21:42:25 2015 -0500
+
+    Unbreak a few items from fixing.
+    
+    * Encode ascii codepoints for Array#inspect using target enc.
+    * Encoding.prevCodeHead returns -1 for us, since no pointers.
+
+commit 802927c330d8e011f33a5939347d7f1d35ad7052
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Mar 23 10:05:25 2015 -0500
+
+    Restructuring of Array#inspect and missing enc checks rb_inspect.
+
+commit 21e03b3eb12e423fe543f007d5e6195c462ff32f
+Author: Smit Shah <who828@gmail.com>
+Date:   Sat Feb 7 23:05:08 2015 +0530
+
+    Fix the bug with size with each_slice without block
+
+commit bc5015a7f5bc252cb6e7714e75bb6b63bb44dcf3
+Author: Smit Shah <who828@gmail.com>
+Date:   Sat Jan 17 01:02:52 2015 +0530
+
+    Added empty array check for RubyArray#any? method
+
+commit f356302f51b3c87816e69ab6f25e72c644e56309
+Author: Smit Shah <who828@gmail.com>
+Date:   Sat Jan 17 00:58:53 2015 +0530
+
+    Bound any? method to RubyArray
+
+commit 5e46bfc340ca7b77f34684acf5b8ea756dc76661
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jan 12 11:40:09 2015 -0600
+
+    Revert "Merge pull request #2443 from Who828/master"
+    
+    This reverts commit 4ed53f8b9d82a70d8a3c6efc6d2b566d57c0c5c9, reversing
+    changes made to 3a19c897051d638aaf558799ef8a53068ec601cc.
+
+commit 4c064f6eb41b7a171a448771fd99c02a7ebb1b0f
+Author: Benoit Daloze <eregontp@gmail.com>
+Date:   Mon Jan 12 18:18:09 2015 +0100
+
+    Fix the build (missing imports).
+
+commit 561252c0520518ceaa4969fb640f78e7ee6984aa
+Author: Smit Shah <who828@gmail.com>
+Date:   Fri Jan 9 09:53:23 2015 +0530
+
+    Follow MRI implementation for RubyArray hash
+
+commit 97c92b72b66a3e42ad1cc83801343ffdfbc1e98c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Nov 6 10:20:14 2014 -0600
+
+    Recursion-free Array#permutation and combination (mri #9932).
+
+commit 502e659261181034f6db16896bfaea70fbe55c15
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Nov 5 10:17:50 2014 -0600
+
+    Remove Ruby as argument to newRange
+
+commit 80727e1eb73354591c9252e00bb82e3def8a4865
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Nov 5 10:00:29 2014 -0600
+
+    context tweaks and some mild naming changes
+
+commit 451b1c7062eea0e58685cfca32920c3e4eb47a23
+Author: Chris Heald <cheald@gmail.com>
+Date:   Wed Nov 5 03:36:20 2014 -0700
+
+    Fix multiple Range stdlib failures
+    
+    * Add ducktyping support for Array#[], Array#[]=, String#[], and String#[]=
+    * Fix re-initialize check on initialize_copy
+    * Fix infinite recursion when inspecting cyclical ranges
+
+commit aafb40b0a772613ae288bb2f28fbf6791b11e6c8
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Sep 10 17:06:13 2014 -0500
+
+    Fix coercion of arrays in Kernel#Array and Array#product.
+    
+    Fixes #1961.
+    Fixes #1962.
+
+commit 6ba08e6d48e093e55d445b719300ed3cb3029aac
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Sep 25 13:00:18 2014 -0500
+
+    Revert only temporarily because this breaks something in Rails 4 involing Array.  Figure out for 1.7.17
+
+commit 0513c951389c015200e7553c515c43b130d64bc9
+Merge: b707c91 5f0e17b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Sep 10 20:55:35 2014 -0500
+
+    Merge remote-tracking branch 'origin/jruby-1_7'
+    
+    Conflicts:
+    	core/pom.xml
+    	core/src/main/java/org/jruby/RubyFile.java
+    	core/src/main/java/org/jruby/RubyFileTest.java
+    	core/src/main/java/org/jruby/RubyKernel.java
+    	core/src/main/java/org/jruby/util/RegularFileResource.java
+    	core/src/main/java/org/jruby/util/TypeConverter.java
+    	docs/man/pom.xml
+    	docs/pom.xml
+    	ext/pom.xml
+    	ext/readline/pom.xml
+    	ext/ripper/pom.xml
+    	lib/pom.xml
+    	maven/jruby-complete/pom.xml
+    	maven/jruby-dist/pom.xml
+    	maven/jruby-jars/pom.xml
+    	maven/jruby-noasm/pom.xml
+    	maven/jruby-rake-plugin/pom.xml
+    	maven/jruby-stdlib/pom.xml
+    	maven/jruby/pom.xml
+    	maven/pom.xml
+    	pom.xml
+    	test/jruby/test_system_error.rb
+    	test/pom.xml
+
+commit 2b0c320695dff770b5ada90da07ac604239dec2e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Sep 10 17:06:13 2014 -0500
+
+    Fix coercion of arrays in Kernel#Array and Array#product.
+    
+    Fixes #1961.
+    Fixes #1962.
+
+commit 664c4fbeffe0e216f6b6795be68ab9fa0f5d40ef
+Merge: fdd1c4b 725d0e3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Aug 20 15:47:21 2014 -0500
+
+    Merge remote-tracking branch 'origin/jruby-1_7'
+    
+    Conflicts:
+    	core/pom.xml
+    	core/src/main/java/org/jruby/runtime/Helpers.java
+    	test/mri/excludes/TestArray.rb
+
+commit b653e37a67be8b94be87c21b0af52ebf055cf014
+Author: Daniel Marcotte <dmarcotte@gmail.com>
+Date:   Sun Aug 3 10:33:15 2014 -0700
+
+    Improve Array#delete_if/reject! compatibility
+    
+    Ensure that RubyArray#rejectBang fully updates the array at each step
+    of its iteration with a more direct port of MRI's array#ary_reject_bang
+    
+    This requires more work than the previous implementation, but ensures
+    that the array is in the expected state if a user checks its contents
+    during the iteration, or breaks from the iteration early (as described
+    in https://bugs.ruby-lang.org/issues/2545)
+
+commit 2676a1ce936a89deaab7db9f11a6a0d63fdf8610
+Merge: c8d269d c57ad62
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 9 12:55:04 2014 -0500
+
+    Merge remote-tracking branch 'origin/master' into new_transcoder
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/RubyConverter.java
+    	test/mri/excludes/TestMethod.rb
+    	test/mri/excludes/TestModule.rb
+
+commit 6225d60e792b3f60adbd76b15958ba3b221f2279
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Mon Jun 30 23:59:03 2014 -0500
+
+    Death to rubyclass stack: Part 2 of 2
+    
+    * This patch builds on the previous commit and eliminates all
+      traces of rubyclass stack from the codebase.
+    
+      - Remove the push/pop/get from thread-context and use sites.
+      - Removed klass arg from method calls.
+    
+    * TODO: embed used to inject values into the current-module obtained
+      from the rubyclass stack. That code needs investigation.
+    
+    * Replaced the hacky if (klass==null) prepareSelf(binding) calls
+      with information about actual execution context. The primary reason
+      to use binding.self instead of self argument in blocks is when
+      the block is being used in a binding-eval context. The same soln.
+      is applicable in other contexts where this pattern was used (and
+      currently marked with SSS FIXME annotations in code comments).
+    
+    * All tests continue to pass.
+
+commit 28588ed678aa94b85a71cf41d555c00fbf76dff0
+Merge: 02eb2f4 1d03c28
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jun 23 14:16:24 2014 -0500
+
+    Merge remote-tracking branch 'origin/master' into new_transcoder
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/RubyBasicObject.java
+    	core/src/main/java/org/jruby/RubyIO.java
+
+commit 8d13ea66ffd473ac605cae3961486c878a0fc6b4
+Author: Alex Dowad <alexinbeijing@gmail.com>
+Date:   Thu Jun 5 07:52:03 2014 +0200
+
+    Fix typo
+
+commit abb5ef68413c8d35c23b1de1cb038bd459d952f6
+Author: Alex Dowad <alexinbeijing@gmail.com>
+Date:   Wed Jun 4 09:26:22 2014 +0200
+
+    Make behavior of Array#eql? more closely match MRI
+
+commit 2d48b1f1bbb68b7ab93a230399f3b7f36d47e75b
+Author: Alex Dowad <alexinbeijing@gmail.com>
+Date:   Thu Jun 5 07:52:03 2014 +0200
+
+    Fix typo
+
+commit bde651d35a37e8d1807f10d96d9e3ccad87e0050
+Author: Alex Dowad <alexinbeijing@gmail.com>
+Date:   Wed Jun 4 09:26:22 2014 +0200
+
+    Make behavior of Array#eql? more closely match MRI
+
+commit 5c9cdfe905bad8cc3c469276ca2bbd8aad9b4f67
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri May 16 12:51:44 2014 -0500
+
+    Start porting IO open/initialize logic.
+
+commit 706b4539517e1c444250334ea261ac56542d02cf
+Merge: 75887be c3e7c29
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu May 8 04:54:10 2014 -0500
+
+    Merge branch 'master' into new_transcoder
+    
+    Conflicts:
+    	core/pom.xml
+    	core/src/main/java/org/jruby/RubyFile.java
+    	core/src/main/java/org/jruby/util/TypeConverter.java
+
+commit 2133142cbb8be4419e52fe922aae17128379d86d
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Apr 30 16:59:00 2014 -0500
+
+    Remove context.is19
+
+commit f97bf3082cd0f6966f9395bf1b829242d8122d4a
+Merge: f377d1c 86f0346
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Apr 16 15:27:46 2014 -0500
+
+    Merge
+
+commit b5a5b2735bf44728b613c245a4a6656ebf055a1f
+Author: Alex Tambellini <atambellini@gmail.com>
+Date:   Mon Apr 14 11:53:29 2014 -0400
+
+    Clean up 1.8/1.9 split in Array#pack
+
+commit 92d55525d1d20959a8b860fe8ed96665cf66bf6d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Apr 13 14:14:36 2014 -0500
+
+    Avoid constructing a Fixnum and a String for sort logic.
+
+commit d264bb03878d0e930ed68adc1cde5dcb0e983dff
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Mar 4 19:54:31 2014 -0600
+
+    Start wiring Converter up to new transcoder.
+    
+    * convpath logics implemented properly now.
+    * Most other methods still to be converted.
+
+commit 4dfa1c5def5a2945aa28e9c71d5eafa8d3c928c4
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Sat Feb 8 13:38:00 2014 -0600
+
+    No need for eachCommon and I wanted to simplify this for an example
+
+commit 611c4c2562acb738109f0f0ebaef08e9e4c25784
+Author: Gustav Munkby <grddev@gmail.com>
+Date:   Wed Feb 5 15:42:31 2014 +0100
+
+    Fix uniq/uniq! with block for array slices
+    
+    Avoid adjusting for slice offset twice.
+
+commit 2c33dc28fe03d46ff98172a9780921da65c97b8d
+Merge: 34faf03 09a51ca
+Author: Thomas E Enebo <tom.enebo@gmail.com>
+Date:   Thu Feb 6 08:48:20 2014 -0600
+
+    Merge pull request #1483 from grddev/uniq_bang
+    
+    Fix uniq/uniq! with block for array slices.  Amazing find!   Next time please submit this PR against jruby-1_7 branch and not master (unless it is Ruby 2.0+ semantics then continue using master)
+
+commit 09a51ca76fe1122c6bfb41cc7d7afd26d0a03a96
+Author: Gustav Munkby <grddev@gmail.com>
+Date:   Wed Feb 5 15:42:31 2014 +0100
+
+    Fix uniq/uniq! with block for array slices
+    
+    Avoid adjusting for slice offset twice.
+
+commit e4739611da6026e6430abe2d40a1f602db3fdb1a
+Author: Daniel Marcotte <dmarcotte@gmail.com>
+Date:   Sun Dec 15 09:27:13 2013 -0800
+
+    Enum sizes for array combinatorics
+
+commit efc38ec641d4f84d09de682dd3037649b8b595c0
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri Dec 13 14:25:43 2013 -0600
+
+    Bah. I screwed up this merge to master from 1.7.  Array.repeated_permutation should not have a no-arg version
+
+commit 89a7ba213f802c0dcc6ac27c906d83d3df3bdb53
+Author: Daniel Marcotte <dmarcotte@gmail.com>
+Date:   Thu Dec 12 08:58:51 2013 -0800
+
+    Array#repeated_permutation should have arity 1
+    
+    Remove arg-less Array#repeated_permutation to match MRI behavior.
+
+commit fbe18f5ed3a77ed4a6ea0494da598d09baf29879
+Author: Daniel Marcotte <dmarcotte@gmail.com>
+Date:   Thu Dec 5 18:10:03 2013 -0800
+
+    Java enumerators lazily compute Enumerator#size
+    
+    For internally created enumerators (i.e. created with
+    enumeratorizeWithSize), ensure that calls to Enumerator#size reflect the
+    current size of the underlying object being enumerated by
+    introducing a function type which can be lazily computed on calls to
+    Enumerator#size.
+
+commit ff4d523af0600ab85f1f3de88f596137f892a52c
+Author: David Masover <masover@iastate.edu>
+Date:   Mon Dec 2 20:30:55 2013 -0600
+
+    subList toIndex should be exclusive. Fixes #1274.
+    
+    Issue at https://github.com/jruby/jruby/issues/1274
+
+commit 4157f3b0478e1be4ba34f1ec66254df90c190f48
+Merge: ed1c756 a35d670
+Author: Thomas E Enebo <tom.enebo@gmail.com>
+Date:   Wed Dec 4 10:34:35 2013 -0800
+
+    Merge pull request #1292 from masover/master
+    
+    subList toIndex should be exclusive, not inclusive. (fromIndex is inclusive.)
+
+commit b0dcdcd7a6b6b14239eef6312a77dfbf3f8ef26e
+Merge: 534ebba 6d92c65
+Author: Thomas E Enebo <tom.enebo@gmail.com>
+Date:   Tue Dec 3 08:51:15 2013 -0800
+
+    Merge pull request #1298 from dmarcotte/cycle-size
+    
+    Add Enumerator#cycle.size and Array#cycle.size
+
+commit 534ebba250207cb00c229e0f8070a287ffe82d26
+Merge: 95ae9ce a054e67
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Dec 3 10:47:08 2013 -0600
+
+    Merge with jruby-1_7
+
+commit a054e674ab8fedf721df368ca085aea5601660f6
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Dec 3 10:46:39 2013 -0600
+
+    Fixes 1291. Sidekiq - Minitest error: NoMethodError: unmocked method :==, expected one of []
+
+commit 6d92c65fda4d4bbcbe155ec1c2c65484e29342a0
+Author: Daniel Marcotte <dmarcotte@gmail.com>
+Date:   Mon Dec 2 08:34:02 2013 -0800
+
+    Add Enumerator#cycle.size and Array#cycle.size
+
+commit 4c1db9144ca9c02ef52fe4f506b45d5b0772a156
+Author: David Masover <masover@iastate.edu>
+Date:   Mon Dec 2 20:30:55 2013 -0600
+
+    subList toIndex should be exclusive. Fixes #1274.
+    
+    Issue at https://github.com/jruby/jruby/issues/1274
+
+commit 58760fc63039773ab1b7d5252ffa1118879383dd
+Merge: a97d736 f4786f9
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Nov 26 13:41:51 2013 -0600
+
+    Merge jruby-1_7 to master
+
+commit ea9deff54397839adbdebff4e10a1e608a22e39d
+Author: Daniel Marcotte <dmarcotte@gmail.com>
+Date:   Tue Nov 26 08:58:27 2013 -0800
+
+    Fix arrays with overridden each
+    
+    Fix a stack overflow in Array#all (https://github.com/jruby/jruby/issues/1265)
+    and restore the correct behavior for Array#any (the needed isBuiltn
+    check was incorrectly removed in https://github.com/jruby/jruby/pull/1234)
+    
+    Also add a spec to ensure this remains stable going forward.
+
+commit 9b1db76d290e21835ef39d14bdee869fadf194cc
+Author: Daniel Marcotte <dmarcotte@gmail.com>
+Date:   Fri Nov 22 18:02:32 2013 -0800
+
+    2.0 Enumerator#size compatibility enhancements
+    
+    Update enum constructors for 2.0, and ensure in a number of cases that
+    we keep the size when we enumeratorize (note: there's still a number
+    of other enumeratorize calls which will be addressed in a later commit)
+
+commit 67d5ab6da631971dc8e86647acd88caba55a2361
+Merge: e18cc96 7139a09
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Nov 20 10:20:45 2013 -0600
+
+    Merge jruby-1_7 to master
+
+commit d3fefd60977c2f5ddd0d6859da525d6f782a1538
+Author: Daniel Marcotte <dmarcotte@gmail.com>
+Date:   Sat Nov 16 07:42:27 2013 -0800
+
+    Fix any_spec
+    
+    Use the appropriate arity to get Enumerable#any to handle its args
+    correctly.  Note that we need to switch from JavaInternalBlockBody to a
+    BlockCallback since JavaInternalBlockBody does not properly respect its
+    arity in 1_7.
+
+commit dc4296f257901b66bfb338c7cd28001a8b5e86ad
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Oct 30 22:01:43 2013 -0500
+
+    De-version Array
+
+commit 0c7100e6c17a9a9879f0f94128f1b9e9d19770ea
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Oct 30 18:22:35 2013 -0500
+
+    Remove "untrust", since it is being deprecated in 2.1
+    
+    See ruby/ruby@1f828497d1e8df2b7b68ac2a093ab4439585d88a
+
+commit 697e6895affa646849a685ed58f6f84795c853aa
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Oct 4 23:37:52 2013 -0500
+
+    Eliminate calls to Ruby.is1_8 and is1_9.
+
+commit d1f89e004fdc78dff75407c82123e6c9e8b406bb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Sep 12 18:48:16 2013 +0200
+
+    Make ClassIndex into an enum, to prevent issues like #1004.
+
+commit 91c11f049d070f60397f72df54104d999e461da4
+Author: Daniel Marcotte <dmarcotte@gmail.com>
+Date:   Mon Jul 29 19:36:32 2013 -0700
+
+    Some yield arg-handling improvements
+    
+    Make Enumerable#all, #none, #one, and #find_index behave to spec in the
+    case of #each yielding multiple values (also remove zip_tags.txt while
+    we're in there since it's passing)
+
+commit a63d961735d1b5d89ebda549e9a3d1b7040d67be
+Author: Alex Tambellini <atambellini@gmail.com>
+Date:   Sat Jul 20 23:08:42 2013 -0400
+
+    Array#sample should attempt coercion via #to_hash
+
+commit bc06703b0f985856e136026fb7ce1ad479895653
+Author: Alex Tambellini <atambellini@gmail.com>
+Date:   Sat Jul 20 22:51:30 2013 -0400
+
+    Array#shuffle should attempt coercion via #to_hash
+
+commit 28c6fbc4e883bc1c9e9242d1da1cb2b785f55339
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 3 12:46:45 2013 -0500
+
+    Move to @mkristian's proposed layout, with some modifications.

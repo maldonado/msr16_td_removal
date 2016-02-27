@@ -1,0 +1,350 @@
+commit 61678ac1a2514a9932276f8d527816a5980a94b3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Feb 25 20:41:40 2013 +1100
+
+    Fix more references to CPL.
+    
+    The phrase "Common Public License" was split across two lines in
+    our default header, which caused it to be missed during earlier
+    search/replace. Also, we did not replace the CPL URL in the
+    header with the EPL URL.
+
+commit 330fef3b0fc18af477ccea19bd278669667f31bb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 12 14:49:29 2013 -0600
+
+    Switch JRuby's CPL license to EPL.
+    
+    Governance of the CPL license was moved to the Eclipse Foundation
+    at some point in the past, and Eclipse blessed the EPL (Eclipse
+    Public License v1.0) as the successor to CPL. Because the CPL
+    contains a clause allowing transparent upgrades to future blessed
+    successor licenses, we can make the move to EPL without
+    re-contacting past contributors.
+    
+    The change in going from CPL to EPL largely just removes some
+    punitive language that apparently made many companies nervous. All
+    other language in the license remains identical.
+    
+    Several documents about Eclipse's move from CPL to EPL are here:
+    
+    http://www.eclipse.org/legal/cpl2epl/
+    
+    Note that Eclipse's move came before the blessing of EPL as the
+    upgrade path for CPL, so they had to do a bit more legal juggling.
+    With Eclipse now the administrator of CPL and with their blessing
+    of EPL as the upgrade path for CPL, all we need to do is make the
+    move.
+
+commit f0a64843c1304ad93ebb4d73474695a733e361ab
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Jan 3 14:05:02 2013 -0600
+
+    GH #360: Non-ASCII character escape sequence in string_content results in SyntaxError
+
+commit 343ed5f7cf65674c7d4d79e87caa7a614d5044a6
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Feb 3 11:44:20 2011 -0600
+
+    WTF cygwin..why change all those permissions!!!
+
+commit 156c372e65fc791ff7ae5c7996a5131cd08d982f
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Feb 2 11:12:06 2011 -0600
+
+    Unused imports
+
+commit d1c27c7121f89c3e12d49d9eed340134d8e8bd26
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Feb 1 15:32:54 2011 -0600
+
+    Remove encoding from Regexp options since in 1.8 kcode has it and in 1.9 pattern has it.  The rest can be figured out based on explicit set kcode values
+
+commit 73b826c55eea70dccd7fd831b208f70ea96bce53
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Jan 31 15:37:22 2011 -0600
+
+    RubyRegexpOptions will always start with KCode + Encoding and be marked as a kcode default.  setExplicitKCode will un mark it as a default and set it to the explicit kcode (usually set by nesu regexp modifiers)
+
+commit d7c5078929c589c6bd0f0b44038bef6f74ddd2f7
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Sat Jan 29 10:05:24 2011 -0600
+
+    Remove wonky set default method I made earlier. git setKcode to be setKCode. All working except cache retrieval for 1.8?
+
+commit 22bcd7063151b5bdd96c42530ac588b6ada624ca
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri Jan 28 17:39:19 2011 -0600
+
+    Fix setter for 'x'
+
+commit ad351694ef33b15a2d4f886043eec04a311a3cc0
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jan 28 13:57:31 2011 -0600
+
+    Move regexp options into a class.
+
+commit 3695a81afc946bb57d6402df9322471c32a7872e
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Jan 17 17:14:30 2011 -0600
+
+    JRUBY-4878: Can't run ruby file with utf-8 characters
+
+commit a4314d7308a8d8a892fbb2ffacd2984ad8550dfa
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Sun Jan 9 10:16:19 2011 -0600
+
+    S-JIS becomes Windows-32J for e regexp flag for 1.9.2
+
+commit 622b4f7a3f78c8f8a2f65ee809ac5f1776ca083f
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Sat Jan 8 16:56:04 2011 -0600
+
+    Most of regexp specs are running but this is sketchy
+
+commit 06509b0fa9c2ea6ca093ae5c17d6d0210f119531
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri Jan 7 20:25:27 2011 -0600
+
+    Slight step sideways end of night code dump. StrNode is more accurate for encoding.  Regexp is somewhat better?  More specs fail though
+
+commit 2b9d152011faaf7909ce17d996a5b68bc9df0da3
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Jan 6 17:53:56 2011 -0600
+
+    Allow \0 in symbols
+
+commit c6d88420a9840f88a8ebacf8515038ff3612ba0c
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Jan 5 17:16:15 2011 -0600
+
+    regexps start usascii and missing bad multibyte character logic
+
+commit 3dbc467c03c49d6fd96b411a5c6b88ea47e2ee72
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Jan 5 15:19:39 2011 -0600
+
+    Really sucky but functional mbc processing
+
+commit 8c9f1bc8e2fad15ccddfae553f0e262ba03c75e7
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Jan 4 10:39:36 2011 -0600
+
+    Make second tokenAdd to keep more in sync with mri
+
+commit e94175ed4335d251ef21fc4ec68d46aae801380a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jan 4 04:19:09 2011 -0600
+
+    Possible fix for JRUBY-5301: [1.9] Unicode characters in regexp in unicode-encoded file do not parse
+    
+    * When reading multi-byte characters from stream, use encoded length associated with first byte to read remaining bytes. Old code was using first byte as codepoint, and garbling the string.
+
+commit b045b1d369d4f9396677f205870f5671e9512734
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri Dec 31 14:03:33 2010 -0600
+
+    1.9 regexp encoding work
+
+commit 0fdc07208aee471e451bc48271cbeb6a921ea719
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Dec 30 10:11:01 2010 -0600
+
+    Some more WIP towards Regexp encoding
+
+commit 08f42f647b641944a1567e2415e966a9ca59b1d8
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Dec 29 12:08:10 2010 -0600
+
+    Remove four defined? spec failures in 1.9
+
+commit 0d8698be5163f3731a6717b856e8e44b59655ec9
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Dec 28 12:25:24 2010 -0600
+
+    mutate encoding from US-ASCII to ASCII-8BIT if there are 8bit chars
+
+commit 52192272b2f4afbc7bae4b6ab4c81eb24a098c8e
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Dec 9 13:10:33 2010 -0600
+
+    Initial stab at magic comments...bleh
+
+commit cae02d5dbba79f5ca206ba9f334ead9660c50ab4
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Sat Sep 4 17:26:39 2010 -0500
+
+    Simple impl of \uxxxx for 1.9 mode.  Basic stuff seems to work and no tests break.  More later
+
+commit ff0ab6e097f56eb056bb7f548611b1e6cbb04b1f
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Jun 18 15:36:10 2009 -0500
+
+    JRUBY-382: Better error output from parser
+
+commit 2b1a005a405839ca4eb268288816294e88f20a2b
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sun Feb 3 18:37:14 2008 +0000
+
+    JRUBY-2062: Add ids and convenient data to SyntaxException and IRubyWarning interface to make their life easier
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5806 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 7467c51f616191255cfd7de6bc01c8451bc573cb
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Sun Nov 4 17:21:46 2007 +0000
+
+    JRUBY-1517: Fix embedded null character issue.
+    - change read to read ints instead of chars
+    - use EOF constant everywhere
+    - change EOF constant to -1 instead of 0
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4857 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 16e5550655d971eca1eeea0a2fe8794b86928b97
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Thu Oct 25 18:14:24 2007 +0000
+
+    Lexer jumbo patch.  Speeds up general parsing 10-15%.  Cold parses are about 30% faster.   Code has been refactored to the point that additional optimizations can be considered (like bytelist identifiers for alloc-less identifiers; same for uninterpolated string nodes).
+    
+    intern'ing of identifiers now happen in lexer rather than being smattered through AST
+    Reader -> InputStream for LexerSource
+    A new ByteList LexerSource for evals
+    
+    Additional bugs fixed:
+    JRUBY-1408: JRuby crashes with error: can't find string "EOF" anywhere before EOF (SyntaxError)
+    JRUBY-1443: Wrong position information for a CallNode with parentheses
+    JRUBY-1435: YieldNodes sometimes have wrong position information
+    JRUBY-1416: eval of a "proc" with setting the line number for something lower than 1 to adjust the line number causes "java.lang.ArrayIndexOutOfBoundsException: -1 (NativeException)"
+    JRUBY-1432: NFE from RubyYaccLexer.yylex
+    
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4731 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 8beb29598e452024de3a2e637d5a1540ffcba5cf
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Tue Jul 17 17:38:54 2007 +0000
+
+    Hide Regular Expressions behind a common interface, meaning that implementations can be switched out much easier. Also add the /j flag to Regexps, for running with Java regular expressions instead of JRegex. All of this is in preparation for REJ and Oniguruma stuff which we should take a look at sooner or later.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4038 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 972877610a58418cc1a3317f59c8f7ae9ef8c1e8
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Tue Feb 20 23:05:11 2007 +0000
+
+    JRUBY-202: ::A = 1 should work
+    
+    Jira issue creation is down so I will explain other changes in detail here:
+    
+    1) Change D*Node (DStrNode, DRegexp, DSymbolNode, ...) to use same logic as
+    MRI and also remove superfluous ArrayNodes + extra DStrNode for all D nodes
+    except DStrNode itself.   This may remove some cannot convert Foo to String
+    errors (though I could not come up with any test cases -- though I know
+    some exist).  This also includes an optimization of just grabbing bytelist data
+    is StrNode is an element (since there is not point in eval'ing that node).
+    
+    2) AST nodes which contain literal String data now hold that data as a
+    ByteList.  The overall benefit of this is that we only need a single clone
+    of the bytelist versus string to bytelist conversion each time we use the
+    literal.  BTW- You may wonder why we need to clone:
+    
+    1.upto(10) do
+      a = "aaaa"
+      # Add destructive op to a  here to screw up literal
+    end
+    
+    Once we get COW strings we can get rid of cloning.
+    
+    The next phase is making the parser/lexer itself fully work with ByteLists.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3033 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit f9a500659dde81c493c45cc606ee6520399791fb
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Tue Jan 9 12:34:17 2007 +0000
+
+    Improve parser speed slightly by bubbling IOException
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2706 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit e38dc21bbf4ac67bef7bf9521eff5a58b5092c5e
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sun Oct 22 18:39:17 2006 +0000
+
+    Landing 'enebo' branch.  Most notable:
+    - Merge in fixes from original refactoring patch form Mirko and friends.
+    - Fixes many many positioning issues.
+    - Simplify and refactor portions of lexing and parsing.
+    - Reduce gratuitious object creation (like making a token which immediately
+       becomes a node).
+    - Comments are now added to parser result as a list.  IDE people can
+      do a second pass to associate these nodes to the appropriate AST nodes.
+    - offsets in ISourcePosition now represent a position 'between' characters.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2367 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit b1293eda8454686e846e2a9837b348e2983bb423
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Wed Dec 21 14:30:32 2005 +0000
+
+    Positioning fixes
+    JRuby library added
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1845 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 3437afe431124a2f60cf7e37c579b0c60ed0bf95
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Fri Sep 30 17:39:23 2005 +0000
+
+    Merge of TOM_RDT_POSITION branch
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1780 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a36ff3729d6a7f2c61eb51273fcee3d3bd371350
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sat Jun 18 14:47:06 2005 +0000
+
+    More moving towards java.util.Stack contract for remaining Abstract Stack users
+    args are never null (we no longer null check with a few strategic asserts)
+    getPosition() always returns something from Nodes (we no longer null check)
+    Remove AttrSetNode (fake parser node) in favor of CallbackMethod
+    we were pushing/popping an extra dynamic vars set every yield
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1715 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 7a83c48af56081c1c2132111d535f28d10cf3afb
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Fri Dec 31 20:55:52 2004 +0000
+
+    Update license to GPL/LGPL/CPL
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1574 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 190b9a510f5d99e90d8456b68aea570da68ae2fe
+Author: Jan Arne Petersen <jpetersen@uni-bonn.de>
+Date:   Sun Dec 12 21:08:22 2004 +0000
+
+    Add SyntaxError.
+    Throw SyntaxExceptions in the lexer (replace the calls to the error handler).
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1480 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 3b8cfba608bdbb4b1f8ddc4a50624ffe748aa41f
+Author: Jan Arne Petersen <jpetersen@uni-bonn.de>
+Date:   Sun Dec 12 12:17:00 2004 +0000
+
+    Removed HereDocNode and StrTermNode from AST because they don't belong there.
+    Refactorized string parsing in the lexer.
+    Fixed some heredoc parsing bugs.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1472 961051c9-f516-0410-bf72-c9f7e237a7b7

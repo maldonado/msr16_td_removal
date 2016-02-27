@@ -1,0 +1,352 @@
+commit 423bac1eda6688fd7a258a8cad321a1d2530f105
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon May 13 15:45:18 2013 -0500
+
+    Move varTable logic out of core classes into its own object.
+
+commit 61678ac1a2514a9932276f8d527816a5980a94b3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Feb 25 20:41:40 2013 +1100
+
+    Fix more references to CPL.
+    
+    The phrase "Common Public License" was split across two lines in
+    our default header, which caused it to be missed during earlier
+    search/replace. Also, we did not replace the CPL URL in the
+    header with the EPL URL.
+
+commit 330fef3b0fc18af477ccea19bd278669667f31bb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 12 14:49:29 2013 -0600
+
+    Switch JRuby's CPL license to EPL.
+    
+    Governance of the CPL license was moved to the Eclipse Foundation
+    at some point in the past, and Eclipse blessed the EPL (Eclipse
+    Public License v1.0) as the successor to CPL. Because the CPL
+    contains a clause allowing transparent upgrades to future blessed
+    successor licenses, we can make the move to EPL without
+    re-contacting past contributors.
+    
+    The change in going from CPL to EPL largely just removes some
+    punitive language that apparently made many companies nervous. All
+    other language in the license remains identical.
+    
+    Several documents about Eclipse's move from CPL to EPL are here:
+    
+    http://www.eclipse.org/legal/cpl2epl/
+    
+    Note that Eclipse's move came before the blessing of EPL as the
+    upgrade path for CPL, so they had to do a bit more legal juggling.
+    With Eclipse now the administrator of CPL and with their blessing
+    of EPL as the upgrade path for CPL, all we need to do is make the
+    move.
+
+commit 2c746af24d95524f837e1cb2b7013fac5a7957bd
+Author: Wayne Meissner <wmeissner@gmail.com>
+Date:   Mon Dec 17 08:24:48 2012 +1100
+
+    Extract the many copy'n'paste variants of VariableAccessor access/allocation routines into a VariableAccessorField class.  This makes the code cleaner, but at the cost of an extra reference indirection during VariableAccessor lookup.
+
+commit 33317dfef1522005c93edf568fb005b6383a9ec5
+Author: Wayne Meissner <wmeissner@gmail.com>
+Date:   Sun Dec 16 17:02:44 2012 +1100
+
+    Track object allocations in groups when objectspace is enabled.  This lowers the overhead of object allocation when OS is enabled to only about 4-6x worse than when it is disabled.
+
+commit e055dbe2e6a793916c7a8383d5a6f6aa0d1e6e7f
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Thu Oct 14 15:51:53 2010 -0400
+
+    Formatting change. Avoid dangling 'if' clause on a line by itself. Also, reformat multi-line boolean conditions so that it is clearer that they indeed span multiple lines.
+
+commit f93a491ed6b2d04070ec98604ef801c847895626
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jun 2 17:54:55 2010 -0500
+
+    Fix for JRUBY-4839: ObjectSpace.undefine_finalizer does not work
+    
+    We need a way to test this without ObjectSpace enabled. All our test runs currently enable ObjectSpace to pass as many tests as possible.
+
+commit 5e4e94528548428dbef47eeff36767c70042b3ff
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jan 20 21:43:01 2010 -0600
+
+    New object_id implementation with uniqueness guarantees.
+    
+    Because identityHashCode turned out to be very unreliable as a unique ID, I redesigned object_id logic to use a strictly-increasing AtomicLong for both ObjectSpace and non-ObjectSpace modes. The long is stored into our object variable table, which is lazily allocated. This does mean that when object_id is called on a given object, the parent's variable table size increases. However, this size increase only affects other objects of the same type that also have object_id called on them (as you would expect) or which have other instance variables (in which case the size increase is just sizeof(pointer) for the extra slot). In general, this should not increase memory usage substantially except for objects that have had object_id called. No additional memory is used for objects that never have object_id called against them or same-typed objects. Also, because the new object_id is based on a Long * 2, object_id is guaranteed to be unique up to 2^63.
+
+commit 20a55f5cf699cd048bae65d2b56137018a62a09e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jan 20 14:26:13 2010 -0600
+
+    Fix for JRUBY-4330: Turning ObjectSpace on after requiring rubygems breaks future gem require statements
+    
+    Modified ObjectSpace-based ID generation to use the same algorithm (System.identityHashcode based) as non-ObjectSpace-based ID generation.
+
+commit 29de372d37a64464f87ee0dff1cd7b5c0a81df71
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Fri Nov 27 15:55:47 2009 -0600
+
+    Method invokes inefficient Number constructor; use static valueOf instead
+    
+    Signed-off-by: Nick Sieger <nick@nicksieger.com>
+
+commit b14872d45736680f5b49d580b243823d9c63a1d9
+Author: Vladimir Sizikov <vsizikov@gmail.com>
+Date:   Tue Jun 24 08:39:44 2008 +0000
+
+    JRUBY-2320: Remove of unused imports in package org.jruby
+    JRUBY-2321: Remove of unused imports in all packages
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7023 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 99a11d2460e84544f7253df13605937fb82be148
+Author: Vladimir Sizikov <vsizikov@gmail.com>
+Date:   Fri Jan 18 18:10:07 2008 +0000
+
+    JRUBY-1993: ObjectSpace#define_finalizer behavior does not match MRI.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5657 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit ff120491b21359d374e6e50a98e8950f963f49cb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Nov 26 06:36:34 2007 +0000
+
+    Remove two more IRubyObject methods:
+    - getNativeTypeIndex moved to a separate interface; former uses now cast to that interface, rather than requiring all IRubyObject instances to specify a native type index directly. Marshalling should probably be refactored to not use this at all (and instead polymorphically dispatch to a method on the target object, similar to how it used to be).
+    - isKindOf moved to RubyModule as isInstance and all references updated to use that version. This maps better to the type being in charge of what is or is not an instance, and mimics Java reflection API (Class#isInstance).
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5045 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit eb05ebdeb31050fee1be4cd931402ecfe172950c
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Mon Apr 23 01:53:38 2007 +0000
+
+    JRUBY-858: Eval within instance_eval seems to have the wrong self.
+    JRUBY-866: struct and its use of metaclasses is not quite right (for inspect and ==)
+    Previous two issues fix last test case in JRUBY-531
+    
+    Remove extraneous unused imports
+    Remove some set-only vars in thread
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3531 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit b4939d610269c777bf1e95c84247a95c2b0a6dd4
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Apr 11 19:28:04 2007 +0000
+
+    Another rework of finalization, much simpler now. Also fixes JRUBY-799, so finalizers will run whether ObjectSpace is enabled or not.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3429 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 8fb40110ad0aca10556fe4276dbbb6ec642d273c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Apr 11 04:06:22 2007 +0000
+
+    JRUBY-796 Fix for a very big leak in finalizer definition and dynamic scope creation
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3423 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 2cb7ce311619e84299b35bde46ad8d29a1c26c98
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Mon Apr 2 12:09:35 2007 +0000
+
+    Start finalizer thread lazily
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3354 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 5df55bc94c35bb4fb1759d881da35fb376e6954c
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Fri Mar 30 04:03:22 2007 +0000
+
+    JRUBY-684: Trying object space changes w/ queueing and re-worked concurrency
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3337 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit fa648a8de0015392511c2c18cd645653e5df8421
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Tue Mar 27 14:03:58 2007 +0000
+
+    JRUBY-723: someone beat me to it.  But also rename and make fields private,
+    and reformat code
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3298 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 7567f17043a8ad21508441fcd0297671404e0af2
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Mar 27 13:53:19 2007 +0000
+
+    Small fix for a slow leak: if top item in OS list is collected, set new top.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3296 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 7f3178c2b1d649037846914f9c0d1090812ec274
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Mon Mar 19 12:10:57 2007 +0000
+
+    Fix for JRUBY-689: don't leak finalizer threads
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3231 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 4bf7730033b7c072f073343beba1fce71634604a
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Thu Feb 22 18:22:00 2007 +0000
+
+    Dump generated classes to disk during the build process
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3059 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 42d915f38277e5918c4cc5ac87a38fdc89986e11
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Mon Jan 8 02:00:59 2007 +0000
+
+    - another fix for JRUBY-411: relinquish monitor in #finishFinalizers
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2694 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a06d764eb0aa7e8be97c81a05dbc823f399a0199
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Sun Jan 7 10:54:02 2007 +0000
+
+    Fix for JRUBY-411. If something bombs, it should swallow
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2691 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit e6e01c38e91fbf85c98cd9eee668e817d2a138d5
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Sat Jan 6 15:36:34 2007 +0000
+
+    Adds finalizer support. JRUBY-282.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2689 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 39287875330d64df4598a499096484bb5f65fdc3
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Fri Dec 1 06:39:26 2006 +0000
+
+    Fix typo in last commit.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2524 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 7be9195b66e9e651085bc895ecc7c05d665d19a7
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Fri Dec 1 06:11:47 2006 +0000
+
+    And remove the last 1.5isms
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2523 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 250878be8c9efe07e17604ffe3f6f53c3d98a3e1
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Tue Nov 28 09:18:48 2006 +0000
+
+    Fix for JRUBY-292, improved _id2ref, by Anders Bengtsson
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2501 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit c8b66db475de1dc66f347884891dd70d9943689b
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Sat Nov 25 17:29:42 2006 +0000
+
+    Fix for JRUBY-266, adds basic working _id2ref, by Anders Bengtsson
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2479 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 448643c70dc9b78a7d89a851b9202699d07cfbb3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Sep 29 16:47:20 2006 +0000
+
+    JRUBY-1: additional changes to improve correctness/safety of ObjectSpace in light of recent fixes
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2248 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit b174080e1ae646a0fc8e25372ec51dc664d92f79
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Sep 29 06:48:08 2006 +0000
+
+    new faster version of ObjectSpace, with known bugs fixed
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2245 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 009ff5766863973db5570497069b4728613d8a2c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Sep 27 21:52:58 2006 +0000
+
+    JRUBY-1: a cheaper ObjectSpace implementation based on a linked list of weak refs
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2244 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit e83dbfadcac8b3a15bf326de9a826209fe49c87c
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Thu Jun 16 18:55:49 2005 +0000
+
+    Fixes some concurrency issues in method cache and object space collection
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1712 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 7a83c48af56081c1c2132111d535f28d10cf3afb
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Fri Dec 31 20:55:52 2004 +0000
+
+    Update license to GPL/LGPL/CPL
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1574 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 870e1da9b41bfdbae259e1fc5f18fc8b76686998
+Author: Stefan Matthias Aust <sma@3plus4.de>
+Date:   Sun Dec 12 09:25:42 2004 +0000
+
+    removes the instance variable runtime in RubyObject
+    reintroduces the variable in RubyNil, RubyBoolean, and RubyClass
+    delegates all calls to Fixnum,Array,Boolean,String,ArgumentError,IndexError and TypeError.newXXX to Ruby
+    fixes all imports
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1469 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 77aba0783765c270d450010571e1e0db2b617285
+Author: Jan Arne Petersen <jpetersen@uni-bonn.de>
+Date:   Tue Nov 9 20:49:39 2004 +0000
+
+    Removed unused imports.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1404 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 529c36ae0f4f7f451a55e0db88600f629ed586a9
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Nov 8 04:40:59 2004 +0000
+
+    Switched to HashSet, since HashMap wasn't being used as a Map
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1402 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a16b4a3596853f2153bfe0df0a8cbe54382d5d58
+Author: Anders Bengtsson <ndrsbngtssn@yahoo.se>
+Date:   Sat Feb 28 23:00:58 2004 +0000
+
+    Removed a lot of old IndexedCallback stuff.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1254 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit c77b91f42c4f3810140d44cbe603248a1d52b7ee
+Author: Jan Arne Petersen <jpetersen@uni-bonn.de>
+Date:   Tue Sep 10 15:18:12 2002 +0000
+
+    - restructure of the code tree.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@782 961051c9-f516-0410-bf72-c9f7e237a7b7

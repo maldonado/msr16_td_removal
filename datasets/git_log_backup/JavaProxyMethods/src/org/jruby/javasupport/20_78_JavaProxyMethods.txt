@@ -1,0 +1,130 @@
+commit ede89b51bd897c4792f8a3cc79a35922be202c96
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jul 27 14:47:25 2012 -0500
+
+    Apparently my refactoring fu is weak. Removing more TC.getRuntime.
+
+commit 6f159fe5dd51c062a5b1aab64a8ede916990877a
+Author: Hiroshi Nakamura <nahi@ruby-lang.org>
+Date:   Mon Jul 11 03:36:17 2011 +0900
+
+    Deprecation of fast constant access paths.
+    
+    Each os those has the same definition as non-fast verision.
+
+commit 095a36a4798e627dd7004c46aedafe71716edd41
+Author: Hiroshi Nakamura <nahi@ruby-lang.org>
+Date:   Mon Jan 3 23:59:17 2011 +0900
+
+    JRUBY-5004: remove unused imports
+    
+    This commit is based on the patch from Douglas Campos <qmx@qmx.me>.
+
+commit 7a8e6611357eda632c02f7c968813718bb00894f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Apr 22 19:19:16 2010 -0500
+
+    Fixes for JRUBY-4732: Clean up anything that calls dataGetStruct on a wrapped Java object to get the object
+
+commit 4351ad0e4802fbe986d96e056e0ad2d821409360
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Apr 21 18:40:43 2010 -0500
+
+    Fixes for JRUBY-4724 and JRUBY-4725
+    
+    JRUBY-4724: Java class equality operator is order dependent
+    JRUBY-4725: to_java_object no longer exists
+
+commit 278ea7843d70289c0af23f2336bb6aed7cebacf7
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Apr 18 15:27:24 2010 -0500
+
+    Restore 1.4- Java object #inspect output (hashy class with internal hashcode).
+
+commit a55fcb067f99286c294536cfecfdeff70d2fd848
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Mar 9 11:36:03 2010 -0600
+
+    Sweater unraveling for JRUBY-4615: java integration specs interference
+    
+    The original problem here was that depending on what order JI-related code was used, a different object could get cached for a java.lang.Class in ObjectProxyCache. Normally, it should just be the proxy wrapper, but some paths inserted a the RubyClass version of the class. This led to peculiar failures if specs were reordered.
+    
+    The fixes made here are as follows:
+    
+    * Eliminate all remaining to_java_object logic, which is where the bad OPC.put originated from
+    * Move all coerce*ToJavaObject logic from JavaUtil into the appropriate toJava overrides
+    * Fixes and modifications surrounding the above two changes
+
+commit 029fb0a7328a1a97293a6faf56c9cf7d342bab9b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Jun 7 14:21:40 2009 -0500
+
+    Eliminate all remaining use of ivar @java_object for Java wrappers.
+
+commit 932fb5e83b00169b461e1bc40b057e75fb960a95
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu May 14 14:51:19 2009 -0500
+
+    Trivial de-warnification of some files I was looking at
+
+commit 7d201178e2f18acea63c961850a33a6d0d16f289
+Author: Bill Dortch <bill.dortch@gmail.com>
+Date:   Tue Mar 10 12:50:17 2009 +0000
+
+    Slightly better fix for JRUBY-3476 (#java_class returns nil if singleton class created).
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9389 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d15385975500ecd23705d6eec2fd717b08f15130
+Author: Bill Dortch <bill.dortch@gmail.com>
+Date:   Sun Mar 8 19:59:59 2009 +0000
+
+    Fix for JRUBY-3476: #java_class returns nil if singleton class created.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9376 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit dd7847f26dc0b25b0cc2ee768e3ff6385d9e6520
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Mon Aug 18 12:22:14 2008 +0000
+
+    Fix for JRUBY-2882. Handle error messages related to constructors better
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7493 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 343af19a25b2032d2e6ca9ab7f8205d534f3afa7
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Sat Aug 16 07:05:40 2008 +0000
+
+    Fix for JRUBY-2926. Make equals short circuit to Object.equals for interfaces
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7474 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 304b540ba200c6b000223af4f25a263583e84933
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Aug 10 02:45:03 2008 +0000
+
+    * Eliminate visibility checking for almost all fcall and vcall paths.
+    * Outline some method_missing logic
+    * Start adding some specific-arity paths for method_missing; still too much boxing, but the code isn't in normal call paths now.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7417 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit c306f7f4b19162a83c1fa8f3b983e7e6c70083d9
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jul 25 18:27:46 2008 +0000
+
+    Wire in closure-conversion logic for constructors, add specs for it, and add more specs (and fix bugs discovered) for calling Java methods with all supported arities up to "n".
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7295 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 17b24fbe8a3976462e1969260b1d08729d2518ec
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jul 25 05:43:02 2008 +0000
+
+    Eliminate Ruby-based JavaProxyMethods module.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7289 961051c9-f516-0410-bf72-c9f7e237a7b7

@@ -1,0 +1,170 @@
+commit 61678ac1a2514a9932276f8d527816a5980a94b3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Feb 25 20:41:40 2013 +1100
+
+    Fix more references to CPL.
+    
+    The phrase "Common Public License" was split across two lines in
+    our default header, which caused it to be missed during earlier
+    search/replace. Also, we did not replace the CPL URL in the
+    header with the EPL URL.
+
+commit e30db59e50ed99e3cc52f1596acff2f52656395e
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Feb 14 14:24:39 2013 -0600
+
+    Fix last regression and wipe out a FIXME at the same time
+
+commit 11adeeea206b8c3c8d2746f44bddc504d7460172
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Feb 13 16:52:55 2013 -0600
+
+    yuck more into the belly of the beast in order to rearrange mode settings until after extractModeEncoding in rubyIO.initialize19 (not done yet though).  Also another mixup between ModeFlags and OpenFile
+
+commit bb21672f550c07f801520c9066997e441e473334
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Feb 13 15:15:21 2013 -0600
+
+    Put mode conversion on proper class (we have fmode = OpenFlags and oflags = ModeFlags reversal to overcome some day)
+
+commit 9a7f84e3f6dccb69ae4842b32c2c16e2425b823a
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Feb 12 14:38:03 2013 -0600
+
+    Make modeflags toString know about RDWR and print out flags in case something else is missing later
+
+commit 2e308c4b51e45692e10489b8534385d2ac1aebfd
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Feb 7 16:47:33 2013 -0600
+
+    more textmode fixes
+
+commit 924faab656a0561a7e5720e6c110da2c0d5b43e6
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Feb 7 16:30:33 2013 -0600
+
+    Hmm I am hitting tests that 1.7.2 does not without excludes...implement TEXTMODE for IO
+
+commit e04c88bdf4a4d8c7c55ecd523afd4f896069bbaf
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Feb 7 11:10:08 2013 -0600
+
+    Add better toString for debugging for ModeFlags
+
+commit 99d68f592afa0aa598c68fb8294365ef2d59b9d1
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Feb 6 15:19:12 2013 -0600
+
+    Massive change to IO+descendent initialization...20 or so errors to track down
+
+commit 330fef3b0fc18af477ccea19bd278669667f31bb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 12 14:49:29 2013 -0600
+
+    Switch JRuby's CPL license to EPL.
+    
+    Governance of the CPL license was moved to the Eclipse Foundation
+    at some point in the past, and Eclipse blessed the EPL (Eclipse
+    Public License v1.0) as the successor to CPL. Because the CPL
+    contains a clause allowing transparent upgrades to future blessed
+    successor licenses, we can make the move to EPL without
+    re-contacting past contributors.
+    
+    The change in going from CPL to EPL largely just removes some
+    punitive language that apparently made many companies nervous. All
+    other language in the license remains identical.
+    
+    Several documents about Eclipse's move from CPL to EPL are here:
+    
+    http://www.eclipse.org/legal/cpl2epl/
+    
+    Note that Eclipse's move came before the blessing of EPL as the
+    upgrade path for CPL, so they had to do a bit more legal juggling.
+    With Eclipse now the administrator of CPL and with their blessing
+    of EPL as the upgrade path for CPL, all we need to do is make the
+    move.
+
+commit daa36aa25fc4c11f994e6f19864bf14149ccf846
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Sep 19 02:38:48 2012 -0500
+
+    Partially fix JRUBY-6893: fcntl(Fcntl::F_GETFL) always return 0
+    
+    I implemented F_GETFL for the basic read, write, and readwrite
+    modes, but there's obviously other flags we could fill out here.
+    
+    Unfortunately, tests for fcntl appear to be almost nonexistent,
+    even in MRI.
+
+commit d055a0ea0c745f604919aa6cfe5346c58c210be6
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jan 31 16:29:41 2012 -0600
+
+    More encoding-related IO cleanup.
+    
+    * Restore some old public signatures
+    * Remove some private deprecated code
+    * Remove more propagation of InvalidValueException
+    
+    Almost green...
+
+commit 4a09d081fa10b293f65d0ca058605a5b6b4ba04f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jan 31 10:34:29 2012 -0600
+
+    First large-scale refactoring to better support IO encodings.
+
+commit 601a0f65c77ad37b5440c9983eb8f0d2b42d9643
+Author: Martin Harriman <larvacea@mac.com>
+Date:   Sun Oct 9 12:01:05 2011 -0700
+
+    JRUBY-3944: process :binmode option
+    
+    The :binmode option, when set to TRUE, is ORed in with flags from the mode string or
+    :mode option, as it is in MRI 1.9.2. Tested in rubyspec; both MRI and this code pass
+    new tests for :binmode, and the existing jruby 1.6.5 code fails as expected.
+    
+    Signed-off-by: Hiro Asari <asari.ruby@gmail.com>
+
+commit 9fd4ada22e3f3f3ac94f65276c73c0b455765edb
+Author: Wayne Meissner <wmeissner@gmail.com>
+Date:   Mon Jul 4 23:01:30 2011 +1000
+
+    Replace usage of com.kenai.constantine with jnr.constants
+
+commit 1cd554c7c6b5981889e21e9edfa15b5f48f0dac0
+Author: Wayne Meissner <wmeissner@gmail.com>
+Date:   Sat May 2 20:03:53 2009 +1000
+
+    Use constantine for O_* constants in File
+
+commit 714843dd03c9622c4f296c942540920bc81033b8
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Fri Apr 18 19:39:45 2008 +0000
+
+    JRUBY-2405: Zlib::GzipFile.wrap has bad signature
+    JRUBY-2406: StringIO.new "", "r+" (rb+) is not open for writing
+    JRUBY-2407: StringIO.new does not accept MODE constants
+    
+    wrap is used by current rubygems libraries
+    Lots o mode changes to StringIO
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6537 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit aa4ffa1be5572b91327ce11238a623b1bd681b27
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 5 06:18:45 2008 +0000
+
+    Fix botched merge that doubled new file content.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5822 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 66b024fedbb2ee32316ccd9de8387931d07993ec
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 5 05:57:53 2008 +0000
+
+    Merging the new IO implementation to trunk to give it appropriate burn-in time. Give it a go, friends!
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5821 961051c9-f516-0410-bf72-c9f7e237a7b7

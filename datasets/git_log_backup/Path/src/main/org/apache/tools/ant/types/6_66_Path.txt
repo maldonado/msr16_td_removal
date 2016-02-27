@@ -1,0 +1,1114 @@
+commit 13000c1a4670271a3257b3c41dc1e17941067c78
+Author: Jesse N. Glick <jglick@apache.org>
+Date:   Wed Jul 17 22:46:10 2013 +0000
+
+    sconnolly advises using TODO rather than XXX in comments.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1504315 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d5131086b99fb9610ab5df24da4ab21d81b38a7d
+Author: Jesse N. Glick <jglick@apache.org>
+Date:   Wed Mar 6 01:08:01 2013 +0000
+
+    Was not compatible to make systemClasspath (and systemBootClasspath) final; the NetBeans Ant integration in fact overwrites this value (for a reason).
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1453111 13f79535-47bb-0310-9956-ffa450edef68
+
+commit da5f3bfd256e383926c6ece58dba15a7d4bd5761
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Tue Aug 21 14:27:46 2012 +0000
+
+    java 5, continued
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1375571 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6b7bc9e53500d2347a555dea2988788a922f3101
+Author: Jacobus Martinus Kruithof <jkf@apache.org>
+Date:   Sat May 26 13:33:54 2012 +0000
+
+    Bug 53291 - Several spell checker findings in apache ant 1.8.3 documentation
+    -- api --
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1342897 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ea33301047ba2de74fa062155df4d6337e5d1392
+Author: Jesse N. Glick <jglick@apache.org>
+Date:   Mon Apr 16 19:30:18 2012 +0000
+
+    #52829: ResourceCollection now Iterable<Resource>.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1326760 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 26337bb13561b001c2d7892e637961099f1644bf
+Author: Jesse N. Glick <jglick@apache.org>
+Date:   Mon Mar 5 18:49:30 2012 +0000
+
+    MS_SHOULD_BE_FINAL
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1297164 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e36ab22599742bfd0a3a2c6522251e2fe4125920
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Jan 21 14:33:47 2011 +0000
+
+    fall back to system properties for build.sysclasspath if there is no project instance
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1061822 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3ac732f3fa743281e9bf1ae35698f5ae321d5d27
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Jun 18 09:03:34 2010 +0000
+
+    Support wildcards in CLASSPATH.  PR 46842.  Based on patch by Mike Murray.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@955896 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 58f0bb04db9c5c8a858d7a3be7719608f25f2f49
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Feb 17 12:58:50 2010 +0000
+
+    if user input is compared to fixed strings in a case insensitive manner we should use the default locale.  Use Locale.ENGLISH consistently
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@910955 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d7de88f3c9e38a8aab90dddc60a0062625acaa67
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Aug 28 06:27:21 2009 +0000
+
+    Caching of system classpath breaks environments where directories that are part of CLASSPATH get created during build (Gump, for example).
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@808770 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 28baeb722759140cb05bf0d54b0ceab536d4d29c
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Aug 27 14:58:21 2009 +0000
+
+    @since
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@808444 13f79535-47bb-0310-9956-ffa450edef68
+
+commit abe9743630494f0dfa29498bad1a450bd2174123
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Aug 27 14:08:13 2009 +0000
+
+    Optionally enable caching for <path>.  Should help in situations like PR 45696
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@808421 13f79535-47bb-0310-9956-ffa450edef68
+
+commit aa373b9f5e7548bf96a51588c9e67b8de6c05404
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Sat Nov 29 18:03:29 2008 +0000
+
+    simplify
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@721698 13f79535-47bb-0310-9956-ffa450edef68
+
+commit eb12bd93a0f8945efa8a36f55fc26834840c8196
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Wed Jun 25 23:39:01 2008 +0000
+
+    add Project to FileResourceIterator
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@671690 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 89373a58c6e1fe5d0e54bd20c6ae46bf4f577c02
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Tue Jul 24 22:21:59 2007 +0000
+
+    defer call to delegateIteratorToList()
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@559243 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e4138014228bd441bc30a497a8395f7753e691e4
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Tue Jul 24 16:32:09 2007 +0000
+
+    Regression: Path subclasses that overrode list() stopped working in
+    resourceCollection contexts in Ant 1.7.0. Bugzilla 42967.
+    
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@559096 13f79535-47bb-0310-9956-ffa450edef68
+
+commit df0fa4d4ab0523b1af55b207c86ded8f896a14c5
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Mon Dec 11 22:36:06 2006 +0000
+
+    Regression: <path> was evaluating nested content only once, so that it could
+    not e.g. pick up files that didn't exist the first time through.
+    Bugzilla 41151.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@485926 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ce0b8ac7d0f83eb13cf9c3a5a3d525048579bb71
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Thu Nov 16 23:36:03 2006 +0000
+
+    checkstyle
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@475982 13f79535-47bb-0310-9956-ffa450edef68
+
+commit bbb8480014c9ea0cd93f136054ffa6836bed787e
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Sun Nov 5 22:51:37 2006 +0000
+
+    checkstyle
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@471555 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 98d1226139081f426245761397cd0fa3741391a2
+Author: Jesse N. Glick <jglick@apache.org>
+Date:   Wed Nov 1 22:35:09 2006 +0000
+
+    If someone tries to append a path to itself, choke gracefully, not with a StackOverflowError.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@470125 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 873b850f39a26e4911d612c157622751ac9582f9
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Mon Oct 30 02:53:20 2006 +0000
+
+    fix for
+    <javac> fails with NPE when compiling with eclipse ecj 3.1.x
+    Bugzilla 40839.
+    root cause of the problem was in org.eclipse.jdt.core.JDTCompiler
+    method addExtDirs. A FileSet was created without the Project attribute set,
+    then added to a Path.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@469050 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1cddc5e63805e05996e688f206169b36b4e8c9b3
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Thu Oct 12 15:45:53 2006 +0000
+
+    fix failures
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@463287 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 157e6f3305b448bee38aae65e6fcfaff4c7e11d0
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Wed Oct 11 21:26:46 2006 +0000
+
+    Let Path use Union by composition instead of inheritance so that third-party
+    code using paths built against Ant 1.7 should still run against Ant 1.6 .
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@462955 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 2e897819a83981a1f4de2e1cc72e33f080fcf573
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Sep 1 18:49:27 2006 +0000
+
+    copy2license.pl
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@439418 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 653aa05d13887c9fd132707cd92c0ed0af04b210
+Author: Jacobus Martinus Kruithof <jkf@apache.org>
+Date:   Sun Jun 12 15:54:15 2005 +0000
+
+    removed unused imports
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@278418 13f79535-47bb-0310-9956-ffa450edef68
+
+commit fbb9886634198d8377104bef9ec697fadeb134df
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Mon May 23 19:51:58 2005 +0000
+
+    ResourceCollections
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@278337 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 126daf8b31f6c01d1c6891581195db9956142970
+Author: Jesse N. Glick <jglick@apache.org>
+Date:   Tue Mar 29 18:35:46 2005 +0000
+
+    Removing old code testing for JDK 1.0 and 1.1.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@278071 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f67320a6500d0c74ce7cb664c174eca0a1205f15
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Mon Mar 14 16:56:41 2005 +0000
+
+    checkstyle - mostly javadoc
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277952 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 33f3479056780007a3b474d8633e36d38552e875
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Tue Mar 1 23:04:39 2005 +0000
+
+    Simplify some file resolution code to rely on FileUtils.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277760 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 5ead23d08ca2e66902223d0248dc6ea9363d37e5
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Thu Feb 24 16:48:45 2005 +0000
+
+    -5 + 2 LOC
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277724 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3476b74ca5f7bb4f3e7986c715b17f6e37523bd2
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Dec 21 15:44:51 2004 +0000
+
+    Jikes supports -bootclasspath
+    PR: 32609
+    
+    Make bootclasspath construction in <javac> take build.sysclasspath
+    into account.  Probably needs to get used in all other tasks
+    supporting bootclasspath as well.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277259 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 2d0707e1315f5b49ed01c4476f79ccd1c57ff2f1
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Dec 16 14:01:40 2004 +0000
+
+    Jikes again: shadows, some private finals that could be static and statics used as instance methods
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277219 13f79535-47bb-0310-9956-ffa450edef68
+
+commit be6e9c4ce20319bc8449466a5db9d2dff4d7f258
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Tue Dec 7 22:14:13 2004 +0000
+
+    Missed a couple.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277144 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f544eb807ac9cd1f28bf1a894ad33519b7119771
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Tue Dec 7 21:49:09 2004 +0000
+
+    Useless temporary variables mostly.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277143 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 7bb0f18d6d15c21ea256733209b830fb00dfea1a
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Jun 23 13:32:57 2004 +0000
+
+    Add libgcj support to Path.addJavaRuntime
+    
+    PR: 29020
+    Submitted by:	Anthony Green <green at redhat dot com>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276615 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c885f568369156a62e3ccb5b4b93b73b9d054443
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Tue Mar 9 16:49:09 2004 +0000
+
+    remove authors from files
+    PR: 27177
+    Obtained from: J.M. (Martijn) Kruithof
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276208 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 278781dcd669412e5e35cc95d8a96e0b2a278f50
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Mon Feb 9 21:05:47 2004 +0000
+
+    Copyright owner is The Apache Software Foundation
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276065 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 66555ca10d24bbfc55e710b9d65f809cfe713dab
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Wed Feb 4 20:38:09 2004 +0000
+
+    Remove trailing spaces in all java files
+    in order to make checkstyle happy
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276017 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ca1513552f7af7fc19de490fbe2d88adb6c993ad
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Tue Feb 3 22:44:50 2004 +0000
+
+    Switch to Apache Software License 2.0
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276010 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8b1e44f10b9e1812c160b24c52eae7d411d070f2
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Dec 12 09:41:46 2003 +0000
+
+    Add a cloneVm attribute to CommandlineJava and <java> and <junit>.
+    
+    If set, the forked VM will be configured to match the currently
+    running VM closely.  This involves:
+    
+    * copying of all system properties.
+    * copying of the bootclasspath - only if no bootclasspath has been
+      specified explicitly or build.sysclasspath has been set to "only".
+    
+    This is accompanied by a magic system property build.clonevm that can
+    be used to force the attribute to be set.
+    
+    It has to be a system property as CommandlineJava doesn't know about
+    project instances.
+    
+    PR: 25327
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@275775 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6cd58fa504db7a3a5e4a06a831952b7f6b3d3b0a
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Aug 14 16:25:52 2003 +0000
+
+    Newer versions of Kaffe have a filesystem layout similar to Sun's VMs,
+    don't exclude rt.jar and friends.
+    
+    PR: 22297
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@275095 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d050f6a18c63fdb1747377e251e66a14b24c3b08
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Wed Aug 13 15:14:31 2003 +0000
+
+    remove enum variable
+    PR: 22336
+    Obtained from: Robert Stupp, using Jan Mat��rne's checkstyle check
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@275076 13f79535-47bb-0310-9956-ffa450edef68
+
+commit dacde0154f5beab7d397daa2be6c63020774a6cc
+Author: Conor MacNeill <conor@apache.org>
+Date:   Sun Aug 3 11:27:27 2003 +0000
+
+    Revert final on System classpath
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@275009 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c837881aacaa09349424cb7967019ebffb715a63
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Jul 24 13:55:57 2003 +0000
+
+    Make some things final
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274932 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3a35c7d914d8b5a1f203561ae6f89afb5d2b80ec
+Author: Conor MacNeill <conor@apache.org>
+Date:   Sat Jul 19 08:11:10 2003 +0000
+
+    style
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274858 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 410129735b97c3b972e414d89f0798272642e2de
+Author: Conor MacNeill <conor@apache.org>
+Date:   Thu Jul 17 15:44:45 2003 +0000
+
+    style
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274851 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 66b5bf27b7d561fbd5c71e408ed5fca66a8aa788
+Author: Conor MacNeill <conor@apache.org>
+Date:   Tue Jul 15 14:54:15 2003 +0000
+
+    style
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274824 13f79535-47bb-0310-9956-ffa450edef68
+
+commit abf343291206f3cab8b3436214cc0a88efefcb25
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Wed May 28 16:27:37 2003 +0000
+
+    PR: 19897
+    Submitted by:	Peter Reilly
+    
+    This patch adds the add(Type) to the introspection rules and
+    updates ConditionBase, FilterChain, Path, SelectorBase and TokenFilter
+    to use the new introspection rule.
+    
+    =========================================
+    =   Changed Files
+    =========================================
+    
+    src/main/org/apache/tools/ant/ProjectHelper.java
+      add two methods used by introspection - getComponentClass and
+      createComponent
+    
+    src/main/org/apache/tools/ant/IntrospectionHelper.java
+      implement addTypeMethods add(Type)
+    
+    src/main/org/apache/tools/ant/filters/TokenFilter.java
+       get TokenFilter to use add(Type) instead of dynamicconfigurator
+       make all nested classes ProjectComponents
+    
+    src/main/org/apache/tools/ant/taskdefs/Delete.java
+       implement an add(FileSelector) method
+    
+    src/main/org/apache/tools/ant/taskdefs/MatchingTask.java
+       implement an add(FileSelector) method
+    
+    src/main/org/apache/tools/ant/taskdefs/condition/ConditionBase.java
+       add an add(Condition) method to demostrate use of add(Type) method
+    
+    src/main/org/apache/tools/ant/types/AbstractFileSet.java
+       implement add(FileSelector)
+    
+    src/main/org/apache/tools/ant/types/FilterChain.java
+       use add(ChainableReader) instead of DynamicConfigurator
+    
+    src/main/org/apache/tools/ant/types/Path.java
+      add an add(Path) method
+    
+    src/main/org/apache/tools/ant/types/optional/ScriptFilter.java
+      remove set/get project as parent imlements them now
+    
+    src/main/org/apache/tools/ant/types/selectors/BaseSelectorContainer.java
+      implement the add(FileSelector) method
+    
+    src/main/org/apache/tools/ant/types/selectors/SelectorContainer.java
+      add an add(FileSelector) method
+    
+    
+    =========================================
+    =   New Files
+    =========================================
+    
+    src/etc/testcases/types/addtype.xml
+      testcases for addtype
+    
+    src/testcases/org/apache/tools/ant/types/AddTypeTest.java
+      test cases for add type
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274635 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3e615520363e28a3f45c9620b398152f81414dc5
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue May 27 09:30:17 2003 +0000
+
+    fix the completely broken clone() implementations.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274622 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1aca5cf03666b5bd7b1d17eb16e727338681d525
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Apr 4 13:51:12 2003 +0000
+
+    Avoid reusing StringBuffers to work around JDK 1.4.1 memory leak.
+    
+    I'm sure that my changes in most cases are of the paranoid type,
+    ResourceUtils and FixCRLF look as if they really had a chance of
+    running into trouble.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274397 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 5e0218a9652cab04a824719dbb163e6dbccac3db
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Mar 11 10:57:42 2003 +0000
+
+    Adapt to JDK 1.4.1 for Mac OS X.
+    
+    Note that there are more jars in that directory that I'm not sure
+    about (whether we want to add them in addJavaRuntime, that is).
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274231 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 24436a1c922162464396caca82dd88c9c04d6d6a
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Mar 7 11:23:16 2003 +0000
+
+    Remove email address from sources
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274203 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1dc8a079057e191ca4c158f36843c2c9e9f9be52
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Feb 10 14:15:00 2003 +0000
+
+    Remove Jakarta Project from license
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274040 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a30889de71888bc66c4c484cfbbefa994590c383
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Jan 23 15:11:12 2003 +0000
+
+    Java Runtime Libraries in JDK 1.4 is a bit more than just rt.jar.
+    
+    PR: 16242
+    Submitted by:	Ville Skytt� <ville dot skytta at iki dot fi>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273861 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 524ca16a8f92973fb88a0fa9692524258e6e3941
+Author: Costin Manolache <costin@apache.org>
+Date:   Mon Dec 30 06:10:14 2002 +0000
+
+    Finally fix the jspc test failure.
+    
+    This is just the first round, it can be improved - not sure what's
+    the best way to deal with classpath specific issues in path.
+    
+    The problem is that CLASSPATH ( as given in the system property,
+    and added in concatSystemPath ) may contain relative paths,
+    and they are relative to user.dir, not the project basedir.
+    
+    Since gump is using relative paths, the launched java didn't find
+    the classes it needed, returning the strange -1 error.
+    
+    Of course, the test suite could be more informative too :-)
+    
+    PR:
+    Obtained from:
+    Submitted by:
+    Reviewed by:
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273727 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1584102bcf4a746edab9bdc58b0024e1c9c32544
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Dec 13 12:29:33 2002 +0000
+
+    IBM has decided that one runtime jar simply is not enough.
+    
+    PR: 15289
+    Submitted by:	Ville Skytt� <ville dot skytta at iki dot fi>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273661 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8f413c12084a80db24f4cdfd6b8f908d4e75556f
+Author: Peter Donald <donaldp@apache.org>
+Date:   Thu Jul 25 15:21:25 2002 +0000
+
+    Remove unused imports, remove glob imports, sort imports.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273169 13f79535-47bb-0310-9956-ffa450edef68
+
+commit de93400d04ba220ab724125f4e869e3daa37f1d4
+Author: Peter Donald <donaldp@apache.org>
+Date:   Thu Jul 25 14:59:02 2002 +0000
+
+    Encapsulate some fields of DataType.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273167 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ca91f8cb7e4f2bfe1a191dea6126a32649af9565
+Author: Magesh Umasankar <umagesh@apache.org>
+Date:   Sat Jun 1 12:26:43 2002 +0000
+
+    Merge changes made to 1.5 Beta1.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@272826 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 9fe0f5be4e42e49babd57ab69bd3fa6d5e64adf1
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Apr 26 16:06:52 2002 +0000
+
+    Directory based <javadoc>.
+    
+    Two new nested elements, <packageset> and <fileset>.  <packageset> is
+    a DirSet that points to directories which get translated into packages
+    if they contain .java sources, <fileset> points to sourcefiles.
+    
+    <packageset> based on a patch by Daniel Ritchey <ritchey_49@hotmail.com>.
+    
+    <fileset> allows you to select files in the default package as well.
+    
+    PR: 6433
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@272583 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 34528dbf65dff02a0f8705372966b4a92bb0b515
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Apr 23 08:15:52 2002 +0000
+
+    spread the usage of JavaEnvUtils
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@272552 13f79535-47bb-0310-9956-ffa450edef68
+
+commit bd1810c9539f5f4663b9aa5577098bade0674e30
+Author: Conor MacNeill <conor@apache.org>
+Date:   Tue Apr 16 07:15:19 2002 +0000
+
+    Some simple Javadocs - also reduce scope of Javadoc work to public
+    for now
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@272450 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c4266e92503f9365db8450324de2709fe4ff5423
+Author: Conor MacNeill <conor@apache.org>
+Date:   Mon Apr 15 13:36:22 2002 +0000
+
+    Coding Standard
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@272441 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6154080061f869b4e425d608da3bd61fad967564
+Author: Conor MacNeill <conor@apache.org>
+Date:   Mon Apr 15 12:11:52 2002 +0000
+
+    More coding standard fixes
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@272433 13f79535-47bb-0310-9956-ffa450edef68
+
+commit af0dbb6ef20efb56df867fa8025d13b0319383e6
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Apr 3 11:24:55 2002 +0000
+
+    reimplement DirSet as subclass of FileSet
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@272182 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e98e1462b5a05048e3336b230901ea885977f339
+Author: Diane Holt <holtdl@apache.org>
+Date:   Sat Mar 30 01:03:40 2002 +0000
+
+    (Oh what the hell -- if the coding sucks, it can get backed out
+     or corrected :)
+    
+    Added:
+      - new DirSet datatype
+      - support for DirSet and FileList to <path>
+      - support for DirSet and FileList to <pathconvert>
+    (Note: The added support for FileList doesn't have anything
+     to do with DirSet, I just figured while was there, might as
+     well add that as well.)
+    
+    Will put through doc/testcases stuff in a separate commit.
+    PR:
+    Obtained from:
+    Submitted by:
+    Reviewed by:
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@272100 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 241e6358ee8a4bfbd8fb63d3cb87886930f210e8
+Author: Conor MacNeill <conor@apache.org>
+Date:   Tue Feb 26 12:16:09 2002 +0000
+
+    Make message about dropped classpath elements verbose instead of a warning.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@271560 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 687d070ddadaf7990d498c5ba2e9d91c43e6003d
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Feb 15 15:19:18 2002 +0000
+
+    Print a warning if we drop elements from a use supplied path.
+    
+    Avoid exactly that warning in Ant's own build file.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@271367 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b9ab19b18b213ce7deadee5ccf88adaa2f5d261b
+Author: Stephane Bailliez <sbailliez@apache.org>
+Date:   Sun Feb 10 20:26:43 2002 +0000
+
+    Fix javadoc
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@271272 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3fddc0bcfddb3f6226843481094795c89862bf5f
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Jan 10 11:21:21 2002 +0000
+
+    License police on documentation files:
+    
+    (1) Make sure all years in which a file has been modified are
+    listed.
+    
+    (2) Make sure the format is consistent, i.e. separate consecutive
+    years with a dash, not a comma.
+    
+    Also: the initial checkin into this CVS module was in 2000, not 1999.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270657 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e3b6d1fe768d87352d3d0348638911045fc4668e
+Author: Stephane Bailliez <sbailliez@apache.org>
+Date:   Tue Jan 8 22:51:39 2002 +0000
+
+    Fix bad coding style.
+    then/else parts of if statement and loop body must always been enclosed
+    in a block statement.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270637 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6ef4875d061c42465f53150b1397b4d7d3b65905
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Dec 13 11:53:44 2001 +0000
+
+    Make those types that have internal state cloneable in a sensible way,
+    take advantage of ProjectComponent, simplify a few things.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270135 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 72245569272f19cdf0052b3468de340a9759d346
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Nov 6 10:47:34 2001 +0000
+
+    Only add directories as extdirs that actually exist.
+    
+    Submitted by:	Constantine P Sapuntzakis <csapuntz@stanford.edu>
+    
+    push addExtdirs to Path.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269877 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 5f93102e17838c47891084f6f62aa8f4c38cac6b
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Nov 2 14:37:34 2001 +0000
+
+    Make sure the class passed into Project.addTaskDefinition is suitable
+    for a task, that is it is public, non-abstract, has a no-arg
+    constructor and a public no-arg execute method.
+    
+    PR: 4163
+    Submitted by:	Ralf Wiebicke <ralf@rw7.de>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269857 13f79535-47bb-0310-9956-ffa450edef68
+
+commit cc03579eba552e1d0146f5f4e7fa82ac275332fc
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Oct 31 11:50:35 2001 +0000
+
+    Add runtime classes in the Kaffe case as well (it has been there for
+    rmic but not for javac).
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269848 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a7870b167d35566a8ed101467825a406aa61fa13
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Oct 31 11:01:24 2001 +0000
+
+    factor out runtime library detection.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269845 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d12e6411ccc654bc10c102c8a085b6b0e4634f8b
+Author: Stephane Bailliez <sbailliez@apache.org>
+Date:   Sun Oct 28 21:31:01 2001 +0000
+
+    Code clean up:
+     - removed useless/duplicate imports
+     - added explicit imports rather than *
+     - changed specifiers order to be conform to JLS.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269827 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 55dcf2dee8cad363de7fd0a2d8317c857349c6bb
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Aug 3 16:38:21 2001 +0000
+
+    New task <condition>.
+    
+    This is a first cut of the generalization of <available> and
+    <uptodate> that is on the list for Ant2. This task supports a single
+    condition and sets a property if it holds true - conditions can be
+    containers for other conditions in turn, giving it the opportunity to
+    support boolean logic.
+    
+    Built in conditions as of now:
+    
+    * <available> and <uptodate> (slightly modified the tasks to allow them to
+    be used as conditions)
+    
+    * containers <and>, <or> and <not>
+    
+    * New conditions <equals> (compares to Strings) and <os> which should
+    give easier access to os.name.
+    
+    More extensive documentation to follow.  Take a look at Ant's build
+    file, it uses the task to detect whether javamail is available now.
+    
+    I had to perform some ugly tricks to make sure that project gets
+    passed to every object that will need it - this will be very different
+    in the future I hope.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269456 13f79535-47bb-0310-9956-ffa450edef68
+
+commit cf3d817333eb1f45c382561f258acd52fdf3d3a9
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Jul 10 15:40:09 2001 +0000
+
+    Stop using canonical paths.  This will change the behavior of Ant when
+    symbolic links are present (but in a way that is probably closer to
+    what the user expects) and remove some problems on platforms that use
+    "uncommon" native file names like OS/390 or VMS.
+    
+    Submitted by:	Jesse Glick <Jesse.Glick@netbeans.com>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269309 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 757c77d1af72de2b0893ee41700ff0185591d58d
+Author: Conor MacNeill <conor@apache.org>
+Date:   Sat Jul 7 14:05:27 2001 +0000
+
+    Another location where invalid paths can be ignored
+    PR: 381
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269288 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 218ad5fc4d8c225edfb15dfd536904c6ec3fd8a3
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Jul 5 12:27:46 2001 +0000
+
+    Work around a feature of the system classloader in some VMs - it
+    drops all classpath entries that are not present at VM start time.
+    
+    PR: 2412
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269271 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c31e31c52a1f624e72be505d788db9be42b87e5d
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed May 23 16:58:36 2001 +0000
+
+    Make usage of my email address consistent (probably going to change
+    home provider).
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269046 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 9f4642716c6149bfbb2c4b3ebfaa07807cac3617
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue May 8 09:35:31 2001 +0000
+
+    Assorted patches:
+    
+    (1) make Ant JDK 1.4 aware
+    (2) improved <style> debugging
+    (3) bring DesirableFilter in line with defualt excludes
+    (4) use correct URL syntax in <get>'s unit test
+    (5) improve JavaDoc comments in Path.java
+    (6) description for test target in Ant's build file
+    
+    Submitted by:	Jesse Glick <Jesse.Glick@netbeans.com>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269014 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 4ca5683c2a54ff4a141ed562a0f3b431b153b2c2
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Jan 12 14:08:51 2001 +0000
+
+    <javac> rewritten to use a factory.
+    
+    Submitted by:	Jay Glanville <jayglanville@home.com>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268444 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 79d1102c453fe7eb9d18b02a80ddcae020c59d22
+Author: Sam Ruby <rubys@apache.org>
+Date:   Wed Jan 10 21:37:42 2001 +0000
+
+    Restore the default to "last".  Add a warning message if an invalid value
+    is specified.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268426 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 2f3fc4ceb269ba3d0285afb816295ff76e503b10
+Author: Sam Ruby <rubys@apache.org>
+Date:   Fri Jan 5 14:26:27 2001 +0000
+
+    Address anomolies where classpath is now being interpreted differently by
+    different tasks due to my change to javac and the introduction of
+    ${build.sysclasspath}
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268407 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6c287080d460efa63e022407e88a04558b9fdbb6
+Author: Conor MacNeill <conor@apache.org>
+Date:   Wed Jan 3 14:18:52 2001 +0000
+
+    Make licence statements mention Ant in place of Tomcat
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268392 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1375c85ac2718db69e07fc8535ba0d71cb0fa691
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Oct 27 14:59:32 2000 +0000
+
+    javadoc correction to ExecTask
+    
+    Submitted by:	Jesse Glick <Jesse.Glick@netbeans.com>
+    
+    Make Path use getCanonicalPath throughout.
+    
+    Submitted by:	Vincent Bergbauer <vincent_bergbauer@yahoo.com>
+    
+    Remove deprecation warnings in SignJar
+    
+    Submitted by:	KC Baltz <KBaltz@responsenetworks.com>
+    
+    Give user a clue if the classic compiler can not be found.
+    
+    Submitted by:	Erik Meade <emeade@geekfarm.org>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268128 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 505d4a8c1d350ffac8a917378a6fac71b2517b3d
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Sep 7 09:51:02 2000 +0000
+
+    Removed <filesetref> and <patternsetref> everywhere, <fileset> and
+    <patternset> support the refid attribute directly instead.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@267973 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3336811fd3e0a3d2d059a0860dc243e9fff65300
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Sep 5 14:25:13 2000 +0000
+
+    JDK 1.1 compatibility issue.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@267963 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e8d2007cff10bf96dfe533c7ed89685702c9add7
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Sep 5 14:15:50 2000 +0000
+
+    Add a nested <path> element to <path>. This means one path can include
+    another path (by reference as well as literally, although I doubt the
+    latter is of any use). Circular references should be caught.
+    Suggested by:	Barrie Treloar <Barrie.Treloar@camtech.com.au>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@267962 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c2007a8479b85ab1900be1b8b1f541d91024c53e
+Author: Conor MacNeill <conor@apache.org>
+Date:   Wed Aug 9 14:09:49 2000 +0000
+
+    Move addExisting functionality from javac to Path
+    Fix error in Path constructor
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@267905 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ab761fc43417dd2ce81f2b6017e5ecd92d3a078b
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Aug 9 06:20:30 2000 +0000
+
+    Added some (deep) clone methods.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@267900 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 2c09476bfee6d3b3ca1d952d451d1179ae62a8d1
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Aug 8 07:26:05 2000 +0000
+
+    Make Path.append() more forgiving.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@267899 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 63363f91c8fc49f6b46adefab32b1f50c0c7c3ce
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Aug 3 09:00:39 2000 +0000
+
+    Some documentation patches.
+    Submitted by:	Barrie Treloar <Barrie.Treloar@camtech.com.au>,
+                    Jesse Glick <Jesse.Glick@netbeans.com>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@267876 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a8d4fe6d9b8c7a4adb1704b12de610dc6e18fe94
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Aug 2 09:24:24 2000 +0000
+
+    Add nested fileset and filesetref attributes to Path.
+    
+    This means you can now add somedir/*.jar to the CLASSPATH by
+    <classpath>
+      <fileset dir="somedir">
+        <include name="**/*.jar" />
+      </fileset>
+    </classpath>
+    
+    and probably adjust the pattern if you don't want to recurse the tree.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@267864 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1f7eed82cc9a11bf2227fd3473f7d921a7330326
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Jul 24 16:05:29 2000 +0000
+
+    Moved EnumeratedAttribute to types as well.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@267828 13f79535-47bb-0310-9956-ffa450edef68

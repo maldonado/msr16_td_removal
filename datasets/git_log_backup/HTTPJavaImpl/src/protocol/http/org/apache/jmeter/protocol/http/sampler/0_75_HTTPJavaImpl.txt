@@ -1,0 +1,128 @@
+commit 5be9daa8a071b34913931247dcf7842bd719638e
+Author: Felix Schumacher <fschumacher@apache.org>
+Date:   Mon Jan 5 14:18:13 2015 +0000
+
+    Bug 57193: Add param and return tags to javadoc
+    Bugzilla Id: 57193
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1649531 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ee7db54f92ff3c8de16657a9cb505b5a4be174ce
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Sat Aug 30 19:12:43 2014 +0000
+
+    Bug 54778 - HTTP Sampler should not return 204 when resource is found in Cache
+    Bugzilla Id: 54778
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1621523 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 05cccf1b4f98d0c2241cc8378b79214fc8bd652d
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Sat Aug 30 14:18:24 2014 +0000
+
+    Bug 54778 - HTTP Sampler should not return 204 when resource is found in Cache
+    Factor out common code
+    Bugzilla Id: 54778
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1621461 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ea6a24ee72400090681acf7d08255bd2e4fe1243
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Mar 16 00:52:11 2014 +0000
+
+    Improved debug
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1577960 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 5de4189b5d9b2dd01d84bd9a9130f12855f702f2
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Nov 27 00:18:19 2012 +0000
+
+    Move to Java 6
+    add @Override for interface implementations
+    Bugzilla Id: 54199
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1413957 13f79535-47bb-0310-9956-ffa450edef68
+
+commit fab774648145df4adf34f3bc932a9f7c15d2617d
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Mon Jul 16 23:04:19 2012 +0000
+
+    Close resources
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1362306 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 2bad2b8f1764f0595dd2d13391e93cc6dc5a7d37
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Jun 23 15:36:18 2012 +0000
+
+    Standardise on HTTPConstants, not the interface
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1353149 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 9a6ed260f37ff70fa0c92e2c6984e6c157cd4c28
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Mon May 7 21:58:28 2012 +0000
+
+    Bug 53136 - Catching Throwable needs to be carefully handled
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1335279 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 77e7b9ab82e953ec397142041552e3ca16f63b78
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Mon Nov 28 01:13:35 2011 +0000
+
+    Only need to nullify savedConnection once in the code block
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1206955 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f7183cb2c31d9fcacfd3fce999c3dfcb70766730
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Nov 27 13:49:39 2011 +0000
+
+    Simplify for loops
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1206721 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3e74f6469ece9f311c76ccdd56640c0b83ea4ccb
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Sep 17 23:10:34 2011 +0000
+
+    SerialVersionUID not required
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1172144 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b40ea80a6fc6c58acf5b320d1d85fb5ec67e7dc7
+Author: Bruno Demion <milamber@apache.org>
+Date:   Wed Apr 20 20:26:47 2011 +0000
+
+    Fix a bug when instream is null (with a 408 http response), don't set body size
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1095503 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a75d1b6fe7af7663da9ff7933085d05a6bcde6b6
+Author: Bruno Demion <milamber@apache.org>
+Date:   Wed Apr 13 22:27:51 2011 +0000
+
+    Change strategy to get response size (use CountingInputStream from Commons IO) View Results Tree - Add new size fields: response headers and response body (in bytes) - derived from Bug 43363 Size Assertion - Add response size scope (full, headers, body, code, message) - derived from Bug 43363
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1091965 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d9d63d95398b033b5602cf9260a364f08f2f062b
+Author: Bruno Demion <milamber@apache.org>
+Date:   Mon Apr 4 19:30:40 2011 +0000
+
+    Simplify new properties to change method to calculate getBytes()
+    Save Headers size and Content-length on sample (in HTTPSampleResult) instead of calculting when gets results
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1088748 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 803af3bd7a0e13eb49746cd2a1b606e5451c98e4
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Nov 30 00:11:42 2010 +0000
+
+    Add HTTP implementations for use by HTTPSamplerProxy
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1040353 13f79535-47bb-0310-9956-ffa450edef68

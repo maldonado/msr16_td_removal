@@ -1,0 +1,227 @@
+commit 060f38fa68cdd373759c4dacd0a9d418ee6ec1a6
+Author: Bruno Demion <milamber@apache.org>
+Date:   Thu Jul 24 13:03:53 2014 +0000
+
+    Adds the ability for the Response Time Graph listener to save/restore format settings in/from the jmx file.
+    Bugzilla Id: 56769
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1613102 13f79535-47bb-0310-9956-ffa450edef68
+
+commit fa5b2e258acb5c160c0cdff5570d6366c803b428
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Fri Nov 29 22:29:00 2013 +0000
+
+    Bug 55826 - Unsynchronised concurrent accesses to list in field RespTimeGraphVisualizer.internalList
+    Bugzilla Id: 55826
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1546654 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a2b81efd552df005800595a1011f8acd55e19644
+Author: Bruno Demion <milamber@apache.org>
+Date:   Fri Oct 11 15:15:18 2013 +0000
+
+    "Clear All" for Aggregate Graph is not clearing the last run Graph
+    Not a real fix, but improves the user experience
+    Bugzilla Id: 55564
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1531330 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 16ebd78729e147905dfa7d37577cfcc2c437d7fc
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Apr 30 23:29:11 2013 +0000
+
+    Propagate the input event ID
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1477874 13f79535-47bb-0310-9956-ffa450edef68
+
+commit eb22e8412a993a41f14f54e26b81a0ff9bcc4a49
+Author: Bruno Demion <milamber@apache.org>
+Date:   Sat Feb 9 17:35:52 2013 +0000
+
+    Improve Response Time Graph Y axis scale with huge values or small values (< 1000ms). Add a new field to define increment scale
+    Bugzilla Id: 54532
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1444399 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3a7a1fb7aec27e9d1c56c8fa0c13d38097cb9070
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Jan 29 18:14:21 2013 +0000
+
+    Add missing NON-NLS markers for message property key name strings
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1440040 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 78926087508567ac77b2e28c8f27f8ad0dcbe903
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Jan 29 17:18:44 2013 +0000
+
+    Add missing NON-NLS markers for message property key name strings
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1440004 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b514102f662a4514dc4a8927b90642a7d077b746
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Sun Jan 20 14:59:12 2013 +0000
+
+    Bug 54451 - Response Time Graph reports wrong times when the are many samples for same time
+    
+    Also fixed OOM in getData() introduced by 54287 (reset of values was not impacted to use Long.MAX_VALUE and Long.MIN_VALUE)
+    Bugzilla Id: 54451
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1435860 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 08cd0a9526f22094d14d9c0e14bd4ef9c2f45d27
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Jan 5 22:55:36 2013 +0000
+
+    Explicit casting to Long
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1429414 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3834935043de34ef2938a792e5809f6c5d83d291
+Author: Bruno Demion <milamber@apache.org>
+Date:   Thu Dec 13 13:01:12 2012 +0000
+
+    Incorrect Timestamp in Response Time Graph when using a date with time in Date format field
+    Bugzilla Id: 54287
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1421273 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 7810d409aa4c8aafb2b1c9cf40af3f1f9ce89708
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Nov 27 00:11:55 2012 +0000
+
+    Move to Java 6
+    add @Override for interface implementations
+    Bugzilla Id: 54199
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1413954 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 14f3ac42d95ad74cb4fa5b02c4af94ba93726fae
+Author: Bruno Demion <milamber@apache.org>
+Date:   Fri Sep 14 07:01:01 2012 +0000
+
+    The internal data list must contains sampler label to allow reload data/interval and draw the graph if no results file defined.
+    Bugzilla Id: 53718
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1384659 13f79535-47bb-0310-9956-ffa450edef68
+
+commit dd0f11307ac2e8ba5e9551e33685d7bd2a7768dd
+Author: Bruno Demion <milamber@apache.org>
+Date:   Wed Sep 12 19:37:34 2012 +0000
+
+    For SeriesNames need to retain insertion order otherwise they have a mismatch between labels and series
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1384101 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ca3d2f82a9e8666f408bc4c146f434d168e9c34a
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Wed Sep 5 21:16:29 2012 +0000
+
+    Make fields final
+    Make field local
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1381375 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 5c7263a3035e4eedc577a84517ddf29c48991db1
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Fri Aug 31 21:43:23 2012 +0000
+
+    Don't use entrySet iteration as we only use value
+    Add comment on LinkedHashMap
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1379629 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 27a04313232422c603d4a57c7b433ab9fdeda5b2
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Thu Aug 23 20:15:41 2012 +0000
+
+    Make matcher transient
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1376673 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ae9fe6e6be2c41bad47d632422eba970ab8f5ffc
+Author: Bruno Demion <milamber@apache.org>
+Date:   Thu Aug 23 12:20:12 2012 +0000
+
+    Rename Reload data button to Apply Filter
+    Bugzilla Id: 53718
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1376457 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8d86dc69155531192b9354a2427bcabe3235f3bd
+Author: Bruno Demion <milamber@apache.org>
+Date:   Wed Aug 22 23:30:13 2012 +0000
+
+    Moves the pattern filter on reload data action
+    Force the reloaded data (to remove filter) when unchecked the filter checkbox
+    Add a change listener on JTabbedPane to make the graph when clic on Graph tab (without clic on Display Graph button)
+    Reorganise some methods in source file
+    Bugzilla Id: 53718
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1376315 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3bd37a86c908e6bfb6b860773cfbcadbbc40423b
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Aug 21 20:05:42 2012 +0000
+
+    Make boxing explicit.
+    Make some fields int rather than Integer to reduce need for boxing/unboxing
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1375742 13f79535-47bb-0310-9956-ffa450edef68
+
+commit cc7817f7c3507223db6a18fb2e840cd20104cf03
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Tue Aug 21 14:42:25 2012 +0000
+
+    UPPER case for static
+    little optimisation in map gets (replace containsKey+get by get then null test)
+    Little optimisation on Map copy (use iterator instead of key iterator + get per key)
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1375581 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 282594d48aa215fe7a0d7017bf137a4259b49240
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Tue Aug 21 14:12:58 2012 +0000
+
+    Code cleanup
+    little optimisation in map gets (replace containsKey+get by get then null test)
+    Little optimisation on Map copy (use iterator instead of key iterator + get per key)
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1375559 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 7729bf4156fa32a56358e539300f70e4476edbc0
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Mon Aug 20 23:49:05 2012 +0000
+
+    Standardise on static final
+    No code change
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1375327 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 36a6e3b8c17f12e8e4094af539d68552ba2a67ec
+Author: Bruno Demion <milamber@apache.org>
+Date:   Mon Aug 20 19:47:32 2012 +0000
+
+    Move createLabelCombo to jorphan.GuiUtils
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1375188 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 264007e11832d677e0e32407a47df08060cedd6a
+Author: Bruno Demion <milamber@apache.org>
+Date:   Mon Aug 20 09:10:26 2012 +0000
+
+    Improves the memory usage by internal list (map now) which keep all results to allow the "reload data" action or "apply interval" action
+    Bugzilla Id: 53718
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1374952 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 93ce6618c986c8f5e0d384b3bbd9fbdd6338539c
+Author: Bruno Demion <milamber@apache.org>
+Date:   Fri Aug 17 18:23:21 2012 +0000
+
+    Change the name "Line Graph" to "Response Time Graph"
+    Bugzilla Id: 53718
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1374385 13f79535-47bb-0310-9956-ffa450edef68

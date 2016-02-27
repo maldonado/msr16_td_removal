@@ -1,0 +1,194 @@
+commit 0ca1046655a0cd795cc74835a32bf4f62f2335fc
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu May 14 09:15:53 2015 -0500
+
+    Tag out now passing tests and fix Method#original_name to return name as symbol instead of string
+
+commit 2774d7879e7130d0d554c918049d043d38247074
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue May 12 16:46:06 2015 -0500
+
+    method.to_proc was providing 1-indexed line and not 0-indexed
+
+commit 256467c9c7163d27ab2ec331e6dab7b532570247
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri May 8 19:46:07 2015 -0500
+
+    Remove experimental unused Method.args from 1.8 era.
+
+commit 72c6c0b8226893575df7dd0d19912011541d7106
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri May 8 19:01:18 2015 -0500
+
+    Refactor argument metadata representation and rendering.
+
+commit 9000d2d1215d16a234300986e330570541a7e40f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri May 8 14:18:00 2015 -0500
+
+    Use a structure for IR argument descs, because OO.
+
+commit d2ea69ef676d5d5225f644d8f9d71086c33104a4
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri May 8 13:51:05 2015 -0500
+
+    Properly adapt IR argsDesc to "parameterList" format.
+    
+    Fixes #2920
+
+commit 55376a00175725027e941df3bdcd5414a0904408
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu May 7 11:53:33 2015 -0500
+
+    Kill off argumentType from BlockBody
+
+commit 512b0a5ab4e129a2e05e6ca83113520252a0048a
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Apr 16 10:49:28 2015 -0500
+
+    StaticScope now has Signature instead of three individual fields.  All other
+    changes were made to support this.  We encode/decode scopes with a full
+    Signature.  Blocks are all rooted in providing a Signature.  All IR*Method
+    will provide a Signature.  Unfortunately, I stopped at IR level for method
+    types.  Over time those should get converted.
+    
+    This corrects all arity issues involving methods and blocks in interp.  JIT
+    is still somewhere passing in the wrong values but I will correct that in
+    a followup (this is not a regression).
+    
+    spec:fast:ruby and test:mri both pass so do JIT variants of those tests
+    but I strong suspect we are shelling out in some way and running some of
+    these tests in interp mode.
+    
+    On other note of distinction is that for builtin functions we only construct
+    a subset of information that Signature wants because Arity is only a subset
+    of the info Signature needs.  Since there are no exotic signatures in builtins
+    there is a Signature.from(Arity) which will convert to a reasonable analogue
+    or throw if it is special in some way.
+    
+    I tried to leave all deprecated versions of methods and constructors but
+    I might have spaced out a few.
+
+commit 3b067b7b76d6ff629394cfca8c7172d6778bb318
+Merge: 92d2cc7 5433238
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Mar 12 15:38:51 2015 -0500
+
+    Merge remote-tracking branch 'origin/jruby-1_7'
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/RubyBasicObject.java
+    	core/src/main/java/org/jruby/java/proxies/ArrayJavaProxy.java
+
+commit 54332386144dca5551f075c25d262f19f330a89b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Mar 12 15:31:58 2015 -0500
+
+    Method procs should have block args appropriate to arity.
+    
+    Fixes #2632
+
+commit 4a27a162b11fde566ca88ee9307f2df9c6e97839
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jan 16 12:22:17 2015 -0600
+
+    Add Method#original_name.
+
+commit 28ec5de6758eb0579e211f6fe7fd80845ca00542
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jan 6 13:09:29 2015 -0600
+
+    Fix 1.8 vs 1.9 and shared impls of some method logic.
+
+commit 32be2df2b46b89f5633ba8f9e714fa861bb9b968
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jan 6 12:48:21 2015 -0600
+
+    Fix compile error in RubyUnboundMethod due to merged change.
+
+commit 4644d3332a8e805cd5be4dfb9b8183f0ebd1ea0e
+Merge: 057cde9 72234f9
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jan 6 12:23:53 2015 -0600
+
+    Merge remote-tracking branch 'origin/jruby-1_7'
+
+commit 72234f9074a1574f7dce41b3003442d976809051
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jan 6 12:11:06 2015 -0600
+
+    UnboundMethod does NOT extend Method and does NOT define to_proc.
+    
+    I swear UnboundMethod used to extend Method and remember having
+    conversations about it, but back as far as 1.8.7 that is not the
+    case. Perhaps Ruby 1.6.
+    
+    Fixes 2426.
+
+commit dc25cfe41764af3a11e8e1a0fffe3bbba1885c20
+Author: Chris Heald <cheald@gmail.com>
+Date:   Mon Nov 10 01:55:58 2014 -0700
+
+    Method#== should consider multiple copies of a method_missing handler for a given
+    method to be equivalent.
+
+commit c0969d5fdee4c9fddc96d87acf7697156a23936f
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Nov 10 09:50:41 2014 -0600
+
+    No block params should ever be null
+
+commit 7359d48db833fff45d430ff8ae55e569cdda69e9
+Merge: d183f8d b4ff008
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Nov 7 08:48:10 2014 -0600
+
+    Merge branch 'super_method' of github.com:cheald/jruby into cheald-super_method
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/RubyMethod.java
+
+commit f488a444bdbadd6f57a73324927ce192ad669bb8
+Author: Chris Heald <cheald@gmail.com>
+Date:   Thu Nov 6 16:44:07 2014 -0700
+
+    Implement Method#curry, which simply delegates to Proc#curry.
+    
+    Also fixes an existing bug in JRuby which would ignore the argument
+    passed to Proc#curry() and would instead always use the Proc's arity.
+    With that fixed, Proc#curry properly works with varargs now.
+    
+    The fixed regression was introduced in 72703450108175e45fb4b21fb7d07676e001c952
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/RubyMethod.java
+
+commit b4ff008b3b492113192211e2cd9425df4804d9d7
+Author: Chris Heald <cheald@gmail.com>
+Date:   Thu Nov 6 16:05:11 2014 -0700
+
+    Add Method#super_method
+
+commit 1f691eeced4ed9890d09c8caf3b1ccebfd65de27
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Oct 9 15:31:43 2013 -0500
+
+    De-version Method
+
+commit d1f89e004fdc78dff75407c82123e6c9e8b406bb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Sep 12 18:48:16 2013 +0200
+
+    Make ClassIndex into an enum, to prevent issues like #1004.
+
+commit 85e49085c8443fe6493e5cbaa554e72ab60caa29
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jul 8 13:17:40 2013 -0500
+
+    Fix parameter passing to procified method. JRUBY-6763.
+
+commit 28c6fbc4e883bc1c9e9242d1da1cb2b785f55339
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 3 12:46:45 2013 -0500
+
+    Move to @mkristian's proposed layout, with some modifications.

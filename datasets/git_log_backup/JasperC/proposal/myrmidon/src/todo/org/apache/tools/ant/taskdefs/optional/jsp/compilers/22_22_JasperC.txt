@@ -1,0 +1,129 @@
+commit 36a0800e7ea144680d92d4233585363120643b5d
+Author: Peter Donald <donaldp@apache.org>
+Date:   Wed Feb 6 13:38:45 2002 +0000
+
+    Style touchups
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@271189 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8ce1de2178a0422105fa437c327b49fb5637ff28
+Author: Stephane Bailliez <sbailliez@apache.org>
+Date:   Sun Jan 20 17:35:02 2002 +0000
+
+    - Fix order of modifiers
+    - Fix duplicate/unecessary imports
+    - Fix single if/else and loop without block
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270813 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 7e5853486c57409e72a3ce3d49d6cfeaa135628f
+Author: Peter Donald <donaldp@apache.org>
+Date:   Sun Jan 20 02:36:21 2002 +0000
+
+    Did some create->add munging
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270798 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 38dce34edfdb4041103530c656e12e6ed61e2bd6
+Author: Peter Donald <donaldp@apache.org>
+Date:   Sun Jan 20 02:11:45 2002 +0000
+
+    Did some create->add munging
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270797 13f79535-47bb-0310-9956-ffa450edef68
+
+commit bfc6ef8295b44eea9ded49c346470c7a7d0c6ee5
+Author: Peter Donald <donaldp@apache.org>
+Date:   Thu Jan 17 08:04:54 2002 +0000
+
+    This is the first patch of the looong process of refactoring the
+    setX()/createX() and setX()/addX() method pairs into a single setX() or
+    addX() method. �I've started with Path, to get rid of some its inertia.
+    
+    Submitted by: "Adam Murdoch" <adammurdoch_ml@yahoo.com>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270776 13f79535-47bb-0310-9956-ffa450edef68
+
+commit df65abbefe02495631560db49de6c99ae9fc4ef4
+Author: Peter Donald <donaldp@apache.org>
+Date:   Sat Jan 12 05:01:23 2002 +0000
+
+    Start to refactor and cleanup javac task
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270682 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 669a7eae15ea1cf4d43f78955eb15a1b757717f5
+Author: Peter Donald <donaldp@apache.org>
+Date:   Sun Dec 23 14:25:02 2001 +0000
+
+    Start updating logging to myrmidon style logging
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270367 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 255020c002e99c42ba08342cbc874a0a5737d24c
+Author: Peter Donald <donaldp@apache.org>
+Date:   Sun Dec 23 06:35:02 2001 +0000
+
+    Fix up license banner.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270362 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 7c0bc50a96e8e885beaf8fa150da252efca3eb00
+Author: Peter Donald <donaldp@apache.org>
+Date:   Sun Dec 16 01:31:39 2001 +0000
+
+    BuildException -> TaskException
+    
+    Yay - down to 180 errors!!!!!!!!!!!!!!!!!!!!!
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270169 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b8c50342cacdaa5bc7e3e4e72eb8351da5824716
+Author: Peter Donald <donaldp@apache.org>
+Date:   Sun Dec 16 00:39:05 2001 +0000
+
+    BuildException -> TaskException
+    
+    Removed uneeded imports.
+    
+    Processed code through style formatter.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270166 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 7a3448dcea316f454dd0ba470f8b0825504ae309
+Author: Peter Donald <donaldp@apache.org>
+Date:   Sat Dec 15 14:56:00 2001 +0000
+
+    Started refactoring.
+    
+    Made BuildException extend TaskException. Now BuildException is no longer a RuntimException and needs to be declared everywhere it could be thrown
+    
+    Removed the constructors that took location info for BuildException. Location is something known about byt the container and the tasks them selves should not be worrying about that sort of thing
+    
+    Removed a bunch of deprecated methods and features. Also moved all file handling utilities outside iof the Project class. To aid the transition I added a resolveFile method to the base ProjectComponent class.
+    
+    480 odd compile errors left to clean up.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270158 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d1064deab4fcb65519fda168052576c3b44eb45e
+Author: Peter Donald <donaldp@apache.org>
+Date:   Sat Dec 15 12:06:33 2001 +0000
+
+    Add in a clone of the main ant source tree so that it can undergo some heavy refactoring.
+    
+    Initial stages involves just making the Ant1.x tasks implement Ant2 interface and refactoring BuildException such that it can be easily be replaced by TaskException etc.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270153 13f79535-47bb-0310-9956-ffa450edef68

@@ -1,0 +1,92 @@
+commit e40c665294ae7590f19bae05b132e82b804d737e
+Merge: d40bc79 0fa8da7
+Author: kares <self@kares.org>
+Date:   Wed Aug 26 15:32:05 2015 +0200
+
+    Merge branch 'jruby-1_7'
+    
+    * jruby-1_7:
+      'more correct' MapJavaProxy key?/include? check that (only) does containsKey
+      rename internal getMap to mapDelegate + add some notes on overrides
+      remove empty line
+      expose iteration check for sub-classes + cleanup putAll (in RubyHash)
+      override more of inherited aset operations on MapJavaProxy (see #930)
+      minimize MapJavaProxy's memory usage - allocate zero RubyHash buckets
+
+commit 3611dbeb0d656528ee3b26b116d1c65969cd8154
+Author: kares <self@kares.org>
+Date:   Wed Aug 26 13:18:02 2015 +0200
+
+    remove empty line
+
+commit a54f0997c0b0475ead97e52e89bb3bf317e58a97
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Apr 22 02:01:42 2015 -0500
+
+    Eliminate "base" java class proxy initialization.
+    
+    All it did was define the long-defunct __jsend! method, which is
+    superceded for many years by java_send.
+
+commit 4e1fe960df4168bb7118de6784a427240fa6ae4d
+Author: kares <self@kares.org>
+Date:   Fri Mar 27 12:42:15 2015 +0100
+
+    time to start sharing the generic (handles var-args) argument toJava conversion
+
+commit 1e56da4dbbabe917f741a18e7a370d9ec3e42822
+Author: kares <self@kares.org>
+Date:   Fri Mar 27 09:27:19 2015 +0100
+
+    use (and cache) the more Java [array] version of the API to retrieve proxy constructors
+
+commit 18f91f7ec60dc309871d74c72af39dffde204798
+Author: kares <self@kares.org>
+Date:   Thu Mar 19 12:20:49 2015 +0100
+
+    explicit inspect() method for JavaProxyConstructor + annotate with JRubyClass
+
+commit ed54a0840756dc21251256959a662356e95e7d6f
+Author: kares <self@kares.org>
+Date:   Thu Mar 19 12:03:02 2015 +0100
+
+    a working inspect for Java proxy methods
+
+commit 836113738e7bc2cf2dc996c0c327f198ad8ffc8d
+Author: kares <self@kares.org>
+Date:   Thu Mar 19 12:02:33 2015 +0100
+
+    empty class array count-- and make sure correct name is annotated with @JRubyClass
+
+commit b7dbefebaf8200faf04eb2049710a1972020403f
+Author: kares <self@kares.org>
+Date:   Thu Mar 19 11:49:59 2015 +0100
+
+    JavaProxyClass - use toRubyArray + delay resolving constructors + re-arrange internals
+
+commit 24c7380e405e2158eda83a9829c78d5c066bef53
+Author: kares <self@kares.org>
+Date:   Thu Feb 5 19:35:17 2015 +0100
+
+    proxy method impl should do check for Method equality using equals not just refs
+
+commit 904606afa3cebe491ab3b132fa9623dd8e804e6a
+Author: kares <self@kares.org>
+Date:   Thu Feb 5 14:49:01 2015 +0100
+
+    rename ProxyMethodImpl's internal fields (for better identification) & also :
+    
+    - invoke implementation now avoids unnecessary System.arraycopy call
+    - pre-maturily optimized some from "excessive" getRuntime() invocations
+
+commit fcb53b843a899fbcf49e0375038dd0f0e1da4cf2
+Author: kares <self@kares.org>
+Date:   Thu Feb 5 11:47:58 2015 +0100
+
+    add generix to Set in JavaProxyClass.getProxyClass's parameters
+
+commit 28c6fbc4e883bc1c9e9242d1da1cb2b785f55339
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 3 12:46:45 2013 -0500
+
+    Move to @mkristian's proposed layout, with some modifications.

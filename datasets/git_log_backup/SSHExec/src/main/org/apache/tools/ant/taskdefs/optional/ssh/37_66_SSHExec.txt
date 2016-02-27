@@ -1,0 +1,398 @@
+commit 965917ea136e553faaca230cc2ba13d0db78a842
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Jan 6 15:54:40 2014 +0000
+
+    seems to be wrapping the wrong stream
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1555873 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c7befb5bd4d7efcef5de9444657b7f1057837eb5
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Jan 6 15:52:32 2014 +0000
+
+    whitespace
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1555872 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 93eb236577fd99125091dea1515a94cb47d2c00a
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Jan 6 15:41:13 2014 +0000
+
+    various new attributes around System.err handling in sshexec.  Submitted by Gilbert Rebhan.  PR 48478
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1555866 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6307fed882ce726b54ff5d478b972ed794aeb275
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Jan 6 15:29:26 2014 +0000
+
+    allow System.in to be passed to sshexec'ed process.  Patch by rosvit.  PR 55393
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1555860 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c4cc9c42b1186ff585b7506c4ece1434a5127ce0
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Mon Feb 18 16:13:11 2013 +0000
+
+    add suppresssystemout attribute to optionally make sshexec silent PR 52070
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1447370 13f79535-47bb-0310-9956-ffa450edef68
+
+commit cd9866805353b3ba69cf0bed6c6335c16d3ffcd1
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Feb 1 13:19:44 2012 +0000
+
+    support for pseudo-terminals in sshexec.  PR 52554
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1239121 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8a8bbe2fb9aa228ecc87e06880ed4655a16eacc0
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Jan 25 11:00:20 2011 +0000
+
+    Actually implement inputstring and document inputproperty.  PR 50576
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1063224 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 632c01d0422cc1bcea7a7c672a63621ce5de5fa3
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Sat Oct 24 06:25:03 2009 +0000
+
+    Only store the command's output with no decoration in sshexec's outputproperty if the command attribute is used.  PR 48040
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@829311 13f79535-47bb-0310-9956-ffa450edef68
+
+commit cba01025c08dc79ce71c75c884e3837219a070aa
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu May 7 08:19:29 2009 +0000
+
+    honor failonerror on connection problems.  PR 46829.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@772543 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8557fcb14481e120e8cd857ce225363b238574c9
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Jan 6 17:27:01 2009 +0000
+
+    tiny refactoring.  Allow JUnit task to be less concerned about formatters (right now formatters could close System.out/err unless they guard against it).
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@732010 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 7171341fc60cfd4d7cd4f92bda0778bf98c17094
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Dec 4 20:15:59 2008 +0000
+
+    store remote output in outputproperty even if it fails.  PR 46340.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@723422 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d796e53fea54cad6b5c2dfb6f892d704504b09f4
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Jul 15 13:14:26 2008 +0000
+
+    Add input to sshexec.  PR 39197.  Based on patch by Robert Anderson.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@676906 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3a9aafdba74f1c5c79bbc8eec60f4c89d4ecc0df
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Fri Oct 5 09:32:10 2007 +0000
+
+    checkstyle
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@582162 13f79535-47bb-0310-9956-ffa450edef68
+
+commit eb4293a5c60d218c2410b4a03bfb90b29fd7cf52
+Author: Kevin Jackson <kevj@apache.org>
+Date:   Wed Oct 3 11:58:38 2007 +0000
+
+    -open session once for a command resource not each command
+    -bugzilla 43437 don't make properties immutable
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@581576 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 79c6e8371ad80a538873156af0381ec82a0d6dfc
+Author: Jan Materne <jhm@apache.org>
+Date:   Thu Sep 20 14:26:16 2007 +0000
+
+    Use better constant names.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@577765 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 0dd2ec90a55b767dfb413d60fbc986ff29888444
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Thu Sep 20 11:12:37 2007 +0000
+
+    more magic num
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@577684 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 60eb01908b0117bad726e0fbf0e946504e1da80d
+Author: Kevin Jackson <kevj@apache.org>
+Date:   Fri Sep 14 01:48:47 2007 +0000
+
+    -use isClosed instead of isEOF, bugzilla #43092
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@575511 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1e5fd23402d0700f28efbc89b7ba7436094e69d0
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Sat Aug 11 13:38:27 2007 +0000
+
+    checkstyle
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@564923 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 424bee292b49822b29c4cc583335999e29df2880
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Sat Aug 11 10:45:19 2007 +0000
+
+    checkstyle: remove trailing ws
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@564891 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a130f4fbe891f9c6fa02b08ee83e5c18966c3dcd
+Author: Kevin Jackson <kevj@apache.org>
+Date:   Fri Jun 1 06:50:36 2007 +0000
+
+    -log actual command
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@543406 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c1964da1880436a20bf1a253a1a56bb7591d7bb7
+Author: Kevin Jackson <kevj@apache.org>
+Date:   Sun Feb 18 04:59:27 2007 +0000
+
+    -fix error message
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@508866 13f79535-47bb-0310-9956-ffa450edef68
+
+commit fdae4b3eaec0822c0ab1138b9ef8c4de28b2b0b8
+Author: Kevin Jackson <kevj@apache.org>
+Date:   Sun Feb 18 04:58:23 2007 +0000
+
+    -provide support for a command file to pass to SSHExec - implemented with a FileResource
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@508865 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 2e897819a83981a1f4de2e1cc72e33f080fcf573
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Sep 1 18:49:27 2006 +0000
+
+    copy2license.pl
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@439418 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 4391d76fe1896f08b3a6d3ff8db58221b8f87cde
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Wed Aug 31 19:39:14 2005 +0000
+
+    Wrap System.out in a KeepAliveOutputStream
+    PR: 36302
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@278545 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c5e898eba1186671ae711c74497362310391b6b5
+Author: Jacobus Martinus Kruithof <jkf@apache.org>
+Date:   Sun Jun 12 18:04:16 2005 +0000
+
+    Removed unused private fields
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@278421 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a1fdc0375c482ddc175ef79cbf9f0b7d786974e6
+Author: Jan Materne <jhm@apache.org>
+Date:   Fri Jun 3 16:46:55 2005 +0000
+
+    make JavaDoc more happier
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@278400 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e7dd85e3dc092435086aca7fcc8aaa000d41496a
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Mar 14 09:02:48 2005 +0000
+
+    Explicitly disconnect the session, PR: 26757
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277914 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 704e2490d33af59280cbe23bc2fb807378fac603
+Author: Jacobus Martinus Kruithof <jkf@apache.org>
+Date:   Wed Mar 9 00:20:42 2005 +0000
+
+    removed lines with $Revision: x.y $ lines (after verification)
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277845 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 260563c19644e93bd4d2af47a4b21b054c3b0f18
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Wed Dec 1 16:58:19 2004 +0000
+
+    checkstyle
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277100 13f79535-47bb-0310-9956-ffa450edef68
+
+commit cca008dd0001628eefae7a0ebffba4815a6909f1
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Apr 14 16:13:27 2004 +0000
+
+    Capture stderr in <sshexec>, PR 28349
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276315 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c885f568369156a62e3ccb5b4b93b73b9d054443
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Tue Mar 9 16:49:09 2004 +0000
+
+    remove authors from files
+    PR: 27177
+    Obtained from: J.M. (Martijn) Kruithof
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276208 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 278781dcd669412e5e35cc95d8a96e0b2a278f50
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Mon Feb 9 21:05:47 2004 +0000
+
+    Copyright owner is The Apache Software Foundation
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276065 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 66555ca10d24bbfc55e710b9d65f809cfe713dab
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Wed Feb 4 20:38:09 2004 +0000
+
+    Remove trailing spaces in all java files
+    in order to make checkstyle happy
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276017 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ca1513552f7af7fc19de490fbe2d88adb6c993ad
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Tue Feb 3 22:44:50 2004 +0000
+
+    Switch to Apache Software License 2.0
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276010 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6e9d415e1e324600c633d070ef54a9fc9f7e597d
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Oct 29 15:02:43 2003 +0000
+
+    timeout should result in build failure.
+    
+    PR: 24170
+    Submitted by:	Edwin Steele <Edwin underscore STEELE at rta dot nsw dot gov dot au>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@275583 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e19a2de440045f14fa2da7a112b8d237bf2abf0f
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Oct 24 08:49:11 2003 +0000
+
+    Catch insanely small timeouts (i.e. it occurs before we even start to execute the command), PR 23992
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@275563 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 70802b2319e95db5b1f4bcab9247da14856a3bd8
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Aug 28 07:10:40 2003 +0000
+
+    Make <sshexec> evaluate the exit code of the remote command.
+    
+    PR: 19237
+    Based on a submission by:	Rob Meyer <rob at bigdis dot com>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@275151 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 36d84a61dc70dd6bbc8ee25d5261de5f2874e837
+Author: Conor MacNeill <conor@apache.org>
+Date:   Wed Jul 9 12:12:59 2003 +0000
+
+    Checkstyle
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274792 13f79535-47bb-0310-9956-ffa450edef68
+
+commit facf7dcfd020377b3bc69d413e5c9db27d6d20a0
+Author: Jesse Stockall <jesse@apache.org>
+Date:   Mon Apr 21 14:27:58 2003 +0000
+
+    More javadoc warning fixes
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274489 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1d1f2da180d0e6d8c4e1d6c0b73e66babe8cb27c
+Author: Conor MacNeill <conor@apache.org>
+Date:   Fri Apr 18 23:40:30 2003 +0000
+
+    Import cleanup
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274483 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c26280a07ee018a4baf824893c6cbb116d22a16d
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Apr 1 13:29:03 2003 +0000
+
+    Remove redundant classes
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274361 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 79d5993c2948c39c74568642878c2d423b857810
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Apr 1 13:09:28 2003 +0000
+
+    Compile, then commit!
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274360 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b65d193a6c080233151240e386f8ea302f64c4ac
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Apr 1 13:05:25 2003 +0000
+
+    Don't say milliseconds when you mean seconds
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274359 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e601be9dd7423c9000e6913ce2f5a785c7881b89
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Apr 1 13:01:09 2003 +0000
+
+    Make <sshexec> wait for the remote command to finish.
+    
+    Requires jsch-0.1.3 to work.
+    
+    Submitted by:	Dale Anson <danson at germane dash software dot com>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274358 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 242569903851181a6f19ca6884525649c12fa72c
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Mar 11 13:15:43 2003 +0000
+
+    New task <sshexec>.
+    
+    Submitted by:	Robert Anderson <riznob at hotmail dot com>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274233 13f79535-47bb-0310-9956-ffa450edef68

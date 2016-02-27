@@ -1,0 +1,443 @@
+commit 61678ac1a2514a9932276f8d527816a5980a94b3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Feb 25 20:41:40 2013 +1100
+
+    Fix more references to CPL.
+    
+    The phrase "Common Public License" was split across two lines in
+    our default header, which caused it to be missed during earlier
+    search/replace. Also, we did not replace the CPL URL in the
+    header with the EPL URL.
+
+commit 330fef3b0fc18af477ccea19bd278669667f31bb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 12 14:49:29 2013 -0600
+
+    Switch JRuby's CPL license to EPL.
+    
+    Governance of the CPL license was moved to the Eclipse Foundation
+    at some point in the past, and Eclipse blessed the EPL (Eclipse
+    Public License v1.0) as the successor to CPL. Because the CPL
+    contains a clause allowing transparent upgrades to future blessed
+    successor licenses, we can make the move to EPL without
+    re-contacting past contributors.
+    
+    The change in going from CPL to EPL largely just removes some
+    punitive language that apparently made many companies nervous. All
+    other language in the license remains identical.
+    
+    Several documents about Eclipse's move from CPL to EPL are here:
+    
+    http://www.eclipse.org/legal/cpl2epl/
+    
+    Note that Eclipse's move came before the blessing of EPL as the
+    upgrade path for CPL, so they had to do a bit more legal juggling.
+    With Eclipse now the administrator of CPL and with their blessing
+    of EPL as the upgrade path for CPL, all we need to do is make the
+    move.
+
+commit b8181cda909f6e42d7c0b7fffaabbe2a502f273b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jul 27 02:19:54 2012 -0500
+
+    Inline all calls to ThreadContext.getRuntime to access the field.
+
+commit f38b8e5a353873c91bf71869108502d0a3adeff1
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jul 3 15:49:45 2012 -0500
+
+    Kinda sorta fix JRUBY-6674
+    
+    Inconsistent java method/signature choosing depending on java version/platform
+    
+    There's no mechanism we can use to choose between disjoint methods
+    but we don't want to hard error out for backward compat and
+    because often disjointedness is because of multiple numeric
+    overloads. Instead, we warn when we have to choose from multiple
+    and show the name and signature we chose. This should only show up
+    once per call site per unique set of argument types, but it will
+    help diagnose improper dispatches.
+
+commit 1624d16b2f78f72b54f9dc4ed4499511e88ff18a
+Author: David Calavera <david.calavera@gmail.com>
+Date:   Wed Feb 24 23:19:36 2010 +0100
+
+    fixes: JRUBY-4351: static fields cannot be set via our JavaField implementation
+    
+    Signed-off-by: Charles Oliver Nutter <headius@headius.com>
+
+commit 4e2b1419624bbe91b047ef592effa1cc9ff62560
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Sep 24 09:30:24 2009 -0500
+
+    More refactoring, more unification of coercion logic. Also a small improvement to the monkey-patched j.u.List#sort Comparable impl.
+
+commit 7a67bd07c400f7ebfdcc09175e3fbee7f8cc3a9c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Sep 22 09:34:37 2009 -0500
+
+    Simplifications of existing coercion protocols; trying to reduce the weight of code that needs to be reworked.
+
+commit 5aee7f9d1ed05aed166f377ecc5b918c63480f04
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Fri Sep 19 18:25:53 2008 +0000
+
+    Minor edit
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7718 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 5f8365a8301f2503d3157bd874c83d4d71dcb39b
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Thu Aug 28 06:02:31 2008 +0000
+
+    Fix issue with field returning unpopulated JavaObject
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7562 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d493ef889d134df026ef91c5f3d0c3c481bf1439
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Tue Aug 19 16:02:34 2008 +0000
+
+    Fix JRUBY-1976, make Java Fields coerce things that aren't JavaObjects correctly, such as JavaConstructor, JavaMethod and JavaField.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7498 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 546d60a6f51d43cd32532ad6f7e0521b5419d8e5
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Mon Aug 18 11:04:58 2008 +0000
+
+    Even more JavaField features fixed.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7492 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit c780b07bb448a1ceccb8b7bd24fb0a4994142889
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Mon Aug 18 10:45:05 2008 +0000
+
+    Make setting of fields convert it's arguments a little smarter
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7491 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit cbfcf0c1b80b4cb7f306d268e5ca63c98732c522
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Apr 10 19:54:50 2008 +0000
+
+    Cleaning up more callback use, as well as an ugly one in RubyMethod. Also tagged existing unused callback factory entry points as deprecated. Almost there!
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6456 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit ef7a973db1cbb1b6bb04d887ea5cb92a59c9bd37
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Apr 10 02:58:38 2008 +0000
+
+    Cleaning up CallbackFactory use in BasicSocket, UNIXServer, UNIXSocket, JavaCallable, JavaField, JavaProxyConstructor, and the remaining thread library classes.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6448 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 0d03a8b4c8142cb38467edb1a7399fa8617a63c4
+Author: Bill Dortch <bill.dortch@gmail.com>
+Date:   Sat Mar 22 07:26:48 2008 +0000
+
+    Some JI cleanup, small perf improvement.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6310 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 424a1cbff5aea37f2f92cc208d29d2544f092828
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Wed Mar 19 12:21:15 2008 +0000
+
+    Annotate the rest of the Java classes with names, parents and inclusions. Also add a warning to install_doc.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6291 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit b87c62c2fd2898cf74d965c2efd4b3fbebd25110
+Author: MenTaLguY <mental@rydia.net>
+Date:   Mon Mar 17 05:42:04 2008 +0000
+
+    enable static field access in security-restricted mode
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6234 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit ab2e0770590f1be5f66c7bbf5e35a36d0c5ef881
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Mon Mar 17 00:02:20 2008 +0000
+
+    JRUBY-2273: NPE when attempting to set Java primitive field to nil
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6229 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 0f7386ed2fc784595b838436936c6292caa9d512
+Author: Bill Dortch <bill.dortch@gmail.com>
+Date:   Mon Feb 25 10:31:28 2008 +0000
+
+    Partial fix for JRUBY-2169: Round out methods in JI wrappers, and add support for 1.5 methods (for annotations, etc.).  Still more to do for JavaProxyConstructor and JavaProxyMethod (i.e., JRuby-defined subclass methods and ctors).  Includes some unit tests, could use more.
+    
+    Does not include some other needed work on low-level JI (see JRUBY-1976, for instance), or some perf work I hope to get in before 1.1.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6025 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 442afa575bd231320193a75f4c73e9000135ea4a
+Author: Bill Dortch <bill.dortch@gmail.com>
+Date:   Fri Feb 8 07:38:47 2008 +0000
+
+    Fix for JRUBY-2069.  Problems with equals() and hashCode() methods caused every instantiation of a Ruby-defined Java subclass to add a new entry to the method match cache (in the same bucket!), since returned hashCode was that of the class, new constructors were returned on every call, and equals() would never return true.  So if you created 1000 instances, then 1000 entries were searched for the 1001st instantiation, and so on.
+    
+    Fixed equals/hashCode for other types as well, should improve method-matching speed in general.  (The new versions no longer call out to the Ruby hash and == methods; these are internal classes, after all.) I still plan to rework matching_method, as there are other issues.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5862 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 95c346df5368a3f5f06fa9d14022efb85eaa6809
+Author: Bill Dortch <bill.dortch@gmail.com>
+Date:   Mon Oct 15 07:45:22 2007 +0000
+
+    Vars have landed. Does not include concurrent SymbolTable (will follow in the next day or so). Also need multi-threaded unit tests, work in progress.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4588 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a10e46cec019a3964c75ebb6b2ec648c3b449ed3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Oct 8 18:23:45 2007 +0000
+
+    Migrate Hash to annotating bindings, rename and remap all equality methods to new conventions
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4514 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit beaaeb89b6d63d6f60bcbdc2b9cb860f7e0c51c4
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Fri Apr 20 21:35:11 2007 +0000
+
+    JRUBY-814: Multiple improvements to Java integration (was: Java method get lost.) [Bill Dortch]
+    
+    Woot huge JI commit right release...Thanks Bill
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3516 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit b19d79dff7e4f080d84a94a33195c020c2b091f6
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Apr 16 18:44:04 2007 +0000
+
+    Damian's fixes for applets in JRUBY-477
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3474 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a2107e60085a5063bca76d897783a512bbd7eddc
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sun Feb 18 15:18:18 2007 +0000
+
+    JRUBY-606: Get rid of un/under-used IRuby interface
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3022 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 5c0789044de8703f41bdf83f29552ba29ad048f6
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sat Jan 27 17:31:22 2007 +0000
+
+    JRUBY-484: Reverse Iter Call relationship in AST and also pass block via Java frame versus maintaining blocks in TC
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2851 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit b390103c285ce373130c474193f69b87f98fb013
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jan 9 01:04:33 2007 +0000
+
+    Damn the torpedos...full steam ahead! Committing fixes for JRUBY-408 to get them out in the wild. There are remaining fixes to be made, but ant test passes, gems install, rails starts, handles requests, and generates.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2700 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 4dfdacd80c56018084c618f3bbab7b542653d95e
+Author: David Corbin <dcorbin@users.sourceforge.net>
+Date:   Sat Oct 8 13:07:06 2005 +0000
+
+    Introduced IRuby interface for Ruby runtime object.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1798 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 51cdfaff80180fd70a2ac468f26c01b36b362c3c
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Wed Sep 7 20:53:43 2005 +0000
+
+    Backing out lazy proxy instance method creation (alias and respond_to? problems)
+    Refactor original javasupport.rb:
+    - Remove as many extra java_class variables as possible to reduce confusion
+    - Adding methods, variables, and constants to proxy class all basically add these using the same technique.  We used to use several different ways.  This should make things a little easier to read
+    - Define high-level conversion methods Java.ruby_to_java and Java.java_to_ruby.  These are like primitive_to_java (and its couterpart), but they additionally wrap the result or grab the java_object.  These were mainly added to aid readability.  Next point release we will refactor all conversion methods to some formalized set
+    - Change semantics of Java::JavaClass#get_fields and Java::JavaClass#get_declared_fields to return the fields and not the names of the fields.  Javasupport prefers the fields and semantically this seems the path of least surprises
+    - Add in old optimization to curry method of instance and class methods when only one Java method of a particular name exists.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1758 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 36ec84bb4bc5dbd391c6ddb676b2faeb380f0539
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Sep 6 14:57:59 2005 +0000
+
+    merging exception-removal changes to HEAD; EvaluateVisitor changes left on branch for now
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1757 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit ca6b16e996ea9af83ce593594b9c69b9364a9924
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sun Aug 28 13:29:33 2005 +0000
+
+    Kill RubyClasses (core class/modules now initialized in Ruby)
+    Store all top-level classes as constants within Object (fixes things like Object.constants) instead of second datastore
+    Always load all core classes (remove lazy loading)
+    Convenience function RubyModule#getClass added
+    Convenience function Ruby#getObject added
+    JavaObject and JavaArray are now Java::JavaObject and Java::JavaArray to be consistent
+    classes defined under another class/module are now defined in the parents creation routine
+    Removed some masking warnings
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1739 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 7a83c48af56081c1c2132111d535f28d10cf3afb
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Fri Dec 31 20:55:52 2004 +0000
+
+    Update license to GPL/LGPL/CPL
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1574 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 8081fdc23459ab3e7b62155a53b7f18b561f93c1
+Author: Stefan Matthias Aust <sma@3plus4.de>
+Date:   Sun Dec 12 14:55:16 2004 +0000
+
+    removes type parameter from CallbackFactory.getXXXMethod()
+    and removes CallType from AbstractCallback and ReflectionCallback
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1476 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 4f41d922891b74a9c19be465925accadbd7bc199
+Author: David Corbin <dcorbin@users.sourceforge.net>
+Date:   Sun Dec 12 14:19:54 2004 +0000
+
+    Changed JavaClass to inherit from JavaObject
+    Changed argument conversion to recognize class proxies as a special case.
+    Extended reflection support to give access to private methods/fields/constructors.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1474 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 870e1da9b41bfdbae259e1fc5f18fc8b76686998
+Author: Stefan Matthias Aust <sma@3plus4.de>
+Date:   Sun Dec 12 09:25:42 2004 +0000
+
+    removes the instance variable runtime in RubyObject
+    reintroduces the variable in RubyNil, RubyBoolean, and RubyClass
+    delegates all calls to Fixnum,Array,Boolean,String,ArgumentError,IndexError and TypeError.newXXX to Ruby
+    fixes all imports
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1469 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit b1562832239a5e5d73b1ee98dade51601e343257
+Author: Jan Arne Petersen <jpetersen@uni-bonn.de>
+Date:   Tue Nov 16 20:30:04 2004 +0000
+
+    Rename references of org.jruby.Ruby from ruby to runtime.
+    Remove unused methods from the IRubyErrorHandler interface.
+    Add "same" method to RubyObject to fix "equal?"
+    Fix JavaObject cache.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1408 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit e40beaae6e6a1503c01e49f17ec4eea41bfc98c7
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Mon Oct 11 15:16:01 2004 +0000
+
+    Temporary hack for non-public interface classes to be accessible (see TODO comment next to hack for more info)
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1335 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a16b4a3596853f2153bfe0df0a8cbe54382d5d58
+Author: Anders Bengtsson <ndrsbngtssn@yahoo.se>
+Date:   Sat Feb 28 23:00:58 2004 +0000
+
+    Removed a lot of old IndexedCallback stuff.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1254 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit f28356ef15a613e347d13729ec357775ebc77aae
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Thu Feb 19 15:42:10 2004 +0000
+
+    Remove index callbacks from javasupport
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1241 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit e7f721acfb6dd4252c6b7c20c7c1139b4a3a8e2f
+Author: Anders Bengtsson <ndrsbngtssn@yahoo.se>
+Date:   Thu Jan 8 18:32:22 2004 +0000
+
+    Moved Callbacks to their own package.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1209 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 50dbd2dff720e7fed45063fc6812e380b7aa22f3
+Author: Anders Bengtsson <ndrsbngtssn@yahoo.se>
+Date:   Sat Oct 26 18:09:38 2002 +0000
+
+    A little better error messages, plus other cleanups.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1035 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit cbbff215ddc8c168eaed4bd8d49160c696d116cf
+Author: Jan Arne Petersen <jpetersen@uni-bonn.de>
+Date:   Sat Sep 21 16:16:37 2002 +0000
+
+    - Add JavaObject cache
+    - Add simple Interface support
+    - Update swing examples.
+    - Fix some bugs.
+    - Some refactorizations.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@876 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit ba4e2d21a6a317cc6d60729e1a47a64ceef8b0d7
+Author: Anders Bengtsson <ndrsbngtssn@yahoo.se>
+Date:   Fri Sep 20 12:54:15 2002 +0000
+
+    Removed constants special-case for javasupport. A constant is just a 'static final' field.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@868 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 0bc88fb86493e033aa75ca7bb320e126431243cd
+Author: Anders Bengtsson <ndrsbngtssn@yahoo.se>
+Date:   Fri Sep 20 11:10:34 2002 +0000
+
+    Getting and setting Java instance variables done.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@867 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit edea7c91f6476de37e8d697a00f02b60f1a05a7a
+Author: Anders Bengtsson <ndrsbngtssn@yahoo.se>
+Date:   Thu Sep 19 23:55:11 2002 +0000
+
+    Introduced Java::JavaField.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@866 961051c9-f516-0410-bf72-c9f7e237a7b7

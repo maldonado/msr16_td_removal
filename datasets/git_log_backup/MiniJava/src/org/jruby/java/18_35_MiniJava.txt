@@ -1,0 +1,278 @@
+commit bfe803d21114168d332e566c5ac2dbf19a4756ef
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 22 22:24:34 2009 -0500
+
+    Add ability to declare signatures for Ruby methods, for Javafication.
+
+commit a6835b95c785942f97ac3fcebab2d33d20cf63d9
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Apr 24 08:19:06 2009 +0200
+
+    First fix to eliminate reflection use against anonymous interface-impl classes.
+
+commit ba40f9ccdc097b634e0f0aa092ffec45fe31a729
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Feb 19 05:40:27 2009 +0000
+
+    Fix for JRUBY-3158: Wrong ruby methods called on object of same class from Java code.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9245 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 27d262b3c5767f7279d195b24f951e622311d5b2
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Feb 18 23:15:18 2009 +0000
+
+    Spec for already-fixed JRUBY-3262: JRuby 1.1.6 regression: ClassFormatError if Ruby superclass of Ruby class implements super-interface of Java interface
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9239 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 761eabb2fb2b71978b56db0d8882dbd1167afbc4
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 10 02:01:17 2009 +0000
+
+    Fix and specs for JRUBY-2999: Regression: Inheriting method with same name from two Java interfaces causes Java classloader error
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9083 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit f12ae0527552ae34449aa25ca6a9d30014c9bb38
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Jan 11 20:31:40 2009 +0000
+
+    Large refactoring of JavaMethod subtypes to fill out all permutations and try to guarantee no more than a single hop through generic code to unique code for almost all paths.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8706 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit c0ba0297e3482fdb61bffe234487488640cafa49
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Oct 31 16:11:22 2008 +0000
+
+    Add a package to the interface impl classes. Perhaps will help JRUBY-3100, but unlikely. At the very least, it's more kosher.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7982 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 5c3afd0733f08c65cc579631de813b56b3bfedd8
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Oct 31 01:18:35 2008 +0000
+
+    Update method-field updating logic in interface implementations to clean up monitor logic and wrap it in try/finally appropriately.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7974 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a4387186d88b39dffa6bc13c3da3341da81629ac
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Oct 16 21:19:15 2008 +0000
+
+    Fix for JRUBY-2993: implementing java class causes exception
+    
+    The problem here was that implementing an interface with multiple 64-bit primitive arguments was corrupting the stack. Specifically, it was always doing "load" instructions at 32-bit boundaries (incrementing the load index by 1 each time). For a single value this appeared to work ok, because it increments the index once and then does no further local variable access. But with two values, the second lload or dload loads from the middle of the first value, resulting in the register error. I fixed it by making sure the index += 2 when the current load is an lload or dload.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7883 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 5d89d09d7771155c4a44276987780ecfa278a4c2
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Oct 11 06:04:04 2008 +0000
+
+    Fix for JRUBY-2965: Sparodic Linkage Error On Startup
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7863 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a36d3e417597940401bb31f34ee03d2879f99d03
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Sat Aug 16 13:42:03 2008 +0000
+
+    Fix JRUBY-2928, the same fix as for equals applied to hashCode and toString
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7477 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 133abfcab61c318e9abccf53806dda84a8e67dc1
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Sat Aug 16 12:43:53 2008 +0000
+
+    Fix JRUBY-2927 and enable the test case for it.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7476 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 343af19a25b2032d2e6ca9ab7f8205d534f3afa7
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Sat Aug 16 07:05:40 2008 +0000
+
+    Fix for JRUBY-2926. Make equals short circuit to Object.equals for interfaces
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7474 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 14db08cb9564260000aedc22596f1ff2d6bb86db
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Aug 8 20:23:07 2008 +0000
+
+    Additional tweaks to the interface impl name searching; if it's a property, don't add isMyFoo? and is_my_foo?. Also moved logic to JavaUtil so I can use it to standardize the name mapping in JavaClass. That's next.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7415 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 98fa63591e33b0b1c77bad806e50b7c5795135e1
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Aug 8 19:04:29 2008 +0000
+
+    Fixes for new flexible interface impl rules:
+    * Predictable ordering for rubified names
+    * Question-marked Java name was not being searched
+    * Specs for ordering and all name variants
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7414 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 5e4668b3ea6a47dfd83de4201f79401dc8509c0a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Aug 8 08:51:01 2008 +0000
+
+    Enhancement for JRUBY-231, allow implementing JavaBean-like interfaces with attr* methods.
+    
+    Actually this commit includes logic to allow get/set methods to be implemented with their property names, boolean properties to be implemented with their question-marked versions, and other boolean methods to be implemented with their question-marked versions, all either Java-case or Ruby-case. Whether this full set of features will remain through 1.1.4 is unknown, but it's there for the moment.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7413 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit fd4c02bbb8116225531ea44564a556ef671f26c7
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Aug 8 07:18:42 2008 +0000
+
+    Fix some bugs in underscored interface implementation, with specs.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7412 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 0828bab4858d640bd25355305702207dffc24d9b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Aug 8 06:15:37 2008 +0000
+
+    Fix for JRUBY-2903, allow interface methods to be implemented with underscore-cased names.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7411 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 14759c6a5254354d86b68ded24680f09aaca207d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Jul 24 02:40:05 2008 +0000
+
+    Fixes and specs for JRUBY-2863, inherited interfaces not getting superinterface methods implemented in Ruby.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7278 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 3537998daad100aad26f403c803dc8ba5345aa23
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 23 23:19:24 2008 +0000
+
+    Object arguments passed from Java into Ruby-based interface implementations were not being wrapped in their ultimate RubyObject, and were instead left as JavaObject and unusable. Modified the interface impl logic and added specs for interface impl of object, primitives, string, nulls, and booleans plus calling through a Java type and back into the Ruby impl.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7277 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 70cf58217e38bd9606ff30245cb569fee20e0090
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jul 22 18:52:55 2008 +0000
+
+    Second phase of interface impl refactoring, reuse minijava code to provide a dynamic-dispatch-free path from the implemented methods (now all generated into a real class) directly to the DynamicMethod they go with. Also eliminated the ruby-based method_missing used for Proc coercion to interfaces. Other than cleaning up code, reducing bytecode generated, and improving coercion, it's mostly done.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7264 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 6af2c161880235f73a1218ae95bbef9cd73b5289
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri May 23 06:50:15 2008 +0000
+
+    * Fix for JRUBY-2551, proxy-subclass-thingies not using getDeclaredConstructors and therefore no ability to override protected constructors from parents.
+    * Also twiddled some MiniJava code that didn't make use of the fact that getConstructors only returns public, and still checked public for each.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6755 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a24dee31791ca84cb28bead262b7425b37df5f6e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon May 19 18:42:52 2008 +0000
+
+    * Cleaned up interface implementation by splitting into define and populate methods (minijava)
+    * Modified search chain for unimplemented interface methods to eventually call method_missing
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6738 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 0ed046275d8003633e3ac1b4cebdbd0d7ac4bf8e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon May 19 08:08:15 2008 +0000
+
+    * Added interface implementation to minijava
+    * Added a sample of interface implementation for minijava
+    * Updated samples of swing and arraylist for minijava (new shorter method signatures)
+    * Some minijava source cleanup
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6730 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 9012dc508ac80a93d23e6be3e90ac8590087a15c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon May 19 02:13:30 2008 +0000
+
+    * Add a warning to minijava and clean up/restructure code a bit.
+    * Add sample code for minijava.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6729 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit fe4e7111ce9635e307ebc85d0834dc5ee264ba9e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat May 17 06:13:32 2008 +0000
+
+    Add support for importing the primitives' Class representations, to make it easier to work with primitives and primitive arrays.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6725 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 037378be1e43c592bdba989e1d6f2d428920488f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat May 17 05:29:01 2008 +0000
+
+    * Fix classloading in minijava import so it uses JRubyClassLoader rather than the ClassLoader that loaded JRuby (which is often the BOOT classloader!)
+    * Add preliminary support for array types to minijava
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6723 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit ea1d62ff87ad41a4ada3733e39a616d5401075db
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat May 17 04:08:16 2008 +0000
+
+    * Make all additional methods bound into core classes by minijava use faster JavaMethod-based methods
+    * Eliminate "as" method in favor of a "to_java" variant that takes a Java class arg
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6722 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 37b9bfbb939feac909e92ca9493dfe26588ec87e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat May 17 02:49:31 2008 +0000
+
+    * Added specific-arity paths to method handles and minijava wrappers.
+    * Cleaned up, dried up minijava a bit.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6721 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 290926955a7ad4807910b60cc698c9dbf6a09d5a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri May 16 23:56:41 2008 +0000
+
+    * Add a new prototype handle generator that mimics java.lang.reflect.Method.invoke fully-boxed.
+    * Wire minijava into handle generator for all method handles.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6720 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 3bb6b82f878bb1fabc16c2155d3cc814c5c0677c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri May 16 23:54:50 2008 +0000
+
+    Early work on a new Java layer that's lighter-weight, more "raw", and more explicit.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6719 961051c9-f516-0410-bf72-c9f7e237a7b7

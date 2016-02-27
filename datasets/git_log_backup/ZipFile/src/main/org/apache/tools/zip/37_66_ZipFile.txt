@@ -1,0 +1,440 @@
+commit 362376d624ba86f6a8f54b47806ac4b40f74df9f
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Jun 4 04:39:26 2013 +0000
+
+    Merge handling of duplicate entries from Commons Compress' ZipFile - needed to fix PR 54967
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1489286 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 82641d77bb4d421ae6190f0b99484f668ebc2106
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Sun Jan 27 16:36:52 2013 +0000
+
+    don't search beyond the start of the archive
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1439115 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1a4946cfd6c88cd17f387b99634ab859dbbea692
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Sun Jan 27 09:58:16 2013 +0000
+
+    improve performance when reading non zip64 zip files, merge from commons compress, based on patch by Robin Power
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1439044 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 98f306fa8431c78926e42cec5801c752747e016e
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Sat Jan 5 20:03:44 2013 +0000
+
+    re-use a bunch of temporary arrays - merge from Compress
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1429370 13f79535-47bb-0310-9956-ffa450edef68
+
+commit dee95e3acc5154aee03ff5f91f9a56426ae79f3f
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Jun 4 16:35:06 2012 +0000
+
+    merge Zip64 support from Commons Compress
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1346025 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6b7bc9e53500d2347a555dea2988788a922f3101
+Author: Jacobus Martinus Kruithof <jkf@apache.org>
+Date:   Sat May 26 13:33:54 2012 +0000
+
+    Bug 53291 - Several spell checker findings in apache ant 1.8.3 documentation
+    -- api --
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1342897 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 0e150acfd40a3e5bec429895d62aa6cb70035670
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Dec 5 16:32:30 2011 +0000
+
+    ZipFile doesn't work properly for archives using unicode extra fields.  Port of fix for COMPRESS-164 by Volker Leidl
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1210522 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 7d02a9f6cf8ffa3710f69d9a9041a3bc78aa21b2
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Aug 5 07:33:25 2011 +0000
+
+    there is an off-by-one error in the loop that searches for the 'end of central directory record'
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1154107 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c4c9d2552b9c8ce227f600205c93ae6dabd5036b
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Jul 13 13:44:20 2011 +0000
+
+    clean up Inflater instance as some JDKs won't do it for us.  PR 42696.  Submitted by Mounir
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1146020 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d3e00e275a0cb053f2a7020c1c45f94804fc9065
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Feb 19 08:47:43 2010 +0000
+
+    EFS in APPNOTE.TXT stands for 'Early Feature Specification' so our usage of it as 'use the general purpose field to signal UTF8' is wrong.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@911741 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6cd0de1022faed419783119405f458e44a1ac663
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Mar 3 13:18:45 2009 +0000
+
+    Parse central directory part of ZIP extra fields.  PR 46637
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@749610 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 752d64fa43db2172327771ba4d36bee3f2d3b49a
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Mar 2 17:17:09 2009 +0000
+
+    improved zip-encoding support for JDK < 1.5, submitted by Wolfgang Glas, merge from commons-compress
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@749368 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a8c2ab18688af2c73127f69ab1a1855241bd282f
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Feb 27 17:00:59 2009 +0000
+
+    provide options for enhanced encoding support in ZIP, document it.  Many thanks to Wolfgang Glas who provided most of the test input as well as patches the new support is based on.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@748593 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8a183a492de7fee445cada4a051a3d41a85bbdb4
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Feb 26 13:38:23 2009 +0000
+
+    optionally read/write InfoZIP unicode fields, merge from commons-compress
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@748147 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 545ff63ab763c8bb5b4a1b2f0aa98e8526518a07
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Feb 23 13:12:16 2009 +0000
+
+    use the desired encoding to decode
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@747002 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8264511a27c63509a8201c2a4861eea5b60c4023
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Feb 23 09:08:11 2009 +0000
+
+    use nio for decoding of names - merge from commons-compress rev 746933
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@746934 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3cb22aa1c607dcc42ccdf3249be2c26e3585c6f5
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Feb 19 17:19:23 2009 +0000
+
+    Support more modern encoding flag where archives signal filenames as UTF-8.  Based on submissions by Wolfgang Glas to commons-compress and TAMURA Kent to Ant.  PR 45548.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@745930 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 817fd319985275076c36a7029f5cbe4983f98d49
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Feb 5 12:30:01 2009 +0000
+
+    fix a bunch of findbugs reported problems in the zip, tar and bzip2 classes.  PR 46661
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@741089 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 601cdf67ba76a5571e5c8e9256563d8e080f1c08
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Jan 29 13:22:58 2009 +0000
+
+    Make sure ZIP archive is closed even when a RuntimeExpection occurs.  PR 46559
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@738853 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8d48bc67994f396712c0b6552ebd857d4f52f521
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Jan 29 12:48:35 2009 +0000
+
+    Move the zip package into a Java 1.4 world
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@738844 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 9b4b922d2c19a5f441625a26941a6024341c8feb
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Aug 8 11:36:43 2008 +0000
+
+    fail early if ZipFile is applied to a non-ZIP archive.  PR 45463.  Suggested by Alison Winters.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@683942 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 7d174c342609636a70ce2f26fb50d8ea8077fd7e
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Jul 18 10:13:28 2008 +0000
+
+    Made up my mind on the fix for PR 35000.  Empty != broken, so make it two separate use cases.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@677870 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 4a1038e342b54a6684ba10135604d94fb8c5b765
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Jul 17 14:23:44 2008 +0000
+
+    an empty central directory is fine for an empty archive
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@677592 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 80e8b2977b7343df0b7fb1b6da7fa34dbd7e0b40
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Jul 17 13:14:30 2008 +0000
+
+    an archive with an empty central directory is broken.  PR 35000.  Submitted by Thomas Aglassinger.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@677575 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 4c69b551ec82319466630d5d268e4b840cd0b909
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Thu Aug 23 17:58:32 2007 +0000
+
+    magic numbers
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@569089 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8d9358d36933cdd6c9a4dfe94cb07513fe846c75
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Tue Aug 21 17:21:45 2007 +0000
+
+    checkstyle: some magic numbers
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@568201 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 70c67a8e781ad050a36e41b923ebff0cc564d287
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Sat Nov 18 17:57:58 2006 +0000
+
+    checkstyle
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@476569 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 2e897819a83981a1f4de2e1cc72e33f080fcf573
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Sep 1 18:49:27 2006 +0000
+
+    copy2license.pl
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@439418 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 32f2e37a95c6a4e4f1fa7972d4040dbc2c3c9b3d
+Author: Stephane Bailliez <sbailliez@apache.org>
+Date:   Sat Oct 22 17:58:42 2005 +0000
+
+    JDK 1.2 is EOL and documentation is no more available. Point to JDK 5 API
+    PR: 37203
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@327676 13f79535-47bb-0310-9956-ffa450edef68
+
+commit fbb9886634198d8377104bef9ec697fadeb134df
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Mon May 23 19:51:58 2005 +0000
+
+    ResourceCollections
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@278337 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b977b55da647e2c09596065ab1e2b6c7dd2820ef
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri May 13 08:09:22 2005 +0000
+
+    <unzip> and <untar> could leave streams open.  PR 34893
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@278254 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 704e2490d33af59280cbe23bc2fb807378fac603
+Author: Jacobus Martinus Kruithof <jkf@apache.org>
+Date:   Wed Mar 9 00:20:42 2005 +0000
+
+    removed lines with $Revision: x.y $ lines (after verification)
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277845 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 5e049f635b8b55f64217aa350e4958654330453f
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Thu Jan 6 18:29:38 2005 +0000
+
+    checkstyle
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277305 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 9fdb1c85ba0d2fab36ce8f3b0563f393d955ac9d
+Author: Jacobus Martinus Kruithof <jkf@apache.org>
+Date:   Sun Dec 12 20:54:42 2004 +0000
+
+    Minor update to allow compilation on 1.2.2 again:
+    cal.getTimeInMillis(); is not available.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277180 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a05d1f12196d34b23d4ab80c3598f6fb63410ac5
+Author: Stephane Bailliez <sbailliez@apache.org>
+Date:   Sat Dec 4 00:03:50 2004 +0000
+
+    First attempt at optimizing the zip code to have decent performance
+    The performance problem was mainly due to the entry insertion in
+    the hashtable where all hash code were equals in the hashtable.
+    I also removed a lot of unecessary Zip(Long|Short) object creation by
+    adding static methods and suppressed a hashtable.
+    
+    More can be done, but I tried not to break the interface and have as less code
+    as possible. The testcase attached in the bug report show that it is now 15% slower than Sun native code and 20% faster than Jazz libs.
+    
+    Now watch for Gump...
+    
+    PR: 31930
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277122 13f79535-47bb-0310-9956-ffa450edef68
+
+commit fdc903238f666ea1f4f60385d40463c8ca3494d2
+Author: Steve Loughran <stevel@apache.org>
+Date:   Sat Oct 30 19:44:02 2004 +0000
+
+    Patch in PR# 21996
+    add a flatten to unzip.
+    I actually only patched in the mapper nested element support; with that the flatten attribute can only introduce inconsistency (what if you spec a mapper and flatten=true).
+    And the patch was modified to keep the attributes private, with a getMapper() operation for subclasses (like untar) to get when needed.
+    Did a bit of cleanup -especially of the unzip tests- while at it.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276981 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 642befb440f22351cef750a8d502b873c74025f5
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Tue May 18 08:14:49 2004 +0000
+
+    Javadoc syntax error corrections
+    PR: 28998
+    Obtained from: Jesse Glick
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276466 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c885f568369156a62e3ccb5b4b93b73b9d054443
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Tue Mar 9 16:49:09 2004 +0000
+
+    remove authors from files
+    PR: 27177
+    Obtained from: J.M. (Martijn) Kruithof
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276208 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 278781dcd669412e5e35cc95d8a96e0b2a278f50
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Mon Feb 9 21:05:47 2004 +0000
+
+    Copyright owner is The Apache Software Foundation
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276065 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 66555ca10d24bbfc55e710b9d65f809cfe713dab
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Wed Feb 4 20:38:09 2004 +0000
+
+    Remove trailing spaces in all java files
+    in order to make checkstyle happy
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276017 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ca1513552f7af7fc19de490fbe2d88adb6c993ad
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Tue Feb 3 22:44:50 2004 +0000
+
+    Switch to Apache Software License 2.0
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276010 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d050f6a18c63fdb1747377e251e66a14b24c3b08
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Wed Aug 13 15:14:31 2003 +0000
+
+    remove enum variable
+    PR: 22336
+    Obtained from: Robert Stupp, using Jan Mat��rne's checkstyle check
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@275076 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 2590a640ce546d8fdce8dc864f929b53e6bb1138
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Jul 24 14:20:56 2003 +0000
+
+    Remove unused fields
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274936 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 66b5bf27b7d561fbd5c71e408ed5fca66a8aa788
+Author: Conor MacNeill <conor@apache.org>
+Date:   Tue Jul 15 14:54:15 2003 +0000
+
+    style
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274824 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 94ef2fbb4b85d79feddb8c66bd1f1ec968147e34
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Jul 7 13:50:57 2003 +0000
+
+    Make checkstyle a little happier.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274784 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6dea74459d271c8b3d8c9ae6d293246639519fe7
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Jul 3 15:38:39 2003 +0000
+
+    Improve algorithm that searches for the central directory - don't get fooled by signatures appearing inside payload.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274750 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d5570e5c6548d2b4c04be749c1f5025c50f5d59a
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Jul 3 14:59:59 2003 +0000
+
+    Calendar.HOUR is different from Calendar.HOUR_OF_DAY
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274748 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ad9c15103d9a4829b0c16c5187066008efd70f9b
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Jul 3 08:30:11 2003 +0000
+
+    Finish implementation of ZipFile, use it in Expand (AKA <unzip>).
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274743 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ec5e77ad322f8dc0d29990bd0dbe9375a71082f7
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Jul 2 14:36:14 2003 +0000
+
+    Initial support for reading of ZIP files - uncomplete as you cannot
+    get an InputStream to the ZipEntrys yet.
+    
+    Will be needed to fix PR 10504 as well as to preserve permissions when
+    updating an archive (no PR yet).
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274742 13f79535-47bb-0310-9956-ffa450edef68

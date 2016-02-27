@@ -1,0 +1,29 @@
+commit 32ef1f04451703c8269d4eab74598bd12b8f9a28
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jul 6 14:32:53 2015 -0500
+
+    Do not persist filename in IR; require it when loading.
+    
+    Fixes #3109
+    
+    Because compiled scripts may be moved around or loaded from
+    locations different than when they were compiled, we must pass
+    filename into the decoding process to allow the script to reflect
+    the new filename.
+
+commit 1494436ea6d65ec5f884bb7a87f5c2e06a21f9ee
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jul 6 13:42:12 2015 -0500
+
+    Get AOT-compiled scripts loading properly again. Fixes #3018
+    
+    Note that there's still one missing piece, as detailed in #3109:
+    we are not updating loaded scripts with their actual filename. The
+    original filename they were compiled from is still there, which
+    may cause problems with require_relative and friends.
+
+commit 28c6fbc4e883bc1c9e9242d1da1cb2b785f55339
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 3 12:46:45 2013 -0500
+
+    Move to @mkristian's proposed layout, with some modifications.

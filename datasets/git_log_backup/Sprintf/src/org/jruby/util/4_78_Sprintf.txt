@@ -1,0 +1,440 @@
+commit 61678ac1a2514a9932276f8d527816a5980a94b3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Feb 25 20:41:40 2013 +1100
+
+    Fix more references to CPL.
+    
+    The phrase "Common Public License" was split across two lines in
+    our default header, which caused it to be missed during earlier
+    search/replace. Also, we did not replace the CPL URL in the
+    header with the EPL URL.
+
+commit 330fef3b0fc18af477ccea19bd278669667f31bb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 12 14:49:29 2013 -0600
+
+    Switch JRuby's CPL license to EPL.
+    
+    Governance of the CPL license was moved to the Eclipse Foundation
+    at some point in the past, and Eclipse blessed the EPL (Eclipse
+    Public License v1.0) as the successor to CPL. Because the CPL
+    contains a clause allowing transparent upgrades to future blessed
+    successor licenses, we can make the move to EPL without
+    re-contacting past contributors.
+    
+    The change in going from CPL to EPL largely just removes some
+    punitive language that apparently made many companies nervous. All
+    other language in the license remains identical.
+    
+    Several documents about Eclipse's move from CPL to EPL are here:
+    
+    http://www.eclipse.org/legal/cpl2epl/
+    
+    Note that Eclipse's move came before the blessing of EPL as the
+    upgrade path for CPL, so they had to do a bit more legal juggling.
+    With Eclipse now the administrator of CPL and with their blessing
+    of EPL as the upgrade path for CPL, all we need to do is make the
+    move.
+
+commit 61239b373024fca80a5b05f746ed4f1955dcdbad
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue May 15 18:41:32 2012 -0500
+
+    Fixes for TestM18N#test_sprintf_s
+
+commit 224ff97e26c0ebd361a03fb1f066631941d45f1c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue May 15 18:34:10 2012 -0500
+
+    Fix JRUBY-6582
+    
+    We were missing encoding negotiation that MRI does during % with
+    string args.
+
+commit a57a324c7fface8ad1ef9592f11c6e8a77505dfe
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Mar 9 17:06:30 2012 -0600
+
+    More BasicSocket work.
+    
+    * Add Socket::Option class
+    * Rewrite getsockopt
+    * Add option-getting to SocketType
+    * Propagate jnr-constants enums more places
+
+commit 5ca2c954e0bedf1ae9b7a9fce7ed0389c2944039
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Feb 20 18:09:03 2012 -0600
+
+    Fix JRUBY-6476: org.jruby.util.Sprintf.rubySprintfToBuffer causing thread locks
+    
+    The OpenJDK impl of NumberFormat has a Hashtable it uses to cache
+    per-locale format strings. Unfortunately, this represents a
+    bottleneck if you have many threads all hitting NumberFormat at
+    once. My fix is to set up thread-local map from Locale to
+    NumberFormat, saving an instance and avoiding the locks and lookup
+    logic.
+    
+    The numbers say it all:
+    
+    before:
+    
+    system ~/projects/jruby $ jruby bench/bench_sprintf.rb
+              '%g' % 1.0   641602.5 (±7.2%) i/s -    3178900 in   4.987003s (cycle=9575)
+    4x contended '%g' % 1.0
+                           144650.4 (±33.7%) i/s -     586908 in   4.908971s (cycle=137)
+    
+    system ~/projects/jruby $ jruby bench/bench_sprintf.rb
+              '%g' % 1.0   641014.2 (±6.8%) i/s -    3183627 in   4.995059s (cycle=10303)
+    4x contended '%g' % 1.0
+                           143091.6 (±33.9%) i/s -     581298 in   4.908607s (cycle=139)
+    after:
+    
+    system ~/projects/jruby $ jruby bench/bench_sprintf.rb
+              '%g' % 1.0  1835549.1 (±9.1%) i/s -    9061846 in   4.985225s (cycle=8306)
+    4x contended '%g' % 1.0
+                           248249.2 (±20.8%) i/s -    1086442 in   4.904267s (cycle=142)
+    
+    system ~/projects/jruby $ jruby bench/bench_sprintf.rb
+              '%g' % 1.0  1628054.7 (±9.8%) i/s -    8017965 in   4.986371s (cycle=18955)
+    4x contended '%g' % 1.0
+                           253320.0 (±29.5%) i/s -    1015344 in   4.892082s (cycle=144)
+
+commit a75ddbea79e231d51b07bfdfa5d35030ac256b6e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Feb 15 02:24:36 2012 -0600
+
+    Additional fixes for JRUBY-6434
+    
+    * Make sprintf pass hash through without wrapping in array
+    * Fix totally broken KeyError logic
+    * Handle %<foo><bar> ArgumentError like MRI
+    * Mask more logic behind is1_9 check
+    * Remove exclude for MRI TestSprintf#test_named
+
+commit 81e155a3b7da2dfd0b778a5116235e7166e654d6
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Feb 13 14:02:01 2012 -0600
+
+    Additional minor tweaks for JRUBY-6434
+    
+    * Propagate format string's encoding into key names
+    * Eliminate useless Ruby-land sprintf def
+    * Eliminate deprecated call from RubyKernel.printf
+
+commit ff481bf0f489ed4b6ce90dd533f1cb3eb62d2510
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Feb 13 12:57:04 2012 -0600
+
+    Fix JRUBY-6434
+    
+    sprintf does not support name references, like sprintf('%<xyz>s', :xyz => 'abc')
+    
+    * Added %<foo> support to Sprintf
+    * Moved %{foo} support from Ruby kernel to Sprintf, since it was
+    incorrectly matching %<foo> stuff (and was brittle anyway)
+
+commit b1f4bfbfad846adebfe3d95d6b17df79594f498a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Jul 14 02:01:39 2011 -0500
+
+    Fix regression from JRUBY-5918 fix.
+
+commit 536935c432bba616d648bdca87abdcebbd3edf50
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 13 04:44:09 2011 -0500
+
+    Fix JRUBY-5918: Float marshal depends on locale
+    
+    * Marshal did not pass a specific locale to Sprintf.
+
+commit e055dbe2e6a793916c7a8383d5a6f6aa0d1e6e7f
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Thu Oct 14 15:51:53 2010 -0400
+
+    Formatting change. Avoid dangling 'if' clause on a line by itself. Also, reformat multi-line boolean conditions so that it is clearer that they indeed span multiple lines.
+
+commit d827f9f4671cdc9f08cf512c495f4e217d4941d3
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri Sep 3 14:26:32 2010 -0500
+
+    Some jet-lagged drunken trivial nb-shutting up stuff (and some tab to whitespace conversion)
+
+commit 5d90f1b219db63a9fb420a8859ff6bb672851e38
+Author: David Calavera <david.calavera@gmail.com>
+Date:   Thu Aug 19 20:42:24 2010 +0200
+
+    fix JRUBY-5022: [1.9] Kernel.Float can handle hexadecimal numbers as strings.
+    All specs fixed for String#% in 1.9
+
+commit 5785cf31abb6eb8a0a28d66798681c5e33b46057
+Author: David Calavera <david.calavera@gmail.com>
+Date:   Thu Aug 19 18:06:26 2010 +0200
+
+    [1.9] String#% supports binary, octal and hex formats for negative numbers
+
+commit 5c1e9ca3a28e46a3788b8c2cbacdd6f0ed79f453
+Author: David Calavera <david.calavera@gmail.com>
+Date:   Wed Aug 18 23:20:34 2010 +0200
+
+    [1.9] String#% supports negative integers using %d, giving priority to `-`
+
+commit aa137041ae915e84166868bf6eb964d1a6d7a4d4
+Author: David Calavera <david.calavera@gmail.com>
+Date:   Sat Jul 3 16:52:40 2010 +0200
+
+    fixes JRUBY-4802: sprintf rounds 5 down instead of up
+
+commit 1fdd7824993d786bcba399d5d4a59a4f2b9ae0aa
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Wed Dec 30 13:11:54 2009 -0600
+
+    Clean up some dead code and change some convert class names in prep for JRUBY-3709
+
+commit 2f3802343d0de9440a71e099002d3b66f51c0a51
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Dec 23 00:40:00 2009 -0600
+
+    Use accessors for those pesky ByteList fields and update bytelist.jar to a current version with accessors and deprecated fields (for compile warnings and because we'll want to privatize them some day).
+
+commit 8ea9c001fdde4ee06d501fe2c1b8054f92299ecd
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Thu Aug 6 10:51:55 2009 +0200
+
+    Convert almost all of Convert
+
+commit da0fdfeab2d6639be42bc787f11456a6d998e460
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Wed Aug 5 21:41:08 2009 +0200
+
+    Remove some tags and make conversion from bytes to longs/bigintegers use the same methods as MRI. First part of converting Convert.
+
+commit a814643908b2dfb8fcaa5641e031e33afb7d7823
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Feb 23 08:46:43 2009 +0000
+
+    Fix my breakage of Bignum formatting.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9274 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 5276187cd178537c8b30c2c063dede410dc92a59
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Feb 23 08:18:12 2009 +0000
+
+    String#% does not appear to prepend prefix for zero. Fixes test_MOD in 1.9 test_string.rb.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9273 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit e2f57b792fe2fc5be30c2d2b78a48cd70b543d7e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Feb 5 05:40:36 2009 +0000
+
+    Add additional checks to "g" formatting in Sprintf to properly display -0.0. Fixes regression from Float#to_s fixes.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9009 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit c7b80cf6bda0eec6b20ff98e1786078067e18ce7
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jan 20 08:28:06 2009 +0000
+
+    Fix by Joseph LaFata for JRUBY-3298: Kernel.srand calls #to_i on number
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8848 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 9801ea19bc82ada8866a8347be93e9609a009ed0
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Thu Jan 1 23:45:08 2009 +0000
+
+    Make Sprintf method take ByteList to write to instead letting it operate on it's own internal buffers. This allows the consumers to guess/allocate more memory and prevent huge amounts of arraycopy and object allocation by writing directly to target buffers. Also, Symbol#inspect 3-5x faster by not using intermediate java Strings.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8542 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 6fe2f5036a5d052c1d6c667e06d42162da8e650c
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Tue Dec 16 20:49:23 2008 +0000
+
+    Guard all RubyWarning.warning(...) methods by runtime.isVerbose() so the message is not built until they're actually invoked.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8371 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 4f35d613126441c2fdda6cd2ecd71d9d4cfe7da8
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Tue Dec 16 19:47:02 2008 +0000
+
+    Introduce isVerbose and warningsEnabled runtime booleans to easier and faster distinguish $VERBOSE is nil/false/true.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8369 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 7bbedee05b951db8dfcad7c92470b4fc10c2b36e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Nov 16 23:57:16 2008 +0000
+
+    Remove all remaining references/dependencies on MethodIndex's int indicies and related fields.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8081 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 75447d6aeda289e2a6319d8f2cc3d0b2ae022549
+Author: Wayne Meissner <wmeissner@gmail.com>
+Date:   Thu Aug 7 02:48:12 2008 +0000
+
+    Cleanups to org.jruby.util:
+    - make fields final where possible
+    - add @Override annotation
+    - deprecate unused classes
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7396 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 2b1a005a405839ca4eb268288816294e88f20a2b
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sun Feb 3 18:37:14 2008 +0000
+
+    JRUBY-2062: Add ids and convenient data to SyntaxException and IRubyWarning interface to make their life easier
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5806 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 979143980c8c1d4b927412178551984001d84ece
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Wed Jan 2 21:21:02 2008 +0000
+
+    JRUBY-1863: String#% should raise ArgumentError or print a warning when $DEBUG or $VERBOSE are set (patch by Vladimir Sizikov)
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5460 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 1bb4e86503197ccda2ca41373f92710c2865a299
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Thu Dec 27 12:51:08 2007 +0000
+
+    Fix for JRUBY-1797: String#% handles null bytes differently than the latest MRI (patch by Vladimir).
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5380 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit c2f75be282f681abced182db675b184c9258c3e6
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Dec 24 19:56:57 2007 +0000
+
+    Fixes for JRUBY-1774, from Vladimir.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5345 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit ad030e944555c8e71e55231b61803c8de07b62da
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Dec 21 22:22:58 2007 +0000
+
+    Fix for JRUBY-1758 from Vladimir.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5332 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 327a5a6978ef72338212352711e6ae8117490253
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Tue Dec 18 16:47:58 2007 +0000
+
+    JRUBY-1737: String#% can't handle some string arguments with underscores (patch by Vladimir Sizikov)
+    JRUBY-1738: Kernel.sprintf with argument of some non-standard type doesn't invoke to_int on it (patch by Vladimir Sizikov)
+    JRUBY-1742: String#% with %s and %p handles tainted status of ar (patch by Vladimir Sizikov)
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5293 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 4d75cc1470f5843b4b66f89f50ed81b88b27b431
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Nov 26 10:01:20 2007 +0000
+
+    Remove the three generic type conversion methods from RubyObject/IRubyObject to TypeConverter utility class. They were never overridden, and so there's no need for them to live in the IRubyObject/RubyObject hierarchy.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5047 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 25e56efa7dd9310dc04c58330627f00ea3b277d8
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Sun Sep 30 16:08:33 2007 +0000
+
+    Further work related to Core class caching in runtime.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4436 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 01039c4bbbed1c44a41437d030eb0507fa424a06
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sat May 5 22:36:28 2007 +0000
+
+    JRUBY-902: printf "%s" - strange behavior (patch by Bill Dortch and test by Alan Hensel)
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3624 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit b1742e48d5561cdc2e90fca3b335c89a0f3d9a84
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Fri Apr 20 02:08:54 2007 +0000
+
+    JRUBY-840: Cow fixes, Enumerable rewrite and arraycopy hunt (Marcin)
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3511 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 958ad3b9bfc5cae3a21185dec303ac7af7d77482
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Apr 7 02:59:27 2007 +0000
+
+    Expanding STI to a few more methods, and doing a sweep of all "direct" callers to make them use STI.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3406 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit f4c15912b1d4edc84b06c882195d27df371d1023
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Apr 6 23:13:04 2007 +0000
+
+    More cleanup of STI and expanding it to conversion methods and hash.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3404 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 0320b51ff913c6fcd25a386065cac05f57cc12c2
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Wed Apr 4 17:44:27 2007 +0000
+
+    Merging non-specific things from my sandbox to get diff smaller:
+    
+    - remove unused imports
+    - remove deprecated methods convertToType and convertToTypeWithCaller and converted all consumers
+       [Note: If extensions were using these functions they are broken now]
+    - attr_accessor was checking Frame args when it could just use the args it is given
+    - removed unused variables
+    - comment out some debugging methods so they are not reported as a warning
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3385 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a995898c3a7e73811dd7161a6d5c3fc38baec26d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Apr 4 05:42:45 2007 +0000
+
+    JRUBY-732 fix
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3376 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 1c02ca0e641c238d2fc8985fe7f939b8b3df6f95
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Mar 29 05:54:41 2007 +0000
+
+    Fixes for JRUBY-734, along with a first run at cleaning up IRubyObject.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3319 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit bcd3301fcd97db90d50558b5bb3c60d7d9226beb
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sat Mar 10 00:20:02 2007 +0000
+
+    The Bill Dortch sprintf special commit....
+    
+    JRUBY-667: String#to_f and Float(str) do not support MRI behavior
+    JRUBY-609: PrintfFormat needs to be completely rewritten
+    JRUBY-39: Floating point formatting discrepancy: "%02f" % '5'
+    JRUBY-581: Kernel.(format|sprintf) does not correspond to MRI's behaviour
+    JRUBY-678: RubyBignum test assertion failure in build 3151
+    
+    In addition to this fix I also removed old PrintfFormat and a few stragglers...There could be some follow work in method_missing in RubyObject and RubyKernel since I removed those old printfformat consumers in a pretty innefficient way.
+    
+    Thanks Bill it is great stuff!!!
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3152 961051c9-f516-0410-bf72-c9f7e237a7b7

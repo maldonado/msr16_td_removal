@@ -1,0 +1,48 @@
+commit 28ec5de6758eb0579e211f6fe7fd80845ca00542
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jan 6 13:09:29 2015 -0600
+
+    Fix 1.8 vs 1.9 and shared impls of some method logic.
+
+commit 4644d3332a8e805cd5be4dfb9b8183f0ebd1ea0e
+Merge: 057cde9 72234f9
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jan 6 12:23:53 2015 -0600
+
+    Merge remote-tracking branch 'origin/jruby-1_7'
+
+commit 72234f9074a1574f7dce41b3003442d976809051
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jan 6 12:11:06 2015 -0600
+
+    UnboundMethod does NOT extend Method and does NOT define to_proc.
+    
+    I swear UnboundMethod used to extend Method and remember having
+    conversations about it, but back as far as 1.8.7 that is not the
+    case. Perhaps Ruby 1.6.
+    
+    Fixes 2426.
+
+commit b4ff008b3b492113192211e2cd9425df4804d9d7
+Author: Chris Heald <cheald@gmail.com>
+Date:   Thu Nov 6 16:05:11 2014 -0700
+
+    Add Method#super_method
+
+commit 8622a2b36eb11c6cf504e66d30d9766c98d15ef1
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Oct 10 15:34:07 2013 -0500
+
+    Anno and warning changes
+
+commit d1f89e004fdc78dff75407c82123e6c9e8b406bb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Sep 12 18:48:16 2013 +0200
+
+    Make ClassIndex into an enum, to prevent issues like #1004.
+
+commit 28c6fbc4e883bc1c9e9242d1da1cb2b785f55339
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 3 12:46:45 2013 -0500
+
+    Move to @mkristian's proposed layout, with some modifications.

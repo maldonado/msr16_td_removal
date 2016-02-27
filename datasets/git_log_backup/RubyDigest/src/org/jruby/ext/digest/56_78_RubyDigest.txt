@@ -1,0 +1,92 @@
+commit 61678ac1a2514a9932276f8d527816a5980a94b3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Feb 25 20:41:40 2013 +1100
+
+    Fix more references to CPL.
+    
+    The phrase "Common Public License" was split across two lines in
+    our default header, which caused it to be missed during earlier
+    search/replace. Also, we did not replace the CPL URL in the
+    header with the EPL URL.
+
+commit 330fef3b0fc18af477ccea19bd278669667f31bb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 12 14:49:29 2013 -0600
+
+    Switch JRuby's CPL license to EPL.
+    
+    Governance of the CPL license was moved to the Eclipse Foundation
+    at some point in the past, and Eclipse blessed the EPL (Eclipse
+    Public License v1.0) as the successor to CPL. Because the CPL
+    contains a clause allowing transparent upgrades to future blessed
+    successor licenses, we can make the move to EPL without
+    re-contacting past contributors.
+    
+    The change in going from CPL to EPL largely just removes some
+    punitive language that apparently made many companies nervous. All
+    other language in the license remains identical.
+    
+    Several documents about Eclipse's move from CPL to EPL are here:
+    
+    http://www.eclipse.org/legal/cpl2epl/
+    
+    Note that Eclipse's move came before the blessing of EPL as the
+    upgrade path for CPL, so they had to do a bit more legal juggling.
+    With Eclipse now the administrator of CPL and with their blessing
+    of EPL as the upgrade path for CPL, all we need to do is make the
+    move.
+
+commit b8181cda909f6e42d7c0b7fffaabbe2a502f273b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jul 27 02:19:54 2012 -0500
+
+    Inline all calls to ThreadContext.getRuntime to access the field.
+
+commit e840823c435393e8365be1bae93f646c1bb0043f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Feb 20 17:22:11 2012 -0600
+
+    Fix JRUBY-6475: md5 digest causes thread lock
+    
+    My investigation led me to Provider.getService, which synchronizes
+    on itself while scanning services for the requested name. Under
+    heavy load, this could mean simply creating a new MessageDigest
+    hits a contended lock. My solution is to cache cloneable instances
+    of the common digest algorithms and use those when possible,
+    rather than doing the full JCA/SPI dance every time.
+    
+    Numbers are not conclusive for high numbers of threads, probably
+    because the overhead of starting and joining those threads clouds
+    real numbers, but for uncontended and lightly-contended cases the
+    improvement is fairly clear:
+    
+    before:
+    
+    uncontended MD5 'foo'
+                           794320.2 (±3.6%) i/s -    3966768 in   5.000912s (cycle=19071)
+    uncontended MD5 'foo' * 1000
+                            84978.3 (±8.4%) i/s -     424840 in   5.040786s (cycle=6536)
+    4x contended MD5 'foo'
+                           164143.3 (±17.4%) i/s -     743796 in   4.912694s (cycle=142)
+    4x contended MD5 'foo' * 1000
+                            47155.2 (±13.2%) i/s -     229680 in   4.974455s (cycle=165)
+    
+    after:
+    
+    uncontended MD5 'foo'
+                           915251.0 (±2.4%) i/s -    4567572 in   4.994108s (cycle=21444)
+    uncontended MD5 'foo' * 1000
+                            91104.0 (±0.9%) i/s -     459492 in   5.044020s (cycle=6962)
+    4x contended MD5 'foo'
+                           248055.6 (±26.5%) i/s -    1037427 in   4.916294s (cycle=183)
+    4x contended MD5 'foo' * 1000
+                            53960.2 (±18.7%) i/s -     255029 in   4.974802s (cycle=181)
+    
+    Note that the small input digests show the benefit more clearly,
+    since they are heavy on new digest creation.
+
+commit 8b9fdd2694366fce183de9060de0c797aefedc6f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Sep 12 15:12:02 2011 -0500
+
+    Move 'digest' and related libraries under org.jruby.ext.digest.

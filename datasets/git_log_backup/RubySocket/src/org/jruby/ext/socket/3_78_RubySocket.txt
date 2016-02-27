@@ -1,0 +1,1465 @@
+commit fd68f3186b30db806372481e5135379d1629b193
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Mon Apr 8 23:58:33 2013 -0400
+
+    Add @Override to RubySocket
+
+commit 61678ac1a2514a9932276f8d527816a5980a94b3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Feb 25 20:41:40 2013 +1100
+
+    Fix more references to CPL.
+    
+    The phrase "Common Public License" was split across two lines in
+    our default header, which caused it to be missed during earlier
+    search/replace. Also, we did not replace the CPL URL in the
+    header with the EPL URL.
+
+commit 330fef3b0fc18af477ccea19bd278669667f31bb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 12 14:49:29 2013 -0600
+
+    Switch JRuby's CPL license to EPL.
+    
+    Governance of the CPL license was moved to the Eclipse Foundation
+    at some point in the past, and Eclipse blessed the EPL (Eclipse
+    Public License v1.0) as the successor to CPL. Because the CPL
+    contains a clause allowing transparent upgrades to future blessed
+    successor licenses, we can make the move to EPL without
+    re-contacting past contributors.
+    
+    The change in going from CPL to EPL largely just removes some
+    punitive language that apparently made many companies nervous. All
+    other language in the license remains identical.
+    
+    Several documents about Eclipse's move from CPL to EPL are here:
+    
+    http://www.eclipse.org/legal/cpl2epl/
+    
+    Note that Eclipse's move came before the blessing of EPL as the
+    upgrade path for CPL, so they had to do a bit more legal juggling.
+    With Eclipse now the administrator of CPL and with their blessing
+    of EPL as the upgrade path for CPL, all we need to do is make the
+    move.
+
+commit bd4916ac6b954692f5ff0ca567cd72aa3a5961d1
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Dec 13 12:20:38 2012 -0600
+
+    Fix connect_nonblock never finishing the connection.
+    
+    When doing a nonblocking connection, the first SocketChannel
+    connect call initiates the connection process. If connect is
+    called again, it will always raise ConnectionPending, which we
+    propagated as EINPROGRESS. As a result, simply calling
+    connect_nonblock repeatedly never finished the connection process
+    by calling finishConnect. Our select loop, however, did have a
+    finishConnect in it, so doing connect_nonblock + select worked
+    ok. This change moves the finishConnect into RubySocket's connect
+    logic and calls that once the connection has been initiated.
+
+commit b8181cda909f6e42d7c0b7fffaabbe2a502f273b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jul 27 02:19:54 2012 -0500
+
+    Inline all calls to ThreadContext.getRuntime to access the field.
+
+commit 97409f48890b8ae132eec4d2d3e88ecf0395714f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Jul 5 15:39:07 2012 -0500
+
+    Fix JRUBY-6761
+    
+    NoMethodError: undefined method `recvfrom' for #<Socket:fd>
+    
+    For now I'm just implementing Socket#recvfrom and
+    recvfrom_nonblock to use the BasicSocket versions, which are
+    largely just "read". This will work ok for TCP sockets, but we'll
+    need additional work to make these aware of UDP and UNIX sockets
+    in the same way as the other Socket methods.
+    
+    We also need tests; RubySpec has none and MRI's suite only has
+    a handful.
+
+commit bf7214b143a3d2b272dc3d01d66a6637406cdd2c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Apr 4 20:41:47 2012 -0500
+
+    Add UNIX socket support to Socket class.
+
+commit 27cb5bea0f37a0bd07e3c7081e894daa7a59b15f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Mar 12 23:11:32 2012 -0500
+
+    Fill out a little big more of Addrinfo.
+
+commit e6bf20a9485ff44c47ccbcd1d277d1f0526385f4
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Mar 12 15:30:51 2012 -0500
+
+    More socket refactoring and miscellaneous cleanup
+    
+    * Cleanup TCPSocket and TCPServer
+    * Use SelectableChannel.blockingLock wherever we're changing blocking
+    * Clean up a bunch of deprecations
+
+commit 16fcbefecad757b34e11c5a3e41b46418eed0bbb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Mar 12 13:36:00 2012 -0500
+
+    More socket cleanup and refactoring.
+    
+    * Move Socket meta method bindings back to Socket, but leave impls in SocketUtils
+    * Consolidate sockerr method into SocketUtils
+    * Clean up IPSocket, move one meta impl to SocketUtils
+
+commit 4f1953a17703939934229288be2dee387f326854
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Mar 12 04:17:57 2012 -0500
+
+    BasicSocket#recv and recv_nonblock work
+    
+    * Arity-split recv
+    * recv should not be buffered
+    * Break out recv logic into a private method
+    * Add recv_nonblock impl
+
+commit 790e9b91fff1fc6b8d8891867594b652589eb44d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Mar 7 16:32:18 2012 -0600
+
+    First pass refactoring RubyBasicSocket.
+
+commit cc95e8bae235f59b378aa2ec28707305c18cf5af
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Mar 7 11:21:28 2012 -0600
+
+    More improvements for ServerSocket and accept/connect.
+    
+    * Add accept_nonblock to ServerSocket
+    * Add ServerSocket error to Socket#listen
+    * Add bind/listen warning to ServerSocket#listen
+    * Refactor ServerSocket#accept a bit
+
+commit 7fb8ea02a5292b6a64de218253b756e1c14c61fb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Mar 6 23:44:50 2012 -0600
+
+    Add error message for Socket#accept.
+    
+    Because we can't support both client and server connections in
+    Socket, we have added ServerSocket for the server side. To make
+    this easier to find, I've added an impl of Socket#accept that
+    mentions ServerSocket and links to an informational page on the
+    JRuby wiki.
+
+commit 715877c10cb58a42374cfa8469259795c0730294
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Mar 6 21:03:52 2012 -0600
+
+    Additional fixes for connect_nonblock and IO.select.
+    
+    * Move finishConnect logic into select's write ops handling
+
+commit ce2282e2f6b62af492c425164027a3a6d28dcb66
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Mar 6 16:38:55 2012 -0600
+
+    Fix JRUBY-6527
+    
+    Socket#connect_nonblock raises Errno::EINPROGRESS, but MRI raises IO::WaitWritable
+    
+    This is just another case where MRI mixes WaitWritable into an
+    errno exception at runtime, so I added another subclass that does
+    it ahead of time and construct that in 1.9 mode.
+
+commit d5a87bf2d6e8458ba0c0e35149ab0132d576efe9
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Mar 6 16:21:48 2012 -0600
+
+    Fix JRUBY-6526 and continue socket refactoring.
+    
+    * Moved most Socket class methods to SocketUtils
+    * Added ServerSocket as a JRuby workaround for Socket only being clients
+    * Added support for symbolic domain, type, and protocol (1.9)
+    * Added 1.9 Socket#initialize with two args
+
+commit a9a50e058d29e4c71f1900e8b13c0265fda143bf
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jan 30 07:33:16 2012 -0600
+
+    First stab at implementing Addrinfo for JRUBY-6393.
+
+commit 606bd2e150aae13320f6441bf31d3d1a549fce4a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Jan 26 19:58:39 2012 -0600
+
+    More of the epic IO/Socket refactoring.
+
+commit 21bbea842d3b7ade11ef620eade4e75200bf508f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Jan 26 18:04:33 2012 -0600
+
+    Begin refactoring socket subsystem.
+
+commit 0e930e0adc0260902e76f8b42c80a9bbe75a0705
+Author: Tim Felgentreff <timfelgentreff@gmail.com>
+Date:   Fri Jan 13 14:44:44 2012 +0100
+
+    add MSG_WAITALL constant
+
+commit fd90c1b966eac7e564ff3b0fed2cf504e5d969fa
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Mon Oct 24 23:19:34 2011 -0400
+
+    Modified fix for Pull Request #85 https://github.com/jruby/jruby/pull/85
+
+commit 5c5e090160f90092b220a3e80e191681fc820851
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Thu Oct 20 16:36:12 2011 -0400
+
+    Revert "pack_sockaddr_in should convert a port string"
+    Ooops. This introduced compile error.
+    
+    This reverts commit 18a02a97d60061db43921690b396eab97c9b9fe4.
+
+commit 18a02a97d60061db43921690b396eab97c9b9fe4
+Author: geemus <geemus@gmail.com>
+Date:   Mon Oct 3 16:42:20 2011 -0500
+
+    pack_sockaddr_in should convert a port string
+    
+    Signed-off-by: Hiro Asari <asari.ruby@gmail.com>
+
+commit 6f159fe5dd51c062a5b1aab64a8ede916990877a
+Author: Hiroshi Nakamura <nahi@ruby-lang.org>
+Date:   Mon Jul 11 03:36:17 2011 +0900
+
+    Deprecation of fast constant access paths.
+    
+    Each os those has the same definition as non-fast verision.
+
+commit 9fd4ada22e3f3f3ac94f65276c73c0b455765edb
+Author: Wayne Meissner <wmeissner@gmail.com>
+Date:   Mon Jul 4 23:01:30 2011 +1000
+
+    Replace usage of com.kenai.constantine with jnr.constants
+
+commit 7d866e86fcde241e93048c9244c7c01691ce43bd
+Author: Brian Browning <bwbrowning@gmail.com>
+Date:   Wed May 25 17:51:32 2011 +0200
+
+    changed gethostbyname to return the hostname instead of ip address
+    
+    Signed-off-by: Hiro Asari <asari.ruby@gmail.com>
+
+commit bc82ec732b1de88927be499689754b52633b6ce9
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Apr 4 14:11:53 2011 -0500
+
+    JRUBY-5613: Socket.listen not defined on Socket (but only subclasses)
+
+commit 56c1fb34da48a15c6e36330a19add2ae32ea519f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Mar 25 14:06:47 2011 -0500
+
+    Fix JRUBY-5594: Seeing ConnectionPendingException in my code
+    
+    * Remove rogue printStackTrace calls from RubySocket.
+
+commit 2eb09cdec693a70b11ea6f122e0c465bfff28300
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Feb 12 03:31:12 2011 -0600
+
+    Fix intermittent failure in JRUBY-5232 regression test.
+    
+    By passing through java.lang.String, RubyBasicSocket occasionally introduced UTF-8 character sequences that just happened to be in the sockaddr bytes as encoded characters in the resulting String. As a result, the characters were not correctly aligned with the original bytes, causing them to occasionally be shifted (since a UTF sequence might consume more than one byte).
+
+commit fd0fa789b21b30f294e8286b72b75fe3b688c27a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Dec 1 12:07:42 2010 -0600
+
+    Merge "backtrace" branch to master, now that it runs clean on all our various test cases.
+    
+    This is a squashed merge encompassing the following commits from "backtrace":
+    
+    commit eb0e24242050199ac1cc4cf6e48d93025f0186f4
+    Merge: 32137de ea48d8d
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Dec 1 12:03:28 2010 -0600
+    
+        Merge remote branch 'origin/master' into backtrace
+    
+    commit 32137decc9351dd7b6a19c49c7955808f535bb9c
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Dec 1 09:41:29 2010 -0600
+    
+        Fix remaining failures for test-all.
+    
+        * Disable CheckClassAdapter temporarily, since it disallows what should be valid JVM identifiers.
+        * Use the presence of $RUBY$ in method name as an additional indicator that we're processing a compiled Ruby body during backtrace gathering.
+        * Move some largely-static properties out of "init" target in build.xml, so they're available whether init is triggered or not (e.g. run.jvm.model).
+    
+    commit ee2a624201d5e9cd408d6ae793160aeb99b50b3d
+    Merge: cd50ae5 88ad204
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Dec 1 08:01:22 2010 -0600
+    
+        Merge branch 'master' into backtrace
+    
+    commit cd50ae5f06b95a2fffab6bc1f3a7419f478d0a52
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Tue Nov 30 19:15:07 2010 -0600
+    
+        Get remaining spec failure with -X+C passing.
+    
+        * Embed the actual Ruby method name into the Java method for block bodies, rather than __block__.
+    
+    commit 52bbfffcae1aed62bf4afcb692bed9725e4e1564
+    Merge: 4ed7235 1aace5e
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Tue Nov 30 01:37:15 2010 -0600
+    
+        Merge branch 'master' into backtrace
+    
+    commit 4ed723579101fffd8bfa73b30dc6e4e8991866f2
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Tue Nov 30 01:31:44 2010 -0600
+    
+        Precompiled (AOT) specs *nearly* green.
+    
+        * Mark __method__ as reading frame "name"
+        * Fix AOT-based stack trace mining logic
+    
+    commit 64e20aa939b5b9c6e41e0e9fe09039a0bb92794a
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Mon Nov 29 16:50:55 2010 -0600
+    
+        Jitted specs running green.
+    
+        * eval needs to set method name into the binding, so it's there for "__method__" in the eval'ed code.
+    
+    commit fd442c0a815bcab9eb6c9aa1b71e1f8a260ee03b
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Mon Nov 29 16:06:53 2010 -0600
+    
+        Interpreted specs green on backtrace.
+    
+        * Tagged some __method__ specs for which backtrace behaves like 1.9, which Matz apparently likes but was afraid to backport. Odd cases anyway.
+        * Fixed method name for the block used to define_method.
+    
+    commit cedb27e430b422c1158f66b4dcc7769922433506
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Nov 24 18:35:22 2010 -0600
+    
+        Reinstate deprecated java_to_ruby and ruby_to_java I removed, since it's still needed by some external libs.
+    
+    commit b48b17910de662b4e2d20ee8f4b5cc734eefc1ed
+    Merge: f39007e 2ae4995
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Nov 24 13:40:58 2010 -0600
+    
+        Merge remote branch 'origin/master' into backtrace
+    
+        Conflicts:
+        	src/org/jruby/Ruby.java
+        	src/org/jruby/RubySymbol.java
+        	src/org/jruby/runtime/CompiledBlock19.java
+        	src/org/jruby/runtime/Interpreted19Block.java
+        	src/org/jruby/runtime/InterpretedBlock.java
+        	src/org/jruby/runtime/MethodBlock.java
+    
+    commit f39007eca676c1e6ec9f891ac63b7c5d907b0d1b
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Thu Nov 18 14:01:29 2010 -0600
+    
+        Start normalizing the method/class names generated into Java by JIT and AOT compiler, to wrap up the remaining spec failures.
+    
+    commit 76e42c4b4522dc87c066d20051d02d1e4005b860
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Nov 17 20:40:33 2010 -0600
+    
+        Disable dynopt for now, to allow better stabilization on the main feature of this branch: frame elimination.
+    
+    commit d03099690df2e16d423e8b6a8969e0264983237f
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Nov 17 15:00:14 2010 -0600
+    
+        Encapsulate "coreMethods" hash in Ruby and add "bound method" logic to default (non-generated) class populator. `ant test-all` runs green now.
+    
+    commit ed7458f72bce55b11e5231f8e7b9d590c09ca53d
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Nov 17 10:46:43 2010 -0600
+    
+        Fix incorrect use of fastSetInstanceVariable instead of fastSetInternalVariable in FFI.
+    
+    commit f09626121b6a8bea6ab39a3c8ed3ccd69f56b505
+    Merge: f780b97 e8ca689
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Nov 17 10:15:16 2010 -0600
+    
+        Merge branch 'master' into backtrace
+    
+    commit f780b972b1f3e18f4c2608d9536e797a0845cd1a
+    Merge: 25ab5d3 6967ea7
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Nov 17 09:04:42 2010 -0600
+    
+        Merge branch 'master' into backtrace
+    
+        Conflicts:
+        	src/org/jruby/runtime/ThreadContext.java
+    
+    commit 25ab5d3d3f8c1fbf0fa334427b1485d322e83f86
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sun Nov 7 00:42:54 2010 -0500
+    
+        Don't do dynopt against calls that receive blocks; non-local flow is not properly handled yet.
+    
+    commit a4ad27056dcc3acf6bae0b0af7e618966d08a6dd
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sat Nov 6 15:22:40 2010 -0500
+    
+        Tag caller specs that do not pass with new backtrace logic (peculiar eval caller behaviors).
+    
+    commit eed8902084cfa06d4648935c1f70da57bf0c7a9c
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sat Nov 6 00:32:59 2010 -0500
+    
+        More fixes to get specs and tests green on backtrace branch:
+    
+        * Hash#index was not being bound properly from RubyHash#index19
+        * Range#min and Range#max need super, and therefore need frame = true
+        * tc_owned is a bad test and fails on system like OS X where (for some reason) / may be owned by user
+        * test_trace_func had been hacked for a bad class result (Integer, instead of Fixnum)...fixed that
+    
+    commit 9d9f94c30de76fa25e738e70e84ea09163eca5cb
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Fri Nov 5 20:03:22 2010 -0500
+    
+        Fix Kernel#caller to replace .java lines with Ruby lines. Brings specs mostly to passing.
+    
+    commit de433c771830e95c54f8196453208f2b312191aa
+    Merge: 3ffe1cf e25c58f
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Fri Nov 5 17:40:02 2010 -0500
+    
+        Merge branch 'master' into backtrace
+    
+        Conflicts:
+        	src/org/jruby/RubyIO.java
+        	src/org/jruby/compiler/impl/StackBasedVariableCompiler.java
+        	src/org/jruby/evaluator/ASTInterpreter.java
+        	src/org/jruby/java/proxies/JavaProxy.java
+    
+    commit 3ffe1cfba86f52ee96d89f3a1c352597f22f76b7
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Oct 27 01:42:06 2010 -0200
+    
+        Fix compile error I accidentally merged.
+    
+    commit b081253fb3cdf5141f7f0cf76d3f8546837d9f42
+    Merge: fc3028d ad68e22
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Tue Oct 26 16:30:25 2010 -0200
+    
+        Merge branch 'master' into backtrace
+    
+        Conflicts:
+        	src/org/jruby/Ruby.java
+        	src/org/jruby/internal/runtime/methods/DefaultMethod.java
+        	src/org/jruby/runtime/ThreadContext.java
+    
+    commit fc3028d9da2750c9d1c394600ab8ee712388724d
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Tue Oct 26 14:39:29 2010 -0200
+    
+        Add better description for class bodies in backtrace
+    
+    commit d796555494c2237116c7477c932fd96cd30d2e20
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Tue Oct 26 11:36:29 2010 -0200
+    
+        Clean up and add color to Rubinius backtraces.
+    
+    commit 012f5357ce649bd5a996211fe231f26097bf4f5b
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sun Oct 24 16:23:04 2010 -0500
+    
+        Fix classloader check to allow for compiled method handles, which use a no-arg constructor.
+    
+    commit 473d48aac6a5523304188d1d433e4c12df989b89
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sun Oct 24 16:10:32 2010 -0500
+    
+        Improve Proc-binding-based eval position info by propagating block's position into the binding and through to the backtrace frame.
+    
+    commit bcfd16b519b145c9ee055db1592dfaced05b71a0
+    Merge: 4902faa 5b49583
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sun Oct 24 11:07:15 2010 -0500
+    
+        Merge branch 'master' into backtrace
+    
+        Conflicts:
+        	src/org/jruby/RubyTime.java
+        	src/org/jruby/runtime/ThreadContext.java
+        	test/org/jruby/test/TestRubyException.java
+    
+    commit 4902faaf1678d5aecdef8b0b66f8ec78062aeec5
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Thu Oct 21 09:28:45 2010 -0500
+    
+        Fix badly-merged RubyProc.to_s19, missing opening brace.
+    
+    commit 69177d7098f9dc4ff9096d08eee25c0d8bb4f971
+    Merge: 801e764 f895837
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Oct 20 21:50:53 2010 -0500
+    
+        Merge branch 'master' into backtrace
+    
+    commit 801e7641b8838a8ae8931a9c6dcc5cf050096c4a
+    Merge: 0c60a89 dda4644
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Tue Oct 19 23:16:41 2010 -0500
+    
+        Merge branch 'master' into backtrace
+    
+        Conflicts:
+        	src/org/jruby/RubyDigest.java
+        	src/org/jruby/RubyProc.java
+    
+    commit 0c60a89aa746f286588b218681e9ad25b11318c4
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Tue Oct 19 23:06:15 2010 -0500
+    
+        Only compile direct recursive calls when we haven't branched to another method body (e.g. for rescues) and we're not compiling a closure or class body.
+    
+    commit 18333fe82c808e8ed49eef898f19c86fa2d764b2
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Tue Oct 12 17:04:13 2010 -0500
+    
+        Get 1.8 specs running green except for a handful of Kernel#caller specs (which don't expect to see .java files in the trace...not sure how to deal with that).
+    
+        * Fix another literal-block-calling path that wasn't using callIter
+    
+    commit 366740120ee76d8df3f977edc1727b60b2d4ad63
+    Merge: b64390b 6b243a3
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Tue Oct 12 10:35:14 2010 -0500
+    
+        Merge remote branch 'origin/master' into backtrace
+    
+    commit b64390b8cf0d2cb13e06d352969a093b5e86818d
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Tue Oct 12 10:33:39 2010 -0500
+    
+        Remaining fixes to get precompiled mode passing all our tests. Still some spec failures.
+    
+        * Bump up permgen max for test runs
+        * Fix stack-based scope initialization to not leave an unused nil on stack
+        * Ensure compiled method handles properly wrap pre/post logic for dummy and backtrace frames.
+    
+    commit 96bd3cbde91fc505b37ee13cbea6ffa3e8690c58
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Mon Oct 11 18:36:34 2010 -0500
+    
+        First fixes for backtrace branch in precompiled mode:
+    
+        * Add test-precompiled build target for running just precompiled
+        * Eliminate extraneous toplevel scope being pushed for precompiled loads (because that logic is all in the generated "load" method now.
+        * Add a new scope descriptor decoding path that properly sets up a toplevel scope
+    
+    commit 0ebbd6ac46c9ac04558f5200f980f26f798b9413
+    Merge: fc387be ac455fc
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Oct 6 21:53:18 2010 -0500
+    
+        Merge branch 'master' into backtrace
+    
+        Conflicts:
+        	src/org/jruby/RubyIO.java
+    
+    commit fc387befff57ada6c116b646a3dfb767cc926ee5
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Tue Sep 28 15:57:58 2010 -0500
+    
+        Renumber arguments for consistency.
+    
+    commit bbc91d3c4039bf6c26ceffd4899dcaaeaa3d46d0
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Tue Sep 28 15:40:38 2010 -0500
+    
+        Fixes to get specs a bit closer to running green.
+    
+        * Move pre/post logic for Script.load into generated code, so it's the same everywhere.
+        * Make pre/post-load push a frame, so top-level of a script is always framed
+        * Remove break handling from non-literal block call paths in CachingCallSite
+        * Make sure all literal block calls are using CallSite.callIter, which handles break
+        * Fix a bad test in testCompiler that needed visibility tweaks and framing
+        * Add complete doco for CallSite
+        * Fix Kernel#caller to trim from top of stack instead of bottom
+    
+    commit 4e814a24d5b2ef1b6567a3076a463ff9d08e2a0d
+    Merge: 91dc13a 3dbcef3
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Mon Sep 27 17:43:30 2010 -0500
+    
+        Merge branch 'master' into backtrace
+    
+    commit 91dc13a2f0b74bc1054d83378782416465ecc1b8
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Mon Sep 27 01:02:48 2010 -0500
+    
+        Fixes to get test-compiled (but not precompiled) passing 100%.
+    
+        * Fix eqlInternal's RubyNumeric branch check if classes are equal
+        * Provide file and line from all BlockBodies, so Proc#to_s can always use it
+        * Fix rejiggered Struct#each and Struct#each_pair to call the appropriate internal version
+        * Fix ruby_test's IO.new suite to not use STDOUT directly, risking that it get closed
+    
+    commit dc4af45352607ebb8a95d70befdcdb15c1111c58
+    Merge: ec8bb7f 90275be
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Tue Sep 21 09:52:10 2010 -0700
+    
+        Merge branch 'master' into backtrace
+    
+        Conflicts:
+        	src/org/jruby/Ruby.java
+        	src/org/jruby/RubyDir.java
+        	src/org/jruby/RubyKernel.java
+        	src/org/jruby/compiler/ASTInspector.java
+        	src/org/jruby/javasupport/util/RuntimeHelpers.java
+    
+    commit ec8bb7fc31d4acd4ebcb040f088e19fb427448e8
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sun Sep 19 16:21:38 2010 -0700
+    
+        Remove frame = true from all core class methods, to reduce their call costs. A few remain for invokeSuper and methods that may still need frames.
+    
+    commit ec276b6ca0c6009702839b12d97664b9e52b1023
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Thu Sep 16 14:10:43 2010 -0500
+    
+        Eliminate RubyTuple use that snuck in.
+    
+    commit f80254100cfc17ac6eb558e465fc1fb9122c3ee4
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Tue Sep 14 10:07:53 2010 -0500
+    
+        Special case a few immutable core types in equalInternal/eqlInternal.
+    
+    commit eb66c45145e4fd1f8c28e9a8c544114f034116e8
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sun Sep 12 18:26:13 2010 -0300
+    
+        Performance changes for backtrace logic:
+    
+        * Back off using Java stack trace for Proc's to_s file+line, since it's prohibitively expensive
+        * Move the Backtrace stack to being a fixed-size array of objects updated, rather than created, when a push happens
+    
+    commit 6f0ade5ab28946b8800431d3454d2e57fc0dbe19
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sun Sep 12 11:36:07 2010 -0300
+    
+        Add generation guard around trivially-inlined logic.
+    
+    commit c4d8705217174580d35757dc85c5c646e980b57f
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sun Sep 12 06:18:38 2010 -0300
+    
+        Full speed ahead with a caching mechanism for calls from core classes. Only works for core class methods right now, but opens the door to expanding that.
+    
+    commit 5874abc01104f6c0f435f8ac4643ed0f77cf7cff
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sun Sep 12 03:43:37 2010 -0300
+    
+        Localize some fields used in Array#include? to speed up the loop.
+    
+    commit 346245cd5e154574d14736cf4b9e0b4b98260d14
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sat Sep 11 15:02:41 2010 -0300
+    
+        Allow passing a number of iterations to bench_quicksort.rb.
+    
+    commit b4687022a1f00d0b63838b1c9daf00753fcfa93e
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sat Sep 11 11:55:15 2010 -0300
+    
+        Fixes to get run-junit-compiled 100% passing on backtrace branch.
+    
+        * Fixed a couple tests that are too sensitive to core method line numbers or expected only .rb elements in the trace
+        * Added a mechanism for procs to retrieve the most recent Ruby frame, for to_s purposes
+        * Added comments for hybrid backtrace logic
+    
+    commit 15cd9b16cb2750d0e40ba478d07fe5bf265dc620
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sat Sep 11 08:07:57 2010 -0300
+    
+        Add better logging to AnnotationBinder (for showing framed/scoped core methods), ASTInspector (for showing methods detected as framed/scoped and for reporting deopt flags as they are set), and JITCompiler (for dumping jitted methods' full classes and inspector results). New property jruby.jit.dumping=(true|FALSE).
+    
+    commit c4e6176498590d791868055025c2e72ded1ccf13
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Fri Sep 10 02:10:20 2010 -0400
+    
+        Improve dumping of generated bytecode by including class and method name when possible.
+    
+    commit 07fc4215f6873f449f89d4f5da7a7e2e8963bc70
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Thu Sep 9 23:39:20 2010 -0400
+    
+        Make attr accessor's var accessor field volatile, to guarantee visibility across threads.
+    
+    commit e3a7cf5cd4d8ccd08407955779bdd94feb5e4ac8
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Sep 8 13:26:48 2010 -0500
+    
+        Add missing "in" to caller backtrace lines.
+    
+    commit 7140c339f386959853f747d86cb2ea9a8afa6f2a
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Sep 8 12:10:50 2010 -0500
+    
+        Fixes to get tracing tests running in interpreted mode:
+    
+        * Off-by-one line numbers were off for MRI too. Fixed to correct line numbers
+        * call and return for Ruby methods need to use impl class, not self class
+    
+    commit cbc9c4edab56807a023817d06db9c22441fa4b53
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Sep 8 10:31:57 2010 -0500
+    
+        Fix runInterpreterBody to properly unwrap RootNode for "gets loop" execution.
+    
+    commit 3a09773058d8d58d5bf8f1b6fbebc494fc18f7c6
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Sep 8 10:01:43 2010 -0500
+    
+        Make --bytecode attempt a recompile, so that dynopt and no-compile modes can still print bytecode.
+    
+    commit 4e48e722ba5ded10975af348738237fcb7fe9b2a
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Sep 8 09:23:38 2010 -0500
+    
+        Add a "full" backtrace style which does not omit any Java frames and interlaces the Ruby frames.
+    
+    commit 6f5057e3ae1e372bd66602dcc26864adc3270128
+    Merge: 7006d31 811fd8d
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Sep 8 07:48:47 2010 -0500
+    
+        Merge branch 'master' into backtrace
+    
+        Conflicts:
+        	src/org/jruby/Ruby.java
+    
+    commit 7006d3175bbf4630921dfecaa4faef2a39a77205
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sat Sep 4 16:04:28 2010 -0500
+    
+        Bytecode size reductions for stack-based nil-initialization of locals and for x, *y and x, * forms of masgn.
+    
+    commit 3a8fb16f020c2b9aaa6228605bdb3d8fd1b78ccf
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sat Sep 4 14:52:04 2010 -0500
+    
+        Do not do direct recursive invocations for heap-based scopes, since the scope is not currently being reset.
+    
+    commit ec00e99636667eff97a891917ae9ef37f94a6eb7
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Fri Sep 3 19:55:24 2010 -0500
+    
+        Turn on dynopt by default, to aid testing of new logic.
+    
+    commit 9508e8a6925fce4f57a386ede867b3f8f9b67d38
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Thu Sep 2 12:40:38 2010 -0500
+    
+        Fix Time test that expected two separate Time.now objects to to_s the same.
+    
+    commit 65ba8b37a8a232495453e71b2a560c761b40893f
+    Author: Nick Sieger <nick@nicksieger.com>
+    Date:   Mon Aug 30 14:50:03 2010 -0500
+    
+        Use new backtrace info to set a more useful Java thread name
+    
+    commit 75b100604af39de52b26bdb21669136234424a0b
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Mon Aug 30 11:37:49 2010 +0900
+    
+        Fix ifne/ifeq bug in dynopt guard and switch DefaultMethod to not flip generations on JIT in dynopt mode.
+    
+    commit fe3b408629e94b7db0436152968bd6d2232f6c7c
+    Merge: eea60da 85c64c6
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sun Aug 29 20:33:06 2010 +0900
+    
+        Merge branch 'master' into backtrace
+    
+    commit eea60da3905c87c16fbb4e6c78fd7a07f842e4bd
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Fri Aug 27 14:09:44 2010 +0900
+    
+        Modify Java Fixnum fib bench to use the long call paths where possible, to be more like what compiled Ruby does not.
+    
+    commit a189563d9073208292e91aff3eb1c88489bd113d
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Aug 25 15:07:21 2010 +0900
+    
+        Fixes for jitted/compiled backtrace generation
+    
+        * SClass in a method body needs to frame, so it has a jump target for non-local return
+        * Compiled methods need to always have their ruby name in the method name, so it can be mined out appropriately
+        * Synthetic calls, like to rescue bodies, need to gobble caller frames to avoid multiple entries
+    
+    commit 276226de611cb8d5af942148109c2a51982e7640
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Aug 25 14:03:44 2010 +0900
+    
+        Add callNumber tracking to method handles, to properly handle return jumps.
+    
+    commit b94bcf119a54f52ab9be3c86bc5cc85078f20eee
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Aug 25 13:16:25 2010 +0900
+    
+        More fixes for hybrid backtrace:
+    
+        * Get generated trace to be RaiseException's Java trace
+        * Add Ruby exception name to the RaiseException message
+        * Rewire and repair trace calls
+    
+        All main suite tests now pass in interpreted mode.
+    
+    commit dc9fcd3de0f3070507ac0a0647973d1e9f16ae4f
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Mon Aug 23 14:38:47 2010 -0500
+    
+        Fix debug logging of exceptions being raised and patch a couple tests for new backtrace structure.
+    
+    commit 3acd3201d85e4da9186fa17d3a04bdc9db742e29
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Mon Aug 23 13:23:04 2010 -0500
+    
+        Include original source file in compiled Ruby, add missing "in" line for MRI rendering, and soften requirements in test_backtraces to allow for native elements in the backtrace.
+    
+    commit 728cf3983fbeffba944fe34a8b0e410cc1de041c
+    Merge: 88a64de 0e9c956
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Mon Aug 23 00:18:07 2010 -0500
+    
+        Merge branch 'master' into backtrace
+    
+    commit 88a64de879446be3398ba7671b5fa1f3e46ce02f
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sun Aug 22 17:29:21 2010 -0500
+    
+        Turn on "positionless" compilation, since compiled code no longer needs to update interpreter backtrace frames. Also fix nil/null backtrace rendering.
+    
+    commit 5712a4ce285a5b3662c8ef8def2599223a232626
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sun Aug 22 17:18:17 2010 -0500
+    
+        Fix off-by-one line numbers from interpreter frames.
+    
+    commit 519f4625b9d9658f50b986b1add560903ee453de
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sun Aug 22 17:10:47 2010 -0500
+    
+        Remove some old backtrace code no longer in use and get all "backtrace" method handles to generate with no frame at all (since Java stack is used now).
+    
+    commit 424d967df8a3b6ba277bdb1b530d4f7f62ecbc4a
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sun Aug 22 16:52:29 2010 -0500
+    
+        Get Kernel#caller working with hybrid traces, get Rubinius rendering working again (partially), separate gathering and rendering of backtraces.
+    
+    commit a00822740712ddd924896feccc10f015fd20d4be
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sun Aug 22 15:32:08 2010 -0500
+    
+        Mine method names out of AOT and JIT compiled stacktrace elements and get JIT using the original name of the method.
+    
+    commit 039d184ac5f798aed21870a7552b66c5973ca0eb
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sat Aug 14 22:16:48 2010 -0500
+    
+        Simplify in-class encoding of StaticScope data.
+    
+    commit 876a762b8af88955bee598dfd0421805d9b47c40
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sun Aug 22 01:41:44 2010 -0500
+    
+        Fixes to hybrid traces to get tests working better:
+    
+        * Omit Kernel#raise and the KernelJavaAddons rbRaise from traces
+        * Handle getBacktrace when there's been no preparation
+    
+        Also modified test/testException.rb to allow internal line numbers for the "load" call, rather than MRI standard "whatever line it was called from".
+    
+    commit 06f1bd171d6897f651b3cebfd76551080acbfe40
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sun Aug 22 00:39:59 2010 -0500
+    
+        Move backtrace management to a separate stack and implement mixed-mode backtrace generation.
+    
+    commit ca40e73a7c136dfdd3853f0cd62a73bf70a3a08f
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sat Aug 21 20:56:50 2010 -0500
+    
+        Get all major interpreter entry-points passing through simple, known method bodies. First step toward mixed-mode backtraces.
+
+commit e055dbe2e6a793916c7a8383d5a6f6aa0d1e6e7f
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Thu Oct 14 15:51:53 2010 -0400
+
+    Formatting change. Avoid dangling 'if' clause on a line by itself. Also, reformat multi-line boolean conditions so that it is clearer that they indeed span multiple lines.
+
+commit d35d29159d796bfa099c780da5c72f86eede67e5
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Sun Jul 25 15:55:46 2010 -0700
+
+    Adapt Socket.getaddrinfo and Socket.getnameinfo for IPv6 addresses.
+    
+    Note that InetAddress.getAllByName(null) returns Inet4Address[] without hints, so, when necessary, we use "[::]" and "[::1]" to ensure that we get Inet6Address[].
+    
+    In theory, this should fix a couple of Socket.getaddrinfo specs for IPv6 addresses, but it does not, since the specs specifically asks for "::" and "::1", but InetAddress.getAllByName returns "0:0:0:0:0:0:0:0" and "0:0:0:0:0:0:0:1", respectively. This should be fixed in RubySpec.
+
+commit 9e5dd44ae5e4b2a65142028bf053b44eae10946c
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Sun Jul 25 00:40:17 2010 -0700
+
+    Consider whether or not we should do reverse lookup when initializing the host name.
+
+commit d2450076ab2a8f8879a9004facc0dad8566e5953
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Mon Jul 12 02:49:18 2010 -0400
+
+    If the first argument to Socket#getnameinfo is a 4-element array, the third element is ignored.
+
+commit dc58f1ba0d99a2f7206546b4326f6769e9298899
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Mon Jul 12 02:29:34 2010 -0400
+
+    Resolve numeric port number to its service name if possible.
+
+commit 58ee674e056ae787cbf904f715801377a81e02f1
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Fri Jun 18 13:15:25 2010 -0500
+
+    JRUBY-4785: Try workaround for linkage error by pulling library inner class out to a standalone class
+
+commit 7ceaee3430b9642c20d0b846b983f3e6357e8893
+Author: Vladimir Sizikov <vsizikov@gmail.com>
+Date:   Sat Jun 12 15:30:54 2010 +0200
+
+    JRUBY-4868: Socket.getservbyname doesn't accept string port argument
+    
+    Regression test added as well.
+
+commit 1c6e5609b45528b80c956a4f69f86f232e98fb51
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue May 4 15:58:27 2010 -0500
+
+    Rework fileno/descriptor registration to live entirely within ChannelDescriptor. This avoids descriptors being unregistered prematurely by RubyIO finalization, eliminates RubyIO finalization, and centralizes registration much more neatly. An additional map is added to Ruby to allow 0, 1, and 2 to always map to the current runtime's notion of in, out, and err.
+
+commit f8f8526605de73c2162197f6422e670e2afbec65
+Author: Wayne Meissner <wmeissner@gmail.com>
+Date:   Thu Mar 25 11:45:55 2010 +1000
+
+    Replace src/org/jruby/ext/socket/IANA.java usage with jnr-netdb
+
+commit a8981decdbf4a91054a5db6c6da90ccb1836de74
+Author: Joe <qbproger@gmail.com>
+Date:   Thu Jan 14 20:19:24 2010 -0500
+
+    add connect and connent_nonblock to socket
+    
+    Signed-off-by: Charles Oliver Nutter <headius@headius.com>
+
+commit eb1f44e4ba939ba9b1d07e11c2e9a4cd127b9a79
+Author: Vladimir Sizikov <vsizikov@gmail.com>
+Date:   Sun Nov 15 13:03:31 2009 +0100
+
+    JRUBY-4232: Socket.bind() not available with jruby
+    
+    - Socket/Server sources clean-up (removed trailing spaces, TABs).
+    - Some more tweaks, based on patch by David Calavera.
+    
+    All newly added RubySpecs for Socket#bind pass now, on Windows and Linux.
+
+commit f02c8e3a54319a16c5802f04416d5bc54108581a
+Author: Wayne Meissner <wmeissner@gmail.com>
+Date:   Wed Sep 2 23:28:03 2009 +1000
+
+    Fix JRUBY-3937 by using defined constants instead of hardcoded literal values.
+
+commit 35b64fa74c28ff95a02a197da416a5597c67f466
+Author: David Calavera <david.calavera@gmail.com>
+Date:   Mon Aug 24 17:02:47 2009 +0200
+
+    fixes JRUBY-2666: Issues with Socket#getaddrinfo
+    
+    Signed-off-by: Charles Oliver Nutter <headius@headius.com>
+
+commit 7a56394aaeb7266f10bcf71a828c5bd1d91bac16
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Aug 24 00:12:50 2009 -0500
+
+    Fix for JRUBY-3927: WEBrick binds only to localhost, not to requested bind addresses
+    
+    Contrib by Joshua Go...thanks!
+
+commit 219a5e81cbdc0f47940ad37e7107629ebb824af2
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Aug 8 07:18:09 2009 -0400
+
+    Fix for JRUBY-3862: Socket.pack_sockaddr_in is broken on linux
+    
+    Thanks to Aman Gupta for the fix!
+
+commit 780d1084da38540a02b7b0e4afdad3b7b57f919d
+Author: Brice Figureau <brice@daysofwonder.com>
+Date:   Sun May 31 19:01:53 2009 +0200
+
+    Fix JRUBY-3563 - fix Socket.getnameinfo to accept getpeername output
+    
+    Since the move toward compatibility of getpeername which not returns
+    a string encoded sock_addr, Socket.getnameinfo wasn't working anymore.
+    This patch adds this format to getnameinfo (BTW, this also solves one of
+    the net-ssh issue).
+    Also this patch implements the case when NI_NUMERICSERV is not given and
+    we have to give back the service as a string.
+    
+    Signed-off-by: Brice Figureau <brice@daysofwonder.com>
+    Signed-off-by: Charles Oliver Nutter <headius@headius.com>
+
+commit 2514af6b2d2cfd740e5388c35580d124eb8ed7c6
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Apr 14 00:13:58 2009 -0500
+
+    Fix for JRUBY-3563: getsockname and getpeername should return a struct sockaddr
+
+commit 770c14ad1224e0bbf2ba55c009ccaabf154a86ae
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Feb 16 06:21:56 2009 +0000
+
+    Improvements for JRUBY-3076: RubyUDPSocket.send tries to do inet address lookup, pauses too long for inet6 failure
+    
+    It turns out Ruby has special-cased logic for <broadcast> and <any> incoming address names. I added this for paths related to this bug, but it probably should be put in place for others as well.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9192 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 1501bc7a0241b767ed5a0ccf1736bf00de5c024f
+Author: Wayne Meissner <wmeissner@gmail.com>
+Date:   Fri Jan 23 09:01:24 2009 +0000
+
+    Rework Ruby#loadConstantSet to use the complete cross-platform set, and filter out constants that don't start with an upper case char
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8875 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 5a2bf93b221217617d81ac60cd5be3838acce9b9
+Author: Wayne Meissner <wmeissner@gmail.com>
+Date:   Thu Jan 22 23:07:32 2009 +0000
+
+    Change some Socket constants to use constantine instead of hard-coded
+    fake values.
+    
+    Also add proper support for TCP_NODELAY, which was previously broken,
+    and broke some tests when different values for IPPROTO_IP and SOL_IP are
+    used.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8871 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 59793962d7cabfe27bacdd76f3d3fc6684f7ac4c
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Wed Dec 17 15:16:25 2008 +0000
+
+    JRUBY-2538 was fixed in past...remove tag.  unused imports
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8377 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit aa4cc160db6b29fb45a1c9278aae93613078e991
+Author: Wayne Meissner <wmeissner@gmail.com>
+Date:   Tue Nov 11 04:15:21 2008 +0000
+
+    Backout Socket constants changes.  Need a better way to ensure that all constants are defined in JRuby, even when the underlying OS doesn't support them
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8042 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 6bf0c7f033597d83974e848d7111630dda65927a
+Author: Wayne Meissner <wmeissner@gmail.com>
+Date:   Mon Nov 10 23:55:29 2008 +0000
+
+    Use constantine constants for AF_* and PF_*
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8041 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit c93970075482bc7f12eb96b0ab02c477c9514229
+Author: Wayne Meissner <wmeissner@gmail.com>
+Date:   Mon Nov 10 22:11:41 2008 +0000
+
+    Use constantine constants for Socket::SO_BROADCAST and friends
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8040 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 704f2b49af62a1c59700dfca329501504ae2d3ab
+Author: Wayne Meissner <wmeissner@gmail.com>
+Date:   Mon Sep 29 11:08:28 2008 +0000
+
+    IRubyObject#getRuntime() -> ThreadContext#getRuntime() sweep for src/org/jruby/ext/socket
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7802 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 37b8116549eba456efa82f5277f6205c4a04252d
+Author: Wayne Meissner <wmeissner@gmail.com>
+Date:   Wed Sep 24 10:17:17 2008 +0000
+
+    Fix JRUBY-2840 by defining required constants.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7773 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 84c534114b752465c9b8957548a4d27bd85e0ed8
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jul 4 16:06:49 2008 +0000
+
+    Trying to improve gethostbyname output; this looks at the InetAddress type and sets AF_INET or AF_INET6 accordingly.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7105 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit aa364e31f4df8372a40d0edd4905a8179c75373d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Jul 3 17:01:15 2008 +0000
+
+    Fix for JRUBY-2687, Socket.for_fd not implemented correctly.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7097 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a7b41d876cb677ba653a997002aa397613468d83
+Author: Vladimir Sizikov <vsizikov@gmail.com>
+Date:   Fri Jun 20 13:20:17 2008 +0000
+
+    JRUBY-2682: Replace StringBuffer with StringBuilder.
+    
+    Patch by Wayne Meissner.
+    
+    Signed-off-by: Vladimir Sizikov <vsizikov@gmail.com>
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7004 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a85973e9a76fe08c741fe226662a339d2f3e0fc0
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Mon May 12 18:53:14 2008 +0000
+
+    Cache remaining core exceptions in the runtime so we don't get NPE's when they're reassigned.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6683 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit cbfcf0c1b80b4cb7f306d268e5ca63c98732c522
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Apr 10 19:54:50 2008 +0000
+
+    Cleaning up more callback use, as well as an ugly one in RubyMethod. Also tagged existing unused callback factory entry points as deprecated. Almost there!
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6456 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 424a1cbff5aea37f2f92cc208d29d2544f092828
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Wed Mar 19 12:21:15 2008 +0000
+
+    Annotate the rest of the Java classes with names, parents and inclusions. Also add a warning to install_doc.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6291 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a3cd040c2b5b940ed66be03caf9d31b7392bdbe1
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Thu Mar 6 15:53:30 2008 +0000
+
+    Trivial Change: Move JNA enabled check before JNA socket load
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6119 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 73754763128b3754f5c190513d23de900ba0216b
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Sat Mar 1 00:15:30 2008 +0000
+
+    Make RubySocket use the nativeEnabled flag
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6075 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 1614241d51bdf6c5e9de02a4ee68f5ce64bc16f2
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Wed Feb 6 22:34:36 2008 +0000
+
+    Make UNIX Domain sockets work with Mysql pure ruby driver, fix closing issues, some misplaced nonblocking settings and also working setsockopt for a few values.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5852 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit c090a3211fb860057412a4ec684c7fede88405dd
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Tue Feb 5 17:11:12 2008 +0000
+
+    Fix for JRUBY-2061, implement UNIXSockets using JNA. Also fix some Errno problems
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5826 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 66b024fedbb2ee32316ccd9de8387931d07993ec
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 5 05:57:53 2008 +0000
+
+    Merging the new IO implementation to trunk to give it appropriate burn-in time. Give it a go, friends!
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5821 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit abb162416e729f21059370c3d4eb05dd0869b525
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Fri Jan 25 16:29:05 2008 +0000
+
+    Fix final failures of socket specs
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5740 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit ed547b3059682033811b712e2e84a730eed8ab9f
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Fri Jan 25 16:28:57 2008 +0000
+
+    Fix failure based on packing address with empty string should become 0.0.0.0.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5739 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a922fa09b34ff523a14cb9a1fbf7c036383b6f72
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Fri Jan 25 16:28:48 2008 +0000
+
+    Fix remaining failures in JRUBY-2039
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5738 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit de67a1d9aeb7a1002b1e04101b7fea17549ab56a
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Fri Jan 25 16:28:39 2008 +0000
+
+    Partial fix for JRUBY-2039, add getservbyname.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5737 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 1733964131d146ffa0392462002b19ca139a5a9a
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Fri Jan 25 16:28:30 2008 +0000
+
+    Partial fix for JRUBY-2039, full implementation of Socket#setsockopt
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5736 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 32d8274e7bedd47c4ed3246bdd690f0329da0286
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Fri Jan 25 16:28:20 2008 +0000
+
+    Fix more or less correct Socket#initialize and correct getsockopt
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5735 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit fe71dd428b15ddb90afd0adc9514f03c85c5ddd1
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Fri Jan 25 16:28:01 2008 +0000
+
+    Add constants more correctly for Socket, make sure getsockopt actually throws an error correctly
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5733 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 1a5c1fd3cba76b61a5402b145edc3bf975c35746
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Fri Jan 25 16:27:50 2008 +0000
+
+    Added needed constants, and missing Socket#initialize method
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5732 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit b3d416662a9b358da11a63a1900dd8a917340322
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Jan 12 23:24:11 2008 +0000
+
+    Multiple cleanups:
+    * Remove most Arity.checkArgumentCount calls since they're handled by generated method handles now
+    * Add javadoc comments to MethodFactory impls and their public methods.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5576 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a694709e87e269be436ed1d176a688712beb9d5d
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Tue Jan 1 05:09:53 2008 +0000
+
+    Remove unused callbackfactorys
+    Add partial impl of Etc with some cooler pieces of it still commented
+    Remove many warnings
+    Some generics to lessen warnings
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5456 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d5edd038a6f0356e46d6307c3391182f12211e9d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Dec 28 21:54:03 2007 +0000
+
+    Fix for JRUBY-1812, load should accept a "wrap" parameter that causes it to load in a new top self.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5400 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a6d700d4c32dca24856ee21780cbe8c96ee3bee7
+Author: Bill Dortch <bill.dortch@gmail.com>
+Date:   Wed Dec 5 08:30:35 2007 +0000
+
+    Add Socket support required by Net::SSH -
+      - add NI_xxx constants
+      - fix #getnameinfo to take alternative String arg[0]
+      - observe flag values in getnameinfo (more could be done here)
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5167 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 95c346df5368a3f5f06fa9d14022efb85eaa6809
+Author: Bill Dortch <bill.dortch@gmail.com>
+Date:   Mon Oct 15 07:45:22 2007 +0000
+
+    Vars have landed. Does not include concurrent SymbolTable (will follow in the next day or so). Also need multi-threaded unit tests, work in progress.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4588 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 6077e241cfa406514cef1d17999cfbbe2622c52f
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Fri Jul 13 09:12:16 2007 +0000
+
+    Fix gethostname when running on Java 6 with funky DHCP stuff
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4010 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 6786296a5bab0a068e8c0d3327ad8476f834367c
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Thu Jul 5 11:34:32 2007 +0000
+
+    Basic UDP support, fix for JRUBY-1126, by Damian Steer
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3962 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 8e632a725e231773a706c5945068f75188b14d63
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Apr 5 07:58:07 2007 +0000
+
+    Removed several more IRubyObject methods
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3393 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 8c2bc8cfe9f4bcaa23b9e8544c55d7f9dc6c54b1
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Mar 29 07:08:05 2007 +0000
+
+    More IRubyObject cleanup; removed initCopy, moved setFrozen around, moved checkArgumentCount to Arity
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3322 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 3f7a006fec0f12a1cb53c78f0059a95768a7e0c8
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Mon Feb 26 11:17:59 2007 +0000
+
+    Socket errors should use the correct allocator
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3079 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 47a5bcab854bea5b3126c530282abc368eb0fb03
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sun Feb 25 18:36:50 2007 +0000
+
+    JRUBY-629: Socket.getaddrinfo should accept a nil host parameter
+    
+    [tested via rails actionwebservice unit test]
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3074 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a2107e60085a5063bca76d897783a512bbd7eddc
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sun Feb 18 15:18:18 2007 +0000
+
+    JRUBY-606: Get rid of un/under-used IRuby interface
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3022 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit bb20e69fca02df78c52e9c534db24e9f4dda0509
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sat Feb 17 22:29:59 2007 +0000
+
+    JRUBY-599: JRuby needs a COW, primitive array backed builtin Array
+    JRUBY-604: Hash#sort raises exception
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3014 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit ba941779cfc4123140eb4dc085f3d6ec561ab8f2
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Fri Feb 16 05:32:51 2007 +0000
+
+    JRUBY-570: nuke plaincharset.jar!
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3008 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit ef423f1b886650195114fe952a1a6407fbb63f82
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Wed Feb 7 22:27:41 2007 +0000
+
+    - Create a NULL_BLOCK to replace null checks against blocks:
+      - Now isGiven() on a block tells you whether it is supplied or not
+      - yield on the NULL_BLOCK throw the correct exception
+        - We were not throwing this correctly by most callers with my landing of
+          the block branch
+        - We were generating NPE in cases where we called something that requires
+          a block and supply none
+    - Block.blockObject => Block.proc
+     - Rename and type since this is just a convenience reference for association
+       from block to what proc it might represent
+    - Remove unused blockAtCreation (this may become relevent for Ruby 2 but why do
+      it now
+    - Remove ThreadContext and IRuby from Frame
+    - Remove Scope
+    - Put Visibility directly on Frame
+    - callingzsuper dead code
+    - Now that modules have a proper superclass we can get rid of special code in
+      callSuper
+    - ArgsPushNode.childNodes should not return null
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2956 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d1e187ee1a48a02764375e108a6f62ab580de2ad
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 6 04:18:52 2007 +0000
+
+    First round of changes for JRUBY-565, converting RubyString's internals to byte[] and using PLAIN encoding for most uses of Java strings internally. More to come, including improving (and re-fixing) UTF8 support.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2951 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 2f35b1cf3531cdbfa12075b7c76de1c1ff2309f9
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Thu Feb 1 12:27:47 2007 +0000
+
+    Switch socket library to be completely implemented in Java, including improving some parts of the functionality
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2898 961051c9-f516-0410-bf72-c9f7e237a7b7

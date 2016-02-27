@@ -1,0 +1,337 @@
+commit ee0c987ff64545d318d3262ff13dc9db76a9e02e
+Author: Felix Schumacher <fschumacher@apache.org>
+Date:   Fri Jan 2 21:13:05 2015 +0000
+
+    Bug 57193: Add param and return tags to javadoc
+    Bugzilla Id: 57193
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1649126 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6bd920ae11b88e016c69043de60d93a205220f67
+Author: Felix Schumacher <fschumacher@apache.org>
+Date:   Thu Nov 13 19:09:14 2014 +0000
+
+    Bug 57193: A few javadoc fixes
+     * Remove self-closing br-tags by replacing them with a
+       unordered list
+     * Add links to URL in javadaocs
+     * Add a return description in javadocs
+    Bugzilla Id: 57193
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1639461 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 71017ef0e7a1b762372392629990433309c6415e
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Sat Aug 30 18:50:14 2014 +0000
+
+    Switch to HttpClient for Date parsing in Header
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1621516 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6ec25d4c825d6919abf0be1e422b5e725b3586e9
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat May 17 01:02:44 2014 +0000
+
+    Add missing final EOL
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1595401 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8d7a4a141ee4389239488932ca1aa8adb6ec42c1
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Wed Feb 26 22:47:42 2014 +0000
+
+    HTTP Cache Manager should not cache PUT/POST etc.
+    Bugzilla Id: 56162
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1572319 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d74e33a2bdf9efbc53e1097283133cc788ec1db3
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Tue Oct 29 23:30:12 2013 +0000
+
+    Bug 55721 - HTTP Cache Manager - no-store directive is wrongly interpreted
+    Check for npe
+    Bugzilla Id: 55721
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1536929 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b2411c9d601026dcf5f668667bb7cb454941d3b0
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Tue Oct 29 23:28:43 2013 +0000
+
+    Bug 55721 - HTTP Cache Manager - no-store directive is wrongly interpreted
+    Bugzilla Id: 55721
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1536928 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 9a258e47eda1c750f98a2a9169313c52b382b4fa
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Jul 5 08:35:52 2013 +0000
+
+    Integer overflow when computing ONE_YEAR_MS in HTTP CacheManager
+    Bugzilla Id: 55187
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1499938 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 5de4189b5d9b2dd01d84bd9a9130f12855f702f2
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Nov 27 00:18:19 2012 +0000
+
+    Move to Java 6
+    add @Override for interface implementations
+    Bugzilla Id: 54199
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1413957 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 01ff96e4158444a792f244844e34cbe83d9feab9
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Fri Aug 24 14:17:03 2012 +0000
+
+    Removed useless method call
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1376930 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 472da1514d311de44fe5569b48be26d8f6946785
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Thu Aug 23 00:48:23 2012 +0000
+
+    Bug 53765 - Switch to commons-lang3-3.1
+    Bugzilla Id: 53765
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1376337 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a81b678d62a693b65fba6ebac8a22d3810e7c65a
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Wed Aug 22 22:56:54 2012 +0000
+
+    TestListener interface could perhaps be split up.
+    Bugzilla Id: 53749
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1376300 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 964ad2cae364cdb9f1e3ca63522ce989be8476eb
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Sat Jul 14 19:03:54 2012 +0000
+
+    Bug 53522 - Cache Manager should not store at all response with header "no-cache" and store other types of Cache-Control having max-age value
+    IF Last-Modified or Date are missing or invalid, set expiration date to one year in future
+    Bugzilla Id: 53522
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1361574 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 0314291864f3deed92d59a83edbaa28029f494d5
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Jul 14 16:12:32 2012 +0000
+
+    Fix comments
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1361558 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b84c05de9352e0649202c6e21f4e3103f5c41dfe
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Jul 14 16:09:25 2012 +0000
+
+    Ensure all parameters are in debug log
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1361557 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 30f680f8946d2654f991b077ca77c50a3b8797a4
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Sat Jul 14 15:49:16 2012 +0000
+
+    Bug 53522 - Cache Manager should not store at all response with header "no-cache" and store other types of Cache-Control having max-age value
+    Added test case
+    Added sleep to ensure entries become invalid after their expiration date has passed
+    Bugzilla Id: 53522
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1361555 13f79535-47bb-0310-9956-ffa450edef68
+
+commit afbdf8a207d6ea2412b268c0249a835ec102da24
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Sat Jul 14 14:25:11 2012 +0000
+
+    Bug 53522 - Cache Manager should not store at all response with header "no-cache" and store other types of Cache-Control having max-age value
+    Changed to store entry forever if no max-age and no expires header which is what specification says in my understanding:
+    http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html
+    Bugzilla Id: 53522
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1361551 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c78d7d0e2857f1a725feb9e19200d1b4c93033f8
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Jul 10 19:50:45 2012 +0000
+
+    no-cache responses should be stored, but must be revalidated, so don't store an expiry date for them
+    Bugzilla Id: 53522
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1359858 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 72fbf46510cfe37ea13b3942c4efeeea0ec46249
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Sun Jul 8 14:56:27 2012 +0000
+
+    Bug 53522 - Cache Manager should not store at all response with header "no-cache" and store other types of Cache-Control having max-age value
+    Bugzilla Id: 53522
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1358753 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 9d7b3bab316ff7451f55bd19f4590bb6cf0cc216
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Sun Jul 8 14:23:54 2012 +0000
+
+    Bug 53522 - Cache Manager should not store at all response with header "no-cache" and store other types of Cache-Control having max-age value
+    Bugzilla Id: 53522
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1358746 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f8194b6efd559eaed415c35eb7d1a986835ea72b
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Sun Jul 8 09:40:51 2012 +0000
+
+    Bug 53521 - Cache Manager should cache content with Cache-control=private
+    Bugzilla Id: 53521
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1358710 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 2bad2b8f1764f0595dd2d13391e93cc6dc5a7d37
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Jun 23 15:36:18 2012 +0000
+
+    Standardise on HTTPConstants, not the interface
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1353149 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 5d7da60ec2b115dfdf9fafbc5684d07fbfa6d33d
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Mon Oct 24 12:29:18 2011 +0000
+
+    Fix generics warning
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1188114 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3541a21eac5fc02ef7df24807892e4bae3a6d7da
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Thu Oct 20 19:07:13 2011 +0000
+
+    Bug 52064 - OutOfMemory Risk in CacheManager
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1186994 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 12e1e0a05614327cb4b37e2e309cb905b4874aea
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Oct 4 17:09:01 2011 +0000
+
+    Bug 51942 - Synchronisation issue on CacheManager when Concurrent Download is used
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1178867 13f79535-47bb-0310-9956-ffa450edef68
+
+commit adf085462abeecb97570ca2080bd5059fc2fe914
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Sep 30 22:44:46 2011 +0000
+
+    Bug 51932 - CacheManager does not handle cache-control header with any attributes after max-age
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1177871 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 82d24f3d38d8b4e7c16a782633f997fc6f5efe2a
+Author: Bruno Demion <milamber@apache.org>
+Date:   Wed Sep 7 13:20:47 2011 +0000
+
+    Bug 51752 - HTTP Cache is broken when using "Retrieve all embedded resources" with concurrent pool
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1166165 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ef8623c6fc90bb4f4fa2c34aa513a246750816a3
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Dec 10 02:14:38 2010 +0000
+
+    Add method for Apache HttpClient
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1044198 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ebf31cf3c3541c599b45e9f2d9a395230598f235
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Mon Dec 6 11:27:09 2010 +0000
+
+    Add Apache HttpClient support
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1042587 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1b870d0fb6eb7c01373ae7d47b7ab427ab89d672
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Feb 23 16:09:09 2010 +0000
+
+    Remove trailing spaces
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@915405 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b423c4357b1daefb339d86254c417b2beec17cd1
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Nov 17 19:27:50 2009 +0000
+
+    Bug 48153 - Support for Cache-Control and Expires headers
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@881451 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1987e3fdb11725c159d68c3eaa54bb4073b03cae
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Nov 17 00:17:11 2009 +0000
+
+    Bug 47461 - Update Cache Manager to handle Expires HTTP header
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@881068 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ebec1397ede9dd6136f994ff989758e701c91ae7
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Nov 13 18:32:40 2009 +0000
+
+    Allow access by unit-test cases
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@835948 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 5532eab69447b260cc3d47e916febadec68092e4
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Aug 14 22:37:19 2009 +0000
+
+    Make ThreadLocal variables type-safe
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@804399 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 4bdf9c6650ba4ede2039a0e29a353224f3127cc9
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Aug 14 19:08:38 2009 +0000
+
+    Add @Override and @Deprecated annotations
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@804323 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 413d3f24baddd42541a5310843cb69ce187611d3
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Oct 5 01:02:48 2008 +0000
+
+    Add serialVersionUIDs
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@701738 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6bf94deccce242cd1bba95592f54fd78a90dfc3e
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Jul 6 23:56:15 2008 +0000
+
+    Detab
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@674365 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 2526e684ae6b56ec3da9218599e23e22c69c5701
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu May 29 21:15:21 2008 +0000
+
+    Bug 28502 - HTTP Resource Cache - initial implementation
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@661482 13f79535-47bb-0310-9956-ffa450edef68

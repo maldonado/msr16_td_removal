@@ -1,0 +1,1032 @@
+commit 562c27936519fa3bb1636c91f874de5808d5b290
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Jan 2 16:06:20 2014 +0000
+
+    don't set the use-caches flag for all connections, just for the one currently read from - caught by Jesse Glick
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1554840 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6ea9dc1024fa547e046417d86c602bed21d64a43
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Jan 1 21:55:35 2014 +0000
+
+    When loading resources from jars it seems to be advisable to disable
+    caching.  PR 54473.  Combining patches by René Krell and Antoine
+    Levy-Lambert.
+    
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1554684 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 13000c1a4670271a3257b3c41dc1e17941067c78
+Author: Jesse N. Glick <jglick@apache.org>
+Date:   Wed Jul 17 22:46:10 2013 +0000
+
+    sconnolly advises using TODO rather than XXX in comments.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1504315 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 51ce8fac7296500ba974ee639616c82475b4f171
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Sun May 12 22:37:56 2013 +0000
+
+    fix for Target rewriting for nested "include" only works when "as" is specified, Bugzilla PR 54940
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1481662 13f79535-47bb-0310-9956-ffa450edef68
+
+commit da5f3bfd256e383926c6ece58dba15a7d4bd5761
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Tue Aug 21 14:27:46 2012 +0000
+
+    java 5, continued
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1375571 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 944210b384ccb4e335ce5a5c3ded7f784fd3e581
+Author: Nicolas Lalevee <hibou@apache.org>
+Date:   Wed Aug 15 10:40:16 2012 +0000
+
+    BR 53550, thanks to Tim Pokorny
+    Improve the resolution of the extension point to bind to:
+    - first try the extension point which might be in the same file
+    - then try the one in the root file
+    
+    Still some work to do: there might be intermediate file in the import stack which we would to resolve the name against, but the ProjectHelper doesn't hold the prefix stacking.
+    
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1373326 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d377aa50f3aef9a5dbb9974d1e5818489ab2db99
+Author: Nicolas Lalevee <hibou@apache.org>
+Date:   Wed Aug 15 10:37:23 2012 +0000
+
+    BR 53549
+    Make the ProjectHelper class expose the method which properly bind targets and extension points.
+    Thanks to Jean-Louis Boudart
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1373321 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 91daac5ad7cb1b28ec72ca13d11253648f2e4ddd
+Author: Nicolas Lalevee <hibou@apache.org>
+Date:   Wed Jun 13 20:22:26 2012 +0000
+
+    #53405 : ExtensionPoint doesn't work with nested import/include
+    Thanks to Jean-Louis Boudart
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1350000 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6b7bc9e53500d2347a555dea2988788a922f3101
+Author: Jacobus Martinus Kruithof <jkf@apache.org>
+Date:   Sat May 26 13:33:54 2012 +0000
+
+    Bug 53291 - Several spell checker findings in apache ant 1.8.3 documentation
+    -- api --
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1342897 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 33b564a18352aee0547e5fc8e5268d0c2f731e04
+Author: Jesse N. Glick <jglick@apache.org>
+Date:   Thu Apr 19 17:02:09 2012 +0000
+
+    JDK 5.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1328047 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e21405f8ee2bc8cea775bbbaee7eb29ffe50aca9
+Author: Jesse N. Glick <jglick@apache.org>
+Date:   Thu Apr 19 16:19:13 2012 +0000
+
+    JDK 5.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1328028 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ea33301047ba2de74fa062155df4d6337e5d1392
+Author: Jesse N. Glick <jglick@apache.org>
+Date:   Mon Apr 16 19:30:18 2012 +0000
+
+    #52829: ResourceCollection now Iterable<Resource>.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1326760 13f79535-47bb-0310-9956-ffa450edef68
+
+commit acaefe7e828ce7c653d463d3caa0b7b304cd0feb
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Fri Apr 8 15:45:49 2011 +0000
+
+    typos
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1090304 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 70abcb7f5d2128f7af46b37ca416d2859a77d8e6
+Author: Nicolas Lalevee <hibou@apache.org>
+Date:   Mon Nov 15 16:09:07 2010 +0000
+
+    Make an enum like class for the values of the missing extension point behavior
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1035335 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3ef6daa0c059beb1dc02fd57435a88a4392219dc
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Sep 27 14:33:08 2010 +0000
+
+    according to the javadocs of JarURLConnection the separator is !/ not ! - this allows dealing with jars in directories that contain a ! in their name, as long as it is not at the end of the directory name.  PR 50007
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1001756 13f79535-47bb-0310-9956-ffa450edef68
+
+commit bd52e7b9b16b87287bed0c011c4fc1794543e9fb
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Jun 23 12:15:13 2010 +0000
+
+    allow targets to deal with missing extension points.  PR 49473.  Submitted by Danny Yates.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@957170 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 13941782fe873cc353e3dd1f25649a401d826952
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Apr 27 04:06:37 2010 +0000
+
+    extension-point doesn't work with import.  PR 48804
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@938315 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 2c468c212113f3d3f8807f41f2fe72d9b3727748
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Apr 22 11:18:08 2010 +0000
+
+    don't warn about duplicate project names if importing the same URL twice.  PR 49162
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@936784 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 510f6b08f62143dee0fa468e9c659ccec0562589
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Jan 4 05:57:17 2010 +0000
+
+    target-group -> extension-point
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@895567 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6cb11c4a231c055d9ed5f710f842ee190282c65c
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Dec 15 15:27:11 2009 +0000
+
+    try a bit harder to close the archive when reading a build file.  Since that still doesn't work, add a task to brutally close jars and use it in import-url-test
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@890827 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e1cd13c79b97bbf750fe5859769f90a99aa9f9bf
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Nov 16 05:32:43 2009 +0000
+
+    support creating url resources relative to other URLs
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@880590 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 42f31b452be82bd026330f0e3ea44878f8c79e5f
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Sun Nov 15 07:25:03 2009 +0000
+
+    Fix import's file attribute if file is imported from URL, test it, document it.  Note to self - url resource needs a way to create relative urls.  Not to self - the duplication in the manual pages for import and include must stop.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@836334 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 2ef9a200ad3991e75ca0bd5d909b751ce7a704c7
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Nov 5 04:38:16 2009 +0000
+
+    allow import of FileProvider or URLProvider resources
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@832990 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 28ca0623119a788c754840b78a50b052518b2006
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Oct 27 14:39:48 2009 +0000
+
+    Use URLProvider instead of URLResource
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@830209 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 89ddfa3d6c328407d120b33bad3705b3f54f4d7e
+Author: Nicolas Lalevee <hibou@apache.org>
+Date:   Mon Oct 26 20:43:58 2009 +0000
+
+    - use the project helper repository for antlib too
+    - change the ProjectHelper API to start using Resource instead of URL or File
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@829947 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 08bdfe8f1b628bdf367a1955f894ec42085de840
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Nov 20 08:45:52 2008 +0000
+
+    allow target-group attribute to use a comma-separated list
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@719198 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 2077f6716fa502957d606dc27630d3a618362620
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Nov 19 12:42:06 2008 +0000
+
+    Add target-group, a special target that must be empty and whose dependency list may be extended by other target(-group)s using their (new) target-group attribute
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@718943 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 193919c329fa321ecc79324cec4ee98ba61160c8
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Nov 13 16:05:47 2008 +0000
+
+    make sure prefix isn't set to project name in import.  make sure it is set even when no target has been encountered in include.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@713745 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6b2378c2e6dfde13698cbe45bf633854c817bbd6
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Nov 12 13:53:57 2008 +0000
+
+    Make prefix separator configurable, nest prefixes in include
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@713373 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 32c6ef39e4527cdcaeb6a702be90203ca8ced940
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Nov 11 11:03:45 2008 +0000
+
+    add an <import> variant named <include> that matches EasyAnt's <use>
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@713016 13f79535-47bb-0310-9956-ffa450edef68
+
+commit dcf31da592d1ef3c7fad80f729b83f500372bed9
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Nov 11 09:36:51 2008 +0000
+
+    add 'as' attribute to <import> in order to control the imported target's prefixes
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@713005 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6a02f448306dee5d4d63dbb092c365469420129d
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Sep 16 13:21:01 2008 +0000
+
+    use the configured ProjectHelper to parse antlib descriptors, if possible,  PR 42208.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@695865 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 073153dd3797a3828591d86a2d069c8a317f893b
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Sun Aug 12 18:24:20 2007 +0000
+
+    checkstyle
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@565104 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3be2b26d815b4e8b26dedbb5be5223bbb6e9604a
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Tue Jul 17 18:47:28 2007 +0000
+
+    fmt/refac
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@557021 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 5184f14831e2987c93d2cbbf5da2318ca5c00241
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Fri Jun 22 03:52:02 2007 +0000
+
+    formatting & MagicNames
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@549699 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 0aa2b2528ff92c3786e50f82ea65acf4d134c260
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Wed Nov 1 00:13:43 2006 +0000
+
+    some checkstyle changes
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@469717 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f5c95e9ca4ca7a2f05523c8205b378a43e1329c4
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Tue Oct 17 21:33:42 2006 +0000
+
+    add fall-back for undefined references that are parsed
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@465065 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d7f1401f8589bd36b84f7805acbb66d67848dba6
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Fri Oct 6 21:17:50 2006 +0000
+
+    Defer references
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@453770 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 583cfae0e5473ffda8b3d45b750980b08550d995
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Thu Oct 5 21:48:49 2006 +0000
+
+    Do not set ant.file.{projectname} when the project name
+    is not set in the <project> tag. (as discussed)
+    Bugzilla report: 39920
+    
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@453401 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 2e897819a83981a1f4de2e1cc72e33f080fcf573
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Sep 1 18:49:27 2006 +0000
+
+    copy2license.pl
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@439418 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 585cd59bf5bec7199af3e19540234f926379e206
+Author: Jesse N. Glick <jglick@apache.org>
+Date:   Wed Jul 26 22:29:50 2006 +0000
+
+    People should not think that "file:../master.xml" is a meaningful URI.
+    Ant historically supports it but normal XML parsers do not.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@425879 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 768aeff3fcfb83725af7a0791d298e6f4b68a472
+Author: Alexey N. Solofnenko <alexeys@apache.org>
+Date:   Tue May 2 02:58:03 2006 +0000
+
+    Restored butchered imports.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@398781 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 0ee0b54fd4bc3adb77d409b48162f55fccd7dfc5
+Author: Alexey N. Solofnenko <alexeys@apache.org>
+Date:   Tue May 2 02:52:46 2006 +0000
+
+    Added static accessors to parser handlers.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@398780 13f79535-47bb-0310-9956-ffa450edef68
+
+commit dfaca18fceb96b17a426554f1ddd06e02ee3591a
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Apr 12 20:53:29 2006 +0000
+
+    set target's name before the depends attribute - leads to more meaningful errors.  PR 37655
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@393610 13f79535-47bb-0310-9956-ffa450edef68
+
+commit dfc1bee39414dbd90d79d067b7f20ad54c7dcfcc
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Fri Oct 21 19:21:29 2005 +0000
+
+    Add debugging messages for Gump failure.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@327253 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c5a01d909ced9e431f155f2225d8232d1301cbde
+Author: Jacobus Martinus Kruithof <jkf@apache.org>
+Date:   Sun Jun 12 17:55:14 2005 +0000
+
+    Removed unused local variables.
+    
+    I think there is an error in ConCat, see added comment.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@278420 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 607f1c73575724cb1b1defa3aec95bc3d8d27c5b
+Author: Steve Loughran <stevel@apache.org>
+Date:   Sat May 21 21:39:53 2005 +0000
+
+    use of fileUtils.close
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@278319 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3d66f4ef91b4caeba139914e097e68800c38d941
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Mon May 16 18:59:58 2005 +0000
+
+    Allways create qualified targets in imported build files
+    PR: 28444
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@278272 13f79535-47bb-0310-9956-ffa450edef68
+
+commit af2f9b85060526cb632ae24db889cfc07847eb38
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Tue Apr 26 11:55:18 2005 +0000
+
+    allow url'ed source's to be used as build files
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@278186 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 0a36bf20ec54cff2f7d0bdef2f7065575875fbcb
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Mon Apr 25 10:15:11 2005 +0000
+
+    check for same targets in a source file
+    PR: 34566
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@278179 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 257dadeaf0fb8588b80fa71b24ee3aca38ea19b7
+Author: Jacobus Martinus Kruithof <jkf@apache.org>
+Date:   Thu Jan 6 12:05:10 2005 +0000
+
+    Make use of FileUtils in a uniform way via the getFileUtils method and a static final reference in the using files.
+    Also removed unused/* imports along the way.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277295 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 0e1abe82d1942310786839697ac61424808f62ea
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Thu Nov 18 09:48:59 2004 +0000
+
+    Set the location for the default target (the location will be the project tag)
+    PR: 32267
+    Reported by: Yves Martin
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277048 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 12efb8ddef1282149515c43b61172b93855aebd0
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Nov 12 11:07:13 2004 +0000
+
+    several javadoc fixes.
+    
+    PR: 30410
+    Submitted by:	Brant Langer Gurganus
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277025 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 39404a01944f1f80a52e8318e75b0dfc84e08894
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Oct 26 14:56:55 2004 +0000
+
+    Better error reporting when users set the wrong default namespace.
+    
+    PR: 30660
+    Submitted by:	Kevin Greiner <kgreiner at xpediantsolutions dot com>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276963 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1c48e016c22d2e836f1926b4edbba6774e6ce3f9
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Thu Sep 30 17:05:38 2004 +0000
+
+    Fix for execution of top level tasks getting delayed by targets.
+    PR: 31487
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276905 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 476678d4a660bd6077ae4a8389cc29f42fbde0c9
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Mon May 24 15:09:57 2004 +0000
+
+    DynamicConfiguratorNS
+    Initial code for dynamicConfiguratorNS.
+    Change from patch the qualified name is given and
+    not the prefix.
+    PR: 28426
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276473 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 33ac6bc3ceb37259604ae74781ab53913b4079da
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Mon Apr 26 17:49:51 2004 +0000
+
+    Add a Location member to oata.Target, with the appropriate settor & gettor.
+    PR:  28599
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276407 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 5ee9f7e6b52909e3d72fe3b58dca99b035b5d176
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Apr 14 15:42:08 2004 +0000
+
+    -breakiterator fixes by Jack Woehr
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276313 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8a5186ec79351562317db7276289191366aef3f3
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Wed Mar 10 09:24:02 2004 +0000
+
+    fix if build file name has ../ or ./
+    PR:  26765
+    Reported by: Ian E. Gorman
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276213 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c885f568369156a62e3ccb5b4b93b73b9d054443
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Tue Mar 9 16:49:09 2004 +0000
+
+    remove authors from files
+    PR: 27177
+    Obtained from: J.M. (Martijn) Kruithof
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276208 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3e7907c8550f987601c6f3f9ccdd93057393f9bc
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Fri Feb 27 11:45:15 2004 +0000
+
+    Fix for duplicate targets in the build file.
+    In ant 1.5 these were not allowed.
+    In ant 1.6, with import file's targets being allowed to
+    be overridden, duplicate targets where incorrectly allowed
+    in normal build files.
+    The fix just checks if the duplicate target is defined
+    in an imported file or in a "main" file.
+    Reported by: Dominique Devienne
+    See: http://marc.theaimsgroup.com/?t=107705039100004&r=1&w=2
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276165 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 278781dcd669412e5e35cc95d8a96e0b2a278f50
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Mon Feb 9 21:05:47 2004 +0000
+
+    Copyright owner is The Apache Software Foundation
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276065 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 66555ca10d24bbfc55e710b9d65f809cfe713dab
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Wed Feb 4 20:38:09 2004 +0000
+
+    Remove trailing spaces in all java files
+    in order to make checkstyle happy
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276017 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ca1513552f7af7fc19de490fbe2d88adb6c993ad
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Tue Feb 3 22:44:50 2004 +0000
+
+    Switch to Apache Software License 2.0
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276010 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f948bb98aabcf47939c53e349b1a054f00ecc833
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Wed Dec 17 15:36:34 2003 +0000
+
+    * Retain difference between "" and "antlib:org.apache.tools.ant" namespaces
+      in UE.getNamespace()
+    * Remove near duplicate method in IntrospectionHelper
+    * Add UnknownElement to signature of IntrospectionHelper#getElementCreator
+      for future xml Namespace use
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@275797 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 929d67e0c966c8b8f996eda2060d9fb89f5b8e60
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Tue Nov 18 17:06:58 2003 +0000
+
+    Ignore attributes for different uris.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@275644 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 9931a12c723b640bcc8f96c889bc5f59cd72a3b6
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Tue Nov 18 10:51:41 2003 +0000
+
+    Implement namespace uri scoping
+    nested elements of types/tasks use the same NS uri as the task/type.
+    also cleanup macrodef attribute handling
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@275639 13f79535-47bb-0310-9956-ffa450edef68
+
+commit bc41ca3c90547e235875442009e703ccf4c93244
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Nov 3 15:47:30 2003 +0000
+
+    Improve error message
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@275608 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 139d895c7443fe02d6a7f18a11ba84d53ab8fe5a
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Mon Oct 20 14:13:40 2003 +0000
+
+    set project for created targets
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@275532 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 4d89b46d4d5f5b26ba4a744b8899b180c7b83ea5
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Wed Sep 17 14:13:53 2003 +0000
+
+    change implementation of handling importing files top-level tasks
+    to be less hachy
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@275250 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 74f58bf0f81de6bc03df6bc1d5315bef92d8f0e4
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Fri Sep 12 20:56:46 2003 +0000
+
+    Typos
+    Submitted by: Larry Shatzer (larry dot shatzer at servent dot com)
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@275232 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 99b22a7da3308ae6800e2b6d95ec3827b54c852f
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Wed Sep 10 10:37:14 2003 +0000
+
+    Change design for storing the current antlib uri
+    Allows deferred execution to work - for example
+    ant script in macro def.
+    Bugzilla report : 23029 from Yannick Menager
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@275209 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 0c43380c15fc81165edf01e2cb6152e9b4087288
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Wed Aug 13 14:06:20 2003 +0000
+
+    remove some deprecated methods and 1.1 holdovers
+    Bugzilla: 22326
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@275071 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ca5799fd8c1780abcc25f63745faf95bd2cdb06a
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Wed Aug 13 13:18:54 2003 +0000
+
+    Add ns support
+    Also split Definer.java in a base class (DefBase) to allow
+    it to be used for other defining tasks
+    Also add AntlibInterface to allow antlib to set uri and
+    classloader for other tasks/types that Definer.
+    
+    Bugzilla: 19897
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@275064 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e4e82cee37cfe430071aa9d5556b1e1547fda11f
+Author: Steve Loughran <stevel@apache.org>
+Date:   Fri Aug 1 05:52:31 2003 +0000
+
+    I cant believe we never noticed this typo before
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274999 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f3e3462d86183541ed6f0c9b8a1c3c963d0d6ce1
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Thu Jul 24 13:48:45 2003 +0000
+
+    Add antlib xml functionality
+    This is patch 7204 the fourth patch of the antlib + ns enhancement. The
+    issues reported by Stephan will need be
+    addressed, so the implementation may change
+    before ant 1.6 is released.
+    PR: 19897
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274930 13f79535-47bb-0310-9956-ffa450edef68
+
+commit cbedf4605966cbd0b34a385d6a763d3b12d45bba
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Wed Jul 23 10:24:39 2003 +0000
+
+    stylecheck
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274902 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 24eb5693d6b7363262ea941cac63d15230aa1aab
+Author: Conor MacNeill <conor@apache.org>
+Date:   Sat Jul 19 11:20:23 2003 +0000
+
+    Coding conventions
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274859 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3a35c7d914d8b5a1f203561ae6f89afb5d2b80ec
+Author: Conor MacNeill <conor@apache.org>
+Date:   Sat Jul 19 08:11:10 2003 +0000
+
+    style
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274858 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1f71acf427e164e75bc4f90b1ddaecd51998709b
+Author: Conor MacNeill <conor@apache.org>
+Date:   Fri Jul 18 12:45:58 2003 +0000
+
+    Coding conventions
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274856 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 410129735b97c3b972e414d89f0798272642e2de
+Author: Conor MacNeill <conor@apache.org>
+Date:   Thu Jul 17 15:44:45 2003 +0000
+
+    style
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274851 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 7b6a46d13193059c7ea056ad646fe5620e2bb79d
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Wed Jul 16 14:39:44 2003 +0000
+
+    get the tasks imported using <import> to be placed
+    in-line and not at the end of the current tasks
+    PR:
+    Obtained from:
+    Submitted by:
+    Reviewed by:
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274836 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 5b331f6baa094f399a85688f1642f719680d9574
+Author: Conor MacNeill <conor@apache.org>
+Date:   Fri Jul 4 14:04:56 2003 +0000
+
+    Easy stuff - imports and licence headers
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274768 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b152a5f8f72c02296d30b09a406a7df25125c4ed
+Author: Costin Manolache <costin@apache.org>
+Date:   Sat May 3 14:30:26 2003 +0000
+
+    Plug the namespace uri. One way or another - we'll need it.
+    
+    Also fix the qname - we need to use the localname.
+    
+    Originally used qname to avoid breaking build files that used : ( they still
+    needed to declare a namespace for that previx - otherwise SAX would complain ).
+    ( not sure about the last part - I think some parsers, when validation is off, will
+    allow : to be used and pass whatever was used as qname ).
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274547 13f79535-47bb-0310-9956-ffa450edef68
+
+commit adb971260c7328e1914b7716ac1691c52d2c88a5
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Apr 28 12:19:18 2003 +0000
+
+    Enable mixed-case task names inside task-containers while trying to
+    keep backwards compatibility for all other cases (all "normal" nested
+    element names get converted to lower case).
+    
+    PR: 19323
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274525 13f79535-47bb-0310-9956-ffa450edef68
+
+commit bfad69862eaa347901bb7895a2bcc81fe274f67d
+Author: Conor MacNeill <conor@apache.org>
+Date:   Sun Apr 6 09:30:57 2003 +0000
+
+    Fix up handling of TaskContainer configuration.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274402 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 662f68f096613b90eb1448be53d907453492287f
+Author: Conor MacNeill <conor@apache.org>
+Date:   Tue Apr 1 14:59:58 2003 +0000
+
+    Change reporting of problems creating elements within Task containers to
+    say that the container does not support the given nested element.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274365 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1dc8a079057e191ca4c158f36843c2c9e9f9be52
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Feb 10 14:15:00 2003 +0000
+
+    Remove Jakarta Project from license
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274040 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c2dba687256b368d6ca095487a17d432dcab22e4
+Author: Conor MacNeill <conor@apache.org>
+Date:   Sat Jan 18 14:21:02 2003 +0000
+
+    Factor out XML Context into its own class
+    Clean up style conformance in ProjectHelper2
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273828 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 21660b7678a4317e417e236d2cd36d12ec102434
+Author: Conor MacNeill <conor@apache.org>
+Date:   Fri Jan 17 10:27:12 2003 +0000
+
+    Actually enable namespace support in ProjectHelper2
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273819 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d1019d39f4e2987a46f2a43d4306aac00ce56467
+Author: Conor MacNeill <conor@apache.org>
+Date:   Thu Jan 9 03:39:53 2003 +0000
+
+    Import updates
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273783 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 5f8c440ba8fc73e8670f2db9836a48db4235a816
+Author: Costin Manolache <costin@apache.org>
+Date:   Mon Jan 6 16:00:55 2003 +0000
+
+    Warn of duplicated project name only if importing.
+    
+    There are normal cases ( antcall) where the same build file is parsed many times
+    ( this could be avoided now - as an optimization ).
+    It is a problem only in import, because of the target conflict resolution.
+    ( targets are qualified with the project name )
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273769 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c38217dcc32fef96f464b96b1fa05a72faa9a9b3
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Jan 6 07:32:35 2003 +0000
+
+    Happy New Year ;-)
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273757 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b6056cddf09360399a507b21aff106d80e5cc942
+Author: Conor MacNeill <conor@apache.org>
+Date:   Sun Jan 5 13:16:42 2003 +0000
+
+    Can't compare files with strings
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273746 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 13706da641f27328b909886f73c77fc414da0291
+Author: Costin Manolache <costin@apache.org>
+Date:   Tue Dec 31 22:07:07 2002 +0000
+
+    Ant is reusing the same helper
+    
+    PR:
+    Obtained from:
+    Submitted by:
+    Reviewed by:
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273736 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c39f7f3091dee4b976be6ff617e2ac74becec4f3
+Author: Costin Manolache <costin@apache.org>
+Date:   Tue Dec 31 17:33:58 2002 +0000
+
+    Added back the import property.
+    Added a small message to allow debugging of duplicated project names.
+    
+    
+    PR:
+    Obtained from:
+    Submitted by:
+    Reviewed by:
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273733 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f15fb7639cb643c876f15a87659cf4a068689a33
+Author: Costin Manolache <costin@apache.org>
+Date:   Fri Dec 27 18:14:50 2002 +0000
+
+    Update with the 2 changes: set attributes explicitely ( instead of passing
+    the SAX2 Attributes).
+    - import will use the normal entry point and will not depend on the sax
+    context. We know we are in an import by looking at the importStack,
+    that will set ignoreProjectTag flag and we'll reuse the context.
+    There are few more changes needed to clean up the context ( some fields
+    are no longer needed, and it needs to use proper getter/setters instead
+    of the fields ).
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273705 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 53c217c8783704e1e65e0613a1e3e4ac8240bb86
+Author: Costin Manolache <costin@apache.org>
+Date:   Wed Dec 25 17:56:22 2002 +0000
+
+    Revert the change, it causes gump failures ( thanks Gump ! )
+    
+    I can't reproduce the error yet ( my gump works fine ), but
+    most likely this is the cause of the errors ( classloader changes
+    couldn't affect anything not using <classloader>).
+    
+    I'll apply again the patch from Nicola, without making more
+    changes.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273695 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1020d9795ba7d534a6c6402af1e507b817ef7ef4
+Author: Costin Manolache <costin@apache.org>
+Date:   Tue Dec 24 17:40:34 2002 +0000
+
+    Make the basedir of each project available.
+    
+    I added both ant.file.NAME and basedir.NAME, and cleaned up a bit
+    the code.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273693 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 594d2dd6c891e638a4a9ce006a8167594b0cabf6
+Author: Costin Manolache <costin@apache.org>
+Date:   Tue Dec 17 05:47:16 2002 +0000
+
+    Fix for the lowercase problem. Sorry for the delay, I didn't have access to
+    email this weekend.
+    
+    The code may still have a small problem - but the original had similar
+    issues. I'll try to move the fix in UE later this week.
+    
+    I think getting to a consistent behavior is quite important - I wouldn't
+    mind having all elements converted to lowercase, and I don't remember
+    and design and explicit decision to have some lowercased and some not.
+    
+    If you still see problems - switch back to the original PH.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273671 13f79535-47bb-0310-9956-ffa450edef68
+
+commit bcc858ea72bf8719537798fd678fd3eaa4445a8e
+Author: Costin Manolache <costin@apache.org>
+Date:   Fri Dec 13 21:56:52 2002 +0000
+
+    Project stores the targets in a hashtable. There is no way to
+    retrieve the ordered list. This should eventually be included in
+    Project, but for now I added a small workaround in order to
+    support Description.
+    
+    
+    
+    PR:
+    Obtained from:
+    Submitted by:
+    Reviewed by:
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273667 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 72b95057faff7deca70f29f3f723514a4d14897c
+Author: Costin Manolache <costin@apache.org>
+Date:   Fri Dec 13 00:46:51 2002 +0000
+
+    This is the delayed-task creation helper. It's a clened-up
+    version of ProjectHelperImpl from embed, with all other extensions
+    removed. I also removed all code that supported the old eval
+    mode ( which reduced the size in 1/2 )
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273653 13f79535-47bb-0310-9956-ffa450edef68

@@ -1,0 +1,223 @@
+commit f3b41aeea35debfa748f014792f0d04267cb291f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Aug 25 22:31:11 2015 -0500
+
+    Improve refinements implementation and enable MRI test.
+
+commit 3e75be4905350f041282a79a7f1ed8f1f2064b6d
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Jun 30 14:46:24 2015 -0500
+
+    Better explain why irScope is a field in StaticScope
+
+commit 1e6e3ff7c3e806a853062006d27d0cddfcd51b27
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jun 30 14:23:59 2015 -0500
+
+    Always use variableNames for sizing growable scopes. Fixes #3089.
+    
+    variableNames is updated when IRScope gets set into StaticScope,
+    and is used for other sizing and definition logic, so make it the
+    sole place we get variable counts from when sizing scopes.
+
+commit d9f12ca8d6b32ba7a0eb62b0b44667fd26f47e50
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri Jun 19 15:54:14 2015 -0500
+
+    Store file on StaticScope and on RootNode.
+    Replace SourcePosition in BuildLambdaInstr to not use ISourcePosition
+    IR now retrieves file from rootnode.
+
+commit a57eba4b7a19647c3732f1d00bbbd049ee224001
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri Jun 12 13:58:54 2015 -0500
+
+    Fixes #1887. parser bug.
+    Fixes #3039. SyntaxError: test.rb:3: syntax error, unexpected kDO_BLOCK
+
+commit 905afa0b2064c0eaa83bf25722e4283abfd4b671
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Sat Apr 18 08:34:08 2015 -0500
+
+    Make setIRScope and setScopeType simpler.  This change makes me wonder how safe we are since not all
+    constructed IRScope paths setIRScope.  In the case of evals it appears we only set IRScopeType.
+
+commit d06fd823d9054ce8905cd06b4ee36180d296f414
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri Apr 17 09:49:14 2015 -0500
+
+    No more requireArgument optionalArguments individual count methods on StaticScope.  getSignature
+    replaces it.
+    
+    Remove Arity usage from JIT.  All information of a JIT'd method can come from signature on
+    StaticScope now.
+    
+    What is remaining is pushing more Arity out of *Method types, but pre2 is dragging on and this
+    last push will be to use new Signature info to properly implement kwargs.
+
+commit bff01ddcef8fc6ca6e0a260a6ff1765635d4379f
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Apr 16 14:02:16 2015 -0500
+
+    1. staticScope.setSignature now only happens when ArgsNode is created and nowhere else (well some dead code which needs to be removed yet).  For AOT, IR persistence still needs to be corrected so that we can popular signature when we reify the StaticScope (to be done in a followup commit).
+    2. CompiledIRMethod now implements IRMethodArgs so this fixed all JIT methods arity errors.
+
+commit 512b0a5ab4e129a2e05e6ca83113520252a0048a
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Apr 16 10:49:28 2015 -0500
+
+    StaticScope now has Signature instead of three individual fields.  All other
+    changes were made to support this.  We encode/decode scopes with a full
+    Signature.  Blocks are all rooted in providing a Signature.  All IR*Method
+    will provide a Signature.  Unfortunately, I stopped at IR level for method
+    types.  Over time those should get converted.
+    
+    This corrects all arity issues involving methods and blocks in interp.  JIT
+    is still somewhere passing in the wrong values but I will correct that in
+    a followup (this is not a regression).
+    
+    spec:fast:ruby and test:mri both pass so do JIT variants of those tests
+    but I strong suspect we are shelling out in some way and running some of
+    these tests in interp mode.
+    
+    On other note of distinction is that for builtin functions we only construct
+    a subset of information that Signature wants because Arity is only a subset
+    of the info Signature needs.  Since there are no exotic signatures in builtins
+    there is a Signature.from(Arity) which will convert to a reasonable analogue
+    or throw if it is special in some way.
+    
+    I tried to leave all deprecated versions of methods and constructors but
+    I might have spaced out a few.
+
+commit 367c2bcd7db1524833484db5af23bac92fa8a531
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Apr 14 16:19:21 2015 -0500
+
+    - DynamicScope+children removed no longer used {get,set}ArgValues methods since they are dead.
+    - ArgsNode getRest() replaced by hasRest() or retrieving getRestArgNode directly.
+    - Slight rearrangement internally of fields in ArgsNode.
+    - Remove accidental println from last commit.
+
+commit 511e8757f4818941cca885c4752e150da1fb640e
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Oct 16 09:43:23 2014 -0500
+
+    duplicating staticscopes can happen before irscope has been set
+
+commit d3e134ce22368792dc138488fbc29dcfc1347050
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Sep 17 12:18:01 2014 -0500
+
+    Properly duplicate StaticScope for proc construction.
+
+commit 13c142a1781c0316e1bcd41360ee1595fd7fda3f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Sep 17 11:54:50 2014 -0500
+
+    ONE SCOPE TO RULE THEM ALL
+    
+    Remove all other StaticScope types and pull IR logic up to it.
+
+commit 4303b57ed0c0e1e5cf9c84fd39a3fbaa918700ec
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Tue Sep 16 01:13:01 2014 -0500
+
+    Fix #1969: Make StaticScope and IRScope agree on var slot assignment
+    
+    * IRBuilder was ignore duplicate "_" args in blocks whereas the parser
+      would allocate slots in StaticScope for all of them. This effectively
+      led the runtime to allocate DynamicScope with 1 fewer slot than what
+      was required because a variable's slot id came from StaticScope
+      but # variables for a DynamicScope came from IRScope.
+    
+      We are yet to find a way to clean up this static/lexical scope
+      duplication/split from the old runtime.
+    
+    * Added a new spec/regression test.
+
+commit dc6dd8392e0b4b065bfc9ea477c334ba60f4997b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Jul 3 11:35:13 2014 -0500
+
+    Include ScopeType in jit-created static scopes. Fix shadowed field
+
+commit 4fd036b2c3d515db5a9c5ab7e249b59f8ea79692
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Mon Jun 30 23:10:57 2014 -0500
+
+    Death to rubyclass stack: Part 1 of 2
+    
+    * When methods are defined, aliased, undefined, the runtime has to
+      determine the method container that is affected by the changes.
+    
+      Thus far, this was done by manipulating a rubyclass stack that
+      is updated at several places in the runtime and weaves its way
+      through frame, binding, yield, instance/module/binding evals,
+      and is updated on every call.
+    
+    * This patch implements a fairly straightforward algorithm for
+      determining the method container at the time it is needed by
+      examining the contents of the lexical scoping tree starting at
+      the scope where the method is manipulated. This examination is
+      affected by runtime flags set on lexical scopes (always blocks)
+      based on whether any of them are being executed in the context of
+      instance/module/binding evals. There are couple special cases to
+      this algorithm. Nevertheless, it is far more straightforward and
+      easy to grok than the existing runtime implementation.
+    
+      In this patch, the rubyclass stack manipulation code is turned off
+      in ThreadContext.java but the rubyclass stack and its traces in
+      the various parts of the runtime are left behind.
+    
+      The algorithm relies on annotation of block scopes when they are
+      being executed in the context of evals. The bulk of this patch
+      involves setting up these annotations in RubyModule, RubyObject,
+      RubyBasicObject and passing them to DynamicScope via Block, BlockBody,
+      IRBlockBody, and InterpretedIRBlockBody.
+    
+      The algorithm also relies on annotation of static scopes with the
+      IR scope type. The other bulk of this patch is in setting up those
+      annotations on IR static scopes.
+    
+    * The algorithm itself is in ir/runtime/IRRuntimeHelpers.java
+      - findInstanceMethodContainer(..)
+    
+      It is easy to split this up into static/dynamic since there are
+      scenarios where the container is statically determined. But, there
+      is no real benefit that we foresee from the static resolution
+      scenarios, and the algorithm is simpler the way it is currently
+      coded up.
+    
+    * This passes all MRI tests and Rubyspecs plus other contrived
+      tests (they need cleaning up -- will probably add them in a later
+      patch).
+
+commit be6823c1c0088c502434931f016d8c8196d0b225
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri Dec 20 10:32:17 2013 -0600
+
+    Decode enum types and add helper to enums
+
+commit c98425767e23bb81fd8b93826164974019d16a38
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Dec 16 12:56:04 2013 -0600
+
+    IRPersistableEnum is not useful (a few tiny methods and no saved space
+
+commit bb0ff626add9d385828ee0dac7d2e0d40563ae60
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri Dec 13 14:41:44 2013 -0600
+
+    Make the enums IR needs to persist implement a common interface since strategy for encoding them will be the same.  Stop using ordinal and let IRPersistedFile figure it out
+
+commit f5e1364ce9427ad4871cd5a90151c6879bebbc15
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Oct 16 10:50:27 2013 -0500
+
+    partial lifus merge: Changes in toString methods of StaticScope, IRStaticScope; IRStaticScope is tweaked for easier determination by ir reaading code;
+
+commit 28c6fbc4e883bc1c9e9242d1da1cb2b785f55339
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 3 12:46:45 2013 -0500
+
+    Move to @mkristian's proposed layout, with some modifications.

@@ -1,0 +1,41 @@
+commit 237fee2f675305db5e267ee2626aee2fa86480b4
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Feb 11 09:36:30 2015 -0600
+
+    Make hasAssignment hasVariableAssignment since it only refers to lvar/dvars.
+    Use this new knowledge in IRBuilder to fix GH #2574.  Still some other cases
+    to fix.
+
+commit 8ce6a0c546a48369708c16a6a9a2f300bfdb1276
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Feb 10 16:42:48 2015 -0600
+
+    Add hasAssignment to all nodes.  To be used by IRBuilder (described in next commit)
+
+commit 8d89919a79f4ef693d82516a7ca876b589f515e5
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Dec 30 13:39:45 2014 -0600
+
+    All ArrayNodes for args list are lightweight.  Simplify buildCallArgs a little more
+
+commit 7621334c9b4bef55cc1ac326dcc8d13ce8c36a56
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Jun 9 09:40:27 2014 -0500
+
+    Start removing old interpreter
+
+commit 5e97e4e9c075f69956c802c1881d0f309bbbd1dc
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 10 23:34:01 2013 -0500
+
+    Changes for self-targeted attr assignment m_m (fixes #872).
+    
+    * Use functional rather than variable site for self.x=.
+    * Statically choose site type (functional/normal) in interpreter
+      too (already in compiler).
+
+commit 28c6fbc4e883bc1c9e9242d1da1cb2b785f55339
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 3 12:46:45 2013 -0500
+
+    Move to @mkristian's proposed layout, with some modifications.

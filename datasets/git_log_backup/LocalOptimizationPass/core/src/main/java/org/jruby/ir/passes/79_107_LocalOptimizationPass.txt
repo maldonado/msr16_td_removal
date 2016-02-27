@@ -1,0 +1,237 @@
+commit d59eeec3e121c84a4cde2642bc67ed71ad3ac3ae
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Tue Jul 28 09:21:23 2015 -0500
+
+    Move liveness tests out of DCE transform into LVA computation
+    
+    DCE used to do additional tests to decide if an instruction can be
+    deleted based on the scope's state. This is a no-no. DCE should
+    not do any additional tests about deletability based on scope
+    state (which was in reality liveness tests) -- it should simply use
+    whatever info is produced by LVA. Those tests should have been
+    part of LVA instead.
+    
+    This really didn't affect correctness of DCE, but it would be
+    providing incorrect information about vars still live when the
+    scope was exited. Specifically, AddLocalVarLoadStoreInstructions pass
+    uses that LVA information to determine whether to add lvar stores
+    on exit. Without accurate LVA information, this can inadvertently
+    prevent lvar updates from being seen outside the scope.
+    
+    This is part 1 of the fix for #3173.
+
+commit 9250f254c9740d1284a4317b9acfa701fead6056
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Mon May 11 22:33:09 2015 -0500
+
+    Fix #2916: Run local opts pass before tmp var opts
+    
+    * This ensures that multiple assignment opts aren't blocked by
+      RAW (read-after-write) hazards because of aggressive tmp var
+      reuse introduced by the tmp var opts pass.
+    
+    * Speeds up fannkuch-redux by an additional 10-15%.
+
+commit 55bc51f8fb963a9e8436d853eb407797e3126b39
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Mon May 11 19:22:37 2015 -0500
+
+    Code cleanup in LocalOptimizationPass
+
+commit 52520e3aaba1e424cca9d6f493ec05844e114a96
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Fri May 1 08:46:57 2015 -0500
+
+    Restore LocalOptimizationPass
+    
+    * While this doesn't do a while lot right now, it does opt
+      some scenarios (some forms of multiple-assignment).
+    * During refactorings and cleanup work between pre1 and pre2,
+      we lost the code that actually ran it. Restoring it here.
+
+commit df80df411e20dead3f2eef4bcb4ac25fab076fb7
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Fri Mar 6 01:43:33 2015 -0600
+
+    All passes now run on demand - no eager runs on nested closures.
+    
+    * This should reduce memory usage + improve perf. marginally
+      in some cases.
+
+commit 2be82aaf0d73af877e3aaff0a6b4f5e9f1cc7ef0
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Mar 5 12:00:17 2015 -0600
+
+    New IRScope.{get,put}StoreLocalVarPlacementProblem.  fic is only references in IRScope now.
+
+commit 0c83a8c3b533710e2b7246706ed353fee3c93411
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Mar 5 09:05:15 2015 -0600
+
+    Change LVA.previouslyRun check to return null if it has never made a CFG before vs making on demand.
+      The basic mechanics of CompilerPass on a null return will naturally run the pass on it which will
+      generate the CFG on demand along with the data.
+    Add comment in getCFG explaining when fic will be null.
+    Comment out child closure passing from LOP because we don't want it but left it comments out because
+      it exposes some lifecycle problems.  Once we stabilize hypernugget and merge back to master we
+      will dig into this problem more.
+
+commit 974016f5522b968f62aecd382e2d96d06af1eed0
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Mar 4 17:06:13 2015 -0600
+
+    Remove special fic check in getCFG.  Partially brittle because I only guard in LOP pass for closures
+
+commit 6ec9f9892f6962f8e11f8a14c9d6ab318671ff8f
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Tue Mar 3 16:54:20 2015 -0600
+
+    Fix incorrect CFG fetch in LocalOptimizationPass
+    
+    * Now -X-C runs with all passes again.
+
+commit 63c8149a9a6cbe5ff5ce7beb8732dcda21639268
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Mar 3 15:12:10 2015 -0600
+
+    Last sloppy commit.  CFGBuilder removed from compilerpasses.  JIT/Full build race problem finally solved
+
+commit 8434fe5bca86854cbd245b600b31d089efe3f6a4
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Fri Oct 31 21:10:36 2014 -0500
+
+    Cleanup! Removed a bunch of stale FIXMEs.
+    
+    * Cleaned up some comments.
+    * Removed some and tweaked some FIXMEs.
+
+commit d3aabe292399063c288ad16e17f948a64e34f07c
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Thu Oct 9 22:46:05 2014 -0500
+
+    Use CompilerPass.run to process nested scopes.
+
+commit 449c114ae0622cfb2299a88a1164693a8e71b6d1
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Thu Oct 9 00:44:31 2014 -0500
+
+    Add LVA invalidation after more other passes.
+    
+    * OptimizeDynScopes changes local vars to tmps!
+    * LocalOptimizePass shouldn't technically modify LVA state,
+      since it is "local", but late at night, and I want to be
+      conservative for now.
+
+commit 2748c1a995953c6ff0fe8454f4f0a05d4b5ce4af
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Tue Oct 7 19:31:31 2014 -0500
+
+    Clean up compiler pass run logic a bit.
+    
+    * Keep track of what passes have run in IRScope.
+    
+    * Updated CompilerPass.run to:
+      - Update this list of passes,
+      - Check if the pass has been previously run.
+        Added a force parameter (for a future scenario) for when
+        we need to re-run a pass.
+      - Provide default implementations of previouslyRun and
+        invalidate.
+    
+    * Individual passes override the default implementations where
+      necessary (for example, where invalidation is not possible
+      because the pass is not reversible).
+
+commit 8f378adcdabace329b5864bb5e6fa5965ee96f26
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Oct 7 15:41:41 2014 -0500
+
+    Fix another pass using invalid field to see if pass has been run
+
+commit 06304620bb01b4c50f62b63023f0d8c2aad4f618
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Sun Oct 5 00:19:54 2014 -0500
+
+    Allow dynscopes to be eliminated for block scopes as well.
+    
+    * So far, dynscopes were only being eliminated for method scopes
+      and all blocks had a dynscope pushed/popped.
+    
+    * This patch enables this for blocks as well.
+    
+    * Required a whole bunch of changes.
+      - Ensure that scope-flags are initialized before passes are run.
+      - Split AddLocalVarLoadStoreInstructions into two pieces.
+      - Use the 'ensureInstrsReady' pattern in InterpretedIRBlockBody
+        to run necessary passes and figure out whether the scope can
+        be fully eliminated, whether the parent's scope can be reused,
+        or whether we need a full dynscope for this block.
+      - Overall, there are some quick-and-dirty fixes in this patch
+        to get things working. Cleanup will come in later patches.
+
+commit 0cdd14aaae2ecdec6d5fcdc92d1fe19b6faa55d8
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Mon Jul 21 00:14:45 2014 -0500
+
+    Pass staticScope through interpreter call stack + optimized imports.
+    
+    * In preparation for a fix for #1792, pass the current static scope
+      through the interpreter call stack.
+    
+    * Unrelated: I accidentally applied optimize imports on the ir/
+      directory while refactoring in IntelliJ.
+    
+    * Next steps:
+      - Make the nesting-depth fix outlined in #1792.
+      - Maybe, rename CurrentScope to ActiveScope.
+      - Maybe, fix ScopeModule to be based off CurrentScope.
+      - Maybe, get rid of currDynScope arg through call stack and get it from
+        ThreadContext where needed (maybe).
+
+commit 9042852c060c58fc4ebb0ecff3349a09ae90e820
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Sun Dec 29 20:21:14 2013 -0600
+
+    [IR] Clean up ToAryInstr
+    
+    * Got rid of the useless dontToAryArrays flag in ToAryInstr
+      I think I added it to support inlining of closures, when
+      YieldInstr is converted to ToAryInstr. However, that code needs
+      some fixing anyway, and it is better to fix it rather than
+      hack up ToAryInstr.
+    
+    * No change in rubyspec results in IR mode.
+
+commit 9dc75e2569a65f58f574750d312f65899bed65a4
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Wed Dec 11 00:13:36 2013 -0600
+
+    [IR] Fixes to LocalOptimizationPass
+    
+    * Fixed code rot and got rid of some stale FIXMEs.
+    * Can't to_ary for multiple-assignment be optimized away?
+      There is a spec that fails with the elimination of to_ary.
+
+commit ce51ec3196d14657e94c1b8063e2120638ab7695
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Fri Sep 27 16:07:17 2013 -0500
+
+    Cleanup: Deleted trailing whitespace on lines in ir/ directory
+
+commit a2f2fcf7d1ee879ddf8b1c335c2e81122c8900e8
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 17 12:02:43 2013 -0500
+
+    Eliminate a bunch of one-off unnecessary anon classes.
+
+commit 4717a0d8b7f30db4c96bed745cf583812c4ccfbc
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri Jul 12 15:55:46 2013 -0500
+
+    Trivial: De-warned some IR source
+
+commit 28c6fbc4e883bc1c9e9242d1da1cb2b785f55339
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 3 12:46:45 2013 -0500
+
+    Move to @mkristian's proposed layout, with some modifications.

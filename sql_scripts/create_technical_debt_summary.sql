@@ -315,3 +315,64 @@ CREATE TABLE survival_plot (
   was_td_removed numeric, 
   epoch_interval numeric
 ); 
+
+
+-- fixing table with modified scripts (09_search_version_removed) version is still not perfect manual investigation necessary
+keep original
+78857 IR_ScopeImpl.java
+76715 RubyFile.java
+77300 RubyModule.java
+78016 RubyWarnings.java
+76105 RubyArray.java
+77649 RubyObject.java
+79417 TextAreaReadline.java
+288   InputTest.java
+17639 ReportTreeModel.java
+78655 AbstractVariableCompiler.java
+78668 AbstractVariableCompiler.java
+17508 DataSet.java
+17697 JTLData.java
+17670 AbstractTable.java
+17696 Table.java
+17413 ReportMenuBar.java
+
+keep temp
+2013  Jar.java
+78171 ASTCompiler.java
+1811  CopyPath.java
+79431 ASTInterpreter.java
+2545  Javadoc.java
+76720 RubyFile.java
+4276  WLJspc.java
+77263 RubyModule.java
+79426 ASTInterpreter.java
+79185 CodeVersion.java
+79312 Range.java
+398   JUnitTestRunnerTest.java
+1173  UnknownElement.java
+79309 StringLiteral.java
+12254 Sample.java
+14875 HTTPHC4Impl.java
+1285 DirectoryScanner.java
+
+investigate 
+18704
+
+
+select a.processed_comment_id , a.project_name, a.file_name, a.class_name,  a.version_removed_name , a.comment_text,  b.version_removed_name from technical_debt_summary a , technical_debt_summary_temp b where a.processed_comment_id = b.processed_comment_id and a.version_removed_name != b.version_removed_name and a.processed_comment_id in ('2013','17697','78171','1811','79431','2545','76720','4276','17413','77263','79426','79185','79312','398','1173','79309','12254','17696','17508','14875','17670')
+update technical_debt_summary_temp set version_removed_name = null, version_removed_hash =  null where processed_comment_id in ('78857','76715','77300','78016','76105','77649','79417','288','17639','78655','78668','17508','17697','17670','17696','17413')
+update technical_debt_summary_temp set version_removed_name = null, version_removed_hash =  null where processed_comment_id not in ('2013','78171','1811','79431','2545','76720','4276','77263','79426','79185','79312','398','1173','79309','12254','14875','1285')
+
+
+select processed_comment_id, version_removed_name , version_removed_hash from technical_debt_summary_temp where version_removed_name != 'not_removed' and processed_comment_id in ('2013','78171','1811','79431','2545','76720','4276','77263','79426','79185','79312','398','1173','79309','12254','14875','1285')
+update technical_debt_summary_temp set last_version_that_comment_was_found_name = '1.7.22' , last_version_that_comment_was_found_hash = 'c28f4926e498e07a0d141846a3f04e13c3c125cd' where processed_comment_id in ('78171','79431','79426','79312','79185');
+update technical_debt_summary_temp set last_version_that_comment_was_found_name = '1.7.0' , last_version_that_comment_was_found_hash = 'ff1ebbe9317706fd44e5be7631011bde8f54a935' where processed_comment_id in ('76720');
+update technical_debt_summary_temp set last_version_that_comment_was_found_name = 'ANT_180_RC1' , last_version_that_comment_was_found_hash = '03ce8558d603de7b653145c0efde5f719e78a71a' where processed_comment_id in ('1285');
+
+with temp as (select processed_comment_id, version_removed_name, version_removed_hash, last_version_that_comment_was_found_name, last_version_that_comment_was_found_hash from technical_debt_summary_temp where  version_removed_name is not null )
+update technical_debt_summary set version_removed_name = t.version_removed_name, version_removed_hash= t.version_removed_hash, last_version_that_comment_was_found_name = t.last_version_that_comment_was_found_name , last_version_that_comment_was_found_hash = t.last_version_that_comment_was_found_hash from temp t where t.processed_comment_id = technical_debt_summary.processed_comment_id 
+
+select * from technical_debt_summary where version_removed_name = 'not_removed' and version_removed_author is not null;
+update technical_debt_summary set version_removed_commit_hash = null, version_removed_author= null where version_removed_name = 'not_removed'  and version_removed_author is not null;
+
+

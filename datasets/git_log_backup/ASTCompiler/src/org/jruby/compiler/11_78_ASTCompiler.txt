@@ -1,0 +1,2241 @@
+commit bb98e4b8decffc0361b70a6c99c1ade5fed0abcb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Mar 28 10:02:33 2013 +0000
+
+    Move RuntimeHelpers to org.jruby.runtime.Helpers.
+
+commit 61678ac1a2514a9932276f8d527816a5980a94b3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Feb 25 20:41:40 2013 +1100
+
+    Fix more references to CPL.
+    
+    The phrase "Common Public License" was split across two lines in
+    our default header, which caused it to be missed during earlier
+    search/replace. Also, we did not replace the CPL URL in the
+    header with the EPL URL.
+
+commit 330fef3b0fc18af477ccea19bd278669667f31bb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 12 14:49:29 2013 -0600
+
+    Switch JRuby's CPL license to EPL.
+    
+    Governance of the CPL license was moved to the Eclipse Foundation
+    at some point in the past, and Eclipse blessed the EPL (Eclipse
+    Public License v1.0) as the successor to CPL. Because the CPL
+    contains a clause allowing transparent upgrades to future blessed
+    successor licenses, we can make the move to EPL without
+    re-contacting past contributors.
+    
+    The change in going from CPL to EPL largely just removes some
+    punitive language that apparently made many companies nervous. All
+    other language in the license remains identical.
+    
+    Several documents about Eclipse's move from CPL to EPL are here:
+    
+    http://www.eclipse.org/legal/cpl2epl/
+    
+    Note that Eclipse's move came before the blessing of EPL as the
+    upgrade path for CPL, so they had to do a bit more legal juggling.
+    With Eclipse now the administrator of CPL and with their blessing
+    of EPL as the upgrade path for CPL, all we need to do is make the
+    move.
+
+commit d62930313a649a89a85dba92b6026375041abf7e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jan 7 13:46:46 2013 -0600
+
+    Improve compilation of some multiple-assignment targets.
+    
+    * All targets are non-expression, so remove variability there.
+    * AttrAsgn targets can propagate non-expression and be faster in
+    invokedynamic logic (no need to peel Nth argument off for return).
+    
+    More work can be done to simplify all targets into non-expression
+    forms, which will then omit the popping of the last value and
+    possibly cascade non-expression behavior to contained elements.
+
+commit 5b2d787a87c98e6f5ce531d9fe2397fa5afb145a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Dec 14 02:36:54 2012 -0600
+
+    Make "if CONST" free under indy.
+
+commit ef5c548eb9f25f279b3f29ffc75e8b42f17bd436
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Dec 14 02:26:47 2012 -0600
+
+    Make "if $global" free under indy.
+
+commit 4cf08e3211097bb2ee3de97f0521762dace11bdf
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Nov 28 12:15:56 2012 -0600
+
+    Decouple compiler and class/module const assignment from TC.
+    
+    * Compiled setConstant calls work against StaticScope
+    * Getting the namespace in which to define class/module uses StaticScope
+
+commit 47a88ba5a70aa90d1c139fdaa2394df36806552d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Oct 30 21:25:24 2012 -0500
+
+    Fix #366
+    
+    DNode logic was always calling the 1.9 version of String#append
+    even in 1.8 mode. For badly-encoded or mixed-encoding text, this
+    could cause a failure due to 1.9's more-strict encoding checks. I
+    modified the logic to call the version-specific append function
+    and added the same type-specific logic in that append.
+
+commit 717653bc540ab4dbe26c44d2603032221a32a373
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Oct 6 20:12:58 2012 -0500
+
+    Remove "dynopt" mode, related code, and unused invocation logic.
+
+commit efe3f08ee65a2e85c239ecdece74b9a54002bb1b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Sep 17 22:02:38 2012 -0500
+
+    Simplify constant and ivar defined? logic in the compiler.
+
+commit 9cd88cd26961fa604c0d69076f4aa0b7ebd0c26a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Sep 17 19:27:28 2012 -0500
+
+    Eliminate transient strings from compiled DSymbol, DXStr logic.
+    
+    Same general pattern as for DStr. See #301.
+
+commit f7726833a3f025f19a4b02c5aee1ce070b8acd1b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Sep 17 18:11:22 2012 -0500
+
+    Eliminate most transient strings in compiled D*Nodes.
+    
+    * Static portions are cached bytelist, direct append.
+    * EvStr with Fixnum/Float/Symbol body append object directly.
+    * Remaining cases coerce to String as before.
+
+commit b03d0bc89aefca13deaff7a568e5d9118a9ca2a8
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Sep 17 01:42:22 2012 -0700
+
+    Performance improvements for defined? logic.
+    
+    * Return a cached, frozen string rather than recreating each time.
+    * Cache variable accessors for ivar defined? checks.
+
+commit 7c3f6426eb26e560f21b2f1905923fa624c4408c
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Thu Jun 21 23:43:39 2012 -0500
+
+    HEADS UP!  Removed all trace of setWithinDefined and isWithinDefined.
+    
+    * Tested on rubyspecs in 1.8 and 1.9 mode -- AST, JIT, IR.  No
+      change in failures after this change.
+    
+    * Removed this from AST interpreter, JIT, IR
+    
+    * setWithinDefined was set by all of these before entering defined?
+      checks and cleared on exit.  isWithinDefined was only used by
+      RaiseException to decide whether to set $! or not -- effectively
+      $! was not being set for exceptions raised by code executing
+      by the call tree rooted in the defined? checks.  However, this
+      resulted in buggy behavior because this call tree could do a ton
+      of work (including loading files, requires, setting up classes,
+      etc.) any of which can raise exceptions and might have to be
+      handled, which require access to $!.  The workaround in IR and
+      AST interpreters was to set "$!" whenever an exception was
+      received (effectively bypassing the condition that RaiseException
+      was guarding).  But, since I removed both these hacky checks as
+      part of a previous commit (20632af6e1fa511fd9b762beda2a60d39bf3c859),
+      we had code failures in Rails (bug JRUBY-6705) because of files
+      not getting loaded properly. So, given that isWithinDefined is only
+      used by RaiseException, which was anyway getting bypassed, there is
+      no reason to keep that check around.  Once I removed that check,
+      since there was no other use of isWithinDefined in the codebase,
+      I also removed setWithinDefined, which led to a bunch of dead code
+      which I purged.
+    
+    * NOTE: JIT is probably yet to remove the $! hack that I removed in
+      the other commit.  It would be best to remove that hack as well
+      so we know for sure that these two commits are working together
+      well without bugs.
+
+commit 1c1ccb591192b115383ff0d8d2d349158e02fefe
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu May 10 18:40:44 2012 -0500
+
+    Fix compilation failures in spec runs.
+    
+    The logic to get the class or module against which to run the body
+    was being emitted into the same Java method as the body. If it
+    accessed local variables or other context from the surrounding
+    body, it would break. This caused compilation failures on some
+    newer RubySpecs.
+    
+    I moved the preparation of the class/module object outside the
+    compiled body, so it did not error when trying to access state
+    from the surrounding body.
+
+commit e54cd59c00c17dd3d1d1b85b83b1dbdf90993cfe
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Apr 12 15:32:13 2012 -0500
+
+    Missing compiler logic for native Java exception propagation.
+    
+    * If rescuing "NativeException" and it's a Java exception, lazily wrap it
+    * FIXME: Currently using the static rescue constant name, rather than runtime value
+
+commit 03ba524de4139a29ebad75005293814cceeffedd
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Jan 19 21:33:30 2012 -0600
+
+    Fix multiple places that called 1.8 instead of 1.9 regexp methods.
+    
+    Many places in the codebase unconditionally called the 1.8 versions
+    of several RubyRegexp methods that have 1.9-specific behavior. This
+    led to hangs like JRUBY-5808, and very likely is the source of
+    other encoding-related bugs.
+    
+    I audited only RubyRegexp methods that have 1.9-specific versions
+    and fixed all incorrect calls. Tests and specs pass in interpreted
+    and compiled modes. A similar audit for other core classes is most
+    definitely warranted.
+
+commit 60440c1cc63172a5e00b31da8ff6d7c16f478299
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Dec 5 19:38:59 2011 -0600
+
+    Repair damage from e0ee1ec2.
+    
+    I reversed the evaluation order of "colon2" assignment to ensure the
+    value evaluates first, but failed to remove "swap" operations
+    elsewhere that expected the RuntimeHelpers.setConstantInModule
+    method to take the LHS, RHS ordering. Fixed those locations and
+    added a test.
+    
+    Conflicts:
+    
+    	test/testCompiler.rb
+
+commit c689af6b2695af41c51219545388ca4046eabde7
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Dec 4 12:06:28 2011 -0600
+
+    Add direct boolean paths for Fixnum RHS boolean operations.
+
+commit a5958eb161142788e0abb4b01b6d21fd0588b8a8
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Nov 29 21:53:29 2011 -0600
+
+    Reduce case/when fast-path optimization.
+    
+    The old optimization did not consider hash collisions on strings and
+    symbols, and would not work if we randomize string hashcodes. Rather
+    than try to hack around those issues, I'm just reducing the string
+    and symbol fast paths to the single-character form only. The ===
+    call is not free, but we can revisit the hashcode-based
+    optimization at a later date and do it right then.
+
+commit ea1cb9b07889c127cf5bc94647fafa98f7638557
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Aug 9 20:55:27 2011 -0500
+
+    Add float RHS operators to indy fast path logic.
+
+commit 70b3b99b1fb99d88da10d6d8e5e60f255f732fea
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Mon Aug 1 13:05:09 2011 -0500
+
+    JRUBY-5622: Propagate encodings through to DStrs and DRegexps
+    
+    Fixes both interpreter and compiler
+
+commit 193b1e5b066dcb1573eacdb2a476c7829a5ae7b5
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jul 12 02:25:16 2011 -0500
+
+    Fix JRUBY-4925: Evaluation of constant happens before rhs of assignment (different to mri)
+    
+    * Compiler simply needed to evaluate the value first, like the interpreter.
+
+commit 53365d3f0c81a5b20ef1fc7fa466af4f65ba1e39
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jun 27 23:15:15 2011 -0500
+
+    Fix JRUBY-5871: java.lang.NegativeArraySizeException from RubyEnumerator (after JITed)
+    
+    The problem here was that the compiler did not properly route "special args" (like foo *args) to the specific-arity path they should go to. This affected any such calls as well as super and zsuper calls, though in this case it was not the latter two cases. The fix is to add a new call path for "varargs" that checks arg arity and reroutes along the right path. I also fixed Enumerator#initialize's varargs path to ensure at least 3 args, which would have prevented a Java error in the first place (but replaced it with an ArgumentError.
+
+commit 67f5c2f55356e22e0e6fe6ea30ce07423e534fa7
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jun 17 13:06:26 2011 -0500
+
+    Add flag to force all multiple-assignment to use the fast logic (not building array, but returning true).
+
+commit ea07bfacfcb0de72e0ab07cf012099e56f252ece
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jun 17 03:18:45 2011 -0500
+
+    Reduce bytecode and complexity for compiled multiple-assignment of attrs.
+
+commit 77cba98fb4fb7d5e5d52ad8a1491ee11315b0ed3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jun 17 00:58:53 2011 -0500
+
+    Improve compiled literal array construction.
+    
+    * For non-expression, all-literal arrays...do nothing.
+    * For arrays larger than 10 elements, batch array population in groups of ten to reduce overall bytecode size.
+
+commit 6e61419e78e4b9f1674b4f05e6104934f7e09fab
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Jun 16 11:04:09 2011 -0500
+
+    Improve perf of "argspush" arguments form (as in x[1, *a] = 2)
+
+commit 3be905f38b26668ad53fc197784629aa338fefee
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Jun 16 10:58:28 2011 -0500
+
+    Improve performance of "argscat" call form (as in foo(1, *a))
+
+commit 9d263047d5daa68f6c8bd886fec4863e05af6e4f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Jun 16 05:57:07 2011 -0500
+
+    Improve perf of compiled simple argument splats of non-arrays.
+
+commit 06c26424d5fa7c5b512dfe944a8ab5fb78daf893
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jun 15 01:17:13 2011 -0500
+
+    Improvements for attribute assignment.
+    
+    * Disable visibility check only when receiver can be statically determined to be "self"
+    * Don't save last argument when not used as an expression (non-invokedynamic)
+    * Don't fold last argument when not used as an expression (invokedynamic)
+    * Simplify call site logic and reduce bytecode load
+
+commit 1d06ff5a2fe82955a0e80928ddafb7f9985a7d72
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon May 16 00:26:48 2011 -0500
+
+    Improve perf of defined? by avoiding the constant encoding of Java String + ByteList construction + Ruby String.
+
+commit 5a1892972b7a06a5b5e5a3b828e77bf3f21ed4f9
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Apr 21 08:59:31 2011 -0500
+
+    Cleanup and reduce bytecode for loading some common literal and runtime values.
+
+commit e1a69a779503d743e0af31e44b45b7d2e72c47a3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Apr 20 08:26:10 2011 -0500
+
+    Remove stray logging and restore intrinsic compilation to dynopt mode.
+
+commit 1a1864332f246cca9eaa6ea7f6959bf4f713850b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Apr 13 17:44:23 2011 -0500
+
+    Fix JRUBY-5674: Cannot override Fixnum operators
+    
+    * Enable "reopening" checks for Fixnum and Float in fast operator paths.
+    * TODO: lighten the checks somehow, or invalidate fast operator call sites actively.
+
+commit d9c97960d825ff852cfda22d3811337315bdd2cf
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Mar 22 16:17:46 2011 -0500
+
+    Do not use Java long for calling aref, since it usually will end up a Fixnum anyway.
+    
+    See https://gist.github.com/881229 for a benchmark that demonstrated the degradation from this optz not working as expected. The *best* option here would be to pass both the cached Fixnum *and* the long, so that the target method/callsite could choose which to use. In other words, argument-doubling.
+
+commit ba1ce78cfeded2b8d078f9718ad2da236e5f4328
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Feb 23 13:57:54 2011 -0600
+
+    Cleanup useless properties, enable fast math operators, add a couple more fast operator call sites.
+
+commit 92265ccc3813ba92e0383b2150553afc9b13cb46
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Feb 7 00:40:02 2011 -0600
+
+    [1.9] Get remaining defined? specs passing in compiler.
+
+commit 343ed5f7cf65674c7d4d79e87caa7a614d5044a6
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Feb 3 11:44:20 2011 -0600
+
+    WTF cygwin..why change all those permissions!!!
+
+commit a3082bb1db6be88019493c0c6651d2e456dc63b6
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Feb 2 14:24:19 2011 -0600
+
+    Add embeddedOptions to RegexpOptions for compiler to stuff away full options.  Comment out isLiteral check until I figure out why that is propagating
+
+commit ad351694ef33b15a2d4f886043eec04a311a3cc0
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jan 28 13:57:31 2011 -0600
+
+    Move regexp options into a class.
+
+commit 193c722ab9f3477f31398314de8446f1f8a967a2
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Jan 8 16:19:35 2011 -0600
+
+    [1.9] Fix remaining language/method_spec failures in interpreter.
+
+commit 2418c0c8028b78a272ba654e3b8860407504ae78
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Jan 8 03:19:49 2011 -0600
+
+    [1.9] Wire up Method#parameters for AOT compiled methods.
+
+commit 32cca6240b3096c6228ac2cf1490bd9f065dbc8d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jan 5 20:31:38 2011 -0600
+
+    Add codeRange to compiled literal strings. Encoding will come next.
+
+commit fd0fa789b21b30f294e8286b72b75fe3b688c27a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Dec 1 12:07:42 2010 -0600
+
+    Merge "backtrace" branch to master, now that it runs clean on all our various test cases.
+    
+    This is a squashed merge encompassing the following commits from "backtrace":
+    
+    commit eb0e24242050199ac1cc4cf6e48d93025f0186f4
+    Merge: 32137de ea48d8d
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Dec 1 12:03:28 2010 -0600
+    
+        Merge remote branch 'origin/master' into backtrace
+    
+    commit 32137decc9351dd7b6a19c49c7955808f535bb9c
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Dec 1 09:41:29 2010 -0600
+    
+        Fix remaining failures for test-all.
+    
+        * Disable CheckClassAdapter temporarily, since it disallows what should be valid JVM identifiers.
+        * Use the presence of $RUBY$ in method name as an additional indicator that we're processing a compiled Ruby body during backtrace gathering.
+        * Move some largely-static properties out of "init" target in build.xml, so they're available whether init is triggered or not (e.g. run.jvm.model).
+    
+    commit ee2a624201d5e9cd408d6ae793160aeb99b50b3d
+    Merge: cd50ae5 88ad204
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Dec 1 08:01:22 2010 -0600
+    
+        Merge branch 'master' into backtrace
+    
+    commit cd50ae5f06b95a2fffab6bc1f3a7419f478d0a52
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Tue Nov 30 19:15:07 2010 -0600
+    
+        Get remaining spec failure with -X+C passing.
+    
+        * Embed the actual Ruby method name into the Java method for block bodies, rather than __block__.
+    
+    commit 52bbfffcae1aed62bf4afcb692bed9725e4e1564
+    Merge: 4ed7235 1aace5e
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Tue Nov 30 01:37:15 2010 -0600
+    
+        Merge branch 'master' into backtrace
+    
+    commit 4ed723579101fffd8bfa73b30dc6e4e8991866f2
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Tue Nov 30 01:31:44 2010 -0600
+    
+        Precompiled (AOT) specs *nearly* green.
+    
+        * Mark __method__ as reading frame "name"
+        * Fix AOT-based stack trace mining logic
+    
+    commit 64e20aa939b5b9c6e41e0e9fe09039a0bb92794a
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Mon Nov 29 16:50:55 2010 -0600
+    
+        Jitted specs running green.
+    
+        * eval needs to set method name into the binding, so it's there for "__method__" in the eval'ed code.
+    
+    commit fd442c0a815bcab9eb6c9aa1b71e1f8a260ee03b
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Mon Nov 29 16:06:53 2010 -0600
+    
+        Interpreted specs green on backtrace.
+    
+        * Tagged some __method__ specs for which backtrace behaves like 1.9, which Matz apparently likes but was afraid to backport. Odd cases anyway.
+        * Fixed method name for the block used to define_method.
+    
+    commit cedb27e430b422c1158f66b4dcc7769922433506
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Nov 24 18:35:22 2010 -0600
+    
+        Reinstate deprecated java_to_ruby and ruby_to_java I removed, since it's still needed by some external libs.
+    
+    commit b48b17910de662b4e2d20ee8f4b5cc734eefc1ed
+    Merge: f39007e 2ae4995
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Nov 24 13:40:58 2010 -0600
+    
+        Merge remote branch 'origin/master' into backtrace
+    
+        Conflicts:
+        	src/org/jruby/Ruby.java
+        	src/org/jruby/RubySymbol.java
+        	src/org/jruby/runtime/CompiledBlock19.java
+        	src/org/jruby/runtime/Interpreted19Block.java
+        	src/org/jruby/runtime/InterpretedBlock.java
+        	src/org/jruby/runtime/MethodBlock.java
+    
+    commit f39007eca676c1e6ec9f891ac63b7c5d907b0d1b
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Thu Nov 18 14:01:29 2010 -0600
+    
+        Start normalizing the method/class names generated into Java by JIT and AOT compiler, to wrap up the remaining spec failures.
+    
+    commit 76e42c4b4522dc87c066d20051d02d1e4005b860
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Nov 17 20:40:33 2010 -0600
+    
+        Disable dynopt for now, to allow better stabilization on the main feature of this branch: frame elimination.
+    
+    commit d03099690df2e16d423e8b6a8969e0264983237f
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Nov 17 15:00:14 2010 -0600
+    
+        Encapsulate "coreMethods" hash in Ruby and add "bound method" logic to default (non-generated) class populator. `ant test-all` runs green now.
+    
+    commit ed7458f72bce55b11e5231f8e7b9d590c09ca53d
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Nov 17 10:46:43 2010 -0600
+    
+        Fix incorrect use of fastSetInstanceVariable instead of fastSetInternalVariable in FFI.
+    
+    commit f09626121b6a8bea6ab39a3c8ed3ccd69f56b505
+    Merge: f780b97 e8ca689
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Nov 17 10:15:16 2010 -0600
+    
+        Merge branch 'master' into backtrace
+    
+    commit f780b972b1f3e18f4c2608d9536e797a0845cd1a
+    Merge: 25ab5d3 6967ea7
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Nov 17 09:04:42 2010 -0600
+    
+        Merge branch 'master' into backtrace
+    
+        Conflicts:
+        	src/org/jruby/runtime/ThreadContext.java
+    
+    commit 25ab5d3d3f8c1fbf0fa334427b1485d322e83f86
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sun Nov 7 00:42:54 2010 -0500
+    
+        Don't do dynopt against calls that receive blocks; non-local flow is not properly handled yet.
+    
+    commit a4ad27056dcc3acf6bae0b0af7e618966d08a6dd
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sat Nov 6 15:22:40 2010 -0500
+    
+        Tag caller specs that do not pass with new backtrace logic (peculiar eval caller behaviors).
+    
+    commit eed8902084cfa06d4648935c1f70da57bf0c7a9c
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sat Nov 6 00:32:59 2010 -0500
+    
+        More fixes to get specs and tests green on backtrace branch:
+    
+        * Hash#index was not being bound properly from RubyHash#index19
+        * Range#min and Range#max need super, and therefore need frame = true
+        * tc_owned is a bad test and fails on system like OS X where (for some reason) / may be owned by user
+        * test_trace_func had been hacked for a bad class result (Integer, instead of Fixnum)...fixed that
+    
+    commit 9d9f94c30de76fa25e738e70e84ea09163eca5cb
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Fri Nov 5 20:03:22 2010 -0500
+    
+        Fix Kernel#caller to replace .java lines with Ruby lines. Brings specs mostly to passing.
+    
+    commit de433c771830e95c54f8196453208f2b312191aa
+    Merge: 3ffe1cf e25c58f
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Fri Nov 5 17:40:02 2010 -0500
+    
+        Merge branch 'master' into backtrace
+    
+        Conflicts:
+        	src/org/jruby/RubyIO.java
+        	src/org/jruby/compiler/impl/StackBasedVariableCompiler.java
+        	src/org/jruby/evaluator/ASTInterpreter.java
+        	src/org/jruby/java/proxies/JavaProxy.java
+    
+    commit 3ffe1cfba86f52ee96d89f3a1c352597f22f76b7
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Oct 27 01:42:06 2010 -0200
+    
+        Fix compile error I accidentally merged.
+    
+    commit b081253fb3cdf5141f7f0cf76d3f8546837d9f42
+    Merge: fc3028d ad68e22
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Tue Oct 26 16:30:25 2010 -0200
+    
+        Merge branch 'master' into backtrace
+    
+        Conflicts:
+        	src/org/jruby/Ruby.java
+        	src/org/jruby/internal/runtime/methods/DefaultMethod.java
+        	src/org/jruby/runtime/ThreadContext.java
+    
+    commit fc3028d9da2750c9d1c394600ab8ee712388724d
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Tue Oct 26 14:39:29 2010 -0200
+    
+        Add better description for class bodies in backtrace
+    
+    commit d796555494c2237116c7477c932fd96cd30d2e20
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Tue Oct 26 11:36:29 2010 -0200
+    
+        Clean up and add color to Rubinius backtraces.
+    
+    commit 012f5357ce649bd5a996211fe231f26097bf4f5b
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sun Oct 24 16:23:04 2010 -0500
+    
+        Fix classloader check to allow for compiled method handles, which use a no-arg constructor.
+    
+    commit 473d48aac6a5523304188d1d433e4c12df989b89
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sun Oct 24 16:10:32 2010 -0500
+    
+        Improve Proc-binding-based eval position info by propagating block's position into the binding and through to the backtrace frame.
+    
+    commit bcfd16b519b145c9ee055db1592dfaced05b71a0
+    Merge: 4902faa 5b49583
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sun Oct 24 11:07:15 2010 -0500
+    
+        Merge branch 'master' into backtrace
+    
+        Conflicts:
+        	src/org/jruby/RubyTime.java
+        	src/org/jruby/runtime/ThreadContext.java
+        	test/org/jruby/test/TestRubyException.java
+    
+    commit 4902faaf1678d5aecdef8b0b66f8ec78062aeec5
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Thu Oct 21 09:28:45 2010 -0500
+    
+        Fix badly-merged RubyProc.to_s19, missing opening brace.
+    
+    commit 69177d7098f9dc4ff9096d08eee25c0d8bb4f971
+    Merge: 801e764 f895837
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Oct 20 21:50:53 2010 -0500
+    
+        Merge branch 'master' into backtrace
+    
+    commit 801e7641b8838a8ae8931a9c6dcc5cf050096c4a
+    Merge: 0c60a89 dda4644
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Tue Oct 19 23:16:41 2010 -0500
+    
+        Merge branch 'master' into backtrace
+    
+        Conflicts:
+        	src/org/jruby/RubyDigest.java
+        	src/org/jruby/RubyProc.java
+    
+    commit 0c60a89aa746f286588b218681e9ad25b11318c4
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Tue Oct 19 23:06:15 2010 -0500
+    
+        Only compile direct recursive calls when we haven't branched to another method body (e.g. for rescues) and we're not compiling a closure or class body.
+    
+    commit 18333fe82c808e8ed49eef898f19c86fa2d764b2
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Tue Oct 12 17:04:13 2010 -0500
+    
+        Get 1.8 specs running green except for a handful of Kernel#caller specs (which don't expect to see .java files in the trace...not sure how to deal with that).
+    
+        * Fix another literal-block-calling path that wasn't using callIter
+    
+    commit 366740120ee76d8df3f977edc1727b60b2d4ad63
+    Merge: b64390b 6b243a3
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Tue Oct 12 10:35:14 2010 -0500
+    
+        Merge remote branch 'origin/master' into backtrace
+    
+    commit b64390b8cf0d2cb13e06d352969a093b5e86818d
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Tue Oct 12 10:33:39 2010 -0500
+    
+        Remaining fixes to get precompiled mode passing all our tests. Still some spec failures.
+    
+        * Bump up permgen max for test runs
+        * Fix stack-based scope initialization to not leave an unused nil on stack
+        * Ensure compiled method handles properly wrap pre/post logic for dummy and backtrace frames.
+    
+    commit 96bd3cbde91fc505b37ee13cbea6ffa3e8690c58
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Mon Oct 11 18:36:34 2010 -0500
+    
+        First fixes for backtrace branch in precompiled mode:
+    
+        * Add test-precompiled build target for running just precompiled
+        * Eliminate extraneous toplevel scope being pushed for precompiled loads (because that logic is all in the generated "load" method now.
+        * Add a new scope descriptor decoding path that properly sets up a toplevel scope
+    
+    commit 0ebbd6ac46c9ac04558f5200f980f26f798b9413
+    Merge: fc387be ac455fc
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Oct 6 21:53:18 2010 -0500
+    
+        Merge branch 'master' into backtrace
+    
+        Conflicts:
+        	src/org/jruby/RubyIO.java
+    
+    commit fc387befff57ada6c116b646a3dfb767cc926ee5
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Tue Sep 28 15:57:58 2010 -0500
+    
+        Renumber arguments for consistency.
+    
+    commit bbc91d3c4039bf6c26ceffd4899dcaaeaa3d46d0
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Tue Sep 28 15:40:38 2010 -0500
+    
+        Fixes to get specs a bit closer to running green.
+    
+        * Move pre/post logic for Script.load into generated code, so it's the same everywhere.
+        * Make pre/post-load push a frame, so top-level of a script is always framed
+        * Remove break handling from non-literal block call paths in CachingCallSite
+        * Make sure all literal block calls are using CallSite.callIter, which handles break
+        * Fix a bad test in testCompiler that needed visibility tweaks and framing
+        * Add complete doco for CallSite
+        * Fix Kernel#caller to trim from top of stack instead of bottom
+    
+    commit 4e814a24d5b2ef1b6567a3076a463ff9d08e2a0d
+    Merge: 91dc13a 3dbcef3
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Mon Sep 27 17:43:30 2010 -0500
+    
+        Merge branch 'master' into backtrace
+    
+    commit 91dc13a2f0b74bc1054d83378782416465ecc1b8
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Mon Sep 27 01:02:48 2010 -0500
+    
+        Fixes to get test-compiled (but not precompiled) passing 100%.
+    
+        * Fix eqlInternal's RubyNumeric branch check if classes are equal
+        * Provide file and line from all BlockBodies, so Proc#to_s can always use it
+        * Fix rejiggered Struct#each and Struct#each_pair to call the appropriate internal version
+        * Fix ruby_test's IO.new suite to not use STDOUT directly, risking that it get closed
+    
+    commit dc4af45352607ebb8a95d70befdcdb15c1111c58
+    Merge: ec8bb7f 90275be
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Tue Sep 21 09:52:10 2010 -0700
+    
+        Merge branch 'master' into backtrace
+    
+        Conflicts:
+        	src/org/jruby/Ruby.java
+        	src/org/jruby/RubyDir.java
+        	src/org/jruby/RubyKernel.java
+        	src/org/jruby/compiler/ASTInspector.java
+        	src/org/jruby/javasupport/util/RuntimeHelpers.java
+    
+    commit ec8bb7fc31d4acd4ebcb040f088e19fb427448e8
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sun Sep 19 16:21:38 2010 -0700
+    
+        Remove frame = true from all core class methods, to reduce their call costs. A few remain for invokeSuper and methods that may still need frames.
+    
+    commit ec276b6ca0c6009702839b12d97664b9e52b1023
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Thu Sep 16 14:10:43 2010 -0500
+    
+        Eliminate RubyTuple use that snuck in.
+    
+    commit f80254100cfc17ac6eb558e465fc1fb9122c3ee4
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Tue Sep 14 10:07:53 2010 -0500
+    
+        Special case a few immutable core types in equalInternal/eqlInternal.
+    
+    commit eb66c45145e4fd1f8c28e9a8c544114f034116e8
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sun Sep 12 18:26:13 2010 -0300
+    
+        Performance changes for backtrace logic:
+    
+        * Back off using Java stack trace for Proc's to_s file+line, since it's prohibitively expensive
+        * Move the Backtrace stack to being a fixed-size array of objects updated, rather than created, when a push happens
+    
+    commit 6f0ade5ab28946b8800431d3454d2e57fc0dbe19
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sun Sep 12 11:36:07 2010 -0300
+    
+        Add generation guard around trivially-inlined logic.
+    
+    commit c4d8705217174580d35757dc85c5c646e980b57f
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sun Sep 12 06:18:38 2010 -0300
+    
+        Full speed ahead with a caching mechanism for calls from core classes. Only works for core class methods right now, but opens the door to expanding that.
+    
+    commit 5874abc01104f6c0f435f8ac4643ed0f77cf7cff
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sun Sep 12 03:43:37 2010 -0300
+    
+        Localize some fields used in Array#include? to speed up the loop.
+    
+    commit 346245cd5e154574d14736cf4b9e0b4b98260d14
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sat Sep 11 15:02:41 2010 -0300
+    
+        Allow passing a number of iterations to bench_quicksort.rb.
+    
+    commit b4687022a1f00d0b63838b1c9daf00753fcfa93e
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sat Sep 11 11:55:15 2010 -0300
+    
+        Fixes to get run-junit-compiled 100% passing on backtrace branch.
+    
+        * Fixed a couple tests that are too sensitive to core method line numbers or expected only .rb elements in the trace
+        * Added a mechanism for procs to retrieve the most recent Ruby frame, for to_s purposes
+        * Added comments for hybrid backtrace logic
+    
+    commit 15cd9b16cb2750d0e40ba478d07fe5bf265dc620
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sat Sep 11 08:07:57 2010 -0300
+    
+        Add better logging to AnnotationBinder (for showing framed/scoped core methods), ASTInspector (for showing methods detected as framed/scoped and for reporting deopt flags as they are set), and JITCompiler (for dumping jitted methods' full classes and inspector results). New property jruby.jit.dumping=(true|FALSE).
+    
+    commit c4e6176498590d791868055025c2e72ded1ccf13
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Fri Sep 10 02:10:20 2010 -0400
+    
+        Improve dumping of generated bytecode by including class and method name when possible.
+    
+    commit 07fc4215f6873f449f89d4f5da7a7e2e8963bc70
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Thu Sep 9 23:39:20 2010 -0400
+    
+        Make attr accessor's var accessor field volatile, to guarantee visibility across threads.
+    
+    commit e3a7cf5cd4d8ccd08407955779bdd94feb5e4ac8
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Sep 8 13:26:48 2010 -0500
+    
+        Add missing "in" to caller backtrace lines.
+    
+    commit 7140c339f386959853f747d86cb2ea9a8afa6f2a
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Sep 8 12:10:50 2010 -0500
+    
+        Fixes to get tracing tests running in interpreted mode:
+    
+        * Off-by-one line numbers were off for MRI too. Fixed to correct line numbers
+        * call and return for Ruby methods need to use impl class, not self class
+    
+    commit cbc9c4edab56807a023817d06db9c22441fa4b53
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Sep 8 10:31:57 2010 -0500
+    
+        Fix runInterpreterBody to properly unwrap RootNode for "gets loop" execution.
+    
+    commit 3a09773058d8d58d5bf8f1b6fbebc494fc18f7c6
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Sep 8 10:01:43 2010 -0500
+    
+        Make --bytecode attempt a recompile, so that dynopt and no-compile modes can still print bytecode.
+    
+    commit 4e48e722ba5ded10975af348738237fcb7fe9b2a
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Sep 8 09:23:38 2010 -0500
+    
+        Add a "full" backtrace style which does not omit any Java frames and interlaces the Ruby frames.
+    
+    commit 6f5057e3ae1e372bd66602dcc26864adc3270128
+    Merge: 7006d31 811fd8d
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Sep 8 07:48:47 2010 -0500
+    
+        Merge branch 'master' into backtrace
+    
+        Conflicts:
+        	src/org/jruby/Ruby.java
+    
+    commit 7006d3175bbf4630921dfecaa4faef2a39a77205
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sat Sep 4 16:04:28 2010 -0500
+    
+        Bytecode size reductions for stack-based nil-initialization of locals and for x, *y and x, * forms of masgn.
+    
+    commit 3a8fb16f020c2b9aaa6228605bdb3d8fd1b78ccf
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sat Sep 4 14:52:04 2010 -0500
+    
+        Do not do direct recursive invocations for heap-based scopes, since the scope is not currently being reset.
+    
+    commit ec00e99636667eff97a891917ae9ef37f94a6eb7
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Fri Sep 3 19:55:24 2010 -0500
+    
+        Turn on dynopt by default, to aid testing of new logic.
+    
+    commit 9508e8a6925fce4f57a386ede867b3f8f9b67d38
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Thu Sep 2 12:40:38 2010 -0500
+    
+        Fix Time test that expected two separate Time.now objects to to_s the same.
+    
+    commit 65ba8b37a8a232495453e71b2a560c761b40893f
+    Author: Nick Sieger <nick@nicksieger.com>
+    Date:   Mon Aug 30 14:50:03 2010 -0500
+    
+        Use new backtrace info to set a more useful Java thread name
+    
+    commit 75b100604af39de52b26bdb21669136234424a0b
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Mon Aug 30 11:37:49 2010 +0900
+    
+        Fix ifne/ifeq bug in dynopt guard and switch DefaultMethod to not flip generations on JIT in dynopt mode.
+    
+    commit fe3b408629e94b7db0436152968bd6d2232f6c7c
+    Merge: eea60da 85c64c6
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sun Aug 29 20:33:06 2010 +0900
+    
+        Merge branch 'master' into backtrace
+    
+    commit eea60da3905c87c16fbb4e6c78fd7a07f842e4bd
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Fri Aug 27 14:09:44 2010 +0900
+    
+        Modify Java Fixnum fib bench to use the long call paths where possible, to be more like what compiled Ruby does not.
+    
+    commit a189563d9073208292e91aff3eb1c88489bd113d
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Aug 25 15:07:21 2010 +0900
+    
+        Fixes for jitted/compiled backtrace generation
+    
+        * SClass in a method body needs to frame, so it has a jump target for non-local return
+        * Compiled methods need to always have their ruby name in the method name, so it can be mined out appropriately
+        * Synthetic calls, like to rescue bodies, need to gobble caller frames to avoid multiple entries
+    
+    commit 276226de611cb8d5af942148109c2a51982e7640
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Aug 25 14:03:44 2010 +0900
+    
+        Add callNumber tracking to method handles, to properly handle return jumps.
+    
+    commit b94bcf119a54f52ab9be3c86bc5cc85078f20eee
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Aug 25 13:16:25 2010 +0900
+    
+        More fixes for hybrid backtrace:
+    
+        * Get generated trace to be RaiseException's Java trace
+        * Add Ruby exception name to the RaiseException message
+        * Rewire and repair trace calls
+    
+        All main suite tests now pass in interpreted mode.
+    
+    commit dc9fcd3de0f3070507ac0a0647973d1e9f16ae4f
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Mon Aug 23 14:38:47 2010 -0500
+    
+        Fix debug logging of exceptions being raised and patch a couple tests for new backtrace structure.
+    
+    commit 3acd3201d85e4da9186fa17d3a04bdc9db742e29
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Mon Aug 23 13:23:04 2010 -0500
+    
+        Include original source file in compiled Ruby, add missing "in" line for MRI rendering, and soften requirements in test_backtraces to allow for native elements in the backtrace.
+    
+    commit 728cf3983fbeffba944fe34a8b0e410cc1de041c
+    Merge: 88a64de 0e9c956
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Mon Aug 23 00:18:07 2010 -0500
+    
+        Merge branch 'master' into backtrace
+    
+    commit 88a64de879446be3398ba7671b5fa1f3e46ce02f
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sun Aug 22 17:29:21 2010 -0500
+    
+        Turn on "positionless" compilation, since compiled code no longer needs to update interpreter backtrace frames. Also fix nil/null backtrace rendering.
+    
+    commit 5712a4ce285a5b3662c8ef8def2599223a232626
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sun Aug 22 17:18:17 2010 -0500
+    
+        Fix off-by-one line numbers from interpreter frames.
+    
+    commit 519f4625b9d9658f50b986b1add560903ee453de
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sun Aug 22 17:10:47 2010 -0500
+    
+        Remove some old backtrace code no longer in use and get all "backtrace" method handles to generate with no frame at all (since Java stack is used now).
+    
+    commit 424d967df8a3b6ba277bdb1b530d4f7f62ecbc4a
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sun Aug 22 16:52:29 2010 -0500
+    
+        Get Kernel#caller working with hybrid traces, get Rubinius rendering working again (partially), separate gathering and rendering of backtraces.
+    
+    commit a00822740712ddd924896feccc10f015fd20d4be
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sun Aug 22 15:32:08 2010 -0500
+    
+        Mine method names out of AOT and JIT compiled stacktrace elements and get JIT using the original name of the method.
+    
+    commit 039d184ac5f798aed21870a7552b66c5973ca0eb
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sat Aug 14 22:16:48 2010 -0500
+    
+        Simplify in-class encoding of StaticScope data.
+    
+    commit 876a762b8af88955bee598dfd0421805d9b47c40
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sun Aug 22 01:41:44 2010 -0500
+    
+        Fixes to hybrid traces to get tests working better:
+    
+        * Omit Kernel#raise and the KernelJavaAddons rbRaise from traces
+        * Handle getBacktrace when there's been no preparation
+    
+        Also modified test/testException.rb to allow internal line numbers for the "load" call, rather than MRI standard "whatever line it was called from".
+    
+    commit 06f1bd171d6897f651b3cebfd76551080acbfe40
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sun Aug 22 00:39:59 2010 -0500
+    
+        Move backtrace management to a separate stack and implement mixed-mode backtrace generation.
+    
+    commit ca40e73a7c136dfdd3853f0cd62a73bf70a3a08f
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sat Aug 21 20:56:50 2010 -0500
+    
+        Get all major interpreter entry-points passing through simple, known method bodies. First step toward mixed-mode backtraces.
+
+commit e1aac35f28ac020e83c7d8967e6766fe6b2a9c97
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Sep 11 08:07:57 2010 -0300
+
+    Add better logging to AnnotationBinder (for showing framed/scoped core methods), ASTInspector (for showing methods detected as framed/scoped and for reporting deopt flags as they are set), and JITCompiler (for dumping jitted methods' full classes and inspector results). New property jruby.jit.dumping=(true|FALSE).
+
+commit 743f9b0898672b0b844cd0d71460ecec993158e9
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Sep 4 16:04:28 2010 -0500
+
+    Bytecode size reductions for stack-based nil-initialization of locals and for x, *y and x, * forms of masgn.
+
+commit bfc7eb3bc9a6d6296e00a923b054d92045998126
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Wed Jun 16 16:37:03 2010 -0500
+
+    JRUBY-4885: Fix 'else' handling in begin ... rescue ... else ... end
+
+commit 1f0e0d1f7dc09580d1d287799997a437a34f5684
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jun 15 09:10:39 2010 -0500
+
+    Fix some handling of intrinsics, specifically op_fdiv for Float and proper handling of unsupported intrinsics.
+
+commit a5503a49df27a4f661b86c282c64a4ca2045cb32
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Jun 10 02:41:33 2010 -0400
+
+    Move back to an atomic generation ID and install some simple type/modification guards for dynopt calls.
+
+commit 924796987b23629d8e23f07b5b5819a7848ce7a2
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jun 2 11:16:03 2010 -0500
+
+    Get intrinsics working properly with Float and add a Java Float-based fib bench.
+
+commit c0bc0ddc70857a29d2641902fc0e8c2f4ac0765e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon May 31 17:30:03 2010 -0500
+
+    Adds a few inlining optimizations for trivial method bodies and clean up some duplicated code for recursion.
+
+commit 264b4177a88184fd569c05ef9556e96205e76da4
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon May 31 17:09:48 2010 -0500
+
+    Trivial method inlining for dynopt mode (still without guards).
+
+commit fd1854b8f8c6ccbcdce0f6f0732c144fca6cc707
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon May 31 12:39:37 2010 -0500
+
+    First experiment in dynamically de-dynamifying calls based on runtime information.
+
+commit 53ece18ead6c9671dfdd7e3ee53c8006101f1109
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed May 26 15:23:52 2010 -0500
+
+    Fix remaining defined spec tag.
+
+commit 9fcb5bde249ef93a9b35fa5e94daad8d00a66116
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed May 26 15:14:03 2010 -0500
+
+    Fix long-failing defined specs we recently untagged.
+
+commit e373c01f64dc8cd4f29517e6d56e8a4db9a90177
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu May 20 16:08:50 2010 -0500
+
+    Eliminate the often-unnecessary getRuntime and getNil from the preamble of compiled methods; brings us closer to lightweight or do-nothing methods inlining away.
+
+commit 6ca0f756342bb79a113be682b7a81af71c747365
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Apr 27 11:56:03 2010 -0500
+
+    Partial fix for too-big methods (JRUBY-2621 and JRUBY-4757): chunk 100%-literal arrays and hashes.
+
+commit 516aa109ef62c3f2e4d9ff8c92b1dc1dc946e61d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jan 18 22:05:52 2010 -0600
+
+    Improvements for JRUBY-4486: defined? self::CONSTANT generates a metric ton of bytecode
+
+commit f0c9235b586d9abb8caf018d6399139f9dbe9613
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jan 4 16:40:23 2010 -0600
+
+    Add block-argument-list-block-arg support to compiler. Completes JRUBY-4180.
+
+commit c23ba2f99388c4e6cf6d2e0f7333db23b58b2b51
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Dec 22 10:59:26 2009 -0600
+
+    JRUBY-4119: alias should use symbols with quotationmarks
+
+commit 95f8f246b041ffe6bba46c2daf60cd6d71738b99
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri Dec 18 17:03:18 2009 -0600
+
+    JRUBY-4355: [19] Splat operator behavior is slightly different in Ruby 1.9 (patch by David Calavera)
+
+commit 551a22a6389ea2f2cad1dac28781cabae630efe9
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri Dec 18 16:11:09 2009 -0600
+
+    JRUBY-3960:  Wrong precedence for defined? and &&=, ||=.  JRUBY-4141: Odd ||= behavior with ENV
+
+commit 25720ab186b2d0fcdeffc1744128e185bf575a6b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Nov 11 12:12:17 2009 -0600
+
+    Fix for JRUBY-1531: Tracing in compiler / Tracing AOT compiled code
+    
+    This adds tracing calls to the compiler output and compiled-method invokers whenever full tracing is enabled. This allows debugging at nearly full speed, though to support bindings DynamicScope optimizations (elimination, for example) has to be turned off. This patch modifies --debug to no longer turn off compilation nor turn on reflection, and test/tracing/test_trace_func.rb passes in all modes.
+
+commit 3cd2e9d3d714cceab46460b33c12c41a512644fe
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Oct 13 15:37:44 2009 -0500
+
+    JRUBY-4029: String hash keys should be copied
+
+commit d993d2b59bb33f90a8ae502cf94c4b00a06ae5a8
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Sep 18 21:27:33 2009 -0700
+
+    Add optimized Array#[] call site and compiler logic.
+
+commit 47c9fb29b31b336d47222946e8444fc5326dbb8f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Sep 16 13:42:15 2009 -0700
+
+    Add long-passing cases for other numeric and boolean operators.
+
+commit 3a525a4c19eab39e1505fea9bd968fa7b131cbc0
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jul 13 22:40:34 2009 -0500
+
+    Refactor compiler to produce all static methods, with the AbstractScript subclass as the first argument. Will make the next phase of the compiler easier, since we can pull out script logic from compiled classes. Seems to speed things up slightly too.
+
+commit e85018a30cc1d1f8ff2abcf8fa029c6d32397e82
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Jun 13 16:27:46 2009 -0500
+
+    Fix by Leonardo Borges for JRUBY-2349: Bug in constant lookup on non Module or Class
+
+commit 5e2cf2182b1f1addd89b4e0946706fe7c47be2a7
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Apr 15 01:06:08 2009 -0500
+
+    Migrate ssa toy script to using Java-based DAG builder.
+
+commit 2257c8f811fab8d675a942c86ab712922dc46c6f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Apr 10 14:11:16 2009 -0500
+
+    Remove all code and references to the outdated and nonfunctional YARV and RBX bytecode support. Both have evolved since, both will need a fresh look, and current interpreter is now much faster than either engine.
+
+commit cdfdc569840f93420b8cf8c6684e17bf6309d792
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Mar 31 20:01:28 2009 +0000
+
+    Merge branch 'fastmath'
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9505 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 977af497b1e90f0d91e9059e1f6b1b7f3b2b7868
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Mar 23 02:23:23 2009 +0000
+
+    Add dyncall optimizations (arity paths, inline caching) to super calls (not zsuper yet).
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9460 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 4b8ccfae5aedb7822f9b00801b8278bfc2e30fe4
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Mar 21 17:56:27 2009 +0000
+
+    Fix for JRUBY-3517: Incorrect self in a multiple assignment
+    
+    The fix here was to do the same "call site selection" that normal attr assignment does. The code was mostly copied from the non-masgn attr assignment code, so there's some duplication to be eliminated, but this fixes the bug.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9446 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 036f2b5f5051543028e7146092531f6f70c52a18
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Mar 9 08:08:10 2009 +0000
+
+    Add peephole property to --properties doc, add peephole optz to zarray.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9383 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 1b5b823dc7edf410d96ee81feb925fa4d12144a1
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 3 05:48:39 2009 +0000
+
+    Fix for JRUBY-3361: Compiled case/when blows up with arrays as when clauses
+    
+    Also updated to latest RubySpec to pick up the spec for it.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8973 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 4c35d54c6ea42b2a73dfc366eb27fd4a4927e009
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jan 30 00:23:40 2009 +0000
+
+    Second phase of block arity-splitting: argument counts 1-3 now pass from compiler back to BlockBody unwrapped.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8943 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit e5fbc852d9f5b47223de832d50e964100b4816ca
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Jan 29 22:31:15 2009 +0000
+
+    Beginning of block arity-splitting: zero-arity path works from compiler into Block/BlockBody (no optz yet on receiver side though).
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8941 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 2491d1ab35a29e3e5c6a29f78c0c69c1f0752a6a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Jan 24 18:35:08 2009 +0000
+
+    Expand case/when optimization to include single-char symbosl and multi-char symbols and strings. Also turn it on by default, even though it's not checking for === override atm.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8880 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 57f9436a667bca75602544533debcc83319789d6
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jan 23 04:25:51 2009 +0000
+
+    Get whole-body rescues to optimize the same way a non-rescued method body would.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8874 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit e1447512f264e770bf61fbbc30aa29e0b1aa5f3b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jan 23 04:25:41 2009 +0000
+
+    First round of perf improvements for rescue.
+    
+    * Make all errorinfo access go straight to ThreadContext, rather than via $! global variable
+    * For methods with body instanceof RescueNode, compile inline without a separate synthetic method
+    * Start preparing to allow ASTInspector optimizations for rescue when it's compiled inline
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8872 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 4d649c8c0fdb559908b66429c0a3f7e9a1b7eca3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Jan 22 07:41:05 2009 +0000
+
+    Add an optimization for __send__ calls with a literal symbol or string; compile it as an fcall to that name.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8865 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit f2e871c69a56eb2a385d748b201fc4e2874a2ea5
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jan 14 16:32:03 2009 +0000
+
+    Make 1.9 compiler fail hard on masgn compilation for now, make main compiler fail hard for unknown nodes, and modify run-junit-precompiled-1.9 to do nothing until compiler is up to speed.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8774 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 03165718fbea29dd71ae09fcc23915f307328d25
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jan 14 16:31:45 2009 +0000
+
+    Add in single-character-string case/when optimization.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8772 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 2c813e9d06d454dbbce800bf961ec1c2a797e5c2
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Tue Jan 13 22:53:26 2009 +0000
+
+    Re-landing case/when AST refactoring
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8751 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 20225f17b2ffb0f7f9797949c3dc94339468f5c4
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jan 13 19:51:29 2009 +0000
+
+    Add support for post args in method arguments in 1.9 compiler.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8749 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d68747263357663bc0aef2df0383525cf2c490ff
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jan 13 18:05:10 2009 +0000
+
+    Move logic for a bare argspush compile into 1.9 compiler (since it can only happen in 1.9) and fix the logic to work correctly (was never encountered before in 1.8 mode).
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8747 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 75f48785fa21e4aff89581353bb425648c2ec7c4
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jan 12 22:37:21 2009 +0000
+
+    Revert "Change how we do case/when in AST.  Remove rewriter tests and position tests until they move to jruby-parser project on Kenai"
+    
+    This reverts commit 195ec6a446134c05697686c1b885e13579a220f1.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8728 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d7361b88d4e224e6837111e9e111342ca9581406
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Mon Jan 12 21:01:09 2009 +0000
+
+    Change how we do case/when in AST.  Remove rewriter tests and position tests until they move to jruby-parser project on Kenai
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8726 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit e8ee226d912e00577082d3289bae5f9dccc0056c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Jan 10 00:33:18 2009 +0000
+
+    Reinstate lost logic for setting errorinfo...disappear some time during my refactoring.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8677 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 76e7f75333e04faed8a69269652f15e94bde863a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Jan 10 00:33:09 2009 +0000
+
+    Only emit retry-handling logic if there's a retry present.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8675 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit e3d710ce9a807f8ee4db04c00cf231d8ad52a4e0
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Jan 10 00:33:03 2009 +0000
+
+    Method preamble cleanup:
+    * Don't getValues from DynamicScope unless it's > 4 vars; we did it every time, creating a throw-away array for every call!
+    * Same fix for chained and "flat closure" method bodies
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8674 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit b51b35c1ed6fcbd502ec9ed34f5fc6c0211ab9e1
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Jan 10 00:32:50 2009 +0000
+
+    Nexts round of rescue optz, part 1: don't outline immediate bodies, and load StandardError without const lookup.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8672 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 8beae5f8a627d9c30d9dca302b3c2a7fea8cf5e9
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jan 9 17:58:51 2009 +0000
+
+    Oops, forgot to consider "evaluate at start" for until and while peephole optz.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8671 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 82b270d677554634125eeb25ad275012d411076a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jan 9 17:58:41 2009 +0000
+
+    Peephole optz for while and until, only compile their bodies if they might run.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8670 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 81ef15ba918907e719c6fc6176ff5faddda4a4a0
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jan 9 17:58:35 2009 +0000
+
+    Peephole optz for And and Or, taking into consideration nodes that are always true or always false.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8669 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit ff7738a32b384835da78a7a43a1144dcdf1c414b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jan 9 17:57:51 2009 +0000
+
+    Expand expr optz for masgn up to 10 elements.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8667 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit b62f9ab29dcceab7ff36e26de2b750795e454d34
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jan 9 17:57:05 2009 +0000
+
+    Minor optz for match2 to eliminate a swap.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8666 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 9c8510bf0a2448901e63fe0b273217854cc5ca9d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jan 9 17:56:30 2009 +0000
+
+    Peephole optz for if statements; only compile bodies that may happen.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8665 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 514ea76038ef8372fcd0208e47d607c8ac454e6f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jan 9 17:55:51 2009 +0000
+
+    Minor optz for literal range to avoid stack juggling.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8663 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 4ff3d90ed08dd9add49b5a603a088c7f778349aa
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jan 9 17:55:18 2009 +0000
+
+    Minor optz for colon3; no need to check if Object is a module.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8661 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 5356a05086485a9192ef49905bd9cef2aac67525
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jan 9 17:54:14 2009 +0000
+
+    Can't peephole optimize class vars because they should raise error if not defined.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8660 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit eef09fd68dfd46161b50c0bac5d18d0ceee93c54
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Jan 8 13:05:48 2009 +0000
+
+    Get optimized cases working again, sharing bodies with normal slow-path switch logic.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8653 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 27000ce54b5cd8ddca7f6f00e4c34de2fa6878e4
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Jan 8 00:25:55 2009 +0000
+
+    Propagate expr through case/when. Mostly peephole optz.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8645 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 85d8d094a5c5ffc9ae554bd4420db1ffd3c117df
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Jan 8 00:25:32 2009 +0000
+
+    Cleaned up, partially optimized, and arity-split case/when logic. --fast case is probably broken, and splatted causes duplication still, but it's close.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8644 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 05ad1d34fec0d374ce2b21782cb68bba0f858d0e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jan 7 07:30:26 2009 +0000
+
+    Arity-split rescue args. Doesn't help performance much, probably way overshadowed by the cost of rescue itself.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8624 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit fb1ce9cc60f79a2acd2484356e833c0a5209247a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jan 7 05:49:40 2009 +0000
+
+    Fix statement-based "and" with a modifier; lack of post exec value popping was breaking compilation.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8623 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit e02fb35cf9fd558e342a2a46dbe7b5f14cb6b778
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jan 7 05:49:15 2009 +0000
+
+    Modification for optimized fixnum switch to support multi-arg fixnum whens.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8622 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit fbb79eff7f9d68820574aef313bc0aa31727673f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jan 2 11:27:47 2009 +0000
+
+    Expr optimizations for a few composite literals:
+    
+    * Non-expr array evaluates elements but does not construct array.
+    * Non-expr dstr, dsymbol, dregexp evaluate elements but do not construct container
+    * Non-expr hash evaluates elements but does not construct hash.
+    * Non-expr immediate elements in each case are thrown out.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8564 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 5f7ce5bf0db3fe852438a7368db357c4e7d5b141
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jan 2 10:50:56 2009 +0000
+
+    Minor optz for flip; compile non-expression bits appropriately.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8563 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 8627587e6e31dbfb736067122e431226b3add4c3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jan 2 10:31:04 2009 +0000
+
+    Make ensure body compile as a non-expression and fix dsymbol bench.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8562 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 4306ab442612b820b5aca0da12ff4fc4ae80e740
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jan 2 08:56:58 2009 +0000
+
+    String optz:
+    
+    * Reduced bytecode emitted for literal strings
+    * Caching bytelists for literal strings in the same way as other literals, rather than on a static array
+    * Increased starting size for dstr to 20 bytes from ByteList's default 4
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8559 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 0165b69a75640c2b9239ff17fe7ff8ef4d0a8a09
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jan 2 06:37:52 2009 +0000
+
+    Big reduction in bytecode emitted for Colon2, using Enebo's split AST nodes as a guide.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8556 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit ff9baab4ad2d88d6b41bf0cd0d789463d53b9bd7
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jan 2 04:22:19 2009 +0000
+
+    Optz for class/sclass/method bodies, to get the usual variable optz and reduce per-entry cost due to recreating the scope.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8555 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 8cea5324eea9546a9597a848eeb09091788a1da3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jan 2 02:29:30 2009 +0000
+
+    Add a control case to masgn bench and clean up some other minor tidbits.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8553 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 397769483c16880ec01c5e67073016b9b1bddb01
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jan 2 02:00:54 2009 +0000
+
+    Expand masgn optz to 3 and 4 arities, the highest possible without introducing intermediate temporary local vars.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8552 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 9883fa4b2df513916cdb3fb9bf03bd89d2fde18e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Dec 30 08:25:39 2008 +0000
+
+    First of several multi-assign optimizations. For cases like a,b=c,d this one is an order of magnitude faster since it avoids standing up an array and accessing it.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8511 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 9fd65ed7385f45ab078e28e41c58813e3c845601
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Dec 29 10:58:22 2008 +0000
+
+    Finally some peephole optz! Propagate an 'expr' flag through compilation to know whether the product of a given subexpression is actually needed. Allows trivial removal of useless code like unused immediates, lvar, dvar, ivar, and gvar lookups. Also will allow optimizing away the array return value from an masgn, which should improve its performance substantially.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8497 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 9b6d602f9572c15032a274a680ddcbbd536c782a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Dec 29 04:33:59 2008 +0000
+
+    Fix double-assignment of lvars in masgn and bad nil-initialization of root scope.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8495 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit c0f0f59e6c610a5f36c5805bdb33b3ba2540bde2
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Dec 28 23:45:19 2008 +0000
+
+    Same improvement for 'for' as for normal blocks; don't expect redo exception unless there's methods that could cause it.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8493 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 250fedda93218c4211c5754af0312eb8599f9eed
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Dec 28 08:48:23 2008 +0000
+
+    Fix regression in masgn + starnode compilation.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8488 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 38539306c47caec741243f5e15be0e345757f069
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Dec 28 01:52:13 2008 +0000
+
+    Bombs away! Eliinate nodeId field from Node and add a method to all nodes of interest to return the value instead. Probably a little slower, but we're moving away from using NodeType on critical path code and the memory savings are pretty substantial (4-8 bytes per node).
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8485 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit e6653b48f2dcf0da3625f8828e18c0bd756835f3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Dec 27 09:57:31 2008 +0000
+
+    Another large optimization of block argument processing; substantial reduction in bytecode size, improved performance, reduced dup/pop churn. also some other miscellaneous cleanup.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8474 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 55d5329d11ff707926b81a553249c1886ef88ed3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Dec 27 07:23:24 2008 +0000
+
+    Large optimization/simplification for method argument processing:
+    * Reduced bytecode for opt and rest args in half
+    * Removed some unnecessary dup/pop
+    * Simplified opt-arg flow to ease JVM framing overhead.
+    * Reduced arity-checking to always do the static call; halved bytecode.
+    * Reduced stack-based nil-filling to only fill uncertain local vars (those not guaranteed to be populated by arg processing)
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8472 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 05bdd562d35a8634b3a67ca834871b72f4978e83
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Dec 27 05:22:16 2008 +0000
+
+    Another round of compiled block optimizations:
+    * Use RubyArray's fillNil (now moved to RuntimeHelpers) instead of Arrays.fill
+    * Nuke BoxedVariableCompiler, since with proc-as-binding it will never work (and hasn't been kept up-to-date anyway)
+    * Add "expression" param to local var lookup methods, to specify whether they should leave a value on stack. First step toward fully expression-aware compilation.
+    * Only handle exception-based redo when body contains nested logic that could cause it (scope-aware methods like eval).
+    * Reduce preamble logic for both methods and closures by reducing unnecessary stack-twiddling.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8470 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 37765f041110234dcb0abc0457ee5b766f124be0
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Dec 23 08:51:20 2008 +0000
+
+    Further reduce OpAsgnOr (a ||= 1) logic for the simplest cases that are considered "always defined" like l/dvars, self, true, and so on. Most interesting for the lvar/dvar case, since it knocks another chunk of bytecode off a reasonably common case.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8439 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit e09fd7a571635fdeaf60ec2f7641facbed7150bf
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Dec 20 08:47:18 2008 +0000
+
+    More bytecode/compiler cleanups:
+    
+    * Actually enable the logic to emit only a single __file__ method for the root of a script; --bytecode output now looking pretty clean. This backs off from the ScriptBodyCompiler approach and just makes root scopes claim they have a restarg at 0 but don't process args.
+    * Revert by-value cache slot sharing for regexp objects, since they can be individually tainted. The fact that we cache them at all is probably still in violation of this behavior, but hell, it's tainting.
+    * Eliminate a rogue ALOAD in constructor/cache setup.
+    * Eliminate generating a clinit method if there's not going to be anything in it. Affects any scripts/methods that don't have literal strings (and maybe one or two other things).
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8410 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 5bec0860cf7ab83fb9c4e948add342c1854f93f9
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Dec 16 20:33:24 2008 +0000
+
+    Large optimization to defined? for most common cases. All cases were causing deopt and going through a very large, involved block of code that required synthetic methods and exception-handling. The modified logic does not use that slow path for those simple cases, and is in many cases several times faster.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8370 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit bf8db0bc4acaeed7900b867e821e959f254be0be
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sat Nov 22 22:57:11 2008 +0000
+
+    Biggest commit eva (1.9 parser+1.9-runtime-related-changes landing)
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8099 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 6e673b59cd7223c945b6b1a4aab23154f48b217a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Oct 24 04:46:31 2008 +0000
+
+    Wide-ranging rework of exception-handling synthetic methods:
+    * Chained compilers split into two, to handle outlining code within child-scoped methods as well
+    * outline method moved to Root and Child method compiler base types
+    * Simple ensures modified to use new outline logic
+    * Rescues modified to use new outline logic for both main logic and bodies; no sharing yet between ruby and java exception paths
+    * Small reduction of code generated for rescues
+    * Simplification of rescue logic in compiler, due to outline use
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7904 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 7c91133ccd72bcb48a1c8c46bd6e3f30816f4abe
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Oct 20 21:00:25 2008 +0000
+
+    Primary set of changes to support JRUBY-3014; compiled scripts now have to have a setFilename method that is used before execution to set what filename the script actually is, allowing __FILE__ to be dynamic for .class files when loading. Still need to fix jar-file location for loaded scripts, both interpreted and compiled.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7898 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit c2ae9de36081f45801b96b380cdea9cc4bf797d1
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Oct 7 03:00:51 2008 +0000
+
+    Fix for JRUBY-2349: Bug in constant lookup on non Module or Class
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7841 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 026f246748a6f0ce2516657e7f4e672af44f6930
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Sep 19 23:40:39 2008 +0000
+
+    Beginnings of annotations on compiled methods, to move toward unifying method binding logic and eliminating extra method generated for [] versions.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7723 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit ef600a2c8d8c065a1599734d560be2b975470796
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Sep 14 04:00:11 2008 +0000
+
+    More compiler refactoring.
+    
+    * MethodCompiler interface becomes BodyCompiler
+    * AbstractMethodCompiler becomes BaseBodyCompiler
+    * ASMMethodCompiler split into a subhierarchy of "root-scoped" body compilers
+    * ASMClosureCompiler becomes "child-scoped" body compiler
+    
+    All preparations for making per-type compilation behaviors more customized, especially to help move towards method bodies using a direct reference to their static scope for constant lookup.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7697 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 5d6010f164fa6cc79dcbc36bc893c5527b1f0193
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Sep 9 09:25:41 2008 +0000
+
+    Add experimental switch support in compiler for all-int-Fixnum case/when. Could be expanded with more formalization, an invariant hash algorithm for all literals, and more efficient bytecode emission to save the body-doubling.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7666 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 6867ab39df405218230a65b91bfa2d2521838db9
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Aug 31 05:14:58 2008 +0000
+
+    Remove unused import from ASTCompiler.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7599 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a20b29bfe53939fa18fde72c45ac86b1883c1ae6
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Aug 31 04:54:09 2008 +0000
+
+    More compiler cleanup:
+    * Eliminated unused, inefficient invokeDynamic (finally!)
+    * Simplified yield logic, pushed null argumentation into Block
+    * Simplified eqq call logic for case/when
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7597 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 5b308a28e94c8e2294879a1ad58b26c864a76938
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Aug 31 00:29:33 2008 +0000
+
+    Compiler improvements:
+    - nuke old inefficient, unused opelementasgn logic
+    - pull out opeelementasgn arguments callback for or/and into a concrete inner class
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7591 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit e1eb359af7c98dac78965357fc9cfd0080bde8ab
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Aug 30 19:57:26 2008 +0000
+
+    Compiler improvements:
+    - Fixnums -1 to 5 back to using the RubyFixnum methods to reduce total bytecode for heavily-used low fixnums like 0 and 1
+    - Rewrite masgn-based attr assignment to use a call site, avoid boxing args for all cases up to a[1,2,3] = 1
+    - Add CallSite call versions that accept caller, to start moving away from frameSelf for visibility checking
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7589 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit f08b92da6c3504f4c68b456809a9b1d3b4e075bf
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Aug 3 03:52:44 2008 +0000
+
+    Adding Java exception rescuing to the compiler as well.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7356 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 0ecae8f26e4ea176b3024578d712eafaf401d70a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 9 20:01:27 2008 +0000
+
+    Eliminate conversion of incoming arg to array in case of multiple assigning StarNode.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7134 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 1a6b635900f434142a8e67b6a69112ab37fa08c1
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 9 19:59:45 2008 +0000
+
+    Add --bytecode flag for debugging, experimentation purposes. Might move it off the list of standard options?
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7133 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit aeb0ace7fa2f23649c0edbba98bec6d04d69af21
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jul 8 00:16:43 2008 +0000
+
+    Add an "escaped" flag to Block to allow properly handling the cases of a break above and below the closure's instantiating frame correctly. Doesn't appear to be the right logic for return, so there's probably more work to be done here. But all break specs pass with this.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7124 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 4d5cd30ed4daa304a1e962d1665e202ff04f9a16
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Jun 14 21:20:58 2008 +0000
+
+    Add jruby.compile.chainsize property to set the number of lines at which we force a "chain" to avoid JVM max method body size.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6967 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 57aa20de709892ee32509c0fe271cb6acede9729
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jun 6 09:05:49 2008 +0000
+
+    Add another entry point into compiler backend to avoid a swap when constructing literal arrays and to call straight into RubyArray construction methods rather than via Ruby.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6913 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 15aa3b515882d0f8a7234a7167605dfae2e8a473
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun May 25 05:46:53 2008 +0000
+
+    Rework __NOFRAME__ pragma to be a local var, so it's ignored during normal execution.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6784 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 3524bdc88d16ab76fd6b5f22756f2bf1512e62dd
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat May 17 08:44:17 2008 +0000
+
+    Add an experimental __NOFRAME__ pragma the compiler can recognize. Very preliminary, experimental stuff.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6728 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit f9a6002635566f44f7cf3e342f3977ffc588d13f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue May 6 04:29:15 2008 +0000
+
+    Adding missing changes...praying git-svn doesn't die halfway through committing again.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6629 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 023c113b85a0d1bac5ba42803314b71d4a330b6c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue May 6 04:14:33 2008 +0000
+
+    Add lighter-weight while loops to inspection/compilation process.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6626 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit e170711abc058eb8a29e4abb403afdb7f0811fe6
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu May 1 19:44:29 2008 +0000
+
+    Reformat compileFlipNode. This is the only optimization it will receive.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6606 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 1e55db1890eaabb459874082d9fef79abde27411
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Apr 28 14:25:03 2008 +0000
+
+    Enable all variable-assignment optimizations by forcing while loops into their own synthetic methods. This results in them forcing heap-based scopes on their host code bodies, but iteratively making loop compilation smarter can eliminate that. It fixes all known issues with loop compilation; now we will work back to make them efficient again.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6587 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit fa73cc0eac8ddac5ec0712665837d252b8cb6e33
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Apr 28 09:14:51 2008 +0000
+
+    Expand variable-assignment optimizations to globals and instance vars, but it's still disabled for the moment due to while/until.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6584 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 0f8653a8e15f5685f88c94a32998d10c0a14e336
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Apr 28 08:16:07 2008 +0000
+
+    Temporarily disabling smarter callback-based variable assignment logic because while loops' exception handling wipe out the stack and break verification. Need to attack while loops separately.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6583 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d290a3e2a288191f08c43e2c9dd0c60e31ab0cc0
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Apr 28 08:16:00 2008 +0000
+
+    Adding microoptz for local variable assignment; reduces amount of stack-juggling necessary. Still needs a fix for one case, where assigning the result of a "while" to a local varaible.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6582 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 379fc8d0aa56e7a49affbbaf366afedc074e7b8e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Apr 28 08:15:49 2008 +0000
+
+    More microoptz:
+    * Use ICONST_M1 through ICONST_5 for small integer values
+    * Use a callback for class var assignment, to avoid a bunch of stack juggling
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6581 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 7be3e62c35796d36ea332a1ecacf7455d73dce4c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Apr 28 08:15:35 2008 +0000
+
+    Multiple microoptz to compiled output:
+    * all int loads now use smallest bytecode possible (biload, siload)
+    * removed extraneous runtime params from several methods
+    * split range instantiation into exclusive/inclusive versions
+    * moved some array/splatting methods out of ASTInterpreter and into RuntimeHelpers
+    * Modified Fixnum creation to use efficient int loading bytecode when possible
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6579 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 34c8afa7edde526a572c70e82d0bb9e55e9f1e04
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Mar 1 18:21:16 2008 +0000
+
+    Fixes for a[b] ||= c and a[b] &&= c being much slower than interpreted and MRI.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6076 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit bc298b069101d15b5c01fdf6f0a71e8f5eba16fc
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Feb 24 15:44:15 2008 +0000
+
+    Add line number into compiled closure name, to provide a bit more information in stack traces.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6015 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 6ee3865cc5caaa9ebfe9da80a86ff866c7963ba7
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Feb 21 15:46:58 2008 +0000
+
+    More optimizations/compiler cleanup for op assignments: op asgn with || and && improved.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5989 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 511aec45f56ca68af0b473d96cc6e8e27c705e3a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Feb 20 20:36:21 2008 +0000
+
+    Performance improvements for opasgn with a normal method operator (as in a.b += c).
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5984 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit ed966065ff11d1d43b37cee308345cf675c9d7ef
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Feb 20 18:40:16 2008 +0000
+
+    First step of refactoring for opasgn compilation.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5980 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit c272260478381c8ac3ab13f39db6a0809d3b1d1b
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Mon Feb 11 02:33:23 2008 +0000
+
+    Fix for JRUBY-2103: $~ semantics still doesnt match MRI.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5899 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 7ec460dc0de02a3e51f0839c95c18c13a79a6d9e
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sat Jan 26 23:27:49 2008 +0000
+
+    Do less lineNumber's in compiler (newline should be enough resolution - ~20% savings for mri/sample/test.rb)
+    Do not lineNumber if last lineNumber is on same line (~1% savings) - simple check
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5757 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 55b1e747d6fd02d03695b731dbb28af9bef191a1
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Fri Jan 25 23:45:51 2008 +0000
+
+    Phase I: Stop using ISourcePosition in runtime
+      - Removes need to manage extra fields in compiler reducing memory size of methods
+      - Seperates setting of setting line and file (later commit will be doing a lot less setFile's)
+    
+    - Removed a chunk of dead code from RubyKernel.eval
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5747 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit cb8cd2e80cf751e38ee034f06975c5ceec750420
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jan 25 09:39:21 2008 +0000
+
+    Improve the performance of case/when by an order of magnitude.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5726 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 35eb534bae9bad04a2693301f5fc1612944d444d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jan 25 09:05:44 2008 +0000
+
+    Remaining fixes for JRUBY-2033, poor performance for attr assignment. Extends "fast" specific-arity attr assignment to all cases.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5725 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 323caec04578139e9b787d9a977c08bb25bf94d9
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jan 25 07:28:25 2008 +0000
+
+    Fix for performance of simple attr assign (x.foo = bar) and added benchmark for a more complex case a[1] = 2)
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5722 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit f37d3c09016f9b17038bec603f3a0dd90566dc12
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jan 23 04:25:35 2008 +0000
+
+    First step toward specific-arity invocation: compiler invokes specific-arity methods on CallSite, from zero up to three arguments.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5697 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 11d711c13d31d3ede73d1c8e71aa5655fd0f65af
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Thu Jan 17 22:46:10 2008 +0000
+
+    Skip string quoting before the cache lookup and use the cache for all regexps (regardless of options and KCODE) including interpolated ones.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5650 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 2a5387cc667c115d43cff2359363a4325e3ce907
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Thu Jan 17 14:40:02 2008 +0000
+
+    Fix for JRUBY-1618, regression with SystemExit
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5644 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 5403220bb7211dff77b8820846621fc5b040f8c0
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Jan 10 02:05:59 2008 +0000
+
+    More fixes to reduce permgen usage:
+    - only generate run, load, and main methods for classes that need them (rather than for all jitted methods)
+    - extend an existing class that has a large number of call site fields, rather than defining new fields for each type
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5545 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 833606c98dbbf59edfd3413e3b2006e022daecfd
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Dec 29 03:33:41 2007 +0000
+
+    Fix for JRUBY-1823, plus refactoring
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5407 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit e138e7380d7e56ee0e3a9d2f7817944bf2874c47
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Dec 19 23:01:42 2007 +0000
+
+    Cleanups and name-mangling unifications (along with a few compiler bug fixes) to make +C work during test runs and add full-file, forced AOT compilation to the test runs.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5302 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 3d66aaaecac43947680bff34f1e02949e51cd2de
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Dec 11 16:39:54 2007 +0000
+
+    Add the ability to compile a script's top-level functions as callable methods directly on the script object.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5210 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 4b46736a80bbf2f95c82c7ce4cd227a75ec5b4a7
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Dec 11 15:20:22 2007 +0000
+
+    Multiple compiled tweaks:
+    - Rename CompilerCallback.compiler to callback, to avoid conflicting with ASTCompiler.compile
+    - Make ASTCompiler an instance, to allow for maintaining state during the compilation process on the tree-walking side
+    - Adjust compiler client code as necessary
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5209 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 3ebdff689db8e1e3e87a5dc4db546047d74d7fc9
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Tue Dec 11 03:25:29 2007 +0000
+
+    First phase of Joni related String/Regexp optimizations:
+    - Major RubyRegexp and MatchData cleanup (Compiler/ASTInterpreter synchronized).
+    - Enabled lazy Region instance creation (only when groups defined).
+    - Heavy lifting for String#scan, String#sub, String#gsub, String#split by direct joni Matcher access and smarter backref management.
+    - Enabled joni Matcher reusing for aforementioned methods.
+    - Enabled thread local Regexp cache for String arguments that are converted to regexps.
+    - Global variable ($=) made ineffective.
+    In most cases the modified methods are now 2x - 5x faster (depending on string size)
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5207 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 012e790c3a16732f986835ad3a5e1403ade6782a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Nov 23 05:23:47 2007 +0000
+
+    Renaming the badly-named ClosureCallback to CompilerCallback
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4992 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 170296806447cb4ecbb5b02f60ed2392598ac82d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Oct 30 07:37:54 2007 +0000
+
+    Fix for JRUBY-1286.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4791 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit b13d510c1a617cd792d486e702dbd3e21dd5c89c
+Author: Bill Dortch <bill.dortch@gmail.com>
+Date:   Tue Oct 30 06:44:22 2007 +0000
+
+    Concurrent SymbolTable implementation. About 5% faster (in bench_symbol) than the ST code introduced in 4580 (which is mostly reverted here), and now threadsafe.
+    
+    As with the concurrent vars code, should perform especially well in multi-threaded applications.
+    
+    For interpreted mode, caches the symbol at the SymbolNode (almost identical to Fixnum handling).
+    
+    Still _much_ slower than MRI in bench_symbol (unlike vars/constants, where we're faster now).  Could be much faster if we cached the Symbol in compiled code.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4787 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 47fc3bf1ebb3d45594f50d9ccc88d56e8aadeba2
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Oct 26 19:26:48 2007 +0000
+
+    Fix for JRUBY-1468, fixes the original issue, adds a whole raft of tests, and fixes a few additional issues discovered.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4747 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 76d3a5c67300ea7316d59fc35eb105b1152dab63
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Fri Oct 12 12:34:45 2007 +0000
+
+    Improve performance of Symbol reference by 3-4 times, as per the test/bench/bench_symbol.rb test. The more radical way of doing this is to generate and save only the id in AST, and let SymbolTable create the Symbol the first time that id is actually used to get something. That would probably improve the performance even more.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4580 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a70b007a27f8191431f2cd947653459c6c8f78c9
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Oct 3 12:19:45 2007 +0000
+
+    Support for stack-based closures. Because the innermost closure's variables are not visible to any other scope, even when repurposed as a binding, those variables can safely be stack-based.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4470 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 8fb5b65952677f00e931d2b4f9da7495e2e91036
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Oct 2 19:32:39 2007 +0000
+
+    Implement chaining/splitting of root compilation elements, to allow large scripts like test.rb to compile and run.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4468 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit f3e313d3caac6d1d49e761b263d8481db71bdfa7
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Oct 2 15:17:06 2007 +0000
+
+    Misc cleanup in the compiler, reduction of code for regexp and match3
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4464 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 5b26d393c98428187d94b7bb168a037380b6f33c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Oct 2 05:58:23 2007 +0000
+
+    Renaming NodeCompilerFactory to ASTCompiler
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4452 961051c9-f516-0410-bf72-c9f7e237a7b7

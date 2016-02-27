@@ -1,0 +1,73 @@
+commit ce4fe6fbc9d43d71204d8585a066919fd234b488
+Merge: 8d95741 55e8e3a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jan 10 15:16:23 2014 -0600
+
+    Merge remote-tracking branch 'origin/jruby-1_7'
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/RubyKernel.java
+    	core/src/main/java/org/jruby/runtime/callsite/RespondToCallSite.java
+
+commit 55e8e3a09ab25902f2b5bfd7f40c23d16481fa42
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jan 10 14:59:44 2014 -0600
+
+    Reenable respond_to? caching logic.
+    
+    The respond_to? call site logic was disabled because it did not
+    take into account respond_to_missing?. Whenever respond_to?
+    returns false, 1.9+ needs to check respond_to_missing? in case the
+    method in question is implemented by method_missing. We disabled
+    all respond_to? caching until we could figure out a safe way to do
+    this caching in 1.9 mode.
+    
+    In this commit, we use the following logic to know whether we can
+    cache the result of a respond_to? call:
+    
+    IF we are in 1.8 mode
+    OR respond_to? returned true
+    OR respond_to_missing? is not overridden
+    THEN cache
+    
+    We will not cache, then, if we're running in 1.9 mode AND
+    respond_to? returned false AND there's a custom
+    respond_to_missing? defined. This should cover all appropriate
+    failure cases and allow us to cache the much more common normal
+    respond_to? cases.
+    
+    Numbers before and after:
+    
+    BEFORE:
+                                              user     system      total        real
+    control, 1 and :to_ary                0.030000   0.000000   0.030000 (  0.031000)
+    1m 1.respond_to?(:to_ary)             0.060000   0.000000   0.060000 (  0.061000)
+    1m 1.respond_to?(:to_ary,true)        0.070000   0.000000   0.070000 (  0.069000)
+    1m 1.respond_to?(:next)               0.040000   0.000000   0.040000 (  0.034000)
+    1m redefined obj.respond_to?          0.020000   0.000000   0.020000 (  0.025000)
+    1m varying name respond_to?           0.030000   0.000000   0.030000 (  0.026000)
+    
+    AFTER:
+                                              user     system      total        real
+    control, 1 and :to_ary                0.030000   0.000000   0.030000 (  0.032000)
+    1m 1.respond_to?(:to_ary)             0.010000   0.000000   0.010000 (  0.011000)
+    1m 1.respond_to?(:to_ary,true)        0.010000   0.000000   0.010000 (  0.015000)
+    1m 1.respond_to?(:next)               0.010000   0.000000   0.010000 (  0.011000)
+    1m redefined obj.respond_to?          0.020000   0.000000   0.020000 (  0.023000)
+    1m varying name respond_to?           0.020000   0.000000   0.020000 (  0.024000)
+    
+    In additionm this should reduce calls to our per-class cache
+    substantially in cases where the argument passed to respond_to? is
+    the same and the target object's type is not changing.
+
+commit 697e6895affa646849a685ed58f6f84795c853aa
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Oct 4 23:37:52 2013 -0500
+
+    Eliminate calls to Ruby.is1_8 and is1_9.
+
+commit 28c6fbc4e883bc1c9e9242d1da1cb2b785f55339
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 3 12:46:45 2013 -0500
+
+    Move to @mkristian's proposed layout, with some modifications.

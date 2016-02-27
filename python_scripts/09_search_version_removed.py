@@ -32,8 +32,16 @@ def parse_block_comment (comment):
             result.append(new_line)
     return result
 
-# cursor.execute("select a.comment_type, a.comment_text, a.project_name, a.version_name, a.file_name, b.version_order, a.processed_comment_id from technical_debt_summary a, tags_information b where a.project_name = b.project_name and a.version_name = b.version_name and a.processed_comment_id = '18402'")
-cursor.execute("select a.comment_type, a.comment_text, a.project_name, a.version_name, a.file_name, b.version_order, a.processed_comment_id from technical_debt_summary a, tags_information b where a.project_name = b.project_name and a.version_name = b.version_name and a.version_removed_name = 'not_removed'")
+def get_latest_tag (project_name):
+    switcher = {
+        "jruby": "107.9.0.1.0",
+        "apache-ant": "66.ANT_194",
+        "apache-jmeter": "75.v2_13_RC2",
+    }
+    return switcher.get(project_name)
+
+# cursor.execute("select a.comment_type, a.comment_text, a.project_name, a.version_name, a.file_name, b.version_order, a.processed_comment_id from technical_debt_summary a, tags_information b where a.project_name = b.project_name and a.version_name = b.version_name and a.processed_comment_id = '1811'")
+cursor.execute("select a.comment_type, a.comment_text, a.project_name, a.version_name, a.file_name, b.version_order, a.processed_comment_id from technical_debt_summary a, tags_information b where a.project_name = b.project_name and a.version_name = b.version_name and a.version_removed_name != 'not_removed'")
 results = cursor.fetchall()
 
 for result in results:
@@ -52,6 +60,7 @@ for result in results:
         comment = parse_block_comment(comment_text)
         # print comment
 
+    analysis_result = dict()
     removed_version_name  = 'not_removed'
     removed_version_order = '-'
     removed_version_hash  = '-'
@@ -99,14 +108,17 @@ for result in results:
                         # print str(value)+' - '+line 
                         if value < 10:
                             not_found_in_version = False
-                            print str(value)+' - '+line 
-                            print str(value)+' - '+comment[comment_index]
+                            
                             comment_total_distance = comment_total_distance + value
                             comment_index = comment_index + 1
                             if not_removed_already == False:
                                 not_removed_already = True 
                             if comment_index == len(comment):
+                                analysis_result[newer_version_path] = 'match'
+                                print "MATCH"
                                 break
+                        
+                        
                 print 'total comment distance = '+ str(comment_total_distance)
             except Exception, e:
                 # file not found exception
@@ -117,7 +129,19 @@ for result in results:
                 removed_version_order = newer_version_order
                 removed_version_hash  = newer_version_hash
                 not_removed_already = False
-            
+                analysis_result[newer_version_path] = 'not match'
+                print "COMMENT NOT FOUND IN THIS VERSION"
+    
+
+    # this is to prevent a exception explained in the resource file "Removed commits test status"
+    
+    latest_tag = get_latest_tag(project_name)
+    if latest_tag in analysis_result:
+        if analysis_result[latest_tag] == 'match':
+            removed_version_name = 'not_removed'
+            removed_version_order = '-'
+            removed_version_hash  = '-'
+
     if removed_version_name != 'not_removed':
         # get version removed -1 
         cursor.execute("select version_name, version_order, version_hash from tags_information where project_name= '"+project_name+"' and version_order < '"+str(removed_version_order)+"' order by version_order DESC limit 1 ")
@@ -127,9 +151,10 @@ for result in results:
         last_version_that_comment_was_found_order = last_version_that_comment_was_found_result[1]
         last_version_that_comment_was_found_hash  = last_version_that_comment_was_found_result[2]
 
-        cursor.execute("update technical_debt_summary set last_version_that_comment_was_found_name= '"+last_version_that_comment_was_found_name+"', last_version_that_comment_was_found_hash = '"+last_version_that_comment_was_found_hash+"' where processed_comment_id = '"+str(processed_comment_id)+"'")
+        cursor.execute("update technical_debt_summary set last_version_that_comment_was_found_name= %s, last_version_that_comment_was_found_hash = %s where processed_comment_id = %s", (last_version_that_comment_was_found_name, last_version_that_comment_was_found_hash, processed_comment_id))
 
     print "removed version =  " + removed_version_name + ' ' + str(removed_version_order)
     # print "udpate technical_debt_summary set version_removed_name = '"+removed_version_name+"',  version_removed_hash = '"+removed_version_hash+"' where processed_comment_id = '"+str(processed_comment_id)+"'"
-    cursor.execute("update technical_debt_summary set version_removed_name = '"+removed_version_name+"',  version_removed_hash = '"+removed_version_hash+"' where processed_comment_id = '"+str(processed_comment_id)+"'")
+    cursor.execute("update technical_debt_summary_temp set version_removed_name = %s, version_removed_hash = %s where processed_comment_id =  %s", (removed_version_name, removed_version_hash, processed_comment_id))
     connection.commit()
+

@@ -1,0 +1,85 @@
+commit f37321bf2446e6180399a68bbc5606df036fd85a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Jun 22 12:05:49 2013 -0500
+
+    Add license header to a couple files.
+
+commit 4a8330815c3e6fc5407b424312fd7d65518203fc
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Oct 26 10:10:14 2011 -0500
+
+    Cleanup and centralize all property-based configuration settings.
+    
+    Properties for JRuby are now all in one location, combined with information
+    on valid options, defaults, and description. All properties going forward
+    should follow the same format, to ensure they're documented in the jruby
+    --properties output.
+    
+    I have added to this new form all properties I thought were interesting to
+    expose. There are a few still hidden that may be deleted soon.
+    
+    I also removed some long-defunct properties and removed unused code that related
+    to them.
+
+commit 20ff6278cc74d368d58276e00804c9f8c445ec1a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Jan 13 18:43:11 2011 -0600
+
+    Fix JRUBY-5322: NPE forcing to compile a script
+    
+    * Refactor backtrace style into TraceType enum
+    * Move raw/full/ruby backtrace-gathering logic into TraceType
+    * Move MRI/Rubinus backtrace-printing logic into TraceType
+    * Fix Main toplevel exception handling to print using TraceType
+    * Fix force-compile errors to render better and fire correctly for top-level scripts
+    * Fix failed script compile to bail out, rather than NPE
+    * Refactor Main into cleaner pieces
+
+commit e05b969291d44e3d42e14861e30ce189a52f1b5f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun May 2 02:09:26 2010 -0500
+
+    Miscellaneous cleanup:
+    
+    * A number of findbugs items in the "threadsafe", "performance", "malcious code", and "experimental" warnings
+    * Tidied up all NetBeans "yellows" in the files I touched
+    * Removed now-defunct JRubyServer/Client/Service
+    * Removed now-defunct ssa.rb and DAGBuilder
+
+commit dd9c0a95096a8fccb9c8d3bd5dfff2a925f5ca78
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Apr 24 11:05:22 2010 -0500
+
+    Improvements for NailMain:
+    
+    * Use a single ClassCache across runs, to avoid re-jitting and re-loading code in each instance
+    * Fire a System.gc after releasing the client, to avoid repeat calls growing the heap unnecessarily
+
+commit 9d5480d704c57612a1e4d5139829cb6dbeb4467d
+Author: Vladimir Sizikov <vsizikov@gmail.com>
+Date:   Tue Mar 9 17:49:34 2010 +0100
+
+    JRUBY-1650: "exit 0" not causing expected behaviour
+    
+    Main.run now returns a Status object, instead of an int, that can indicate
+    if this is an explicit or implicit exit.
+    
+    Based on patch by Andrew Wason, with tweaks.
+    
+    Signed-off-by: Charles Oliver Nutter <headius@headius.com>
+
+commit 58d67c3af30369ee56fc2cf7c551bf63b6f736af
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri May 15 16:43:03 2009 -0500
+
+    Clean up Main to use the config's error output and NailMain to handle raised exceptions properly (eliminates "MainExitException logging on NG server).
+
+commit 763a7532a96da1338a23147b1e1bb64242b50764
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun May 3 11:56:41 2009 -0700
+
+    Start of work to make Nailgun a viable option for running JRuby:
+    
+    * Build in NG java stuff by default
+    * Include tool/nailgun in bin dist
+    * Merge jruby-ng and jruby-ng-server functionality into main jruby script

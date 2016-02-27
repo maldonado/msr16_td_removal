@@ -1,0 +1,76 @@
+commit 6667e4cdd6d4914852b49e767b9f836a4d6941f2
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Aug 7 11:13:38 2000 +0000
+
+    Some cleanup in Javac. Removed duplicate code and used the nested
+    fileset element of Path to fake extdirs for Jikes.
+    
+    This should change:
+    
+    (1) It will scan for all files not only .JAR files in the extdirs
+    specified. Javac ignores the extension as well.
+    
+    (2) If no extdirs have been specified, the system property
+    java.ext.dirs is consulted.
+    
+    (3) JikesOutputParser has been removed, instead the return code of
+    jikes determines compilation failures. Expected to behave the same as
+    before - suggested by Matt Foemmel <mpfoemme@ThoughtWorks.com>.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@267893 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 82e6aad2041eedda98525856f6ab515986772593
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Aug 4 14:58:43 2000 +0000
+
+    Make Jikes use the new Execute class instead of calling Runtime.exec itself.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@267888 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a67f5b98b5a5f57f105269882800666bfc4d74b5
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Jul 21 10:19:23 2000 +0000
+
+    Workaround for a problem when compiling many files on Windows.
+    
+    I've modified Matt's patch a little to kick in only if we are actually
+    running on Windows and want to compile a lot of files.
+    
+    Unfortunately File.createTempFile is not available on JDK 1.1. I use
+    java.util.Random to create a hopefully unique filename for a temporary
+    file. Hope this works - don't have a Windows box to check.
+    
+    Submitted by:	mpfoemme@ThoughtWorks.com
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@267810 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f39abb65a12e8d5ad7c8f772fbd5e655edb36f6e
+Author: Conor MacNeill <conor@apache.org>
+Date:   Sun Jul 2 16:18:55 2000 +0000
+
+    Catch IO Exceptions when running Jikes
+    Based on an observation by Matt Foemmel <mpfoemme@ThoughtWorks.com> a while ago.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@267723 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 064d126d420b174b2a1a028b094b0254bc32822f
+Author: Stefano Mazzocchi <stefano@apache.org>
+Date:   Wed Feb 9 20:52:42 2000 +0000
+
+    better abstraction on the includes/excludes
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@267596 13f79535-47bb-0310-9956-ffa450edef68
+
+commit bce31805e9b4b1360d50be8e001886d58e087e38
+Author: James Duncan Davidson <duncan@apache.org>
+Date:   Thu Jan 13 10:42:41 2000 +0000
+
+    initial checkin
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@267549 13f79535-47bb-0310-9956-ffa450edef68

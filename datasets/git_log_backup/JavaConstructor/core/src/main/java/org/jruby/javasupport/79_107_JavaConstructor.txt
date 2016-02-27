@@ -1,0 +1,169 @@
+commit 69f9741525255f629a8bde3e6f68376e0ca65e7c
+Merge: af7f58f b2d759a
+Author: kares <self@kares.org>
+Date:   Sun Aug 16 18:28:10 2015 +0200
+
+    Merge branch 'jruby-1_7'
+    
+    * jruby-1_7:
+      add declaring class methods for Java/Ruby on JavaConstructor
+      make the java method spec pass on Ruby > 1.9 (method names are symbols)
+      move and add some more Java 8 interface specs
+      use (Java 6+) compiler API instead of `javac` (to make sure right is used)
+      increase return type on internal method
+      re-use some code snippets within instance and meta java_send impls
+      move JavaProxyClassMethods from Java into JavaProxy instead
+      spec TypeError raised with java_send when there's a type mismatch
+      spec how Java array[].to_s behaves on non-byte[]
+      move byte[] proxy to_s into a specialized class
+      avoid e.printStackTrace + init native ex.cause and cleanup RubyDigest some
+      make require 'digest/bubblebabble' work (MRI compatibility)
+      Fix Digest bubblebabble incorrect output on empty string
+      Remove several layers on copying in babblebubble.
+      Add direct BubbleBabble power from OpenSSH
+      manually filter out matching callables with non-matching arguments length
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/ext/digest/RubyDigest.java
+    	core/src/main/java/org/jruby/javasupport/Java.java
+
+commit b2d759a29cb1ce0cc2b7aae0dbd9c570232d86a7
+Author: kares <self@kares.org>
+Date:   Sun Aug 16 16:53:52 2015 +0200
+
+    add declaring class methods for Java/Ruby on JavaConstructor
+
+commit c26fe1ba92acad0de01273d4711711f8e2e690ec
+Merge: ab4be7b dd9cf5f
+Author: kares <self@kares.org>
+Date:   Thu Mar 26 10:51:46 2015 +0100
+
+    Merge branch 'jruby-1_7'
+    
+    * jruby-1_7: (35 commits)
+      align added JavaSupport method name with convention
+      test `[].copy_data` addon - also added alias so it can be used with 2 args as well
+      cleanup and add tests from Java array addons ...  seems a litle strange
+      move Java array assertions around from equality test
+      should override proxy implemented call() with block as well
+      export void early on with other (primitives) and test it's behaviour
+      DRY-up interface-template impl ... (extracted some anonymous into inner classes)
+      handle nested array.to_java conversion where element is already an array + cleanup
+      implement array.component_type helper on the Ruby side + test how [].to_java works
+      fix array factories `Java::int[1][2].new` as well as `Java::byte.new_array(3)` (#2749)
+      unify and test the no-matching-callable raised error messages / hints
+      handle yet another unnecessary "ambiguous Java methods found" warning
+      add a JI test - setting a security manager created in Ruby
+      use `getArity()` in favor of `getParameterTypes().length`
+      use IntHashMap as callable cache for `__jcreate!` method and share a new-cache helper
+      the intention here was to "use the lowest-arity non-overload" and we're finally there!
+      as (most) Java invokers will not have overrides - they won't use the internal cache ... for loading up JRuby's built-in JI classes this saves up allocating > 2100 maps
+      explicit inspect() method for JavaProxyConstructor + annotate with JRubyClass
+      a working inspect for Java proxy methods
+      empty class array count-- and make sure correct name is annotated with @JRubyClass
+      ...
+    
+    Conflicts:
+    	core/pom.xml
+    	core/src/main/java/org/jruby/java/invokers/StaticMethodInvoker.java
+    	core/src/main/java/org/jruby/javasupport/JavaMethod.java
+    	core/src/main/java/org/jruby/javasupport/JavaSupport.java
+    	core/src/main/java/org/jruby/javasupport/JavaUtil.java
+    	test/test_higher_javasupport.rb
+
+commit e4a6982022cbd81e8d40a461ec86abb3c3700b19
+Author: kares <self@kares.org>
+Date:   Mon Mar 23 21:46:07 2015 +0100
+
+    unify and test the no-matching-callable raised error messages / hints
+
+commit 530f72b648d38c587895f09c2eed871f231b9241
+Author: kares <self@kares.org>
+Date:   Thu Mar 19 11:09:59 2015 +0100
+
+    test (and fix) inspect / to_s for Java callables + share inspectParameterTypes for re-use
+
+commit f2b9bf70c30160c1463ab59e76de9e477bed467c
+Merge: acd4108 adeb887
+Author: kares <self@kares.org>
+Date:   Thu Mar 19 19:17:58 2015 +0100
+
+    Merge branch 'jruby-1_7' into master
+    
+    * jruby-1_7: (24 commits)
+      calculate 'sofisticated' type preference when ambiguous callables found (fixes #2595)
+      in case there's an exact parameter match - do not proceed with argument matching
+      do not do equals on Class objects (just compare by identity) + remove unused imports
+      re-factored candidate matching loops - for more readability and less implicit iterator use
+      cleanup the constructor search - keeping redundant ~ 'intended' code as comments
+      a slight Java integration (mostly bootstrap internals) cleanup
+      update CallableSelector's (Map) cache internals - so we can easily refactor further
+      move Java.method_missing into native
+      loadPaths list generics - easier to guess for JavaEmbedUtils consumers
+      add a factory onto ClassValue since we're be instantiating the same (based on opt)
+      one JRubyMethod with 2 names is enough to have
+      more base-class sharing between JavaCallable method/constructor impl + minor tweaks
+      move getArity/getParameterTypes into base class as finals + help used methods to JIT
+      guess name-class hash-map size without internal resizing (currently <= 48 elements)
+      after several concurrency fixes in Java integration - un-comment a multi-threaded test
+      non need to cast intValue to (int)
+      move (and tune) error logic from CallableSelector into the invoker impl where it's used
+      align JavaField's value/static_value conversions and return values + test functionality
+      correct (Java) equals/hashCode semantics for JavaAccessibleObject + minor tweaks
+      Try turning off sudo:false to fix build issues.
+      ...
+    
+    Conflicts:
+    	.travis.yml
+    	core/src/main/java/org/jruby/RubyObject.java
+    	core/src/main/java/org/jruby/java/proxies/MapJavaProxy.java
+    	core/src/main/java/org/jruby/javasupport/JavaCallable.java
+    	core/src/main/java/org/jruby/javasupport/JavaEmbedUtils.java
+    	core/src/main/java/org/jruby/javasupport/JavaSupport.java
+    	core/src/main/java/org/jruby/runtime/Helpers.java
+    	core/src/main/java/org/jruby/util/CodegenUtils.java
+    	core/src/main/ruby/jruby/java.rb
+    	core/src/test/java/org/jruby/test/TestCodeCache.java
+    	test/test_higher_javasupport.rb
+
+commit 411086dd13164d19a5c690626b0645e71e2584a1
+Author: kares <self@kares.org>
+Date:   Fri Mar 13 20:20:49 2015 +0100
+
+    cleanup the constructor search - keeping redundant ~ 'intended' code as comments
+
+commit 0de8bdfe4584008cab1a416dac68161b133a7ecd
+Author: kares <self@kares.org>
+Date:   Tue Mar 17 10:47:28 2015 +0100
+
+    more base-class sharing between JavaCallable method/constructor impl + minor tweaks
+
+commit ebc242242e00a9734b7acc73f2c69b44fa908fd0
+Author: kares <self@kares.org>
+Date:   Fri Mar 13 19:37:46 2015 +0100
+
+    move getArity/getParameterTypes into base class as finals + help used methods to JIT
+
+commit d7217ca941b6f3f2a164792ec25881bf16eb5a21
+Author: kares <self@kares.org>
+Date:   Mon Mar 2 19:40:26 2015 +0100
+
+    correct (Java) equals/hashCode semantics for JavaAccessibleObject + minor tweaks
+    
+    - return concrete types from getValue
+    - also re-implemented (inherited) toJava conversion
+
+commit f5313d521aa68dd45ce23407ea31aeddcfba4a1b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Aug 6 13:22:20 2014 -0500
+
+    More tweaks for exception-raising in JI calls.
+    
+    * Propagate ThreadContext through for stack rewriting.
+    * Avoid creating intermediate objects for rewriting.
+
+commit 28c6fbc4e883bc1c9e9242d1da1cb2b785f55339
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 3 12:46:45 2013 -0500
+
+    Move to @mkristian's proposed layout, with some modifications.

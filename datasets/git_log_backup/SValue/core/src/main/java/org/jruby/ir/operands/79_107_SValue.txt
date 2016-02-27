@@ -1,0 +1,83 @@
+commit ce91559019b9902ac267a732fe3eebb3cfc87eeb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Aug 5 16:43:53 2015 -0500
+
+    Use polymorphism for Operand.getOperandType.
+    
+    getOperandType is only used by the persistence engine, so there's
+    no impact to interpreter performance by doing this, and for a
+    startup-interpreted 'rails c' this reduces memory use by over 5MB.
+
+commit 15aabf391de6c2172295a633808ca60045c7e326
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Sun Mar 15 08:57:23 2015 -0500
+
+    Convert all remaining decodes for Operands to static construction methods
+
+commit 764bb855a987ccebbc1ab63a5a4673294419e757
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Mar 10 16:49:07 2015 -0500
+
+    Encoding of Operands moved into Operands instead of using visitor
+
+commit 94eb4ae16f1460c1bf1cc23cae8e6075510c25b8
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Oct 9 10:17:45 2014 -0500
+
+    Split apart InlinerInfo into SimpleCloneInfo and InlineCloneInfo.  Specialization used to make it clearer which code is performing which type of cloning
+
+commit 0cdd14aaae2ecdec6d5fcdc92d1fe19b6faa55d8
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Mon Jul 21 00:14:45 2014 -0500
+
+    Pass staticScope through interpreter call stack + optimized imports.
+    
+    * In preparation for a fix for #1792, pass the current static scope
+      through the interpreter call stack.
+    
+    * Unrelated: I accidentally applied optimize imports on the ir/
+      directory while refactoring in IntelliJ.
+    
+    * Next steps:
+      - Make the nesting-depth fix outlined in #1792.
+      - Maybe, rename CurrentScope to ActiveScope.
+      - Maybe, fix ScopeModule to be based off CurrentScope.
+      - Maybe, get rid of currDynScope arg through call stack and get it from
+        ThreadContext where needed (maybe).
+
+commit fba2bccc91bdc715f1f453a562c26bf68cf0060d
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Mon Jan 6 10:53:56 2014 -0600
+
+    Minor cleanup: stripped trailing whitespace in ir/ classes
+
+commit 1e070ea66cea5b4452879c47d8f720f08e5ce80a
+Merge: 269c91d 1080132
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Dec 11 14:34:35 2013 -0600
+
+    Merge with master
+
+commit aa34194a38bf66dcc3f3bdee4ce55085613ee969
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Dec 10 17:10:19 2013 -0600
+
+    Massive lifus merge with lots of my own merging/changes..build broken but almost working
+
+commit eb7e0628c5a7b7cdf9eac2d634a54d27e06d2105
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Oct 30 18:32:51 2013 -0500
+
+    Fix a few remaining references to 1.9 logic.
+
+commit ce51ec3196d14657e94c1b8063e2120638ab7695
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Fri Sep 27 16:07:17 2013 -0500
+
+    Cleanup: Deleted trailing whitespace on lines in ir/ directory
+
+commit 28c6fbc4e883bc1c9e9242d1da1cb2b785f55339
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 3 12:46:45 2013 -0500
+
+    Move to @mkristian's proposed layout, with some modifications.

@@ -1,0 +1,53 @@
+commit e4750b88b167f5ef6eef48ccaaca81114321cc30
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Nov 17 12:00:28 2010 -0600
+
+    Use short .getRuntime in interpcontext
+
+commit 3b45c8d008c32458064572a67db387fc6963f72c
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Oct 21 17:11:08 2010 -0500
+
+    Add support for Range
+
+commit f9c3ccc4acaa8fb591fb5e1e051d21343adf8b6f
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Jun 8 15:08:36 2010 -0400
+
+    Simple renaming in ir package
+
+commit a71dcacb83698ead80d78f3cf30c9d52adaedffa
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Thu Apr 22 10:41:15 2010 -0500
+
+    - First pass at inlining methods.
+
+commit ad09bdcf85837c1283898d45c968d0ab442e0b99
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Tue Sep 22 18:33:47 2009 -0500
+
+    - First pass at implementing live variable analysis -- the cfg building / printing code needs tweaking; Need to implement dead code removal using results of lva.
+
+commit 26971842a0b03a49e4d3610e9759f478c76ca775
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Thu Aug 27 17:56:41 2009 -0500
+
+    - Continuing cleanup of scoping code;  IR_Class now extends IR_Module; filled out some more stubs to optimize some core class method calls for constant arguments;
+
+commit b2852d3f64a2679a1c6a3b8d75cb19d9afb35c85
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Sat Aug 8 01:19:01 2009 -0500
+
+    - Fixed problem with non-atomic values.  I think i have it fixed.
+
+commit d7e29b3be44236fca6f412886f65bcdac025baf5
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Thu Aug 6 19:45:39 2009 -0500
+
+    - First pass of copy & constant propagation peephole opt. in place.  Compound values are not handled correcty yet.  I can only propagate the reference to the compound value, not the entire value.  Will fix this in next round of fixes.
+
+commit ddaf4c565c871ce4a59cf23683c59bcc2429fec9
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Thu Jul 23 17:37:09 2009 -0500
+
+    - Moved all operands to operands/ and instructions to instructions/ and fixed up imports.  Added some commented out code to start running peephole opts on the IR -- which will also serve as a basis for SCCP passes later on.

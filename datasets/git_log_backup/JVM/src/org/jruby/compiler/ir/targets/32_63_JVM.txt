@@ -1,0 +1,171 @@
+commit d24646d1e675d1ac787317c014769456b848ca32
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Sep 18 11:34:14 2012 -0500
+
+    deadend without moving to Java 6...unwinding this craziness
+
+commit 964717cfbd31457f63cb8e3af2cd7b3b45351537
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Sep 6 17:30:30 2012 -0500
+
+    Does this look safe to you?
+
+commit d8c290d988422da310e25908e68619ce5e0a0367
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Sat Mar 5 10:54:40 2011 -0600
+
+    Moved modules, classes, constants from IRScopeImpl to IRModule to move
+    away from recording lexical information to recording semantic
+    information.  Moved away from 'compile-time' resolution of Ruby
+    constants because Module.remove_const and set_const makes such resolutions
+    potentially incorrect.
+
+commit deaa704c2b37ce61ea3818651846c663fedfdfc7
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Oct 27 15:21:50 2010 -0500
+
+    Make Symbol Operand work.  Add name to reference
+
+commit 5e5588fbe9a5337903c716baf797398cfe013bc2
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Oct 26 15:25:15 2010 -0500
+
+    Make CallInstr have explicit receiver argument instead of being first argument in callArgs
+
+commit f036288d7170923cce97e3604099f12c7c6d3133
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Oct 25 16:31:37 2010 -0500
+
+    Implement get field instruction and hide some more fields behind getters
+
+commit 37790427a94f3498780ba846c6709e40500271f1
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Oct 25 16:22:39 2010 -0500
+
+    Implement put field instruction
+
+commit f9c3ccc4acaa8fb591fb5e1e051d21343adf8b6f
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Jun 8 15:08:36 2010 -0400
+
+    Simple renaming in ir package
+
+commit 6cabc8fb6a510545419554de8f9e48ab0d9de2c0
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri Jun 4 17:54:06 2010 -0500
+
+    Madness to go this long without committing
+
+commit 5a08b5476f504d5f0cbbc628a85d88816f9df97b
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Jan 26 15:59:21 2010 -0600
+
+    Trivial IR changes littering my tree
+
+commit a6cb71cadf23ae3acba67c64adadc24cc56bbb1a
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Jan 7 17:06:30 2010 -0600
+
+    CALL_Instr -> CallInstruction plus mild style changing
+
+commit 237f6fccd437bd1c9315f1f27361b0c68537855f
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Jan 7 16:11:16 2010 -0600
+
+    A little more refactoring for style and a little DRY'ing of var/label index generation
+
+commit fd5db54803738633dbed63308d1a712b8d07941e
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Jan 7 14:17:14 2010 -0600
+
+    Very minor style changes except for internal variable logic on scope impl
+
+commit 3cfb280eb697e67564f5b137c623271088b89de4
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Sat Nov 28 21:50:43 2009 -0600
+
+    - Ugh! Fixing bad previous commit (because I didn't do a clean build and missed a code change).
+
+commit 26971842a0b03a49e4d3610e9759f478c76ca775
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Thu Aug 27 17:56:41 2009 -0500
+
+    - Continuing cleanup of scoping code;  IR_Class now extends IR_Module; filled out some more stubs to optimize some core class method calls for constant arguments;
+
+commit dd945066f2ddaeef7abb5d5b10c6fe6efc84b890
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Thu Aug 6 16:55:55 2009 -0500
+
+    - Cleaned up code some more and added operand simplification methods for use in peephole opts. and later sccp passes.
+
+commit 44f2321e1b17635c3896f2e4a3c2fecf5530f602
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Aug 1 02:15:15 2009 -0500
+
+    Add Duby's type declaration logic as a DECLARE_LOCAL_TYPE operation.
+
+commit ddaf4c565c871ce4a59cf23683c59bcc2429fec9
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Thu Jul 23 17:37:09 2009 -0500
+
+    - Moved all operands to operands/ and instructions to instructions/ and fixed up imports.  Added some commented out code to start running peephole opts on the IR -- which will also serve as a basis for SCCP passes later on.
+
+commit 508fcfeff8a6aa908ec642f1db3016ff3e4017ec
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jul 20 20:18:52 2009 -0500
+
+    Add logic to generate real classes and methods for classes and methods in the Ruby code structure.
+
+commit fef453bc9583db5ef96f8a45fd598b376aff64ba
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jul 17 02:41:16 2009 -0500
+
+    Add basic support for instance vars as fields, though this will have to be made a bit more rubyish.
+
+commit 5b5997e4a1b8716720aad6018569713b33fcd352
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jul 17 02:23:43 2009 -0500
+
+    Manage class data as a unit.
+
+commit 0aef96ebca07ed44a0f50c7d94749638b9f6a408
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jul 17 02:16:49 2009 -0500
+
+    Manage method data all together in a data structure, in its own stack.
+
+commit 91dff421ca957ea46ba6819e522ab03832b2bf1c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jul 17 02:08:30 2009 -0500
+
+    Added BEQ, LABEL, and JUMP to emitter, along with label management.
+
+commit aa0f8552add516965129d0a8ddf14d9e00ccafe1
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jul 17 01:26:38 2009 -0500
+
+    Add RECV_ARG support and variable allocation/loading.
+
+commit c401b85047857427a7b421d4bcadc480364afc97
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jul 17 00:54:34 2009 -0500
+
+    Add the beginnings of a JVM emitter.
+
+commit 3eb979fe140a545b12ea9b21551d8e4be812ee40
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Sat Jul 4 14:54:25 2009 -0500
+
+    - Several fixes to get this thing to start compiling ... lots more to go!
+
+commit e79a2205eedc83fa30b9d9525604c67fc44f0fa5
+Author: Subramanya Sastry <subbu@earth.(none)>
+Date:   Tue Jun 9 01:57:52 2009 -0500
+
+    - Replaced all tabs with 4 spaces
+
+commit dfa3f8635f6293f8c65b6506df4904cc9e2bfedf
+Author: Subramanya Sastry <subbu@earth.(none)>
+Date:   Tue Jun 9 01:48:38 2009 -0500
+
+    - First commit: incomplete, will not compile, and some files are just outlines

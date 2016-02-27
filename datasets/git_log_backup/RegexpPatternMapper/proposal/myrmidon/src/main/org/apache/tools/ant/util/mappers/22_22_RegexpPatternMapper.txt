@@ -1,0 +1,36 @@
+commit 2afc643a3ea676cc68f2f010ea3a7560b7a0a3af
+Author: adammurdoch <dev-null@apache.org>
+Date:   Mon Mar 4 02:44:15 2002 +0000
+
+    * Moved FileNameMapper to framework.  Got rid of setTo() and setFrom()
+      from the interface, as these are no longer needed.
+    
+    * Changed tasks to accept a FileNameMapper directly, rather than using Mapper.
+    
+    * Removed the 'flatten' attribute from the <copy> task.
+    
+    * Removed the 'ext' attribute from the <native2ascii> task.
+    
+    * Removed Mapper and MapperType.
+    
+    * Moved <flatten> mapper to antlib.
+    
+    * Made ExtMapper available as <map-extension> and moved to antlib.
+    
+    * Added <prefix> mapper, to apply a fixed prefix to names.
+    
+    * Added <chain> mapper, to apply a chain of mappers to names.
+    
+    * Added <mapped-fileset>, a fileset that transforms nested filesets using a mapper.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@271715 13f79535-47bb-0310-9956-ffa450edef68
+
+commit eb278f795eee59165a03a7046586dc20b589f600
+Author: Peter Donald <donaldp@apache.org>
+Date:   Sun Jan 13 04:45:01 2002 +0000
+
+    Move mappers into their own package
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270726 13f79535-47bb-0310-9956-ffa450edef68

@@ -1,0 +1,71 @@
+commit 367c2bcd7db1524833484db5af23bac92fa8a531
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Apr 14 16:19:21 2015 -0500
+
+    - DynamicScope+children removed no longer used {get,set}ArgValues methods since they are dead.
+    - ArgsNode getRest() replaced by hasRest() or retrieving getRestArgNode directly.
+    - Slight rearrangement internally of fields in ArgsNode.
+    - Remove accidental println from last commit.
+
+commit 73df3d230b9d92c7237d581c6366df1b92ad9b2b
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Dec 16 12:58:47 2014 -0600
+
+    evalSimple path no longer has duplicated scope (messiness to be cleaned up after evalWithBinding
+    removes its additionalScope).
+    Reinstated NoVars assertion because we no longer erroneously ask 'phantom' scope for a block
+    value which is never there...ooooooo spooky
+    SClasses should not need to get closure
+
+commit 7c0595b83accaa59fd4e4c07ca7bcaadceac7beb
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Dec 16 11:31:16 2014 -0600
+
+    Re-apply
+
+commit ae8e0aaccd0f9c47837e3f4d085c907930eeff96
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Dec 16 11:30:47 2014 -0600
+
+    Revert until I figure this regression out
+
+commit 7ec773f861178d63de7ce9463b76c77a08e2c682
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Dec 15 14:16:48 2014 -0600
+
+    Partially fix #2300 (3/4 of IR side).  No more magical storage in IREvalScope.
+    More work coming from core/TC/DynamicScope side of things.  Disabled assert
+    because for module_evals we are pushing 2 scopes when 1 would do and our value
+    retrieval chokes on that.
+
+commit d44608b53b035c461eca8cd8d7a37b34cba371ef
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Dec 15 13:24:40 2014 -0600
+
+    I used to find this typo funny
+
+commit bd336989903a9af7afb8c8f67fc27ea09e2a7640
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 18 09:59:38 2014 -0600
+
+    Revert "Generify scopes to Object, in preparation for using Object in"
+    
+    This reverts commit a57d94a4c02063e2df2c655fbe349d2b4769ba41.
+    
+    This change is right long term but breaks the current compiler in
+    many unpleasant ways. Rather than sort them out, I'm reverting
+    this for now. Once we switch to IR+JIT we should be able to
+    reinstate this commit.
+
+commit a57d94a4c02063e2df2c655fbe349d2b4769ba41
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 4 15:16:49 2014 +0100
+
+    Generify scopes to Object, in preparation for using Object in
+    IR JIT.
+
+commit 28c6fbc4e883bc1c9e9242d1da1cb2b785f55339
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 3 12:46:45 2013 -0500
+
+    Move to @mkristian's proposed layout, with some modifications.

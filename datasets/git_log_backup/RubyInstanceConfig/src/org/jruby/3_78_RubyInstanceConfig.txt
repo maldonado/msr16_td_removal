@@ -1,0 +1,3607 @@
+commit e2a39a803ff96c06a117e8410fb1b7002d9a8040
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jun 14 07:17:33 2013 -0500
+
+    Make these properties a bit easier to read.
+
+commit 7a883f1f99ba1e6b298705736f4b40138a1fbab9
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jun 5 19:04:51 2013 -0500
+
+    Add JVM properties for most command-line arguments.
+    
+    This commit adds configurable JVM properties (also accessible as
+    -X flags) for most command-line arguments. Those flags can now
+    be set for JRuby applications that are never run directly at a
+    command line, such as those within an application server.
+    
+    The new properties are under the "CLI" category in the property
+    list.
+    
+    This commit also cleans up and formalizes the "Option" subsystem
+    a bit so it can be turned into an external library or used by
+    other projects. Support for Enum-based options was also added.
+
+commit 340a2fa24f3a9447be3db8faf37ab42a449361d8
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jun 5 09:23:04 2013 -0500
+
+    Remove nonstandard, unsupported, and barely-useful benchmark flag.
+
+commit 334f9367c5f80a6a57dec67cfc71006c4c7a0515
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jun 5 09:14:56 2013 -0500
+
+    Remove broken and unsupported sampling profiler.
+
+commit b859d658b01fe5afd5f14007e9a3b6554a8f1d6d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jun 5 09:02:22 2013 -0500
+
+    Move deprecated to bottom.
+
+commit bc15c5e35d95857b21aa16f7d8ae5e3bed5e4ecf
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon May 20 21:25:56 2013 -0500
+
+    Fix name of static Option for consistent hashing.
+
+commit 2eb2d0732b98614cfc6a329ff7e5f28ff143ab79
+Merge: ccd06ac af1d387
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon May 20 21:24:22 2013 -0500
+
+    Merge branch 'consistent-hashing' of github.com:rdblue/jruby into rdblue-consistent-hashing
+    
+    Conflicts:
+    	src/org/jruby/RubySymbol.java
+    	src/org/jruby/util/cli/Options.java
+
+commit d09e2d5fe7f49c8450ea142ad4d1522d726e9bcf
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue May 7 19:14:45 2013 -0500
+
+    Initial reimplementation of Enumerator#next in Java.
+
+commit af1d38770b1ebc1811e66ea33d9814b82826867d
+Author: Ryan Blue <rdblue@gmail.com>
+Date:   Sun Mar 17 15:08:56 2013 +0000
+
+    Fixing hashing consistency across JVM instances.
+    
+    Several of the core JRuby classes calculate hash codes based on java or ruby
+    object ids. This doesn't produce consistent hashing across JVM instances, which
+    is needed for distributed frameworks. For example, Hadoop uses hashCode values
+    to distribute keys from the map phase to the same reducer task (partitioning).
+    
+    This commit adds hashCode (and ruby's hash method) implementations for
+    RubyBoolean, RubyNil, and RubySymbol. RubyBoolean and RubyNil simply return
+    static, randomly-generated hashCode values that are hard-coded. This replaces
+    the default java Object#hashCode.
+    
+    For RubySymbol, the previous implementation of hashCode returned the symbol's
+    id, which could be different depending on the order in which symbols are
+    created. This updates it to calculate a hashCode based on the raw symbolBytes
+    like the RubyString implementation, but with a RubySymbol-specific seed and
+    without the encoding addition for 1.9. This value is calculated when symbols
+    are instantiated so the performance impact should be minimal.
+    
+    This commit also adds a RubyInstanceConfig setting and CLI option for
+    consistent hashing, jruby.consistent.hashing.enabled, which controls whether
+    the Ruby runtime's hash seeds (k0 and k1) are generated randomly. When set to
+    true, they are set to static values. These hash seeds are used to hash
+    RubyString objects, so this will make string hash codes consistent across JVMs.
+    
+    (later commit...)
+    
+    Updating hashCode implementations.
+    
+    Per discussion on the last commit's pull request [1], updating the
+    implementations of hashCode for RubyNil and RubyBoolean. Now the hashCode
+    behavior for nil and booleans will only change when consistent hashing is
+    enabled. Adds a hashCode instance variable to RubyBoolean and RubyNil that is
+    set in the constructor to the Object#hashCode value (using
+    System.identityHashCode) or a static value.
+    
+    [1]: https://github.com/jruby/jruby/pull/590
+
+commit 0012c9c4167f433f3c5de9878a92eb00b18b20b9
+Author: Vipul A M <vipulnsward@gmail.com>
+Date:   Sat Apr 13 13:44:36 2013 +0530
+
+    remove double assignment
+    
+    Signed-off-by: Wayne Meissner <wmeissner@gmail.com>
+
+commit 8bbe14b9a3483ff9a789f56cc3a4beeb7446a18e
+Author: Jeff Simpson <jeff.simpson@livingsocial.com>
+Date:   Mon Apr 1 12:22:03 2013 -0600
+
+    Added new option jruby.timeout.thread.pool.max to control the max number of Timeout worker threads.
+
+commit 9455243a00447da881635662afc71196fa5b733f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Mar 29 23:54:58 2013 +0100
+
+    Tweak fix for #530 to only bail out when -v with no argv script.
+
+commit 600578120d0abaebae29e45418df93f934bba92c
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Thu Mar 28 22:23:11 2013 -0400
+
+    Fix #530.
+    
+    If no inline script (via '-e') or a script is given on the command-line,
+    do not create a Ruby runtime, but return immediately.
+
+commit 61678ac1a2514a9932276f8d527816a5980a94b3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Feb 25 20:41:40 2013 +1100
+
+    Fix more references to CPL.
+    
+    The phrase "Common Public License" was split across two lines in
+    our default header, which caused it to be missed during earlier
+    search/replace. Also, we did not replace the CPL URL in the
+    header with the EPL URL.
+
+commit 330fef3b0fc18af477ccea19bd278669667f31bb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 12 14:49:29 2013 -0600
+
+    Switch JRuby's CPL license to EPL.
+    
+    Governance of the CPL license was moved to the Eclipse Foundation
+    at some point in the past, and Eclipse blessed the EPL (Eclipse
+    Public License v1.0) as the successor to CPL. Because the CPL
+    contains a clause allowing transparent upgrades to future blessed
+    successor licenses, we can make the move to EPL without
+    re-contacting past contributors.
+    
+    The change in going from CPL to EPL largely just removes some
+    punitive language that apparently made many companies nervous. All
+    other language in the license remains identical.
+    
+    Several documents about Eclipse's move from CPL to EPL are here:
+    
+    http://www.eclipse.org/legal/cpl2epl/
+    
+    Note that Eclipse's move came before the blessing of EPL as the
+    upgrade path for CPL, so they had to do a bit more legal juggling.
+    With Eclipse now the administrator of CPL and with their blessing
+    of EPL as the upgrade path for CPL, all we need to do is make the
+    move.
+
+commit 99585732e9099c814901f96ba36c30f2483eaf0d
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Wed Jan 9 20:30:29 2013 -0500
+
+    Unused import
+
+commit 8f62aa6373595f76e45b7eedbeffdc7aeb30fe14
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Tue Jan 1 00:44:58 2013 -0500
+
+    Provide the runtime with the way to know if Kernel#gsub should be defined.
+
+commit 5e4aab28b26fd127112b76fabfac9a33b64caf77
+Author: Hiroshi Nakamura <nahi@ruby-lang.org>
+Date:   Sat Nov 17 22:25:00 2012 +0900
+
+    Use Perl's Hash for String#hash
+    
+    Replace String hash function again, use Perl's Hash instaed of
+    SipHash-2-4.  Perl's Hash is 10**5 times faster than
+    Murmur2/SipHash-2-4.  Our understanding is Perl's Hash is not broken in
+    regards to HashDoS attack[1] so far.
+    
+    For the case Perl's Hash is broken in the future, you can use
+    SipHash-2-4 by passing "jruby.siphash.enabled=true" system property
+    (false by default.)
+    
+    [1] http://2012.appsec-forum.ch/conferences/#c17
+
+commit 36f3a99b26e499d613d90c072159ba118a0f112b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Nov 8 16:31:58 2012 -0600
+
+    Modify indy-checking logic to reflect actual default for JVM ver.
+
+commit 617db1cba2dbcfda469c01e232315c7c74cc7690
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Nov 7 16:58:57 2012 -0600
+
+    Add -Xdebug.parser to print out real parser exception to stderr and to also not allow any internal jruby impl loading (a bit fragile :) )
+
+commit 7e8ebe0b092c95e93afe8f7e9d84827e040e3a39
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Oct 29 14:33:19 2012 -0500
+
+    Switch indy on/off check to use HotSpot version (hs >= 24 enables)
+
+commit 7ba1531855cb65f6974e9cf53848c98c572d5d34
+Merge: 1e9086f 1caa496
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Oct 26 23:20:46 2012 -0700
+
+    Merge pull request #326 from iconara/json_profile_printer_additions
+    
+    JSON format profile printer (additions)
+
+commit 717653bc540ab4dbe26c44d2603032221a32a373
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Oct 6 20:12:58 2012 -0500
+
+    Remove "dynopt" mode, related code, and unused invocation logic.
+
+commit fa914f67cff6659a26d621ade9bf0801015467c3
+Author: Theo Hultberg <theo@iconara.net>
+Date:   Sun Sep 30 17:55:48 2012 +0200
+
+    Profile reports can now be written to a file
+    
+    Support for writing profile reports to files, notably support for writing profiles from multiple threads to the same JSON or HTML file without syntax errors.
+    
+    There's a new abstraction that handles profile printing: ProfileOutput. Together with new methods on ProfilePrinter, printHeader, printFooter and a new parameter to printProfile (first), it can orchestrate the the profile printers so that they print the right things at the right time.
+
+commit cc2a6a24a6142bcfdd94e7ecec2a5a9fc1d72fb3
+Merge: ccc8988 e5d068d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Sep 28 17:36:09 2012 -0700
+
+    Merge pull request #270 from iconara/json_profile_printer
+    
+    JSON format profile printer
+
+commit 4aa8812fb49935dabf5e93d143b7de9ad0b2636f
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Sat Sep 22 11:11:46 2012 -0500
+
+    JRUBY-6867: Parsing issues with long lines
+
+commit 3baeea6eec82d127944cef58259e9a2149fa551a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Aug 27 15:05:50 2012 -0500
+
+    Fix JRUBY-6859
+    
+    java.lang.ArrayIndexOutOfBoundsException when using --profile.api . MAX_PROFILE_METHODS too low?
+    
+    This was actually fixed already in the 1.7 line in aabfa79f4 but
+    this commit adds a warning (once) and configurable property to
+    bump up the max size.
+
+commit 645a1031df9f853955a0eba59d0de57fb0182031
+Author: Theo <theo@iconara.net>
+Date:   Wed Aug 22 14:27:59 2012 +0200
+
+    Added a JSON profile printer and --profile.json to enable it
+
+commit d21ef67a1545646ab4dae3cbb9f6c17aa4734c36
+Author: Uwe Kubosch <uwe@kubosch.no>
+Date:   Wed Aug 22 00:34:43 2012 +0200
+
+    * JRUBY-6852 Do not set compile mode to off on ScriptingContainer startup
+
+commit 82eb39685cb0b4b54c57a105baff48d1889c2a4c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Aug 17 16:35:14 2012 -0500
+
+    Actually detect Hotspot/OpenJDK 1.8 properly.
+
+commit 8ae5b3ec294da2e17683f95f2106cabf9936ea38
+Merge: 585eb8c 775ce0c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Aug 7 00:18:12 2012 -0700
+
+    Merge pull request #192 from alindeman/removing_fast
+    
+    --fast is mostly a no-op
+
+commit 01a0a734ba5f8f3fe1b090594d66d40a12d58c9b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Aug 3 11:56:28 2012 -0500
+
+    Changes to invokedynamic enabling.
+    
+    * On Java 6, on only if explicitly turned on (for JSR292 backport)
+    * On OpenJDK Java 7, on only if explicitly turned on (temporarily)
+    * On OpenJDK Java 8, on by default unless turned off
+
+commit 3e9873dddbb9a0ab922ea67f7982b4d2a0703be4
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jul 31 15:48:43 2012 -0500
+
+    Temporarily set invokedynamic to be off unless turned on.
+    
+    Invokedynamic gives Ruby code a tremendous performance boost on
+    JRuby, but unfortunately the current support for it in OpenJDK is
+    lacking. There are crashes and errors that prevent us from being
+    able to reliably recommend using it. Because of that, we are
+    temporarily setting the default behavior to not use invokedynamic,
+    until there are publicly available builds of OpenJDK with the new
+    and improved invokedynamic compiler support.
+    
+    You can still turn on invokedynamic by passing
+    -Xcompile.invokedynamic=true to JRuby, or passing
+    -Djruby.compile.invokedynamic=true to the JVM, or by putting
+    these flags into JRUBY_OPTS or JAVA_OPTS, respectively.
+    
+    We are working with the OpenJDK developers to ensure the new indy
+    logic gets into a public release as soon as possible.
+
+commit bda5f8e8ea726539c61123fa5e6ae3ce741cc190
+Author: kares <self@kares.org>
+Date:   Thu Oct 20 11:36:14 2011 +0200
+
+    refactor profiling internals (preparation for better Ruby runtime profiling for envs that setup a non-global Ruby to be profiled)
+
+commit 0717b089af3b370e3df12bc24618b6ce7a6c5854
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jul 30 16:50:13 2012 -0500
+
+    Tweaks to invokedynamic to support non-Java 7.
+    
+    * Allow explicitly turning invokedynamic on regardless of JVM.
+    * Log compilation failures using log.error instead of log.debug.
+
+commit 47fd4acb720385b7d7852e1876e28520aa0cf484
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jul 27 01:55:07 2012 -0500
+
+    Remove all safelevel checks throughout JRuby (plus misc cleanup).
+
+commit cfbb5d2c5190f36d87c925d3f77d08b63559009d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jul 3 18:14:20 2012 -0500
+
+    Use caller backtrace logic to make warning file:line accurate.
+
+commit 775ce0c975fd11446e726ec97c35438afc267670
+Author: Andy Lindeman <alindeman@gmail.com>
+Date:   Sun Jun 3 16:52:58 2012 -0400
+
+    --fast is mostly a no-op
+    
+    * --fast is now basically synonymous with -X+C (force compilation)
+    * The other features that --fast enabled added complexity and often
+      caused strange bugs (e.g., JRUBY-6698).
+    * I *think* that much of these performance gains can be garnered by
+      simply using JRuby 1.7 with Java 7 and invokedynamic.
+
+commit a30e48450e9723b39f7e6500ecd47d384aa95752
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat May 19 10:25:13 2012 -0500
+
+    Modify --properties output to be a valid .jrubyrc file.
+
+commit e1035cd396b30a7ed1f895a70b5216b12a4f2e83
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Apr 12 14:10:33 2012 -0500
+
+    Add ability to specify post inlining compiler passes as option (for testing)
+
+commit 537bde73c406901e386f71c92fffbbbda63cd4a2
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Apr 11 16:08:59 2012 -0500
+
+    IR: Pass aliases ... we hardly knew you
+
+commit 9194ce94c1189d728c38424ee167d4b28ec10a83
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Apr 11 15:33:07 2012 -0500
+
+    IR: Remove configs for specifying passes
+
+commit 269cb0aa62b1a65ec54f14b85cd503e0cb405a97
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Sat Mar 24 18:12:15 2012 -0500
+
+    [IR] Fixes to binding pass code; added option to turn it on from the
+    command line; the current implementation in the interp cannot be
+    debugged since all local var accesses always hit the dynamic scope.
+
+commit 0b37cfac825ef6fd513e73b8e64fa60f1f769731
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Mar 13 12:14:58 2012 -0500
+
+    A few tweaks to add 2.0 mode and 2.0's lazy enumerator stuff.
+
+commit 27b399053666545aabb27c3783c9645823d9b95a
+Author: Ketan Padegaonkar <KetanPadegaonkar@gmail.com>
+Date:   Fri Dec 2 07:57:59 2011 -0800
+
+    JRUBY-6243 Add support for graph profile with HTML output
+    
+    * This is a port of the GraphProfilePrinter to print HTML output
+    * Hookup the '--profile.html' argument in the CLI
+    * Add HtmlProfilePrinter in profiler.rb for programatic usage
+
+commit 66ecd85ea0931172ac9fca28b13a94ce965b07f7
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 14 10:55:00 2012 -0600
+
+    Add backtrace.mask flag to mask .java lines in backtrace.
+
+commit bc709fb2dbf7b04d27504d0b98399e43e3b81402
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Tue Feb 7 23:49:31 2012 +0530
+
+    [IR] Experimental profiling support in the interpreter to find hot
+    methods and code modification count.
+
+commit 1922f2e888a7a059937b6d1c9a09a0786c3adc04
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jan 24 19:22:52 2012 -0600
+
+    IR-to-JVM backend refactoring.
+    
+    * Move compilation snippits into instructions
+    * Add argument to enable IR-to-JVM backend using -X+CIR
+    * Modifications and tweaks to get simple code working again
+
+commit 31d886d3b7de174347e0c16820f507d8a284fba1
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Dec 29 11:21:51 2011 -0600
+
+    IR: Allow API-based toggling of debugging
+
+commit ea0eed02b4eb57c2198afa9fd47f94bc46cfc69f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Dec 21 13:44:31 2011 -0600
+
+    Add -G/--gemfile option because why the hell not.
+
+commit 64d7379a5c189285783aba9bdb4c9cd7dc1ef455
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Dec 5 17:28:43 2011 -0600
+
+    Tie background JITing into options.
+    
+    * Add option to disable background JIT
+    * Disable background JIT when threshold <= 0 (e.g. for testing)
+
+commit 36cd2ca94fea12ad627814ac710b758e0d71306e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Dec 1 01:46:49 2011 -0600
+
+    Fixes for invokedynamic binding bugs.
+    
+    * Rebinding a call site must also reset type profile.
+    
+    When a series of types are bound into a call site PIC, a situation
+    can arise where class mutation causes those types to continually
+    rebind the call site. Because the site's type profile was not
+    reset, a new PIC was never constructed.
+    
+    * Logging did not show all paths that cause call site rebinding
+    
+    Binding logging only logged newly-created method handles. Since
+    those handles were usually saved off into the DynamicMethod object,
+    rebinding of previously-constructed handles did not get logged. I
+    modified the logging to always log rebinding, even if the handles
+    were not recreated.
+    
+    * Complete call site rebinding should be throttled at some point.
+    
+    Previously, only excessive polymorphism could lead to a call site
+    being rebound as a simple inline cache. If an application
+    continually makes mutations that trigger site rebinding, we continue
+    to rebind and never fail. I modified and added configurations to
+    fail to an inline cache on excessive mutation (1000 fails, currently).
+
+commit 43a42d6b600ce72bd93ca055e15c1fcf12c33118
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Nov 30 17:41:56 2011 -0600
+
+    Actually disable instance-var invokedynamic stuff, since something's not quite right.
+
+commit 32c559b56306411e8c41d6e87304e9478ff59710
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Nov 29 01:30:16 2011 -0600
+
+    Add support for get/set of ivars via invokedynamic. Works, but disabled for now.
+
+commit 120223bf2db2421c878cc29d8f05448d50151aa0
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Nov 19 23:54:28 2011 -0600
+
+    Add a config property to enable a single global require lock.
+    
+    The ability to require files in parallel in Ruby leads to many
+    threading bugs. Constants can be defined before they're ready for
+    use, classes can be modified while they're being used, global
+    state can be initialized at the same time it's in use. Bad news.
+    
+    This flag is experimental, and forces all requires to happen in
+    in serial. First thread to acquire the lock keeps it until it
+    returns from require. This prevents all potential threading bugs.
+    
+    It is not enabled by default, in case there's libraries out there
+    that require and never return. For example, if require has a side
+    effect of starting an event loop, and so it is usually required
+    within a new thread. That pattern will have to go away in order
+    for this flag to be useful (and by extension, for requires to be
+    made properly threadsafe).
+
+commit 49f5e34bd45b642c52303fa61f69cdeec3ff43b1
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri Oct 28 14:30:14 2011 -0500
+
+    Allow compile.mode to accept OFFIR for now.  Also add toString method to Option so we can see which option is bogus
+
+commit 565a6d8a2f943e0c2de602841f1a3f886deb7c39
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Oct 27 02:03:11 2011 -0500
+
+    Rename Property to Option, etc.
+
+commit 4a8330815c3e6fc5407b424312fd7d65518203fc
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Oct 26 10:10:14 2011 -0500
+
+    Cleanup and centralize all property-based configuration settings.
+    
+    Properties for JRuby are now all in one location, combined with information
+    on valid options, defaults, and description. All properties going forward
+    should follow the same format, to ensure they're documented in the jruby
+    --properties output.
+    
+    I have added to this new form all properties I thought were interesting to
+    expose. There are a few still hidden that may be deleted soon.
+    
+    I also removed some long-defunct properties and removed unused code that related
+    to them.
+
+commit bb9cd0753436fabe726ada1036ad1476e70383a3
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Mon Oct 17 23:02:45 2011 -0400
+
+    Fix JRUBY-6076: Mixed-case Java package name not resolved
+
+commit 03e6618fb2367540249ed718f5b190b979b874ca
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Thu Oct 6 10:17:35 2011 -0700
+
+    Document a few more common properties.
+
+commit 25f156282a5fdd3438bb025946199cfa21fb3b24
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Thu Oct 6 10:09:56 2011 -0700
+
+    Starting to javadoc some configuration fields/properties
+
+commit d8d08f07f35e0efb8fc5674a2a3c3d75b4abcfce
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Sep 28 16:32:04 2011 -0500
+
+    Enable switchpoint call site invalidation and indirect call paths for invokedynamic support.
+    
+    SwitchPoint-based class hierarchy invalidation previously invalidated each in turn. This was
+    known to be inefficient, since each invalidation forces the JVM to a safepoint in order to
+    push invalidations out to code that has inlined through a SwitchPoint. I modified the
+    invalidation logic to aggregate a collection of all SwitchPoints from child classes/modules
+    and invalidate them as a batch.
+    
+    My benchmark was the time it takes to run the FFI specs. Because they run in rspec, and
+    rspec redefines top-level methods for each example, ths SwitchPoint invalidation is hit hard.
+    With the modified logic, the SP-based invalidation slows the suite to about 2x what it is
+    without SP invalidation. This can still be improved, but it's good enough to enable SP
+    invalidation for now.
+
+commit f71d633a86e8959200d1b010dad3d3dbd16c66a4
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Sep 21 15:39:43 2011 -0500
+
+    Turn off in-process launching by default.
+    
+    This feature was originally intended to blunt the high startup cost of JRuby
+    by launching subprocess commands that look like "ruby" commands inside the
+    same JVM using a new JRuby instance. While this worked, it also led to lots
+    of peculiar artifacts, like false pids, odd stream behavior, and runnaway
+    "subprocess" threads that would have died naturally if run as a new process.
+    
+    Because of these issues, and because JRuby's base startup time has improved
+    greatly since the feature was added, I'm finally turning off in-process
+    launching by default. We'll see how it goes.
+    
+    Possible problems that will arise:
+    
+    * Any subprocess command that literally uses "ruby" as the program to run
+      will fail unless "ruby" has been aliased to "jruby" as in RVM. People may
+      see those subprocesses start incorrectly launching the system "ruby"
+      rather than JRuby if they don't use rvm.
+    * Any tools or scripts that launch many subprocess "ruby" commands may slow
+      down somewhat. They will be launching new JVM processes and those JVMs will
+      take time to warm up.
+
+commit 5ac18309ddb0465f81df37407deb9ae34a7d9e01
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Sep 19 23:02:37 2011 -0500
+
+    By popular demand, add optional colorization to console backtrace output.
+
+commit c3d5d0fffcfbbb0ef03cfc7ef8151f4a512e62c4
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Sep 14 11:18:34 2011 -0500
+
+    Support running on Java 1.8ish.
+
+commit 004bacf037f09607667facd3bcf04c1782622ca9
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Sep 14 02:05:57 2011 -0500
+
+    Move general command-line help strings to a separate class and move references off RubyInstanceConfig.
+
+commit 39915bec25c709781f6394360568589f321a25af
+Author: Hiroshi Nakamura <nahi@ruby-lang.org>
+Date:   Wed Sep 14 17:29:34 2011 +0900
+
+    Add src/org/jruby/util/cli/OutputStrings.java temporarily
+    
+    Just for local build.
+
+commit a133c196d0420385d948e57d4069437a2524ed6f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Sep 14 01:41:37 2011 -0500
+
+    Fix a couple visibility issues that somehow snuck by my clean builds and test runs.
+
+commit d9c84782df3a5aafa0de2c979d3b301e051a4c5f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Sep 14 01:28:15 2011 -0500
+
+    Refactor RubyInstanceConfig.
+    
+    * Reorganize contents into functional groups a bit.
+    * Pull out argument processing into a top-level class.
+    * Pull out command-line printing strings into a top-level class.
+    * Add settings for many fields missing them.
+    * Prepare for moving static configs into instance configs.
+
+commit 122f676c9b1ab34ab42d207af224a223e238a097
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Sep 13 23:40:41 2011 -0500
+
+    Fix a test failure and move native/cext enabled flags to per-runtime (per-config).
+
+commit f804c1070fd01c308ee84c8baa4c949113f868e4
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Sep 13 16:17:30 2011 -0500
+
+    Provide a finer-grained switch for turning off *just* C extensions.
+
+commit 0f7c9ce8261d46ebfb7ef6e17e7da2f86f5d5ba5
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Sep 12 12:48:51 2011 -0500
+
+    Update to ASM 4.0 RC2 and master builds of jnr-{ffi,posix,constants,netdb}.
+    
+    Squashed commit of the following:
+    
+    commit ce02afcf40ede2c485ab357435866ce754cd2671
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Mon Sep 12 12:46:44 2011 -0500
+    
+        Fix group id for jnr-posix and version numbers for modified libs.
+    
+    commit 0b5632be85dce5500c35d3533fa5d7cd240bf515
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Mon Sep 12 12:39:24 2011 -0500
+    
+        Fixes to get ASM 4.0 RC2 passing tests.
+    
+        * Update jnr-* to master versions, since some depend on ASM and had to be updated too.
+        * Fix ASM-related errors due to new class hierarchy.
+        * fix skinnymethodadapter_spec to use new h_ prefix for handles and to filter "asm" constants.
+    
+    commit 4ac391fb3bf2f53dd42f8e4c5f3a0e36ca638e1b
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Mon Sep 12 10:35:08 2011 -0500
+    
+        Remaining tweaks to get jruby compiling with ASM 4.0 RC2.
+    
+    commit 3801518505d0d38bf045a39fd8ca6eb80ef50126
+    Author: Douglas Campos <qmx@qmx.me>
+    Date:   Mon Sep 12 00:21:54 2011 -0300
+    
+        updated InvokeDynamicSupport
+    
+    commit 2aabc1894d38b717cca2b4546f51596b8b03db6e
+    Author: Douglas Campos <qmx@qmx.me>
+    Date:   Sun Sep 11 12:43:39 2011 -0300
+    
+        updating asm version
+
+commit a4c297e62ba432f3815a9511f00a35e437124634
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Sep 8 13:03:44 2011 -0500
+
+    Tweaks to invokedynamic invocation to get tests passing.
+    
+    * Handle null return values from Java calls appropriately
+    * Disable Java calls until I can add exception-handling wrapper logic
+
+commit ac63a1d044521b0e6c08593d38db672285860c71
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Aug 26 10:29:58 2011 -0500
+
+    Modify --properties list to use new short form.
+    (cherry picked from commit 318191b5c15a97cf4567a687b74f1573bd4e8fd9)
+
+commit 6543a4692fcaa831694870dd50cc5a62aa8c113e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Aug 26 10:07:09 2011 -0500
+
+    Modify dotfile to use short property names and update --properties docs for 1.8/1.9 compat version format.
+    (cherry picked from commit bcedef3671b9774cb6aaca5d87ea245a31196052)
+
+commit 0f721c21cf9a4fd5cde38e7c0ce8464a88e11b0c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Aug 25 19:21:32 2011 -0500
+
+    Primitive initial support for a .jrubyrc, based on properties.
+
+commit 0abdd839c17e79d479b06fbd0207e6143add0656
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Aug 24 02:13:41 2011 -0500
+
+    Refactor Fiber support into threaded and coroutine-based.
+
+commit f7138c4cf4af1e6cd4a76232a97072e0e29d5458
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Aug 13 01:46:32 2011 -0500
+
+    Add fastops to the "safe" group, even though it's on by default now.
+
+commit 2c45f4f7e75cac2258951342a5df67cd516537f4
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Aug 10 18:30:33 2011 -0500
+
+    Use switchpoints for class mutation invalidation. Disabled by default, since switchpoints are slow in OpenJDK 7 GA.
+
+commit c026e25f1f46f0199356c160a44cf0806a33227e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Aug 9 18:03:46 2011 -0500
+
+    Add guard logic for fast fixnum operators and enable fastops in indy logic.
+
+commit 6d14073c862200d5cbf0c1bae9a2dc4cb38cbb8c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Aug 9 13:18:33 2011 -0500
+
+    Build-fixing tweak for build-time default ruby version.
+
+commit b124f1f00d221e4e532d049c9f4116837b191f78
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Aug 9 12:44:18 2011 -0500
+
+    Allow specifying default Ruby version as a build parameter.
+
+commit 1ca723b1cf60b673a8714c89eeafdb4169ca5c24
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Aug 1 17:17:08 2011 -0500
+
+    IR: Add more debugging to IR via jruby.ir.compiler.debug
+
+commit 6dee475e24580eb5afcf36a92c929edae6cbce07
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Aug 1 16:56:36 2011 -0500
+
+    Make test_inliner controllable form a property
+
+commit 217f31a899c58a2529718e9dca253a241c6cfcbc
+Author: Tobias Crawley <tcrawley@gmail.com>
+Date:   Thu Jul 21 10:12:13 2011 -0400
+
+    Allow disabling ENV write-through to the real environment [JRUBY-5934]
+    
+    This adds updateNativeENVEnabled to RubyInstanceConfig with a default of true.
+    If it is true and jruby.native.enabled is also true, any modifications to
+    the runtime's ruby ENV will be reflected in the system env via POSIX. Otherwise,
+    the modifications are not written through.
+    
+    This setting has not yet been pushed out to the embedding API's (ScriptingContainer
+    & JRubyEngine), nor has it been documented.
+
+commit e3d64d2302d913bde055fe6a9fa8a5c269ab6a7e
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Sat Jul 2 13:27:44 2011 -0500
+
+    Add jruby.ir.dead_code, jruby.ir_live_variable properties to enable these IR passes (default to off for now)
+
+commit 89abef1deaefffe310cef91a6bf61b32df14874c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jun 22 00:41:15 2011 -0500
+
+    Fix JRUBY-5844: jruby -x (executing ruby embedded into a message) fails
+    
+    * The shebang line was searching for the first of any shebang, not the first with "ruby" in it.
+
+commit 67f5c2f55356e22e0e6fe6ea30ce07423e534fa7
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jun 17 13:06:26 2011 -0500
+
+    Add flag to force all multiple-assignment to use the fast logic (not building array, but returning true).
+
+commit 1ce656fb06e60fcddcf44e3041dc71ed02dc20e8
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Jun 16 20:13:33 2011 -0500
+
+    Add logging properties for exceptions, backtraces, and Kernel::caller invocations.
+
+commit 979062cd30ec8dbafdf3c12a70be0e35f191b989
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jun 14 09:30:09 2011 -0500
+
+    Numerous refactorings and fixes for invokedynamic logic.
+    
+    * New property jruby.invokedynamic.safe to enable all known-safe (passing tests) but potentially slow options. invokedynamic.all still enables everything.
+    * attr accessors now bind straight through to IRubyObject.get/setVariable
+    * jruby.invokedynamic.attr to bind fast paths for attribute accessors. Default is true.
+    * Simplified formatting for NativeCall.toString
+    * Save Lookup instance in JRubyCallSite for future lookups
+    * Fixes to arg counting and matching along Ruby and native binding paths
+    * Improved logging output for invokedynamic dispatch binding, with serial number and reason for failed direct binding
+    * Properly permute Ruby to Ruby calls to permit block passing
+
+commit 1d1c6bad604a95fd6d35ea6397f200945ab3d163
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jun 14 01:53:17 2011 -0500
+
+    Initial unguarded Fixnum-RHS operator support through invokedynamic.
+
+commit c58a86d895f31108c6646cd52e733b59d8c5429c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jun 8 23:33:50 2011 -0500
+
+    Initial support for directly binding Java invocations from Ruby. Only no-arg calls with coercible return values (or void) supported for now.
+
+commit c1029d9ae8eee713088372ba7761f81c88414b57
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jun 8 13:16:07 2011 -0500
+
+    Add property for enabling/disabling use of invokedynamic for lazy initialization of literals.
+
+commit d534695ef46402a637c0c35baf052576228ad10c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu May 26 21:35:35 2011 -0500
+
+    Oops; USE_INVOKEDYNAMIC should end up false if not running on Java 7.
+
+commit c2ab051060e47340eb61c44036bc4512ef4c07ed
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu May 26 21:18:23 2011 -0500
+
+    Centralize construction of invokedynamic-related niblets and start adding properties for individual invokedynamic features.
+
+commit d6fa35f02dd7bd81e5102f01d11e3a4ed0e47efe
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed May 18 13:40:15 2011 -0500
+
+    Hack around ASM bug generating bad stack maps near dead code by switching return jump to call rather than call + athrow.
+
+commit bf1632f6c836d1070b5fe2cc7bb8a54e12db0f78
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun May 8 17:01:56 2011 -0500
+
+    Enable invokedynamic by default when running on a capable JVM.
+
+commit 27dca93c5a4e4dee8dc530e73217f2b3dda57fe9
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Apr 27 10:52:51 2011 -0500
+
+    Additional fixes to get ASM4 + java.lang.invoke modifications passing tests (not in indy mode).
+    
+    * Fix SkinnyMethodAdapter spec
+    * Use 1.5 bytecode for 1.5 and 1.6, to avoid bugs in stack map for some compiler scenarios
+
+commit 4fa52b39b19920d40ed0a46b6b7a6e4381fe7877
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Apr 6 12:50:08 2011 -0500
+
+    Update to java.lang.invoke, ASM 4 (prerelease), JSR292-mock 1.6, and fix compile failure due to bytecode version.
+
+commit 9bc2e09d0c7aff683fc264c9407846c61d0092cc
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Apr 6 00:25:00 2011 -0500
+
+    Fix JRUBY-5044: JRuby throws invalid runtime exception when loading C extensions in different runtimes
+    
+    * Loading a C extension now disables in-process runtime launching, since it probably wouldn't work anyway.
+
+commit f498fe5cec577c68a17817f7ef92f8c02b9d7ea7
+Author: David Calavera <david.calavera@gmail.com>
+Date:   Fri Mar 25 11:07:15 2011 -0700
+
+    fix JRUBY-5592: JRuby 1.6 done blowed up RUBYOPT
+
+commit ff1ec4932a80fd781021ea29fa4dd4d5b815d4c3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Mar 24 22:45:45 2011 -0500
+
+    Fixes and support code for JRUBY-5596: Improve Dalli IO performance
+    
+    * Disable backtrace generation for EAGAIN, which is usually used to retry a nonblocking read.
+    * Provide a flag to force all Errno (EAGAIN specifically) to generate traces (for debugging).
+    * Add a Runtime MBean to monitor exception counts, backtrace counts, and caller counts.
+
+commit a24ab0df8ae4beeda6e67165a9f0c4eca72d7487
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Mar 24 18:53:46 2011 -0500
+
+    Fix JRUBY-5604: JRuby version string should use MRI's format
+
+commit fbc02a4782489375cc7ceaafc9eec473f096cc37
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Tue Mar 22 10:31:41 2011 -0500
+
+    Allow resolveScript to still resolve files on PATH when running from complete jar
+
+commit e270b0d0752d0a2bd19a158098f3a6fbdc2f12fd
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Mon Mar 21 18:34:58 2011 -0500
+
+    Ensure that reaching the end of arguments doesn't ignore RUBYOPT
+
+commit b9cedf3db70637a792e0d0153c7ac671c93e004a
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Sun Mar 6 20:50:43 2011 -0600
+
+    Add missing newlines in usage message to fix formatting
+
+commit 4fbbfa53605225ade660e8c15388fc7590b6f2ad
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Mar 1 15:05:44 2011 -0600
+
+    Refactor backtrace generation logic.
+    
+    * Move out of inner classes into org.jruby.runtime.backtrace package
+    * Add new BacktraceData struct to delay trace-mining until actually needed
+    * Add new CALLER Gather type
+
+commit ba1ce78cfeded2b8d078f9718ad2da236e5f4328
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Feb 23 13:57:54 2011 -0600
+
+    Cleanup useless properties, enable fast math operators, add a couple more fast operator call sites.
+
+commit 780ba75ce627bfafc7d93f27f57dc518345c5361
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Feb 16 16:00:01 2011 -0600
+
+    Fix JRUBY-5517: RUBYOPT is pulled from system env always, even for in-process child
+    
+    * Always use RubyInstanceConfig.environment hash for RUBYOPT env
+    * Default RubyInstanceConfig.environment to System.getenv
+    * Ensure RubyInstanceConfig.environment can never be null.
+
+commit 597a16d05d31de1aff150f26a087fe3a30c503ec
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 15 13:25:09 2011 -0600
+
+    For JRUBY-5504: Improve default backtraces
+    
+    * New exception format for exceptions propagated all the way out
+    * Refactored TraceType into Gather and Format phases
+    * Trace type is per-runtime now
+    * New backtrace style "mri" for old C Ruby format
+
+commit 7821434b2bd17adcd486778e950c06bc51c3889f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Feb 4 12:21:06 2011 -0600
+
+    Bump max jitted method size up to 30000 bytes.
+
+commit b4f71021c04a5b56469582fe15021c53eec3849d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 1 21:22:31 2011 -0600
+
+    Remove logic to enable forking the JVM. All forms of fork(2) now unconditionally raise NotImplementedError.
+
+commit ba1e9821914359e016214b1000a4d433423b63f8
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Thu Jan 27 15:33:43 2011 -0600
+
+    Upgrade to launcher 1.0.6
+    
+    Brings:
+    - Increased -Xss
+    - Improved -Xhelp output (JRUBY-4768)
+    - Disable ri/rdoc generation in the "native" RubyGems defaults file
+
+commit 24e260ddec122dac82a0dea56027fa056f8352f5
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Sat May 1 21:20:23 2010 -0500
+
+    Work with native launcher to provide better help text for 'jruby -X'.
+
+commit 64c3a02c4855be7e653e81a3cb36d614b4d1729b
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Thu Jan 20 20:11:27 2011 -0600
+
+    JRUBY-5281, JRUBY-5345: java.net.URI or java.net.URL? Both.
+    
+    See http://weblogs.java.net/blog/2007/04/25/how-convert-javaneturl-javaiofile
+    for more details. Crossing fingers that this is the last round of
+    'no such file to load' madness.
+
+commit 5fc85736e73b197861e27164e58cf71022a9f29d
+Author: Daniel Lucraft <dan@fluentradical.com>
+Date:   Sat Jan 15 14:51:30 2011 +0000
+
+    Profiler: Ruby API works with profile block and start/stop options
+
+commit 211803d1a901fd38ee8f4a78c823b6fb6577b43e
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri Jan 14 14:28:59 2011 -0600
+
+    No isEmpty() on Java 5
+
+commit f9a54e4fb580ace0aea6ba1064e36e68c1c101a4
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri Jan 14 14:27:37 2011 -0600
+
+    No isEmpty() on Java 5
+
+commit 20ff6278cc74d368d58276e00804c9f8c445ec1a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Jan 13 18:43:11 2011 -0600
+
+    Fix JRUBY-5322: NPE forcing to compile a script
+    
+    * Refactor backtrace style into TraceType enum
+    * Move raw/full/ruby backtrace-gathering logic into TraceType
+    * Move MRI/Rubinus backtrace-printing logic into TraceType
+    * Fix Main toplevel exception handling to print using TraceType
+    * Fix force-compile errors to render better and fire correctly for top-level scripts
+    * Fix failed script compile to bail out, rather than NPE
+    * Refactor Main into cleaner pieces
+
+commit 71f8afd19d61b70f8dea9d50ffbd54a23aed0a70
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jan 11 10:42:17 2011 -0600
+
+    [1.9] Fix "trunk" in version string.
+
+commit 6b1e5586fcc5134f68657873841ba92ce1c931e7
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Tue Jan 11 14:19:32 2011 -0500
+
+    Fix JRUBY-5330: Empty RUBYOPT should be ignored
+
+commit b83c1f3ced6d035d77ae3f89ca6e3e742bc1a674
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Jan 9 21:21:46 2011 -0600
+
+    Fix -E help text (1.9) and reorder --profile flags.
+
+commit 1750cc385c9de20a04c0420ade0ac69bd114af3f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Jan 9 21:00:54 2011 -0600
+
+    [1.9] Add --disable-gems flag.
+
+commit 16aa9c5ccc6fe347998eaaf65bed6b759fb608f1
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Jan 6 01:23:38 2011 -0600
+
+    [1.9] Temporarily disable match-with-capture and enable compiler.
+
+commit f99dbc122b3152cb0c2a713db3a030087cec317d
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Jan 5 15:20:16 2011 -0600
+
+    Support -U and -E flags
+
+commit 6ccfdfd98e0a86f3cd352f525bed7a64f3d18739
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jan 4 13:18:35 2011 -0600
+
+    Fix --help output to be at most 80 columns wide.
+
+commit 0a42dd6b14ddbdcab379a7cb04dda5f885b6b20c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jan 4 12:55:11 2011 -0600
+
+    Revert --profile to be "flat" profiling and add --profile.api for enabling Ruby-level API.
+
+commit 8e196532220925181e0af3e4b2f65844b6038a79
+Merge: 7b96984 3d95a53
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jan 4 05:15:04 2011 -0600
+
+    Merge branch 'master' into profiling
+
+commit d4a6279214edfe682877c09dfe69912479cb50b1
+Author: David Calavera <david.calavera@gmail.com>
+Date:   Mon Jan 3 23:55:07 2011 +0100
+
+    fix JRUBY-5281 and JRUBY-5287: jruby-complete not working from directory with spaces
+
+commit 095a36a4798e627dd7004c46aedafe71716edd41
+Author: Hiroshi Nakamura <nahi@ruby-lang.org>
+Date:   Mon Jan 3 23:59:17 2011 +0900
+
+    JRUBY-5004: remove unused imports
+    
+    This commit is based on the patch from Douglas Campos <qmx@qmx.me>.
+
+commit 152e8efcd719cc23aaa46cfa6e7a3d4b2b70ddd1
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Sat Jan 1 01:02:31 2011 -0500
+
+    Happy New Year!
+
+commit 3e6d395cef59df49649cd6a417d2b1539f10218f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Dec 29 20:20:28 2010 -0600
+
+    Add an additional "main" class that always loads a specific filename, to ease creation of executable JRuby apps-in-jars.
+
+commit 7b96984afc343e4b8e2fdd5205a30b24d26a9006
+Merge: d2575a7 0c5e9d7
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Dec 17 17:53:55 2010 -0600
+
+    Merge branch 'master' into danlucraft-master
+    
+    Conflicts:
+    	src/org/jruby/runtime/ThreadContext.java
+
+commit d2575a71f38b702a110d86d21910db42a1597b2f
+Author: Daniel Lucraft <dan@fluentradical.com>
+Date:   Fri Dec 17 09:18:09 2010 +0000
+
+    Graph profiler: refactorings to allow for printing profile data from Ruby code (doesn't work yet)
+
+commit 2da2d00c5101234b71194a58e0cbdd290264e71a
+Author: Daniel Lucraft <dan@fluentradical.com>
+Date:   Thu Dec 16 09:00:26 2010 +0000
+
+    Graph profiler: added --profile option which creates ProfilingCacheEntryFactorys but doesn't do any profiling yet
+
+commit e5915beeccd1ef36af9919ca96537ed64bcab921
+Author: Daniel Lucraft <dan@fluentradical.com>
+Date:   Wed Dec 15 08:58:32 2010 +0000
+
+    Graph profiler: refactor FlatProfileData and GraphProfileData into a single ProfileData and two printers
+
+commit 68cbe8f36a30d1fd1f02d03b265427d8009539d7
+Author: Daniel Lucraft <dan@fluentradical.com>
+Date:   Wed Dec 15 08:13:29 2010 +0000
+
+    Graph profiler: rename --profile option to --profile.graph option
+
+commit c96b4df08b5022c69fa484b8579bfe66f29c8c28
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Dec 13 23:29:11 2010 -0600
+
+    Remove unused or non-useful backtrace styles.
+
+commit 62ecad3bed149fee9e993578b4decf0d78a91947
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Dec 7 22:50:41 2010 -0600
+
+    Fix JRUBY-5221: jruby.reify.classes raising error with optparse
+    
+    The problem here was that the class in question (OptionParser::Switch) had a no-arg "pattern" method on both the object and the class. When generating reified Java methods, this caused an error, since it is not allowed to have both a static and an instance method with the same name and signature. I fixed it by giving priority to the instance method, since normally those will be the most important for reification (for interface impl, etc).
+    
+    * Prefer instance methods when name+signature conflicts with a static method
+    * Move jitted code to rubyjit top-level package and reified classes to rubyobj top-level package
+    * Add some debug logging to reify logic
+
+commit 20a255faa858e520022db0ed59dac2496b82870d
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Thu Dec 2 15:08:58 2010 -0600
+
+    JRUBY-4774, WARBLER-15: Fix classpath and load path issues related to file paths containing spaces
+
+commit fd0fa789b21b30f294e8286b72b75fe3b688c27a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Dec 1 12:07:42 2010 -0600
+
+    Merge "backtrace" branch to master, now that it runs clean on all our various test cases.
+    
+    This is a squashed merge encompassing the following commits from "backtrace":
+    
+    commit eb0e24242050199ac1cc4cf6e48d93025f0186f4
+    Merge: 32137de ea48d8d
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Dec 1 12:03:28 2010 -0600
+    
+        Merge remote branch 'origin/master' into backtrace
+    
+    commit 32137decc9351dd7b6a19c49c7955808f535bb9c
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Dec 1 09:41:29 2010 -0600
+    
+        Fix remaining failures for test-all.
+    
+        * Disable CheckClassAdapter temporarily, since it disallows what should be valid JVM identifiers.
+        * Use the presence of $RUBY$ in method name as an additional indicator that we're processing a compiled Ruby body during backtrace gathering.
+        * Move some largely-static properties out of "init" target in build.xml, so they're available whether init is triggered or not (e.g. run.jvm.model).
+    
+    commit ee2a624201d5e9cd408d6ae793160aeb99b50b3d
+    Merge: cd50ae5 88ad204
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Dec 1 08:01:22 2010 -0600
+    
+        Merge branch 'master' into backtrace
+    
+    commit cd50ae5f06b95a2fffab6bc1f3a7419f478d0a52
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Tue Nov 30 19:15:07 2010 -0600
+    
+        Get remaining spec failure with -X+C passing.
+    
+        * Embed the actual Ruby method name into the Java method for block bodies, rather than __block__.
+    
+    commit 52bbfffcae1aed62bf4afcb692bed9725e4e1564
+    Merge: 4ed7235 1aace5e
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Tue Nov 30 01:37:15 2010 -0600
+    
+        Merge branch 'master' into backtrace
+    
+    commit 4ed723579101fffd8bfa73b30dc6e4e8991866f2
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Tue Nov 30 01:31:44 2010 -0600
+    
+        Precompiled (AOT) specs *nearly* green.
+    
+        * Mark __method__ as reading frame "name"
+        * Fix AOT-based stack trace mining logic
+    
+    commit 64e20aa939b5b9c6e41e0e9fe09039a0bb92794a
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Mon Nov 29 16:50:55 2010 -0600
+    
+        Jitted specs running green.
+    
+        * eval needs to set method name into the binding, so it's there for "__method__" in the eval'ed code.
+    
+    commit fd442c0a815bcab9eb6c9aa1b71e1f8a260ee03b
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Mon Nov 29 16:06:53 2010 -0600
+    
+        Interpreted specs green on backtrace.
+    
+        * Tagged some __method__ specs for which backtrace behaves like 1.9, which Matz apparently likes but was afraid to backport. Odd cases anyway.
+        * Fixed method name for the block used to define_method.
+    
+    commit cedb27e430b422c1158f66b4dcc7769922433506
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Nov 24 18:35:22 2010 -0600
+    
+        Reinstate deprecated java_to_ruby and ruby_to_java I removed, since it's still needed by some external libs.
+    
+    commit b48b17910de662b4e2d20ee8f4b5cc734eefc1ed
+    Merge: f39007e 2ae4995
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Nov 24 13:40:58 2010 -0600
+    
+        Merge remote branch 'origin/master' into backtrace
+    
+        Conflicts:
+        	src/org/jruby/Ruby.java
+        	src/org/jruby/RubySymbol.java
+        	src/org/jruby/runtime/CompiledBlock19.java
+        	src/org/jruby/runtime/Interpreted19Block.java
+        	src/org/jruby/runtime/InterpretedBlock.java
+        	src/org/jruby/runtime/MethodBlock.java
+    
+    commit f39007eca676c1e6ec9f891ac63b7c5d907b0d1b
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Thu Nov 18 14:01:29 2010 -0600
+    
+        Start normalizing the method/class names generated into Java by JIT and AOT compiler, to wrap up the remaining spec failures.
+    
+    commit 76e42c4b4522dc87c066d20051d02d1e4005b860
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Nov 17 20:40:33 2010 -0600
+    
+        Disable dynopt for now, to allow better stabilization on the main feature of this branch: frame elimination.
+    
+    commit d03099690df2e16d423e8b6a8969e0264983237f
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Nov 17 15:00:14 2010 -0600
+    
+        Encapsulate "coreMethods" hash in Ruby and add "bound method" logic to default (non-generated) class populator. `ant test-all` runs green now.
+    
+    commit ed7458f72bce55b11e5231f8e7b9d590c09ca53d
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Nov 17 10:46:43 2010 -0600
+    
+        Fix incorrect use of fastSetInstanceVariable instead of fastSetInternalVariable in FFI.
+    
+    commit f09626121b6a8bea6ab39a3c8ed3ccd69f56b505
+    Merge: f780b97 e8ca689
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Nov 17 10:15:16 2010 -0600
+    
+        Merge branch 'master' into backtrace
+    
+    commit f780b972b1f3e18f4c2608d9536e797a0845cd1a
+    Merge: 25ab5d3 6967ea7
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Nov 17 09:04:42 2010 -0600
+    
+        Merge branch 'master' into backtrace
+    
+        Conflicts:
+        	src/org/jruby/runtime/ThreadContext.java
+    
+    commit 25ab5d3d3f8c1fbf0fa334427b1485d322e83f86
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sun Nov 7 00:42:54 2010 -0500
+    
+        Don't do dynopt against calls that receive blocks; non-local flow is not properly handled yet.
+    
+    commit a4ad27056dcc3acf6bae0b0af7e618966d08a6dd
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sat Nov 6 15:22:40 2010 -0500
+    
+        Tag caller specs that do not pass with new backtrace logic (peculiar eval caller behaviors).
+    
+    commit eed8902084cfa06d4648935c1f70da57bf0c7a9c
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sat Nov 6 00:32:59 2010 -0500
+    
+        More fixes to get specs and tests green on backtrace branch:
+    
+        * Hash#index was not being bound properly from RubyHash#index19
+        * Range#min and Range#max need super, and therefore need frame = true
+        * tc_owned is a bad test and fails on system like OS X where (for some reason) / may be owned by user
+        * test_trace_func had been hacked for a bad class result (Integer, instead of Fixnum)...fixed that
+    
+    commit 9d9f94c30de76fa25e738e70e84ea09163eca5cb
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Fri Nov 5 20:03:22 2010 -0500
+    
+        Fix Kernel#caller to replace .java lines with Ruby lines. Brings specs mostly to passing.
+    
+    commit de433c771830e95c54f8196453208f2b312191aa
+    Merge: 3ffe1cf e25c58f
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Fri Nov 5 17:40:02 2010 -0500
+    
+        Merge branch 'master' into backtrace
+    
+        Conflicts:
+        	src/org/jruby/RubyIO.java
+        	src/org/jruby/compiler/impl/StackBasedVariableCompiler.java
+        	src/org/jruby/evaluator/ASTInterpreter.java
+        	src/org/jruby/java/proxies/JavaProxy.java
+    
+    commit 3ffe1cfba86f52ee96d89f3a1c352597f22f76b7
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Oct 27 01:42:06 2010 -0200
+    
+        Fix compile error I accidentally merged.
+    
+    commit b081253fb3cdf5141f7f0cf76d3f8546837d9f42
+    Merge: fc3028d ad68e22
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Tue Oct 26 16:30:25 2010 -0200
+    
+        Merge branch 'master' into backtrace
+    
+        Conflicts:
+        	src/org/jruby/Ruby.java
+        	src/org/jruby/internal/runtime/methods/DefaultMethod.java
+        	src/org/jruby/runtime/ThreadContext.java
+    
+    commit fc3028d9da2750c9d1c394600ab8ee712388724d
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Tue Oct 26 14:39:29 2010 -0200
+    
+        Add better description for class bodies in backtrace
+    
+    commit d796555494c2237116c7477c932fd96cd30d2e20
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Tue Oct 26 11:36:29 2010 -0200
+    
+        Clean up and add color to Rubinius backtraces.
+    
+    commit 012f5357ce649bd5a996211fe231f26097bf4f5b
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sun Oct 24 16:23:04 2010 -0500
+    
+        Fix classloader check to allow for compiled method handles, which use a no-arg constructor.
+    
+    commit 473d48aac6a5523304188d1d433e4c12df989b89
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sun Oct 24 16:10:32 2010 -0500
+    
+        Improve Proc-binding-based eval position info by propagating block's position into the binding and through to the backtrace frame.
+    
+    commit bcfd16b519b145c9ee055db1592dfaced05b71a0
+    Merge: 4902faa 5b49583
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sun Oct 24 11:07:15 2010 -0500
+    
+        Merge branch 'master' into backtrace
+    
+        Conflicts:
+        	src/org/jruby/RubyTime.java
+        	src/org/jruby/runtime/ThreadContext.java
+        	test/org/jruby/test/TestRubyException.java
+    
+    commit 4902faaf1678d5aecdef8b0b66f8ec78062aeec5
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Thu Oct 21 09:28:45 2010 -0500
+    
+        Fix badly-merged RubyProc.to_s19, missing opening brace.
+    
+    commit 69177d7098f9dc4ff9096d08eee25c0d8bb4f971
+    Merge: 801e764 f895837
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Oct 20 21:50:53 2010 -0500
+    
+        Merge branch 'master' into backtrace
+    
+    commit 801e7641b8838a8ae8931a9c6dcc5cf050096c4a
+    Merge: 0c60a89 dda4644
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Tue Oct 19 23:16:41 2010 -0500
+    
+        Merge branch 'master' into backtrace
+    
+        Conflicts:
+        	src/org/jruby/RubyDigest.java
+        	src/org/jruby/RubyProc.java
+    
+    commit 0c60a89aa746f286588b218681e9ad25b11318c4
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Tue Oct 19 23:06:15 2010 -0500
+    
+        Only compile direct recursive calls when we haven't branched to another method body (e.g. for rescues) and we're not compiling a closure or class body.
+    
+    commit 18333fe82c808e8ed49eef898f19c86fa2d764b2
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Tue Oct 12 17:04:13 2010 -0500
+    
+        Get 1.8 specs running green except for a handful of Kernel#caller specs (which don't expect to see .java files in the trace...not sure how to deal with that).
+    
+        * Fix another literal-block-calling path that wasn't using callIter
+    
+    commit 366740120ee76d8df3f977edc1727b60b2d4ad63
+    Merge: b64390b 6b243a3
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Tue Oct 12 10:35:14 2010 -0500
+    
+        Merge remote branch 'origin/master' into backtrace
+    
+    commit b64390b8cf0d2cb13e06d352969a093b5e86818d
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Tue Oct 12 10:33:39 2010 -0500
+    
+        Remaining fixes to get precompiled mode passing all our tests. Still some spec failures.
+    
+        * Bump up permgen max for test runs
+        * Fix stack-based scope initialization to not leave an unused nil on stack
+        * Ensure compiled method handles properly wrap pre/post logic for dummy and backtrace frames.
+    
+    commit 96bd3cbde91fc505b37ee13cbea6ffa3e8690c58
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Mon Oct 11 18:36:34 2010 -0500
+    
+        First fixes for backtrace branch in precompiled mode:
+    
+        * Add test-precompiled build target for running just precompiled
+        * Eliminate extraneous toplevel scope being pushed for precompiled loads (because that logic is all in the generated "load" method now.
+        * Add a new scope descriptor decoding path that properly sets up a toplevel scope
+    
+    commit 0ebbd6ac46c9ac04558f5200f980f26f798b9413
+    Merge: fc387be ac455fc
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Oct 6 21:53:18 2010 -0500
+    
+        Merge branch 'master' into backtrace
+    
+        Conflicts:
+        	src/org/jruby/RubyIO.java
+    
+    commit fc387befff57ada6c116b646a3dfb767cc926ee5
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Tue Sep 28 15:57:58 2010 -0500
+    
+        Renumber arguments for consistency.
+    
+    commit bbc91d3c4039bf6c26ceffd4899dcaaeaa3d46d0
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Tue Sep 28 15:40:38 2010 -0500
+    
+        Fixes to get specs a bit closer to running green.
+    
+        * Move pre/post logic for Script.load into generated code, so it's the same everywhere.
+        * Make pre/post-load push a frame, so top-level of a script is always framed
+        * Remove break handling from non-literal block call paths in CachingCallSite
+        * Make sure all literal block calls are using CallSite.callIter, which handles break
+        * Fix a bad test in testCompiler that needed visibility tweaks and framing
+        * Add complete doco for CallSite
+        * Fix Kernel#caller to trim from top of stack instead of bottom
+    
+    commit 4e814a24d5b2ef1b6567a3076a463ff9d08e2a0d
+    Merge: 91dc13a 3dbcef3
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Mon Sep 27 17:43:30 2010 -0500
+    
+        Merge branch 'master' into backtrace
+    
+    commit 91dc13a2f0b74bc1054d83378782416465ecc1b8
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Mon Sep 27 01:02:48 2010 -0500
+    
+        Fixes to get test-compiled (but not precompiled) passing 100%.
+    
+        * Fix eqlInternal's RubyNumeric branch check if classes are equal
+        * Provide file and line from all BlockBodies, so Proc#to_s can always use it
+        * Fix rejiggered Struct#each and Struct#each_pair to call the appropriate internal version
+        * Fix ruby_test's IO.new suite to not use STDOUT directly, risking that it get closed
+    
+    commit dc4af45352607ebb8a95d70befdcdb15c1111c58
+    Merge: ec8bb7f 90275be
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Tue Sep 21 09:52:10 2010 -0700
+    
+        Merge branch 'master' into backtrace
+    
+        Conflicts:
+        	src/org/jruby/Ruby.java
+        	src/org/jruby/RubyDir.java
+        	src/org/jruby/RubyKernel.java
+        	src/org/jruby/compiler/ASTInspector.java
+        	src/org/jruby/javasupport/util/RuntimeHelpers.java
+    
+    commit ec8bb7fc31d4acd4ebcb040f088e19fb427448e8
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sun Sep 19 16:21:38 2010 -0700
+    
+        Remove frame = true from all core class methods, to reduce their call costs. A few remain for invokeSuper and methods that may still need frames.
+    
+    commit ec276b6ca0c6009702839b12d97664b9e52b1023
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Thu Sep 16 14:10:43 2010 -0500
+    
+        Eliminate RubyTuple use that snuck in.
+    
+    commit f80254100cfc17ac6eb558e465fc1fb9122c3ee4
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Tue Sep 14 10:07:53 2010 -0500
+    
+        Special case a few immutable core types in equalInternal/eqlInternal.
+    
+    commit eb66c45145e4fd1f8c28e9a8c544114f034116e8
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sun Sep 12 18:26:13 2010 -0300
+    
+        Performance changes for backtrace logic:
+    
+        * Back off using Java stack trace for Proc's to_s file+line, since it's prohibitively expensive
+        * Move the Backtrace stack to being a fixed-size array of objects updated, rather than created, when a push happens
+    
+    commit 6f0ade5ab28946b8800431d3454d2e57fc0dbe19
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sun Sep 12 11:36:07 2010 -0300
+    
+        Add generation guard around trivially-inlined logic.
+    
+    commit c4d8705217174580d35757dc85c5c646e980b57f
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sun Sep 12 06:18:38 2010 -0300
+    
+        Full speed ahead with a caching mechanism for calls from core classes. Only works for core class methods right now, but opens the door to expanding that.
+    
+    commit 5874abc01104f6c0f435f8ac4643ed0f77cf7cff
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sun Sep 12 03:43:37 2010 -0300
+    
+        Localize some fields used in Array#include? to speed up the loop.
+    
+    commit 346245cd5e154574d14736cf4b9e0b4b98260d14
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sat Sep 11 15:02:41 2010 -0300
+    
+        Allow passing a number of iterations to bench_quicksort.rb.
+    
+    commit b4687022a1f00d0b63838b1c9daf00753fcfa93e
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sat Sep 11 11:55:15 2010 -0300
+    
+        Fixes to get run-junit-compiled 100% passing on backtrace branch.
+    
+        * Fixed a couple tests that are too sensitive to core method line numbers or expected only .rb elements in the trace
+        * Added a mechanism for procs to retrieve the most recent Ruby frame, for to_s purposes
+        * Added comments for hybrid backtrace logic
+    
+    commit 15cd9b16cb2750d0e40ba478d07fe5bf265dc620
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sat Sep 11 08:07:57 2010 -0300
+    
+        Add better logging to AnnotationBinder (for showing framed/scoped core methods), ASTInspector (for showing methods detected as framed/scoped and for reporting deopt flags as they are set), and JITCompiler (for dumping jitted methods' full classes and inspector results). New property jruby.jit.dumping=(true|FALSE).
+    
+    commit c4e6176498590d791868055025c2e72ded1ccf13
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Fri Sep 10 02:10:20 2010 -0400
+    
+        Improve dumping of generated bytecode by including class and method name when possible.
+    
+    commit 07fc4215f6873f449f89d4f5da7a7e2e8963bc70
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Thu Sep 9 23:39:20 2010 -0400
+    
+        Make attr accessor's var accessor field volatile, to guarantee visibility across threads.
+    
+    commit e3a7cf5cd4d8ccd08407955779bdd94feb5e4ac8
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Sep 8 13:26:48 2010 -0500
+    
+        Add missing "in" to caller backtrace lines.
+    
+    commit 7140c339f386959853f747d86cb2ea9a8afa6f2a
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Sep 8 12:10:50 2010 -0500
+    
+        Fixes to get tracing tests running in interpreted mode:
+    
+        * Off-by-one line numbers were off for MRI too. Fixed to correct line numbers
+        * call and return for Ruby methods need to use impl class, not self class
+    
+    commit cbc9c4edab56807a023817d06db9c22441fa4b53
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Sep 8 10:31:57 2010 -0500
+    
+        Fix runInterpreterBody to properly unwrap RootNode for "gets loop" execution.
+    
+    commit 3a09773058d8d58d5bf8f1b6fbebc494fc18f7c6
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Sep 8 10:01:43 2010 -0500
+    
+        Make --bytecode attempt a recompile, so that dynopt and no-compile modes can still print bytecode.
+    
+    commit 4e48e722ba5ded10975af348738237fcb7fe9b2a
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Sep 8 09:23:38 2010 -0500
+    
+        Add a "full" backtrace style which does not omit any Java frames and interlaces the Ruby frames.
+    
+    commit 6f5057e3ae1e372bd66602dcc26864adc3270128
+    Merge: 7006d31 811fd8d
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Sep 8 07:48:47 2010 -0500
+    
+        Merge branch 'master' into backtrace
+    
+        Conflicts:
+        	src/org/jruby/Ruby.java
+    
+    commit 7006d3175bbf4630921dfecaa4faef2a39a77205
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sat Sep 4 16:04:28 2010 -0500
+    
+        Bytecode size reductions for stack-based nil-initialization of locals and for x, *y and x, * forms of masgn.
+    
+    commit 3a8fb16f020c2b9aaa6228605bdb3d8fd1b78ccf
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sat Sep 4 14:52:04 2010 -0500
+    
+        Do not do direct recursive invocations for heap-based scopes, since the scope is not currently being reset.
+    
+    commit ec00e99636667eff97a891917ae9ef37f94a6eb7
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Fri Sep 3 19:55:24 2010 -0500
+    
+        Turn on dynopt by default, to aid testing of new logic.
+    
+    commit 9508e8a6925fce4f57a386ede867b3f8f9b67d38
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Thu Sep 2 12:40:38 2010 -0500
+    
+        Fix Time test that expected two separate Time.now objects to to_s the same.
+    
+    commit 65ba8b37a8a232495453e71b2a560c761b40893f
+    Author: Nick Sieger <nick@nicksieger.com>
+    Date:   Mon Aug 30 14:50:03 2010 -0500
+    
+        Use new backtrace info to set a more useful Java thread name
+    
+    commit 75b100604af39de52b26bdb21669136234424a0b
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Mon Aug 30 11:37:49 2010 +0900
+    
+        Fix ifne/ifeq bug in dynopt guard and switch DefaultMethod to not flip generations on JIT in dynopt mode.
+    
+    commit fe3b408629e94b7db0436152968bd6d2232f6c7c
+    Merge: eea60da 85c64c6
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sun Aug 29 20:33:06 2010 +0900
+    
+        Merge branch 'master' into backtrace
+    
+    commit eea60da3905c87c16fbb4e6c78fd7a07f842e4bd
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Fri Aug 27 14:09:44 2010 +0900
+    
+        Modify Java Fixnum fib bench to use the long call paths where possible, to be more like what compiled Ruby does not.
+    
+    commit a189563d9073208292e91aff3eb1c88489bd113d
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Aug 25 15:07:21 2010 +0900
+    
+        Fixes for jitted/compiled backtrace generation
+    
+        * SClass in a method body needs to frame, so it has a jump target for non-local return
+        * Compiled methods need to always have their ruby name in the method name, so it can be mined out appropriately
+        * Synthetic calls, like to rescue bodies, need to gobble caller frames to avoid multiple entries
+    
+    commit 276226de611cb8d5af942148109c2a51982e7640
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Aug 25 14:03:44 2010 +0900
+    
+        Add callNumber tracking to method handles, to properly handle return jumps.
+    
+    commit b94bcf119a54f52ab9be3c86bc5cc85078f20eee
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Wed Aug 25 13:16:25 2010 +0900
+    
+        More fixes for hybrid backtrace:
+    
+        * Get generated trace to be RaiseException's Java trace
+        * Add Ruby exception name to the RaiseException message
+        * Rewire and repair trace calls
+    
+        All main suite tests now pass in interpreted mode.
+    
+    commit dc9fcd3de0f3070507ac0a0647973d1e9f16ae4f
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Mon Aug 23 14:38:47 2010 -0500
+    
+        Fix debug logging of exceptions being raised and patch a couple tests for new backtrace structure.
+    
+    commit 3acd3201d85e4da9186fa17d3a04bdc9db742e29
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Mon Aug 23 13:23:04 2010 -0500
+    
+        Include original source file in compiled Ruby, add missing "in" line for MRI rendering, and soften requirements in test_backtraces to allow for native elements in the backtrace.
+    
+    commit 728cf3983fbeffba944fe34a8b0e410cc1de041c
+    Merge: 88a64de 0e9c956
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Mon Aug 23 00:18:07 2010 -0500
+    
+        Merge branch 'master' into backtrace
+    
+    commit 88a64de879446be3398ba7671b5fa1f3e46ce02f
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sun Aug 22 17:29:21 2010 -0500
+    
+        Turn on "positionless" compilation, since compiled code no longer needs to update interpreter backtrace frames. Also fix nil/null backtrace rendering.
+    
+    commit 5712a4ce285a5b3662c8ef8def2599223a232626
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sun Aug 22 17:18:17 2010 -0500
+    
+        Fix off-by-one line numbers from interpreter frames.
+    
+    commit 519f4625b9d9658f50b986b1add560903ee453de
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sun Aug 22 17:10:47 2010 -0500
+    
+        Remove some old backtrace code no longer in use and get all "backtrace" method handles to generate with no frame at all (since Java stack is used now).
+    
+    commit 424d967df8a3b6ba277bdb1b530d4f7f62ecbc4a
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sun Aug 22 16:52:29 2010 -0500
+    
+        Get Kernel#caller working with hybrid traces, get Rubinius rendering working again (partially), separate gathering and rendering of backtraces.
+    
+    commit a00822740712ddd924896feccc10f015fd20d4be
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sun Aug 22 15:32:08 2010 -0500
+    
+        Mine method names out of AOT and JIT compiled stacktrace elements and get JIT using the original name of the method.
+    
+    commit 039d184ac5f798aed21870a7552b66c5973ca0eb
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sat Aug 14 22:16:48 2010 -0500
+    
+        Simplify in-class encoding of StaticScope data.
+    
+    commit 876a762b8af88955bee598dfd0421805d9b47c40
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sun Aug 22 01:41:44 2010 -0500
+    
+        Fixes to hybrid traces to get tests working better:
+    
+        * Omit Kernel#raise and the KernelJavaAddons rbRaise from traces
+        * Handle getBacktrace when there's been no preparation
+    
+        Also modified test/testException.rb to allow internal line numbers for the "load" call, rather than MRI standard "whatever line it was called from".
+    
+    commit 06f1bd171d6897f651b3cebfd76551080acbfe40
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sun Aug 22 00:39:59 2010 -0500
+    
+        Move backtrace management to a separate stack and implement mixed-mode backtrace generation.
+    
+    commit ca40e73a7c136dfdd3853f0cd62a73bf70a3a08f
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Sat Aug 21 20:56:50 2010 -0500
+    
+        Get all major interpreter entry-points passing through simple, known method bodies. First step toward mixed-mode backtraces.
+
+commit b9f508f08b183a2141a4c69f84090a150d2cf928
+Author: Daniel Lucraft <dan@fluentradical.com>
+Date:   Tue Nov 30 22:09:29 2010 +0000
+
+    Add a --profile.graph option, and split ProfileData into FlatProfileData and GraphProfileData, though they behave the same currently
+
+commit 5cf92443800cdeaf33821acc72c85eb76834b3b3
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Oct 26 17:35:50 2010 -0500
+
+    Hook IR into main
+
+commit aabfa79f434ef5ad491b708ae1cefb65458ff29e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Oct 26 13:07:25 2010 -0200
+
+    First stab at a basic instrumented profiler. Needs update of jruby launcher to pass --profile through.
+
+commit d0f5663d0930373a66125d5a7eddf26810fb5a28
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Oct 22 18:11:25 2010 -0500
+
+    Fix for JRUBY-5079: Kernel#select() prevents exit during a signal handler
+    
+    Make Kernel#exit! actually do System.exit, when the current JRuby instance was started from command line.
+
+commit e055dbe2e6a793916c7a8383d5a6f6aa0d1e6e7f
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Thu Oct 14 15:51:53 2010 -0400
+
+    Formatting change. Avoid dangling 'if' clause on a line by itself. Also, reformat multi-line boolean conditions so that it is clearer that they indeed span multiple lines.
+
+commit 67c5df10d1c2e913202d84da94b66a57c880cc1d
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Sat Oct 2 13:54:53 2010 -0400
+
+    Also ignore space-only RUBYOPT.
+
+commit 611b61b3ceffed0391e09d67576d0b4bf54b07f5
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Sat Oct 2 13:38:10 2010 -0400
+
+    Fix JRUBY-5119: Empty RUBYOPT should be discarded
+
+commit bf3a20b2fd57783adb939d3031a7751deccefc17
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Sep 24 18:12:18 2010 -0600
+
+    Fix for JRUBY-5100. Can't figure out a good way to write a test for this.
+
+commit e1aac35f28ac020e83c7d8967e6766fe6b2a9c97
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Sep 11 08:07:57 2010 -0300
+
+    Add better logging to AnnotationBinder (for showing framed/scoped core methods), ASTInspector (for showing methods detected as framed/scoped and for reporting deopt flags as they are set), and JITCompiler (for dumping jitted methods' full classes and inspector results). New property jruby.jit.dumping=(true|FALSE).
+
+commit 3040e75903ff7d46a38cb3d9a5407be71293ac1f
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Sun Aug 29 01:39:22 2010 -0400
+
+    Add OS to RUBY_DESCRIPTION (JRUBY-4974)
+
+commit 18b0b98f3f559e96bb7e784ba4cb4b36b5feecf8
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Thu Aug 12 23:20:54 2010 -0400
+
+    Maybe it is useful to show where jruby finds the script specified by '-S'.
+
+commit 3916a17643344873abef70526b165ff1fe49df49
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Aug 12 17:36:01 2010 -0500
+
+    Add a property to turn off setAccessible use within JI/reflection.
+
+commit 4d656f85d897125f52abedc98ce0648613c48999
+Author: Hiroshi Nakamura <nahi@ruby-lang.org>
+Date:   Mon Jul 26 22:33:17 2010 +0900
+
+    Fix for JRUBY-4968: set RubyInstanceConfig.FASTSEND_COMPILE_ENABLED = true when "jruby.compile.fastest=true"
+
+commit 0b3474cfcb71340e2debd177967b1e6a22456447
+Author: David Calavera <david.calavera@gmail.com>
+Date:   Tue Jul 13 00:06:56 2010 +0200
+
+    fix JRUBY-4783: JRuby crashes if the same Ruby lib is required in RUBYOPT and the -r flag
+
+commit bd01f5adbcc9f241103b017a96b88013093c03b3
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Sun Jul 11 14:55:32 2010 -0400
+
+    Fix JRUBY-4931: '--version' flag should prevent interpreter from running (even in the presence of '-e' or a script file name)
+
+commit 32aa2317717ae22f19bc009c154b58771f821358
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Thu Jun 24 09:30:59 2010 -0500
+
+    Warn and ignore -J arguments that get passed to JRuby that probably got passed via in-memory launch
+
+commit 5c289fd53bf68685146ae3378b9c2c2cabebb5ad
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Sat Jun 19 21:36:41 2010 -0400
+
+    Use ArrayList.addAll() instead.
+
+commit 14e908e429ce4973db40a31ccb77c1a76bc3a561
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Sat Jun 19 21:26:50 2010 -0400
+
+    Prefer StringBuilder.append() to string concatenation.
+
+commit 60f553cd7cab9c205b7ba1b0695d271e2502eb5c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Jun 13 20:39:31 2010 -0500
+
+    Add a flag to turn off dynopt guards (experimental)
+
+commit f5786126b17a475bc6d40d7fd28306154b01c94b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jun 1 12:38:27 2010 -0500
+
+    Don't compile the script at CLI when running in dynopt mode, so it can dynopt.
+
+commit fd1854b8f8c6ccbcdce0f6f0732c144fca6cc707
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon May 31 12:39:37 2010 -0500
+
+    First experiment in dynamically de-dynamifying calls based on runtime information.
+
+commit cd1677ddf0f4a1ef1b584f33825404a5c22b55d9
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Apr 30 01:50:20 2010 -0500
+
+    Add the ability to pre-generate all method handles when compiling a .rb file (--handles flag to jrubyc).
+
+commit dd9c0a95096a8fccb9c8d3bd5dfff2a925f5ca78
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Apr 24 11:05:22 2010 -0500
+
+    Improvements for NailMain:
+    
+    * Use a single ClassCache across runs, to avoid re-jitting and re-loading code in each instance
+    * Fire a System.gc after releasing the client, to avoid repeat calls growing the heap unnecessarily
+
+commit a531f14e263b481a80d6bb7598b51fe10e5e6149
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Fri Apr 16 20:44:10 2010 -0500
+
+    Fix jruby.jit.maxsize help text.
+
+commit 4aa991b9562416385e40dcde39a8677f0764d4fe
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Tue Apr 13 15:14:07 2010 -0500
+
+    * src/org/jruby/RubyInstanceConfig.java: JRUBY-3923: Merge Ribrdb patch for running file: URLs from complete jar
+
+commit 92fdc201e3f4b2d72354b5e6598d5ed74b3398e0
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Apr 9 13:35:46 2010 -0500
+
+    Add --properties doco for jit.codeCache.
+
+commit 593d928a42270fb370fdfbf2e4257c5f671d7f96
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Mar 21 14:10:02 2010 -0500
+
+    Add doco for useProxy property.
+
+commit 6b742bc0fd900b0ba5e71ff7517a4460f9e43d08
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Mon Mar 15 00:02:27 2010 -0500
+
+    It's 2010 already.
+
+commit a44514e6740648f27a3a9ebf1cd84363c2b2db5d
+Author: David Calavera <david.calavera@gmail.com>
+Date:   Sun Feb 14 17:32:14 2010 +0100
+
+    fixes JRUBY-4543: Multiple RubySpec failures for Kernel's load() and require()
+    
+    Signed-off-by: Charles Oliver Nutter <headius@headius.com>
+
+commit 6921cefd9dd702053d3bb6321e84b0c65b3c5c2a
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Mon Feb 22 16:28:25 2010 -0600
+
+    JRUBY-4208: Fix '-F' argument parsing
+    
+    I <3 4-char fixes.
+
+commit 30e75d063e716c63abc5cd565a0d6a91d2b8ae4c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Feb 17 16:27:00 2010 -0600
+
+    Fix for JRUBY-4496: Using symlinks to share files over several rails projects does not work
+
+commit 6465ba99c4a95bcba39bae3baaf7c9562b2aeba5
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Sat Feb 13 21:17:47 2010 -0600
+
+    JRUBY-1954: -x flag not supported
+    
+    Based on Michael Johann's original patch, I
+    trimmed some seemingly superfluous setters and
+    getters.
+    
+    Also I added a test file 'test/testDoc.foo' that
+    can be used to test it. This is inspired by
+    Michael's command line option parsing test in the
+    original patch. To test, run:
+    
+    jruby -c -xtest testDoc.foo
+    
+    in the root directory.
+
+commit 193969f3f5c8647ec5c58eea6241861df6d16b27
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jan 19 23:25:25 2010 -0600
+
+    Reinstate the jruby.interfaces.useProxy property to bypass the new "real class" interface impl generation.
+
+commit e3687ea5dab290d7603da0c61f911cdf30b0bb77
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jan 18 19:02:13 2010 -0600
+
+    Add a property to work around premature EBADF when unwrapping process streams on certain VMs (IBM J9 Java 6, in the case of JRUBY-4466)
+
+commit a69dc99ad2d9092fba02343d6be3a5b87872c06e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jan 18 14:19:13 2010 -0600
+
+    Merge codecache logic into master to go with SHA1-hashed jit class naming.
+    
+    Squashed commit of the following:
+    
+    commit e2fdeca86709f0a187fca56f3aab0aca5b107f67
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Mon Jan 18 14:18:26 2010 -0600
+    
+        Fixes to integrate codecache branch and new SHA1-hashed jit class naming.
+    
+    commit fe17bb668af10a3ecd09ff695f085c4ea9bfda08
+    Merge: 79ce626 45ec484
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Mon Jan 18 13:29:17 2010 -0600
+    
+        Merge branch 'master' into codecache
+    
+        Conflicts:
+        	src/org/jruby/RubyInstanceConfig.java
+        	src/org/jruby/compiler/JITCompiler.java
+    
+    commit 79ce62661f08447a75a03efcd710a531e765ff0b
+    Merge: 7fee4a2 ef6c935
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Thu Dec 17 01:46:07 2009 -0600
+    
+        Merge branch 'master' into codecache
+    
+    commit 7fee4a25f5cb614e142da4e6fe167e29468745f4
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Thu Dec 10 23:43:23 2009 -0600
+    
+        Added jruby.jit.codeCache property to dump/load jitted classes to/from disk. Also modified ClassCache to look in normal classloader first (allowing pre-deploy jit dumping and bundling in a jar file) plus jruby.jit.debug property to output what the codeCache stuff is doing.
+
+commit 3849128d6ab797ecef79db8786ac8bcea11fbbf3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jan 12 09:35:07 2010 -0600
+
+    Reduce bytecode size by packing all basic cache initialization into a descriptor string that's parsed on load.
+
+commit 586dc8b5d976c96e955f4af474f77333a86492e2
+Author: Yoko Harada <yokolet@gmail.com>
+Date:   Sun Jan 10 17:50:14 2010 -0500
+
+    add getter/setter methods to RubyInstanceConfig mainly for easing of configuration from embedding API
+
+commit eadc874d60bab0dd964d1fe2e64ef5f878f090cd
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Dec 31 16:21:58 2009 -0600
+
+    More fixes to get test-all green again.
+    
+    1. revert default "in" stream in RubyInstanceConfig to use System.in rather than new FileInputStream(FileDescriptor.in)
+    2. make ReflectedJavaMethod instances be isBuiltin. This fixes the hanging in system() calls due to inability to fully unwrap an IO object.
+
+commit 31e5d68286caa467a53f42924692d1280b2c744f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Dec 31 02:06:57 2009 -0600
+
+    Turn reflected methods back OFF by default. Solves the hanging in #system calls, but I'll have to investigate that separately.
+
+commit 4d6c364fba608450958f3fbe32a75edab74e6d79
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Dec 30 23:51:53 2009 -0600
+
+    Add a global to_java method when JI is enabled to permit pre-coercing objects to specific Java types.
+
+commit 158390c034d47c1b38691b849e09b0290f51ca83
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Dec 30 13:56:12 2009 -0600
+
+    Fixes to reflection binding of methods for issues found in test-all now that "reflected" mode disables generated invokers as well.
+
+commit 4f9b2a38d70c95347c89f196ed76db414470a6bf
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Dec 29 18:02:50 2009 -0600
+
+    Fixes to make explicitly passing a Java array as the last argument to a varargs method work like it did before with varargs support still in place.
+
+commit 0bfb3f464c97a11a25a5b1ad935e982d7c9e99b6
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Dec 29 14:02:37 2009 -0600
+
+    Make jmx components be off by default, turned on by the property or by --manage. Native launchers will need to do the --manage bit as well.
+
+commit 3e44eb3d51aaa9d50317b7d7f42083e422ff0ed0
+Author: Vladimir Sizikov <vsizikov@gmail.com>
+Date:   Tue Dec 22 23:09:36 2009 +0100
+
+    JRUBY-4378: JIRB from jnlp over HTTP is broken
+    
+    Also, introduced classpath:/ scheme to load resources
+    from the classpath.
+    
+    For example, JRuby's home can be set to:
+    classpath:/META-INF/jruby.home
+    and that should be pretty functional.
+    
+    But there are severe limitations, like there is
+    no proper globbing, and that makes rubygems non-functional.
+    
+    For now, classpath:/-style home is set only
+    for weird cases, like jnlp over HTTP. For regular/typcial
+    jruby-complete.jar stuff, we still use jar:file.
+
+commit 56a8a99f3ec224c18b954247563722dc49c50dd3
+Author: David Calavera <david.calavera@gmail.com>
+Date:   Fri Dec 11 09:15:51 2009 +0100
+
+    JRUBY-4348: exec doesn't inherit RUBYOPT from the parent process
+    
+    Signed-off-by: Vladimir Sizikov <vsizikov@gmail.com>
+
+commit 8c23c0543674f33ba2c9d3550008e35a39301586
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Dec 9 12:24:45 2009 -0600
+
+    Add a jruby.jit.cache property to allow disabling the "class cache" used for jitted bodies of code. JRUBY-4301.
+
+commit 3487bba2fada506a4c56b7e643e82ae3b6294cb5
+Author: Vladimir Sizikov <vsizikov@gmail.com>
+Date:   Tue Dec 8 11:54:04 2009 +0100
+
+    Fixed JRUBY-4116 and JRUBY-3950 (IRB in Applet and WebStart environments).
+    
+    - JRUBY-4116: security error running org.jruby.demo.IRBConsole in jruby-complete
+    - JRUBY-3950: samples/irb-applet.html doesn't load the Applet
+
+commit bbc8136d44c23e39c92499ecbc65211b8da072fc
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Wed Nov 25 20:47:31 2009 -0600
+
+    JRUBY-4276: Set org.jruby.runtime.load.LoadService.DEBUG_LOAD_TIMINGS at run time.
+    
+    Based on patch by Hiro Asari plus additional modifications.
+    
+    Here's an example on how to enable this and other LoadService's interesting logging:
+    
+    jruby -b \
+      -J-Djruby.debug.loadService.timing=true \
+      -J-Djruby.debug.loadService=true -e "require 'yaml'"
+
+commit 5b300701bae49c47a83a7867b31f6b2c6254a400
+Author: Vladimir Sizikov <vsizikov@gmail.com>
+Date:   Fri Nov 20 22:18:37 2009 +0100
+
+    JRUBY-4148: -C flag not always work
+    
+    Plus regression tests.
+
+commit 7429e74c175f6f89bed74b4cecdcdbd1c1ac590c
+Author: Vladimir Sizikov <vsizikov@gmail.com>
+Date:   Wed Nov 18 13:47:16 2009 +0100
+
+    JRUBY-4238: rake spec does not work with jruby-complete.jar
+    
+    Added a regression test as well.
+
+commit 25720ab186b2d0fcdeffc1744128e185bf575a6b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Nov 11 12:12:17 2009 -0600
+
+    Fix for JRUBY-1531: Tracing in compiler / Tracing AOT compiled code
+    
+    This adds tracing calls to the compiler output and compiled-method invokers whenever full tracing is enabled. This allows debugging at nearly full speed, though to support bindings DynamicScope optimizations (elimination, for example) has to be turned off. This patch modifies --debug to no longer turn off compilation nor turn on reflection, and test/tracing/test_trace_func.rb passes in all modes.
+
+commit cc4b619d6400c107f20448d78c4f26406bde053d
+Author: Vladimir Sizikov <vsizikov@gmail.com>
+Date:   Sun Nov 8 00:13:24 2009 +0100
+
+    Major refactoring of JRuby's launching code (Kernel's system/backquote/exec).
+    
+    - Created LaunchConfig class that keeps the launch configuration info.
+    - Launcher code now aware of cmd.exe's built-in commands on Windows.
+    - Ported MRI's has_redirection().
+    - Properly handle BAT and CMD files: they should be launched in-shell.
+    - Many new backquote tests, and make them pass on Windows and Linux.
+    - Introduced jruby.debug.launch property for ShellLauncher logging.
+    - Updated jruby --properties output
+    - JRUBY-2253: Kernel#exec should raise Errno::ENOENT
+      Based on patch by Riley Lynch (very useful, thanks!), further reworked and improved.
+    - JRUBY-4213: ruby-debug-ide installation fails
+    - JRUBY-4200: redirection issue in windows
+    - JRUBY-2235: Kernel.system('non-existing-file') produces some output but shouldn't
+
+commit 7d756e2bd1ffcc28c183223971b1350569688b1d
+Author: Vladimir Sizikov <vsizikov@gmail.com>
+Date:   Thu Oct 29 21:02:18 2009 +0100
+
+    JRUBY-4182: ant test-secuirty-manager fails
+
+commit 51699f3492557213d1d5b015e6916206ebe43091
+Author: Vladimir Sizikov <vsizikov@gmail.com>
+Date:   Tue Oct 20 21:26:58 2009 +0200
+
+    JRUBY-4126:  Fix for a small typo and a small improvment to the online help
+    
+    Patch by Heiko W. Rupp, thanks!
+
+commit f24ed90d2ce425d9a7b34cb258a63edca6fcdec4
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Fri Oct 16 12:01:27 2009 -0500
+
+    JRUBY-4060, JRUBY-4062: Fix RUBYOPT leaking into ARGV
+
+commit 6025864f01bda31759a868de9118b77fdc51ec14
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Oct 5 13:54:42 2009 -1000
+
+    For JRUBY-3417, make it possible to turn on backtraces for some types of jumps.
+
+commit 2d2a73e84eb9a82bd0c9c44599147116e94f8f1b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Sep 26 15:32:57 2009 -0500
+
+    Add load service logging, by craig mcmillan, for JRUBY-3874.
+    
+    Squashed commit of the following:
+    
+    commit aa8c70ca0bca546bfd367792056f703c706e8ff4
+    Author: mccraig mccraig of the clan mccraig <craig@trampolinesystems.com>
+    Date:   Mon Sep 21 18:19:46 2009 +0100
+    
+        more explicit LoadService logging
+    
+    commit 3a23dd225605b3f41c0639407aa71c4d036460c2
+    Merge: a64cd1c 1d1d279
+    Author: mccraig mccraig of the clan mccraig <craig@trampolinesystems.com>
+    Date:   Mon Sep 21 17:53:49 2009 +0100
+    
+        Merge branch 'master' into load_service_debug_master
+    
+        Conflicts:
+        	src/org/jruby/runtime/load/LoadService.java
+    
+    commit a64cd1cab3b008311d6a2f6e9b06af417fbe937c
+    Author: mccraig mccraig of the clan mccraig <craig@trampolinesystems.com>
+    Date:   Thu Sep 17 20:21:58 2009 +0100
+    
+        adding LoadService debug logging for builtinLib search
+    
+    commit d323a4ea242c94e43dee9166cac2ef89d18d88e6
+    Author: mccraig mccraig of the clan mccraig <craig@trampolinesystems.com>
+    Date:   Fri Aug 21 11:45:14 2009 +0100
+    
+        fix merge of LoadService debugging from 1.3.1 branch
+    
+    commit dff28677f1d59314763e649a8b1cb9d61ba233fc
+    Author: mccraig mccraig of the clan mccraig <craig@trampolinesystems.com>
+    Date:   Wed Aug 12 11:20:41 2009 +0100
+    
+        make all logging code conditional
+    
+    commit 76c81b339db3f71c4b5e9e11a7e1f40307797ffa
+    Author: mccraig mccraig of the clan mccraig <craig@trampolinesystems.com>
+    Date:   Fri Aug 21 11:24:49 2009 +0100
+    
+        remove yucky hard tabs
+    
+        Conflicts:
+    
+        	src/org/jruby/runtime/load/LoadService.java
+    
+    commit 35f73b472582fade141bc62c3e47d729aa1e06c3
+    Author: mccraig mccraig of the clan mccraig <craig@trampolinesystems.com>
+    Date:   Fri Aug 21 11:21:14 2009 +0100
+    
+        add -Djruby.debug.loadService=true for stderr printouts of trys and
+        successes of LoadService
+    
+        Conflicts:
+    
+        	src/org/jruby/RubyInstanceConfig.java
+        	src/org/jruby/runtime/load/LoadService.java
+
+commit a0c45a0aef67664d8ce8db6ac55ff69a72e424d5
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Sat Sep 26 13:58:23 2009 -0500
+
+    Version string changes
+
+commit 822197707740ee62fa87f34ab2f0c78ce91e79c7
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Sep 25 15:37:02 2009 -0500
+
+    Fix \0 in --help output string.
+
+commit 7d0b5df6b060149703046460112c07c4ccd7203f
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri Sep 25 15:53:00 2009 -0500
+
+    [19] Make 1.9 run in interpreted mode for upcoming release and refactor setting of compat mode a little
+
+commit c35daa9a6e8de06c05863c11c284a57bd26e0b06
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Sep 18 21:04:53 2009 -0700
+
+    Reduce the JIT size limit from WAY TOO BIG to 10000 bytes, so really gigantic methods do not jit.
+
+commit a599d502826879e0f5b5b78c4fa6f47c5a7a2e8e
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri Sep 18 15:11:08 2009 -0700
+
+    [19] JRuby-3974: In-proc execution loses almost all parent-process config values
+
+commit 1db67832029deb8fb695683aac8379b5724c30c6
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Sep 12 08:43:46 2009 -0500
+
+    Fix for JRUBY-2962: Command line arguments ignored when RUBYOPT is set
+
+commit 3d2919b24336f5056205153a5dd1f01621e2cae3
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Mon Aug 31 14:41:30 2009 -0500
+
+    Rest of fix for JRUBY-937 allowing RUBYOPT to optionally include args w/o dashes
+
+commit 8935770f55c0ce5a4cf1136b549c77d032b83a26
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Mon Aug 31 12:03:27 2009 -0500
+
+    JRUBY-3705, JRUBY-3150: Fix load path spec under $SAFE by handling RUBYOPT
+
+commit e916b83ca61323448e69661ed610aace40d8872d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Aug 5 15:11:23 2009 -0500
+
+    Fix --1.9 and --1.8 flag processing.
+
+commit 99e5740dad90f0bdd51ba27f61efab6a533b4f7d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Aug 5 04:19:18 2009 -0500
+
+    Move --1.9 and --1.8 options to normal arg processing, rather than bin script.
+
+commit 302291ef10a0d944a5402ef0a416ab8d6ec0f147
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Jul 12 19:48:09 2009 -0500
+
+    Add experimental generated-handle support to avoid reflected invocation. Enable with -J-Djruby.java.handles=true. Small improvement in dispatch speed.
+
+commit 3fb66d14be28a56d7e3aaef92210e60494ec3af6
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 8 18:37:33 2009 -0500
+
+    Add experimental code for reifying Ruby classes into Java classes at runtime. Enable with -Djruby.reify.classes=true.
+
+commit 82e0d69030cfd3bcc3d1cedbdc954d75f92413a1
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Jun 6 16:21:24 2009 -0700
+
+    Enable inlining dynamic calls in --fast mode.
+
+commit 7115cb6a7d37e735d8dcb6618f99aefb750e772e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Jun 6 16:16:32 2009 -0700
+
+    Switch --fast to use RUBY_COMPILED backtrace generator and fix RUBY_COMPILED to search all frames.
+
+commit 3e44fca5378f15f349adb406acfabd0c950bf8aa
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue May 12 01:22:29 2009 -0500
+
+    Fix -S script resolution (make it fail gracefully) when running from within jruby-complete jar, since it will have a URL as jruby.home and won't resolve as a normal file.
+
+commit 87072bec63ec82a83f463417391ccc785870ec71
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon May 11 14:25:01 2009 -0500
+
+    Probable fix for JRUBY-3621: relative_path_from returns errors for "C:/" and "C:\\"
+    
+    The -S processing was not actually normalizing filenames to / using JRubyFile. I have not (yet) tested this on Windows, but I think this will fix it.
+
+commit 488c32b7a0cb0d5efd7330e4d5f7fdffe78545c4
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Mon Apr 20 12:36:44 2009 -0500
+
+    Took the 'r' prefix out of the revision part of the version string.
+    
+    With Git hashes, it confuses too much.
+
+commit 2257c8f811fab8d675a942c86ab712922dc46c6f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Apr 10 14:11:16 2009 -0500
+
+    Remove all code and references to the outdated and nonfunctional YARV and RBX bytecode support. Both have evolved since, both will need a fresh look, and current interpreter is now much faster than either engine.
+
+commit 32100c7038ec6a49db60a75e15d01f97b7d3a3de
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Wed Apr 8 00:38:23 2009 -0500
+
+    Send USR2 to a JRuby process to receive a Ruby thread dump.
+    
+    Currently only a single runtime is supported; considering options
+    going forward for dumping all active Ruby threads across runtimes.
+    
+    - Need to dupe frame in order to preserve initial line:number
+    - Remove err.println from RubyRunnable
+    - Track thread contexts in thread service, move thread dump signal logic to RubySignal
+
+commit 7bd55a3d3ab30771d185c23f336c88e22e2764ca
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Apr 6 12:34:33 2009 -0500
+
+    First steps toward inlinable dyncalls. This modification will pull single-arg fcalls all the way back to the call site. This speeds up some benchmarks but slows others, and so it still requires a property jruby.compile.inlineDyncalls=true.
+
+commit 7724a5d41666357061a8d2f87d003d4833ae38df
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Mar 21 18:09:01 2009 +0000
+
+    Fix for JRUBY-3514: RUBY_PATCHLEVEL should be a Fixnum instead of String
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9448 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit f1bcffab64c94e5c6b34722a1aa48b0ed323682c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Mar 15 08:19:41 2009 +0000
+
+    Clean up version and copyright strings, fix a missing newline in --help output, and add JVM name and version to version string.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9415 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 7c66de78a91d12da1989fce526aa92ef9ceaf9ae
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Mon Mar 9 16:18:48 2009 +0000
+
+    Fix more issues where a restricted security environment can be problematic
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9385 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 036f2b5f5051543028e7146092531f6f70c52a18
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Mar 9 08:08:10 2009 +0000
+
+    Add peephole property to --properties doc, add peephole optz to zarray.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9383 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 31320deaa5ded25adb0f8870b8305d3340c9856f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Mar 5 19:18:22 2009 +0000
+
+    Simple fix to stop interpreter arg processing at the first zero-length argument. Fixes JRUBY-3467: bug with *one* extra space on shebang with jruby-1.2rc1
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9350 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 28bf75a9274a3a32b64930ea6d401fd494173e44
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 24 21:10:13 2009 +0000
+
+    Minor tweaks to get JRuby running unmodified on Android:
+    
+    * Don't use EnumSet for mapping Errnos; seems to be a bug on Android with EnumSet.
+    * Load JMX-based BeanManager stuff via reflection; no JMX on Android.
+    * Explicitly pass the default 8192 size to BufferedReader and BufferedInputStream; Dalvik warns otherwise (???)
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9306 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 12d0a50a124615c67505bc1618afa378538155fd
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Feb 18 04:11:17 2009 +0000
+
+    Fix for JRUBY-3255: jruby -S script/server fails in Rails application
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9232 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 5855ad9b06f693033e5948175c53d786a0ef1540
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Feb 18 03:52:21 2009 +0000
+
+    Fix for JRUBY-3253: Lack of default jruby.home in embedded usage causes NPE
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9231 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d63cc4db5bf5e1c4c029cf3ae034fd75b256de47
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Mon Feb 16 17:19:47 2009 +0000
+
+    JRUBY-3410: Add -y flag to debug the parser
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9194 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 31c770cb5e1dea738cac6a3ef564edeb04ed36c4
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jan 23 09:04:07 2009 +0000
+
+    Add respond_to? call-site optimization inspired by Yehuda Katz. Should be 100% safe, but a good 20-25% faster than original.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8877 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 0746d04376d5a16802b95e5062fe586c687d2ae6
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jan 23 09:04:02 2009 +0000
+
+    Improved Yehuda respond_to optimization.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8876 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 4d649c8c0fdb559908b66429c0a3f7e9a1b7eca3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Jan 22 07:41:05 2009 +0000
+
+    Add an optimization for __send__ calls with a literal symbol or string; compile it as an fcall to that name.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8865 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 20225f17b2ffb0f7f9797949c3dc94339468f5c4
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jan 13 19:51:29 2009 +0000
+
+    Add support for post args in method arguments in 1.9 compiler.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8749 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 35b25102dbb523345f259ca0ab92857530d6c472
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Jan 10 21:17:58 2009 +0000
+
+    Update to Ruby 1.8.6p287 stdlib. Also fixed 1.9 version/patchlevel reporting throughout. A few tests had to be tweaked for 1.8.6p287 because they depended on 1.8.7 behavior (that hadn't been reverted in our stdlib yet) or old 1.8.6 behavior that had been updated.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8696 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 6d5b43a5ecdc2cdf827fe8f659bc80dbf71a020f
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Tue Jan 6 19:55:42 2009 +0000
+
+    JRUBY-3287: Add public RubyInstanceConfig#setCompatVersion
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8617 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 5d2a47821447887e4b234180bf8bac7ad66df3d8
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Tue Jan 6 17:12:34 2009 +0000
+
+    JRUBY-3275: New ARGF spec failures (patch mostly by Joseph LaFata)
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8611 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 9b6165d33ba04fac71936a3834cec72589740fcc
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jan 5 13:37:09 2009 +0000
+
+    Add RAW backtrace to --fast mode, so there's at least *something* for now. Will eventually clean this up a bit more.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8601 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit e0e5798ee3f1f35c9897601abfbab24c530a13be
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jan 5 11:55:57 2009 +0000
+
+    Adding the long-awaited --fast flag to turn on all optimizations that don't impact execution behavior. Next up...make them not impact execution behavior :)
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8600 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 9805288fcbffc6a11dac50416f0c7c096c60189e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Dec 27 05:22:48 2008 +0000
+
+    Remove boxed compiler from --properties message.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8471 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 05bdd562d35a8634b3a67ca834871b72f4978e83
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Dec 27 05:22:16 2008 +0000
+
+    Another round of compiled block optimizations:
+    * Use RubyArray's fillNil (now moved to RuntimeHelpers) instead of Arrays.fill
+    * Nuke BoxedVariableCompiler, since with proc-as-binding it will never work (and hasn't been kept up-to-date anyway)
+    * Add "expression" param to local var lookup methods, to specify whether they should leave a value on stack. First step toward fully expression-aware compilation.
+    * Only handle exception-based redo when body contains nested logic that could cause it (scope-aware methods like eval).
+    * Reduce preamble logic for both methods and closures by reducing unnecessary stack-twiddling.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8470 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit f370b1ce48e72cf8663317775735110098e423b0
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Dec 27 00:19:32 2008 +0000
+
+    When possible, avoid allocating any DynamicScope at all for interpreted methods that don't have variables and don't have scope-aware contents. A good 20% speedup on bench_method_dispatch_only's dumb method. Also required some changes for inspection to support 1.9 node types.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8466 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 2ce155eb1a6297de8648580bcbabec7364333e39
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Dec 26 23:32:14 2008 +0000
+
+    Modify all interpreted call paths to never check for event hooks when not started with --debug mode. This reduces overhead for both pure interpreted and interpreted+jitted methods. Since --debug was necessary before for event hooks to work, this does not break anything. It also opens up the possibility of adding tracing to jitted output, since it can be conditionally emitted.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8465 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 1d6c408a473993d644e943cb4d4f6d788927655a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Dec 16 18:04:40 2008 +0000
+
+    First round of twiddling to get 1.9 compilation work under way.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8367 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit bf8db0bc4acaeed7900b867e821e959f254be0be
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sat Nov 22 22:57:11 2008 +0000
+
+    Biggest commit eva (1.9 parser+1.9-runtime-related-changes landing)
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8099 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit f7c76f0e90ad2d2b667a659be606355d2a0094cb
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Tue Nov 18 22:39:08 2008 +0000
+
+    JRUBY-3162: Fix jruby home when the complete jar is located in a path with spaces in the name
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8083 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 103b8cd1d8ebbc98fe336469a081661d32b2a42c
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Sat Nov 8 16:23:55 2008 +0000
+
+    JRUBY-3126: Get gems usable from within the inside of the complete jar
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8023 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit bfc5b143abcd5a2eaaf59057a592b2dc452a4a8e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Sep 10 07:53:25 2008 +0000
+
+    Add a --headless option that forces headless operation.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7670 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 5d6010f164fa6cc79dcbc36bc893c5527b1f0193
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Sep 9 09:25:41 2008 +0000
+
+    Add experimental switch support in compiler for all-int-Fixnum case/when. Could be expanded with more formalization, an invariant hash algorithm for all literals, and more efficient bytecode emission to save the body-doubling.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7666 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 3d7e84c44292f585e91d4de702868098016697b5
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Aug 22 05:44:40 2008 +0000
+
+    Remove indexed method logic and property.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7520 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit edd8190afdcb203f9d0dadf723f5f0b023cd8d93
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Jul 20 20:54:51 2008 +0000
+
+    Fixes to make Rubinius and YARV flags functional again.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7246 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 8ca2b03c28ef773483c373c942909e8be39d2607
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jul 15 23:18:20 2008 +0000
+
+    Various fixes for JRUBY-2677, problems opening filenames or passing arguments with unicode characters.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7181 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit e37e7214391f452527786d49e781809cc96b6814
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jul 15 06:33:34 2008 +0000
+
+    Modifications for JRUBY-2679, to allow excluding specific methods from being jitted.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7174 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 1a6b635900f434142a8e67b6a69112ab37fa08c1
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 9 19:59:45 2008 +0000
+
+    Add --bytecode flag for debugging, experimentation purposes. Might move it off the list of standard options?
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7133 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 8d1eef47be27649a60fd5ac2e969ac6a5195375d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Jul 3 19:05:05 2008 +0000
+
+    Fixes for JRUBY-2744, reenable c-call and c-return tracing for native methods.
+    
+    I added back the tracing, but it's only enabled at runtime if you set jruby.debug.fullTrace=true because it introduces significant performance hit. --debug enables this by default, however. We'll need to look at unification of all debug/trace settings, especially since I think it's feasible to add tracing to jitted code now that there's a standard --debug flag we could use to turn such traces on.
+    
+    I also added a number of config params that weren't showing up in the ConfigMBean.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7098 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit bc11d0b8837fc51e3c8ca70c477cd362341a20ee
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Thu Jul 3 16:34:23 2008 +0000
+
+    JRUBY-2746: attempt to make the -S flag more compatible
+    
+    - still need to consider whether we need to do PATH searching
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7095 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 8982c6874b6bf161fc5cc288d6658468bf28e75b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 2 18:54:20 2008 +0000
+
+    Add a new property that enables lazy handles for compiled code. To mitigate the cost of generating a handle per method, jruby.compile.lazyHandles will cause all method handles to be LazyCompiledMethod, which defers the actual code generation and loading until the method is first accessed. For JRUBY-2714.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7079 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 82f8735c8d04004e6a2c257835c1c3008c38ada5
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 2 17:36:54 2008 +0000
+
+    Fix RubyInstanceConfig initializer for secured environment; ensure specVersion gets set to something.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7078 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 5d9280cf90ab1ee2923ed794a55992637fd5d596
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 2 16:07:10 2008 +0000
+
+    Multiple modifications to improve compiled def performance:
+    * Bytecode version used for compilation and code generation now defaults to current JVM, overridable with jruby.bytecode.version=1.5|1.6. This allows us to add in Java 1.6's frame calculation to reduce verification cost.
+    * Method handles generated for precompiled code now use an empty constructor and a separate "init" method defined on CompiledMethod. This reduces the amount of bytecode generated and allows a potentially faster construction path.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7076 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit b445b1919691ae07b88acfb676c4750fd488a867
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jul 1 23:01:22 2008 +0000
+
+    Add a new jruby.jit.maxsize setting for limiting the maximum size of class that will be allowed to JIT and classload, to prevent too-large methods from jitting and being unoptimizable in HotSpot (and therefore actually *slower* than interpreted). We need some experimentation to find a good default max for this.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7069 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d948781ebd71b63e95a87bb2b131d0c5d5a7e0c5
+Author: Vladimir Sizikov <vsizikov@gmail.com>
+Date:   Tue Jul 1 16:03:39 2008 +0000
+
+    Improved jruby -v output as was agreed:
+    
+    jruby 1.1.2 (ruby 1.8.6 patchlevel 114) (2008-07-01 rev 7062) [i386-java]
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7063 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a7b41d876cb677ba653a997002aa397613468d83
+Author: Vladimir Sizikov <vsizikov@gmail.com>
+Date:   Fri Jun 20 13:20:17 2008 +0000
+
+    JRUBY-2682: Replace StringBuffer with StringBuilder.
+    
+    Patch by Wayne Meissner.
+    
+    Signed-off-by: Vladimir Sizikov <vsizikov@gmail.com>
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7004 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 77e61205d29af37aecf658bf71bf0354e2898811
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Jun 15 08:09:19 2008 +0000
+
+    Add --1.8 and --1.9 flags to specify compatibility level (--1.8 is default, provided for consistency).
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6978 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 4d5cd30ed4daa304a1e962d1665e202ff04f9a16
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Jun 14 21:20:58 2008 +0000
+
+    Add jruby.compile.chainsize property to set the number of lines at which we force a "chain" to avoid JVM max method body size.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6967 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit ad2c49da381a6d955723e0b41a6bc731142fc8f2
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Jun 8 07:03:13 2008 +0000
+
+    Add doco for --manage flag.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6917 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 8ab879368a62ca2cdbe731dc33adcbfd72dd8999
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jun 6 09:06:38 2008 +0000
+
+    Make the management setting security-aware, since it's disallowed in a secured environment.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6914 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit debe19cab41e3043dbb6745ca5d836d33fa797d7
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jun 6 07:07:09 2008 +0000
+
+    Add in basic support for JMX management and monitoring of JRuby, along with our first MBean to monitor JIT metrics.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6908 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 3932d95f7aecc3b927a837b05f3af215d442f8d1
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jun 4 15:49:47 2008 +0000
+
+    Set Java VM to use -client by default, to avoid confusion as to which is running and to speed startup when -server is not needed but JVM wants to use it by default.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6882 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 4df71f176f8a89d99f97fa0254748cd38b1a724a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jun 3 08:21:16 2008 +0000
+
+    * Added --client, --server, and --sample for JVM -client, -server, and -Xprof options respectively
+    * Added smarts to make a bare -J or -J-X dump out JVM's list of options
+    * Cleaned up output for bare -X to just show extended options
+    * Rewrote help message for -Kkcode to reflect what it does in JRuby
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6870 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 867b7f1c7542e37876d3b5d69e036003260ee249
+Author: Vladimir Sizikov <vsizikov@gmail.com>
+Date:   Mon Jun 2 12:51:17 2008 +0000
+
+    JRUBY-2601: New default for jruby.jit.threshold property is not
+    reflected in the --properties listing on jruby command.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6865 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 2843dcf20f7b6e642a89c193e4d882d0666c2b6d
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Tue May 27 12:41:23 2008 +0000
+
+    Revert "Allow JRuby home to be set from complete jar if -Djruby.home not present"
+    
+    This reverts commit 6748 (8e472568076c93772bdb47afb5f6029667dd9b61).
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6818 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit baafe7317120147572e1f5fcf1af48d6f22e6d30
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Wed May 21 04:03:55 2008 +0000
+
+    Allow JRuby home to be set from complete jar if -Djruby.home not present
+    
+    - Still needs work for full in-jar operation
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6748 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit e5c5beb359218355307db72b9471c14b01045e95
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue May 13 06:00:19 2008 +0000
+
+    Update JIT max and JIT threshold for JRUBY-2514, to reflect perf improvements in interpreter and size improvements in compiled code.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6694 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit cd038376d9e201e5f98ae0a61723d4ae517be232
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Mon May 12 19:51:51 2008 +0000
+
+    Back out --debug I just committed since it is already there
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6689 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 92c612a45239486a43bb656238f5c36fb6b4fe7f
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Mon May 12 19:31:35 2008 +0000
+
+    JRUBY-2492: Add --debug option explanation in RubyInstanceConfig (patch by Martin Krauskopf)
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6688 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit e872d067dd1539b245db88a1c2c887918be0012b
+Author: Vladimir Sizikov <vsizikov@gmail.com>
+Date:   Thu May 8 10:05:13 2008 +0000
+
+    JRUBY-2474: --debug for interpreted mode, --jdb for jdb
+    
+    Patch by Martin Krauskopf.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6641 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 19ac35c27b8787018c593344e9953d89035f2f62
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu May 1 22:07:22 2008 +0000
+
+    Add miracle cure for slow startup to jruby(sh) and jruby.bat startup scripts.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6608 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d065d9338f2f98f6e4fada6df33f5f748d389202
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Fri Apr 11 13:05:08 2008 +0000
+
+    A working version of rbuf_fill that doesn't use timeout
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6461 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit efe4fd5768f2f331cf04b55b5396170d38a440a5
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Tue Mar 18 00:03:23 2008 +0000
+
+    JRUBY-1975: Handle bin scripts with non-identifier characters better
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6254 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 0e6b4326ec239a45f3a3fecd4faeff23d4ad6a69
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Mon Mar 17 05:09:44 2008 +0000
+
+    JRUBY-1446: Preliminary '-s' support, when supplied manually on the command-line.
+    Not yet for args on the shebang line.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6232 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 7ee0a70441e4b84b12022e14601206534c8aff8f
+Author: Vladimir Sizikov <vsizikov@gmail.com>
+Date:   Fri Mar 7 19:12:11 2008 +0000
+
+    Make JRuby read the script file buffered, not byte-by-byte.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6140 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit c52ef1b3855534b17842ace62394f352e1105af6
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Mar 6 18:04:59 2008 +0000
+
+    Fixes for JRUBY-1799, allow the thread pool size and ttl to be configurable. Added configuration properties, --properties help, and moved the executor from a static field of FutureThread to an instance field on Ruby, so each runtime can have its own pool.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6122 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 29c289eb843b7ecc8f859ba5842fbafb51ea616f
+Author: Vladimir Sizikov <vsizikov@gmail.com>
+Date:   Wed Feb 27 20:51:00 2008 +0000
+
+    JRUBY-2189: jruby -X does not provide help on extended options.
+    
+    Also, restored printing of error messages for specific
+    command line option errors.
+    
+    For example: 'jruby -C' should not only print help usage,
+    but also "-C must be followed by a directory expression".
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6050 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit c4c463923a27519fcff8e4eb9b51d77461447415
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Wed Feb 27 17:09:40 2008 +0000
+
+    - Move setJRubyHome to instance config, so it can be set before instance is
+      created and initialized
+    - Allow jruby home to be set to 'file:' URL, so that it can reference e.g.
+      'META-INF/jruby.home' inside the complete jar
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6045 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 0d2c4cd290c28bc185053fd048ad3bc75db54bd4
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Wed Feb 20 11:15:37 2008 +0000
+
+    Make sure that the classcache gets reset if someone changes the loader for RubyInstanceConfig.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5977 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit b1784333ccde8d3686c22e407b70f05b1e0c1226
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Tue Feb 19 03:28:13 2008 +0000
+
+    JRUBY-2123: canonicalize script filename
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5968 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 11162145749913e0379ecffb4b829fde760ba4ec
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Mon Feb 18 09:04:26 2008 +0000
+
+    Allow LoadService to be customized again.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5961 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 3858e245930324e86871841b0af8bc5b3ff47d10
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Feb 16 00:45:17 2008 +0000
+
+    Add fast operator support for Fixnums, via jruby.compile.fastops=true.
+    Move boxed compile property to RubyInstanceConfig, so it's enabled for "fastest" mode.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5946 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 114cc4121cdcb4dba145f7c20735b08517865a9b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Feb 15 18:34:22 2008 +0000
+
+    Multiple changes and enhancements to ClassCache:
+    - Move "one shot" classloading logic into ClassCache
+    - Remove all references to org.jruby code by defining a new OneShotClassLoader and adding a T param for Class<?>
+    - Add a "max" value to limit size of the cache
+    - Add a reference queue to allow efficient cleanup of dead class references
+    - ClassGenerator must implement bytecode() and name() methods
+    
+    Also changes in JRuby to use the new cache
+    - Modified JITCompiler to use the new queue correctly
+    - JITCompiler gives up on JIT if cache.isFull() or cacheClassByKey returns null (failed to cache or load class)
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5937 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 47aef08edb027edbc289699a612c762267830cb6
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Mon Feb 11 19:52:05 2008 +0000
+
+    Make ClassCache use supplied classloader so classes all get created in same place
+    Remove extra functionality in classcache that we are not currently using
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5907 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 2ba54eea9eb6380f4a72db707444e0c48055a7e3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Feb 8 23:19:58 2008 +0000
+
+    Add class cache basics, disabled in JIT for now. It works in this form, but does not take into account differences in the body or args of a method that are not otherwise visible in the file:line.name key (such as for eval or for files that get re-loaded after modification). Ultimately the key piece missing is a reliable equivalence check.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5874 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 1afde653a85a1099147050e52130d72b57f0887a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Feb 8 20:35:35 2008 +0000
+
+    Add a "jruby.compile.fastest" that sets all experimental settings and make frameless be really frameless. For demonstrating future performance potential.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5871 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit fad6cbc50786ef3d7085118e3252f2f1d9fd9b6a
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Fri Jan 25 22:18:03 2008 +0000
+
+    Remove unnecessary JRubyClassLoader accessor on RubyInstanceConfig
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5746 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 379c5b2f30c2aaca072cdf1347ff4fe5b24d5248
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Mon Jan 21 15:31:02 2008 +0000
+
+    JRUBY-2009: make sure jruby home computed by runBinScript is an absolute path
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5682 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 6e9123b0d2e0aa527da9419137fe7c87325aa9f6
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Mon Jan 21 06:17:27 2008 +0000
+
+    Fix script filename issue by expanding -S script name to fully-qualified path
+    (fixes IRB, broken in previous commit)
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5680 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit ae58f946a7dca103adb6644319a51887650cf2b5
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Mon Jan 21 03:22:42 2008 +0000
+
+    JRUBY-2009: Set $0 based on -S argument
+    - also refactor catching of MainExitException to a single place in Main.run
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5679 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 45acb347ae8e7ab01c57050a87fb579fd5f646c9
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Sat Jan 19 13:01:04 2008 +0000
+
+    Fix JRUBY-1952, the -T flag
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5667 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 9e049bca88d3abc896ea4cd309948f407a9719eb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Jan 19 10:25:08 2008 +0000
+
+    Make IO#read buffered for all other cases (File was done yesterday).
+    Mild hack: set any stream that becomes stdout/stderr to be sync, since ttys are not fully buffered in C/MRI, but we can't (currently) determine if a given stream corresponds to a tty (perhaps out instanceof PrintWriter could be an indication?
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5665 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 9ae5eeeb0fca80ff8a08f6467a9526b8ee05e41c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jan 16 11:09:09 2008 +0000
+
+    Large refactoring of Main.java and Ruby.java, with some additional work on LoadService and RubyGlobals. Cleaned up loading logic, reordered into actual dependency order, and broke up into appropriat emethods. Inlined and simplified Main logic. Set up LoadService to be constructed immediately and initialized during init, as preparation for loadpath/classpath unification.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5628 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 34e9d97def79948eb36288d33119f78625e0a532
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Mon Jan 14 16:41:19 2008 +0000
+
+    Fix for JRUBY-1953, support for the -W flag
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5603 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit e3c9019280a625488501375c96c32dd7eabdb605
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Mon Jan 14 12:12:35 2008 +0000
+
+    Fix for JRUBY-1946, support -0 flag
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5602 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit c0d7fc060add88ededf98e931409aa07f7c32656
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Mon Jan 14 11:48:29 2008 +0000
+
+    Fix for JRUBY-1947, support -C
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5601 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 3aaec7082c092cb0fd9066c0facd0de9473582b5
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Mon Jan 14 11:37:51 2008 +0000
+
+    Fix for JRUBY-1949
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5600 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 2676a5f4e06e95e1c007f601e4d773c5090dc470
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Mon Jan 14 10:47:07 2008 +0000
+
+    Fix for JRUBY-1948, support the -c syntax check flag
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5599 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 0a00006b65b1d841eec04f19433c285ace1b08d0
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Jan 13 02:23:45 2008 +0000
+
+    Cleaned up a bunch of command-line params, moved most JRuby-specific options to -X, and updated CLI help docs.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5579 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit f78bf8378761ad5a9aef4757eac921814814b2fb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jan 8 17:28:23 2008 +0000
+
+    Add a jruby.jit.logEvery method to log how many methods are being compiled.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5536 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 84d0648c2b6fd9bf81b54a8bec156a50d29ffd43
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jan 8 08:19:53 2008 +0000
+
+    Add a max jittable methods limit, specified with jruby.jit.max. Default is 2048, 0 disable JIT, -1 disables max (unlimited). Should help permgen stay reasonable with large apps and many runtimes in the same JVM.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5535 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 7b3e1c3a6bb5c271b99cda21b07f69c8e9c38efe
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Jan 3 04:46:37 2008 +0000
+
+    Add a couple more compiler-related properties to enable turning off positioning and thread-event polling. These provide another big boost, although again they're not entirely stable.
+    Also updated the --properties output to separate by category.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5467 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 85473628dfa584eec05b85df466e446322c3b771
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Jan 3 01:31:28 2008 +0000
+
+    Added support for a jruby.native.verbose property to show why JNA isn't loading.
+    Added a check for os.name startsWith 'Darwin', since that's what soylatte uses.
+    Modified catch block in POSIXFactory to catch a throwable, since JNI failures are usually of type Error, not Exception. This should fix any issues loading on platforms unsupported by JNA.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5465 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 94dc806d8650944114eb947fc67724bc04ec0d4f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Dec 30 10:20:43 2007 +0000
+
+    Much of the work for JRUBY-1847. Wait functions, pid/gid/uid functions all implemented. We will need to test against Rubinius specs, but they depend on fork at the moment. They should be possible to migrate to using non-fork child processes.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5439 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 7416acfe0b5fa8827e2b1048d6315d9de4979e8f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Dec 30 03:57:32 2007 +0000
+
+    Add totally experimental/dangerous support for fork, disabled by default. JRUBY-1845.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5436 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit bf87faa2d84fde2cc68d8163f2d6ef8b8b31e5ad
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Dec 28 18:32:31 2007 +0000
+
+    Move JIT compilation logic out of DefaultMethod.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5395 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit f01589d2823588c715cc93bd22bad2e877a89151
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Dec 28 02:27:54 2007 +0000
+
+    Add indexed methods property to --properties, move it to RubyInstanceConfig
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5390 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 969d4c564413d44f4398ba0ace0d05719c941abd
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Dec 21 23:28:09 2007 +0000
+
+    Cleanup for config properties.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5333 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a78db1a702e5cbf7125c0311a9cbecf7289b0dc1
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Dec 21 13:54:19 2007 +0000
+
+    Fix for JRUBY-1641 from Vladimir; safely check privileged system properties, since blowing up there kills JRuby.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5324 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 2032904fd9f4de66cb8ec134bbd55400ee180dde
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Tue Dec 18 17:11:44 2007 +0000
+
+    JRUBY-1740: Usage text says ObjectSpace is both enabled and disabled by default (patch by Ryan Fowler)
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5294 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 57b8005ae7bcd84ecceb1800ff73df689765e3fa
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Nov 30 17:23:27 2007 +0000
+
+    Add --properties help for turning off native code (JNA)
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5132 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a083c59df048f22cbeb3a36b456a371cd9676e26
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Fri Nov 30 12:53:04 2007 +0000
+
+    Make the base class loader customizable. Needed to get strange ClassLoader environments working - for example Ant
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5131 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit bb8868f7330167e9a16ea16eb19a8098e1a916ec
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Nov 29 23:17:02 2007 +0000
+
+    Make -v show 1.9.1 if running in 1.9 compatibility mode
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5128 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit bcd81d3759665f16730cb2ad1d1ac513cf02db1f
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Thu Nov 29 13:00:32 2007 +0000
+
+    Fix for JRUBY-1626, patch by Vladimir Sizikov
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5102 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 9f4f129edbf1cd0f699405d7146f219bae629877
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Nov 29 06:19:04 2007 +0000
+
+    Eliminate the static reference to a default JRubyClassLoader in org.jruby.Ruby, since it could cause a sideways leak via Java SE's softreferenced java.lang.reflect.Field objects when running in a web container.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5097 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 4b868eac2d850d87162f75c38cc98cbf10d226e1
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Wed Nov 28 17:39:09 2007 +0000
+
+    Remove --command documentation (no longer recommended)
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5092 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit b71784be316d596b2071deead640d8d0fb5c6429
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Nov 28 16:37:29 2007 +0000
+
+    Added --properties option to print out all recognized Java properties
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5088 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 72a546b972018f0cf5c6edeb0019c1a175e8ed23
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Nov 14 04:53:46 2007 +0000
+
+    Adding --compat flag for execution, eliminating the "rite" name since it's the name of Matz's old 1.9 codebase, adding Ruby 1.9-style Kernel#proc plus a test
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4936 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 171b97463f404ace7133ff250070ad2d482b5eaf
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Nov 10 23:08:37 2007 +0000
+
+    Added a "frameless" compilation mode that will compile code without framing when possible. Specify -Djruby.compile.frameless=true
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4910 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d273c346c987a873bb41c5e0a2788b2dfc713bc7
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Nov 7 06:25:24 2007 +0000
+
+    Fix CWD issue for NG clients to work correctly.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4881 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 5c9c1cb72dac2e27eeea016a4734c92d9540e22b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Nov 7 06:02:50 2007 +0000
+
+    Multiple changes to clean up CommandlineParser by merging it into RubyInstanceConfig, make NG work better, and so on.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4880 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 80926ef73e074d1b2a42bccbea7da22434b86aeb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Nov 5 18:04:37 2007 +0000
+
+    Updating compiler properties and flags for new standard:
+    jruby.compile.mode=OFF|JIT|FORCE
+    -C flag = OFF
+    no flag = JIT
+    +C flag = FORCE
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4860 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 2b043ce7607f5fb0d82fbe2c4f7964c8e4aed4e4
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Thu Nov 1 04:34:16 2007 +0000
+
+    JRUBY-1315 shell launching/arg processing fixed on trunk
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4839 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit f192235e19ba3314cb69f2d21a800802aad36e7c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Oct 30 06:34:41 2007 +0000
+
+    Disable ObjectSpace by default, and add +O flag to enable it.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4786 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit dc36ae92199a4f831cfcff44250a56917ec59ab0
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Oct 27 06:33:07 2007 +0000
+
+    JRUBY-1482: fixed bad files in previous commit.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4767 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 83f8bbdb95d84a9459ae93d2f5d101fd7156ca46
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Oct 27 06:31:05 2007 +0000
+
+    Reverting JRUBY-1482 commit; other stuff snuck in.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4766 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 3c5de5b0cfbc9f43ccb2fd2fe949da8f601b101f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Oct 27 06:23:50 2007 +0000
+
+    JRUBY-1482: Make ARGV default to [] always and be configurable through RubyInstanceConfig.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4765 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit f5f86f4cda59ba784b19dffd0e09eb5bdda1407c
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Thu Oct 25 16:58:08 2007 +0000
+
+    Add support for a jruby.rite-flag, and a matching rite-boolean on JRubyMethod.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4730 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit fdfd50dfb65a37ce0d69bb7fa53c8058dc572e3d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Oct 25 00:56:02 2007 +0000
+
+    An additional change for JRUBY-905, to allow Ruby instantiation without the overhead of a classloader-per-instance.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4723 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 0dc14ed346f7108aa91f73c552949ec95be10c5b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Oct 9 20:39:03 2007 +0000
+
+    Revert an unsafe frame-saving in bindings, since bindings can be used in many places.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4538 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit be9df2d00c836a6c59b8f21e64a7dce11b0d34e4
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Thu Oct 4 05:33:12 2007 +0000
+
+    Add a simple CPU sampler to JRuby
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4477 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 8beb29598e452024de3a2e637d5a1540ffcba5cf
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Tue Jul 17 17:38:54 2007 +0000
+
+    Hide Regular Expressions behind a common interface, meaning that implementations can be switched out much easier. Also add the /j flag to Regexps, for running with Java regular expressions instead of JRegex. All of this is in preparation for REJ and Oniguruma stuff which we should take a look at sooner or later.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4038 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit bd68defdced85b7e091f79abc5b23d034828556b
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Fri Jul 6 12:22:20 2007 +0000
+
+    Make sure that both -O and jruby.objectspace.enabled works in a reasonable way.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3967 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit e43b107b3301ad479a79bcb4cf7dbdfbdbf8c02e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue May 22 19:24:47 2007 +0000
+
+    More DRY handling of JIT properties; moved them to RubyInstanceConfig.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3714 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d9e39625c923f3ca9402550ec3b5a30ed6cf5a24
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Thu Apr 26 19:54:12 2007 +0000
+
+    Make LoadService extendible in a better way, and also make the Ruby runtime accept ways of changing the default LoadService
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3566 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit b19d79dff7e4f080d84a94a33195c020c2b091f6
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Apr 16 18:44:04 2007 +0000
+
+    Damian's fixes for applets in JRUBY-477
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3474 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit f38e2bb26e525be2714a3fdf85f04711e1037844
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Sun Mar 11 05:54:50 2007 +0000
+
+    Revert previous revision; didn't fix the problem I wanted
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3175 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 59efc25fde114a7f84c0ce986234fefe2626f2a6
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Sun Mar 11 05:00:00 2007 +0000
+
+    Try a system property to disable InProcessScript as a way to fix
+    some-places-failing object space test
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3174 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 0eaa64478294d5b433834a58b07593fcf294cab7
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Sun Jan 28 23:11:59 2007 +0000
+
+    JRUBY-446: reduce impact of InProcessScript
+    - but, in-proc script now has environment passed to it
+    - RubyInstanceConfig for simplifying instantiation of the runtime
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2871 961051c9-f516-0410-bf72-c9f7e237a7b7

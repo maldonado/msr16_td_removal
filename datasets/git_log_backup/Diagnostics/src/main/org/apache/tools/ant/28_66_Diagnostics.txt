@@ -1,0 +1,504 @@
+commit 3d706ab8188a674936880b6f4530b0cf3991758b
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Mon Aug 20 17:49:13 2012 +0000
+
+    java 5 updates
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1375137 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ec8453fec55d23b35f75593e40fa8001f73caea7
+Author: Jesse N. Glick <jglick@apache.org>
+Date:   Wed Jul 20 19:22:19 2011 +0000
+
+    FindBugs.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1148910 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a28f64f5cf1b63d9342683d77d79a5cdf9e67f85
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Nov 22 12:27:03 2010 +0000
+
+    fix a bunch of warnings you get when building on Harmony which uses Eclipse's compiler.  There are still lots (more than 100) of deprecation warnings and warnings about missing serialversionids that I have ignored.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1037691 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 9f59925bbd5dc77ba3ac65f277f7e5810a3ec517
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Nov 10 16:53:35 2010 +0000
+
+    detect Apache Harmony
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1033587 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 9fec95e95eb235218cb626468dd20a70aaca2ae8
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Nov 10 16:27:04 2010 +0000
+
+    print whether Kaffe/gcj have been detected in -diagnostics
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1033569 13f79535-47bb-0310-9956-ffa450edef68
+
+commit af5b94e9d969c42765bd41f15181a6653535a76a
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu May 27 04:33:36 2010 +0000
+
+    drop version check now that ant-nodeps.jar has been removed
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@948667 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d7cd65aa7f0e8bebb9cee2bfebc94a5b15fee107
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Feb 22 05:27:22 2010 +0000
+
+    untabify
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@912484 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 4d7bc0e158af463ab6d54f9ab35a01a5e011a831
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Sat Feb 20 23:57:59 2010 +0000
+
+    fix getClassLocation method in Diagnostics class. Bug 48782. Reported by Torsten Werner. Patch by Ludovic Claude.
+    
+    
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@912258 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b0eca5e4bbae7c254ba66eac900378c25c585fdd
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Jul 28 04:42:28 2009 +0000
+
+    print where core and optional classes have been found.  PR 47574.  Make check for optional classes work again after the test task has been removed.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@798399 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 499deaa3777abe9b4095fe47a20d9ce5d5991b18
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Jan 29 14:55:31 2009 +0000
+
+    Include information about the XSLT processor found (if any) in -diagnostics.  PR 46612.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@738872 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6cc29239b3603a513225c5709d0fb6b73ebe2271
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Dec 19 13:39:16 2008 +0000
+
+    make diagnostics check the file it has just written in order to detect full filesystems.  PR 32676.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@728019 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 94da71c7641a9cdccc8e4b5f0bd814fb75a70b7c
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Aug 27 13:24:42 2008 +0000
+
+    change command line parser so that version is only printed once - and version as well as diagnostics methods know the current loglevel.  The former is PR 45695, the later useful for 45692.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@689477 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 7679c154cff6b6aec0a7952031eaac373285a656
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Wed Jul 18 10:46:50 2007 +0000
+
+    checkstyle
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@557220 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3be2b26d815b4e8b26dedbb5be5223bbb6e9604a
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Tue Jul 17 18:47:28 2007 +0000
+
+    fmt/refac
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@557021 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 0aa2b2528ff92c3786e50f82ea65acf4d134c260
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Wed Nov 1 00:13:43 2006 +0000
+
+    some checkstyle changes
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@469717 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 44f1058c6d58bd5376c2b4c06ffe08bf96564937
+Author: Steve Loughran <stevel@apache.org>
+Date:   Thu Oct 26 23:11:25 2006 +0000
+
+    handle security checks on property get gracefully
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@468181 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ff5195fa54146617ec5805b9e2863bc1dcb8d150
+Author: Steve Loughran <stevel@apache.org>
+Date:   Thu Sep 7 15:27:45 2006 +0000
+
+    move other java1.5+ check down to the other java1.5 proxy tests.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@441117 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a6e993b7aa5d03adba27db8b0dadb9f4356789ae
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Tue Sep 5 12:48:48 2006 +0000
+
+    fix for diagnostics using java 1.4
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@440335 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 2e897819a83981a1f4de2e1cc72e33f080fcf573
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Sep 1 18:49:27 2006 +0000
+
+    copy2license.pl
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@439418 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1e6540e5975e006a0e86313b2c69ab53653ff215
+Author: Jacobus Martinus Kruithof <jkf@apache.org>
+Date:   Sat Mar 25 22:35:34 2006 +0000
+
+    Adding property storing the ant core library.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@388848 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b73a6c6b827631e22dd1c671351d9bf2c6233d14
+Author: Jacobus Martinus Kruithof <jkf@apache.org>
+Date:   Sat Mar 25 21:27:51 2006 +0000
+
+    Improved use of MagicNames for ant internal properties
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@388834 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3043b4818699a717c8d1d521d2da765882171c5c
+Author: Steve Loughran <stevel@apache.org>
+Date:   Wed Jan 18 21:11:21 2006 +0000
+
+    extra proxy diagnostics, in a java1.5-only package. By abusing the toString() operation, we dont need any extra interfaces for this.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@370259 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 75b9942dbaade0c9122d7bd0f6244b1939a0af34
+Author: Steve Loughran <stevel@apache.org>
+Date:   Tue Dec 27 23:41:41 2005 +0000
+
+    xml nameserver check
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@359325 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 954f6058d772148440655e920c59b4cdfc651924
+Author: Jacobus Martinus Kruithof <jkf@apache.org>
+Date:   Thu Sep 22 20:03:53 2005 +0000
+
+    Layout, extracted methods / named constants
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@291012 13f79535-47bb-0310-9956-ffa450edef68
+
+commit bcb846c8052a13d203836f221d8e2d7bf636e2f0
+Author: Steve Loughran <stevel@apache.org>
+Date:   Sun Jun 12 23:15:57 2005 +0000
+
+    Little something to make IDE debugging easier; <diagnostics/> prints the diagnostics out as per -diagnostics.
+    1. Why does Netbeans4.1 keep javax.xml.parsers.SAXParserFactory a secret? SecurityException handling to Diagnostics to compensate.
+    2. could add output file support, maybe?
+    3. could add task="junit" for detailed task diags instead...
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@278422 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b32f4587da5b6aa63458564000e7c29ab5f3e5cb
+Author: Jacobus Martinus Kruithof <jkf@apache.org>
+Date:   Mon Jun 6 19:45:32 2005 +0000
+
+    PR: 35246
+    As suggested by Darin Swanson.
+    (use USER_LIBDIR, and use File.separatorChar in there)
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@278406 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1511487597b2dfa9391f80564f09d13a12418911
+Author: Jacobus Martinus Kruithof <jkf@apache.org>
+Date:   Sun May 22 16:13:54 2005 +0000
+
+    Avoiding to catch unspecified Error. The context indicates we want to continue even when loading a class is unsuccessful. The only Error we expect and want to continue on would in that case be LinkageError (and not e.g ThreadDeath / VirtualMachineError).
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@278323 13f79535-47bb-0310-9956-ffa450edef68
+
+commit faba017869b796b137c9147c00a00cd11dd94f1e
+Author: Jacobus Martinus Kruithof <jkf@apache.org>
+Date:   Thu Apr 7 17:59:11 2005 +0000
+
+    Made compilable on 1.2 / 1.3
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@278113 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c68814d65527318073803bdc33d0e0d62edd3552
+Author: Steve Loughran <stevel@apache.org>
+Date:   Thu Apr 7 17:08:24 2005 +0000
+
+    ok, sometimes drift is -ve.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@278112 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b5e043025fb0aeef5e150d433cb0808b66441efd
+Author: Steve Loughran <stevel@apache.org>
+Date:   Thu Apr 7 17:07:33 2005 +0000
+
+    looking@why my junit reports are apparently an hour old. No fix, but -diagnostics now prints some clock info, and examines diffs between temp dir and local clock and complains if they are too different. (>10s, purely arbitrary)
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@278111 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 0641431ea7db7115eb04c96c69c7923acbfc7385
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Fri Mar 11 11:10:30 2005 +0000
+
+    spacing
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277898 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1f41dffdf227108f1ce2236253b6ad49bec0905a
+Author: Jacobus Martinus Kruithof <jkf@apache.org>
+Date:   Thu Mar 3 13:59:04 2005 +0000
+
+    Removed unused import
+    Documented empty block
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277771 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b0003afe366c593c70d5af9b037ae55dee28df1e
+Author: Steve Loughran <stevel@apache.org>
+Date:   Tue Mar 1 14:55:47 2005 +0000
+
+    complete rework of reporting when we cant instantiate an element
+    
+    old: generic error message
+    
+    new: step by step diagnostics with instructions.
+    
+    The code treats ant tasks and ant optional tasks specially, based on package names.
+    
+    Also: moved some constants into the appropriate places.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277750 13f79535-47bb-0310-9956-ffa450edef68
+
+commit bec41871b591248271815886afd1c0a318ee025e
+Author: Steve Loughran <stevel@apache.org>
+Date:   Tue Feb 8 18:50:35 2005 +0000
+
+    diagnostics probes temp dir by writing a file to it.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277618 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c218102bcab9c3d579e51dcd3189b6a5cf38e60e
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Wed Feb 2 09:05:26 2005 +0000
+
+    whitespace around +
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277568 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 9e2453aa537b27b5cf753e91c823aa0819a80040
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Jan 31 08:41:56 2005 +0000
+
+    2005
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277560 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 9e260d7fa31b28b41ef6061745860550eefb965b
+Author: Steve Loughran <stevel@apache.org>
+Date:   Fri Jan 28 23:18:32 2005 +0000
+
+    diagnostics should list lib dir too.
+    Refactored the constants in the launcher for better sharing.
+    I worry about the hard coded file separator there (/),
+    so replaced in the code, but left the constant in,
+    in case someone was using it.
+    Updated WHATSNEW. Added which.jar to the fetchables.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277559 13f79535-47bb-0310-9956-ffa450edef68
+
+commit db48fbb829447064857a6b918e78cdab0b0c89b1
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Nov 22 09:23:37 2004 +0000
+
+    Various checkstyle violations
+    
+    Submitted by:	Larry Shatzer
+    
+    And some
+    
+    (untabify (point-min) (point-max))
+    
+    on some files.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277063 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 29b76e0c0106639914aec76b2f1c7d7b63b1c0d4
+Author: Steve Loughran <stevel@apache.org>
+Date:   Wed Nov 10 00:37:31 2004 +0000
+
+    These are all patches to stop java1.5 whining about varargs.
+    In java.15 some of the reflection APIs are overloaded to be
+    usable via varargs, so untyped things cause confusion. These
+    are everywhere that bootstrap complains.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277008 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 7e145de4f1d0b125c3b9c9b3ce11f29609f5e55d
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Thu Oct 28 08:47:26 2004 +0000
+
+    Properties.propertyNames() should be used instead of .keys().
+    PR: 27261
+    Obtained from: Mike Murray
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276969 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c885f568369156a62e3ccb5b4b93b73b9d054443
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Tue Mar 9 16:49:09 2004 +0000
+
+    remove authors from files
+    PR: 27177
+    Obtained from: J.M. (Martijn) Kruithof
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276208 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 278781dcd669412e5e35cc95d8a96e0b2a278f50
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Mon Feb 9 21:05:47 2004 +0000
+
+    Copyright owner is The Apache Software Foundation
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276065 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 66555ca10d24bbfc55e710b9d65f809cfe713dab
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Wed Feb 4 20:38:09 2004 +0000
+
+    Remove trailing spaces in all java files
+    in order to make checkstyle happy
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276017 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ca1513552f7af7fc19de490fbe2d88adb6c993ad
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Tue Feb 3 22:44:50 2004 +0000
+
+    Switch to Apache Software License 2.0
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276010 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e580392c2d28c2a3530ebe0e1005bae0d45c5b8b
+Author: Conor MacNeill <conor@apache.org>
+Date:   Sun Jul 6 09:57:37 2003 +0000
+
+    More cleanup
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274776 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 710b0e612e0d93fe9c490a4ae9b274bc51f789e0
+Author: Conor MacNeill <conor@apache.org>
+Date:   Mon Apr 14 14:47:42 2003 +0000
+
+    More cleanup
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274444 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 161579a6d082eac88d197ee70491745c54d48b92
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Mar 31 13:46:18 2003 +0000
+
+    Move "where has this class been loaded from?" logic to LoaderUtils.
+    Use it in <junit>, <antlr> and Diagnostics.
+    
+    As side effects:
+    
+    * fix PR: 15131
+    
+    * make Diagnostics compile using JDK 1.1
+    
+    this doesn't mean CVS HEAD will build on JDK 1.1, still to fix are
+    Sync, SQLExec and EscapeUnicode.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274352 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1dc8a079057e191ca4c158f36843c2c9e9f9be52
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Feb 10 14:15:00 2003 +0000
+
+    Remove Jakarta Project from license
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274040 13f79535-47bb-0310-9956-ffa450edef68
+
+commit cac0c1cdb8fc41fadedd41f08c0e8c820e5b18fc
+Author: Steve Loughran <stevel@apache.org>
+Date:   Sun Dec 1 04:38:44 2002 +0000
+
+    because I had a pressing need to be find out which parser I was using on java1.4, and new all the code was a cut and paste away
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273595 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 74b6597e3a4c61f84321f72eb1f5be186f2a6e51
+Author: Stephane Bailliez <sbailliez@apache.org>
+Date:   Mon Nov 4 17:37:05 2002 +0000
+
+    Fixed NPEs that could have been flying if ant.home was not defined
+    PR: 14232
+    Reported by: darin_swanson@oti.com (Darin Swanson)
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273483 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8f413c12084a80db24f4cdfd6b8f908d4e75556f
+Author: Peter Donald <donaldp@apache.org>
+Date:   Thu Jul 25 15:21:25 2002 +0000
+
+    Remove unused imports, remove glob imports, sort imports.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273169 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 648275616e663a005c61d610d17c8cc006b12903
+Author: Stephane Bailliez <sbailliez@apache.org>
+Date:   Tue Jul 16 12:48:22 2002 +0000
+
+    Forgot to catch Errors while doing the diagnostics..making it totally useless
+    when there is a ClassDefNotFoundError...that is...most of the time..
+    hem...
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273114 13f79535-47bb-0310-9956-ffa450edef68
+
+commit da5a13f8e4e0e4475f942b5ae5670271b711d423
+Author: Magesh Umasankar <umagesh@apache.org>
+Date:   Tue Jul 9 21:06:15 2002 +0000
+
+    Merge differences between the ANT_15_FINAL branch and the trunk into the trunk.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273081 13f79535-47bb-0310-9956-ffa450edef68

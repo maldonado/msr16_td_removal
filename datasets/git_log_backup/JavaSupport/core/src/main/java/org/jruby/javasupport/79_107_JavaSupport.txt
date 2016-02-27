@@ -1,0 +1,225 @@
+commit a1cb4099ed2cdb39d8a1f2b9d6383f79de5e250b
+Merge: c815260 f7d09d0
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Apr 24 15:25:53 2015 -0500
+
+    Merge remote-tracking branch 'origin/jruby-1_7'
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/javasupport/JavaSupport.java
+    	core/src/main/java/org/jruby/javasupport/binding/Initializer.java
+    	core/src/main/java/org/jruby/javasupport/binding/InterfaceInitializer.java
+
+commit 2bdfb5aab5cee4ef8aa7e5f0d29daf6305740035
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Apr 24 11:29:27 2015 -0500
+
+    Eliminate proxy leak by adding pre/post to unfinished proxy check.
+
+commit c26fe1ba92acad0de01273d4711711f8e2e690ec
+Merge: ab4be7b dd9cf5f
+Author: kares <self@kares.org>
+Date:   Thu Mar 26 10:51:46 2015 +0100
+
+    Merge branch 'jruby-1_7'
+    
+    * jruby-1_7: (35 commits)
+      align added JavaSupport method name with convention
+      test `[].copy_data` addon - also added alias so it can be used with 2 args as well
+      cleanup and add tests from Java array addons ...  seems a litle strange
+      move Java array assertions around from equality test
+      should override proxy implemented call() with block as well
+      export void early on with other (primitives) and test it's behaviour
+      DRY-up interface-template impl ... (extracted some anonymous into inner classes)
+      handle nested array.to_java conversion where element is already an array + cleanup
+      implement array.component_type helper on the Ruby side + test how [].to_java works
+      fix array factories `Java::int[1][2].new` as well as `Java::byte.new_array(3)` (#2749)
+      unify and test the no-matching-callable raised error messages / hints
+      handle yet another unnecessary "ambiguous Java methods found" warning
+      add a JI test - setting a security manager created in Ruby
+      use `getArity()` in favor of `getParameterTypes().length`
+      use IntHashMap as callable cache for `__jcreate!` method and share a new-cache helper
+      the intention here was to "use the lowest-arity non-overload" and we're finally there!
+      as (most) Java invokers will not have overrides - they won't use the internal cache ... for loading up JRuby's built-in JI classes this saves up allocating > 2100 maps
+      explicit inspect() method for JavaProxyConstructor + annotate with JRubyClass
+      a working inspect for Java proxy methods
+      empty class array count-- and make sure correct name is annotated with @JRubyClass
+      ...
+    
+    Conflicts:
+    	core/pom.xml
+    	core/src/main/java/org/jruby/java/invokers/StaticMethodInvoker.java
+    	core/src/main/java/org/jruby/javasupport/JavaMethod.java
+    	core/src/main/java/org/jruby/javasupport/JavaSupport.java
+    	core/src/main/java/org/jruby/javasupport/JavaUtil.java
+    	test/test_higher_javasupport.rb
+
+commit dd9cf5f96b43f75d7fc9c4f3b9c7ac1c1d072e2e
+Author: kares <self@kares.org>
+Date:   Thu Mar 26 09:35:27 2015 +0100
+
+    align added JavaSupport method name with convention
+
+commit f22aed3bfbabcf2c679d2d101aaacd70f5330a52
+Author: kares <self@kares.org>
+Date:   Thu Mar 19 08:34:45 2015 +0100
+
+    cleanup JavaProxyConstructor - share invocation handler + no fixnums on arg conversion
+    ... also added getJavaProxyConstructor onto JavaSupport - so there's less lookup going on
+
+commit f2b9bf70c30160c1463ab59e76de9e477bed467c
+Merge: acd4108 adeb887
+Author: kares <self@kares.org>
+Date:   Thu Mar 19 19:17:58 2015 +0100
+
+    Merge branch 'jruby-1_7' into master
+    
+    * jruby-1_7: (24 commits)
+      calculate 'sofisticated' type preference when ambiguous callables found (fixes #2595)
+      in case there's an exact parameter match - do not proceed with argument matching
+      do not do equals on Class objects (just compare by identity) + remove unused imports
+      re-factored candidate matching loops - for more readability and less implicit iterator use
+      cleanup the constructor search - keeping redundant ~ 'intended' code as comments
+      a slight Java integration (mostly bootstrap internals) cleanup
+      update CallableSelector's (Map) cache internals - so we can easily refactor further
+      move Java.method_missing into native
+      loadPaths list generics - easier to guess for JavaEmbedUtils consumers
+      add a factory onto ClassValue since we're be instantiating the same (based on opt)
+      one JRubyMethod with 2 names is enough to have
+      more base-class sharing between JavaCallable method/constructor impl + minor tweaks
+      move getArity/getParameterTypes into base class as finals + help used methods to JIT
+      guess name-class hash-map size without internal resizing (currently <= 48 elements)
+      after several concurrency fixes in Java integration - un-comment a multi-threaded test
+      non need to cast intValue to (int)
+      move (and tune) error logic from CallableSelector into the invoker impl where it's used
+      align JavaField's value/static_value conversions and return values + test functionality
+      correct (Java) equals/hashCode semantics for JavaAccessibleObject + minor tweaks
+      Try turning off sudo:false to fix build issues.
+      ...
+    
+    Conflicts:
+    	.travis.yml
+    	core/src/main/java/org/jruby/RubyObject.java
+    	core/src/main/java/org/jruby/java/proxies/MapJavaProxy.java
+    	core/src/main/java/org/jruby/javasupport/JavaCallable.java
+    	core/src/main/java/org/jruby/javasupport/JavaEmbedUtils.java
+    	core/src/main/java/org/jruby/javasupport/JavaSupport.java
+    	core/src/main/java/org/jruby/runtime/Helpers.java
+    	core/src/main/java/org/jruby/util/CodegenUtils.java
+    	core/src/main/ruby/jruby/java.rb
+    	core/src/test/java/org/jruby/test/TestCodeCache.java
+    	test/test_higher_javasupport.rb
+
+commit cfa0011387bd9933128e9e5ea35821bedef601c8
+Author: kares <self@kares.org>
+Date:   Mon Mar 2 19:45:35 2015 +0100
+
+    add a factory onto ClassValue since we're be instantiating the same (based on opt)
+    
+    - JavaSupport internals now no longer deal with ClassValue impl constructors
+
+commit 03acf55c5106ea1e49530dbcaa3b3dfd37dbf44d
+Author: kares <self@kares.org>
+Date:   Fri Mar 13 10:24:57 2015 +0100
+
+    guess name-class hash-map size without internal resizing (currently <= 48 elements)
+
+commit a8522d937eddd96a439522a931ef6ad5dfb559b4
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Mar 2 12:30:58 2015 -0600
+
+    Move rather than rewrite JavaSupport so we can merge from 1.7.
+
+commit 2f5ff5cc939a21ae494c7eb90c4b6926d536ad89
+Author: kares <self@kares.org>
+Date:   Mon Mar 2 10:51:32 2015 +0100
+
+    lazily initialize the deprecated (un-used) javaObjectVariables field in JavaSupport
+
+commit ac6a9de9fc89782c9fc6f073747a59d1d0cb6e7c
+Author: kares <self@kares.org>
+Date:   Fri Feb 27 13:21:40 2015 +0100
+
+    do not re-wrap RuntimeException + unnecessary elses
+
+commit 79f0889692872b499a2c902331315db9e27f1fa1
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Feb 27 08:32:32 2015 -0600
+
+    Cleanup, reduce duplication, refactor methods for proxy creation.
+    
+    * Java.getProxyClass is the one true way to get the Ruby proxy
+      class for a Java class.
+    * Unified more of class vs interface proxy logic.
+    * Both #1621 and #2014 appear to be working with this commit.
+
+commit d37cdb5245472f3a12e6da98a1d97c2f51f2b9a6
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Feb 26 15:38:26 2015 -0600
+
+    Combine duplicated logic.
+
+commit 032a6cee0a2bb85f560d3f96c369ace6877f1715
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Feb 26 15:32:38 2015 -0600
+
+    Deprecate old object variable logic and make its structure lazy.
+
+commit a63248b01e394898bf9da705e354966ccc929814
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Feb 26 15:22:28 2015 -0600
+
+    Encapsulate new ClassValue fields.
+
+commit 5d4a39d14b05bdc5b593d2a093ba25687789011e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Feb 26 15:13:29 2015 -0600
+
+    Remove JavaClass from participation in proxy binding.
+    
+    This commit makes several substantial changes:
+    
+    * JavaClass does not reference the associated proxy class; this
+      now happens entirely through ClassValue logic.
+    * ClassValue logic for the proxy class checks for uninitialized
+      proxy in current thread, otherwise proceeding to creation. First
+      thread wins, but if any two actually start building at the same
+      time they will do the same work and one will be thrown away.
+      This allows us to eliminate locking.
+    * The "uninitialized" proxy reference now lives as a thread-local
+      ClassValue.
+    
+    The basic logic for booting a class goes like this:
+    
+    * Request proxy from ClassValue proxy cache. If it's there, done.
+    * Check for thread-local ClassValue unfinished proxy. If it's
+      there, we're in a thread that's binding classes and return it.
+    * Proceed to construct the proxy. Two threads may get to this
+      point, but only the first one to complete its hierarchy will
+      permanently cache the proxy.
+    
+    This appears to pass all our tests and passes tests for #1621.
+
+commit 3ab1f25d7497914b2a6baf649dc7684e9b1bbe27
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Feb 26 13:50:02 2015 -0600
+
+    Move "assigned names" maps from JavaClass to a ClassValue.
+
+commit bb872d3cb6cf33575a15e1ff699572be806a0180
+Author: kares <self@kares.org>
+Date:   Fri Jan 30 17:06:51 2015 +0100
+
+    do not re-wrap runtime exceptions when creating a proxy class in JavaSupport
+
+commit f1d362075acb9b220a2c207c295e5c42e69012cb
+Author: Chris Jester-Young <cky@on-site.com>
+Date:   Wed Apr 9 14:22:58 2014 -0400
+
+    Actually use Java7ClassValue when using Java 7+.
+
+commit 28c6fbc4e883bc1c9e9242d1da1cb2b785f55339
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 3 12:46:45 2013 -0500
+
+    Move to @mkristian's proposed layout, with some modifications.

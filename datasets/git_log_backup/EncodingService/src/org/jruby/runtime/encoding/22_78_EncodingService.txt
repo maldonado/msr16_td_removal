@@ -1,0 +1,189 @@
+commit 63ba9e150cb5d0b3e15e96e74edabdecb6c74342
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Nov 19 11:54:42 2012 +0100
+
+    Make matching methods with MRI versions for simpler comparisons
+
+commit bcdd8589ae1695b32764b840456955791d0df5b3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Oct 15 17:24:29 2012 -0500
+
+    ASCII-8BIT encoding from Ruby corresponds to ISO-8859-1 in Java.
+
+commit 9a0113b61de235286703789840b73b2e6209b031
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jul 3 14:01:49 2012 -0500
+
+    Additional tweak for JRUBY-6679
+    
+    Since the special-cased behavior for code page is only necessary
+    on Windows, I limited it to Windows. I also modified the exception
+    handling to simply allow the null return, which then falls back on
+    normal default Java charset.
+
+commit 1b66ac24384864ba398d224b6b1b157eaa9d72f6
+Author: ryenus <ryenus@gmail.com>
+Date:   Mon May 28 09:47:08 2012 +0800
+
+    JRUBY-6679 count in windows console code page
+
+commit 5cb84952cda7c9f00fd441ae5ce30e828b44a04c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon May 14 21:52:27 2012 -0500
+
+    Eliminate Ruby objects from static map in RubyNKF.
+
+commit 8a0b6cd605614e3d038af987cd2a4370efa8acea
+Author: Yoko Harada <yokolet@gmail.com>
+Date:   Thu May 10 13:14:33 2012 +0900
+
+    Makes kconv's isXXX methods alive
+
+commit bbf21f25e96ed510e4166fe002f0991f9f7458c1
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Mon Feb 6 00:18:24 2012 -0500
+
+    Fix JRUBY-6398: java.lang.NullPointerException when executing jruby.exe
+    
+    When JVM has an unusual default encoding, we fail to boot. Avoid this by falling back on ASCII-8BIT.
+
+commit 4a09d081fa10b293f65d0ca058605a5b6b4ba04f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jan 31 10:34:29 2012 -0600
+
+    First large-scale refactoring to better support IO encodings.
+
+commit 467ce0a956425da5913454b8413084e391ac1794
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jan 16 12:34:16 2012 -0600
+
+    Fix JRUBY-6323
+    
+    JRuby does not pay attention to either -U or LANG in determining encoding for ARGV (it is always ASCII-8BIT)
+    
+    Added and used utility methods for producing internally-encoded
+    Strings from Java strings that came from an external source like
+    command-line arguments. This allows ARGV to reflect the proper ruby
+    internal encoding.
+
+commit 33a9b80c641b0715c7752abd946241e9cfe406eb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Dec 29 15:13:12 2011 -0600
+
+    Implement the most basic functionality in Encoding::Converter.
+
+commit 9b5e375bf0486409be2b82601965a53c63cd88dc
+Author: Hiroshi Nakamura <nahi@ruby-lang.org>
+Date:   Wed Sep 7 15:01:55 2011 +0900
+
+    Move Zlib encoding related implementations to RubyIO.java
+    
+    I expected there're common impls for encoding parameter parsing, but I
+    could not refactor now. Should be done in the future.
+
+commit 3e27e54534290bfa2b220ff1c1ddf9ff65448f7c
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Tue Feb 22 08:59:32 2011 -0600
+
+    JRUBY-5525: Ensure encoding service is set up in both 1.8 and 1.9 modes
+    
+    Move OSEnvironment to org.jruby.util and deprecate single-class
+    org.jruby.environment package.
+
+commit 891409e4b2333d9b73ad9db8ab9faadb6892e53b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jan 26 22:21:47 2011 -0600
+
+    Improve and expand fix for JRUBY-5406 and centralize encoding lookup logic in EncodingService.
+
+commit e275d67fd77c27fa95300a581e3c23b7260a0b7a
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Jan 20 16:19:38 2011 -0600
+
+    Make default_external encoding be set based on locale and fall back to ascii-8bit like MRI if none can be found
+
+commit 075299d475c6b02767866b7649f0bc2cae280a0e
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Dec 9 15:57:23 2010 -0600
+
+    Remove some new RubyEncoding consumers
+
+commit a653f2f2dc2430904b256f2aeed22406f3775e17
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Dec 9 13:02:31 2010 -0600
+
+    Do not NPE if no such encoding available
+
+commit 12764a754de57e5b9d96e7ea6019cd9740a57750
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Dec 7 15:18:35 2010 -0600
+
+    runtime field is not used past construction
+
+commit 645add8007f95e379604ee890ff42afe2e728b70
+Author: David Calavera <david.calavera@gmail.com>
+Date:   Mon Sep 20 11:35:05 2010 +0200
+
+    fix ArrayIndexOutOfBounds exception loading the encoding from the index
+
+commit 2f3802343d0de9440a71e099002d3b66f51c0a51
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Dec 23 00:40:00 2009 -0600
+
+    Use accessors for those pesky ByteList fields and update bytelist.jar to a current version with accessors and deprecated fields (for compile warnings and because we'll want to privatize them some day).
+
+commit 54ff25101d0618d5c258e588873d94aba2823ffa
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Sun Jan 4 01:31:46 2009 +0000
+
+    Fix bug in encoding service.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8586 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit ca3c9c732c61f0dc72167b03295bec7d98fcad7c
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Sat Jan 3 16:27:49 2009 +0000
+
+    Move default internal/external encoding from encoding service to runtime.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8578 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 7a2096e99dd976ce07a5d0c2e3f658dc2d4c02c5
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Sun Nov 9 18:14:48 2008 +0000
+
+    Better EncodingService.getEncoding()
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8035 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit bd23d8f2251b517958fe48e55888b1f58f3b217a
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Sat Nov 8 16:01:46 2008 +0000
+
+    add defaultInternalEncoding and defaultExternalEncoding fields in EncodingService.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8022 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 403d55bff0b9332d50a959f4db157f378dcf4cce
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Fri Nov 7 16:36:10 2008 +0000
+
+    Automatically register encoding index when querying EncodingService.getEncodnig(Encoding);
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8009 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 8434d1ace1573c833c811a7792693bb150284a17
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Fri Nov 7 02:41:04 2008 +0000
+
+    Do not create Encoding instance per alias.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8007 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 3d6d3488de997e1d6bfa895f3b24186e372791ed
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Fri Nov 7 02:25:30 2008 +0000
+
+    1.9 Encoding class and runtime encoding services. Support for finding, listing names and aliases, lazy loading, proper encoding name constantization. Very lazy encoding loading scheme to exploit encoding method devirtualization which 1.9 can't do. Next big step: make jcodings Encoding a ByteList member (so we get for free String, Regexp and File/IO encoding storage).
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8006 961051c9-f516-0410-bf72-c9f7e237a7b7

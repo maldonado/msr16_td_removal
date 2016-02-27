@@ -1,0 +1,61 @@
+commit 43f7ec512ca712cd34b74e2428a18cfa5c4453e2
+Author: Douglas Campos <qmx@qmx.me>
+Date:   Wed Jul 13 04:10:30 2011 -0300
+
+    using jruby's log wrapper
+
+commit d987526355d25561adc29d35681f7070f32741f6
+Author: Douglas Campos <qmx@qmx.me>
+Date:   Wed Jul 13 00:46:29 2011 -0300
+
+    *cache logging cleanups
+
+commit e055dbe2e6a793916c7a8383d5a6f6aa0d1e6e7f
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Thu Oct 14 15:51:53 2010 -0400
+
+    Formatting change. Avoid dangling 'if' clause on a line by itself. Also, reformat multi-line boolean conditions so that it is clearer that they indeed span multiple lines.
+
+commit 3abe87f385a612154865a79c2b00a298765a416a
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Mon Mar 9 16:18:29 2009 +0000
+
+    Make sure some pieces of code handle security restricted environments gracefully
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9384 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 97a9e7112e6fba33af93739e7f9dd22397cf5a45
+Author: Bill Dortch <bill.dortch@gmail.com>
+Date:   Thu Dec 27 08:04:00 2007 +0000
+
+    Fixed PermGen issue in build caused by daemon "vulture" thread in new ObjectProxyCache.  OPC was not being finalized due to this thread (which must have prevented the entire runtime from being finalized, as the OPC instances weren't using a lot of memory themselves).  With the build spinning up 189 runtimes, this quickly led to blown PermGen (though not when running test-interpreted).
+    
+    Will have to find another way to do the OPC vulture thread.  It's not essential (I've simply disabled it); put/getOrCreate also expunge dead entries, and the objects/proxies are held by weak/soft references and will be gc'ed anyway, but in some cases an initial flurry of activity will populate the cache, with little or no subsequent 'put' activity that might trigger cleanup. (I observed this today while debugging.)
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5371 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 05122d8686ecb49dd22765aa77964e07494f844c
+Author: Bill Dortch <bill.dortch@gmail.com>
+Date:   Wed Dec 26 19:02:47 2007 +0000
+
+    Ensure ObjectProxyCache#getOrCreate will not return null if proxy has been gc'ed.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5367 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 597ad9de2cd1c8da21f28b94aa91dd4bf13825af
+Author: Bill Dortch <bill.dortch@gmail.com>
+Date:   Wed Dec 26 13:57:00 2007 +0000
+
+    Remove superfluous field from ObjectProxyCache.Entry.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5361 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 7d9d9f3c9a04918bd3db1316992b69e4b9ed4b9d
+Author: Bill Dortch <bill.dortch@gmail.com>
+Date:   Wed Dec 26 13:14:25 2007 +0000
+
+    Fix for JRUBY-199 (and related JRUBY-1513 and JRUBY-1735). Caches proxies in Weak/Concurrent Map-like cache, which replaces the ineffectual JavaObject cache.  TODO: unit tests, measure memory/performance impact.
+    
+    Also, miscellaneous JI cleanup.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5360 961051c9-f516-0410-bf72-c9f7e237a7b7

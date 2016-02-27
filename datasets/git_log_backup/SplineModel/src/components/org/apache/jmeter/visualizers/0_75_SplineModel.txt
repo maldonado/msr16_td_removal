@@ -1,0 +1,195 @@
+commit 7810d409aa4c8aafb2b1c9cf40af3f1f9ce89708
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Nov 27 00:11:55 2012 +0000
+
+    Move to Java 6
+    add @Override for interface implementations
+    Bugzilla Id: 54199
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1413954 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 7805d0b600f2acf1dc00d5483bc836b5d07cff98
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu Jan 5 02:34:24 2012 +0000
+
+    Oops - revert r1227449 as the field was used
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1227450 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 347d0e4a5f06d26878779d15a9de7df926811f1e
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu Jan 5 02:31:10 2012 +0000
+
+    Unused field
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1227449 13f79535-47bb-0310-9956-ffa450edef68
+
+commit da09a5b2a6dd824105d705e317da4e70bfa8dbd5
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Dec 31 03:17:39 2010 +0000
+
+    Constants should be static
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1054042 13f79535-47bb-0310-9956-ffa450edef68
+
+commit acfdbff60a1a61e70bb71ccdafd1ed414085ec18
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Wed Dec 16 00:02:46 2009 +0000
+
+    Remove cache of samples from SamplingStatCalculator and move into new subclass CachingStatCalculator.
+    Only a few visualisers actually need the cache, which can take lots of memory.
+    Aggregate Report now uses far less memory.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@891076 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 03235df4f3b3e3d5f280b9a3cf383fc3fd11e17b
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Sep 1 13:35:05 2009 +0000
+
+    Remove unused method (getGuiClass)
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@810030 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d8e9ba8f2d416919114f8368fb6a14d69a096e3c
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Aug 15 15:14:47 2009 +0000
+
+    Fix up some raw types
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@804478 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 5140275c58ca8567cc247eb2f1863ed5808929fc
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Jan 2 00:45:32 2009 +0000
+
+    Remove obsolete getClassLabel() method
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@730652 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 303ac0d3f60e3913a00196655dffcb565c5398cc
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Nov 14 13:05:24 2008 +0000
+
+    Improved thread safety
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@713989 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 95ad11b6e77eefdbcc36f9cc93bacb586a1cdddd
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Jul 6 21:47:12 2008 +0000
+
+    Detab
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@674351 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 17eb25fca3aa016a4d99272b3046c6ee9425f20a
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Jun 5 23:46:36 2007 +0000
+
+    The clear() method was defined in the following interfaces:
+    Clearable, JMeterGUIComponent and TestElement.
+    The methods serve different purposes, so two of them were renamed:
+    the Clearable method is now clearData() and the JMeterGUIComponent method is now clearGui().
+    3rd party add-ons may need to be rebuilt.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-2@544682 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 9c4460de60fbb62e091bd0118fff4031e96abd1d
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat May 5 23:43:53 2007 +0000
+
+    Add NLS markers
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-2@535575 13f79535-47bb-0310-9956-ffa450edef68
+
+commit cb8075dd6a1a9d9e8d1d40b38280bbf7e3e66515
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Jan 7 17:09:09 2007 +0000
+
+    Update license (remove copyright)
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-2@493775 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 194240922c9b3eb9983b116a6d8ac85830ee11b2
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Wed Feb 15 01:04:12 2006 +0000
+
+    Make Sample a read-only class
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-1@377909 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 76159a5b953d9dc5518b2ccb03bfbc1c4908837d
+Author: Michael Stover <mstover1@apache.org>
+Date:   Tue Jul 12 20:51:09 2005 +0000
+
+    Formatting Code to basic Java Standard
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@325542 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 503346d6a94eef4d7860b402372346458a59ebe0
+Author: Michael Stover <mstover1@apache.org>
+Date:   Fri May 28 21:09:14 2004 +0000
+
+    Lightning struck, and this is a week's worth of offline effort.  Visualizers have been refactored.  The AccessLogSampler and supporting classes have been refactored, with an additional Filter implementation, and made into a TestBean, fixed a bug that causes tests not to stop in certain cases.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@324592 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a679295cc5b2ff47ce103cda3ee2c3d283785b2e
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Feb 13 01:48:46 2004 +0000
+
+    ASF L V2
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@324280 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 40f92a67673ad78bb25f1dd20572141b2b7018ad
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Oct 5 01:15:52 2003 +0000
+
+    Removing unused items
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323474 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1507154cab890813aea4daf81682763682094d91
+Author: Jeremy Arnold <jeremy_a@apache.org>
+Date:   Sat Aug 16 09:58:28 2003 +0000
+
+    Reformatted to JMeter conventions.
+    Minor JavaDoc updates (mostly formatting).
+    No code changes.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323416 13f79535-47bb-0310-9956-ffa450edef68
+
+commit baa7b1776ba3876cd5962bf0126010272a2b6f87
+Author: Michael Stover <mstover1@apache.org>
+Date:   Wed Feb 5 05:12:10 2003 +0000
+
+    Creating new Extractor component type.  Making first new Extractor implementation (RegexExtractor)
+    Also hit the "Organize Imports" button in eclipse at the wrong time.  Many class files touched - sorry.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323072 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 0e114302abbc268623232e468d0f1d51c361043a
+Author: kcassell <dev-null@apache.org>
+Date:   Mon Feb 3 14:29:01 2003 +0000
+
+    Reformatted per Turbine standards
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323066 13f79535-47bb-0310-9956-ffa450edef68
+
+commit dd9932a03c9826150ab4c98914a145ba5f3248ae
+Author: Michael Stover <mstover1@apache.org>
+Date:   Sun Aug 11 19:24:54 2002 +0000
+
+    New src directory organization, committing all files
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@322831 13f79535-47bb-0310-9956-ffa450edef68

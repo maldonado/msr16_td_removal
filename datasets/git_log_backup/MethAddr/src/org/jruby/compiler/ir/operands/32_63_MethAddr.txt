@@ -1,0 +1,65 @@
+commit 5f5278cdfe4b7720fac52d237409113b26bcf0c7
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Wed Mar 23 22:25:35 2011 -0500
+
+    Some more pieces of is_defined? IR completed.  More to go.
+
+commit b5d32a6b8d66ca55d9c915427ec300947afba0fb
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Sat Nov 27 16:14:50 2010 -0600
+
+    Added MethodHandle operand; Split calls into method lookup + method invoke; Added single-entry inline cache to methodhandle
+
+commit 035c22704a61d0a5df26b219f7d6b8810e3e0291
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Sun Oct 31 01:31:44 2010 -0500
+
+    Generate IR for UndefNode
+
+commit 214b11c51eb40f1c01855778adad879098cde162
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Sun Oct 31 00:03:18 2010 -0500
+
+    Fixed IR for alias nodes (right now, relying on ruby internal calls instruction -- probably should change to their own IR instructions at some point)
+
+commit deaa704c2b37ce61ea3818651846c663fedfdfc7
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Oct 27 15:21:50 2010 -0500
+
+    Make Symbol Operand work.  Add name to reference
+
+commit 6cabc8fb6a510545419554de8f9e48ab0d9de2c0
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri Jun 4 17:54:06 2010 -0500
+
+    Madness to go this long without committing
+
+commit 16cea81b40c77d9a035baa2b3914d9edf0883fba
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Fri Oct 9 00:12:37 2009 -0500
+
+    - Some more progress towards integrating closures into analyses & optimizations; Next step: integrating them into LVA.
+
+commit b802028b86902e552c7e453719043abaf4cc603b
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Thu Aug 27 01:46:01 2009 -0500
+
+    - [ Hmm .. git newbie here .. somehow lost the commit .. trying again ] Fixed couple bugs with scope canonicalization; implemented ir output as a compiler pass; added code-version-token for IR_Method and added several method stubs to start optimizing calls
+
+commit d7e29b3be44236fca6f412886f65bcdac025baf5
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Thu Aug 6 19:45:39 2009 -0500
+
+    - First pass of copy & constant propagation peephole opt. in place.  Compound values are not handled correcty yet.  I can only propagate the reference to the compound value, not the entire value.  Will fix this in next round of fixes.
+
+commit dd945066f2ddaeef7abb5d5b10c6fe6efc84b890
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Thu Aug 6 16:55:55 2009 -0500
+
+    - Cleaned up code some more and added operand simplification methods for use in peephole opts. and later sccp passes.
+
+commit ddaf4c565c871ce4a59cf23683c59bcc2429fec9
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Thu Jul 23 17:37:09 2009 -0500
+
+    - Moved all operands to operands/ and instructions to instructions/ and fixed up imports.  Added some commented out code to start running peephole opts on the IR -- which will also serve as a basis for SCCP passes later on.

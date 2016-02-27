@@ -1,0 +1,45 @@
+commit 84411ede14fcf244ae642b508d39286202c45202
+Author: Douglas Campos <qmx@qmx.me>
+Date:   Fri Jul 15 03:43:42 2011 -0300
+
+    migrating all j.u.l logging to our wrapper
+
+commit ff1ec4932a80fd781021ea29fa4dd4d5b815d4c3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Mar 24 22:45:45 2011 -0500
+
+    Fixes and support code for JRUBY-5596: Improve Dalli IO performance
+    
+    * Disable backtrace generation for EAGAIN, which is usually used to retry a nonblocking read.
+    * Provide a flag to force all Errno (EAGAIN specifically) to generate traces (for debugging).
+    * Add a Runtime MBean to monitor exception counts, backtrace counts, and caller counts.
+
+commit 6f65b6bc0ba28f0529fc8e30bef457b56f91cd0c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Apr 28 17:32:50 2009 -0500
+
+    Fix the other JMX logging to "FINE" too. One of those days.
+
+commit a0a0e6375c03d71c7104ed7dd01218c363a5f54a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Apr 28 17:31:30 2009 -0500
+
+    Reduce log level for JMX failure to "FINE" to keep it quiet normally.
+
+commit e0172918a939bb077850337c6734b972574f3566
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Apr 28 17:17:37 2009 -0500
+
+    Add INFO logging and swallowing of Error during JMX init, to allow booting on IKVM without flags.
+
+commit 28bf75a9274a3a32b64930ea6d401fd494173e44
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 24 21:10:13 2009 +0000
+
+    Minor tweaks to get JRuby running unmodified on Android:
+    
+    * Don't use EnumSet for mapping Errnos; seems to be a bug on Android with EnumSet.
+    * Load JMX-based BeanManager stuff via reflection; no JMX on Android.
+    * Explicitly pass the default 8192 size to BufferedReader and BufferedInputStream; Dalvik warns otherwise (???)
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9306 961051c9-f516-0410-bf72-c9f7e237a7b7

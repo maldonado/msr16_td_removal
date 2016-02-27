@@ -1,0 +1,72 @@
+commit 61678ac1a2514a9932276f8d527816a5980a94b3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Feb 25 20:41:40 2013 +1100
+
+    Fix more references to CPL.
+    
+    The phrase "Common Public License" was split across two lines in
+    our default header, which caused it to be missed during earlier
+    search/replace. Also, we did not replace the CPL URL in the
+    header with the EPL URL.
+
+commit 330fef3b0fc18af477ccea19bd278669667f31bb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 12 14:49:29 2013 -0600
+
+    Switch JRuby's CPL license to EPL.
+    
+    Governance of the CPL license was moved to the Eclipse Foundation
+    at some point in the past, and Eclipse blessed the EPL (Eclipse
+    Public License v1.0) as the successor to CPL. Because the CPL
+    contains a clause allowing transparent upgrades to future blessed
+    successor licenses, we can make the move to EPL without
+    re-contacting past contributors.
+    
+    The change in going from CPL to EPL largely just removes some
+    punitive language that apparently made many companies nervous. All
+    other language in the license remains identical.
+    
+    Several documents about Eclipse's move from CPL to EPL are here:
+    
+    http://www.eclipse.org/legal/cpl2epl/
+    
+    Note that Eclipse's move came before the blessing of EPL as the
+    upgrade path for CPL, so they had to do a bit more legal juggling.
+    With Eclipse now the administrator of CPL and with their blessing
+    of EPL as the upgrade path for CPL, all we need to do is make the
+    move.
+
+commit b8181cda909f6e42d7c0b7fffaabbe2a502f273b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jul 27 02:19:54 2012 -0500
+
+    Inline all calls to ThreadContext.getRuntime to access the field.
+
+commit 5cb84952cda7c9f00fd441ae5ce30e828b44a04c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon May 14 21:52:27 2012 -0500
+
+    Eliminate Ruby objects from static map in RubyNKF.
+
+commit 8a0b6cd605614e3d038af987cd2a4370efa8acea
+Author: Yoko Harada <yokolet@gmail.com>
+Date:   Thu May 10 13:14:33 2012 +0900
+
+    Makes kconv's isXXX methods alive
+
+commit dc6b9c0a6d0fde59c798b76a1a83d5e82e615ef0
+Author: Hiroshi Nakamura <nahi@ruby-lang.org>
+Date:   Tue Sep 13 13:20:26 2011 +0900
+
+    UTF-16 is supported by NKF
+    
+    Merge pull request #75 from koichiroo/fix_utf-16_error.
+    
+    It's already fixed by Charles at 32ac3b43 but the fix by Koichiroo looks
+    slightly better, though it might have some map in the future.
+
+commit 6672befd2b9e9cad44326f4b911b2fb8d84ed47b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Sep 12 13:52:47 2011 -0500
+
+    Move NKF to org.jruby.ext.nkf.

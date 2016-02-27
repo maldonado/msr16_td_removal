@@ -1,0 +1,461 @@
+commit 8cf39ed8557ae2ac59393a3e91a14023be431368
+Author: Felix Schumacher <fschumacher@apache.org>
+Date:   Sat Nov 22 13:45:15 2014 +0000
+
+    Bug 57193: Add param and return tags to javadoc
+    Bugzilla Id: 57193
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1641063 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 80e99eb895a2ac3257b0fbcb311d8e51cf6be571
+Author: Felix Schumacher <fschumacher@apache.org>
+Date:   Fri Nov 14 20:30:33 2014 +0000
+
+    Bug 57193: * Generics won't work in javadoc, so describe the type
+     textually. * add missing return and throws javadoc statements
+    Bugzilla Id: 57193
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1639778 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 9d8dc6783f2ab76e160ba9c2a7d708f1aa95a768
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Sat Sep 13 12:10:54 2014 +0000
+
+    Bug 54648 - JMeter GUI on OS X crashes when using CMD+C (keyboard shortcut or UI menu entry) on an element from the tree
+    Remove final as in this case transient cannot be final.
+    See:
+    http://mail-archives.apache.org/mod_mbox/jmeter-dev/201409.mbox/%3CCAOGo0VaKGcTm=3+jF-mrjaVFBi21HPWE7mW1u09ve-QsP6sLOA@mail.gmail.com%3E
+    Bugzilla Id: 54648
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1624728 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1372fcf4625e540b625e6b60df2e69bbc35aa3ee
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Tue Sep 9 11:25:38 2014 +0000
+
+    Bug 54648 - JMeter GUI on OS X crashes when using CMD+C (keyboard shortcut or UI menu entry) on an element from the tree
+    Put back final.
+    Bugzilla Id: 54648
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1623759 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 4f697f781e5f3fbc9a001db9fc61ed5e4b24243a
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Mon Sep 8 21:20:24 2014 +0000
+
+    Bug 54648 - JMeter GUI on OS X crashes when using CMD+C (keyboard shortcut or UI menu entry) on an element from the tree
+    
+    Bugzilla Id: 54648
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1623589 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 4663f8f1afa9abe9128f3ab842a6c613a72215f4
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Wed Sep 11 18:18:00 2013 +0000
+
+    Tidy up use of TestElement.ENABLED; use TestElement.isEnabled()/setEnabled() throughout
+    Bugzilla Id: 55548
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1521971 13f79535-47bb-0310-9956-ffa450edef68
+
+commit abc06e3fe1227dad0405df9e02fb83f3a8f653d9
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Jul 7 02:37:32 2013 +0000
+
+    Generic for loops
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1500356 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 9ab6b6240f50d3dae399d46bf207c2a00d14ddee
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Nov 27 00:14:39 2012 +0000
+
+    Move to Java 6
+    add @Override for interface implementations
+    Bugzilla Id: 54199
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1413956 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6572ccd24deea5e6946001872a193a88b61574cd
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Thu Oct 13 17:23:58 2011 +0000
+
+    Bug 51876 - Functionnality to search in Samplers TreeView
+    
+    Implemented search in AbstractTestElement and refactored already implemented subclasses to use ancestor method.
+    Added search features on additionnal configuration elements to:
+    - BeanShellTestElement
+    - AbstractScopedElement
+    - CSVDataSet
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1182997 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 21580143e5b586b7a11db848725f952b784089ad
+Author: Bruno Demion <milamber@apache.org>
+Date:   Tue Oct 11 21:49:27 2011 +0000
+
+    Little javadoc
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1182109 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c84b8bca0ffa598e347ec3a7bdb0b6a798635de8
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Tue Oct 11 19:46:59 2011 +0000
+
+    Bug 51876 - Functionnality to search in Samplers TreeView
+    
+    Highlight all nodes up to ThreadGroup node to make search result visible if nodes are not expanded
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1182051 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3dd627dcf99eb381db3247a44c74b0bb154c3b04
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Tue Oct 11 17:32:43 2011 +0000
+
+    Bug 51876 - Functionnality to search in Samplers TreeView
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1181906 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e4d1ad74ae885d1590f7b53258312d97027c620b
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu Feb 3 12:45:43 2011 +0000
+
+    Model may be null during startup
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1066798 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1b870d0fb6eb7c01373ae7d47b7ab427ab89d672
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Feb 23 16:09:09 2010 +0000
+
+    Remove trailing spaces
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@915405 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a14244315588abc86f495bb7eaaab08ab91a127d
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Jan 31 12:59:07 2010 +0000
+
+    Add serial version UIDs
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@905027 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 79dc17339f65e9c9339270aabf095adefd519136
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Wed Nov 18 23:16:09 2009 +0000
+
+    Generics and other tidy ups
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@881994 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 85084e2cdb718b00fb220b11c3edb4e800858bdf
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Aug 16 00:33:20 2009 +0000
+
+    The "typing" continues ...
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@804542 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6bf94deccce242cd1bba95592f54fd78a90dfc3e
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Jul 6 23:56:15 2008 +0000
+
+    Detab
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@674365 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 213c53f7030ec54a2557c48a186a2cb03e6d0438
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Dec 7 17:24:36 2007 +0000
+
+    Tidy up: use getName()/setName() instead of property access
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@602161 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6b6da48da758db9530a9e4054005cac2209d1e2c
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Wed Sep 12 15:08:42 2007 +0000
+
+    Clarify logging
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@574984 13f79535-47bb-0310-9956-ffa450edef68
+
+commit bd5d121d68038f3e712ec463a2172dd7026f52f8
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Jan 7 17:46:38 2007 +0000
+
+    Update license (remove copyright)
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-2@493779 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 7f0237cd8aea5de6306c1d08d2edfc83a69a26d3
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Wed Apr 5 19:54:14 2006 +0000
+
+    Tidy up
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-1@391762 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8475b11e510ce92495690d2057fccfdcaeccafdf
+Author: Peter Lin <woolfel@apache.org>
+Date:   Wed Oct 5 19:34:53 2005 +0000
+
+    more updates to core classes for reporting tool
+    peter
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-1@325813 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 76159a5b953d9dc5518b2ccb03bfbc1c4908837d
+Author: Michael Stover <mstover1@apache.org>
+Date:   Tue Jul 12 20:51:09 2005 +0000
+
+    Formatting Code to basic Java Standard
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@325542 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 7292f4805b043dc61cf1d4751bf4d8ba2c481558
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Wed Jun 15 00:06:49 2005 +0000
+
+    Enable Tree to use disabled icons (based on work by Peter)
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@325459 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 281c286fbd4cca0d1ff318cbd70acbe41a7e2981
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat May 14 17:29:55 2005 +0000
+
+    Implement GUI_CLASS for TestBean Gui classes
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@325337 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ce1e8f0c8de9f1a51f03be7eb804ee6e84439602
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Mar 5 13:18:38 2004 +0000
+
+    New method getDocAnchor() - gets the #href name for Help
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@324396 13f79535-47bb-0310-9956-ffa450edef68
+
+commit cddaa5cdf90af58b9588d35307c2a6ba19cc6cc4
+Author: Jordi Salvat i Alabart <jsalvata@apache.org>
+Date:   Fri Feb 20 02:35:45 2004 +0000
+
+    Make cue for Activate/Disable be visible immediately.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@324344 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ac4f4d2f41481b78afa9483770c0982813a2d9db
+Author: Jordi Salvat i Alabart <jsalvata@apache.org>
+Date:   Fri Feb 20 01:08:34 2004 +0000
+
+    Added TODO comment - should we remove the parameterless constructor?
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@324342 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 80d909ad54e782be56695b14bbf7a51dc652fd70
+Author: Jordi Salvat i Alabart <jsalvata@apache.org>
+Date:   Fri Feb 20 01:03:08 2004 +0000
+
+    It's been long since JMeterTreeNode.createTestElement
+    was creating anything -- so renamed it to getTestElement,
+    which is a good name for what it does now.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@324341 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ea2e7c989f1508e26cea9cf73e9b11cdfbdf27a7
+Author: Jordi Salvat i Alabart <jsalvata@apache.org>
+Date:   Fri Feb 20 00:56:03 2004 +0000
+
+    There's no point in the tree node being a GUI component.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@324340 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 552a178bb1ec96215a7555e5fecbef578e72dfeb
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Wed Feb 11 22:54:41 2004 +0000
+
+    ASF L V2; use JDK1.3 version of chained errors
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@324257 13f79535-47bb-0310-9956-ffa450edef68
+
+commit cced1c584685dcfa478e6da16224b9485520dc45
+Author: Jordi Salvat i Alabart <jsalvata@apache.org>
+Date:   Wed Feb 11 17:27:43 2004 +0000
+
+    Avoid NPE when a TestBean has no icon.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@324252 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1e85dee6531ba1197d3df769879e2302f7caa586
+Author: Jordi Salvat i Alabart <jsalvata@apache.org>
+Date:   Wed Feb 11 14:40:51 2004 +0000
+
+    Added icon support to TestBeans.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@324250 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 21a4a1ddf8eef9c273d077c28df964ee484b91e8
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu Jan 29 01:21:45 2004 +0000
+
+    Constructor needs to be public for JUnit test to work
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@324178 13f79535-47bb-0310-9956-ffa450edef68
+
+commit beb0eea23966a796dd889725e7b62c33122310b9
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Wed Jan 7 23:45:03 2004 +0000
+
+    Added constructor to allow tests to work
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@324004 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a27335954dc79cede532e08c3e9fa46c75d0e851
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Oct 19 22:26:08 2003 +0000
+
+    Make fields private; log final; fix Boolean usage; Javadoc tags
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323598 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3a1e6a75ab3a3c2480e266557df2b8ba695a61ff
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Sep 7 18:54:54 2003 +0000
+
+    Converted to use getLoggerForClass()
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323446 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 2b6e45706a0c5a69e05585c8d1dcc37992600734
+Author: Jeremy Arnold <jeremy_a@apache.org>
+Date:   Fri Jun 27 19:21:47 2003 +0000
+
+    Reformatted to JMeter conventions.
+    Minor JavaDoc updates.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323371 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a25d838cbb365573a3cf79cd6f6d29580fe12d0a
+Author: Michael Stover <mstover1@apache.org>
+Date:   Tue Jun 10 16:27:22 2003 +0000
+
+    Doc updates
+    Fixing integrated Help
+    Fixed clearing of gui for HTTPSampler
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323325 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8e26fb530c0188e72a75d0f8945bfc0010e36d56
+Author: Michael Stover <mstover1@apache.org>
+Date:   Thu May 29 13:33:57 2003 +0000
+
+    no message
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323295 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6dad839268c9c0110921f1ebdb59077bd672a97c
+Author: Michael Stover <mstover1@apache.org>
+Date:   Mon Apr 7 14:35:28 2003 +0000
+
+    New JMeter properties allow functions to be fully recursive and reduces the amount of repetitive cloning of test elements
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323133 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 55d3666b535d217ea4d228dc81b260ecba0a9d9c
+Author: Michael Stover <mstover1@apache.org>
+Date:   Tue Mar 25 17:24:35 2003 +0000
+
+    new JMeterProperty classes (not yet plugged into JMeter's code)
+    patch from ElanChezhiyan to fix enabling/disabling of JMeter components
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323119 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 419de160a37120f356e5ce11cf9634ac672978fd
+Author: Michael Stover <mstover1@apache.org>
+Date:   Fri Feb 28 14:21:52 2003 +0000
+
+    Added 'modifyTestElement' method to JMeterGUIComponent.  Prevents a lot
+    of unnecessary object creation and swapping.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323094 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 539401e0d3a08adae97db064009b87c8c4885564
+Author: Michael Stover <mstover1@apache.org>
+Date:   Mon Feb 3 16:08:36 2003 +0000
+
+    Changing test tree to  hold TestElement objects instead of GUI objects.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323067 13f79535-47bb-0310-9956-ffa450edef68
+
+commit efe7ce57f9bc542ad0aa5bab16e6cff07f54656e
+Author: Jordi Salvat i Alabart <jsalvata@apache.org>
+Date:   Thu Jan 2 01:00:12 2003 +0000
+
+    Undoing involuntary change that breaks test case saving
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@322950 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ad698b456601d3ff48e228f706d971abf3553b71
+Author: Jordi Salvat i Alabart <jsalvata@apache.org>
+Date:   Tue Dec 31 18:26:08 2002 +0000
+
+    Fix serialization unit test.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@322948 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 0c9ed840efa7c948829ad2e24fcf019441faeaea
+Author: Jordi Salvat i Alabart <jsalvata@apache.org>
+Date:   Tue Dec 31 18:05:54 2002 +0000
+
+    Show icons in testplan tree.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@322947 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 7f6e3a5b11f03ca1b4384a12ca17ca9bd44d6717
+Author: Michael Stover <mstover1@apache.org>
+Date:   Mon Aug 19 22:33:14 2002 +0000
+
+    Added ability to disable/enable test components.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@322857 13f79535-47bb-0310-9956-ffa450edef68
+
+commit dd9932a03c9826150ab4c98914a145ba5f3248ae
+Author: Michael Stover <mstover1@apache.org>
+Date:   Sun Aug 11 19:24:54 2002 +0000
+
+    New src directory organization, committing all files
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@322831 13f79535-47bb-0310-9956-ffa450edef68

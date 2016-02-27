@@ -1,0 +1,77 @@
+commit fa541f44b41fcc65dd84868e1785ea7b82987d3e
+Author: Kevin Menard <kevin@nirvdrum.com>
+Date:   Wed Apr 22 14:39:51 2015 -0400
+
+    Make sure __ENCODING__ is correct for both inline scripts and source files.
+    
+    Fixes #2847: JRuby not using UTF-8 for source files.
+
+commit 3beeeb80561fd671fdd560907caf9644932ecb7a
+Author: Kevin Menard <kevin@nirvdrum.com>
+Date:   Fri Dec 12 17:38:06 2014 -0500
+
+    Tidied up the encoding visitor interfaces a bit.
+
+commit 1f88220ad74e05fd8a2c081ea9592dbc812ca7a3
+Author: Kevin Menard <kevin@nirvdrum.com>
+Date:   Fri Dec 12 07:59:35 2014 -0500
+
+    Restructured encoding definition process a bit to allow easier external use.
+
+commit 6f4f18a01af49f02e23f797ff97a907964b354b8
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Mar 13 15:00:17 2014 -0500
+
+    Better negotiation from String to Encoding, default to ASCII.
+
+commit 4ea0f6276a714dd9dfc5d4a14b1b76ba7b84469f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Mar 11 14:06:16 2014 -0500
+
+    Implement Converter#putback and insert_output plus other fixes.
+
+commit 8bd49637c13c9cc5a9a2a2834e42869d7174269b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Nov 11 11:46:27 2013 -0500
+
+    Add support for ISO-8859-16 character set. Fixes #1214.
+
+commit b1d9cb5b850eab6935b50dd77983b45be1da61de
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Aug 9 00:11:14 2013 -0500
+
+    Edging closer to everything passing again.
+
+commit 1158df5a7ad82af49c031104b6e652924ebc9368
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Aug 8 01:21:50 2013 -0500
+
+    Large port of MRI IO transcoding logic, to fill in our gaps.
+
+commit b409980a9055f2c770b65fb608d258db0553ab37
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jul 15 16:24:05 2013 -0500
+
+    Refactor more of RubyConvert into CharsetTranscoder to share.
+
+commit 3e3012ed97340e80cd42f3e858e30528c307b09f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jul 15 15:10:57 2013 -0500
+
+    Implement Encoding::Converter.asciicompat_encoding.
+    
+    I hand-set up the mapping for the moment to get things running,
+    but I assume there's a table somewhere in jcodings we can use to
+    do this programmatically.
+
+commit 382c7034e1e9d7201085448df3fb2d2eba3d3312
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jul 15 13:47:56 2013 -0500
+
+    Move encoding classes setup later, so fixnum constants can be set.
+
+commit 28c6fbc4e883bc1c9e9242d1da1cb2b785f55339
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 3 12:46:45 2013 -0500
+
+    Move to @mkristian's proposed layout, with some modifications.

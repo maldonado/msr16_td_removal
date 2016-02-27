@@ -1,0 +1,119 @@
+commit 111011d3f80903e64caeafc114a4e60999314b90
+Author: Christian Meier <m.kristian@web.de>
+Date:   Thu Feb 19 13:01:48 2015 +0100
+
+    ensure relative paths do NOT load unless "." is on $LOAD_PATH
+    
+    there is an extra search on "." necessary otherwise the relative path
+    will be found via the classloader. the regular mri spec does not fail
+    since current directory in java is independent from the current directory
+    in ruby
+
+commit 6884f63c4fd8e98f466a123934914eba0f939461
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Oct 15 18:38:16 2014 -0500
+
+    Restore minimal part of old IO for jossl 0.9.5 to work.
+
+commit a6f20b63a56aff2e1bce74f89078234bc4c34446
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Aug 12 17:46:03 2014 -0500
+
+    Eliminate remnants of old IO backend and localize fileno map.
+    
+    The old Stream/ChannelStream/ChannelDescriptor code is no more.
+    Instead, JRuby 9000 uses a fresh port of MRI's IO and transcoding
+    logic, which then builds off a much thinner fileno shim using NIO
+    channels. This comment removes the old logic, which is no longer
+    used.
+    
+    Utility methods and constants from those classes have been moved
+    to more appropriate places, and the old internal/external fileno
+    map -- which used to be static -- is now managed on a per-runtime
+    basis. For most users running a single JRuby instance with full
+    native-call capabilities, this map will not come into play much,
+    but it is still used to find existing ChannelFD wrappers around a
+    given channel, and must be managed independently from runtime to
+    runtime.
+
+commit 6fff27e58b3a2442292635060468f7e7a6cb1136
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu May 29 21:33:54 2014 -0500
+
+    Shorter method name for getting fileno from Channel.
+
+commit 504738a4306f865fd33afa4b3e2428f105ec0b9c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed May 28 08:58:51 2014 -0500
+
+    Remove all references to getMainStream[Safe].
+
+commit ecc42a6c13d6884dd52e2dcbae8c592c682d6d92
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue May 27 20:18:59 2014 -0500
+
+    IO work continues.
+    
+    * Reopen work and refactorign to support it.
+    * PosixShim class to make POSIX and NIO both look like POSIX.
+    * FilenoUtil class to handle fileno (real/fake) management.
+    * Myriad minor refactorings and cleanups.
+
+commit fda9e60f7240ce84b96c066772fa8228c854bb88
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed May 21 10:07:14 2014 -0500
+
+    More work getting real fileno and abstracting channel/fd.
+
+commit 426dc691b76bba73e6f9471aca90a381a5704e33
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue May 20 14:37:34 2014 -0500
+
+    Start building up Channel FD abstraction. IRB works again.
+
+commit 67f78925c4bc9b6202d15a0e3492d9ea8bd8a9d3
+Author: Dmitry Ratnikov <ratnikov@google.com>
+Date:   Fri Apr 11 18:09:04 2014 -0400
+
+    Move descriptor interaction logic to resources.
+
+commit 77c398f9f79f0c477c78515aacc791a18bb3ad48
+Author: Dmitry Ratnikov <ratnikov@google.com>
+Date:   Wed Apr 16 13:41:14 2014 -0400
+
+    Replace custom ChannelDescriptor exceptions to use ResourceException
+
+commit 9d260832b6471b9c1b42b40360e90e5a2d4c4169
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Jan 4 13:28:38 2014 -0600
+
+    Implement BasicSocket.for_fd and related fixes.
+    
+    * for_fd consumes the given fileno/descriptor and initializes the
+      type of socket for_fd is called against (TCPServer, etc).
+    * RubyTCPServer no longer keeps a separate reference to the server
+      channel nor the address, to allow for_fd initialization.
+    * ChannelDescriptor will now also not decrement the reference
+      count during finish logic unless close is specified. With the
+      old logic, non-closing finish would still produce an error on
+      future non-closing finish when it should do nothing at all.
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/ext/socket/RubyBasicSocket.java
+
+commit 24406b237e1a851d7f440f2f45dedc24dba29d3e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Oct 9 22:18:15 2013 -0500
+
+    Partial re-port of reopen to handle modes better. Fixes #1104.
+    
+    This is only a partial re-port of MRI reopen logic, but it does
+    a better job of propagating the incoming IO's modes to the new
+    stream/descriptor under the covers. The cases given in the bug now
+    pass and I will try to come up with a good test case for them.
+
+commit 28c6fbc4e883bc1c9e9242d1da1cb2b785f55339
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 3 12:46:45 2013 -0500
+
+    Move to @mkristian's proposed layout, with some modifications.

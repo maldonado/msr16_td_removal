@@ -1,0 +1,139 @@
+commit eeede12e670b557ddeaa57616e605d9688558e9f
+Author: Peter Donald <donaldp@apache.org>
+Date:   Sun Mar 3 07:09:30 2002 +0000
+
+    Die ProjectComponent die!
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@271699 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 13e89f3197245c5888e32971c39ccb143f898ae3
+Author: Peter Donald <donaldp@apache.org>
+Date:   Thu Feb 14 10:49:34 2002 +0000
+
+    Move filter class into framework
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@271337 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e055d2d5ad475583b976c0d564e1a3b7cad8b5ce
+Author: Peter Donald <donaldp@apache.org>
+Date:   Sun Feb 10 01:10:41 2002 +0000
+
+    Remove some unused cruft
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@271267 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1ce3b5124e62fa17fed42c8b5222ba81fe6accfa
+Author: Peter Donald <donaldp@apache.org>
+Date:   Sun Feb 10 00:18:08 2002 +0000
+
+    Comment out creator for the time being
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@271259 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e4118d939d6e68a252d1244467f3962ae9ed18bb
+Author: Peter Donald <donaldp@apache.org>
+Date:   Sat Jan 12 23:58:30 2002 +0000
+
+    Started to clean up filtersets by removing unused methods, inlining them and general removal of cruft
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270715 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 0c0ea749581b7ddac026ab294d1708f7b784d75b
+Author: Peter Donald <donaldp@apache.org>
+Date:   Fri Jan 4 09:26:42 2002 +0000
+
+    Removed DataType and maual handling of references etc
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270510 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a6ab0235192d311e0846d196589b71a02e2a7a43
+Author: Peter Donald <donaldp@apache.org>
+Date:   Sun Dec 30 10:46:59 2001 +0000
+
+    Restyled.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270479 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 669a7eae15ea1cf4d43f78955eb15a1b757717f5
+Author: Peter Donald <donaldp@apache.org>
+Date:   Sun Dec 23 14:25:02 2001 +0000
+
+    Start updating logging to myrmidon style logging
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270367 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 255020c002e99c42ba08342cbc874a0a5737d24c
+Author: Peter Donald <donaldp@apache.org>
+Date:   Sun Dec 23 06:35:02 2001 +0000
+
+    Fix up license banner.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270362 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 4058f2a97f7dc93772debc5bfd54f193e51f0256
+Author: Peter Donald <donaldp@apache.org>
+Date:   Sat Dec 22 12:58:59 2001 +0000
+
+    restyled
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270312 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 5f6832bd82418c0d62e243e5d6ae5dcdb95b7446
+Author: Peter Donald <donaldp@apache.org>
+Date:   Fri Dec 21 14:21:24 2001 +0000
+
+    Move to using Java2 collections API
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270291 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b8c50342cacdaa5bc7e3e4e72eb8351da5824716
+Author: Peter Donald <donaldp@apache.org>
+Date:   Sun Dec 16 00:39:05 2001 +0000
+
+    BuildException -> TaskException
+    
+    Removed uneeded imports.
+    
+    Processed code through style formatter.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270166 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 7a3448dcea316f454dd0ba470f8b0825504ae309
+Author: Peter Donald <donaldp@apache.org>
+Date:   Sat Dec 15 14:56:00 2001 +0000
+
+    Started refactoring.
+    
+    Made BuildException extend TaskException. Now BuildException is no longer a RuntimException and needs to be declared everywhere it could be thrown
+    
+    Removed the constructors that took location info for BuildException. Location is something known about byt the container and the tasks them selves should not be worrying about that sort of thing
+    
+    Removed a bunch of deprecated methods and features. Also moved all file handling utilities outside iof the Project class. To aid the transition I added a resolveFile method to the base ProjectComponent class.
+    
+    480 odd compile errors left to clean up.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270158 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d1064deab4fcb65519fda168052576c3b44eb45e
+Author: Peter Donald <donaldp@apache.org>
+Date:   Sat Dec 15 12:06:33 2001 +0000
+
+    Add in a clone of the main ant source tree so that it can undergo some heavy refactoring.
+    
+    Initial stages involves just making the Ant1.x tasks implement Ant2 interface and refactoring BuildException such that it can be easily be replaced by TaskException etc.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270153 13f79535-47bb-0310-9956-ffa450edef68

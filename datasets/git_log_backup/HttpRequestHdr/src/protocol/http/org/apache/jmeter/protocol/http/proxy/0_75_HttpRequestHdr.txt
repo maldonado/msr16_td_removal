@@ -1,0 +1,750 @@
+commit 382886509e429042b4fe0213ff531a812ad15b0f
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Sun Mar 1 14:10:23 2015 +0000
+
+    Use better iteration way
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1663109 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ee0c987ff64545d318d3262ff13dc9db76a9e02e
+Author: Felix Schumacher <fschumacher@apache.org>
+Date:   Fri Jan 2 21:13:05 2015 +0000
+
+    Bug 57193: Add param and return tags to javadoc
+    Bugzilla Id: 57193
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1649126 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c76b747eae139bba8e97b4478c2af20f3121b195
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu Oct 3 16:23:57 2013 +0000
+
+    The CONNECT request parameter is a host[:port], not a URI, so skip any attempt to adjust it
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1528919 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b861ee3a75adeb7e88c9fdd5b0783186f4473a3a
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu Oct 3 16:21:43 2013 +0000
+
+    Tidy up logging
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1528918 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d9733b25d5c5f16c8c846eb9c98f61f370efc015
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu Aug 29 23:58:45 2013 +0000
+
+    Allow access to first line for debug purposes
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1518860 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 775eda63f54ddc13a1d31a6936c6b15940c9427e
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Wed Aug 7 23:39:02 2013 +0000
+
+    Add code docn
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1511538 13f79535-47bb-0310-9956-ffa450edef68
+
+commit bf4a601ebe1bbddc003ef47f3808fbf208f4b987
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Wed Aug 7 23:08:06 2013 +0000
+
+    Avoid unused variable warning and provide useful debug output
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1511528 13f79535-47bb-0310-9956-ffa450edef68
+
+commit da3fc037c778b4adaf499fe05b9e08cf3f13292a
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Wed Aug 7 21:25:45 2013 +0000
+
+    Bug 54142 - HTTP Proxy Server throws an exception when path contains "|" character
+    Integrated my patch with a slight change to make current behaviour with Java Impl remain the same as bug only affects HC impls
+    Bugzilla Id: 54142
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1511503 13f79535-47bb-0310-9956-ffa450edef68
+
+commit aeb0793e3a2f8f7d494f9cd03f1e0dac1558d193
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Mar 17 23:28:26 2013 +0000
+
+    Tab police - also remove trailing spaces in same files
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1457590 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8e247d8f7244f7134030186ecd396223eafac5ac
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Wed Sep 5 20:35:30 2012 +0000
+
+    use indexOf(char)
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1381353 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 472da1514d311de44fe5569b48be26d8f6946785
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Thu Aug 23 00:48:23 2012 +0000
+
+    Bug 53765 - Switch to commons-lang3-3.1
+    Bugzilla Id: 53765
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1376337 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 2bad2b8f1764f0595dd2d13391e93cc6dc5a7d37
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Jun 23 15:36:18 2012 +0000
+
+    Standardise on HTTPConstants, not the interface
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1353149 13f79535-47bb-0310-9956-ffa450edef68
+
+commit bfbf055dcbd93c87d022e680c107345a714861b6
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Sat Jun 16 20:56:07 2012 +0000
+
+    Use HTTPConstantsInterface instead of HTTPConstants
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1351000 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 65d93f611a59764926a5793f2426bf4334191bc0
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Fri Mar 2 23:37:26 2012 +0000
+
+    Bug 52674 - Proxy : Add a Sampler Creator to allow plugging HTTP based samplers using potentially non textual POST Body (AMF, Silverlight...) and customizing them for others
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1296512 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b0016a47634f72a174d015a90914373833ca0051
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Tue Feb 28 16:01:05 2012 +0000
+
+    Bug 52788 - HttpRequestHdr : Optimize code to avoid useless work
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1294708 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 5f0c11e03cb3ce5493bf14b4632a6f25af987993
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Wed Feb 15 22:12:19 2012 +0000
+
+    Bug 52675 - Refactor Proxy and HttpRequestHdr to allow Sampler Creation by Proxy
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1244757 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 7f4f392d64c73179610b0633b65e23d86c6b29db
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Sun Dec 18 15:34:34 2011 +0000
+
+    Bug 52352 - Proxy : Support IPv6 URLs capture
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1220430 13f79535-47bb-0310-9956-ffa450edef68
+
+commit dd1c543db404f0b84743012e08988d6273120ca0
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Mon Oct 24 16:39:42 2011 +0000
+
+    Generic for loops
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1188215 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 17e0d1a93663aca34197d68589da533114b507a8
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Nov 30 00:16:48 2010 +0000
+
+    Allow HTTP implementation to be selected at run-time
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1040356 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 116301a8839d74288c570d343cbe4385a6d2644b
+Author: Bruno Demion <milamber@apache.org>
+Date:   Fri Nov 19 07:28:51 2010 +0000
+
+    Seems to miss a close parenthesis
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1036752 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 70d4bc08f3dcf70678cc5b3ebec50b7fde1b516d
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Nov 19 01:32:31 2010 +0000
+
+    Fix PUT proxy handling
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1036704 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8ac0c73fbbafd736e1672a4c378fbba672763f0e
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Jul 6 14:48:43 2010 +0000
+
+    user.dir is a System property
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@960908 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1b870d0fb6eb7c01373ae7d47b7ab427ab89d672
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Feb 23 16:09:09 2010 +0000
+
+    Remove trailing spaces
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@915405 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f52cf4362f23c38f642b71ec74b8eb135bc5147e
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Oct 10 15:18:56 2009 +0000
+
+    StringBuffer => StringBuilder
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@823869 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d8e9ba8f2d416919114f8368fb6a14d69a096e3c
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Aug 15 15:14:47 2009 +0000
+
+    Fix up some raw types
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@804478 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 7031cd5741931b3dbb295e4b84daf5727882a18a
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Aug 11 13:41:22 2009 +0000
+
+    Bug 47622 - don't add Connection header from browser
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@803117 13f79535-47bb-0310-9956-ffa450edef68
+
+commit db68ab6b387018d41f09886f1f69b7fc555f7821
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Wed Aug 5 23:58:28 2009 +0000
+
+    Bug 47622 - enable recording of HTTPS sessions
+    Many thanks to Milamber.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@801473 13f79535-47bb-0310-9956-ffa450edef68
+
+commit bea8caced3d3ce13af07276d9b7b06dbb4ee6227
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Wed Aug 5 13:23:50 2009 +0000
+
+    Remove deprecated method
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@801222 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d4fe1821489c0ba403c77970a25ec257aebe0881
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Apr 24 23:02:11 2009 +0000
+
+    Fix various Eclipse warnings: delete unused code; make some vars final and private
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@768439 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 298e376f77b132df67d056c35b3890d12dc11a72
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Apr 7 17:54:16 2009 +0000
+
+    Bug 46977 -  JMeter does not handle HTTP headers not delimited by whitespace
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@762874 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 7fddda117e63fff77544869c2229b31349e5b2f4
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Jan 2 00:29:07 2009 +0000
+
+    Bug 46423 - I18N of Proxy Recorder
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@730650 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6bf94deccce242cd1bba95592f54fd78a90dfc3e
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Jul 6 23:56:15 2008 +0000
+
+    Detab
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@674365 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c15cfc966fcb55658eb7188b6ac4d22c7b7b747d
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu May 29 11:50:03 2008 +0000
+
+    Unused import
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@661304 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 01aef3b24287aba6ec5122f0b1eb424775593d72
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Wed May 28 23:08:45 2008 +0000
+
+    Bugs 44808 & 39641 - Proxy support for binary requests
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@661141 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 0431342fc6b55cae74fc4b3121cae06650f31658
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu May 8 02:15:58 2008 +0000
+
+    Bug 19128 - Added multiple file POST support to HTTP Samplers
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@654389 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 26f3f56465d2976f6e2f1301b8d5be7c7bc0a6ff
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat May 3 20:18:23 2008 +0000
+
+    Minor tidyup
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@653127 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 97f5943089bcb0248170d09431a17b8a745d5aa6
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Apr 29 21:10:55 2008 +0000
+
+    Ensure that static variables are final to ensure visibility
+    Trim variable name parameter in function calls
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@652128 13f79535-47bb-0310-9956-ffa450edef68
+
+commit bbfbad6c6c0968ee44871197f9132372aac1f52c
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Apr 27 23:20:24 2008 +0000
+
+    Fix Locale-sensitive case conversions
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@652027 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 71a5d0f3145c60ce15e189f5bda227f743757a42
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu Apr 17 00:52:32 2008 +0000
+
+    Replace duplicated code with call to utility routine
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@648910 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6e2f4dcc1e1a6c5ba4c0db0e9854ef772f5ef31c
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu Apr 10 01:21:09 2008 +0000
+
+    Ensure if and for statements always use blocks
+    Other minor tidyups
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@646610 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ffab6ecaadb8de1c5b87500e5cff827b4b28730c
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Nov 17 14:38:18 2007 +0000
+
+    Only check for invalid characters on first line to reduce overhead.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@595955 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 094e7765b879265f62644e5bb8e3c6ac51bc59a8
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Nov 17 00:49:35 2007 +0000
+
+    Rename misnamed private method
+    Give access to URL string
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@595885 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f714577cf1642ebabd375961a1c543810d53d82f
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Nov 17 00:04:48 2007 +0000
+
+    Reject HTTPS requests
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@595877 13f79535-47bb-0310-9956-ffa450edef68
+
+commit cce863b5615266ec7f05818b7b5b38491e4f0f8b
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Nov 16 18:44:25 2007 +0000
+
+    Don't assume port is 80 if not specified (may be https e.g. spoofing)
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@595772 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8ba9480c4d6c135aa5e456a7963fb345c8c0400e
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Oct 21 15:50:15 2007 +0000
+
+    Use HTTPConstants instead of HTTPSamplerBase
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@586911 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 63b0f6266b985e98a6385c88151a612468e810ae
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Sep 2 14:19:10 2007 +0000
+
+    Fix up some Javadoc errors
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-2@571988 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 5fa1642437a5781b76090db426e6f7aa636db87e
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Jul 14 01:42:02 2007 +0000
+
+    Oops! The setup of the port got lost in the recent changes.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-2@556204 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b9e05b7bfc215355055a32a4b26bf7a602a77052
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Jul 3 19:39:51 2007 +0000
+
+    Bug 42173 - Let HTTP Proxy handle encoding of request, and undecode parameter values
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-2@552959 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a45b3d7f5b76a26e5f3d90f5b171632880fa6c24
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Apr 28 13:26:26 2007 +0000
+
+    Remove some unused throw clauses
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-2@533343 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 862840473d7a83cd36c41e258fdc9be326268f92
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Mon Apr 16 22:52:00 2007 +0000
+
+    Bug 41518 - JMeter changes the HTTP header Content Type for POST request
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-2@529431 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 76ac18a730825da38a38e4efec83ddb80c03e47f
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Apr 14 11:56:35 2007 +0000
+
+    Bug 27780 - (patch 19936) create multipart/form-data HTTP request without uploading file
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-2@528796 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f0006142470b5e9dde2957247d16b910af7879fc
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Mar 30 23:05:12 2007 +0000
+
+    Unused imports
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-2@524306 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3fb5d8d841e2de3ed329b77021728a5b6455be7e
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Wed Mar 21 23:51:22 2007 +0000
+
+    Bug 41837 - Parameter value corruption in proxy
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-2@521050 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ff4f99913cf741315ee21aedbc2683c381cec011
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Mar 17 22:12:43 2007 +0000
+
+    Bug 41876 - Add more options to control what the HTTP Proxy generates
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-2@519460 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 34979973d12bce91bb4d9c96b8dd75914d791582
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Mar 3 12:55:26 2007 +0000
+
+    Bug 41707 - HTTP Proxy XML-RPC support
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-2@514149 13f79535-47bb-0310-9956-ffa450edef68
+
+commit db8dedbff2834a7eb4e0429a307ecbdd731a53d8
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Jan 7 18:10:21 2007 +0000
+
+    Update license (remove copyright)
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-2@493789 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 570d13086604b7e74ef36cfb191dee16e1afd4ef
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Apr 29 22:57:06 2006 +0000
+
+    Unused import
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-1@398253 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 469dc8895717b315d0348e8d390139ad645c158e
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Apr 29 12:23:17 2006 +0000
+
+    Use HTTPSamplerFactory to create the samples
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-1@398135 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 98d179d020f339ab2c07597cd246bd67e1e8eb7c
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Apr 25 22:52:11 2006 +0000
+
+    NLS changes; general tidyup
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-1@397007 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 85e38bb8c87d7a1f34dca59514fe063e11a1de05
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu Jan 26 00:58:52 2006 +0000
+
+    Move last of unit test code to test tree
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-1@372384 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 76159a5b953d9dc5518b2ccb03bfbc1c4908837d
+Author: Michael Stover <mstover1@apache.org>
+Date:   Tue Jul 12 20:51:09 2005 +0000
+
+    Formatting Code to basic Java Standard
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@325542 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d56336c18ebb1446202c5e5c7570734aa1e81438
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Jul 3 14:08:55 2004 +0000
+
+    Use HTTPSamplerBase and HTTPNullSampler where possible
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@324775 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 188ae5683ff9e68a243bfddae83bb324803edce2
+Author: Michael Stover <mstover1@apache.org>
+Date:   Fri May 21 16:58:26 2004 +0000
+
+    Fixing AccessLog filter, fixing caching of Controller property values
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@324577 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c3555be72dec6c4e8ac9412d19566ccc429e312d
+Author: Michael Stover <mstover1@apache.org>
+Date:   Thu May 20 19:18:41 2004 +0000
+
+    2.0 merge into main and TestBean fixes
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@324572 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b76babd908d241d0775e26664b51bee40ea5c1fb
+Author: Michael Stover <mstover1@apache.org>
+Date:   Fri Apr 16 13:21:45 2004 +0000
+
+    Merging rel-2_0 branch to main
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@324548 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 0e213f1efb0dc4348d17a123e0d15332c464f0ef
+Author: Jordi Salvat i Alabart <jsalvata@apache.org>
+Date:   Thu Feb 12 01:19:53 2004 +0000
+
+    Removing erroneous suggestion in comment.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@324267 13f79535-47bb-0310-9956-ffa450edef68
+
+commit da54d94e739c952bd9a02468f8353f43fff47434
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu Feb 12 00:33:56 2004 +0000
+
+    ASF L V2
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@324266 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 4d7b4f85c07fca0cf2423b9efbea4e53219ba0d4
+Author: Jordi Salvat i Alabart <jsalvata@apache.org>
+Date:   Tue Jan 20 09:36:40 2004 +0000
+
+    Added a comment.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@324125 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e4901ee4a8325791f762c067d35ca8145e04cc9b
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Nov 18 19:05:51 2003 +0000
+
+    Optionally add sequence number to sampler names
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323706 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 2c033463efc62a4173a18bdd53ae7a62b4e75184
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Nov 18 18:28:46 2003 +0000
+
+    More debug
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323703 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6eaf1923b4543cd273c88d19b5880cfc052e142b
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Oct 19 22:43:51 2003 +0000
+
+    final string now static; Boolean() and String() usage; unused fields; javadoc tags
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323610 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 0968ab08331c10d1e215bbe39d04c6fb524799d6
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Oct 5 00:52:25 2003 +0000
+
+    Removing unused items
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323472 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 16298eacd614fb53fe98cc75d581507e226274df
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Mon Sep 15 23:14:02 2003 +0000
+
+    Use getLoggerForClass()
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323456 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1dd68b883013115def67a6963ff8c1abcc055e5c
+Author: Jeremy Arnold <jeremy_a@apache.org>
+Date:   Sat Aug 16 17:22:52 2003 +0000
+
+    Reformatted to JMeter conventions.
+    Minor JavaDoc updates (mostly formatting).
+    Removed an unused private field.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323420 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 0ccb12d379924e457e096e1b15f936acb2b0fde1
+Author: Michael Stover <mstover1@apache.org>
+Date:   Wed Aug 6 19:35:38 2003 +0000
+
+    Fixing bugs with SOAP Sampler
+    adding support for gzip encoding
+    fixing bugs with loading jmx files that effected no one but me :-)
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323403 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 5044b2b892484512982a4396067c0f5830d2b16b
+Author: Michael Stover <mstover1@apache.org>
+Date:   Fri Jun 20 14:15:37 2003 +0000
+
+    Updating third party libs
+    Updating docs
+    Updating import statements
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323357 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 2858215e3c8d4008d50e7119fde83ad694856bc1
+Author: Michael Stover <mstover1@apache.org>
+Date:   Thu Jun 5 15:02:06 2003 +0000
+
+    Fixing the way redirects happen
+    fixing checking if test plan changed since last save
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323312 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 207f5e32d2d8325fa0eb3a3e37808159e467b090
+Author: Jeremy Arnold <jeremy_a@apache.org>
+Date:   Sun Jun 1 20:02:07 2003 +0000
+
+    Reformatted to Turbine (JMeter) conventions.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323305 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6387d4363a878561c19e1b148f889c826acf31fd
+Author: Michael Stover <mstover1@apache.org>
+Date:   Tue Apr 8 20:25:35 2003 +0000
+
+    fixing proxy server
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323144 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1699b6b0dddeba2d259d7075d8b7c5a6b68d7300
+Author: Michael Stover <mstover1@apache.org>
+Date:   Tue Apr 8 18:33:57 2003 +0000
+
+    fixing proxy server
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323143 13f79535-47bb-0310-9956-ffa450edef68
+
+commit dd729ef02ebdf612bcf6a64b053153c054c6d5d0
+Author: Michael Stover <mstover1@apache.org>
+Date:   Tue Apr 1 15:08:57 2003 +0000
+
+    Proxy won't allow encoded content from server
+    New default config element gui from Elan Chezhiyan
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323125 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 60366e6596760c2201ddd9c88144ee2a73513ceb
+Author: Jordi Salvat i Alabart <jsalvata@apache.org>
+Date:   Mon Jan 13 01:05:57 2003 +0000
+
+    Added test that would have detected bug#15687.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@322985 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e010fabc00d06483b01456d61caeba54a3812c10
+Author: Michael Stover <mstover1@apache.org>
+Date:   Thu Oct 17 19:47:20 2002 +0000
+
+    Moving jorphan classes back under JMeter's umbrella
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@322908 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 31ecdbb04d2bc04d4a64ec3274e1ff3fc32e8454
+Author: Michael Stover <mstover1@apache.org>
+Date:   Tue Oct 15 18:53:31 2002 +0000
+
+    Extracting non-JMeter specific classes to separate library
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@322904 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3bbe20979863c6bc4df4fe5e920b45d58340307c
+Author: Michael Stover <mstover1@apache.org>
+Date:   Sun Aug 25 19:42:21 2002 +0000
+
+    Can select language from menu
+    HTTPSampler calls urlconn.disconnect on all connections
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@322874 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 0f6a345117de90766fb900b17c53860da2a3d4ab
+Author: Michael Stover <mstover1@apache.org>
+Date:   Wed Aug 14 17:49:04 2002 +0000
+
+    Headers now read and compared correctly as case-insensitive generically in proxy
+    proxy records correctly in presence of HTTP Defaults (fixes bug #11397)
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@322845 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 4476039a56c6d7ed15639ae2f9c25ebd808683f5
+Author: Michael Stover <mstover1@apache.org>
+Date:   Tue Aug 13 22:25:15 2002 +0000
+
+    More inclusive in search of headers for "Content-Type"
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@322841 13f79535-47bb-0310-9956-ffa450edef68
+
+commit dd9932a03c9826150ab4c98914a145ba5f3248ae
+Author: Michael Stover <mstover1@apache.org>
+Date:   Sun Aug 11 19:24:54 2002 +0000
+
+    New src directory organization, committing all files
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@322831 13f79535-47bb-0310-9956-ffa450edef68

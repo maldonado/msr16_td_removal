@@ -1,0 +1,156 @@
+commit ce91559019b9902ac267a732fe3eebb3cfc87eeb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Aug 5 16:43:53 2015 -0500
+
+    Use polymorphism for Operand.getOperandType.
+    
+    getOperandType is only used by the persistence engine, so there's
+    no impact to interpreter performance by doing this, and for a
+    startup-interpreted 'rails c' this reduces memory use by over 5MB.
+
+commit d2ea85fd3c1837df40925a9fce6cd023c539f9ea
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Apr 17 12:23:57 2015 -0500
+
+    Propagate coderange out of StringLiteral through all consumers.
+
+commit 18d9c88aa5e608fd92cbd2986db64ae1bafa5f5d
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Mar 12 10:09:42 2015 -0500
+
+    Better fix for FrozenString.  String-fed FrozenStrings should just pass through to String Literal
+    rather than get reconstructed from generate bytelist.
+    Frozen string optimization did not propagate coderange to FrozenString.
+    XStrNode when constructed from StrNode did not propagate coderange.
+
+commit 9ac895a9470962095f80a6ba4f67edd4e505d06a
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Mar 11 14:44:59 2015 -0500
+
+    Temporary workaround to my FrozenLiteral commit.  -J-ea noticed these strings were being used in places where the strings are required to be intern'd.  A followup fix will remove these uses of FrozenLiteral (and StringLiteral), but this will fix the ci errors.
+
+commit b173aca39240df164c5e57e36edf8349c08b03f0
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Mar 11 12:33:20 2015 -0500
+
+    Encoding and Decoding now understand how to encode/decode byte[] and Encoding.
+    FrozenString and StringLiteral fixed up to properly dump encoding and coderange.
+
+commit 7d25b9e9b5786f1737b748774bb68332862b233a
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Mar 11 09:18:38 2015 -0500
+
+    Weird two missing return's...more coffee
+
+commit 60888bcbd3f028f3bf387fd81833be40c1ee2dbf
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Mar 11 09:12:21 2015 -0500
+
+    Moar encoding progress
+
+commit 764bb855a987ccebbc1ab63a5a4673294419e757
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Mar 10 16:49:07 2015 -0500
+
+    Encoding of Operands moved into Operands instead of using visitor
+
+commit 040a6136d5f1bbeece9ae9267e2b3fb5e4424dd0
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Feb 11 15:09:06 2015 -0600
+
+    Revert "Strings should pass cr to avoid recalc'ing"
+    
+    3 mysterious errors to work through in test:mri.
+    
+    This reverts commit 9d8dc51d11927bce37c7989a71543dd83747d0c3.
+
+commit 9d8dc51d11927bce37c7989a71543dd83747d0c3
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Feb 10 17:02:43 2015 -0600
+
+    Strings should pass cr to avoid recalc'ing
+
+commit 595b8bb476b47cf7ec12fa67c51252b468014cd5
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri Dec 19 14:06:55 2014 -0600
+
+    Less sure on this but no reason alloc'ing an empty string over and over
+
+commit 1899c264deac2cb0548069c69a0fe11e6166b39d
+Author: Chris Heald <cheald@gmail.com>
+Date:   Sat Nov 8 23:52:51 2014 -0700
+
+    Propagate coderange from StrNode -> StringLiteral and use it when building compound strings. Fixes bug9882
+
+commit 94eb4ae16f1460c1bf1cc23cae8e6075510c25b8
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Oct 9 10:17:45 2014 -0500
+
+    Split apart InlinerInfo into SimpleCloneInfo and InlineCloneInfo.  Specialization used to make it clearer which code is performing which type of cloning
+
+commit 0cdd14aaae2ecdec6d5fcdc92d1fe19b6faa55d8
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Mon Jul 21 00:14:45 2014 -0500
+
+    Pass staticScope through interpreter call stack + optimized imports.
+    
+    * In preparation for a fix for #1792, pass the current static scope
+      through the interpreter call stack.
+    
+    * Unrelated: I accidentally applied optimize imports on the ir/
+      directory while refactoring in IntelliJ.
+    
+    * Next steps:
+      - Make the nesting-depth fix outlined in #1792.
+      - Maybe, rename CurrentScope to ActiveScope.
+      - Maybe, fix ScopeModule to be based off CurrentScope.
+      - Maybe, get rid of currDynScope arg through call stack and get it from
+        ThreadContext where needed (maybe).
+
+commit 0bbd0bbc7326367a8753b3e67b72e6dae125dd94
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Mar 19 13:41:44 2014 -0500
+
+    Workaround for invalid charsets in what must be how we deal with this in our other runtimes (fixme above is holder for fixing this better later)
+
+commit fba2bccc91bdc715f1f453a562c26bf68cf0060d
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Mon Jan 6 10:53:56 2014 -0600
+
+    Minor cleanup: stripped trailing whitespace in ir/ classes
+
+commit 6d93e86394fd4ef8f3084c00c7cd659a10511f0f
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Sun Dec 15 09:41:56 2013 -0600
+
+    Some basic equals+hash impls.  Playing with idea of building constant pool in IR persistence
+
+commit e2fec35978e14c90ca788f161493d3435112861b
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Dec 12 14:12:16 2013 -0600
+
+    Re-add toString in places it was removed.  Representation will be handled differently by persistence
+
+commit aa34194a38bf66dcc3f3bdee4ce55085613ee969
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Dec 10 17:10:19 2013 -0600
+
+    Massive lifus merge with lots of my own merging/changes..build broken but almost working
+
+commit ce51ec3196d14657e94c1b8063e2120638ab7695
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Fri Sep 27 16:07:17 2013 -0500
+
+    Cleanup: Deleted trailing whitespace on lines in ir/ directory
+
+commit 909334fe9b70a6b7b79491767d31efff9a7ce119
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 24 16:55:32 2013 -0500
+
+    Use proper decoding instead of ByteList.toString.
+
+commit 28c6fbc4e883bc1c9e9242d1da1cb2b785f55339
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 3 12:46:45 2013 -0500
+
+    Move to @mkristian's proposed layout, with some modifications.

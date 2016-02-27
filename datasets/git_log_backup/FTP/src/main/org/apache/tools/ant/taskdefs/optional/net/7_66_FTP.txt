@@ -1,0 +1,1159 @@
+commit 326b38f70193a95c9ef8371a727747fe0a5fecb5
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Jan 2 14:37:32 2014 +0000
+
+    assorted micro-optimizations by Adrian Nistor - 13 different Bugzilla issues
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1554813 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 13000c1a4670271a3257b3c41dc1e17941067c78
+Author: Jesse N. Glick <jglick@apache.org>
+Date:   Wed Jul 17 22:46:10 2013 +0000
+
+    sconnolly advises using TODO rather than XXX in comments.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1504315 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6b7bc9e53500d2347a555dea2988788a922f3101
+Author: Jacobus Martinus Kruithof <jkf@apache.org>
+Date:   Sat May 26 13:33:54 2012 +0000
+
+    Bug 53291 - Several spell checker findings in apache ant 1.8.3 documentation
+    -- api --
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1342897 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d2693fcfed2230ef91eb1cf56f9abbdcaab1aeb2
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Apr 15 07:24:35 2011 +0000
+
+    commons-net trunk has removed all static final ints from FTPReply
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1092610 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 5f20b99140fb4ec958a6d540b9df7b3c08312b40
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Feb 3 21:00:00 2011 +0000
+
+    microoptimizations.  PR 50716
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1066963 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ce81059049a47a2d9da23d84245af9763114cd3f
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Sun Nov 7 00:02:57 2010 +0000
+
+    fix for bug 50217, NPE in ftp chmod
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1032188 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 92663dfd6a98615bd2d2b087f988561ff35102af
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon May 17 09:17:19 2010 +0000
+
+    ftp download fails for certain setups.  PR 49296.  Based on patch by Kristof Neirynck
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@945039 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c767541c7d35c9eef55bf65e686373b02b71af2a
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Feb 18 11:00:58 2010 +0000
+
+    As Jesse points out, equalsIgnoreCase is not locale-sensitive
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@911324 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 58f0bb04db9c5c8a858d7a3be7719608f25f2f49
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Feb 17 12:58:50 2010 +0000
+
+    if user input is compared to fixed strings in a case insensitive manner we should use the default locale.  Use Locale.ENGLISH consistently
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@910955 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d58f4d380b325e8802b1fdf22bd87ead365d1397
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Feb 17 10:05:08 2010 +0000
+
+    Change more List#contains() cases, most of the changes are unlikely to have a real performance impact since the lists usually are too small
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@910889 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f21a1750ce8008bd256ff8fd0ba35e97949b2829
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Feb 1 08:56:37 2010 +0000
+
+    More FileUtils.close and a moved flush operation in XMLJUnitresultFormatter
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@905214 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d72413184949c04015b452cf9cdf36bf2107061f
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Aug 27 10:14:07 2009 +0000
+
+    refactored <ftp> so commons-net may be loaded via a separate classloader.  Based on patch by Greg Roodt in PR 45860.  Not really tested, yet, therefore I haven't changed defaults.properties so far
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@808350 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b38b45047d637c9f67a18d6932ff3943b797132d
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Aug 13 10:15:03 2009 +0000
+
+    make ftp task compile against commons-net 2.0 and 1.4.1.  PR 47669.  Submitted by Alexander Kurtakov
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@803830 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 2ca342fb2a9191f8e22abfc8fee9aaab94ea8496
+Author: Jacobus Martinus Kruithof <jkf@apache.org>
+Date:   Sat Jan 31 16:14:58 2009 +0000
+
+    Fixed some obvious errors. (Formatter class is not thread safe, equals from string to another object).
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@739572 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a4e5c13b86391f9b7ad23e326fe3d2bb66a16cc7
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Sep 26 14:19:58 2008 +0000
+
+    Allow selectors for remote filesets in <ftp>.  Submitted by Mario Frasca.  PR 44726.  (unfortunately some whitespace changes slipped in as well, sorry for that).
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@699336 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a0e5b158cf8e86b8bda5ba136641be537d104dae
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Jul 14 14:31:25 2008 +0000
+
+    allow ftp remote verification to be disabled.  PR 35471.  Suggested by Viacheslav Garmash.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@676603 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d2c31ad3984d53975ee22a574f8078bdb60f9d2e
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Jul 14 14:07:07 2008 +0000
+
+    log where directories get created
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@676595 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c9913e80faed6857ab9ad31c377642525b438fa8
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Jul 14 13:53:31 2008 +0000
+
+    log where ftp is going to
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@676591 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 94dd480d07ac2028fc94d46a253abcd2ddb189a8
+Author: Jacobus Martinus Kruithof <jkf@apache.org>
+Date:   Fri Jan 4 17:45:12 2008 +0000
+
+    request from cactus team, backward incompatible change in FileUtils made backward compatible
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@608939 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 95a74e963706a41dd5bfde0e6d8c8e0e6314bdec
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Wed Sep 12 11:35:15 2007 +0000
+
+    checkstyle
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@574889 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 7e05b3d981ceab1b87536eed26f67d82470f1a0c
+Author: Jacobus Martinus Kruithof <jkf@apache.org>
+Date:   Mon Sep 10 19:15:27 2007 +0000
+
+    pr33969: tempfile task / FileUtils.createTempFile now actually creates the file.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@574339 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 02fce032edbad3f50cb317f7cefc8987f2876040
+Author: Jacobus Martinus Kruithof <jkf@apache.org>
+Date:   Mon Sep 10 17:43:31 2007 +0000
+
+    pr 41724: FTP task fail, FTPClient may return null in its arrays.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@574313 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 20e8233e7067e6734ae16da0c45ea2e300d8d60d
+Author: Jacobus Martinus Kruithof <jkf@apache.org>
+Date:   Sun Apr 8 12:43:36 2007 +0000
+
+    Changes after static code analysis.
+    new Long...longValue  new Int...intValue -> Long.parseLong(..)
+    and arraycopy to copy arrays
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@526548 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 0f3a4ae2e2f52ddb7ea22dc8da6fd1b9e4ccbb20
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Mon Nov 20 21:18:41 2006 +0000
+
+    checkstyle
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@477343 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 691dfe87dc85f2564ea912bfb61a963e1a544458
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Sat Nov 18 18:06:30 2006 +0000
+
+    checkstyle
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@476575 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 032ca220dd28da39f4fed6af48c925a4e97f80a4
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Sun Nov 12 22:32:27 2006 +0000
+
+    checkstyle
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@474075 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a7414cb320c3631615d56227a4dd57aab3680701
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Wed Nov 8 22:04:47 2006 +0000
+
+    remove tabs
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@472660 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 231e1c4688ea592b2df75147d9f12906d9a14b73
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Sun Nov 5 22:50:17 2006 +0000
+
+    checkstyle
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@471554 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 2e897819a83981a1f4de2e1cc72e33f080fcf573
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Sep 1 18:49:27 2006 +0000
+
+    copy2license.pl
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@439418 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 31c6b1478b79b169bb878376f1ba943de7b9cd37
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Tue Jun 6 10:52:47 2006 +0000
+
+    FTP Account could not be specified in ant FTP task.
+    Bugzilla report 39720.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@412075 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 7eb22e8cdc4c161dcf8e89d40a8e072930db5d8f
+Author: Jacobus Martinus Kruithof <jkf@apache.org>
+Date:   Fri Apr 21 21:47:06 2006 +0000
+
+    indicated when methods/classes became deprecated, as to give us the possibility to remove deprecated methods in the future.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@396012 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 996bcb97e1d9fbf54a97b263f6cf33c005ae540d
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Mar 3 20:22:57 2006 +0000
+
+    2006
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@382924 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c4bb79c7a8685958a73ee9d196e4463f4f8de643
+Author: Steve Loughran <stevel@apache.org>
+Date:   Wed Mar 1 11:59:54 2006 +0000
+
+    include the caught exception when relayed
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@381998 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c5a01d909ced9e431f155f2225d8232d1301cbde
+Author: Jacobus Martinus Kruithof <jkf@apache.org>
+Date:   Sun Jun 12 17:55:14 2005 +0000
+
+    Removed unused local variables.
+    
+    I think there is an error in ConCat, see added comment.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@278420 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a1fdc0375c482ddc175ef79cbf9f0b7d786974e6
+Author: Jan Materne <jhm@apache.org>
+Date:   Fri Jun 3 16:46:55 2005 +0000
+
+    make JavaDoc more happier
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@278400 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 11f0a8954237d3208179ca4404f47ad882591f56
+Author: Steven M. Cohen <scohen@apache.org>
+Date:   Mon May 30 17:56:33 2005 +0000
+
+    Add logging of local vs remote timestamps in <ftp> task.
+    PR:31812
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@278381 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f2d32ac66d804c5dfeb14adcfa0ab31ff8f648e8
+Author: Steven M. Cohen <scohen@apache.org>
+Date:   Mon May 30 14:41:34 2005 +0000
+
+    Add initialSiteCommand and siteCommand attributes.
+    PR:34257, 34853
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@278378 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d0cb590844449882c124f78aa671ef8750c75ea9
+Author: Steven M. Cohen <scohen@apache.org>
+Date:   Mon May 30 00:40:21 2005 +0000
+
+    Based on a patch submitted by Neeme Praks, allow support for a retry count on FTP transfers.  Some
+    servers are unreliable for unknown - this allows for a retry count to be specified to accomodate work on such
+    flaky servers.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@278374 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 536a84c211f50992fedce887f3120414eec39068
+Author: Steven M. Cohen <scohen@apache.org>
+Date:   Sun May 29 03:01:10 2005 +0000
+
+    convert serverLanguageCodeConfig attribute to use EnumeratedAttribute pattern
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@278373 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3885afdd77f0f1619377c813800780c711983ed8
+Author: Steven M. Cohen <scohen@apache.org>
+Date:   Sat May 28 17:05:44 2005 +0000
+
+    Convert ftp task systemTypeKey and timestampGranularity attributes to using the EnumeratedAttribute pattern
+    and add some JUnit tests of the new configuration stuff.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@278372 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 75414134803bc6fd9e433288f138a269044bdaec
+Author: Steven M. Cohen <scohen@apache.org>
+Date:   Sun May 22 18:48:42 2005 +0000
+
+    Add new timestampGranularity attribute to account for the typical case in PUT operations where the client
+    is HH:mm:ss and the ftp server is HH:mm.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@278325 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 22bdc578fccd792a5e254f068715464deef89765
+Author: Steven M. Cohen <scohen@apache.org>
+Date:   Sat May 21 13:02:02 2005 +0000
+
+    Change so that systemTypeKey and all the new xxxConfig attributes work by the convention that setting the attribute to "" leaves the attribute unset, at
+    whatever value it had before, that is, for all these, the default value of null.  This would enable property-file based development to proceed more easily.
+    Update documentantation to reflect this.
+    PR: 34978
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@278316 13f79535-47bb-0310-9956-ffa450edef68
+
+commit fd1af1a4acf7249cc1807e2f6c68d5659d847dc7
+Author: Steven M. Cohen <scohen@apache.org>
+Date:   Thu May 19 07:58:54 2005 +0000
+
+    fix bug 34941
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@278293 13f79535-47bb-0310-9956-ffa450edef68
+
+commit da924b6826a99480fee5bba3a73fb9c28e9dd759
+Author: Steven M. Cohen <scohen@apache.org>
+Date:   Sat May 14 13:14:14 2005 +0000
+
+    change name of attribute from systemKeyConfig to systemTypeKey as a more intuitive name and check in
+    documentation for revised FTP task.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@278265 13f79535-47bb-0310-9956-ffa450edef68
+
+commit de249300a2a75fe42f344513cea5fb2291795f24
+Author: Steven M. Cohen <scohen@apache.org>
+Date:   Fri May 13 10:34:40 2005 +0000
+
+    improve clarity of what FTPConfigurator is doing.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@278258 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 813c2482279195999531f86dce204164523a071b
+Author: Steven M. Cohen <scohen@apache.org>
+Date:   Fri May 13 10:26:20 2005 +0000
+
+    Add FTPConfigurator class so as to avoid forcing users to upgrade to version 1.4.0 of commons-net.
+    As long as users use the ftp task as they have previously, they do not need 1.4.0.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@278257 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ce53f734e02f75c0815efc60306bb262a2ce8365
+Author: Steven M. Cohen <scohen@apache.org>
+Date:   Thu May 12 04:04:59 2005 +0000
+
+    Adapt Ant to use the new functionalities of commons-net 1.4.0 to enable greater configurability of the server:
+    Month names other than English, date formats other than the standard ones (such as all-numeric timestamps
+    on unix), and different server time zones can now be supported in Ant.
+    PR:30706, 33443
+    Obtained from:
+    Submitted by: Neeme Praks
+    Reviewed by: Steve Cohen
+    CVS: ----------------------------------------------------------------------
+    CVS: PR:
+    CVS:   If this change addresses a PR in the problem report tracking
+    CVS:   database, then enter the PR number(s) here.
+    CVS: Obtained from:
+    CVS:   If this change has been taken from another system, such as NCSA,
+    CVS:   then name the system in this line, otherwise delete it.
+    CVS: Submitted by:
+    CVS:   If this code has been contributed to Apache by someone else; i.e.,
+    CVS:   they sent us a patch or a new module, then include their name/email
+    CVS:   address here. If this is your work then delete this line.
+    CVS: Reviewed by:
+    CVS:   If we are doing pre-commit code reviews and someone else has
+    CVS:   reviewed your changes, include their name(s) here.
+    CVS:   If you have not had it reviewed then delete this line.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@278251 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 80eb41df70f59620db5127b116b1311dc33bd804
+Author: Jacobus Martinus Kruithof <jkf@apache.org>
+Date:   Mon Mar 14 19:24:58 2005 +0000
+
+    Restored javadoc in the original format.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277961 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e5dd10d19cc2f85f42bfa61d41f6d81676751c93
+Author: Jacobus Martinus Kruithof <jkf@apache.org>
+Date:   Mon Mar 14 19:19:20 2005 +0000
+
+    PR: 28797
+    
+    FTP list command could crash with an ArrayIndexOutOfBoundsException.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277959 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 2d1c5924e54f556642b92ec702cdbee071db3e75
+Author: Jacobus Martinus Kruithof <jkf@apache.org>
+Date:   Fri Mar 4 22:31:40 2005 +0000
+
+    PR: 33770
+    
+    Improved FTP task to not fail on hidden directories.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277793 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 38e8c824936299cd2b96aeb302c5bf5c9545b31e
+Author: Steve Loughran <stevel@apache.org>
+Date:   Fri Feb 18 23:28:00 2005 +0000
+
+    This commit eliminates all (but one) use of Project.createTask("some name") from the codebase. It also sets up all created tasks using the new Task.bindToOwner call.
+    
+    I'm tempted to retrofit Task.bindToOwner back to the 1.6.x codebase, for the benefit of third party tasks; same for the extra constructors for exec and java. Thoughts?
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277700 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 257dadeaf0fb8588b80fa71b24ee3aca38ea19b7
+Author: Jacobus Martinus Kruithof <jkf@apache.org>
+Date:   Thu Jan 6 12:05:10 2005 +0000
+
+    Make use of FileUtils in a uniform way via the getFileUtils method and a static final reference in the using files.
+    Also removed unused/* imports along the way.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277295 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6653c42a77eb0d663817f3112a5631f3bad6bfbe
+Author: Jacobus Martinus Kruithof <jkf@apache.org>
+Date:   Sat Dec 11 22:43:05 2004 +0000
+
+    If we can use File.getParentFile, there is presumably no reason to use FileUtils.getParentFile, right?
+    (Comment re-used from jglick)
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277179 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 17841320a3e3dda9366a97444cc8830ac952acf0
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Mon Aug 23 20:27:37 2004 +0000
+
+    FTP getTimeDiff was returning wrong value
+    PR: 30595
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276800 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c885f568369156a62e3ccb5b4b93b73b9d054443
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Tue Mar 9 16:49:09 2004 +0000
+
+    remove authors from files
+    PR: 27177
+    Obtained from: J.M. (Martijn) Kruithof
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276208 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 278781dcd669412e5e35cc95d8a96e0b2a278f50
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Mon Feb 9 21:05:47 2004 +0000
+
+    Copyright owner is The Apache Software Foundation
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276065 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 66555ca10d24bbfc55e710b9d65f809cfe713dab
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Wed Feb 4 20:38:09 2004 +0000
+
+    Remove trailing spaces in all java files
+    in order to make checkstyle happy
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276017 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ca1513552f7af7fc19de490fbe2d88adb6c993ad
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Tue Feb 3 22:44:50 2004 +0000
+
+    Switch to Apache Software License 2.0
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276010 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a679a5bbce605a1e4326d56030baeecb3a1bf4b7
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Wed Nov 5 22:00:56 2003 +0000
+
+    Prevent NPE in method CheckRemoteSensitivity
+    PR: 24440
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@275615 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d3f03ad754ffdd5d27796dc492ca2db38a7bf444
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Wed Oct 15 18:49:53 2003 +0000
+
+    Merge from ANT_16_BRANCH
+    Fix problem with non absolute remote dirs
+    PR: 23833
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@275510 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6b62a56cce039854101659763a32d087ba8a8a85
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Oct 14 13:19:53 2003 +0000
+
+    More robust cleanup of temporary files, PR 17512
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@275490 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b14e61f604f088f5522e8caa9c396da71e7b775e
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Mon Oct 13 19:53:01 2003 +0000
+
+    Merge from ANT_16_BRANCH
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@275463 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d9068e8df8cfe332db108010ea61bc049844ad44
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Fri Sep 12 20:32:29 2003 +0000
+
+    send the filename in the proper remote format in the site command done
+    to chmod a file after a put
+    PR: 23143
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@275231 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d61c41640d8da8db162c892b39003159e0eab05e
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Fri Aug 22 11:23:48 2003 +0000
+
+    Fixes unsensitive searches on case sensitive remote file systems
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@275130 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 9a7f8d24f541c554cedaf2d7c947cdb2828b6609
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Thu Aug 21 16:56:12 2003 +0000
+
+    Optimize scanning in FTP.FTPDirectoryScanner, using similar algorithms
+    to the ones introduced in DirectoryScanner.
+    There is a gain when
+    - the include patterns look like some/very/long/path
+    - the remote file system is case sensitive
+    - the casesensitive and followsymlinks options of the fileset are set
+    to true (the default)
+    PR: 20103
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@275120 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ad1b099b2809f1f29ee924142391d3741f12e7ec
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Thu Aug 14 21:01:43 2003 +0000
+
+    Add two new attributes timediffmillis and timediffauto for the ftp task
+    so that the newer attribute can take into account time differences between local
+    machine and remote server.
+    PR: 19358
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@275097 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 4177bdb64e339c8ee010ab514d0670cdcee1d963
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Thu Aug 14 15:47:37 2003 +0000
+
+    mistake found ... oops ... corrected
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@275093 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c16e1955f177db572f1fb7bc04582462b4ea6870
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Thu Aug 14 14:47:54 2003 +0000
+
+    Go on working on the followsymlinks support in the FTP task.
+    The scanner was working previously, but the retrieving of links was not working
+    because the followsymlinks attribute was not passed through.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@275089 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 9c13b48a8226c6ef5fa199a6d5c6eb75fbbe82ed
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Thu Aug 14 11:37:36 2003 +0000
+
+    files which are pointed to by symbolic links should be excluded if followsymlinks="false"
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@275081 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1cab901b51468635a71d7bb6752766436f68bf1d
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Thu Aug 7 22:23:35 2003 +0000
+
+    Removed unused variable
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@275045 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 24f9da26b52d675f4b7c2ab79167a04647e243ee
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Wed Aug 6 12:24:42 2003 +0000
+
+    Issue a warning message indicating that selectors within filesets
+    are not supported in the ftp task when the fileset is remote
+    (all actions except put)
+    PR: 18280
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@275037 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 63382d9cbfc5089d6c46cd7819b33bf956f38a87
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Wed Aug 6 10:58:24 2003 +0000
+
+    Fix the ftp task, its documentation and testcases to maintain backward
+    compatibility.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@275035 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 84d3b327034c7e5100be5010e26e1b22a2c63d4f
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Tue Aug 5 22:59:16 2003 +0000
+
+    removed output on System.out, sorry
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@275029 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e9d8b2247fa54e4c33027f1140a7a3c3ff046cac
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Tue Aug 5 22:23:57 2003 +0000
+
+    Make the FTP.FTPDirectoryScanner behave like the DirectoryScanner
+    in terms of following symbolic links which are directories.
+    This will make a change of behavior in comparison with ant 1.5.3
+    where the behavior of the ftp task was to never follow symbolic links.
+    
+    Also select symbolic links which are files
+    PR: 14063
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@275028 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d98034a54c5078adecb4ac4096f386f3d8e8bf92
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Tue Aug 5 16:44:43 2003 +0000
+
+    Make the FTP.FTPDirectoryScanner class also register the root of a fileset
+    when the root matches include exclude patterns.
+    This is the behavior of the DirectoryScanner for normal filesets.
+    This change should only possibly impact the RMDIR modus of the ftp task
+    when the root directory is included.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@275026 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 92245fefff70914ab5f4dc32e39aa34fa46241a6
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Tue Jul 29 11:19:27 2003 +0000
+
+    Some ftp servers have binary as default, so when binary is false
+    it is good to set explicitly the ascii mode for the transfer.
+    Problem reported by Michael Nebus (Michael dot Nebus at Pfizer dot com)
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274980 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 0bd649e567f3b63e1ee5e2984700432026dbc34b
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Sat Jul 26 15:58:11 2003 +0000
+
+    resolve files sent to chmod
+    PR: 21865
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274955 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e65fb2c1cce7bf58dc8bffbf79b3681dc806b64a
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Tue Jul 22 17:59:52 2003 +0000
+
+    style
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274891 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6ee5317ca34e43ca1d62e890dcf034eb44cca649
+Author: Conor MacNeill <conor@apache.org>
+Date:   Sun Jul 6 09:03:18 2003 +0000
+
+    Fix a few checkstyle errors
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274775 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 4a288273ac68ec22a390ef317d6a2b4e7fe5c4f0
+Author: Conor MacNeill <conor@apache.org>
+Date:   Fri Mar 7 14:51:59 2003 +0000
+
+    When changing dirs resolve to the coorect separator conventions
+    PR:	10755
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274211 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 110fbc5d96aced9daef6bb03060adc669a93734e
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Feb 24 08:25:19 2003 +0000
+
+    commons-net 1.0.0 has been released, drop NetComponents in favor of it.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274168 13f79535-47bb-0310-9956-ffa450edef68
+
+commit cfb1f629ca2975be2292b593c049d04f2531d4a1
+Author: Conor MacNeill <conor@apache.org>
+Date:   Fri Feb 21 10:41:53 2003 +0000
+
+    Optimization
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274162 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e074b294911e39877ee9a480e44979f16b9a4882
+Author: Conor MacNeill <conor@apache.org>
+Date:   Fri Feb 21 09:42:36 2003 +0000
+
+    Change the way FTP tries to create parent directories. It now does this
+    by attempting to change to the dir first and if that fails, then trying to
+    make the dir. This means that file upload should not require non-critical
+    errors to be ignored.
+    
+    PR:	9586
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274160 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1dc8a079057e191ca4c158f36843c2c9e9f9be52
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Feb 10 14:15:00 2003 +0000
+
+    Remove Jakarta Project from license
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274040 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3c2bbbcda3cfbe3aff8b17b766538149385ceed2
+Author: Magesh Umasankar <umagesh@apache.org>
+Date:   Wed Dec 4 16:42:34 2002 +0000
+
+    Real tired of seeing email address being abused.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273610 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 387d93e6ece00a294af599f30f0aac7b0bb56eee
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Sep 25 14:08:48 2002 +0000
+
+    Make <ftp>'s MKDIR action work recursively (if necessary).
+    
+    PR: 12576
+    Submitted by:	Kyle Adams <kadams at gfs.com>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273352 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 2bf9f10a860d6519b1247e6f7f5487c193c584b3
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Sep 23 16:01:43 2002 +0000
+
+    New <ftp> action rmdir.
+    
+    PR: 12765
+    Submitted by:   Gabriele Garuglieri <gabriele.garuglieri at infoblu.it>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273347 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c8d4ba2393fab9703138171f5d63efa34cbc37e8
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Sep 23 15:47:56 2002 +0000
+
+    Add preservelastmodified attribute to <ftp>.
+    
+    PR: 12548
+    Submitted by:	gudnabrsam at yahoo.com
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273346 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8f413c12084a80db24f4cdfd6b8f908d4e75556f
+Author: Peter Donald <donaldp@apache.org>
+Date:   Thu Jul 25 15:21:25 2002 +0000
+
+    Remove unused imports, remove glob imports, sort imports.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273169 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 28b68ab7d0689dbc35dbdf26d2308786549b8985
+Author: Peter Donald <donaldp@apache.org>
+Date:   Tue Jul 23 07:54:56 2002 +0000
+
+    Encapsulate usage of project object rather than allowing objects 7 subclasses acessing a protected variable of their super super super .... class.
+    
+    Deprecated the variable so that that anyone directly referencing variable will get warning and suggestion to use the accessor.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273155 13f79535-47bb-0310-9956-ffa450edef68
+
+commit da5a13f8e4e0e4475f942b5ae5670271b711d423
+Author: Magesh Umasankar <umagesh@apache.org>
+Date:   Tue Jul 9 21:06:15 2002 +0000
+
+    Merge differences between the ANT_15_FINAL branch and the trunk into the trunk.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273081 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6bd8d6e938a45868902ecd1092858e8372933c7c
+Author: Magesh Umasankar <umagesh@apache.org>
+Date:   Sat Jun 22 23:38:38 2002 +0000
+
+    Merge changes made to 1.5 Beta2.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@272967 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ca91f8cb7e4f2bfe1a191dea6126a32649af9565
+Author: Magesh Umasankar <umagesh@apache.org>
+Date:   Sat Jun 1 12:26:43 2002 +0000
+
+    Merge changes made to 1.5 Beta1.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@272826 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 03d0b81deb49fb4b6b87fa7dd648daf8f3bcbf4b
+Author: Conor MacNeill <conor@apache.org>
+Date:   Mon Apr 15 14:56:34 2002 +0000
+
+    Order of modifiers
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@272442 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6154080061f869b4e425d608da3bd61fad967564
+Author: Conor MacNeill <conor@apache.org>
+Date:   Mon Apr 15 12:11:52 2002 +0000
+
+    More coding standard fixes
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@272433 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b7e18b46c407a3a2b29b632055eb03d5ad434151
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Apr 15 09:57:34 2002 +0000
+
+    Make <ftp>'s directory scanner behave the same way as the one for
+    normal filesets when it comes to pattern matching.  The current
+    version did not look at the directory part at all.
+    
+    PR: 4411
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@272430 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 152be14c152edab99f90e8c71f589a6bf8087bbe
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Apr 15 09:33:33 2002 +0000
+
+    Make sure <ftp> closes the output stream when listing files.
+    
+    Cosmetics.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@272428 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 879077fa37b76ac953c13ae4c6e0f62c59c69ffa
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Mar 21 09:47:35 2002 +0000
+
+    add umask and chmod capability to <ftp>
+    
+    Submitted by:	Jay van der Meer <jvandermeer2@comcast.net>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@271938 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f3577cdb5ce536ebcae232a268d7e01f1897e4e9
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Jan 10 13:59:39 2002 +0000
+
+    License police on task definitions:
+    
+    (1) Make sure there is a Copyright notice on all files.
+    
+    (2) Make sure all years in which a file has been modified are
+    listed.
+    
+    (3) Make sure the format is consistent, i.e. separate consecutive
+    years with a dash, not a comma.
+    
+    (4) Change some references from Tomcat to Ant.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270658 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 130315b576401682fedfa9655c790b8380955177
+Author: Stephane Bailliez <sbailliez@apache.org>
+Date:   Tue Jan 8 20:21:58 2002 +0000
+
+    Fix bad coding style.
+    then/else parts of if statement and loop body must always been enclosed
+    in a block statement.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270631 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3a28c02ef6540c2d32aef2665f4abfd00e5937e3
+Author: Magesh Umasankar <umagesh@apache.org>
+Date:   Wed Dec 5 02:06:57 2001 +0000
+
+    setAction(String) replaced with setAction(FTP.Action) for action attribute of the FTP task.  setAction(String) has been deprecated.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270072 13f79535-47bb-0310-9956-ffa450edef68
+
+commit cd1fb767982f2edccacada9cde5fcce18e05355b
+Author: Magesh Umasankar <umagesh@apache.org>
+Date:   Fri Nov 23 19:17:45 2001 +0000
+
+    Remotedir need not be specified for ftp to work.
+    
+    PR: 4821, 5053
+    
+    Submitted by:
+    Erik Hatcher "jakarta@ehatchersolutions.com"
+    Remco Slotboom "remco.slotboom@ctp.com"
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269999 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d17f3c4f2af31dd15b59bc9a2a42fdf2a6854c92
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Oct 31 11:05:00 2001 +0000
+
+    Use locale independent methods to identify OS or match attributes and
+    elements in build files.
+    
+    PR: 4100
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269847 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 76f5174e7c5e445a20eb0c1cbcb22f81e2c72503
+Author: Stephane Bailliez <sbailliez@apache.org>
+Date:   Mon Oct 29 14:25:07 2001 +0000
+
+    Fixed imports accidentely removed during cleanup
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269833 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d12e6411ccc654bc10c102c8a085b6b0e4634f8b
+Author: Stephane Bailliez <sbailliez@apache.org>
+Date:   Sun Oct 28 21:31:01 2001 +0000
+
+    Code clean up:
+     - removed useless/duplicate imports
+     - added explicit imports rather than *
+     - changed specifiers order to be conform to JLS.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269827 13f79535-47bb-0310-9956-ffa450edef68
+
+commit bec2a0777e910345fa7877d5aaa209ddde0937e3
+Author: Conor MacNeill <conor@apache.org>
+Date:   Sun Sep 30 13:21:54 2001 +0000
+
+    Merge of 1.4.1 changes into Main truck for Gump testing
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269745 13f79535-47bb-0310-9956-ffa450edef68
+
+commit df14132289636640ade9cc52ecf8bfdc4ba52433
+Author: Conor MacNeill <conor@apache.org>
+Date:   Thu Aug 30 13:26:38 2001 +0000
+
+    Merge in 1.4 src changes
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269663 13f79535-47bb-0310-9956-ffa450edef68
+
+commit fffe72edb5a6a6deb6222d79841a42c1663ccd36
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Jul 27 14:50:43 2001 +0000
+
+    Add ignoreNoncriticalErrors and skipFailedTransfers attributes to
+    <ftp>
+    
+    ignoreNoncrtiticalErrors makes the task ignore all error messages when
+    creating a directory (some servers return strange codes if the
+    directory in question already exists).
+    
+    skipFailedTransfers warns about failed file transfers but keeps going
+    on - transfering everything that works.
+    
+    Submitted by:	Steve Loughran <steve_l@iseran.com>
+    
+    Add a "mkdir" action to <ftp>, make <ftp> take a missing remote file a
+    "the file is not uptodate" when sending files.
+    
+    Submitted by:	Larry V. Streepy, Jr. <streepy@healthlanguage.com>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269403 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1c03d4738077efd8b9b09670c26b25430c83af1f
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Jul 4 15:05:19 2001 +0000
+
+    properly recurse remote directory in <ftp>
+    
+    PR: 2285
+    Submitted by:	Jean-Francois.Morneau@ift.ulaval.ca (Jean-Francois Morneau),
+                    Roger Vaughn <rogervaughn@yahoo.com>
+    
+    make sure <ftp> disconnects from the server when it's done
+    
+    Submitted by:	Brian Rumple <brumple@VALUBOND.COM>,
+                    Roger Vaughn <rogervaughn@yahoo.com>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269268 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 568f34ca12abadcb872618b04f05c3314c1f2bf4
+Author: Peter Donald <donaldp@apache.org>
+Date:   Thu Jan 11 11:53:52 2001 +0000
+
+    Add in extra error case when creating directories.
+    
+    Submitted By: Stuart Roebuck <stuart.roebuck@adolos.co.uk>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268432 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6c287080d460efa63e022407e88a04558b9fdbb6
+Author: Conor MacNeill <conor@apache.org>
+Date:   Wed Jan 3 14:18:52 2001 +0000
+
+    Make licence statements mention Ant in place of Tomcat
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268392 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6b5745a21d93054c9d1efb9b6782886ba115bf8d
+Author: Peter Donald <donaldp@apache.org>
+Date:   Sat Nov 25 02:38:54 2000 +0000
+
+    Used some elisp magic to remove those tabs and replace with spaces.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268237 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b86a0a2830f81aa373a40ca7db51c5308f58550a
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Nov 15 16:40:33 2000 +0000
+
+    Add a passive mode option to <ftp>
+    
+    Submitted by:	Stuart Roebuck <sr@adolos.com>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268189 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8f65e70de743f36c38e49d728fb7e1858a8a0250
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Nov 8 17:01:10 2000 +0000
+
+    Added a new optional telnet task.
+    
+    Submitted by:	Scott Carlson <scottcarlson@yahoo.com>
+    
+    Moved optional FTP task to the new net package.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268161 13f79535-47bb-0310-9956-ffa450edef68

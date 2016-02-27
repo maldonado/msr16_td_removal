@@ -1,0 +1,73 @@
+commit bb98e4b8decffc0361b70a6c99c1ade5fed0abcb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Mar 28 10:02:33 2013 +0000
+
+    Move RuntimeHelpers to org.jruby.runtime.Helpers.
+
+commit 3856da14eaac69262b5fdf20de638ffb97f9865e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jun 28 17:36:48 2011 -0500
+
+    Fix JRUBY-5773: assignment in a method with default argument strip off other arguments.
+    
+    * setEndArgValues in *DynamicScope were not lining up fields properly.
+
+commit 6e66cedba30922992c1bd13e3c684704841478a5
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Mar 9 03:56:08 2009 +0000
+
+    Some cleanup for DynamicScope and subtypes in preparation for generation logic.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9380 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit bf8db0bc4acaeed7900b867e821e959f254be0be
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sat Nov 22 22:57:11 2008 +0000
+
+    Biggest commit eva (1.9 parser+1.9-runtime-related-changes landing)
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8099 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 36247fea442ff881dc81a00ed3e67420a3527709
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Wed Aug 20 20:51:45 2008 +0000
+
+    Add signatures (currently unused) for dynamic scopes to assign args without needing to box them first.  We will use these later and I want to reduce patch size for an experimental patch.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7504 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a537fc64feaefb7c06a22621f23264d3be5d7435
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jul 14 07:08:49 2008 +0000
+
+    Enable ThreeVar scope globally.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7162 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 3187530acd3e00809b114e345a1d91afa273b7c9
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jul 14 07:08:38 2008 +0000
+
+    Set up hierarchy ThreeVar < TwoVar < OneVar < NoVar to reduce repetition and simplify implementation of higher-order scopes.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7160 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit fd4b104d0e7193fc8c7f6e66c529cacaf7d15e62
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jul 14 07:08:07 2008 +0000
+
+    Add "index two" entry points into DynamicScope.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7158 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit aafd3613a2c1104e3c22d2483e3868099999df3e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jul 14 07:08:00 2008 +0000
+
+    Add three-var scope, not enabled yet.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7157 961051c9-f516-0410-bf72-c9f7e237a7b7

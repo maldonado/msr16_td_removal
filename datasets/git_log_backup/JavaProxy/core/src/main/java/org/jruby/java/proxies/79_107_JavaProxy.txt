@@ -1,0 +1,343 @@
+commit 28137f59dcada90884958b081710e34555e0ba38
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Aug 18 12:23:07 2015 -0500
+
+    Fix class-level java_send varargs path to accept all arities.
+
+commit 69f9741525255f629a8bde3e6f68376e0ca65e7c
+Merge: af7f58f b2d759a
+Author: kares <self@kares.org>
+Date:   Sun Aug 16 18:28:10 2015 +0200
+
+    Merge branch 'jruby-1_7'
+    
+    * jruby-1_7:
+      add declaring class methods for Java/Ruby on JavaConstructor
+      make the java method spec pass on Ruby > 1.9 (method names are symbols)
+      move and add some more Java 8 interface specs
+      use (Java 6+) compiler API instead of `javac` (to make sure right is used)
+      increase return type on internal method
+      re-use some code snippets within instance and meta java_send impls
+      move JavaProxyClassMethods from Java into JavaProxy instead
+      spec TypeError raised with java_send when there's a type mismatch
+      spec how Java array[].to_s behaves on non-byte[]
+      move byte[] proxy to_s into a specialized class
+      avoid e.printStackTrace + init native ex.cause and cleanup RubyDigest some
+      make require 'digest/bubblebabble' work (MRI compatibility)
+      Fix Digest bubblebabble incorrect output on empty string
+      Remove several layers on copying in babblebubble.
+      Add direct BubbleBabble power from OpenSSH
+      manually filter out matching callables with non-matching arguments length
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/ext/digest/RubyDigest.java
+    	core/src/main/java/org/jruby/javasupport/Java.java
+
+commit 15fe810e3edbea62b89d6c203c9bbe11fb3dafcf
+Author: kares <self@kares.org>
+Date:   Sat Aug 15 23:32:00 2015 +0200
+
+    increase return type on internal method
+
+commit f5b131099ce1847db6838ed5897ec4637d5c2989
+Author: kares <self@kares.org>
+Date:   Sat Aug 15 18:14:16 2015 +0200
+
+    re-use some code snippets within instance and meta java_send impls
+
+commit 83c15b313bbaf31bb824f67b1fd563e8b44d2e66
+Author: kares <self@kares.org>
+Date:   Sat Aug 15 16:51:33 2015 +0200
+
+    move JavaProxyClassMethods from Java into JavaProxy instead
+
+commit 40beb472cb17c6c0cbf46ba199a9461e0e7bd877
+Merge: c0c086e e237201
+Author: kares <self@kares.org>
+Date:   Mon May 25 16:54:09 2015 +0200
+
+    Merge branch 'jruby-1_7'
+    
+    * jruby-1_7: (54 commits)
+      [travis-ci] re-try sudo: false
+      dry out the two (Java helper) respond_to_p19 methods
+      respondsTo JRuby API under 1.9.3 does not do respond_to_missing? like MRI does
+      sleep should convert it's "time interval" argument the same way as MRI
+      respond_to_missing? should always get a symbol name passed (fixes #2946)
+      add a respond_to_missing unit test (on 1.9)
+      introduce and use conversion( just like MRI does) on #timeout's sec argument
+      add missing ' ' (space) in exception message ... TypeError from `sleep('invalid')`
+      DateTime.iso8601 fails with an error if a second fraction is present
+      [build] switch to 1.7.21-SNAPSHOT for test-jruby-jars
+      refactor Timeout's scheduled tasks to an inner class (for easier identification)
+      further hand drying of the Timeout module impl
+      less (int) casting noiz
+      add some (internal) generics for an improved readability xp
+      inner class' Finalizer fields id and finalized can be final
+      generix-ize the environment field (at least internally) + use a StringBuilder
+      unnecessary (int) cast
+      missing throw statement in RubyString's concat
+      tune timeout to work when scheduling or argument convenrsion throws (see #2940)
+      return empty Ruby array for empty dir list
+      ...
+    
+    Conflicts:
+    	.gitignore
+    	.travis.yml
+    	VERSION
+    	core/pom.xml
+    	core/src/main/java/org/jruby/RubyArray.java
+    	core/src/main/java/org/jruby/RubyBasicObject.java
+    	core/src/main/java/org/jruby/RubyDir.java
+    	core/src/main/java/org/jruby/RubyEnumerable.java
+    	core/src/main/java/org/jruby/RubyFile.java
+    	core/src/main/java/org/jruby/RubyGlobal.java
+    	core/src/main/java/org/jruby/RubyIO.java
+    	core/src/main/java/org/jruby/RubyKernel.java
+    	core/src/main/java/org/jruby/RubyModule.java
+    	core/src/main/java/org/jruby/RubyString.java
+    	core/src/main/java/org/jruby/RubyTime.java
+    	core/src/main/java/org/jruby/ext/timeout/Timeout.java
+    	core/src/main/java/org/jruby/java/proxies/JavaProxy.java
+    	core/src/main/java/org/jruby/util/Dir.java
+    	core/src/main/java/org/jruby/util/encoding/CharsetTranscoder.java
+    	docs/man/pom.xml
+    	docs/pom.xml
+    	ext/pom.xml
+    	ext/readline/pom.xml
+    	ext/ripper/pom.xml
+    	lib/pom.xml
+    	lib/ruby/1.9/date/format.rb
+    	lib/ruby/1.9/io/linux_console.rb
+    	lib/ruby/shared/gauntlet_rubygems.rb
+    	lib/ruby/shared/rubygems.rb
+    	lib/ruby/shared/rubygems/available_set.rb
+    	lib/ruby/shared/rubygems/basic_specification.rb
+    	lib/ruby/shared/rubygems/command.rb
+    	lib/ruby/shared/rubygems/command_manager.rb
+    	lib/ruby/shared/rubygems/commands/cert_command.rb
+    	lib/ruby/shared/rubygems/commands/cleanup_command.rb
+    	lib/ruby/shared/rubygems/commands/contents_command.rb
+    	lib/ruby/shared/rubygems/commands/dependency_command.rb
+    	lib/ruby/shared/rubygems/commands/environment_command.rb
+    	lib/ruby/shared/rubygems/commands/generate_index_command.rb
+    	lib/ruby/shared/rubygems/commands/help_command.rb
+    	lib/ruby/shared/rubygems/commands/install_command.rb
+    	lib/ruby/shared/rubygems/commands/list_command.rb
+    	lib/ruby/shared/rubygems/commands/mirror_command.rb
+    	lib/ruby/shared/rubygems/commands/outdated_command.rb
+    	lib/ruby/shared/rubygems/commands/owner_command.rb
+    	lib/ruby/shared/rubygems/commands/pristine_command.rb
+    	lib/ruby/shared/rubygems/commands/push_command.rb
+    	lib/ruby/shared/rubygems/commands/query_command.rb
+    	lib/ruby/shared/rubygems/commands/search_command.rb
+    	lib/ruby/shared/rubygems/commands/setup_command.rb
+    	lib/ruby/shared/rubygems/commands/specification_command.rb
+    	lib/ruby/shared/rubygems/commands/uninstall_command.rb
+    	lib/ruby/shared/rubygems/commands/unpack_command.rb
+    	lib/ruby/shared/rubygems/commands/update_command.rb
+    	lib/ruby/shared/rubygems/commands/which_command.rb
+    	lib/ruby/shared/rubygems/commands/yank_command.rb
+    	lib/ruby/shared/rubygems/compatibility.rb
+    	lib/ruby/shared/rubygems/config_file.rb
+    	lib/ruby/shared/rubygems/core_ext/kernel_gem.rb
+    	lib/ruby/shared/rubygems/core_ext/kernel_require.rb
+    	lib/ruby/shared/rubygems/defaults.rb
+    	lib/ruby/shared/rubygems/dependency.rb
+    	lib/ruby/shared/rubygems/dependency_installer.rb
+    	lib/ruby/shared/rubygems/dependency_list.rb
+    	lib/ruby/shared/rubygems/deprecate.rb
+    	lib/ruby/shared/rubygems/doctor.rb
+    	lib/ruby/shared/rubygems/errors.rb
+    	lib/ruby/shared/rubygems/exceptions.rb
+    	lib/ruby/shared/rubygems/ext.rb
+    	lib/ruby/shared/rubygems/ext/builder.rb
+    	lib/ruby/shared/rubygems/ext/cmake_builder.rb
+    	lib/ruby/shared/rubygems/ext/configure_builder.rb
+    	lib/ruby/shared/rubygems/ext/ext_conf_builder.rb
+    	lib/ruby/shared/rubygems/ext/rake_builder.rb
+    	lib/ruby/shared/rubygems/gemcutter_utilities.rb
+    	lib/ruby/shared/rubygems/indexer.rb
+    	lib/ruby/shared/rubygems/install_update_options.rb
+    	lib/ruby/shared/rubygems/installer.rb
+    	lib/ruby/shared/rubygems/installer_test_case.rb
+    	lib/ruby/shared/rubygems/local_remote_options.rb
+    	lib/ruby/shared/rubygems/name_tuple.rb
+    	lib/ruby/shared/rubygems/package.rb
+    	lib/ruby/shared/rubygems/package/old.rb
+    	lib/ruby/shared/rubygems/package/tar_header.rb
+    	lib/ruby/shared/rubygems/package/tar_reader/entry.rb
+    	lib/ruby/shared/rubygems/package/tar_writer.rb
+    	lib/ruby/shared/rubygems/path_support.rb
+    	lib/ruby/shared/rubygems/platform.rb
+    	lib/ruby/shared/rubygems/psych_additions.rb
+    	lib/ruby/shared/rubygems/rdoc.rb
+    	lib/ruby/shared/rubygems/remote_fetcher.rb
+    	lib/ruby/shared/rubygems/request.rb
+    	lib/ruby/shared/rubygems/request_set.rb
+    	lib/ruby/shared/rubygems/request_set/gem_dependency_api.rb
+    	lib/ruby/shared/rubygems/requirement.rb
+    	lib/ruby/shared/rubygems/resolver/current_set.rb
+    	lib/ruby/shared/rubygems/security.rb
+    	lib/ruby/shared/rubygems/security/policy.rb
+    	lib/ruby/shared/rubygems/security/signer.rb
+    	lib/ruby/shared/rubygems/security/trust_dir.rb
+    	lib/ruby/shared/rubygems/server.rb
+    	lib/ruby/shared/rubygems/source.rb
+    	lib/ruby/shared/rubygems/source/installed.rb
+    	lib/ruby/shared/rubygems/source/local.rb
+    	lib/ruby/shared/rubygems/source/specific_file.rb
+    	lib/ruby/shared/rubygems/source_list.rb
+    	lib/ruby/shared/rubygems/spec_fetcher.rb
+    	lib/ruby/shared/rubygems/specification.rb
+    	lib/ruby/shared/rubygems/ssl_certs/AddTrustExternalCARoot.pem
+    	lib/ruby/shared/rubygems/stub_specification.rb
+    	lib/ruby/shared/rubygems/syck_hack.rb
+    	lib/ruby/shared/rubygems/test_case.rb
+    	lib/ruby/shared/rubygems/test_utilities.rb
+    	lib/ruby/shared/rubygems/text.rb
+    	lib/ruby/shared/rubygems/uninstaller.rb
+    	lib/ruby/shared/rubygems/uri_formatter.rb
+    	lib/ruby/shared/rubygems/user_interaction.rb
+    	lib/ruby/shared/rubygems/util/list.rb
+    	lib/ruby/shared/rubygems/validator.rb
+    	lib/ruby/shared/rubygems/version.rb
+    	maven/jruby-complete/pom.xml
+    	maven/jruby-dist/pom.xml
+    	maven/jruby-jars/pom.xml
+    	maven/jruby-noasm/pom.xml
+    	maven/jruby-rake-plugin/pom.xml
+    	maven/jruby-stdlib/pom.xml
+    	maven/jruby/pom.xml
+    	maven/pom.xml
+    	pom.xml
+    	test/pom.xml
+    	test/test_dir.rb
+    	test/test_kernel.rb
+    	test/test_respond_to.rb
+    	test/test_timeout.rb
+
+commit df1d09dd43c04ecb34a2a7a71ad3ee7e61599660
+Author: kares <self@kares.org>
+Date:   Mon Apr 27 22:56:35 2015 +0200
+
+    extract arg size mismatch check into a private method
+
+commit c26fe1ba92acad0de01273d4711711f8e2e690ec
+Merge: ab4be7b dd9cf5f
+Author: kares <self@kares.org>
+Date:   Thu Mar 26 10:51:46 2015 +0100
+
+    Merge branch 'jruby-1_7'
+    
+    * jruby-1_7: (35 commits)
+      align added JavaSupport method name with convention
+      test `[].copy_data` addon - also added alias so it can be used with 2 args as well
+      cleanup and add tests from Java array addons ...  seems a litle strange
+      move Java array assertions around from equality test
+      should override proxy implemented call() with block as well
+      export void early on with other (primitives) and test it's behaviour
+      DRY-up interface-template impl ... (extracted some anonymous into inner classes)
+      handle nested array.to_java conversion where element is already an array + cleanup
+      implement array.component_type helper on the Ruby side + test how [].to_java works
+      fix array factories `Java::int[1][2].new` as well as `Java::byte.new_array(3)` (#2749)
+      unify and test the no-matching-callable raised error messages / hints
+      handle yet another unnecessary "ambiguous Java methods found" warning
+      add a JI test - setting a security manager created in Ruby
+      use `getArity()` in favor of `getParameterTypes().length`
+      use IntHashMap as callable cache for `__jcreate!` method and share a new-cache helper
+      the intention here was to "use the lowest-arity non-overload" and we're finally there!
+      as (most) Java invokers will not have overrides - they won't use the internal cache ... for loading up JRuby's built-in JI classes this saves up allocating > 2100 maps
+      explicit inspect() method for JavaProxyConstructor + annotate with JRubyClass
+      a working inspect for Java proxy methods
+      empty class array count-- and make sure correct name is annotated with @JRubyClass
+      ...
+    
+    Conflicts:
+    	core/pom.xml
+    	core/src/main/java/org/jruby/java/invokers/StaticMethodInvoker.java
+    	core/src/main/java/org/jruby/javasupport/JavaMethod.java
+    	core/src/main/java/org/jruby/javasupport/JavaSupport.java
+    	core/src/main/java/org/jruby/javasupport/JavaUtil.java
+    	test/test_higher_javasupport.rb
+
+commit 55a98ccd5eb181aba13140387f43e74388b8189e
+Author: kares <self@kares.org>
+Date:   Tue Mar 24 09:15:05 2015 +0100
+
+    fix array factories `Java::int[1][2].new` as well as `Java::byte.new_array(3)` (#2749)
+
+commit 250976c35aed2194d78f3b4e2505602ca9a5e65d
+Author: kares <self@kares.org>
+Date:   Wed Mar 18 11:25:45 2015 +0100
+
+    add prettyParams with StringBuilder passed in helper + less garbage in CodegenUtils
+
+commit 983af6e8deac98eb47710bb718293fbd0520665b
+Merge: f2359d1 b596b5a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Feb 27 13:14:07 2015 -0600
+
+    Merge remote-tracking branch 'origin/jruby-1_7'
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/java/invokers/ConstructorInvoker.java
+    	core/src/main/java/org/jruby/java/proxies/JavaProxy.java
+    	core/src/main/java/org/jruby/javasupport/Java.java
+    	core/src/main/java/org/jruby/javasupport/JavaSupport.java
+
+commit f4e7711b545a086a64084b33cfe9afd43a51eb23
+Author: kares <self@kares.org>
+Date:   Wed Feb 4 13:15:42 2015 +0100
+
+    move (related) static getJavaClass helper into JavaClass (and name both accordingly)
+
+commit 45d1fa033dac18c5b9de1d9f31aca2b212ffac21
+Author: kares <self@kares.org>
+Date:   Sat Jan 31 17:43:48 2015 +0100
+
+    no need to copy the byte[] array returned from output stream's `toByteArray`
+
+commit 45940a4b23ca279aa17430f7b177f70025e83743
+Author: kares <self@kares.org>
+Date:   Sat Jan 31 17:42:56 2015 +0100
+
+    hide the object field and use getObject internally as well + minor cleanup of some code
+
+commit 7a07d22cbf589c13cb914da4be35cd5e0bb92624
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Aug 6 13:36:34 2014 -0500
+
+    Propagate ThreadContext.
+
+commit 95637342f1ce0e4bf11362b2790bfc1f77c5a9bb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Aug 6 13:36:00 2014 -0500
+
+    Arity-split rest form should set required = min args.
+
+commit f5313d521aa68dd45ce23407ea31aeddcfba4a1b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Aug 6 13:22:20 2014 -0500
+
+    More tweaks for exception-raising in JI calls.
+    
+    * Propagate ThreadContext through for stack rewriting.
+    * Avoid creating intermediate objects for rewriting.
+
+commit fc62c340dddb0adbb91e6a9d45ed73411c3a9744
+Author: Daniel Marcotte <dmarcotte@gmail.com>
+Date:   Tue Apr 15 09:28:40 2014 -1000
+
+    Static JavaProxy#getJavaClass needs to clear $!
+    
+    Calls from Ruby which go through JavaProxy.getJavaClass (ie.
+    field_writer, field_reader, and field_accessor) can result in $!
+    incorrectly containing a NoMethodError from its attempt to invoke
+    "java_class".  Ensure we clear it in the catch block.
+
+commit 28c6fbc4e883bc1c9e9242d1da1cb2b785f55339
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 3 12:46:45 2013 -0500
+
+    Move to @mkristian's proposed layout, with some modifications.

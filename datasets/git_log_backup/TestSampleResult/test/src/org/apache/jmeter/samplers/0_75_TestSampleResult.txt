@@ -1,0 +1,189 @@
+commit d02e144ece8303713c867f197699c710f9d28593
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Dec 17 00:16:06 2011 +0000
+
+    Bug 52333 - Reduce overhead in calculating SampleResult#nanoTimeOffset
+    Use a background thread to calculate the offset instead of doing it each sample
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1215361 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ee71ded289aa8f663fa0b85a60bef1962c95616d
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Wed Sep 21 01:03:09 2011 +0000
+
+    Add optional pause between child samples
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1173449 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f382c7e4373c33d644f553a3532ce95564b8d95e
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Wed Sep 21 00:48:08 2011 +0000
+
+    Bug 51855 - Parent samples may have slightly inaccurate elapsed times
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1173443 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3f24d3a87b4fbacf56682a3d9dbf24cfba95191e
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Sep 20 01:13:04 2011 +0000
+
+    Rename variables to make them clearer
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1172939 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6bab8798d13fe909c1064a36bb392a5a89b95a6b
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Mon Sep 19 22:50:16 2011 +0000
+
+    Adjust nanoTime fudge factors.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1172874 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 027940eb28ce9c610915496fe7d4466cb1c5f8e3
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Apr 2 14:46:13 2011 +0000
+
+    Add fudge factor to total time as well
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1088040 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 81ff872b26ce169faaae3df54d9f71cd28cf8da5
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Mon Jan 3 01:16:23 2011 +0000
+
+    Add fudge factor for overall time comparison
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1054512 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6f1170e749567f5d3cb205a8dd6f2ce0ed23a409
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Jan 2 23:46:24 2011 +0000
+
+    Test both with and without using nanoTime
+    Still some boundary errors using nanoTime which have yet to be resolved
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1054498 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ace9627dac5e86b36e40cd3f0d7ab82fa9512606
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Mon Nov 22 23:18:05 2010 +0000
+
+    System.nanoTime() tends to drift relative to System.currentTimeMillis().
+    Change SampleResult to recalculate offset each time.
+    Also enable reversion to using System.currentTimeMillis() only.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1037933 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 778f7532ee90c401353ed816ce1c2bfcef9bc721
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Wed Apr 21 00:00:09 2010 +0000
+
+    Use assertEquals(exp,actual) rather than assertTrue(actual==exp) to give more info on failure
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@936117 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 7dadcc1bd9581178bba3e0f65280b6be48721a76
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Aug 14 20:16:36 2009 +0000
+
+    Drop some deprecated/unused methods
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@804356 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1d78e952d048032efe90873c97cedcc1ca611c5e
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Mon May 18 01:03:08 2009 +0000
+
+    Allow for timer resolution generating short elapsed time
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@775786 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 832cee11d2714155b8fb823aa442b5dd72a3b6ba
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun May 10 18:19:28 2009 +0000
+
+    Tab police
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@773382 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 97f5943089bcb0248170d09431a17b8a745d5aa6
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Apr 29 21:10:55 2008 +0000
+
+    Ensure that static variables are final to ensure visibility
+    Trim variable name parameter in function calls
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@652128 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e48b6d0c929c6874b7f215144aba266c2981b2ee
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Mar 29 01:10:57 2008 +0000
+
+    Bug 44600 - 1-ms resolution timer when running with Java 1.5+
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@642469 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e8a2ef47f9cc95da3e8d9e40d002d5f88ed028cd
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Oct 23 18:52:45 2007 +0000
+
+    Updated tests for getDataEncoding() + WithDefault() and NoDefault()
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@587604 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f37e800011421cb284868fc0bc93ebf3d66771c8
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Aug 14 10:20:31 2007 +0000
+
+    Allow for quoted charset in Content-Type parsing
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-2@565694 13f79535-47bb-0310-9956-ffa450edef68
+
+commit cc16f616cfdf79da872f0e1ea2d6e80478a3f67c
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Jul 10 01:16:26 2007 +0000
+
+    Allow for timing variations
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-2@554800 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a933487bee3d9000f8ee0f2f672a3ac29d3ab8b8
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Apr 24 21:35:53 2007 +0000
+
+    Allow some margin of error
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-2@532089 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d1bab6aedbaf1129882d2f1d60c6ac77662ee089
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Apr 22 13:33:11 2007 +0000
+
+    Bug 42184 - Number of bytes for subsamples not added to sample when sub samples are added
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-2@531175 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1aae0782a7be4f6abcf2c8b61d52b078f1f1ccd6
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Feb 27 21:38:06 2007 +0000
+
+    Show time if test fails
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-2@512431 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e5232161398dac373c43660652d26e8dd5cbdd8d
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Jan 7 18:31:05 2007 +0000
+
+    Update license (remove copyright)
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-2@493796 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 521fea2d067fe5cbc362f71c70fcb133720b97a2
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Jan 13 00:39:35 2006 +0000
+
+    Move test code to test tree
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-1@368532 13f79535-47bb-0310-9956-ffa450edef68

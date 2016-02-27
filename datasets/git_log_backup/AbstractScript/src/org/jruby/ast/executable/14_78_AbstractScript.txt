@@ -1,0 +1,454 @@
+commit 3d12d1c5eddc16329633feb8fa569223b34768b8
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Nov 28 16:38:33 2012 -0600
+
+    Final modifications to get scopes loading from cache.
+    
+    * For initial Script execution via __file__, must setRootScope
+    * Script.load impl will setRootScope
+    * All other method forms will receive scope index from parent compiler
+
+commit 12302a420c0165e41095e6d8367d316c69bc9c4c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Nov 28 13:42:19 2012 -0600
+
+    Pass parent StaticScope into creation.
+    
+    This allows us to provide the parent scope without having it
+    pushed on ThreadContext.
+
+commit 55c3b8f755c0d49612932d438f92ed6f21b82254
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Nov 28 13:16:55 2012 -0600
+
+    Modify scope and block creation to decouple them.
+    
+    * Single method decodeScope for decoding all types of scopes
+    * New StaticScope::Type enum to indicate type of scope
+    * Closure creation receives StaticScope rather than instantiating
+
+commit ad53c9945faebec469f62be8c9a916b04c1a78e2
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Nov 28 11:17:41 2012 -0600
+
+    Modify compiler to use non-deprecated const lookup methods.
+    
+    * Const lookup and defined pass in StaticScope
+    * AbstractScript/RuntimeCache receive StaticScope
+    * Compiled code uses context.getCurrentStaticScope for now
+
+commit efe3f08ee65a2e85c239ecdece74b9a54002bb1b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Sep 17 22:02:38 2012 -0500
+
+    Simplify constant and ivar defined? logic in the compiler.
+
+commit b03d0bc89aefca13deaff7a568e5d9118a9ca2a8
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Sep 17 01:42:22 2012 -0700
+
+    Performance improvements for defined? logic.
+    
+    * Return a cached, frozen string rather than recreating each time.
+    * Cache variable accessors for ivar defined? checks.
+
+commit 34e41ea98e5fe328792f763018e19b09b5e5a172
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Aug 20 18:27:18 2011 -0500
+
+    Changes to support using StaticScope directly for constant lookup.
+    
+    * Return index from cacheStaticScope for future use.
+    * Add loadScope that uses that index.
+    * Modify invokedynamic-based caching to use AbstractScript/RuntimeCache too.
+
+commit 36dd3a0424ec9789a402a60d6262fff7c7a59c75
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Jul 10 01:45:11 2011 -0500
+
+    Fix JRUBY-4339: Kernel.load with wrap=true does not protect the global namespace of calling program
+    
+    * We were not wrapping the script's scope with an anonymous module.
+
+commit 5a1892972b7a06a5b5e5a3b828e77bf3f21ed4f9
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Apr 21 08:59:31 2011 -0500
+
+    Cleanup and reduce bytecode for loading some common literal and runtime values.
+
+commit 56b5c02366235e7e95edb16ff978b8d25f0a3cdd
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Apr 20 09:34:44 2011 -0500
+
+    Cache a Float instance for literals, like other impls do.
+
+commit 92f10a22aa94e4a7ca02d6aaf7b8054ccff18f11
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Jan 8 01:54:05 2011 -0600
+
+    [1.9] Implement Proc#parameter for compile blocks.
+
+commit 9af2369886892c745309ef643b8ba97f7efe6467
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jan 7 17:14:05 2011 -0600
+
+    Fixes for 1.9 encoding logic in compiled code.
+    
+    * Implement __ENCODING__
+    * Cache encodings in constructor, avoiding re-lookup
+    * Pass through encoding properly for regexp
+    * Pull in fixed ByteList that actually sets encoding field in constructors
+
+commit cfae2e9bdbd00400d62776e6a010d57d0c3a9d71
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Jan 6 00:30:43 2011 -0600
+
+    [1.9] Add encoding support to compiled strings, plus test.
+
+commit 32cca6240b3096c6228ac2cf1490bd9f065dbc8d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jan 5 20:31:38 2011 -0600
+
+    Add codeRange to compiled literal strings. Encoding will come next.
+
+commit 042f381d860fdd0261222d924c9b37c246634918
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jan 4 18:14:11 2011 -0600
+
+    Preserve original bytes in literal strings and regexp, in preparation for non-Unicode encodings.
+
+commit 3849128d6ab797ecef79db8786ac8bcea11fbbf3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jan 12 09:35:07 2010 -0600
+
+    Reduce bytecode size by packing all basic cache initialization into a descriptor string that's parsed on load.
+
+commit d9656d2b20c159592a0ddbcda9e6059d78862fba
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Dec 19 16:59:47 2009 -0600
+
+    Move all caching logic out of "real class" and use RuntimeCache (now top-level) for method caching.
+
+commit 888e2f97c391b6050358c35f7b808ac13cfb9ec2
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Nov 2 17:43:00 2009 -0800
+
+    Remove a volatile modifier from inline cache and start reducing guard-checking to all static calls.
+
+commit ea7757221be2641a1256ebe84b1191ea7490eb59
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Oct 14 23:48:52 2009 -0500
+
+    Fix for JRUBY-4037: Ruby 1.8 compatibility: /#{/\w/}/uo does not work as expected
+    
+    Thanks to James Abley for the footwork.
+
+commit 40737de684dbd64fb3f60514f84cb1d853f81d59
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jul 13 09:28:51 2009 -0500
+
+    Move runtime caches to a floating structure, rather than living on the script. Will make it easier to support a static cache in the future.
+
+commit 2afcfd01ef871cd643cd32700201601b52b386eb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jun 2 21:05:44 2009 -0700
+
+    Revert "Inline caching for global variable accessors. Why? Because it's there!"
+    
+    This reverts commit ed72b6b0d8761df1b0404ac82563158f8428aa2f.
+    
+    This breaks the JSR223 engine's global variable stuff. We'll need to take another look at doing this, if it's actually worth doing. JRUBY-3729.
+
+commit 4519b9a1647ceed1dd9545958f596be68e9ea18e
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri May 22 15:29:02 2009 -0500
+
+    JRUBY-3509: uninitialized constant when using ResourceController plugin with Rails 2.2.2
+
+commit ed72b6b0d8761df1b0404ac82563158f8428aa2f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu May 14 10:01:28 2009 -0500
+
+    Inline caching for global variable accessors. Why? Because it's there!
+
+commit 7bd55a3d3ab30771d185c23f336c88e22e2764ca
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Apr 6 12:34:33 2009 -0500
+
+    First steps toward inlinable dyncalls. This modification will pull single-arg fcalls all the way back to the call site. This speeds up some benchmarks but slows others, and so it still requires a property jruby.compile.inlineDyncalls=true.
+
+commit c8c9e55f7f1afdde43d4cdd2b5635055b3765af4
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Apr 1 03:29:09 2009 +0000
+
+    Hook up the compiler to the new ivar logic.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9511 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 977af497b1e90f0d91e9059e1f6b1b7f3b2b7868
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Mar 23 02:23:23 2009 +0000
+
+    Add dyncall optimizations (arity paths, inline caching) to super calls (not zsuper yet).
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9460 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit da9a0701fa884af0f8c246d87dce16a48976bd00
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Feb 22 20:26:24 2009 +0000
+
+    Revert "Add Float caching to compiler and interpreter. Passes all tests, improves performance, but I feel like I didn't do it before on purpose..."
+    
+    Apparently floats can be frozen and tainted.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9266 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 83bcb0122b4f5095625c368f6373fe2bacb2fd4f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Feb 21 20:11:32 2009 +0000
+
+    Add Float caching to compiler and interpreter. Passes all tests, improves performance, but I feel like I didn't do it before on purpose...
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9261 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 04602b8b0c0dcf59ecb5c978870d6d433d8b13c3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jan 14 01:50:05 2009 +0000
+
+    1.9-compatible argument processing for blocks.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8753 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 61087b655f62b02867a748d631c4cef06c506284
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jan 12 00:09:33 2009 +0000
+
+    Fix issues preventing precompiled run from passing:
+    
+    * Heap scope was not properly initializing local variables to nil in a class body, causing self to be nil and screwing up super from block-based methods (define_method) in that body.
+    * Mark literal regexp as such when creating them in AbstractScript.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8714 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 40bebd6552460a2bdd1405a242efa77d08c250be
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jan 2 10:12:30 2009 +0000
+
+    Cleanup, optz for regexp; no more using a custom field and offload some logic to AbstractScript methods.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8560 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 4306ab442612b820b5aca0da12ff4fc4ae80e740
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jan 2 08:56:58 2009 +0000
+
+    String optz:
+    
+    * Reduced bytecode emitted for literal strings
+    * Caching bytelists for literal strings in the same way as other literals, rather than on a static array
+    * Increased starting size for dstr to 20 bytes from ByteList's default 4
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8559 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit b6a2b7c54a716e9783a070552d5e0edf2d3dd77b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jan 2 07:19:34 2009 +0000
+
+    Add Colon2 and Colon3 caching to compiler.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8558 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit ff9baab4ad2d88d6b41bf0cd0d789463d53b9bd7
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jan 2 04:22:19 2009 +0000
+
+    Optz for class/sclass/method bodies, to get the usual variable optz and reduce per-entry cost due to recreating the scope.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8555 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d1c60c3a0f6bb0988d89fe1274cd0c6b24ca9447
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Jan 1 22:04:07 2009 +0000
+
+    Move BigInteger caching to use an array and AbstractScript methods like the other literals. Also, store the strings as base 16 to save PRECIOUS MEMORY.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8541 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit f9d229ea390c5e25992499a656e16f9dcb93c38d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Dec 29 02:42:46 2008 +0000
+
+    Microopt to eliminate need to push an index for the first 10 regexps, blockbodies, block callbacks, fixnums, symbols, constants, and callsites.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8494 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 6adbf9efe7ad933050fbae15ae1a83127a3ef8b8
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Dec 23 07:58:27 2008 +0000
+
+    Migrate for/BEGIN/END blocks to newer reduced-bytecode binding mechanisms. Eliminates the synthetic method by calling a pre-defined method, and caches in an array instead of in separate, custom fields for every class.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8438 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 292ccf116b2040c8720259b46e1e1dfd7cfbb96c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Dec 21 22:43:19 2008 +0000
+
+    Fix my regression: when there's no local variables, it was creating an array of one empty string, instead of an empty String[].
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8427 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 0b01fd39c3eb7c08f19db278d903353186f91879
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Dec 21 21:13:14 2008 +0000
+
+    Greatly reduce the amount of bytecodes emitted for closure bodies by moving most of the BlockBody construction logic to pre-defined methods. Saves all the bytecode for creating the BlockBody plus the synthetic method into which it was embedded.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8426 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit e09fd7a571635fdeaf60ec2f7641facbed7150bf
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Dec 20 08:47:18 2008 +0000
+
+    More bytecode/compiler cleanups:
+    
+    * Actually enable the logic to emit only a single __file__ method for the root of a script; --bytecode output now looking pretty clean. This backs off from the ScriptBodyCompiler approach and just makes root scopes claim they have a restarg at 0 but don't process args.
+    * Revert by-value cache slot sharing for regexp objects, since they can be individually tainted. The fact that we cache them at all is probably still in violation of this behavior, but hell, it's tainting.
+    * Eliminate a rogue ALOAD in constructor/cache setup.
+    * Eliminate generating a clinit method if there's not going to be anything in it. Affects any scripts/methods that don't have literal strings (and maybe one or two other things).
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8410 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit bda00e4e4bbedc9e1dd1644705a83b1f5683784f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Dec 20 07:41:38 2008 +0000
+
+    Cache literal regexp like any other literal, using an array and simple pre-defined initializer methods. Reduces bytecode size for literal regexp many times over. Also added a literal regexp benchmark.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8408 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d33e3308b7284cac60d0709f129a0a96049f01b4
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Dec 2 21:12:33 2008 +0000
+
+    Fix for JRUBY-3140: Const lookup failures in precompiled specs
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8247 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 302eb3dfb6a1d052cad541a49081795590e6efa5
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Oct 31 02:51:34 2008 +0000
+
+    Reenable constant cache with a global generation number; name-based was tricky to get right and I'm really burned out.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7976 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a30371eddf9dfe72eb1520de4ab3c7bbde9b7c30
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Oct 29 03:35:55 2008 +0000
+
+    Disabling constant caching for JRUBY-3091 and adding two cases for two found issues. There may be more.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7936 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d6a74cb976e310ae581c9f4368b1fac90904267c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Oct 28 19:21:56 2008 +0000
+
+    Add constant caching logic to the compiler, matching interpreter for JRUBY-3062.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7928 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 7c91133ccd72bcb48a1c8c46bd6e3f30816f4abe
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Oct 20 21:00:25 2008 +0000
+
+    Primary set of changes to support JRUBY-3014; compiled scripts now have to have a setFilename method that is used before execution to set what filename the script actually is, allowing __FILE__ to be dynamic for .class files when loading. Still need to fix jar-file location for loaded scripts, both interpreted and compiled.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7898 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 9f134d477a57af330c47aa2ac784ab12baeb5c9e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Aug 31 02:35:36 2008 +0000
+
+    Migrate Fixnum caching to use an array, like call sites and symbols. Same advantages apply as for symbols, and again this is oddly faster than using fields.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7594 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 02478636cdb1023765a309575232fa81b84942e6
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Aug 31 00:57:51 2008 +0000
+
+    Move RubySymbol caching to using arrays as well; in this case, moving to an array has mostly memory benefits, probably moreso than for call sites since symbols are not as common as calls. And even more oddly, moving to an array-based ccache sped up bench_symbol substantially.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7593 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 4ecbc6b0076e38e1bb0770ab204c8cc598fa2de9
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Aug 31 00:29:45 2008 +0000
+
+    Modify call site caching to construct an array of call sites, rather than using fields on the script object. This reduces both bytecode and memory overhead for call sites, since arrays take up only the space they need unlike the 50 call site fields originally on AbstractScript. This should in turn have the effect of reducing memory usage per compilation unit by (50 - number of call sites) * 4 bytes for cases with less than 50 call sites. Oddly enough, moving to an array of call sites from fields seems to have no effect on performance.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7592 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 3854660a4033c5824a6af54c72ca862041ac23c1
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jun 3 01:31:59 2008 +0000
+
+    Add fixnum caching to the inherited cache compiler, to avoid generating a ton of methods for all classes that have any fixnums in them.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6868 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 2b6bb1be0cd613626e9b8c1793cc8bc77c865ede
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun May 11 06:53:08 2008 +0000
+
+    Almost all changes and fixes to get arity 1-3 working correctly. A few remaining issues.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6673 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 9d7e06e6ca01cc6b4e6efbccc60ef4b43e3e6904
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Apr 29 23:31:06 2008 +0000
+
+    Add a fix and test for rvalyi's issue: non-inherited symbols were not being retrieved correctly. Also bumped inherited count up to 50.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6596 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a8b814818f0cde7c30f8b31bb71debd6cf0c81ff
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Apr 29 06:33:59 2008 +0000
+
+    Modify symbol caching/creation to use AbstractScript superclass methods rather than always generating a new (large) method for every literal symbol.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6593 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 7be3e62c35796d36ea332a1ecacf7455d73dce4c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Apr 28 08:15:35 2008 +0000
+
+    Multiple microoptz to compiled output:
+    * all int loads now use smallest bytecode possible (biload, siload)
+    * removed extraneous runtime params from several methods
+    * split range instantiation into exclusive/inclusive versions
+    * moved some array/splatting methods out of ASTInterpreter and into RuntimeHelpers
+    * Modified Fixnum creation to use efficient int loading bytecode when possible
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6579 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 20b108375e49aafeec994434de9f01d4370b28d6
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jan 14 00:58:54 2008 +0000
+
+    Outlining pre/post/catch logic from generated method handles, to help reduce permgen load a bit.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5590 961051c9-f516-0410-bf72-c9f7e237a7b7

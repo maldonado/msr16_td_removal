@@ -1,0 +1,476 @@
+commit efdf51b7263010a7bd16a4c90b54dab7d7a76e2a
+Author: Brian Belleville <bbellevi@uci.edu>
+Date:   Mon Jul 6 10:09:50 2015 -0700
+
+    [Truffle] Function to initialize secureRandom
+    
+    This is to initialize ThreadContext.secureRandom. This change should not
+    affect the behavior of this class, but facilitates ahead of time
+    compilation.
+
+commit 088b8d4366f711fe292916775e77733aa6ba5baf
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Apr 15 12:49:06 2015 -0500
+
+    Circular warning logic caused $! to be set, breaking test autorun.
+
+commit eed14f7490281e10b549509c2ec29edbd538c2c6
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Apr 6 11:55:21 2015 -0500
+
+    Grr...failed to commit with merge for some reason.
+
+commit 3039669445b6b2ffa9fcfaaf84594576bb0086bf
+Merge: c5b3e02 7774be5
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Apr 6 11:22:34 2015 -0500
+
+    Merge remote-tracking branch 'origin/jruby-1_7'
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/RubyBasicObject.java
+    	core/src/main/java/org/jruby/runtime/ThreadContext.java
+    	spec/regression/GH-1675_casecmp_on_UTF16LE_encoded_string_spec.rb
+
+commit 7774be525ac71997cd2ed75ef641c47078a704bc
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Apr 6 11:20:08 2015 -0500
+
+    Use target obj as self for instance_eval. Fixes #2301.
+
+commit 7e01a8653e59d34c76db7d13b6f9e7d4b37c696f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jan 9 15:33:45 2015 -0600
+
+    No need to preserve BacktraceElement object in Binding.
+    
+    Saves cloning it for every block and binding we instantiate!
+
+commit 0f4adc34b63b47f88e113fb5ca2f95817ef8e30b
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Dec 17 19:07:57 2014 -0600
+
+    War of the wallpaper!  I think my fix to remove bogus extra dynscope per simple eval
+    exposed that we somewhere pop off toplevel scope before the runtime shuts down.  To
+    counteract this I add back a bogus scope only for shutdown.  This is likely a bug
+    in that any capture lvars in at_exit blocks is likely lost (haven't tested), but
+    this makes mspec fast run without error for now.
+
+commit e4d16ac8afc3e6d7b19e8aa18c2b399fc6bc8dcb
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Dec 17 15:09:41 2014 -0600
+
+    I see no reason for setting parent frame visibility to public.  Nothing triggered so removing
+
+commit b5b730563b948b340fa6044fe104b3baea972d06
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Dec 17 14:50:27 2014 -0600
+
+    Fix #2301
+
+commit 695baa1aa3705b161088b4b4d78eafd0a4424938
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Dec 16 16:22:27 2014 -0600
+
+    Still a bit messy but all extra scope removal is done with known extra depth calcs removed
+
+commit 73df3d230b9d92c7237d581c6366df1b92ad9b2b
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Dec 16 12:58:47 2014 -0600
+
+    evalSimple path no longer has duplicated scope (messiness to be cleaned up after evalWithBinding
+    removes its additionalScope).
+    Reinstated NoVars assertion because we no longer erroneously ask 'phantom' scope for a block
+    value which is never there...ooooooo spooky
+    SClasses should not need to get closure
+
+commit 1a93885ded18e4f55848878dd89ab8cb0c97807b
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Sun Oct 26 20:22:36 2014 +0000
+
+    Tests for new detailed source positions.
+
+commit 09b0be3b1ea5c20090c5d15ba5d624aa228523d2
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Oct 14 17:21:08 2014 -0500
+
+    Remove some params for long dead rubyClass field on TC
+
+commit 44364b1a9f212f64f0b7219c780a62265842611f
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Oct 14 17:03:56 2014 -0500
+
+    Remove no longer correctly named preMethodFrameAndClass since we no longer have class
+
+commit 8d2f6b362a10586d21835b836733eee38776225d
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Sep 24 15:28:10 2014 -0500
+
+    Remove dead jumptarget crud from old runtime
+
+commit 13c142a1781c0316e1bcd41360ee1595fd7fda3f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Sep 17 11:54:50 2014 -0500
+
+    ONE SCOPE TO RULE THEM ALL
+    
+    Remove all other StaticScope types and pull IR logic up to it.
+
+commit c2110cda3d295f55f22d20a4879f8a85a85dc095
+Merge: b3a1aab 3e74923
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Sep 12 18:09:17 2014 -0500
+
+    Merge remote-tracking branch 'origin/master'
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/runtime/ThreadContext.java
+
+commit 3e74923964e06f4e5eb10553e2c011eabb48d153
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Fri Sep 12 00:05:41 2014 -0500
+
+    Deleted a bunch of dead code
+
+commit 57de8506bd525db0e68f0248aa8d9d077a135eba
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Sep 11 19:49:26 2014 -0500
+
+    Pass impl class into methods and clean up arg offset logic.
+
+commit d42d2c299dd05ff791f4ba37435974b6f14134a0
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Fri Aug 15 12:18:49 2014 +0100
+
+    Delete a bunch of dead code in ThreadContext.
+
+commit 6225d60e792b3f60adbd76b15958ba3b221f2279
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Mon Jun 30 23:59:03 2014 -0500
+
+    Death to rubyclass stack: Part 2 of 2
+    
+    * This patch builds on the previous commit and eliminates all
+      traces of rubyclass stack from the codebase.
+    
+      - Remove the push/pop/get from thread-context and use sites.
+      - Removed klass arg from method calls.
+    
+    * TODO: embed used to inject values into the current-module obtained
+      from the rubyclass stack. That code needs investigation.
+    
+    * Replaced the hacky if (klass==null) prepareSelf(binding) calls
+      with information about actual execution context. The primary reason
+      to use binding.self instead of self argument in blocks is when
+      the block is being used in a binding-eval context. The same soln.
+      is applicable in other contexts where this pattern was used (and
+      currently marked with SSS FIXME annotations in code comments).
+    
+    * All tests continue to pass.
+
+commit 4fd036b2c3d515db5a9c5ab7e249b59f8ea79692
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Mon Jun 30 23:10:57 2014 -0500
+
+    Death to rubyclass stack: Part 1 of 2
+    
+    * When methods are defined, aliased, undefined, the runtime has to
+      determine the method container that is affected by the changes.
+    
+      Thus far, this was done by manipulating a rubyclass stack that
+      is updated at several places in the runtime and weaves its way
+      through frame, binding, yield, instance/module/binding evals,
+      and is updated on every call.
+    
+    * This patch implements a fairly straightforward algorithm for
+      determining the method container at the time it is needed by
+      examining the contents of the lexical scoping tree starting at
+      the scope where the method is manipulated. This examination is
+      affected by runtime flags set on lexical scopes (always blocks)
+      based on whether any of them are being executed in the context of
+      instance/module/binding evals. There are couple special cases to
+      this algorithm. Nevertheless, it is far more straightforward and
+      easy to grok than the existing runtime implementation.
+    
+      In this patch, the rubyclass stack manipulation code is turned off
+      in ThreadContext.java but the rubyclass stack and its traces in
+      the various parts of the runtime are left behind.
+    
+      The algorithm relies on annotation of block scopes when they are
+      being executed in the context of evals. The bulk of this patch
+      involves setting up these annotations in RubyModule, RubyObject,
+      RubyBasicObject and passing them to DynamicScope via Block, BlockBody,
+      IRBlockBody, and InterpretedIRBlockBody.
+    
+      The algorithm also relies on annotation of static scopes with the
+      IR scope type. The other bulk of this patch is in setting up those
+      annotations on IR static scopes.
+    
+    * The algorithm itself is in ir/runtime/IRRuntimeHelpers.java
+      - findInstanceMethodContainer(..)
+    
+      It is easy to split this up into static/dynamic since there are
+      scenarios where the container is statically determined. But, there
+      is no real benefit that we foresee from the static resolution
+      scenarios, and the algorithm is simpler the way it is currently
+      coded up.
+    
+    * This passes all MRI tests and Rubyspecs plus other contrived
+      tests (they need cleaning up -- will probably add them in a later
+      patch).
+
+commit 05e1b11ad00be5b85a5df8419573aab4f98f2954
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Fri Jun 13 17:36:27 2014 +0100
+
+    Revert "[Truffle] Restore a basic version of set_trace_func."
+    
+    This reverts commit 077a4ffb881e62b4d1fab78270a81cc500c0c252.
+
+commit 077a4ffb881e62b4d1fab78270a81cc500c0c252
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Thu Jun 12 01:48:11 2014 +0100
+
+    [Truffle] Restore a basic version of set_trace_func.
+
+commit 2133142cbb8be4419e52fe922aae17128379d86d
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Apr 30 16:59:00 2014 -0500
+
+    Remove context.is19
+
+commit 5f5538f745ffe4976c2efd4fa177925bea932c83
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Tue Apr 22 23:56:24 2014 -0500
+
+    [IR] Get rid of static scope id from non-local return handling.
+    
+    * Use "statically determined" but a dynamic scope marker (dynamic scope
+      reference) to figure out what scopes to return from.
+    
+    * Meta class bodies need special handling since they behave like
+      method bodies in terms of variable sharing, but returns from them
+      behave like non-local returns.
+    
+    * All previously passing tests now pass. The test case from github
+      issue 1644 also passes now.
+    
+      jruby -X-CIR -e "def foo; p :in; if block_given?; yield; else; foo { return }; end; p :out; end; foo"
+    
+      TODO: Add MRI/rubyspec test case.
+
+commit c58164f7c6d24d317bac36fc57060ed4be8ca5e6
+Author: Thomas E Enebo <tom.enebo@gmail.com>
+Date:   Tue Apr 8 08:38:49 2014 -0500
+
+    Cheryr-picked from master
+
+commit 06130f94ed43d3660dea65e2dbb415b8aafdac5f
+Author: areman <andre.kullmann@googlemail.com>
+Date:   Wed Apr 2 00:56:30 2014 +0200
+
+    remove wildcard imports and rename buidin to builtin
+
+commit 86a75dce0e3db7dd41b651fd32f37e7cce2c6726
+Author: areman <andre.kullmann@googlemail.com>
+Date:   Tue Apr 1 17:09:27 2014 +0200
+
+    Change the profiler to make it possible to add custom profiler implementations
+
+commit f3294be81fa509921c458742f9ee7a71516a236b
+Author: Douglas Campos <qmx@qmx.me>
+Date:   Wed Mar 19 14:33:39 2014 -0300
+
+    drop 'IfNecessary', they unconditionally expand
+
+commit 017545414d51458e46d071200a3d113c353d4400
+Merge: b725465 d784882
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Feb 21 14:37:20 2014 -0600
+
+    Merge remote-tracking branch 'origin/jruby-1_7'
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/Ruby.java
+    	core/src/main/java/org/jruby/RubyThread.java
+
+commit 83a761926a2d094b77b7369e879e7b2dc86a0360
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Feb 21 10:59:27 2014 -0600
+
+    Propagate throw/catch continuation out of fiber into waiter.
+    
+    Fixes #1519.
+
+commit bb8bc7b0bf40f59bac5561a5e5b6f04f44e71d15
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Sat Feb 15 00:01:30 2014 -0600
+
+    [IR] Removed IRScope references from Break and NonlocalReturn instrs.
+    
+    * All IRScopes add two pieces of IR information to the static scopes
+      that are created: (a) scope-type (b) scope-id. These two bits are
+      sufficient to support breaks and non-local returns.
+    
+    * This eliminates all IRScope references and uses from IRRuntimeHelpers
+      as well.
+    
+    * This should now make it easier for the JIT to support them.
+
+commit 6712676cbbd6d42e4dc238894075e3b76987481e
+Merge: 7f393ee 021e103
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Feb 13 16:11:15 2014 -0600
+
+    Merge remote-tracking branch 'origin/jruby-1_7'
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/util/cli/Options.java
+
+commit 021e103184b719de999750a057ddac2335678452
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Feb 13 16:09:23 2014 -0600
+
+    Avoid creation of null weakref on every ThreadContext.
+
+commit 567e7f24a44e8f5b16fd32ba32c7cfb6ac892d2a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jan 31 12:20:18 2014 +0100
+
+    Implement frame push/pop and related fixes (IR JIT).
+    
+    * Fix rescue table for disjoint blocks going to same catch.
+    * Implement push/pop of frame.
+    * Various fixes for arity-matching in indy binding.
+    * Add IR JIT compiler passes w/ AddCallProtocolInstructions.
+
+commit 67de9ead501be6ce320d591e079b65df022501d9
+Merge: 764ad7b 825cb8f
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Jan 27 11:23:13 2014 -0600
+
+    Merge with jruby-1_7
+
+commit a00793d7dd11d237f7bbd22cbb4c867fbf1f600a
+Author: David Grayson <davidegrayson@gmail.com>
+Date:   Sun Jan 26 12:56:42 2014 -0800
+
+    ThreadContext.gatherCallerBacktrace: Got rid of several lines of code that were computing things that were not used.
+
+commit e1a4bbf7cf8e71f8aeb8f66be51f81d8fdfa2f1e
+Merge: b9ab568 d365ebd
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jan 17 03:01:18 2014 -0600
+
+    Merge remote-tracking branch 'origin/jruby-1_7'
+
+commit d365ebd309cf9df3dde28f5eb36ea97056e0c039
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jan 17 02:59:54 2014 -0600
+
+    Top self ("main") should inspect to "main". Fixes #1410.
+
+commit b9ab568342636cddfca95899a10c112e4491b2ff
+Merge: 4c39748 14f7c47
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jan 17 01:09:52 2014 -0600
+
+    Merge remote-tracking branch 'origin/jruby-1_7'
+
+commit 1bff2a6ac88b0a65de1927bdaab9bfe768ed7e72
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jan 14 19:37:32 2014 -0600
+
+    Use a per-thread SecureRandom and move #hex into native.
+
+commit ed1f75e756c34397dfc1f2637d0019020e706653
+Merge: 1d49d70 a049d87
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jan 14 14:19:59 2014 -0600
+
+    Merge remote-tracking branch 'origin/jruby-1_7'
+
+commit a049d87f81ecf3fe751c37d3d57e8ebefc66f33d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jan 14 14:17:00 2014 -0600
+
+    Clear frame name when duplicating it for a class body. Fixes #1402
+
+commit 697e6895affa646849a685ed58f6f84795c853aa
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Oct 4 23:37:52 2013 -0500
+
+    Eliminate calls to Ruby.is1_8 and is1_9.
+
+commit 55e0d93f6dc2682b720b3061fa6ea5f997957fec
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Oct 4 09:09:12 2013 -0500
+
+    Restore RubyDateFormat and TimeOutputFormatter. Closes #1081
+
+commit 5b40997a333d2829f3d592ead3b393fbe4976cdc
+Author: Benoit Daloze <eregontp@gmail.com>
+Date:   Thu Sep 19 01:30:23 2013 +0200
+
+    use Date arbitrary precision in #strftime (%N,%L) output
+    
+    * need ThreadContext, use constructor to pass it
+    * pass all related Date/DateTime tests
+    * more arguments, but casting from Object (long versus Rational) seems bad
+
+commit 59823cbc0a6349ffde2004b892a10cbd516ffca0
+Author: Benoit Daloze <eregontp@gmail.com>
+Date:   Wed Sep 18 17:59:50 2013 +0200
+
+    stop depending on Ruby version in RubyDateFormat
+    
+    * nsec will be 0 in 1.8 anyway
+
+commit 9e6bbbf829e3c8b48adbbb7bf2ec73f5f79f390e
+Author: Benoit Daloze <eregontp@gmail.com>
+Date:   Fri Aug 23 13:41:12 2013 +0200
+
+    do not pretend to fit RubyDateFormat in Java's DateFormat
+    
+    * we want ByteList support
+    * Locale is not a concern
+    * having the pattern and data as internal state is bad for caching and usage
+    * only depends on ruby_1_9, might worth be moved in Runtime or even singleton if the context is passed
+
+commit fec1af4d3b70d08699905c65a7fd97a6af76ba28
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Sep 17 13:06:16 2013 -0500
+
+    Make Thread#backtrace a bit more thread-safe.
+    
+    The original NPE for #406 was due to the thread not having started
+    running yet; its "context" reference was null. I added logic to
+    check for that and not try to produce a backtrace.
+    
+    In addition, I discovered that the building of the trace was also
+    not threadsafe, since the "backtrace" and "backtraceIndex" fields
+    in ThreadContext could be updated at the same time by the original
+    thread. My changes here should make it less likely that backtrace
+    building will walk off the end of the "backtrace" array, but there
+    will still be cases where the index and the array get out of sync
+    and the backtrace contains a couple bogus lines. It is unclear
+    to me whether we should forcibly prevent the target thread from
+    updating these fields while the backtrace-generating thread is
+    generating, since it would surely introduce overhead into the
+    normal backtrace updating process.
+    
+    Fixes #406.
+
+commit dcca74a0fc11f43b3bd0d5f43c1bcc40b3766c1d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Sep 5 00:35:57 2013 -0500
+
+    Port new Fiber impl from Ruby to Java, for lower-level magic.
+    
+    See faac06d for details on the implementation.
+
+commit 28c6fbc4e883bc1c9e9242d1da1cb2b785f55339
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 3 12:46:45 2013 -0500
+
+    Move to @mkristian's proposed layout, with some modifications.

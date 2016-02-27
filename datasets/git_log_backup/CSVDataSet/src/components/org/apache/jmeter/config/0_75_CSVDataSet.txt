@@ -1,0 +1,355 @@
+commit c75ef9db05893666c5f74bd9f53796b8a5bf13cd
+Author: Rainer Jung <rjung@apache.org>
+Date:   Sat Sep 14 13:30:39 2013 +0000
+
+    Fix typo.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1523234 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a668434f7335885508870e42e3c7bf2667c4990f
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Aug 17 13:59:32 2013 +0000
+
+    CSV Dataset Config loses sharing mode when switching languages
+    Bugzilla Id: 55432
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1514993 13f79535-47bb-0310-9956-ffa450edef68
+
+commit abc06e3fe1227dad0405df9e02fb83f3a8f653d9
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Jul 7 02:37:32 2013 +0000
+
+    Generic for loops
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1500356 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 7810d409aa4c8aafb2b1c9cf40af3f1f9ce89708
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Nov 27 00:11:55 2012 +0000
+
+    Move to Java 6
+    add @Override for interface implementations
+    Bugzilla Id: 54199
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1413954 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e1c5c20a4f8b1cd2d48a9543c470b314dc72aa24
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Fri Nov 9 23:39:03 2012 +0000
+
+    Bug 54129 - Search Feature does not find text although existing in elements
+    Bugzilla Id: 54129
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1407693 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 37160aaed0a9a6330fdf73d733bde096064726f4
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Mon Sep 17 17:28:47 2012 +0000
+
+    FileServer should provide thread-safe parsing
+    Bugzilla Id: 53806
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1386736 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 463a549d68a5896377a4087d3213579fcc06550b
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu Sep 13 23:00:47 2012 +0000
+
+    CSV Dataset does not handle embedded new lines in quoted data
+    Bugzilla Id: 53807
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1384594 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8fbf856d7f2af4b1374c9444c06742b9296ead33
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Feb 24 01:11:14 2012 +0000
+
+    Bug 52728 - CSV Data Set Config element cannot coexist with BSF Sampler in same Thread Plan
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1293052 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 524e515559c207aebef254d863b86897dbd010ad
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Fri Nov 4 08:34:07 2011 +0000
+
+    Bug 51876 - Functionnality to search in Samplers TreeView
+    Changed implementation to:
+    - Add ability to search with regexp
+    - Add ability to search in case sensitive and insentive modes
+    - Plug additional search implementations
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1197425 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 24b528cf552086374f659cd36c74e94d9904d1fc
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Mon Oct 31 00:29:16 2011 +0000
+
+    Fix indentation
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1195289 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 2277ab25ecd4d04beedca39b712416bb531a0840
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Oct 22 22:45:47 2011 +0000
+
+    Missing @Overrides
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1187821 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6572ccd24deea5e6946001872a193a88b61574cd
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Thu Oct 13 17:23:58 2011 +0000
+
+    Bug 51876 - Functionnality to search in Samplers TreeView
+    
+    Implemented search in AbstractTestElement and refactored already implemented subclasses to use ancestor method.
+    Added search features on additionnal configuration elements to:
+    - BeanShellTestElement
+    - AbstractScopedElement
+    - CSVDataSet
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1182997 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 2953ee05c51dfa4449a704cb892343cd2f022f28
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Fri Oct 7 17:55:25 2011 +0000
+
+    Bug 51988 - CSV Data Set Configuration does not resolve default delimiter for header parsing when variables field is empty
+    
+    Replaced startsWith by equals as initial code was (Agree with Sebb remark).
+    Rollback of formatting to what it was.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1180123 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b8c7ef65c2fdd72a6e2ca581520af118bcf75209
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Fri Oct 7 11:10:18 2011 +0000
+
+    Bug 51988 - CSV Data Set Configuration does not resolve default delimiter for header parsing when variables field is empty
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1180004 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 679001cb1fde7cc34c9232b573887aa0b2d9153b
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Apr 12 17:17:45 2011 +0000
+
+    Bug 51002 - Stop Thread if CSV file is not available. JMeter now treats IOError as EOF.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1091505 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 5d32c6a9f6640289ee25c58775f96378ac41974e
+Author: Bruno Demion <milamber@apache.org>
+Date:   Mon Aug 16 18:55:55 2010 +0000
+
+    Bug 49666 - CSV Header read as data after EOF
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@986094 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1b870d0fb6eb7c01373ae7d47b7ab427ab89d672
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Feb 23 16:09:09 2010 +0000
+
+    Remove trailing spaces
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@915405 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3a6b05eed9fbe2c768ca8274ce3842637717fea6
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Mon Feb 8 23:05:38 2010 +0000
+
+    Bug 46790 - CSV Data Set Config should be able to parse CSV headers
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@907839 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 7198e5827e23afe8fd9b72e7e4887d87199ed4c1
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Wed Feb 11 14:58:47 2009 +0000
+
+    Oops - left in debug line
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@743354 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3ca35884491f9a6740d0faaf6bd5a4533f9c2250
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Feb 3 01:29:49 2009 +0000
+
+    Use utility method rather than duplicating code
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@740181 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 95ad11b6e77eefdbcc36f9cc93bacb586a1cdddd
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Jul 6 21:47:12 2008 +0000
+
+    Detab
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@674351 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ea12e4e4feac1fe7c4f3c61d38050f748dc8610c
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Jul 5 17:54:17 2008 +0000
+
+    Bug 45185 - CSV dataset blank delimiter causes OOM
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@674215 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1ad8d7410922c21e52255654d6fb92f6d917f09f
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri May 9 21:37:13 2008 +0000
+
+    Bug 44418/42178 - CSV Dataset file handling improvements
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@654944 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6e2f4dcc1e1a6c5ba4c0db0e9854ef772f5ef31c
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu Apr 10 01:21:09 2008 +0000
+
+    Ensure if and for statements always use blocks
+    Other minor tidyups
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@646610 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 11303a4795d87a8e6c66ac6c9e1f7e6fee939eda
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Mon Mar 24 15:03:50 2008 +0000
+
+    Makes more sense to use IOError for file format problems; include last char in logging output.
+    Revert to BufferedReader to ensure that mark(1) is available
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@640435 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6b24c1c6a33f2f76c0859b24694ee1eca3d63948
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Mar 22 22:18:40 2008 +0000
+
+    Bug 44650 - CSV Dataset now handles quoted column values
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@640095 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 35c7af38712fde57b50e613466fe07680b2146f7
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Aug 14 11:34:57 2007 +0000
+
+    Add stop thread option to CSV Dataset
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-2@565710 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c52d6dd05a91073cc150b3dd8947c1caf093c381
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Mar 10 21:58:10 2007 +0000
+
+    Bug 41704 - Allow charset encoding to be specified for CSV DataSet
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-2@516795 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 28a0c6fef4c76c4a970715cdc7a9d65df6c8ed31
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Mon Feb 12 23:10:49 2007 +0000
+
+    Extract filename once
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-2@506738 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e416bae98d32b44b69416b21454f73e8afe88903
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Jan 7 17:28:00 2007 +0000
+
+    Update license (remove copyright)
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-2@493777 13f79535-47bb-0310-9956-ffa450edef68
+
+commit bc52bbeace91e334cd9b850a1315a5db6ef6adc4
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Wed Oct 11 23:19:20 2006 +0000
+
+    Fix deserialisation bug
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-2@463059 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b11df77c1f812901d175f6dcbad9525072ae77bb
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun May 21 16:50:56 2006 +0000
+
+    Ensure recycle is set by default
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-1@408186 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f2332a1d7702b53edef0af0dd540b974e8f60483
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun May 21 14:17:54 2006 +0000
+
+    Bug 39580 - recycle option for CSV Dataset
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-1@408176 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6f6e38831a9ad854e5b64795b22212a97d5fefc5
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Nov 22 20:14:14 2005 +0000
+
+    Move expensive operation out of loop
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-1@348232 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 357e407f764d00a39ff2f7c55390610fd91d9c56
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Nov 15 00:54:38 2005 +0000
+
+    Show full name if IOError occurs
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-1@344283 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 66cade259461a0597285b4e31cc5e8be4e5bed63
+Author: Michael Stover <mstover1@apache.org>
+Date:   Wed Aug 17 15:02:26 2005 +0000
+
+    CSVDataSet handles blank columns in csv file
+    New log parsers - shared log parser (multiple threads take turns on the same access log), order preserving parser (multiple threads take turns on the same access log AND the ordering in the log is preserved)
+    Improvements to session filter
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-1@325640 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 76159a5b953d9dc5518b2ccb03bfbc1c4908837d
+Author: Michael Stover <mstover1@apache.org>
+Date:   Tue Jul 12 20:51:09 2005 +0000
+
+    Formatting Code to basic Java Standard
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@325542 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d6baa6379ab08cd4cf8e01f06ff8a22a5e041018
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Apr 8 23:43:28 2005 +0000
+
+    Allow user to specify delimiter to be used when parsing the file
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@325253 13f79535-47bb-0310-9956-ffa450edef68
+
+commit bcd84b6037ad437950779be8baf1c9731cd44ae8
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Jan 4 19:30:16 2005 +0000
+
+    Add ASF Lic V2; remove unused imports
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@325075 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c0dbcaf9efc4240c2499a4b9e0f0160cd90dd6d7
+Author: Michael Stover <mstover1@apache.org>
+Date:   Tue Oct 19 20:08:19 2004 +0000
+
+    Adding new threadsafe FileServer
+    CSVDataSet now open for business
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@324979 13f79535-47bb-0310-9956-ffa450edef68

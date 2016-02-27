@@ -1,0 +1,53 @@
+commit 8f7ba7467e8ae513d859f0faa1c4e6a6ec57afcf
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Thu Feb 3 00:32:11 2011 -0600
+
+    Bug fixes in StringLiteral & AttrAssignInstr
+
+commit 8cb2f980003cac2e82452716ab8f37fb3753c9d0
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Sun Dec 26 18:17:43 2010 -0600
+
+    Cache runtime object for constant IR operands; Move args caching code from CallInstr to MultiOperanInstr
+
+commit e4750b88b167f5ef6eef48ccaaca81114321cc30
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Nov 17 12:00:28 2010 -0600
+
+    Use short .getRuntime in interpcontext
+
+commit c7e43a6fe23c345da71c3c95ebfb3af364857fe0
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri Oct 22 12:10:29 2010 -0500
+
+    Add match3 support into jruby_impl_call
+
+commit f9c3ccc4acaa8fb591fb5e1e051d21343adf8b6f
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Jun 8 15:08:36 2010 -0400
+
+    Simple renaming in ir package
+
+commit 6cabc8fb6a510545419554de8f9e48ab0d9de2c0
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri Jun 4 17:54:06 2010 -0500
+
+    Madness to go this long without committing
+
+commit 26971842a0b03a49e4d3610e9759f478c76ca775
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Thu Aug 27 17:56:41 2009 -0500
+
+    - Continuing cleanup of scoping code;  IR_Class now extends IR_Module; filled out some more stubs to optimize some core class method calls for constant arguments;
+
+commit d7e29b3be44236fca6f412886f65bcdac025baf5
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Thu Aug 6 19:45:39 2009 -0500
+
+    - First pass of copy & constant propagation peephole opt. in place.  Compound values are not handled correcty yet.  I can only propagate the reference to the compound value, not the entire value.  Will fix this in next round of fixes.
+
+commit ddaf4c565c871ce4a59cf23683c59bcc2429fec9
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Thu Jul 23 17:37:09 2009 -0500
+
+    - Moved all operands to operands/ and instructions to instructions/ and fixed up imports.  Added some commented out code to start running peephole opts on the IR -- which will also serve as a basis for SCCP passes later on.

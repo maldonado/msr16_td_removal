@@ -1,0 +1,59 @@
+commit 5955eb8149557281d083cbd966156ab3f1041b54
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Sun Mar 10 23:06:20 2013 -0500
+
+    [IR] Some cleanup and fixes to exception regions and cfg building
+    
+    * Also some stub code for breaks in the JIT + hints of what might
+      need to be fixed for the JIT.
+
+commit 8474e841fd15197d2f05ee0667e033698559f505
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Mon May 7 14:45:51 2012 -0500
+
+    [IR] Some cleanup of local-var store placement code.
+
+commit e77dd25f4213df62f69d259031ad78a983ec8d95
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Fri Apr 13 16:09:43 2012 -0500
+
+    [IR] Mark basic blocks that are entries of rescue blocks.
+
+commit 61bd77aee4ebdfda4de9f1b7f51acc383f4251c7
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Thu Mar 15 19:01:45 2012 -0500
+
+    [IR] 1. Moved straight-line bb merging code to CFG (with a bug fix)
+    2. Added straight-line bb merging to CFG.optimize().
+    3. Changed edge processing order in linearizer.
+    4. Removed bad assertion in CFG linearizer.
+
+commit a7d9eed1023d7f90729b06eba6d200509287aa11
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Thu Mar 15 16:53:41 2012 -0500
+
+    [IR] Fixed bug in CFG building to eliminate duplicate edges between
+    a pair of nodes.
+
+commit c431ed736856499d4d2f32e69959c416eadb360c
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Tue Mar 13 14:23:27 2012 -0500
+
+    [IR] More package restructuring:
+    instructions/jruby/* --> instructions/*, instructions/defined/*
+
+commit dfac3cd5df0eeb2955d0a49f1d96b16f5a8e0057
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Tue Mar 13 09:47:45 2012 -0500
+
+    [IR] More package restructuring:
+    ir.representations/*Inliner* -> ir.transformations.inlining/
+
+commit 53945eb6cd55a8e2a78c00f7166574fc09d4e845
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Tue Mar 13 09:33:12 2012 -0500
+
+    [IR] Package restructuring:
+    org.jruby.compiler.ir -> org.jruby.ir
+    org.jruby.ir.compiler_passes -> org.jruby.ir.passes
+    org.jruby.interpreter -> org.jruby.ir.interpreter

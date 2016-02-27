@@ -1,0 +1,149 @@
+commit 63c8149a9a6cbe5ff5ce7beb8732dcda21639268
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Mar 3 15:12:10 2015 -0600
+
+    Last sloppy commit.  CFGBuilder removed from compilerpasses.  JIT/Full build race problem finally solved
+
+commit e2964e5b0881b4bf734be5b385206f571830e53f
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Sat Feb 28 13:12:10 2015 -0600
+
+    lots of rearrangement and state added to fullinterpretercontext and some basic outline of flow in prepareFullBuild
+
+commit 06304620bb01b4c50f62b63023f0d8c2aad4f618
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Sun Oct 5 00:19:54 2014 -0500
+
+    Allow dynscopes to be eliminated for block scopes as well.
+    
+    * So far, dynscopes were only being eliminated for method scopes
+      and all blocks had a dynscope pushed/popped.
+    
+    * This patch enables this for blocks as well.
+    
+    * Required a whole bunch of changes.
+      - Ensure that scope-flags are initialized before passes are run.
+      - Split AddLocalVarLoadStoreInstructions into two pieces.
+      - Use the 'ensureInstrsReady' pattern in InterpretedIRBlockBody
+        to run necessary passes and figure out whether the scope can
+        be fully eliminated, whether the parent's scope can be reused,
+        or whether we need a full dynscope for this block.
+      - Overall, there are some quick-and-dirty fixes in this patch
+        to get things working. Cleanup will come in later patches.
+
+commit 141e995fe2ea6c1a1cac83c95a2287f82f113d3b
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Sun Sep 28 22:41:03 2014 -0500
+
+    Ensure that closure cfg is built before running LVA on them.
+    
+    * We need to redo some of the dependency business, but for now,
+      this does the trick.
+    
+    * Discovered by running rubyspecs with passes:
+      OptimizeTempVarsPass,LocalOptimizationPass,DeadCodeElimination,LinearizeCFG
+
+commit 0cdd14aaae2ecdec6d5fcdc92d1fe19b6faa55d8
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Mon Jul 21 00:14:45 2014 -0500
+
+    Pass staticScope through interpreter call stack + optimized imports.
+    
+    * In preparation for a fix for #1792, pass the current static scope
+      through the interpreter call stack.
+    
+    * Unrelated: I accidentally applied optimize imports on the ir/
+      directory while refactoring in IntelliJ.
+    
+    * Next steps:
+      - Make the nesting-depth fix outlined in #1792.
+      - Maybe, rename CurrentScope to ActiveScope.
+      - Maybe, fix ScopeModule to be based off CurrentScope.
+      - Maybe, get rid of currDynScope arg through call stack and get it from
+        ThreadContext where needed (maybe).
+
+commit ebb4a580167f5b0a8c8c461c392646204fd86662
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Sun Feb 9 21:32:39 2014 -0600
+
+    Minor: Removed trailing whitespace.
+
+commit cebf8d7c8df6fdc9cdbda6904a24e97d77414e87
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Feb 4 12:48:34 2014 -0600
+
+    Make DataBlockProblem use BB as it's key for the mapping table instead of asking for the id.  Also change BB to hash on its id as opposed to its label
+
+commit 4092208d404f3ce3b05286e0696e2ca0beeb868a
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Feb 4 09:53:13 2014 -0600
+
+    IR: Finish removing DataFlowVar for Integer
+
+commit e3eeee2caf2fd5426c74e850077c3ef45b035490
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Jan 30 17:42:48 2014 -0600
+
+    BY THE POWER OF GRAYSKULL!!!!!  DataFlow now uses Java Generics
+
+commit ec268cd37591aea2d3f07e68e0329a8849e8fd48
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Jan 30 15:52:55 2014 -0600
+
+    [IR] Change CFG to produce proper direction iterators so we can just call next where they are used.  Change DataFlowProblem to use them.  Mild formatting changes
+
+commit 5a005f5cf4ca04f69c46700eacdbb1d6b5b59736
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Tue Jan 7 20:33:56 2014 -0600
+
+    [IR] Experimental: First pass implementing unboxing of floats.
+    
+    * Added a pass to detect unboxable floating-point operations
+      and perform them with Java primitives directly without
+      incurring call overheads.
+    * This code doesn't yet add inlining/type guards for dealing
+      with monkeypatching or type changes along optimized paths.
+    * Added -Xir.unboxing=true commandline option for enabling
+      the pass.
+    * This code hasn't been tested extensively for correctness or
+      performance, but it is meant to be correct (modulo missing
+      type guards). It should work in the presence of closures by
+      adding any required boxing/unboxing instructions at boundaries.
+    * Added support for float ALU, box, and unboxing instructions
+      in IR JIT as well.
+    * Analysis now works correctly on loop-based and closure-based
+      versions of mandelbrot (type-guards are still missing). Some
+      more tweaks are required for the closure version to get rid of
+      some spurious boxing instructions.
+    * Preliminary results:
+      - Over 5x speedup with JIT on the while-loop version of mandelbrot
+        (all fixnum ops still go through boxed calls).
+      - Over 20% speedup with interpreter on the closures version of
+        mandelbrot (when DCE is enabled). JIT doesn't support closures
+        yet.
+      - But, meaningless numbers in the absence of safety guards, but
+        just an indication of potential in fp-heavy code.
+    * To be done:
+      - Additional tweaks to analysis.
+      - Retain exception edge info better in IR and exploit it in
+        analysis.
+      - Fix ToAryInstr to not lose information about safety in most
+        cases where its operand is an Array.
+      - Exploit Fixnum information where it is obvious it won't
+        overflow boundaries (ex: 50.times {..})
+      - Exploit inlining opportunities on simple iterators like
+        (n.times {..}).
+      - Exploit information from Constants and Math.* methods.
+      - A lot of this requires appropriately placed safety guards.
+
+commit ce51ec3196d14657e94c1b8063e2120638ab7695
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Fri Sep 27 16:07:17 2013 -0500
+
+    Cleanup: Deleted trailing whitespace on lines in ir/ directory
+
+commit 28c6fbc4e883bc1c9e9242d1da1cb2b785f55339
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 3 12:46:45 2013 -0500
+
+    Move to @mkristian's proposed layout, with some modifications.

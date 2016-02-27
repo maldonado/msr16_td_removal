@@ -1,0 +1,142 @@
+commit 838c8d7a991d1914357ce47db62f594aca27bc78
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jul 24 22:32:10 2015 -0500
+
+    CallConfiguration is not used by any DynamicMethods anymore.
+    
+    CallConfiguration used to be needed to determine how to frame and
+    scope all methods in the system. However, in JRuby 9k it is no
+    longer needed.
+    
+    * Core methods that need frame/scope have the pre/post logic
+      generated in bytecode (for generated invokers) or in handles
+      (for MethodHandle-based invokers).
+    * Interpreted IR methods have their own flags for frame/scope, or
+      have instructions that perform the pre/post logic.
+    * Jitted IR methods always have emit bytecode to do the pre/post
+      logic.
+    
+    After a quick inspection I found that there's no other uses of
+    the callConfig field in DynamicMethod, so this commit removes it
+    and deprecates the constructors and accessors. This should shrink
+    all DynamicMethod subclasses by at least 4 bytes and perhaps 8. It
+    also reduces the size and overhead of our generated populators,
+    which might have a slight effect on startup.
+
+commit cf7c487735fb87d20237c44dfcd1a7818da7111a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Apr 2 23:03:26 2015 -0500
+
+    Always support latest source version.
+
+commit 7791321ff35529b84e83c0480c621af7dbe5c247
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Jul 6 14:32:53 2014 -0500
+
+    Move toward better metadata in native core methods.
+    
+    * Fully-specify methods that read/write frame or scope fields.
+    * Attach additional "caller" CallConfig to methods for later use.
+    * Eliminate static lists of scope/frame consumers (full field
+      specification means those methods will get picked up on boot.
+    
+    This change moves us toward having full framing information in the
+    DynamicMethod object associated with a given native method. This
+    will allow us to do a better job of late-framed calls (don't
+    frame or scope until we call a method that needs it), alias
+    warnings (only warn when aliasing a method that has framing
+    requirements), and ultimately better frame elimination in the new
+    IR runtime.
+
+commit 6d9e299823371978e04384e81d9186efc3a14106
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Jul 6 11:43:18 2014 -0500
+
+    Move method frame and scope-tracking out of ASTInspector.
+
+commit ff6897e33a8e8f6e3e714fe6176c0a19f65abb85
+Merge: c66a441 3e66642
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Dec 29 09:45:32 2013 -0600
+
+    Merge remote-tracking branch 'origin/jruby-1_7'
+
+commit e554ada5c2b889ee2d90e9a994bfddef5adc14ca
+Author: Uwe Kubosch <uwe@kubosch.no>
+Date:   Fri Dec 27 13:00:57 2013 +0100
+
+    * Separate helper methods from processing implementation
+    * Avoid having to load annotation processing during runtime.
+    * Fixes https://github.com/ruboto/ruboto/issues/545
+
+commit 031d58e95b21e1d15f43e79ca9509cf2dda8ce02
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Oct 30 23:52:03 2013 -0500
+
+    Remove most non-parser references to CompatVersion.
+    
+    This also removes compat logic from annotation-based method
+    binding and invoker generation. I believe only the parser remains
+    to be de-versioned.
+
+commit 6d5ddacf7ef3011b3e6856df4d7c430a33cedd9e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Oct 8 15:21:32 2013 -0500
+
+    Bump up execution mode and stdlib to 2.1 (head).
+
+commit c4eae4b89300c252e6472297ea63fe0583ffed53
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Sep 28 11:39:04 2013 -0500
+
+    Fix framing regression.
+    
+    During 1.7.5 dev cycle, I reworked how backref/lastline are
+    stored to reduce their impact on performance and bring their
+    behavior more in line with MRI wrt blocks. In the process of
+    making this move, I inadvertently turned on the frame requirement
+    for all core class method names, resulting in any Ruby code that
+    calls any of those names using a full frame. This has a serious
+    perf impact on many benchmarks.
+    
+    This change fixes the framing to only be active when the target
+    method actually needs to read or write a frame field, reducing the
+    number of frame-requiring methods significantly and restoring
+    perf to what it should be.
+    
+    We are unsure if this change will go into 1.7.5, given the wide
+    impact a mistake in this fix could have, but it is passing JIT
+    and AOT ruby19 tests and I will continue to test it to hopefully
+    get it into the release.
+
+commit f5792bb6315aa153bf4028f86e85787f69d0763f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jul 9 11:32:50 2013 -0500
+
+    Add Generated annotation to populators.
+
+commit 066303638c5f3eb25b2c28e450d2b5e5aa62a04e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Jul 6 02:16:01 2013 -0500
+
+    Updates to tidy up and get tests passing on master.
+    
+    * Move integration test Java dependencies from core to test
+    * Re-shade yydebug, since tests appear to depend on it.
+    * Restore the copying of unsafe-mock for use in compile phase.
+    * Stop using project.parent.basedir which does not appear to
+      be supported consistently.
+    * Set compile mode to OFF for unit tests for now, to avoid
+      memory/permgen issues.
+    * Get a few more unit tests passing. Still not 100%.
+    * Move generated sources to standard maven location. Should be
+      the last dependency on "build" dir.
+    * Duplicate quiet.rb which appears to be used by both unit
+      tests and integration tests.
+    * Update the BUILDING file for changes in development workflow.
+
+commit 28c6fbc4e883bc1c9e9242d1da1cb2b785f55339
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 3 12:46:45 2013 -0500
+
+    Move to @mkristian's proposed layout, with some modifications.

@@ -1,0 +1,1931 @@
+commit bed22b00f729da46ea6ed768d5f30014d919bcc6
+Author: Jan Materne <jhm@apache.org>
+Date:   Thu Apr 10 10:24:18 2014 +0000
+
+    JavaDoc fixes (for Java8 doclint) - first bunch
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1586262 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d3f98c2b74fde37c21ce16273f7487b10efabf1d
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Jan 22 05:24:24 2014 +0000
+
+     Javadoc.postProcessGeneratedJavadocs() fails for Classes that extend Javadoc - PR 56047
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1560253 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8128522925929ecbc8c2b80dcfb0cb3837188797
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Jan 6 17:35:34 2014 +0000
+
+    failOnWarning attribute for javadoc.  Patch by Tim Boemker.  PR 55015
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1555938 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 39734fdcece949c4acffdb69416c2407b959ffaf
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Jan 3 06:45:24 2014 +0000
+
+    NPE in javadoc when no destdir is specified.  PR 55949
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1555019 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ec877a5787e2a356246fdd8f405025ca4e2eed73
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Sun Oct 27 17:08:09 2013 +0000
+
+    javadoc post-process should be skipped when no javadocs have been created
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1536161 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 13000c1a4670271a3257b3c41dc1e17941067c78
+Author: Jesse N. Glick <jglick@apache.org>
+Date:   Wed Jul 17 22:46:10 2013 +0000
+
+    sconnolly advises using TODO rather than XXX in comments.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1504315 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6a1e5bf81d8551496caae2d0a90a40c339752681
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Jun 24 15:50:56 2013 +0000
+
+    More robust handling of line-feeds - in particular make it work on Windows - thanks Uwe!
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1496104 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 7bc745a289cf68cb2eba647bbfba9e9ec06eb771
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Jun 24 15:12:57 2013 +0000
+
+    post-process generated javadocs as workaround for CVE-2013-1571 - based on Maven patch by Uwe Schindler - PR 55132
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1496083 13f79535-47bb-0310-9956-ffa450edef68
+
+commit da5f3bfd256e383926c6ece58dba15a7d4bd5761
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Tue Aug 21 14:27:46 2012 +0000
+
+    java 5, continued
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1375571 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6b7bc9e53500d2347a555dea2988788a922f3101
+Author: Jacobus Martinus Kruithof <jkf@apache.org>
+Date:   Sat May 26 13:33:54 2012 +0000
+
+    Bug 53291 - Several spell checker findings in apache ant 1.8.3 documentation
+    -- api --
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1342897 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ea33301047ba2de74fa062155df4d6337e5d1392
+Author: Jesse N. Glick <jglick@apache.org>
+Date:   Mon Apr 16 19:30:18 2012 +0000
+
+    #52829: ResourceCollection now Iterable<Resource>.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1326760 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c28ec7da7aefa85051bcb81e0eea06c74e17342a
+Author: Jesse N. Glick <jglick@apache.org>
+Date:   Mon Feb 27 21:43:29 2012 +0000
+
+    #52740: safer stream closing.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1294345 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 5f20b99140fb4ec958a6d540b9df7b3c08312b40
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Feb 3 21:00:00 2011 +0000
+
+    microoptimizations.  PR 50716
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1066963 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 58f0bb04db9c5c8a858d7a3be7719608f25f2f49
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Feb 17 12:58:50 2010 +0000
+
+    if user input is compared to fixed strings in a case insensitive manner we should use the default locale.  Use Locale.ENGLISH consistently
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@910955 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 70c93da9aedf0f207c067c2e78dd6d7822535474
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Feb 17 05:35:49 2010 +0000
+
+    a few more O(n) lookups where O(1) would be possible - optional tasks not checked, yet
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@910832 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b71fd5ddcba8aff698e5ab8df375f60f232ac899
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Oct 5 15:28:35 2009 +0000
+
+    provide project instance to internally created types
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@821845 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f62d563414e6848898008af84073651eb83a7959
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Jul 13 05:46:17 2009 +0000
+
+    PrintWriter hides exceptions, avoid it
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@793462 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f1a903928bcd56cdb6d73818008915236f4d531d
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Nov 24 10:39:46 2008 +0000
+
+    Add attributes for javadoc's -docfilessubdirs and -excludedocfilessubdir CLI args.  PR 34455
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@720156 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a68bd225333b6acf66b9e8cfbf381806d14078ac
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Nov 24 09:31:32 2008 +0000
+
+    remove non-1.4 stuff from javadoc
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@720143 13f79535-47bb-0310-9956-ffa450edef68
+
+commit edb0dd9582a26bb899aa970735f93049c61d7ce7
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Nov 17 21:13:04 2008 +0000
+
+    use adapter instead of instanceof checks
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@718387 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 5f81fd801113c7f3bb4b734d0be4337ef482c0fd
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Oct 10 16:20:54 2008 +0000
+
+    javadoc fails if bottom/gead contain line breaks.  PR 43342.  Based on patch by Robert Streich.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@703516 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8bf76a6d5476dfc5dcaea89528973e324bbdcf6f
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Oct 10 15:04:46 2008 +0000
+
+    space is not the only whitespace that could show up.  bottom/head are free-form HTML with line breaks, tabs and all that.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@703493 13f79535-47bb-0310-9956-ffa450edef68
+
+commit eaf2df67d3251b4cbdc10801d72d8f39734e9236
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Aug 20 14:45:32 2008 +0000
+
+    whitespave
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@687362 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a9831bdcaffac274787802ee7e89b9eb596706b8
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Aug 20 14:44:14 2008 +0000
+
+    Add a new attribute to javadoc to allow URLs for location of offline links.  PR 28881.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@687360 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 00829ad00c50d5d4cff7c5f9b52bedc00225dfb4
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Tue Jun 17 16:04:18 2008 +0000
+
+    [43348] Use FileProvider interface
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@668724 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 94dd480d07ac2028fc94d46a253abcd2ddb189a8
+Author: Jacobus Martinus Kruithof <jkf@apache.org>
+Date:   Fri Jan 4 17:45:12 2008 +0000
+
+    request from cactus team, backward incompatible change in FileUtils made backward compatible
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@608939 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 30ed25c7c7f8a0de0cf10d2129c314eddb43c562
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Thu Aug 16 14:19:29 2007 +0000
+
+    make huge method in a number of methods
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@566724 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 7719d03ac2bfbda10f4704d7d73e2a868430b68b
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Tue Jan 2 00:11:48 2007 +0000
+
+    Bugzilla 41268: rollback 32927
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@491717 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6672d9d6c7aebc2ff4ccde1cd6d763b28e7f5d40
+Author: Jesse N. Glick <jglick@apache.org>
+Date:   Sat Dec 30 01:44:10 2006 +0000
+
+    #41264: In Ant 1.7.0, <fileset> in <javadoc> does not by default include
+    only **/*.java as the documentation claims and earlier revisions did.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@491150 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b8a4ef4f9128a18629e51849358e6335987aaac5
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Mon Nov 6 22:42:36 2006 +0000
+
+    Bugzilla 40900, docletpath attribute of javadoc ignored
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@471909 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 59ac4ad93530362846256073006b71c8c0bb676a
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Sat Nov 4 22:45:07 2006 +0000
+
+    checkstyle
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@471288 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 0927b4407be4e1a13ac3a5f67dbc6284ed1cc002
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Thu Nov 2 22:50:04 2006 +0000
+
+    bugzilla 32927: description of javadoc's tag should be optional
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@470578 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 7254e769ce095cc4272d5f936dd2740e09db8a9e
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Wed Nov 1 23:19:33 2006 +0000
+
+    bugzilla report 40852: useextenalfile of javadoc now applies to all command line args
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@470134 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 2e897819a83981a1f4de2e1cc72e33f080fcf573
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Sep 1 18:49:27 2006 +0000
+
+    copy2license.pl
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@439418 13f79535-47bb-0310-9956-ffa450edef68
+
+commit fe678d1937dfca00eda5019956c3352d557accc6
+Author: Kevin Jackson <kevj@apache.org>
+Date:   Mon Jun 26 05:15:35 2006 +0000
+
+    roll back deprecation of Project.resolveFile, revert prior changes to code
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@417126 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 4f2ff64361dd1027372a591f67ba068410e5aafd
+Author: Kevin Jackson <kevj@apache.org>
+Date:   Thu Jun 15 02:47:34 2006 +0000
+
+    use fileutils.resolveFile
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@414442 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 7eb22e8cdc4c161dcf8e89d40a8e072930db5d8f
+Author: Jacobus Martinus Kruithof <jkf@apache.org>
+Date:   Fri Apr 21 21:47:06 2006 +0000
+
+    indicated when methods/classes became deprecated, as to give us the possibility to remove deprecated methods in the future.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@396012 13f79535-47bb-0310-9956-ffa450edef68
+
+commit eeda02e8751fc4e0b50f00c1daa6e4957c444646
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Apr 11 18:19:57 2006 +0000
+
+    provide magic properties to control javac
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@393282 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c165848d7bbdfee24aa5aa67d165b5b64bb3b4d8
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Apr 6 18:52:13 2006 +0000
+
+    whitespace
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@392032 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 49727a3da8d30bd6abcb219f140097f4a3b6fe95
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Apr 6 18:27:32 2006 +0000
+
+    allow ressource collections for source files in <javadoc>
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@392027 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 45564f5dea35d9f17cff9a5ba369763f432ca0f0
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Mar 3 21:05:33 2006 +0000
+
+    whitespace
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@382930 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ca49e8ec2b665044e322681ed568b5917bf867f3
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Mar 3 21:02:13 2006 +0000
+
+    make packagenames optional
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@382928 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 2e6f47ada0ea117a33785ccb8f0517778f1277e4
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Feb 15 05:28:35 2006 +0000
+
+    whitespace
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@377943 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 72d7a6c80d7edf1e8836f1f0bdc5464b6abdf53d
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Feb 15 05:27:55 2006 +0000
+
+    javadoc doesn't like the palckage name '', skip it
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@377942 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1740fe9a0bf8a5a141483f4f538252d535a965b8
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Feb 1 05:45:55 2006 +0000
+
+    skip non-directory entries in sourcepath
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@374000 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 44564adf2b66dc37a61204f206d8374813fa7888
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Jul 8 14:27:03 2005 +0000
+
+    -breakiterator has been promoted, PR 34580
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@278458 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a95fba7819161dd65bf2c57b24b933ad42868f86
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Tue May 31 15:53:33 2005 +0000
+
+    Move javadoc backslash with space fix to ant 1.6.5
+    Check if file separator character is backslash before conversion
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@278385 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f6148a6bc31ac56cbb1875b5b11fd5b38d6bf260
+Author: Jesse N. Glick <jglick@apache.org>
+Date:   Wed Mar 30 16:59:26 2005 +0000
+
+    Misc. cleanups relating to #30606.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@278090 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3d67036913aeb416479a16d21f2792575f7b7202
+Author: Jesse N. Glick <jglick@apache.org>
+Date:   Tue Mar 29 18:23:47 2005 +0000
+
+    #30606: add 'executable' attr to <javadoc>.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@278069 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8a86b8228ff5523912422a5792c5788bc95ff228
+Author: Jesse N. Glick <jglick@apache.org>
+Date:   Mon Mar 28 23:22:12 2005 +0000
+
+    #25832: deprecating the task names <WsdlToDotnet> and <style>.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@278068 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 4b119ee9226b31baf1f56de58cdb284f54189a4b
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Mar 21 15:26:49 2005 +0000
+
+    replace '\' if quoting file names, PR 27814
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@278036 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 03c6952a50ba663cea05d8a3e4cc4ca4b956d879
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Mar 17 09:34:02 2005 +0000
+
+    Optionally create javadocs for packages that only contain a
+    package.html file.
+    
+    PR: 25339
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@278005 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8f927b8ff527c174d0efe0ded1a1be49f1bb434c
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Mar 17 09:06:22 2005 +0000
+
+    Optionally resolve the link attribute.
+    
+    PR: 24364
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@278003 13f79535-47bb-0310-9956-ffa450edef68
+
+commit fbb0b6d2d73a37a4e6853e0c020f010b2e0a3ded
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Mon Mar 14 10:06:58 2005 +0000
+
+    javadoc
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277925 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 9b13568a17c8f2a84cd6be1ce54c3553c8dde181
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Mar 10 13:05:03 2005 +0000
+
+    fix indentation
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277871 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 2a291dca9249d6a4958d9898282fa67343bf59b7
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Mar 10 12:50:58 2005 +0000
+
+    Various javadoc and code-style fixes by Kev Jackson
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277868 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8dc5322cbe81038018fd8bcddc638019b01ad1c6
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Jan 14 09:45:54 2005 +0000
+
+    Finalize and document bootclasspath changes
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277360 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 257dadeaf0fb8588b80fa71b24ee3aca38ea19b7
+Author: Jacobus Martinus Kruithof <jkf@apache.org>
+Date:   Thu Jan 6 12:05:10 2005 +0000
+
+    Make use of FileUtils in a uniform way via the getFileUtils method and a static final reference in the using files.
+    Also removed unused/* imports along the way.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277295 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3f31dc8f7a3bfbca7fc1b633742521ce5e4cb6c4
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Nov 12 15:17:12 2004 +0000
+
+    Make Jikes happy
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277030 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c885f568369156a62e3ccb5b4b93b73b9d054443
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Tue Mar 9 16:49:09 2004 +0000
+
+    remove authors from files
+    PR: 27177
+    Obtained from: J.M. (Martijn) Kruithof
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276208 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 278781dcd669412e5e35cc95d8a96e0b2a278f50
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Mon Feb 9 21:05:47 2004 +0000
+
+    Copyright owner is The Apache Software Foundation
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276065 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 66555ca10d24bbfc55e710b9d65f809cfe713dab
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Wed Feb 4 20:38:09 2004 +0000
+
+    Remove trailing spaces in all java files
+    in order to make checkstyle happy
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276017 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ca1513552f7af7fc19de490fbe2d88adb6c993ad
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Tue Feb 3 22:44:50 2004 +0000
+
+    Switch to Apache Software License 2.0
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276010 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6b62a56cce039854101659763a32d087ba8a8a85
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Oct 14 13:19:53 2003 +0000
+
+    More robust cleanup of temporary files, PR 17512
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@275490 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 08084b4e5c26211fb4fb4335d175f1e9c33be1bf
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Tue Sep 16 09:08:57 2003 +0000
+
+    Next round of typo fixes by Larry Shatzer
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@275242 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 9434671efa81b38a4ebc571a5ea531375b541758
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Wed Aug 13 14:46:15 2003 +0000
+
+    removing enum variable
+    PR: 22345
+    Obtained from:
+    Submitted by:
+    Reviewed by:
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@275074 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e67a40fbb339967749e3c2f6e20d83cccbb22c58
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Aug 1 10:08:12 2003 +0000
+
+    Revert part of the commit that made tasks use Execute#isFailure.
+    
+    On OpenVMS the Java VM will exit with a return code of 0 on success,
+    even though this is going to signal a failure for the OS.  All tasks
+    that spawn new VMs have now been reverted to explicitly check for
+    retCode != 0 instead of Execite.isFailure(retCode).
+    
+    We could as well introduce Execute#isJavaFailure or something like
+    this in case future VM's on OpenVMS will start to do the right thing.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@275005 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d47dfcbc98b247c96b409f811a8a5a045e58cdc7
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Jul 25 12:14:44 2003 +0000
+
+    Use Execute.isFailure
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274951 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 24eb5693d6b7363262ea941cac63d15230aa1aab
+Author: Conor MacNeill <conor@apache.org>
+Date:   Sat Jul 19 11:20:23 2003 +0000
+
+    Coding conventions
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274859 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3a35c7d914d8b5a1f203561ae6f89afb5d2b80ec
+Author: Conor MacNeill <conor@apache.org>
+Date:   Sat Jul 19 08:11:10 2003 +0000
+
+    style
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274858 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 410129735b97c3b972e414d89f0798272642e2de
+Author: Conor MacNeill <conor@apache.org>
+Date:   Thu Jul 17 15:44:45 2003 +0000
+
+    style
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274851 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 60f48875263c0b85f9eab0d94454e3ce3efce5c2
+Author: Conor MacNeill <conor@apache.org>
+Date:   Thu Jul 17 14:17:01 2003 +0000
+
+    Style and remove one stray debug
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274848 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e580392c2d28c2a3530ebe0e1005bae0d45c5b8b
+Author: Conor MacNeill <conor@apache.org>
+Date:   Sun Jul 6 09:57:37 2003 +0000
+
+    More cleanup
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274776 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 84bb508794b3d1fad60ad8b3b835b942310eb86d
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed May 21 06:37:06 2003 +0000
+
+    Fix self assignment - PR: 19288 - Submitted by: Thierry Lach
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274599 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c8a0d86217d9ad286d0bc776dec192cef50999f9
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed May 14 15:10:23 2003 +0000
+
+    fix @since tag
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274580 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 05a1f53cbd6426c29e95d793b5855edca7abfbbf
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed May 14 15:01:12 2003 +0000
+
+    Similar to PR: 10499, filenames passed in via @argfile needs to be
+    quoted if they contain spaces in JDK 1.4's javadoc.
+    PR: 16871
+    
+    Enable usage of standard tags in <tag> by making description optional.
+    PR: 18912
+    
+    Support the -noqualifier switch.
+    PR: 19288
+    
+    Add nested <arg> as a more convenient alternative to additionalparams.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274578 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 39b1929142d8d29f58b4654edf13d677e3959dcb
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Apr 17 13:41:25 2003 +0000
+
+    Add linksource attribute to Javadoc.
+    
+    Submitted by:	<smagoun at mac dot com>
+    
+    Add breakiterator attribute to Javadoc.
+    
+    PR: 11569
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274479 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1aca5cf03666b5bd7b1d17eb16e727338681d525
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Apr 4 13:51:12 2003 +0000
+
+    Avoid reusing StringBuffers to work around JDK 1.4.1 memory leak.
+    
+    I'm sure that my changes in most cases are of the paranoid type,
+    ResourceUtils and FixCRLF look as if they really had a chance of
+    running into trouble.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274397 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 24436a1c922162464396caca82dd88c9c04d6d6a
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Mar 7 11:23:16 2003 +0000
+
+    Remove email address from sources
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274203 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 96cf0f784893f628be4c8f2126c0c0ec8785dd89
+Author: Erik Hatcher <ehatcher@apache.org>
+Date:   Wed Mar 5 03:03:11 2003 +0000
+
+    #17142 - enhance Javadoc tag element to allow a fileset
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274196 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 626c8a16d3d9fab9b858a2f191c4b3df51a19f7e
+Author: Conor MacNeill <conor@apache.org>
+Date:   Wed Feb 19 12:30:55 2003 +0000
+
+    Trim javadoc sourcefiles entries
+    
+    PR:	10700
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274145 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6b4bd1e75afe4b1d0aa765844a5da4e4d5936ae2
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Feb 18 15:19:05 2003 +0000
+
+    <http://java.sun.com/products/jdk/1.2/docs/tooldocs/solaris/javadoc.html#linkoffline>
+    says the second arg to linkoffline must be an URL.  The docs for JDK
+    1.3 and later say URL or file, but comments in
+    
+    PR: 10964
+    
+    indicate it doesn't work that way.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274129 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1dc8a079057e191ca4c158f36843c2c9e9f9be52
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Feb 10 14:15:00 2003 +0000
+
+    Remove Jakarta Project from license
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274040 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6a65262ae702364e448ed94837199c40eac8eefd
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Jan 13 15:52:12 2003 +0000
+
+    Make build.sysclasspath handling more consistent.
+    
+    PR: 15014
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273795 13f79535-47bb-0310-9956-ffa450edef68
+
+commit aea9fac4c0e1961af44bc91298d14edec2ae1f3c
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Nov 8 16:07:55 2002 +0000
+
+    -source is a javadoc option, not one of the standard doclet.
+    
+    PR: 13747
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273524 13f79535-47bb-0310-9956-ffa450edef68
+
+commit acb441fdfacde4a4b0acb64fba5fb9eb4222a4fd
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Oct 31 15:12:53 2002 +0000
+
+    fix issues reported by PMD
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273480 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8f413c12084a80db24f4cdfd6b8f908d4e75556f
+Author: Peter Donald <donaldp@apache.org>
+Date:   Thu Jul 25 15:21:25 2002 +0000
+
+    Remove unused imports, remove glob imports, sort imports.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273169 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f9121ee81e58e6cb4369a4e043e0a88cbfe3e503
+Author: Peter Donald <donaldp@apache.org>
+Date:   Tue Jul 23 08:39:59 2002 +0000
+
+    Encapsulate some fields in Task and add some deprecation warnings to coresponding fields.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273157 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 28b68ab7d0689dbc35dbdf26d2308786549b8985
+Author: Peter Donald <donaldp@apache.org>
+Date:   Tue Jul 23 07:54:56 2002 +0000
+
+    Encapsulate usage of project object rather than allowing objects 7 subclasses acessing a protected variable of their super super super .... class.
+    
+    Deprecated the variable so that that anyone directly referencing variable will get warning and suggestion to use the accessor.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273155 13f79535-47bb-0310-9956-ffa450edef68
+
+commit da5a13f8e4e0e4475f942b5ae5670271b711d423
+Author: Magesh Umasankar <umagesh@apache.org>
+Date:   Tue Jul 9 21:06:15 2002 +0000
+
+    Merge differences between the ANT_15_FINAL branch and the trunk into the trunk.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273081 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6bd8d6e938a45868902ecd1092858e8372933c7c
+Author: Magesh Umasankar <umagesh@apache.org>
+Date:   Sat Jun 22 23:38:38 2002 +0000
+
+    Merge changes made to 1.5 Beta2.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@272967 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ca91f8cb7e4f2bfe1a191dea6126a32649af9565
+Author: Magesh Umasankar <umagesh@apache.org>
+Date:   Sat Jun 1 12:26:43 2002 +0000
+
+    Merge changes made to 1.5 Beta1.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@272826 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 31374307160688b2170ec91108580c83682268c4
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Apr 30 11:36:03 2002 +0000
+
+    A sourcepath without package names is a no-op now (again).
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@272616 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 9fe0f5be4e42e49babd57ab69bd3fa6d5e64adf1
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Apr 26 16:06:52 2002 +0000
+
+    Directory based <javadoc>.
+    
+    Two new nested elements, <packageset> and <fileset>.  <packageset> is
+    a DirSet that points to directories which get translated into packages
+    if they contain .java sources, <fileset> points to sourcefiles.
+    
+    <packageset> based on a patch by Daniel Ritchey <ritchey_49@hotmail.com>.
+    
+    <fileset> allows you to select files in the default package as well.
+    
+    PR: 6433
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@272583 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 233ae85c5f835679681ece8d58a279b6bcf50550
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Apr 25 12:14:51 2002 +0000
+
+    Don't tell people we'd execute a given command line when we really do
+    something completely different.
+    
+    I hope this will cut down the "Ant swallows my quotes" reports to
+    those that are real problems in Ant and not just problems of
+    communication.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@272573 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6bc9693c3c5e8f944a104478a7aae93b9b667c53
+Author: Conor MacNeill <conor@apache.org>
+Date:   Thu Apr 18 06:54:54 2002 +0000
+
+    Ongoing Javadocs
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@272495 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 9a82620775359dfad6b8d5665136195944067657
+Author: Conor MacNeill <conor@apache.org>
+Date:   Tue Apr 16 10:36:25 2002 +0000
+
+    Javadocs
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@272455 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 80080d456c543d039426db35bcf35d90694bbd96
+Author: Conor MacNeill <conor@apache.org>
+Date:   Mon Apr 15 15:33:11 2002 +0000
+
+    Reduce a small number of long lines
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@272443 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 03d0b81deb49fb4b6b87fa7dd648daf8f3bcbf4b
+Author: Conor MacNeill <conor@apache.org>
+Date:   Mon Apr 15 14:56:34 2002 +0000
+
+    Order of modifiers
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@272442 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c4266e92503f9365db8450324de2709fe4ff5423
+Author: Conor MacNeill <conor@apache.org>
+Date:   Mon Apr 15 13:36:22 2002 +0000
+
+    Coding Standard
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@272441 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c6c232893c39257745a8f7a618bcdb5c59791cae
+Author: Conor MacNeill <conor@apache.org>
+Date:   Sun Apr 14 11:16:19 2002 +0000
+
+    Various coding standard fixes
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@272418 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 87bf01f5de873b8eb5a25c2c62acbd7c9d1e92b1
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Apr 11 15:59:37 2002 +0000
+
+    <javadoc> added some options to the not-cloned Commandline potentially
+    adding them several times of execute would be called more than once.
+    
+    Cosmetics.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@272382 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e2aa7c41ea6b92db4fdb91c61f97ad09b4a25940
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Apr 8 16:11:27 2002 +0000
+
+    Add -source switch to <javadoc>
+    
+    PR: 5645
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@272299 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6a44607ea6af11ed90c5b6da98e9ce1f33cc8de0
+Author: Conor MacNeill <conor@apache.org>
+Date:   Fri Apr 5 14:57:36 2002 +0000
+
+    Preserve ordering of taglets and tags by using one list
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@272243 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 32452cc99f5c05c8796b142c4f4d2ec5e94eb91d
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Apr 5 14:27:48 2002 +0000
+
+    stray debug statement.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@272239 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8bd72d65333484586da86a70f2b57c44baef89ad
+Author: Conor MacNeill <conor@apache.org>
+Date:   Fri Apr 5 05:42:26 2002 +0000
+
+    Add taglets support to javadoc
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@272232 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 2e62a659cb8308b60a3a1c7371147aa0937f55df
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Apr 4 10:31:18 2002 +0000
+
+    Make sure locale argument is the first one in javadoc
+    
+    PR: 4984
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@272200 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d42faeefd8d4a36746e0e05b0e0db809680a55fd
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Mar 28 12:15:27 2002 +0000
+
+    New utility class that deals with the specifics of a Java
+    installation:
+    
+    * Moved JVM version detection code from Project to the new class.
+    
+    * Unified the "find executable" methods and factored them into the new
+      class.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@272069 13f79535-47bb-0310-9956-ffa450edef68
+
+commit eb81bd4f4ea8ca269b8ba496e9b9a9a15b92ce2d
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Mar 21 08:19:07 2002 +0000
+
+    Make detection system for java|javac|javadoc fallback to *.exe instead
+    of * on dos based systems.
+    
+    PR: 7117
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@271929 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 732df7532e22b0472690663897388f4b89ca9eb6
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Mar 11 07:23:34 2002 +0000
+
+    JDK 1.1 fixes
+    
+    incomplete in the case of XCatalog, I'll follow up on this.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@271811 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 7fec7616d1d256735fd5a608ca3dc5af444edab6
+Author: Erik Hatcher <ehatcher@apache.org>
+Date:   Sun Mar 3 01:46:23 2002 +0000
+
+    Changing "ant:task" to "ant.task" to avoid JDK 1.4 javadoc warnings (XDoclet has been modified to handle this separator too).
+    
+    Updating the majority of the rest of the tasks with the XDoclet tags.  The generated defaults.properties is *almost* the same as the current hand maintained one!
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@271678 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 10aeeab05bb0ece58bc02b9f32661722985bfa92
+Author: Erik Hatcher <ehatcher@apache.org>
+Date:   Wed Feb 27 20:36:13 2002 +0000
+
+    XDoclet fun!
+    
+    These are harmless Javadoc comment additions for use with the proposal/xdocs runs.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@271582 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 36edbf6dcb3c83de2e14f93d934b0e1042a2942f
+Author: Jon Skeet <jskeet@apache.org>
+Date:   Tue Feb 26 12:42:32 2002 +0000
+
+    Invalid scope parameters now throw exceptions.
+    Repeated scope elements generate verbose messages.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@271561 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 92893d10b46a88eccdf0a2931e32e6df0855de8f
+Author: Jon Skeet <jskeet@apache.org>
+Date:   Tue Feb 26 10:00:16 2002 +0000
+
+    Added support for the -tag option in JavaDoc 1.4
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@271553 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a6e3c87111d5424020495cdd49329ab92ec301cc
+Author: Peter Donald <donaldp@apache.org>
+Date:   Mon Feb 18 13:35:20 2002 +0000
+
+    Make doclets behave the same way as other ClassPath loaded things in the presence of gump ... or at least thats what I think this patch does ? ;)
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@271413 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 144c9d1920436dcf6b1bff39191fef262f752ee0
+Author: Stephane Bailliez <sbailliez@apache.org>
+Date:   Sat Jan 26 19:21:02 2002 +0000
+
+    Remove unused fields and methods
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270893 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 17997f266a2dd6b2a879ea9678086a8a9545a389
+Author: Stephane Bailliez <sbailliez@apache.org>
+Date:   Sun Jan 20 20:45:58 2002 +0000
+
+    - Fix order of modifiers
+    - Fix duplicate/unecessary imports
+    - Fix single if/else and loop without block
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270814 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 33bc8da11841b4c56234262bd17649990f09d751
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Jan 11 14:59:40 2002 +0000
+
+    Change the methods that try to locate JDK tools to work on AIX with
+    IBM's JDK 1.2 as well.
+    
+    @todo refactor into a single method somewhere
+    
+    PR: 5541
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270667 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f3577cdb5ce536ebcae232a268d7e01f1897e4e9
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Jan 10 13:59:39 2002 +0000
+
+    License police on task definitions:
+    
+    (1) Make sure there is a Copyright notice on all files.
+    
+    (2) Make sure all years in which a file has been modified are
+    listed.
+    
+    (3) Make sure the format is consistent, i.e. separate consecutive
+    years with a dash, not a comma.
+    
+    (4) Change some references from Tomcat to Ant.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270658 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e3b6d1fe768d87352d3d0348638911045fc4668e
+Author: Stephane Bailliez <sbailliez@apache.org>
+Date:   Tue Jan 8 22:51:39 2002 +0000
+
+    Fix bad coding style.
+    then/else parts of if statement and loop body must always been enclosed
+    in a block statement.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270637 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c78d3f894ef997a88406bbad2d848f3e8d7c3649
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Dec 12 09:17:36 2001 +0000
+
+    Replace ProjectHelper.replaceProperties calls with a new one-arg
+    method in project.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270128 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c2065125609e2004875f7b04e3addb49a4277bf6
+Author: Peter Donald <donaldp@apache.org>
+Date:   Sat Dec 1 03:34:35 2001 +0000
+
+    Make changes so that tasks use the two arg replaceProperties() rather than 3 arg as it is lower coupling.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270063 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 17e5ca87217a81f888ded1b2d9dac971503ac796
+Author: Magesh Umasankar <umagesh@apache.org>
+Date:   Tue Nov 27 18:04:54 2001 +0000
+
+    Convert tabs to spaces...
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270031 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 307c136939d49423c10c698109f0012d9448bfc0
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Nov 2 16:36:49 2001 +0000
+
+    push createTempFile to FileUtils
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269859 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ab9f91736afcdd65e4ca1da6c627f4df71f5289a
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Nov 2 07:56:53 2001 +0000
+
+    Take care of NetWare when searching for "java" and "javadoc", add
+    NetWare case for <property environment=... />.
+    
+    Simplify OS based decisions.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269851 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d17f3c4f2af31dd15b59bc9a2a42fdf2a6854c92
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Oct 31 11:05:00 2001 +0000
+
+    Use locale independent methods to identify OS or match attributes and
+    elements in build files.
+    
+    PR: 4100
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269847 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d12e6411ccc654bc10c102c8a085b6b0e4634f8b
+Author: Stephane Bailliez <sbailliez@apache.org>
+Date:   Sun Oct 28 21:31:01 2001 +0000
+
+    Code clean up:
+     - removed useless/duplicate imports
+     - added explicit imports rather than *
+     - changed specifiers order to be conform to JLS.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269827 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 72f5630bdb31d0bec9e564a13603542b6911567a
+Author: Peter Donald <donaldp@apache.org>
+Date:   Sat Oct 13 01:56:00 2001 +0000
+
+    Remove some tabs.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269786 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d81ef5ce763346716ca8c78ba6ab666eb05a31d8
+Author: Peter Donald <donaldp@apache.org>
+Date:   Sat Oct 13 01:53:37 2001 +0000
+
+    Add comments regarding future netware integration.
+    
+    Submitted by: "Jeff Tulley" <JTULLEY@novell.com>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269785 13f79535-47bb-0310-9956-ffa450edef68
+
+commit df14132289636640ade9cc52ecf8bfdc4ba52433
+Author: Conor MacNeill <conor@apache.org>
+Date:   Thu Aug 30 13:26:38 2001 +0000
+
+    Merge in 1.4 src changes
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269663 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f66cab0ea7689df54fe51f64018cd3ef8b05cd3d
+Author: Conor MacNeill <conor@apache.org>
+Date:   Sat Aug 18 14:59:40 2001 +0000
+
+    Merge from ANT_145_BRANCH up to Beta 2
+    PR:
+    Obtained from:
+    Submitted by:
+    Reviewed by:
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269587 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1ca56f13c4f3bf5a4a3d264131da2ddfc729c063
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Jul 18 10:07:02 2001 +0000
+
+    Apply the same magic <javadoc> uses to locate the javadoc command to
+    CommandlineJava (and with thus to <java fork="true">).
+    
+    Suggested by:	Jesse Glick <Jesse.Glick@netbeans.com>
+    
+    Also, add .exe on OS/2 as well.
+    
+    This still doesn't work for IBM's JDK 1.3 on AIX (java is in
+    JAVA_HOME/jre/sh and javac in JAVA_HOME/sh) - need to find out what
+    java.home points to and where javadoc is, before we can fix that.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269357 13f79535-47bb-0310-9956-ffa450edef68
+
+commit cbef49e344857a1cf7c35737b67d3c732f901710
+Author: glennm <glennm@unknown>
+Date:   Tue Jul 17 14:54:13 2001 +0000
+
+    Look for java.home/../bin/javadoc(.exe) before falling
+    back on plain old javadoc.  Just looking in the java.home
+    directory tree isn't sufficient, as it may give incorrect
+    results on Windows (thanks to Connor for the info.).
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269351 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c341305e4451b6c8d51f9fb3d3e1fb9a8cbf8aa9
+Author: glennm <glennm@unknown>
+Date:   Sun Jul 15 14:25:28 2001 +0000
+
+    The javadoc task now looks for the javadoc executable
+    in the java.home/../bin directory.  That way if your
+    java installation isn't in your path, you can still
+    create javadocs.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269344 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 21a88b996ae1899e19a7062eeb3fe214cb2cbe4f
+Author: Conor MacNeill <conor@apache.org>
+Date:   Sun Jul 8 06:21:45 2001 +0000
+
+    If the package list cannot be found, the offline links are
+    skipped - a message is printed at verbose level
+    
+    PR:`	1304
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269293 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 44eb536d1a20de19ebafa6da4f479c16735aa3ad
+Author: Conor MacNeill <conor@apache.org>
+Date:   Sat Jul 7 03:09:22 2001 +0000
+
+    javadoc @files do not work under JDK 1.1
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269279 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6d4c233dcb612d3f6004572bb05f4e404bb4d770
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Jun 21 11:49:26 2001 +0000
+
+    Make the packagelistloc attribute of javadoc's link child a File so it
+    will be resolved properly.
+    
+    Reported by:	abethegn@canal-plus.fr
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269212 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 91f7d992dc20124771b9a9709df15b4295c825ef
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Jun 7 10:02:07 2001 +0000
+
+    Don't change working directory for javadoc.
+    
+    Submitted by:	Jay Glanville <dickon@nortelnetworks.com>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269116 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 7ded9a569f39709b66b0fc816d4e518ba5ddee5d
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed May 23 16:44:11 2001 +0000
+
+    Added useexternalfile attribute to <javadoc> - this makes javadoc use
+    a temporary file for source file and package names (via javadoc's
+    @file parameter) to defeat command line length limitations.
+    
+    Inspired by:	Frederic Lavigne <fred@castify.net>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269045 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 52579e96823f78d8588c70e92d5cded416cbeb9a
+Author: Conor MacNeill <conor@apache.org>
+Date:   Thu May 17 09:56:22 2001 +0000
+
+    Quote the -group parameter to Javadoc
+    
+    Submitted by:	Jay Glanville <dickon@nortelnetworks.com>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269026 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ecab5d3357ca0836630042cdcc01873e188563b8
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri May 11 06:22:44 2001 +0000
+
+    Make javadoc expand properties for the new nested elements.
+    
+    Use this to make the year of the copyright message in Ant's javadoc
+    dynamic - nice demonstration of tstamp's format element at the same
+    time.
+    
+    Inspired by:	Jon Stevens <jon@latchkey.com>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269023 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b5b31688e6c4d88f260cdadbf93834179af15c97
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu May 10 12:14:36 2001 +0000
+
+    Add some nested elements to javadoc where it seemed to be useful.
+    
+    Submitted by:	Jesse Glick <Jesse.Glick@netbeans.com>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269020 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a9a32155c55b9fafe17c094167a195e276117e36
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Apr 18 14:49:52 2001 +0000
+
+    brush up documentation for <javadoc> (adding documentation for the
+    excludepackagenames attribute in the first place), minor cleanups in
+    the implementation of this task.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268951 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 068f7348847e10c8deca027f67e7142c559cdfa0
+Author: Conor MacNeill <conor@apache.org>
+Date:   Fri Mar 2 16:01:13 2001 +0000
+
+    Merge after 1.3 release
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268748 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 5337488612953eb072e38cb99e6b5d60999297da
+Author: Conor MacNeill <conor@apache.org>
+Date:   Tue Feb 13 12:32:01 2001 +0000
+
+    Merge of 1.3 branch changes into the main branch
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268652 13f79535-47bb-0310-9956-ffa450edef68
+
+commit af102bbd3d062facf9d1b393aefbc7e2c49f25a1
+Author: glennm <glennm@unknown>
+Date:   Wed Jan 24 16:56:46 2001 +0000
+
+    Resolving package names now occurs with the
+    use of a private FileSet.  This provides
+    the use of the default excludes patterns,
+    which include **/CVS/**, preventing any
+    .java files in a CVS/Base directory from
+    being included.
+    
+    Just in case someone does ever have a
+    package named blah.CVS, I added the
+    "defaultexcludes" attribute.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268517 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b6d17002e391d12ad7b155663bbfd34494595fa4
+Author: glennm <glennm@unknown>
+Date:   Mon Jan 22 20:55:32 2001 +0000
+
+    Back out CVS directory hack.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268501 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6cc1290e8b4359111d844d0acedae38c7c121f73
+Author: glennm <glennm@unknown>
+Date:   Mon Jan 22 17:05:35 2001 +0000
+
+    Hack to ignore CVS directories.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268500 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b3cb9a9d4f526df3bfef0706e46bc82857babdc3
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Jan 19 13:27:00 2001 +0000
+
+    Changed the handling of build.sysclasspath so that Ant should behave
+    the same way as Ant 1.2 did - if build.sysclasspath has not been set.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268480 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 2f3fc4ceb269ba3d0285afb816295ff76e503b10
+Author: Sam Ruby <rubys@apache.org>
+Date:   Fri Jan 5 14:26:27 2001 +0000
+
+    Address anomolies where classpath is now being interpreted differently by
+    different tasks due to my change to javac and the introduction of
+    ${build.sysclasspath}
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268407 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6c287080d460efa63e022407e88a04558b9fdbb6
+Author: Conor MacNeill <conor@apache.org>
+Date:   Wed Jan 3 14:18:52 2001 +0000
+
+    Make licence statements mention Ant in place of Tomcat
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268392 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6b5745a21d93054c9d1efb9b6782886ba115bf8d
+Author: Peter Donald <donaldp@apache.org>
+Date:   Sat Nov 25 02:38:54 2000 +0000
+
+    Used some elisp magic to remove those tabs and replace with spaces.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268237 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 73db4788f651cb51e829b92b92b462b5bfb1f0ee
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Oct 31 11:12:05 2000 +0000
+
+    Reinstate javadoc's failonerror attribute.
+    
+    Requested by:	Corey Puffalt <corey@kelman.com>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268134 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 2f003461287b7059beff6f37c7a8769af29dd58a
+Author: Conor MacNeill <conor@apache.org>
+Date:   Sun Oct 29 13:10:28 2000 +0000
+
+    Restore the -d flag for destdir when it is supplied. Whilst this is an option
+    of the standard doclet, many other doclets also use it. For doclets which do not
+    like it, simply do not provide a destdir attribute to the javadoc tag.
+    
+    The check for whether destDir is supplied only operated if the standard doclet
+    is being used (or using javadoc1)
+    
+    Based on the observation of Scott M Stark <Scott_Stark@displayscape.com>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268131 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 4771d246a416828537319b6235a93a4382d746fa
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Sep 14 13:36:45 2000 +0000
+
+    Make <javadoc> ignore .java files in directories containing a "-".
+    
+    You cannot have a package name with a "-" in it anyway so these files
+    are something different. In my case I had example files in the
+    .../doc-files directory and javadoc died because I've used the same
+    classname (Example) in several places.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@267992 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ff810113da688cd4aa875ac5bb4ddea3863a9f53
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Sep 6 14:05:00 2000 +0000
+
+    Removed all nested <classpathref> elements in favor of <classpath
+    refid="...">.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@267970 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 9977131b5e492680cc19d6d7a1a9fc5fee039e16
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Sep 5 14:58:52 2000 +0000
+
+    Javadoc's destDir attribute should now work again.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@267966 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 5dbbf38ae0c5a52945dc021eb30f3869003c7298
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Sep 5 14:35:38 2000 +0000
+
+    -d is not an option of javadoc in 1.2 but of the standard doclet.
+    Submitted by:	Glenn McAllister <glennm@ca.ibm.com>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@267964 13f79535-47bb-0310-9956-ffa450edef68
+
+commit fa4f79ea067b26b61f52362142a00a98740b7748
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Sep 5 12:32:32 2000 +0000
+
+    Avoid StringIndexOutOfBoundsException when .java files were found
+    directly inside one of the source directories (classes in the default
+    package).
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@267961 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f923ab50f9caea6910391d866039acd889f99077
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Sep 4 15:19:17 2000 +0000
+
+    <javadoc> and <patch> would fail if the execute method was called more
+    than once on the same instance of the class. This is why the second
+    <javadoc> in the nightly builds ("ant dist install") failed.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@267956 13f79535-47bb-0310-9956-ffa450edef68
+
+commit dc761150247d522f50dac32db7e7613b3c845bb7
+Author: Conor MacNeill <conor@apache.org>
+Date:   Wed Aug 30 22:10:38 2000 +0000
+
+    Workaround for Jikes compilation problem
+    
+    Submitted by:	Paul Philion <philion@acmerocket.com>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@267948 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 76248d54a131e0eafa34a739f1814ff3e6ae4304
+Author: Conor MacNeill <conor@apache.org>
+Date:   Wed Aug 30 14:34:53 2000 +0000
+
+    Make it fly with 1.1
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@267946 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f504cf793e6d72308577e1dc86c7bed47d65de12
+Author: Conor MacNeill <conor@apache.org>
+Date:   Wed Aug 30 14:27:25 2000 +0000
+
+    Increase speed of Javadoc task
+    
+    Submitted by:	Glenn McAllister <glennm@ca.ibm.com>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@267944 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c32873b51961cb99f47b4ae6da2922b7b46a6f89
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Aug 7 13:58:35 2000 +0000
+
+    Added nested elements and attributes to reference CLASSPATH structures
+    defined at another place in the same project.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@267896 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 0dd985bc2a3584f478eebc7c1a25f24aa559f1ac
+Author: Conor MacNeill <conor@apache.org>
+Date:   Fri Aug 4 10:23:25 2000 +0000
+
+    Add some eror checking to the syntax of the linkoffline attribute
+    Fix the output of argument list under verbose logging (Thanks to Ken Wood)
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@267885 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b18b40b1524d7c536ddef35aff1a8afd12fb0868
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Aug 4 10:08:03 2000 +0000
+
+    Moved the javadoc == 1.1 or 1.2 check out of init().
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@267884 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6d7c130971fb273119d770033fc4ea42f899349f
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Aug 3 11:25:14 2000 +0000
+
+    Did some cleanup.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@267882 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 20dede5ad87cf903e9be1a39d67312d7f39dfcd0
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Aug 1 13:47:03 2000 +0000
+
+    MSVSS doesn't extend Exec any longer.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@267863 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c2077d52ddbe15f9357e4609f78f6cd8187b0365
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Aug 1 12:47:55 2000 +0000
+
+    Javadoc doesn't extend Exec any longer.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@267862 13f79535-47bb-0310-9956-ffa450edef68
+
+commit abd5987913a0a10ee5c1fbbe6232c468986d889b
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Jul 24 15:53:06 2000 +0000
+
+    Made Path resolve relative paths through Project. Moved it to the
+    types package on the same instance, so I had to touch a lot of ather
+    files as well.
+    Reported by:	Frederic Lavigne <fred@L2FProd.com>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@267827 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3b6232b7803559affe032b2702c9c2db0c970c16
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Jul 17 07:11:42 2000 +0000
+
+    Correctly detect missing arguments to Javadoc.
+    Submitted by:	 Peter Donald <donaldp@mad.scientist.com>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@267791 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 2ca1e77475977fb699c6b99945b7368a73301fe4
+Author: Conor MacNeill <conor@apache.org>
+Date:   Fri Jul 14 15:02:33 2000 +0000
+
+    Minor bug fixes in Javadoc.
+    
+    1. handle package statements that use tabs.
+    2. Fix minor bug in comment parsing.
+    
+    The parsing bug was pointed out by Johan Granstrom <johan.granstrom@itec.se> but
+    I have not used his patch directly.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@267787 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8162d141e44b778d135f9251277e85c922f0544c
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Jul 14 08:25:52 2000 +0000
+
+    Make rmic, javac and javadoc use Path and add nested elements for
+    various PATH like structures.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@267782 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 5e9f5581f28801337e67f012235a14d9efb31ec7
+Author: Conor MacNeill <conor@apache.org>
+Date:   Sat Jul 8 17:35:51 2000 +0000
+
+    Give Ernst some credit for the Javadoc changes :-)
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@267748 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b879b27c7274e2a54ad6a6e2a886311cb51ce771
+Author: Conor MacNeill <conor@apache.org>
+Date:   Sat Jul 8 17:18:50 2000 +0000
+
+    Add nested doclet tag to javadoc task
+    
+    Javadoc now can be used with a doclet like this
+    <javadoc ...>
+       <doclet name="blah"
+               path="path/to/blah">
+          <param name="-foo" value="blah"/>
+          <param name="-bar" value="blahblah"/>
+       </doclet>
+    </javadoc>
+    
+    param value's are just strings no path translations, etc.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@267747 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 9bd75d2c4e8bb5387ec65dd76ccf483f2bec59e7
+Author: Conor MacNeill <conor@apache.org>
+Date:   Thu Jul 6 16:48:27 2000 +0000
+
+    Move to task level logging
+    
+    This patch removes the concept of currentTarget and currentTask from the
+    BuildEvents code. To facilitate this I have moved logging to the task
+    level which now passes a task pointer to the project's log method.
+    
+    Task level logging may also allow for more fine grained control of logging
+    in the future.
+    
+    I have left the Project's log methods public to allow people's custom
+    tasks to continue to work. In the future these can become private.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@267740 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 62c181f4549c1a507665534eb4ef75edae02822b
+Author: Sam Ruby <rubys@apache.org>
+Date:   Wed Jul 5 19:38:31 2000 +0000
+
+    Override the logging of Javadoc output in order to filter out
+    Generating messages.  Generating messages are set to a priority
+    of VERBOSE unless they appear after what could be an
+    informational message.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@267738 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ece10d579b717271df6d23074bfd0345e58ceb95
+Author: Conor MacNeill <conor@apache.org>
+Date:   Tue Jul 4 09:25:56 2000 +0000
+
+    Add support for docletpath.
+    
+    I have changed the patch as submitted to treat the docletpath as a classpath rather
+    than a file.
+    
+    Submitted by:	Ernst de Haan <ernst@jollem.com>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@267729 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d42633d63a6a9b030046f0307850b72ca9282640
+Author: Conor MacNeill <conor@apache.org>
+Date:   Thu Jun 29 15:45:41 2000 +0000
+
+    Oops - make the new Javadoc work under JDK 1.1
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@267713 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 689fca41585cc1768a0501fd11c8235b6e4bc481
+Author: Conor MacNeill <conor@apache.org>
+Date:   Thu Jun 29 15:32:43 2000 +0000
+
+    Update javadoc task to support multiple link and group options.
+    
+    Submitted by:	Patrick Chanezon <chanezon@netscape.com>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@267712 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b50848acbae81898bb10c59495c089c2697adde4
+Author: Sam Ruby <rubys@apache.org>
+Date:   Wed Jun 14 12:42:14 2000 +0000
+
+    Javadoc 1.2 multiple group support
+    Submitted by: Donald Leslie <Donald_Leslie@lotus.com>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@267676 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ef962a9a03b756c4ee546afe6efe69ad06f0a692
+Author: Stefano Mazzocchi <stefano@apache.org>
+Date:   Fri Mar 3 14:15:42 2000 +0000
+
+    called "javadoc" directly to avoid classpath problems that bugged many cocoon devs (it didn't happen to me because  was setting tools.jar in my autoexec.bat... now I have a clean classpath and everything works fine on both 1.2 and 1.1
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@267626 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ae16bb711b331f6c8a20ee1298cf171de43266f7
+Author: Stefano Mazzocchi <stefano@apache.org>
+Date:   Sun Feb 13 18:24:18 2000 +0000
+
+    Several changes:
+    
+    1)  restructured Project and Task: copyFile should be a project
+    method rather than a task method for good OO patterns. Well,
+    actually they should be target-granular but we'll see.
+    
+    2)  patched all the necessary files to make the above work
+    
+    3)  removed some unused methods (setAttributes())
+    
+    4)  added the Filter task that addes token filtering capabilities
+    to all the copyFile operations. This works more or less as a
+    superstructure to Replace and KeySubst but automatically and
+    inherited by all the tasks that use copyFile() methods.
+    
+    5)  indicated KeySubst as deprecated
+    
+    6) updated docs to reflect this new behavior
+    
+    NOTE: behavior is _totally_ back compatible if you don't
+    specify any <filter> tag.
+    
+    NOTE2: nothing is carved in stone. If you don't like something
+    you're welcome to propose fixes.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@267604 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 35c0faa1a2b3165909e96d09cd13f429d172f661
+Author: Sam Ruby <rubys@apache.org>
+Date:   Sun Feb 6 21:16:57 2000 +0000
+
+    1) Correct potential infinite loops when parsing invalid Java source
+    2) Correct Stefano's mailing address
+    3) Correct handling of escaped quotes in strings
+    4) Return exit code from the exec'd process as it may be useful
+    
+    Submitted by: Michael Smith <michael@sneakerlabs.com>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@267590 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1af1e04eefdc1cd751ef1286fb680420f6131d19
+Author: Sam Ruby <rubys@apache.org>
+Date:   Sun Feb 6 19:28:54 2000 +0000
+
+    Fixed javadoc so that it doesn't go into an infinite loop on lines such as:
+    
+        tmpExcludes.addElement("**/"+tok.nextToken().trim()+"/**");
+    
+    (currently found in org.apache.tools.ant.taskdefs.Copydir)
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@267589 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 5d4e93228c4153ed052f67999e939e3f492879cf
+Author: Sam Ruby <rubys@apache.org>
+Date:   Sun Feb 6 00:26:57 2000 +0000
+
+    Merge classpath+sourcepath for jdk 1.1
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@267581 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1ee4709de6c4b88091fff76ca5eaea49750cafdc
+Author: Stefano Mazzocchi <stefano@apache.org>
+Date:   Thu Jan 27 03:54:43 2000 +0000
+
+    used the new boolean method
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@267574 13f79535-47bb-0310-9956-ffa450edef68
+
+commit fd287b3a808daed93021646efdcf52a31957e35a
+Author: Stefano Mazzocchi <stefano@apache.org>
+Date:   Sun Jan 23 11:39:13 2000 +0000
+
+    new javadoc task now extends exec and spawns another JVM to go around the system.exit() problems
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@267558 13f79535-47bb-0310-9956-ffa450edef68

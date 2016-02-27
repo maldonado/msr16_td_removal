@@ -1,0 +1,92 @@
+commit bf8c2d9b4bb7b6dde9688ada47bd49da69930ffa
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Sat Aug 1 18:58:38 2015 +0200
+
+    Method definitions do not need to wrap their name in an argument node
+
+commit bff01ddcef8fc6ca6e0a260a6ff1765635d4379f
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Apr 16 14:02:16 2015 -0500
+
+    1. staticScope.setSignature now only happens when ArgsNode is created and nowhere else (well some dead code which needs to be removed yet).  For AOT, IR persistence still needs to be corrected so that we can popular signature when we reify the StaticScope (to be done in a followup commit).
+    2. CompiledIRMethod now implements IRMethodArgs so this fixed all JIT methods arity errors.
+
+commit 512b0a5ab4e129a2e05e6ca83113520252a0048a
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Apr 16 10:49:28 2015 -0500
+
+    StaticScope now has Signature instead of three individual fields.  All other
+    changes were made to support this.  We encode/decode scopes with a full
+    Signature.  Blocks are all rooted in providing a Signature.  All IR*Method
+    will provide a Signature.  Unfortunately, I stopped at IR level for method
+    types.  Over time those should get converted.
+    
+    This corrects all arity issues involving methods and blocks in interp.  JIT
+    is still somewhere passing in the wrong values but I will correct that in
+    a followup (this is not a regression).
+    
+    spec:fast:ruby and test:mri both pass so do JIT variants of those tests
+    but I strong suspect we are shelling out in some way and running some of
+    these tests in interp mode.
+    
+    On other note of distinction is that for builtin functions we only construct
+    a subset of information that Signature wants because Arity is only a subset
+    of the info Signature needs.  Since there are no exotic signatures in builtins
+    there is a Signature.from(Arity) which will convert to a reasonable analogue
+    or throw if it is special in some way.
+    
+    I tried to leave all deprecated versions of methods and constructors but
+    I might have spaced out a few.
+
+commit 367c2bcd7db1524833484db5af23bac92fa8a531
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Apr 14 16:19:21 2015 -0500
+
+    - DynamicScope+children removed no longer used {get,set}ArgValues methods since they are dead.
+    - ArgsNode getRest() replaced by hasRest() or retrieving getRestArgNode directly.
+    - Slight rearrangement internally of fields in ArgsNode.
+    - Remove accidental println from last commit.
+
+commit bd057e97a1537fdd6a03cb1f3085b3df668b764f
+Author: Thomas E Enebo <tom.enebo@gmail.com>
+Date:   Thu Feb 12 12:44:27 2015 -0600
+
+    Revert "Revert "Fixed arity issue with RubyMethod""
+
+commit 237fee2f675305db5e267ee2626aee2fa86480b4
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Feb 11 09:36:30 2015 -0600
+
+    Make hasAssignment hasVariableAssignment since it only refers to lvar/dvars.
+    Use this new knowledge in IRBuilder to fix GH #2574.  Still some other cases
+    to fix.
+
+commit 8ce6a0c546a48369708c16a6a9a2f300bfdb1276
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Feb 10 16:42:48 2015 -0600
+
+    Add hasAssignment to all nodes.  To be used by IRBuilder (described in next commit)
+
+commit 95a586e46804d298a5a7583bae23ab5a723613d0
+Author: Thomas E Enebo <tom.enebo@gmail.com>
+Date:   Wed Feb 11 09:52:31 2015 -0600
+
+    Revert "Fixed arity issue with RubyMethod"
+
+commit 562f72136710ea3be8bde39aef3c319a7beed65c
+Author: Smit Shah <who828@gmail.com>
+Date:   Tue Feb 10 23:46:36 2015 +0530
+
+    Fixed arity issue with RubyMethod
+
+commit ed2bf9e0db9443d63bc5f2e0ca13f666165fc6de
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jan 10 13:44:09 2014 -0600
+
+    Always ensure def and defs nodes get a non-null body.
+
+commit 28c6fbc4e883bc1c9e9242d1da1cb2b785f55339
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 3 12:46:45 2013 -0500
+
+    Move to @mkristian's proposed layout, with some modifications.

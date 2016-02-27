@@ -1,0 +1,55 @@
+commit f9c3ccc4acaa8fb591fb5e1e051d21343adf8b6f
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Jun 8 15:08:36 2010 -0400
+
+    Simple renaming in ir package
+
+commit 63753dc47fcb715bdd2710fce5dc22126b68eaa9
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Fri Oct 23 23:59:56 2009 -0500
+
+    - First round of attempting to add alloc-frame, load-from-frame &
+      store-to-frame instructions for closures.  2 separate dataflow passes
+      to insert load and store instructions where required -- partially
+      working, still some pieces to fall in place.
+
+commit dc0b3a049c641482c1161afe84c91d898aeca413
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Wed Oct 14 18:58:12 2009 -0500
+
+    - Cleaned up the scope setup some more; Integrated (not fully tested &
+      debugged) closures into live variable anaysis code; Added instructions
+      to allocate heap frame, load / store variables from frame (not
+      integrated yet);
+
+commit c060b6f3ec6dda3222db425c11183368ffd625cc
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Mon Oct 5 00:30:01 2009 -0500
+
+    - Bug fix in cfg construction + added dominator tree builder.
+
+commit 58996aeb051c474a8409506a3058634d81cb90dd
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Sun Oct 4 16:52:40 2009 -0500
+
+    - Bug fixes in ir and cfg construction; canonicalized cfg; added
+      improved visit order to dataflow framework; first pass (stubs) at
+      dealing with method aliases.
+
+commit 8d92c98c80f94b7c4e8b0e15fc98f1cadee6cb37
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Fri Sep 25 10:29:45 2009 -0500
+
+    - Some more code cleanup + implemented dead code elimination pass
+
+commit ad09bdcf85837c1283898d45c968d0ab442e0b99
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Tue Sep 22 18:33:47 2009 -0500
+
+    - First pass at implementing live variable analysis -- the cfg building / printing code needs tweaking; Need to implement dead code removal using results of lva.
+
+commit 19ab623c4e93a22c4419da6116b66fa4cd172791
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Tue Sep 22 10:32:18 2009 -0500
+
+    - Added dataflow analysis abstract classes -- different df problems (live var analysis, etc.) can be implemented as derived classes without having to rewrite common code across problems.

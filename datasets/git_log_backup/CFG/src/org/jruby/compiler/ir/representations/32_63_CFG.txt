@@ -1,0 +1,337 @@
+commit 75a5ab2bb99e69d6fea4f4822b3b019318ab38d6
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Fri Mar 25 16:40:47 2011 -0500
+
+    white space fix
+
+commit cfaa7e801797f39fccd61b9c460d1f6c6f0f1c27
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri Mar 25 16:38:16 2011 -0500
+
+    Move assert lower
+
+commit 25457f97677167e32dfee0efe77433004f84aa4e
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Wed Mar 23 19:00:22 2011 -0500
+
+    Add sanity check to traversal order code + always delete orphaned bbs
+
+commit 4ba1af07daf58fcbfaac8ca499982de97ceefa90
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Wed Mar 23 12:36:20 2011 -0500
+
+    Remove a couple possibly incorrect canRaiseException methods
+
+commit c2dd90c0ec7fb2d896718adc2b4b5166e3ac84d4
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Wed Mar 23 12:23:47 2011 -0500
+
+    Optimized CFG to eliminate useless exception edges & orphaned bbs;
+    Removed debugging output from cfg linearization.
+
+commit 400aa0fab646a52269a94fb548710797eca56616
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Wed Mar 23 01:48:51 2011 -0500
+
+    Fix IR & CFG for raise-rescue-ensure code + first pass at interpreting
+    generated IR for these.
+
+commit 3ce3a78982812e11199ec1041f09e824aac604a9
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Tue Mar 22 18:52:24 2011 -0500
+
+    Renamed rescue body marker instructions to exception region marker instructions
+
+commit 881282fa0221bdeffce7a7c472517d4e997d50f9
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Fri Mar 18 15:51:16 2011 -0500
+
+    Got rid of unused method in CFG.java and commented out stale inlining code in
+    the interpreter.
+
+commit ddafa53dcb28af2ff160cc3f132b32b48f08fe21
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Mar 3 16:26:04 2011 -0600
+
+    Make MethAddr in CallInstr be a MethAddr instead of Operand.  SplitCallInstr will be needed to deal with split calls
+
+commit cf8d9613ea01b97f6809745b7f95d38d826be4c7
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Fri Feb 25 00:05:16 2011 -0600
+
+    Complete implementation of BREAK instruction -- fix up IR, CFG, and
+    interpretation.
+
+commit 0a952a3c94b2e3ff2509caf58afdd3b909b803e7
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Thu Feb 24 02:09:40 2011 -0600
+
+    Fixed bug in live variable analysis code that led to missing binding
+    store instructions -- now analysis is more conservative and leads to
+    excessive stores and needs to be tightened up later; refactored some
+    common code into CFG.
+
+commit e60e990301354dc1dd7bc1ec44c56fef6f5a9931
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Wed Feb 9 02:28:53 2011 -0600
+
+    Fix bugs with interpretation of ReturnInstr
+
+commit f9d494be4d166ce9939bbd23c241c1357c6ae6fd
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Mon Dec 27 00:17:44 2010 -0600
+
+    Testing linearized instruction list; switch instead of virtual calls
+
+commit 095c97dca60e937adc61edc1922c7cb6b5ddfd14
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Sun Dec 26 18:16:58 2010 -0600
+
+    Convert fall-thru bb map from hashmap to array
+
+commit be2f19bfd520ea3059bad8a65ed3df718bb81316
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Sun Nov 28 01:06:16 2010 -0600
+
+    Start all call args at index 0 (rather than 1); start experimenting with inlining
+
+commit b5d32a6b8d66ca55d9c915427ec300947afba0fb
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Sat Nov 27 16:14:50 2010 -0600
+
+    Added MethodHandle operand; Split calls into method lookup + method invoke; Added single-entry inline cache to methodhandle
+
+commit 9f11857c07cd4b6e6278ad9e461ad2a14549e777
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Wed Nov 17 23:53:38 2010 -0600
+
+    Turn off unnecessary cfg output
+
+commit d8ba0ca973f5a3acde57e3131eab1088ba0d8076
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri Nov 12 15:28:00 2010 -0600
+
+    Rename Case Instruction (not impl'd yet)
+
+commit 4733ec035d776b95da7830196124f3100e32bdc5
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Aug 30 16:38:25 2010 +0900
+
+    Some more block specific IR stuff (mostly renaming)
+
+commit 8f8c90b14a56828bfebdfc923d7a52efbc0f2e5c
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Aug 11 17:42:58 2010 -0500
+
+    Remove more errors
+
+commit f9c3ccc4acaa8fb591fb5e1e051d21343adf8b6f
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Jun 8 15:08:36 2010 -0400
+
+    Simple renaming in ir package
+
+commit 6cabc8fb6a510545419554de8f9e48ab0d9de2c0
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri Jun 4 17:54:06 2010 -0500
+
+    Madness to go this long without committing
+
+commit 8cf878db238d3accc9c4c1cd7be387d170d53010
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Wed Aug 18 02:02:18 2010 -0500
+
+    - Bug fix in cfg generation in the presence of exceptions; bug fix in IR
+      generation in the presence of returns in ensure blocks; delete
+      orphaned bbs (without incoming edges) after cfg generation.
+
+commit 012d423328b757ec530f59d63bd794e343c5f686
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Thu Aug 5 00:28:40 2010 -0500
+
+    - Fixed rescue handler map for inlined methods + fixed linearization
+      code to deal with exception blocks + push all rescue blocks to the end
+      of the method so common case code remains straightline as far as
+      possible.
+
+commit 755a750036964406d566efc7429ada37f2264a60
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Wed Aug 4 21:46:38 2010 -0500
+
+    - Bug fixes in the inlining code dealing with closures, and exceptions.
+
+commit ff7daff1b6a1a9d87c0bcf0f9c42a1d207a404fd
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Wed Aug 4 17:40:33 2010 -0500
+
+    - During inlining, preserve edge types.
+
+commit 817e3d38fb9ebb18d75fff5b5ac2dccfaf5316ed
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Wed Aug 4 01:16:02 2010 -0500
+
+    - Cleaned up code that deals with building of rescued regions & rescue
+      blocks; First quick pass at inlining in the presence of exceptions and
+      rescue blocks -- still buggy, needs another pass to clarify semantics
+      and set up the cfg correctly.
+
+commit 6b8b5c6c5215ad5fd2751a87a15da9a8e6adb18a
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Wed Jun 2 11:53:02 2010 -0500
+
+    - Bug fix with linearization + fixed ir to only emit one line num ir instruction
+      per source line.
+
+commit 3c9aaa07d8a6b740471cae0fdfad27f1b14d8631
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Tue Jun 1 14:27:57 2010 -0500
+
+    - Added a basic block linearization pass so that instructions can be
+      processed as one big list and translated to bytecode (or interpreted)
+      without having to bother with the CFG.
+
+commit 085e6526a85793e88c2e6ff8ee7709c68ca78a72
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Thu May 27 15:10:26 2010 -0500
+
+    - Got rid of BUILD_CLOSURE IR instruction; the closure sits well as an
+      argument of CallInstruction; the IR instruction is basically useless
+      baggage.  No longer adding DEFINE_CLASS_METHOD instruction when the
+      method being added is the "synthetic" root method of classes.
+
+commit 4313d7c6f339c79ba8002cb909def062bdfa619c
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Mon Apr 26 20:05:30 2010 -0500
+
+    - After inlining, merge straightline basic blocks at the head/tail of the callee.
+
+commit 022d5284f8b155a50cf733e82c44a948a680cc2a
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Thu Apr 22 23:44:37 2010 -0500
+
+    - Bug fixes in IR generation of yield instruction + more bug fixes in inlining of closures (seems to work better now).
+
+commit 2015ffcea442a811c2fc3dcc5d24ba47aa3dacfc
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Thu Apr 22 19:03:22 2010 -0500
+
+    - Fixed bug with IR generation of while; some more method/closure inlining fixes (lot more to fix!); added a dummy pass to test method inlining.
+
+commit a71dcacb83698ead80d78f3cf30c9d52adaedffa
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Thu Apr 22 10:41:15 2010 -0500
+
+    - First pass at inlining methods.
+
+commit fd5db54803738633dbed63308d1a712b8d07941e
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Jan 7 14:17:14 2010 -0600
+
+    Very minor style changes except for internal variable logic on scope impl
+
+commit a8a12784939fd6ad06458e2ac66920725e23b52f
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Tue Dec 22 00:21:04 2009 -0600
+
+    - Added instruction to set up self in the root method of a class/module; Fixes several bugs in the frame load/store placement algorithm -- lots of spurious frame loads/stores are now gone.  In addition, if we make assumptions about core class methods, most of the frame load/stores will likely disappear -- future work.
+
+commit 0a8a5c36b38825c33ddb9da16ff1a1fd562fbe32
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Mon Dec 21 00:44:36 2009 -0600
+
+    - Fixups to cfg building to ensure that rescued bodies, rescue blocks,
+      and ensure blocks are properly hooked up.  Next step: fixing frame
+      load/store analysis code to handle these.
+
+commit 772767e7e391b52891a337c3a753e33b52a3072b
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Thu Dec 3 22:31:11 2009 -0600
+
+    - Added some utility methods for the interpreter.
+
+commit aeadc748152679024f1a83c8e8e91a57364ab7c6
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Thu Dec 3 18:19:23 2009 -0600
+
+    - More rescue/ensure bug fixes + more FIXMEs + optimization of IS_TRUE_Instr.
+
+commit 2f45248783061da8d7fd34fe13bccbca836b7100
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Tue Dec 1 18:12:04 2009 -0600
+
+    - More fixes to rescue / ensure code + handled rescue / ensure code during cfg building (still missing a couple pieces).
+
+commit 15d7d44d7b26584ca251a4918e3555b43da8d7c0
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Sat Nov 28 21:30:23 2009 -0600
+
+    - Few bug fixes + started changing coding style to conform with existing
+      coding style + translated SClassNode + added several additional fixmes
+      + added timing output.
+
+commit 63753dc47fcb715bdd2710fce5dc22126b68eaa9
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Fri Oct 23 23:59:56 2009 -0500
+
+    - First round of attempting to add alloc-frame, load-from-frame &
+      store-to-frame instructions for closures.  2 separate dataflow passes
+      to insert load and store instructions where required -- partially
+      working, still some pieces to fall in place.
+
+commit 78dfc2798b99f35d866a4bd7b033a4d1e6fa98c3
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Sun Oct 18 00:02:08 2009 -0500
+
+    - Bug fixes in ir generation + one more ir node translated (more ruby
+      code now successfully processed - ir built, cfg built, local opts
+      done, dom tree built, lva done, dead code eliminated).
+
+commit dc0b3a049c641482c1161afe84c91d898aeca413
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Wed Oct 14 18:58:12 2009 -0500
+
+    - Cleaned up the scope setup some more; Integrated (not fully tested &
+      debugged) closures into live variable anaysis code; Added instructions
+      to allocate heap frame, load / store variables from frame (not
+      integrated yet);
+
+commit 0a2edf9d95b2c1a18cb434df86cd1162a414a8d5
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Wed Oct 7 18:03:18 2009 -0500
+
+    - Closures are handled better w.r.t. IR printing + cfgs are built for
+      closures too now + added a BUILD_CLOSURE IR instruction + fixed some
+      bugs (can now build ir and cfg and run local opts on much larger code
+      bodies).
+
+commit c060b6f3ec6dda3222db425c11183368ffd625cc
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Mon Oct 5 00:30:01 2009 -0500
+
+    - Bug fix in cfg construction + added dominator tree builder.
+
+commit 58996aeb051c474a8409506a3058634d81cb90dd
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Sun Oct 4 16:52:40 2009 -0500
+
+    - Bug fixes in ir and cfg construction; canonicalized cfg; added
+      improved visit order to dataflow framework; first pass (stubs) at
+      dealing with method aliases.
+
+commit 8d92c98c80f94b7c4e8b0e15fc98f1cadee6cb37
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Fri Sep 25 10:29:45 2009 -0500
+
+    - Some more code cleanup + implemented dead code elimination pass
+
+commit 19ab623c4e93a22c4419da6116b66fa4cd172791
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Tue Sep 22 10:32:18 2009 -0500
+
+    - Added dataflow analysis abstract classes -- different df problems (live var analysis, etc.) can be implemented as derived classes without having to rewrite common code across problems.
+
+commit ed478257185aa583e1ffe1a4fc054c7f863d7983
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Fri Sep 11 01:45:13 2009 -0500
+
+    - Initial code to build CFG for methods; Added jgrapht-jdk1.5 jar which is used by for building the CFG

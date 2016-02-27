@@ -1,0 +1,65 @@
+commit 61678ac1a2514a9932276f8d527816a5980a94b3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Feb 25 20:41:40 2013 +1100
+
+    Fix more references to CPL.
+    
+    The phrase "Common Public License" was split across two lines in
+    our default header, which caused it to be missed during earlier
+    search/replace. Also, we did not replace the CPL URL in the
+    header with the EPL URL.
+
+commit 330fef3b0fc18af477ccea19bd278669667f31bb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 12 14:49:29 2013 -0600
+
+    Switch JRuby's CPL license to EPL.
+    
+    Governance of the CPL license was moved to the Eclipse Foundation
+    at some point in the past, and Eclipse blessed the EPL (Eclipse
+    Public License v1.0) as the successor to CPL. Because the CPL
+    contains a clause allowing transparent upgrades to future blessed
+    successor licenses, we can make the move to EPL without
+    re-contacting past contributors.
+    
+    The change in going from CPL to EPL largely just removes some
+    punitive language that apparently made many companies nervous. All
+    other language in the license remains identical.
+    
+    Several documents about Eclipse's move from CPL to EPL are here:
+    
+    http://www.eclipse.org/legal/cpl2epl/
+    
+    Note that Eclipse's move came before the blessing of EPL as the
+    upgrade path for CPL, so they had to do a bit more legal juggling.
+    With Eclipse now the administrator of CPL and with their blessing
+    of EPL as the upgrade path for CPL, all we need to do is make the
+    move.
+
+commit 1dbbe1a37a3d9cd926b906dc06b5a8578de6b3b3
+Author: Bill Dortch <bill.dortch@gmail.com>
+Date:   Fri Sep 21 03:25:29 2007 +0000
+
+    More JI cleanup:
+     - Reworked the very expensive and thread-unsafe (and essentially obsolete) proxy extender mechanism. No longer is every new proxy checked against all proxy extenders; since the Rubification of the Java class hierarchy, it's really only necessary to extend the class/module specified in the extend_proxy method. I'd like to see this feature deprecated, as it's redundant now (see forthcoming note on jruby-dev).
+     - Moved JavaClass instances to a ConcurrentHashMap for faster access.  They had been in a weak hash map, but since almost all of them were linked to proxies that were in non-weak maps, there was really no benefit (and some performance penalties).
+     - Used concurrent techniques to speed proxy class lookup.  Proxies are now stored with their corresponding JavaClass instances, and can be retrieved with an unsynchronized access.
+     - Eliminated the ProxyData "dataStruct" that had been attached to the JavaUtilities module; most of the fields (maps) had been eliminated in the work noted above; the remaining fields have been moved to JavaSupport where they may be accessed without a JavaUtilities reference.
+     - Permanently disabled the the old-style (<) interface implementation syntax (there had been a method to enable it; no more).
+     - Fixed a bug wherein the colon2 syntax for opening modules was not working if the module had not previously been referenced.  Will open a JIRA and backport to the 1.0 branch.
+    
+    Fixes JRUBY-931 (thread-unsafe proxy extender access).
+    
+    Most of this work is transitional; i.e., will probably be implemented differently when JI is overhauled.  Just cleaning up and clearing away dead wood in advance of that overhaul.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4364 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 319e7de9a6fbc79cbe075269ea1b6f27f7138ac7
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon May 21 04:30:43 2007 +0000
+
+    Missed a file for JRUBY-920.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3691 961051c9-f516-0410-bf72-c9f7e237a7b7

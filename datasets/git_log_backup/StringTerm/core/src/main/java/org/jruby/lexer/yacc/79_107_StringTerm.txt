@@ -1,0 +1,317 @@
+commit f6b39eceebd34dac200e916ef9dd3b8d1b9dbd65
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri Jun 19 17:08:34 2015 -0500
+
+    Convert SyntaxException to be based on file and line vs ISourcePosition.
+    Made compile_error method which accepts PID
+
+commit e810614f4c238e8be10cbfd7bce0e20d1758c727
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Jun 4 15:45:15 2015 -0500
+
+    Fixes #3015. Syntax Error on nested hash that parses with MRI 2.0 but not with JRuby 9000
+
+commit b26ceb4874839581d14905811910f32a9dc0fc85
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Sun Apr 5 11:14:05 2015 -0500
+
+    The only \ followed by non-ascii test in the world
+
+commit a5e70693e151c5d42b79a4f0d9539b513ea1e539
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Sun Apr 5 08:55:32 2015 -0500
+
+    do no intern keywords
+
+commit 881743e98fab6cdebcfe516668c1f31a3a159fe0
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Sat Apr 4 14:39:28 2015 -0500
+
+    default buffer for string content too small by default.  simplify getStringToken usage
+
+commit 20f819023d474635adc2e50724d8df1f67d9e381
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Apr 2 15:02:11 2015 -0500
+
+    Documented and further fixed precise_mbclen since I did not correctly understand the API :P
+
+commit fbaf0389687e543bcbdd2d416d3f3e67a3a2b5b5
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Apr 1 14:13:44 2015 -0500
+
+    New lexer running plenty of stuff but missing some features like SCRIPT_LINES and with some bad line position info
+
+commit 1c1838e8b3256e61b67778dfa4fa7f42ee037733
+Author: kiichi <k77ch7@gmail.com>
+Date:   Mon Nov 17 22:30:11 2014 +0900
+
+    improve handling of non ascii character after backslash
+
+commit 39c7e339d9a170d877d7fc9fbfc73cfee48b2f1f
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Sun Jan 18 11:55:42 2015 -0600
+
+    Fixes #2154. Parser needs to support "foo": hash key syntax
+
+commit 8c6750d76d027cc9cad8e33de3ce9ade2bf50074
+Merge: 254a327 4d402cd
+Author: Christian Meier <m.kristian@web.de>
+Date:   Thu Nov 20 21:06:53 2014 +0000
+
+    Merge branch 'jruby-1_7'
+    
+    Conflicts:
+    	.travis.yml
+    	build.xml
+    	maven/jruby/pom.rb
+    	maven/jruby/pom.xml
+    	test/pom.rb
+
+commit 254a32779c769f77a3898fcf1a998e38c579edbe
+Merge: 16c4b16 2a9ccce
+Author: Christian Meier <m.kristian@web.de>
+Date:   Thu Nov 20 13:14:43 2014 +0000
+
+    Merge branch 'jruby-1_7'
+    
+    Conflicts:
+    	.gitignore
+    	.travis.yml
+    	build.xml
+    	core/pom.xml
+    	core/src/main/java/org/jruby/RubyInstanceConfig.java
+    	core/src/main/java/org/jruby/RubyModule.java
+    	core/src/main/java/org/jruby/RubyTime.java
+    	core/src/main/java/org/jruby/compiler/ASTCompiler.java
+    	core/src/main/java/org/jruby/compiler/BodyCompiler.java
+    	core/src/main/java/org/jruby/compiler/impl/BaseBodyCompiler.java
+    	core/src/main/java/org/jruby/ext/bigdecimal/RubyBigDecimal.java
+    	core/src/main/java/org/jruby/internal/runtime/methods/DefaultMethod.java
+    	core/src/main/java/org/jruby/lexer/yacc/RubyYaccLexer.java
+    	core/src/main/java/org/jruby/lexer/yacc/StringTerm.java
+    	core/src/main/java/org/jruby/parser/ParserConfiguration.java
+    	core/src/main/java/org/jruby/runtime/Helpers.java
+    	core/src/test/java/org/jruby/test/MainTestSuite.java
+    	docs/CodeConventions.txt
+    	lib/pom.rb
+    	lib/ruby/1.8/resolv.rb
+    	lib/ruby/1.8/rexml/document.rb
+    	lib/ruby/1.8/rexml/entity.rb
+    	lib/ruby/1.8/rexml/rexml.rb
+    	lib/ruby/1.8/rexml/text.rb
+    	lib/ruby/1.9/cgi/core.rb
+    	lib/ruby/1.9/dl/func.rb
+    	lib/ruby/1.9/drb/ssl.rb
+    	lib/ruby/1.9/gserver.rb
+    	lib/ruby/1.9/ipaddr.rb
+    	lib/ruby/1.9/net/http.rb
+    	lib/ruby/1.9/net/imap.rb
+    	lib/ruby/1.9/net/pop.rb
+    	lib/ruby/1.9/net/smtp.rb
+    	lib/ruby/1.9/open-uri.rb
+    	lib/ruby/1.9/optparse.rb
+    	lib/ruby/1.9/rake.rb
+    	lib/ruby/1.9/rake/alt_system.rb
+    	lib/ruby/1.9/rake/application.rb
+    	lib/ruby/1.9/rake/clean.rb
+    	lib/ruby/1.9/rake/cloneable.rb
+    	lib/ruby/1.9/rake/contrib/ftptools.rb
+    	lib/ruby/1.9/rake/contrib/sys.rb
+    	lib/ruby/1.9/rake/dsl_definition.rb
+    	lib/ruby/1.9/rake/ext/core.rb
+    	lib/ruby/1.9/rake/ext/module.rb
+    	lib/ruby/1.9/rake/ext/string.rb
+    	lib/ruby/1.9/rake/ext/time.rb
+    	lib/ruby/1.9/rake/file_list.rb
+    	lib/ruby/1.9/rake/file_task.rb
+    	lib/ruby/1.9/rake/file_utils.rb
+    	lib/ruby/1.9/rake/file_utils_ext.rb
+    	lib/ruby/1.9/rake/gempackagetask.rb
+    	lib/ruby/1.9/rake/invocation_chain.rb
+    	lib/ruby/1.9/rake/multi_task.rb
+    	lib/ruby/1.9/rake/packagetask.rb
+    	lib/ruby/1.9/rake/pseudo_status.rb
+    	lib/ruby/1.9/rake/rake_module.rb
+    	lib/ruby/1.9/rake/rdoctask.rb
+    	lib/ruby/1.9/rake/ruby182_test_unit_fix.rb
+    	lib/ruby/1.9/rake/runtest.rb
+    	lib/ruby/1.9/rake/task.rb
+    	lib/ruby/1.9/rake/task_arguments.rb
+    	lib/ruby/1.9/rake/task_manager.rb
+    	lib/ruby/1.9/rake/tasklib.rb
+    	lib/ruby/1.9/rake/testtask.rb
+    	lib/ruby/1.9/rake/version.rb
+    	lib/ruby/1.9/rake/win32.rb
+    	lib/ruby/1.9/resolv.rb
+    	lib/ruby/1.9/rexml/document.rb
+    	lib/ruby/1.9/rexml/entity.rb
+    	lib/ruby/1.9/rexml/text.rb
+    	lib/ruby/1.9/ripper/lexer.rb
+    	lib/ruby/1.9/socket.rb
+    	lib/ruby/1.9/time.rb
+    	lib/ruby/1.9/webrick/htmlutils.rb
+    	lib/ruby/1.9/webrick/httputils.rb
+    	lib/ruby/1.9/yaml.rb
+    	lib/ruby/2.0/bigdecimal/util.rb
+    	lib/ruby/2.0/cgi/core.rb
+    	lib/ruby/2.0/csv.rb
+    	lib/ruby/2.0/erb.rb
+    	lib/ruby/2.0/fileutils.rb
+    	lib/ruby/2.0/gserver.rb
+    	lib/ruby/2.0/net/ftp.rb
+    	lib/ruby/2.0/net/http/response.rb
+    	lib/ruby/2.0/net/imap.rb
+    	lib/ruby/2.0/net/pop.rb
+    	lib/ruby/2.0/net/protocol.rb
+    	lib/ruby/2.0/net/smtp.rb
+    	lib/ruby/2.0/open-uri.rb
+    	lib/ruby/2.0/racc/rdoc/grammar.en.rdoc
+    	lib/ruby/2.0/rdoc/generator/template/darkfish/js/jquery.js
+    	lib/ruby/2.0/rdoc/rd/block_parser.rb
+    	lib/ruby/2.0/resolv.rb
+    	lib/ruby/2.0/rexml/entity.rb
+    	lib/ruby/2.0/rinda/tuplespace.rb
+    	lib/ruby/2.0/socket.rb
+    	lib/ruby/2.0/ssl.rb
+    	lib/ruby/2.0/test/unit/parallel.rb
+    	lib/ruby/2.0/thread.rb
+    	lib/ruby/2.0/time.rb
+    	lib/ruby/2.0/uri/common.rb
+    	lib/ruby/2.0/uri/generic.rb
+    	lib/ruby/2.0/webrick/htmlutils.rb
+    	lib/ruby/2.0/webrick/httprequest.rb
+    	lib/ruby/2.0/webrick/httputils.rb
+    	lib/ruby/2.0/xmlrpc/client.rb
+    	lib/ruby/2.0/xmlrpc/server.rb
+    	lib/ruby/2.0/yaml.rb
+    	maven/jruby-complete/src/it/integrity/verify.bsh
+    	maven/jruby-dist/src/it/integrity/verify.bsh
+    	maven/jruby-jars/src/it/integrity/verify.bsh
+    	maven/jruby-noasm/src/it/integrity/verify.bsh
+    	maven/jruby/src/it/integrity/verify.bsh
+    	pom.xml
+    	spec/ffi/async_callback_spec.rb
+    	spec/ffi/bool_spec.rb
+    	spec/ffi/buffer_spec.rb
+    	spec/ffi/callback_spec.rb
+    	spec/ffi/custom_param_type.rb
+    	spec/ffi/custom_type_spec.rb
+    	spec/ffi/dup_spec.rb
+    	spec/ffi/enum_spec.rb
+    	spec/ffi/errno_spec.rb
+    	spec/ffi/ffi_spec.rb
+    	spec/ffi/function_spec.rb
+    	spec/ffi/io_spec.rb
+    	spec/ffi/library_spec.rb
+    	spec/ffi/long_double.rb
+    	spec/ffi/managed_struct_spec.rb
+    	spec/ffi/memorypointer_spec.rb
+    	spec/ffi/number_spec.rb
+    	spec/ffi/platform_spec.rb
+    	spec/ffi/pointer_spec.rb
+    	spec/ffi/rbx/attach_function_spec.rb
+    	spec/ffi/rbx/memory_pointer_spec.rb
+    	spec/ffi/rbx/spec_helper.rb
+    	spec/ffi/rbx/struct_spec.rb
+    	spec/ffi/string_spec.rb
+    	spec/ffi/strptr_spec.rb
+    	spec/ffi/struct_by_ref_spec.rb
+    	spec/ffi/struct_callback_spec.rb
+    	spec/ffi/struct_initialize_spec.rb
+    	spec/ffi/struct_packed_spec.rb
+    	spec/ffi/struct_spec.rb
+    	spec/ffi/typedef_spec.rb
+    	spec/ffi/union_spec.rb
+    	spec/ffi/variadic_spec.rb
+    	spec/ruby/optional/ffi/library_spec.rb
+    	spec/ruby/optional/ffi/spec_helper.rb
+    	test/mri.1.8.index
+    	test/pom.rb
+    	test/rubicon/test_object_space.rb
+    	test/test_command_line_switches.rb
+    	test/test_dir.rb
+    	test/test_file.rb
+    	test/test_higher_javasupport.rb
+    	test/test_io.rb
+    	test/test_jar_on_load_path.rb
+    	test/test_jarred_gems_with_spaces_in_directory.rb
+    	test/test_launching_by_shell_script.rb
+    	test/test_load_compiled_ruby_class_from_classpath.rb
+    	tool/globals_1_8_7.rb
+    	tool/globals_1_9_3.rb
+    	tool/globals_2_0_0.rb
+
+commit 08c32389f0e71873370b516453496ca30f2021d0
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Nov 5 15:26:32 2014 -0600
+
+    New nest function for upcoming changes. string end should return actual end char and dbeg now returns char value
+
+commit bb85d423be5de39d151afb31fa7e7fa8733886df
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Nov 3 19:25:11 2014 -0600
+
+    Character#isAlphabetic is from Java 7, so duplicate logic here.
+
+commit 2c583546d3fe533993caf2a4adb97bbaeded010a
+Merge: 8801d55 2b7fecb
+Author: Thomas E Enebo <tom.enebo@gmail.com>
+Date:   Mon Nov 3 16:25:39 2014 -0600
+
+    Merge pull request #2064 from k77ch7/improve_handling_of_nonascii_character_after_backslash
+    
+    improve handling of non ascii character after backslash
+
+commit 8801d55b3964204ac1f1f2db29cc45afe987469a
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Nov 3 16:23:45 2014 -0600
+
+    Fixes #2088. Allow partial but not actual esoteric interpolation sequences to be regexp values
+
+commit 5bc65dde8df88adbc04484d4c04e6a02678d7aa8
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Oct 29 17:43:07 2014 -0500
+
+    More substantial and slightly less icky fix to potentially non-embedded gvar/ivar character sequences
+
+commit c11cb6e33eb680c7de37cf55aeffe02f5751e9d0
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Oct 29 16:21:08 2014 -0500
+
+    Horrific fix for global and ivar characters which are not interpolators fix. Cleanup next fix
+
+commit 2b7fecb7ebb7798964344b05a7c7060871075533
+Author: kiichi <k77ch7@gmail.com>
+Date:   Tue Oct 21 22:09:10 2014 +0900
+
+    improve handling of non ascii character after backslash
+
+commit 73c6081b773737ba9fac3fbcacdde15b45ea06ea
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Sat Aug 16 11:40:51 2014 -0500
+
+    Missed some more Token usages and removed Token itself
+
+commit c8297b673018024a755d26955d2200388f547f63
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Sat Aug 16 11:20:04 2014 -0500
+
+    Remove use of Token from parser
+
+commit f0096b9e1e55f6efdd68784d6ef0de2ea9ae7de8
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Feb 26 11:12:59 2014 -0600
+
+    10+ years of wanting to change this name....YES! (RubyYaccLexer -> RubyLexer)
+
+commit 1bb6298040457cdf096d92ddef293ba1b69217b2
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Nov 21 01:04:08 2013 -0600
+
+    Remove more compat version references and deprecate some stuff.
+
+commit 28c6fbc4e883bc1c9e9242d1da1cb2b785f55339
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 3 12:46:45 2013 -0500
+
+    Move to @mkristian's proposed layout, with some modifications.

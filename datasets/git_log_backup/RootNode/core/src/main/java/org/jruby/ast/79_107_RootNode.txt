@@ -1,0 +1,47 @@
+commit d9f12ca8d6b32ba7a0eb62b0b44667fd26f47e50
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri Jun 19 15:54:14 2015 -0500
+
+    Store file on StaticScope and on RootNode.
+    Replace SourcePosition in BuildLambdaInstr to not use ISourcePosition
+    IR now retrieves file from rootnode.
+
+commit 237fee2f675305db5e267ee2626aee2fa86480b4
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Feb 11 09:36:30 2015 -0600
+
+    Make hasAssignment hasVariableAssignment since it only refers to lvar/dvars.
+    Use this new knowledge in IRBuilder to fix GH #2574.  Still some other cases
+    to fix.
+
+commit 8ce6a0c546a48369708c16a6a9a2f300bfdb1276
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Feb 10 16:42:48 2015 -0600
+
+    Add hasAssignment to all nodes.  To be used by IRBuilder (described in next commit)
+
+commit b90a5c513d5eaa166d1c7f6e7cade84a633b7adc
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Jun 9 15:12:40 2014 -0500
+
+    More removal of old interpreter
+
+commit 7621334c9b4bef55cc1ac326dcc8d13ce8c36a56
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Jun 9 09:40:27 2014 -0500
+
+    Start removing old interpreter
+
+commit a248935d296a067b94a7a033bf7db783ef282d7d
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Fri May 2 21:08:20 2014 +0100
+
+    Parameterise the rest of the AST nodes for accept.
+    
+    Hadn't noticed that most of them hadn't been updated, as I was mainly using Node#accept.
+
+commit 28c6fbc4e883bc1c9e9242d1da1cb2b785f55339
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 3 12:46:45 2013 -0500
+
+    Move to @mkristian's proposed layout, with some modifications.

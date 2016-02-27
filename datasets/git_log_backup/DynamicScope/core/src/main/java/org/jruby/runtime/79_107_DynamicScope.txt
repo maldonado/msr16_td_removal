@@ -1,0 +1,139 @@
+commit eff3dcce17bdb473b4ea140223786336100c2ce6
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Jul 16 18:24:50 2015 -0500
+
+    Return always goes to the nearest return-capturing lexical scope.
+    
+    Return-capturing scopes are:
+    
+    * method bodies
+    * lambda blocks
+    * class and module bodies
+    
+    Because blocks may be lambdas *or* non-lambdas, we need a live
+    bit on their dynscope to know it's a block being used as a lambda.
+    We can't put this bit on the body or the IRScope because they are
+    static structures.
+    
+    This fix adds a lambda bit to dynscope and uses that to determine
+    the nearest return scope. That allows us to eliminate lambda
+    checks on the return-handling end completely, and always use the
+    proper scope as our marker for the bubbling return.
+    
+    Specs coming. Fixes #3143.
+
+commit 367c2bcd7db1524833484db5af23bac92fa8a531
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Apr 14 16:19:21 2015 -0500
+
+    - DynamicScope+children removed no longer used {get,set}ArgValues methods since they are dead.
+    - ArgsNode getRest() replaced by hasRest() or retrieving getRestArgNode directly.
+    - Slight rearrangement internally of fields in ArgsNode.
+    - Remove accidental println from last commit.
+
+commit e788e1d120ece04e5f26c9b966b8ac6b6aa2d65a
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri Apr 10 11:07:34 2015 -0500
+
+    Re-add getNextCapturedScope for ruby-debug-ide to continue working
+
+commit 695baa1aa3705b161088b4b4d78eafd0a4424938
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Dec 16 16:22:27 2014 -0600
+
+    Still a bit messy but all extra scope removal is done with known extra depth calcs removed
+
+commit 3565ea50bc380f7e62a8c708dad7eddb57414f7e
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Sep 24 10:40:49 2014 -0500
+
+    Change getNextCapturedScope to getParentScope (aligns with getNthParentScope name and it makes more sense as a name).
+
+commit 2d71826d3c9112301d0ea3690c0feb7ac7774d50
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Sep 18 15:35:32 2014 -0500
+
+    Clean up and thread-localize evalType from IR block body.
+
+commit 8c49c0d125cd06da4b0bfc16d62cd84a769857ca
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Sep 18 15:34:56 2014 -0500
+
+    Doco fix.
+
+commit 4fd036b2c3d515db5a9c5ab7e249b59f8ea79692
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Mon Jun 30 23:10:57 2014 -0500
+
+    Death to rubyclass stack: Part 1 of 2
+    
+    * When methods are defined, aliased, undefined, the runtime has to
+      determine the method container that is affected by the changes.
+    
+      Thus far, this was done by manipulating a rubyclass stack that
+      is updated at several places in the runtime and weaves its way
+      through frame, binding, yield, instance/module/binding evals,
+      and is updated on every call.
+    
+    * This patch implements a fairly straightforward algorithm for
+      determining the method container at the time it is needed by
+      examining the contents of the lexical scoping tree starting at
+      the scope where the method is manipulated. This examination is
+      affected by runtime flags set on lexical scopes (always blocks)
+      based on whether any of them are being executed in the context of
+      instance/module/binding evals. There are couple special cases to
+      this algorithm. Nevertheless, it is far more straightforward and
+      easy to grok than the existing runtime implementation.
+    
+      In this patch, the rubyclass stack manipulation code is turned off
+      in ThreadContext.java but the rubyclass stack and its traces in
+      the various parts of the runtime are left behind.
+    
+      The algorithm relies on annotation of block scopes when they are
+      being executed in the context of evals. The bulk of this patch
+      involves setting up these annotations in RubyModule, RubyObject,
+      RubyBasicObject and passing them to DynamicScope via Block, BlockBody,
+      IRBlockBody, and InterpretedIRBlockBody.
+    
+      The algorithm also relies on annotation of static scopes with the
+      IR scope type. The other bulk of this patch is in setting up those
+      annotations on IR static scopes.
+    
+    * The algorithm itself is in ir/runtime/IRRuntimeHelpers.java
+      - findInstanceMethodContainer(..)
+    
+      It is easy to split this up into static/dynamic since there are
+      scenarios where the container is statically determined. But, there
+      is no real benefit that we foresee from the static resolution
+      scenarios, and the algorithm is simpler the way it is currently
+      coded up.
+    
+    * This passes all MRI tests and Rubyspecs plus other contrived
+      tests (they need cleaning up -- will probably add them in a later
+      patch).
+
+commit bd336989903a9af7afb8c8f67fc27ea09e2a7640
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 18 09:59:38 2014 -0600
+
+    Revert "Generify scopes to Object, in preparation for using Object in"
+    
+    This reverts commit a57d94a4c02063e2df2c655fbe349d2b4769ba41.
+    
+    This change is right long term but breaks the current compiler in
+    many unpleasant ways. Rather than sort them out, I'm reverting
+    this for now. Once we switch to IR+JIT we should be able to
+    reinstate this commit.
+
+commit a57d94a4c02063e2df2c655fbe349d2b4769ba41
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 4 15:16:49 2014 +0100
+
+    Generify scopes to Object, in preparation for using Object in
+    IR JIT.
+
+commit 28c6fbc4e883bc1c9e9242d1da1cb2b785f55339
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 3 12:46:45 2013 -0500
+
+    Move to @mkristian's proposed layout, with some modifications.

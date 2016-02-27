@@ -1,0 +1,119 @@
+commit 5cb010871e68cc5760980196c8276e26f20546e0
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun May 17 03:24:52 2009 -0500
+
+    Fix for JRUBY-3638: Multi-Threading issues with JRuby 1.3RC1 and soap4r
+    
+    Whew! This was a doozy! The problem here was as suspected, a "dummy" scope was being shared across calls/threads and causing the backref/lastline to step on each other. This would not simply affect multi-threaded cases either; it could easily break cases where only a single thread happened to read a bad backref from a previous call, or even a single thread read its own backref from an earlier call in the stack trace.
+    
+    The fix is detailed largely in the bug. No test cases accompany this because a new core construct has been introduced to produce a hard failure if we ever make this mistake again. It's a very tricky thing to test since it depends on either thread-unsafety or one call reading a backref and one call writing a backref in ways that are not immediately apparent yo the compiler. So these are fairly specific and localized issues that have far-reaching effects.
+
+commit 6e66cedba30922992c1bd13e3c684704841478a5
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Mar 9 03:56:08 2009 +0000
+
+    Some cleanup for DynamicScope and subtypes in preparation for generation logic.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9380 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit bf8db0bc4acaeed7900b867e821e959f254be0be
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sat Nov 22 22:57:11 2008 +0000
+
+    Biggest commit eva (1.9 parser+1.9-runtime-related-changes landing)
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8099 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 36247fea442ff881dc81a00ed3e67420a3527709
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Wed Aug 20 20:51:45 2008 +0000
+
+    Add signatures (currently unused) for dynamic scopes to assign args without needing to box them first.  We will use these later and I want to reduce patch size for an experimental patch.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7504 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 34c5b29cd1de8959666244a6c8441311badff5d1
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jul 14 17:14:01 2008 +0000
+
+    Add four-var scope and enable it globally.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7164 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a537fc64feaefb7c06a22621f23264d3be5d7435
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jul 14 07:08:49 2008 +0000
+
+    Enable ThreeVar scope globally.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7162 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 3187530acd3e00809b114e345a1d91afa273b7c9
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jul 14 07:08:38 2008 +0000
+
+    Set up hierarchy ThreeVar < TwoVar < OneVar < NoVar to reduce repetition and simplify implementation of higher-order scopes.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7160 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit fd4b104d0e7193fc8c7f6e66c529cacaf7d15e62
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jul 14 07:08:07 2008 +0000
+
+    Add "index two" entry points into DynamicScope.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7158 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d290a3e2a288191f08c43e2c9dd0c60e31ab0cc0
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Apr 28 08:16:00 2008 +0000
+
+    Adding microoptz for local variable assignment; reduces amount of stack-juggling necessary. Still needs a fix for one case, where assigning the result of a "while" to a local varaible.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6582 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit f5203ff13f3da9d89f08458a06a777220a9fdb6b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Jan 13 00:04:44 2008 +0000
+
+    Multiple cleanups:
+    * Tighten up NoVars scope to not do checks where it's unrecoverable (assert instead) and return IRubyObject.NULL_ARRAY instead of a new array in getValues.
+    * Some cleanup of Ruby.java.
+    * Fix RubyFile.expand_path arity regression from previous commit.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5577 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a694709e87e269be436ed1d176a688712beb9d5d
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Tue Jan 1 05:09:53 2008 +0000
+
+    Remove unused callbackfactorys
+    Add partial impl of Etc with some cooler pieces of it still commented
+    Remove many warnings
+    Some generics to lessen warnings
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5456 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d50ba810da64fe9ced82db246c55ec890a39da47
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Nov 24 20:05:44 2007 +0000
+
+    Last captured var optimization for now: have compiler unwrap to appropriate depth, rather than recursive call to get/setVar.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5029 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d237a30fee4b2a8b2a34303eea80583c8a8872fd
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Nov 24 12:39:37 2007 +0000
+
+    Added no-var and two-var versions of DynamicScope.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5019 961051c9-f516-0410-bf72-c9f7e237a7b7

@@ -1,0 +1,87 @@
+commit edd4826e021907b17360065a08b68aac23efe513
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri May 2 18:28:37 2014 -0500
+
+    Fix up botched merge.
+
+commit ac4e61a504f4240c50551b168b2c3a4033409d52
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Apr 22 18:56:32 2014 -0500
+
+    Shrink RubyThread.Event object in prep for a proper queue.
+
+commit 37eb12f46bb04111b62e41b7c1e3a4c3f9a210d9
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Apr 30 16:49:38 2014 +0800
+
+    Implement thread interrupts in the same way as MRI.
+    
+    In order to support Ruby 2.1's ability to disable thread
+    interrupts (async exceptions, etc), we need to match their
+    mechanism of dispatching those interrupts. This is a first attempt
+    to mimic the MRI way.
+
+commit 648ee5c7868b5496e1e98615e566fd712bd6c448
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Apr 22 18:56:32 2014 -0500
+
+    Shrink RubyThread.Event object in prep for a proper queue.
+
+commit 697e6895affa646849a685ed58f6f84795c853aa
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Oct 4 23:37:52 2013 -0500
+
+    Eliminate calls to Ruby.is1_8 and is1_9.
+
+commit 937f414be083800b78a0aacc6203d2c1eda1f04d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Sep 15 16:19:03 2013 +0200
+
+    Remove several locks involved in thread mail and lifecycle.
+    
+    The deadlock reported in #1015 was caused by RubyThread#dispose
+    and Thread#kill logic (RubyThread#kill) acquiring the same two
+    locks in opposite order. dispose first acquired the RubyThread
+    monitor, in order to read and write volatile state, and then
+    acquired the ThreadService monitor without releasing RubyThread in
+    order to unregister the RubyThread object. kill acquired the
+    ThreadService monitor and then attempted to acquire the RubyThread
+    monitor in order to deliver the kill event.
+    
+    As it turned out, the "mail" field on RubyThread was the primary
+    actor triggering the use of synchronization, and much of that
+    synchronization was not necessary. The removal of the thread from
+    ThreadService did not need to be synchronized. The dispose and
+    receiveMail methods did not need to be synchronized if the mail
+    slot was made into an atomic reference. The deliverEvent method
+    did not need to be synchronized for any reason.
+    
+    I made the appropriate changes to turn mail into an atomic
+    reference, avoid keeping the RubyThread lock when calling into
+    ThreadService to remove the RubyThread, and remove locks that
+    became irrelevant once mail became atomic.
+    
+    Fixes #1015.
+
+commit 2553bd170b67a00b5fb0833d0e6a4600926831eb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Sep 5 12:26:09 2013 -0500
+
+    Safety fixes for new Fiber.
+    
+    * Ensure SizedQueue has been loaded before constructing any.
+    * Do not allow NEVER object to leak out of Fiber logic.
+
+commit dcca74a0fc11f43b3bd0d5f43c1bcc40b3766c1d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Sep 5 00:35:57 2013 -0500
+
+    Port new Fiber impl from Ruby to Java, for lower-level magic.
+    
+    See faac06d for details on the implementation.
+
+commit 28c6fbc4e883bc1c9e9242d1da1cb2b785f55339
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 3 12:46:45 2013 -0500
+
+    Move to @mkristian's proposed layout, with some modifications.

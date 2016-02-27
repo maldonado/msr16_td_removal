@@ -1,0 +1,49 @@
+commit 1ee3768ebd8547d0f56f313b7965a3ba004c8ccd
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jul 25 15:55:22 2014 -0500
+
+    More dumbness in my socket fixes.
+
+commit 505bf9835f6a7c90c9f77a1e93b4eed27a557af4
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jul 25 11:31:54 2014 -0500
+
+    Unify ChannelFD creation and set cloexec for all socket types.
+    
+    This does not fix the issues described in #1859 but at least we
+    are fixing *our* sockets.
+
+commit ecc42a6c13d6884dd52e2dcbae8c592c682d6d92
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue May 27 20:18:59 2014 -0500
+
+    IO work continues.
+    
+    * Reopen work and refactorign to support it.
+    * PosixShim class to make POSIX and NIO both look like POSIX.
+    * FilenoUtil class to handle fileno (real/fake) management.
+    * Myriad minor refactorings and cleanups.
+
+commit 3b3fbe198fa0ee44887ba2ce4c6d3c5e005b1069
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue May 20 13:51:24 2014 -0500
+
+    Clean out a bunch more uses of ChannelStream.
+
+commit b1d9cb5b850eab6935b50dd77983b45be1da61de
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Aug 9 00:11:14 2013 -0500
+
+    Edging closer to everything passing again.
+
+commit 909334fe9b70a6b7b79491767d31efff9a7ce119
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 24 16:55:32 2013 -0500
+
+    Use proper decoding instead of ByteList.toString.
+
+commit 28c6fbc4e883bc1c9e9242d1da1cb2b785f55339
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 3 12:46:45 2013 -0500
+
+    Move to @mkristian's proposed layout, with some modifications.

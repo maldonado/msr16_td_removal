@@ -1,0 +1,458 @@
+commit 085a747c38d7df1ce401a7695287a40cd952c84f
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Nov 27 00:19:20 2012 +0000
+
+    Move to Java 6
+    add @Override for interface implementations
+    Bugzilla Id: 54199
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1413958 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 12e48b1764856d7791d7089de8f5a6d4051cf34a
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Aug 28 23:42:18 2012 +0000
+
+    Group private static fields together
+    No code change
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1378384 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8f1291df9c2e0686c2fb7077e1e8260404be6ebe
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Aug 28 23:37:01 2012 +0000
+
+    Simplify: establish class and tearDownTest implementation in testStarted, so no need for static HashMap
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1378383 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8a84c66ed257dfaf4663deb2e9e575572b2c4aea
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Aug 28 22:05:58 2012 +0000
+
+    Unused parameter
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1378363 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f8fdfb212b71fa80b68078754d7ba7fdcaa6b28c
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Aug 28 22:04:36 2012 +0000
+
+    Remove redundant null check in createJavaClient
+    Actually use the return value from the method
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1378362 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 62e6ebb6b4a87335eef7bb9180d0aeeedd96ea8f
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Aug 28 21:57:01 2012 +0000
+
+    Remove redundant setup of context (already done by caller)
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1378360 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a479dd92f521e204ec96133319c42928461167b0
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Aug 28 20:17:02 2012 +0000
+
+    Simplify; no need to save client and context
+    Bugzilla Id: 53782
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1378293 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6fbf3a9b2d3629390d39dfd3ef8cc65e3bb12aa7
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Tue Aug 28 19:54:09 2012 +0000
+
+    Bug 53782 - Enhance JavaSampler handling of JavaSamplerClient cleanup to use less memory
+    Changes following sebb remarks on dev mailing list:
+    
+    http://mail-archives.apache.org/mod_mbox/jmeter-dev/201208.mbox/%3CCAH9fUpZfe2Jg589tEbUfNrFygSo1mUbvv-tCZ5QEWs5fBZOsXw%40mail.gmail.com%3E
+    Bugzilla Id: 53782
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1378286 13f79535-47bb-0310-9956-ffa450edef68
+
+commit def12ac8e293a55f11aa6cac13f845ce05fe5a3e
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Sun Aug 26 19:44:09 2012 +0000
+
+    Bug 53782 - Enhance JavaSampler handling of JavaSamplerClient cleanup to use less memory
+    Fix NPE in distributed tests
+    Bugzilla Id: 53782
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1377499 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 967f08871d40b54cfee25a0f56aea52fa256e5e0
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Sat Aug 25 13:17:19 2012 +0000
+
+    Bug 53782 - Enhance JavaSampler handling of JavaSamplerClient cleanup to use less memory
+    Only register instance of JavaSamplerClient that have overriden or implemented teardownTest
+    Bugzilla Id: 53782
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1377291 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 5f3b692a0d265b75ee062fbe0f2f527996e13ecc
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Sat Aug 25 12:21:50 2012 +0000
+
+    Bug 53782 - Enhance JavaSampler handling of JavaSamplerClient cleanup to use less memory
+    
+    First improvement, store only necessary objects
+    Bugzilla Id: 53782
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1377279 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a81b678d62a693b65fba6ebac8a22d3810e7c65a
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Wed Aug 22 22:56:54 2012 +0000
+
+    TestListener interface could perhaps be split up.
+    Bugzilla Id: 53749
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1376300 13f79535-47bb-0310-9956-ffa450edef68
+
+commit cc1045e75d52c0376251309f2156fa57c4fd3663
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Aug 21 14:23:38 2012 +0000
+
+    Use tab separator after whoami as per all the other invocations
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1375569 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1e318f101a1601200f25e9516a9170c9c9992eab
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Tue Aug 21 13:37:15 2012 +0000
+
+    Rollback as per discussion on dev mailing list :
+    http://mail-archives.apache.org/mod_mbox/jmeter-dev/201208.mbox/browser
+    
+    Bugzilla Id: 53743
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1375541 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 0a1d1960f178c9afc68e64fa694e7bb1c5beebae
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Mon Aug 20 08:49:59 2012 +0000
+
+    Bug 53743 - JavaSamplers.allSamplers static Set keeps references even after thread has ended
+    Bugzilla Id: 53743
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1374946 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 25f495bef5cd4ee34c8a5dc07bdd03f57460a7c8
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Sat Apr 7 19:44:11 2012 +0000
+
+    Add override
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1310837 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b5f415a91276ff4a141c973648cc8e1ba73aa554
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Sat Apr 7 19:34:55 2012 +0000
+
+    Bug 53042 - Introduce a new Interface to be implemented by AbstractSampler to allow Sampler to decide wether a config element applies to Sampler
+    
+    Make Java Sampler only merge 2 config elements
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1310833 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 7552e7f4b99dc4496609d997d35a1ec0d4ddc7bd
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Apr 24 17:56:44 2010 +0000
+
+    Use setResponseData(String, null) where default charset is OK
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@937663 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f52cf4362f23c38f642b71ec74b8eb135bc5147e
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Oct 10 15:18:56 2009 +0000
+
+    StringBuffer => StringBuilder
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@823869 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 22f4bded19832c359d1d42deb8f3b11c60096ef4
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Aug 15 12:22:28 2009 +0000
+
+    Fix up some raw types
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@804465 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6bf94deccce242cd1bba95592f54fd78a90dfc3e
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Jul 6 23:56:15 2008 +0000
+
+    Detab
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@674365 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 97f5943089bcb0248170d09431a17b8a745d5aa6
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Apr 29 21:10:55 2008 +0000
+
+    Ensure that static variables are final to ensure visibility
+    Trim variable name parameter in function calls
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@652128 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 63b0f6266b985e98a6385c88151a612468e810ae
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Sep 2 14:19:10 2007 +0000
+
+    Fix up some Javadoc errors
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-2@571988 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 80c3a2122ab6c24aefd6c037e13836f110ec331a
+Author: Alf Hoegemark <alf@apache.org>
+Date:   Sat Jun 30 09:38:44 2007 +0000
+
+    Include name of sampler in log message, to make it easier to see which sampler it is
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-2@552124 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 19e79832a536c26c17650a4f3ba33ecd1000ad1e
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Mar 4 02:38:38 2007 +0000
+
+    Add serialVersionUIDs
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-2@514339 13f79535-47bb-0310-9956-ffa450edef68
+
+commit db8dedbff2834a7eb4e0429a307ecbdd731a53d8
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Jan 7 18:10:21 2007 +0000
+
+    Update license (remove copyright)
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-2@493789 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 5bce4b5d7391525ca3d0b2afe92ca4c9de83b865
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu Sep 21 23:08:37 2006 +0000
+
+    Bug 40451 - set label if not set by sampler
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-2@448729 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 76159a5b953d9dc5518b2ccb03bfbc1c4908837d
+Author: Michael Stover <mstover1@apache.org>
+Date:   Tue Jul 12 20:51:09 2005 +0000
+
+    Formatting Code to basic Java Standard
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@325542 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 156dc97bd03dc95701ad8f6fe88a4b1d191a99cb
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu May 19 23:16:25 2005 +0000
+
+    Allow Java Samplers access to test element name
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@325371 13f79535-47bb-0310-9956-ffa450edef68
+
+commit dd2734b6e2682a7f3cf91a0d6623e133b28379db
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue May 17 22:58:38 2005 +0000
+
+    Rename parameters to avoid hiding class fields
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@325352 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 87ee8d269dfa4d355f2251fc2bd3433d4fbfbeb4
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Feb 10 00:46:44 2004 +0000
+
+    ASF L V2
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@324235 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 0287828a6c6fde43bd1338c9c8779224249fb96e
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Dec 19 14:38:47 2003 +0000
+
+    Use sampleStart() and sampleEnd() instead of setTime()
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323915 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d00354aef8cc21aaff26ec2c5c0d700af7b15e99
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Oct 5 00:27:17 2003 +0000
+
+    Removing unused items
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323471 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 726af4f4c80b0b36153d73a139653e1bed5510ba
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Sep 7 18:58:17 2003 +0000
+
+    Use getLoggerForClass()
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323447 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e3e62123c0612e56085ba8b95806f22939c0ee4f
+Author: Jeremy Arnold <jeremy_a@apache.org>
+Date:   Sun Jun 8 11:03:26 2003 +0000
+
+    Reformatting and JavaDoc updates.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323323 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8c7a202622ac4ff33a40e44df6b3e5446bf7e5b5
+Author: William Thad Smith <thads@apache.org>
+Date:   Wed May 14 15:58:43 2003 +0000
+
+    fixed a bug where the context wasn't getting updated (for changing
+    variables)
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323285 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e9c443044b38645556c30a23f0cb541f151e71be
+Author: Jeremy Arnold <jeremy_a@apache.org>
+Date:   Thu May 8 21:03:38 2003 +0000
+
+    Switched to using the CVS Revision as the version instead of Id.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323265 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 38a0f442a6cc94aa1956e0a27f23b75acb332273
+Author: Jeremy Arnold <jeremy_a@apache.org>
+Date:   Thu May 8 20:58:52 2003 +0000
+
+    Reformatted to conform with JMeter (Turbine) conventions.
+    Updated JavaDoc.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323264 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d05b28fa34710686079e7cc843ee856a6a7024e4
+Author: Jeremy Arnold <jeremy_a@apache.org>
+Date:   Sat May 3 15:34:34 2003 +0000
+
+    Cleaned up some JavaDoc warnings and a few unncessary JavaDoc comments (auto-generated templates with no useful information).
+    Changed some auto-generated JavaDoc to non-JavaDoc comments (because the ones generated by JavaDoc are more useful).
+    Commented out a couple of methods that appear to be no longer used.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323250 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 4db8fdffe45dc38a32cdc9e10d6b325271c8f026
+Author: Michael Stover <mstover1@apache.org>
+Date:   Thu May 1 15:49:07 2003 +0000
+
+    Revamping internal contoller code
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323231 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 9626b06155c4462c5c5094ea024f4480b861ac65
+Author: Jeremy Arnold <jeremy_a@apache.org>
+Date:   Tue Apr 15 21:17:17 2003 +0000
+
+    Minor clean-up of the Java sampler.  Mostly updates to Javadoc comments.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323161 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 723bb81628507580c235ac41b473896834ed1898
+Author: Michael Stover <mstover1@apache.org>
+Date:   Fri Apr 11 19:10:57 2003 +0000
+
+    Revamping how iteration notification works
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323153 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6dad839268c9c0110921f1ebdb59077bd672a97c
+Author: Michael Stover <mstover1@apache.org>
+Date:   Mon Apr 7 14:35:28 2003 +0000
+
+    New JMeter properties allow functions to be fully recursive and reduces the amount of repetitive cloning of test elements
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323133 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 5068c73aecb556e068116fffab30f843a0cfa1a3
+Author: Michael Stover <mstover1@apache.org>
+Date:   Tue Mar 18 13:41:14 2003 +0000
+
+    WorkBench doesn't need to extend TestPlan (which was confusing too)
+    patch from Jeremy Arnold changing interface for JavaSampler
+    Fixing ResponseAssertion's GUI
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323117 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f35098e40ecfd804c2fbb89e3d48350f7a2e1e78
+Author: Michael Stover <mstover1@apache.org>
+Date:   Sat Mar 15 14:44:52 2003 +0000
+
+    Java Sampler updated (Jeremy Arnold)
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323115 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8f927141aee4032f64c3113f1e544b050f40c28d
+Author: Michael Stover <mstover1@apache.org>
+Date:   Fri Mar 14 21:15:37 2003 +0000
+
+    New table model making things simpler
+    fixing problem with test plan level variables
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323114 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 93dc059f7319114f2495dd86b6715a0086e55a7a
+Author: Michael Stover <mstover1@apache.org>
+Date:   Fri Aug 30 14:43:21 2002 +0000
+
+    Fixing serialization and other problems with remote testing
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@322889 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 83c789314d92cc998b022447286c01debba9da97
+Author: Michael Stover <mstover1@apache.org>
+Date:   Thu Aug 29 18:17:43 2002 +0000
+
+    Updating docs for help system
+    Making class members transient as appropriate
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@322888 13f79535-47bb-0310-9956-ffa450edef68
+
+commit bae5abd86cc930fb2521678d654acf219fa35f71
+Author: Michael Stover <mstover1@apache.org>
+Date:   Fri Aug 23 21:02:12 2002 +0000
+
+    Replaced log4j with Avalon LogKit
+    created some simple logging categories in jmeter.properties
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@322866 13f79535-47bb-0310-9956-ffa450edef68
+
+commit dd9932a03c9826150ab4c98914a145ba5f3248ae
+Author: Michael Stover <mstover1@apache.org>
+Date:   Sun Aug 11 19:24:54 2002 +0000
+
+    New src directory organization, committing all files
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@322831 13f79535-47bb-0310-9956-ffa450edef68

@@ -1,0 +1,284 @@
+commit f3b41aeea35debfa748f014792f0d04267cb291f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Aug 25 22:31:11 2015 -0500
+
+    Improve refinements implementation and enable MRI test.
+
+commit 9b5e6911fd214b54fd6eeab9e58499ad0260b924
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Aug 18 12:16:29 2015 -0500
+
+    unbreak coercion logic where every array from a valid coerce would warn.  recent regression
+
+commit d8a6401ebaf9e75db4c111518c1d6c472c4c0300
+Merge: 3efcd1d e92030e
+Author: kares <self@kares.org>
+Date:   Tue Aug 18 13:24:28 2015 +0200
+
+    Merge branch 'jruby-1_7'
+    
+    * jruby-1_7:
+      some more comparable asserts including for the Java compareTo part
+      native RubySymbol#compareTo since we expect to always be able to sort
+      should not-rewrite jump exceptions twice as well (not just raise ones)
+      delete un-used imports
+      [ji] do not rewrite stack-trace twice for Ruby (raise) exceptions
+      base compareTo should not silence all Ruby raised exceptions (fixes #2232)
+      re-arrange rescue spec (we're about to spec some more behavior)
+      only test nil return from Object cmp on 1.9 (on 1.8.7 its expected to raise)
+      more of correct $! restore + use get/setErrorInfo for better predictability
+      another incorrect $! with numeric coercion on <=> + cleanup getRuntime()
+      Fix some consumers for #1601.  Don't leak out  if we are swallowing the raised exception
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/Main.java
+    	core/src/main/java/org/jruby/RubyBasicObject.java
+    	core/src/main/java/org/jruby/RubyClass.java
+    	core/src/main/java/org/jruby/RubyComparable.java
+    	core/src/main/java/org/jruby/RubyNumeric.java
+    	core/src/main/java/org/jruby/RubySymbol.java
+    	core/src/main/java/org/jruby/RubyTime.java
+    	core/src/main/java/org/jruby/javasupport/JavaCallable.java
+
+commit adda8552d84c217886c0dfb40ea38b8a6906c326
+Author: kares <self@kares.org>
+Date:   Mon Aug 17 11:54:42 2015 +0200
+
+    more of correct $! restore + use get/setErrorInfo for better predictability
+    
+    semi-picked from 78e968ef4da7880c2f9f2c31098fc0d7d5eb39db (#1601)
+
+commit 5849a2b9db92a48294f153221a76d75d834364b3
+Author: kares <self@kares.org>
+Date:   Mon Aug 17 10:55:51 2015 +0200
+
+    another incorrect $! with numeric coercion on <=> + cleanup getRuntime()
+    
+    see #1601
+
+commit 03d90f8f999c14a462d36441bf429a9884709096
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed May 7 11:41:40 2014 -0500
+
+    Fix some consumers for #1601.  Don't leak out  if we are swallowing the raised exception
+
+commit 487a9efb0ae0ed86fd5d4a681ab473f3b62468a9
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Jul 16 16:14:19 2015 -0500
+
+    Formatting.
+
+commit e9c524a0ff5f401c39067465d5d137f1dcdff12d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Jul 16 16:13:52 2015 -0500
+
+    Restore missing str2fnum signatures. Fixes #3139.
+
+commit db484cc30a54be11e592db8b938f22d2bad90802
+Merge: eed14f7 7708f4c
+Author: Thomas E Enebo <tom.enebo@gmail.com>
+Date:   Mon Apr 6 14:12:58 2015 -0500
+
+    Merge pull request #2797 from cheald/fix-respond-to-missing
+    
+    Support respond_to_missing? in respondsTo() lookups
+
+commit 2832da57cf5f255f531835ef2340c8376cae69a0
+Author: Kevin Menard <kevin@nirvdrum.com>
+Date:   Fri Apr 3 13:07:19 2015 -0400
+
+    Cleaned up some 1.8 cruft from RubyNumeric.
+
+commit fe8c87a099a34b1cbc6d8b7d5979af54b0532fe4
+Author: Chris Heald <cheald@gmail.com>
+Date:   Thu Apr 2 10:45:39 2015 -0700
+
+    Support respond_to_missing? in respondsTo() lookups
+    
+    RubyBasicObject assumes that if respond_to? is undefined, it can just fast-track
+    method lookups. We have to also check for respond_to_missing?; failure to do so causes
+    Javaland respondsTo() calls to fail when an object defines respond_to_missing? (despite
+    the documentation's admonishment to not use it)
+    
+    The practical case for this is ActiveSupport::Duration in ActiveSupport 4.2.1
+
+commit 14791004da0dfb5d0d437d64635709c0bebf2d9f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Mar 3 18:51:55 2015 -0600
+
+    Numeric and Comparable both rescue only StandardError in coerce.
+    
+    More warning reduction.
+
+commit c8e291f9ab277d054d76e6acbdde3ce71c175bae
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Mar 3 18:16:24 2015 -0600
+
+    Faster nil access.
+
+commit 2d46e1fd08e118e2c2f08a76adbd196c397b323e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Mar 3 18:15:53 2015 -0600
+
+    Numeric coercion should bail out if !respond_to? coerce.
+    
+    Reduces warning noise in test:mri.
+
+commit 068871b071c7b6b4ad10c5d6547b0ffd6da4cd75
+Author: Teemu <teemu@aikais.in>
+Date:   Sun Mar 1 20:09:17 2015 +0200
+
+    Fix Bignum's bitwise operations
+    
+    Changes are made to Bignum#&, Bignum#| and Bignum#^ to fix bitwise
+    operations with objects other than Bignum or Fixnum. For example:
+    
+      my_bignum & Rational(3, 2) # => TypeError instead of 0
+
+commit b27868aa7137ab68eec2076b3ae9b9e8d42d6129
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Sat Feb 14 09:51:40 2015 -0600
+
+    Some more $! save/restore fixes + add comments for all of them
+
+commit 78e968ef4da7880c2f9f2c31098fc0d7d5eb39db
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Fri Feb 13 23:43:16 2015 -0600
+
+    Save/restore $! properly in the JRuby runtime
+    
+    * Whenever a RaiseException is caught and handled, the $! should
+      be the restored to the previous value of the exception before
+      the try-catch was entered.
+    
+    * This fixes #1601 and #2491 but additional code auditing and
+      discussion will be helpful.
+
+commit 13f3988630d810e6e01778030b391d6549659680
+Author: Chris Heald <cheald@gmail.com>
+Date:   Tue Nov 11 20:38:22 2014 -0700
+
+    Update Numeric#step to be 2.2 compliant
+    
+    Including support for kwargs and better infinite bounds handling.
+    
+    To support this change, ArgsUtil.extractKeywordArgs has been added
+    which will validate kwargs and extract an array of values given a list
+    of keywords to accept. This should probably be rolled into the
+    @JRubyMethod decorator at some point so that kwargs validation and extraction
+    is transparent.
+
+commit f2331da721d30693035c8245d5ba0e3d632fb722
+Author: Chris Heald <cheald@gmail.com>
+Date:   Tue Nov 11 11:09:24 2014 -0700
+
+    Numeric#quo now delegates to Rational#quo, which performs conversions according
+    to MRI behavior.
+
+commit 5caaf346132af832e0feefd04976c979ed719109
+Author: Chris Heald <cheald@gmail.com>
+Date:   Tue Nov 11 10:05:12 2014 -0700
+
+    bitCoerce now attempts to coerce given arguments for bitwise operations
+    into fixnums or bignums, and raises an exception if it is unable to do so.
+
+commit 9a60f919df4b28d3eae69e7a32210796c1cdd82c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Nov 8 16:54:29 2014 -0600
+
+    Add 2.2 warnings for numeric coercion scenarios.
+
+commit 69fa5fea15f288f5a39987aa3a6743183f1bfac2
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Aug 11 11:44:05 2014 -0500
+
+    Actually implement RubyNumeric.getIntValue and document behavior.
+
+commit 1a2daf7bb76fe23ef7a12b7dc5ee45286f605a2d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri May 23 13:39:23 2014 -0500
+
+    Port logic for popen (native version).
+
+commit 1c09ad7a3d65189776c13de9c6cd6a6aebbf5fa8
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Tue May 13 19:10:26 2014 -0500
+
+    ISSUE 1601: save/restore $! properly in the runtime
+    
+    * Eliminates one more rubyspec error -- now down to to one
+      failure before rubyspec run is green in IR mode.
+    
+    * This also fixes the error with "bundle exec rake" with the
+      gem "analytics-ruby" line in Gemfile in IR mode (reported
+      by nirvdrum on IRC).
+    
+    * This still requires another set of eyes going over all the
+      files and see if other instances have been missed.
+
+commit 30595fe5170c6c1e784e21395eb2adc4f0fa5b08
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed May 7 11:41:40 2014 -0500
+
+    Fix some consumers for #1601.  Don't leak out  if we are swallowing the raised exception
+
+commit fbe18f5ed3a77ed4a6ea0494da598d09baf29879
+Author: Daniel Marcotte <dmarcotte@gmail.com>
+Date:   Thu Dec 5 18:10:03 2013 -0800
+
+    Java enumerators lazily compute Enumerator#size
+    
+    For internally created enumerators (i.e. created with
+    enumeratorizeWithSize), ensure that calls to Enumerator#size reflect the
+    current size of the underlying object being enumerated by
+    introducing a function type which can be lazily computed on calls to
+    Enumerator#size.
+
+commit 913223fe10c450de5a0a4deb7907fff2312945d2
+Author: Daniel Marcotte <dmarcotte@gmail.com>
+Date:   Tue Dec 3 08:35:34 2013 -0800
+
+    Fix cast error for step.size on bignums
+
+commit 633f9350a082f46ebe08de2a5d11cf6d60d7f70a
+Author: Daniel Marcotte <dmarcotte@gmail.com>
+Date:   Fri Nov 29 10:37:25 2013 -0800
+
+    Implement Numeric#step.size
+    
+    Gets Numeric#step.size doing its thing by putting the following pieces
+    in place:
+    * implement Numeric#intervalStepSize closely following the MRI
+    implementation (https://github.com/ruby/ruby/blob/09b02349c212cac6395e9a634e3d4610e9bbc48c/numeric.c#L1799)
+    * implement Numeric#floatStepSize which Numeric#intervalStepSize relies
+    on, again porting from MRI (https://github.com/ruby/ruby/blob/09b02349c212cac6395e9a634e3d4610e9bbc48c/numeric.c#L1748))
+    * refactor Numeric#floatStep19 to also use the new floatStepSize, which
+    not only avoids duplication, but also fixes some tests
+    * create Numeric#stepSize, and use it to enumeratorizeWithSize our steps
+    
+    We'll be able to un-exclude test_size_for_step from test_enumerator.rb
+    once Range#size is implemented (https://github.com/jruby/jruby/issues/1252).
+
+commit 86948cfd34fd1c6b663f2c821c469dd822f415df
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Oct 30 21:15:41 2013 -0500
+
+    De-version Numeric
+
+commit ba3165d6ad47032ff5e22d0e2a1ef2b68a333c80
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Oct 7 23:24:13 2013 -0500
+
+    De-version Numeric
+
+commit d1f89e004fdc78dff75407c82123e6c9e8b406bb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Sep 12 18:48:16 2013 +0200
+
+    Make ClassIndex into an enum, to prevent issues like #1004.
+
+commit 28c6fbc4e883bc1c9e9242d1da1cb2b785f55339
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 3 12:46:45 2013 -0500
+
+    Move to @mkristian's proposed layout, with some modifications.

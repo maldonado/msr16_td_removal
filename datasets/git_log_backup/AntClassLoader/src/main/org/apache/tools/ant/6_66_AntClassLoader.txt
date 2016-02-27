@@ -1,0 +1,1391 @@
+commit 13c01b296aad1480fe20295199726362d552e6d7
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Jan 2 16:02:59 2014 +0000
+
+    improve skipping of non-zips based on feedback by Jesse
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1554838 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 9bd753321ae84d06e3115d0549c2d7dda7972428
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Jan 2 07:22:39 2014 +0000
+
+    deal more gracefully with non-JARs on the CLASSPATH - PR 53964
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1554758 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 13000c1a4670271a3257b3c41dc1e17941067c78
+Author: Jesse N. Glick <jglick@apache.org>
+Date:   Wed Jul 17 22:46:10 2013 +0000
+
+    sconnolly advises using TODO rather than XXX in comments.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1504315 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3d706ab8188a674936880b6f4530b0cf3991758b
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Mon Aug 20 17:49:13 2012 +0000
+
+    java 5 updates
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1375137 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 021d52822aabfb96e25acd8cba4b8ec081fb0f3f
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Aug 9 03:28:32 2011 +0000
+
+    make AntClassLoader$ResourceEnumeration adhere to the Enumeration contract.  PR 51579
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1155197 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a03b5aac182dde5fb0c0759f3c6340245de8414f
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Mar 5 08:03:23 2010 +0000
+
+    unused imports
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@919327 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b33d33d754378862953b0243500d94eaaf983923
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Mar 4 15:16:49 2010 +0000
+
+    embrace java.util.jar.  PR 48853
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@919018 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3e2cbab6ba443daf0abf6e02535fb6cc1df72e04
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Mar 4 13:47:35 2010 +0000
+
+    reduce performance loss in AntClassLoader from 1000% to about 50%.  PR 48853
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@918989 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c767541c7d35c9eef55bf65e686373b02b71af2a
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Feb 18 11:00:58 2010 +0000
+
+    As Jesse points out, equalsIgnoreCase is not locale-sensitive
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@911324 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d9ad5addc95b056d1465325b3c1d1b0fa255d4e3
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Jul 31 16:06:31 2009 +0000
+
+    whitespace
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@799651 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 44b6fcc18428fa69126219ae080c0ec6afa48f40
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Jul 31 16:04:30 2009 +0000
+
+    use the same logic as getResource in getResourceAsStream.  PR 44103
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@799650 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 329f6d356af02746fa26d4304ad57b8bdadb8c8b
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Jul 29 10:22:58 2009 +0000
+
+    report name of corrupt ZIP to System.err,  PR 47593
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@798838 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c8e91147e37e34c4024c33ecf454e7c46639baa2
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Jul 22 13:17:16 2009 +0000
+
+    properly set CodeSource when loading classes.  PR 20174
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@796702 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 26f846b838b5fe50fa23fc233438c583c7c8ab4d
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Jul 22 09:51:16 2009 +0000
+
+    allow access to parent.  PR 35436
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@796649 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8ebe808f72152ef41370bcfd89c7cd0c369db2f0
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Jul 22 09:44:52 2009 +0000
+
+    override getResources in a new AntClassLoader subclass that will be used consistently when Ant is running on Java5+.  PR 46752
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@796647 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e04ff4d52c085936aae51afe2bc9a4db7ab18dde
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Jul 22 05:03:35 2009 +0000
+
+    make all classes use the same AntClassLoader constructor
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@796614 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 430b0251e54d02957b2636927d04a79a02c83ddb
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Sep 26 15:51:23 2008 +0000
+
+    what started as an innocent minor performance improvement of antClassLoader lead to an infinite recursion and thus to a testcase for VectorSet.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@699377 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 59f1d6794540ce9f88d620aa1e76642b3484e378
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Sep 25 12:34:28 2008 +0000
+
+    don't add the same file more than once.  PR 45848.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@698947 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a3e9c2a63dff7f77ab2cae7d2e59395f993d7f8e
+Author: Jesse N. Glick <jglick@apache.org>
+Date:   Fri Aug 8 15:23:17 2008 +0000
+
+    Better error reporting in case a corrupt ZIP file is on the classpath.
+    Formerly would show a ZipException stack trace but give no indication of which file was responsible.
+    (Of course it would be better if ZipFile.open itself included the file path in the detail message!)
+    Cf.: http://www.netbeans.org/nonav/issues/show_bug.cgi?id=142733
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@683997 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 4e74021ca23d31455cb2d95c6f47e7b319de1862
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Wed Jul 18 10:35:16 2007 +0000
+
+    checkstyle: 100char limit
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@557215 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 575c81fdc8d03b8261352fe79daa86d513c84e3d
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Wed Jul 18 09:59:27 2007 +0000
+
+    checkstyle - ws and tab
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@557213 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a840de1ce8f5d8b5cf31c5f91efb95f4d97467cc
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Tue Jul 17 18:37:53 2007 +0000
+
+    fmt/refac
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@557013 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b01075559fb50563658829b9c45687defb865c12
+Author: Kevin Jackson <kevj@apache.org>
+Date:   Thu Jun 7 06:59:43 2007 +0000
+
+    -use FileUtils.close
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@545087 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 758a6bcb93484d657bdd50c688c023a59d153476
+Author: Jacobus Martinus Kruithof <jkf@apache.org>
+Date:   Sun Apr 29 13:00:17 2007 +0000
+
+    Pr: 42259 inspired on optimization suggested by Tom Brus
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@533498 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 88e48dbdd378dbb095a7537d430e400cd785532c
+Author: Steve Loughran <stevel@apache.org>
+Date:   Fri Apr 27 20:40:13 2007 +0000
+
+    little bit of code review
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@533214 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 221b05d0594d787ec6b0dc04f91b88ab0d2179a2
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Sun Dec 24 22:48:45 2006 +0000
+
+    allow path components to be directly added to AntClassLoader
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@490081 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 0aa2b2528ff92c3786e50f82ea65acf4d134c260
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Wed Nov 1 00:13:43 2006 +0000
+
+    some checkstyle changes
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@469717 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b10bf232ba67322a7c3ab689984c1e39710f0d66
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Wed Oct 4 21:18:59 2006 +0000
+
+    another go at bugzilla 38747, isolate resources
+    get the baseloader for resources in isolate mode
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@453032 13f79535-47bb-0310-9956-ffa450edef68
+
+commit da045acc91c10bf9a3e0ef58d1343ae7704e5d3a
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Wed Sep 27 22:46:57 2006 +0000
+
+    revert 38747: resource isolation, should fix one of gumps issues - look at other later
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@450614 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f1415bcf0486c18252c3ddf68a867590e9ca7d35
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Tue Sep 5 12:44:49 2006 +0000
+
+    revert Bugzilla: 35436, getResources is final in java 1.4
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@440332 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 0f55b6b9d6a98accff8e0352474df465207806f7
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Mon Sep 4 22:39:06 2006 +0000
+
+    Bugzilla 38747: isolate resources in antclassloader when requested
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@440199 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1fe0291e099e9814a69ed27097477d455e1ec6fe
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Sun Sep 3 22:54:24 2006 +0000
+
+    fix failing unit test by fixing moving getResources code from findResource to getResiources()
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@439868 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 445abf598ae15d9626be0cda96709c0954235010
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Sun Sep 3 16:50:23 2006 +0000
+
+    opps: made setParent private by accident
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@439802 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 56e61f039f54d015e60e3e2ecaaeaa8e666d8cef
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Sun Sep 3 16:45:00 2006 +0000
+
+    Set the parent of the antClassLoader correctly: bugzilla 35436
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@439801 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 2e897819a83981a1f4de2e1cc72e33f080fcf573
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Sep 1 18:49:27 2006 +0000
+
+    copy2license.pl
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@439418 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 7eb22e8cdc4c161dcf8e89d40a8e072930db5d8f
+Author: Jacobus Martinus Kruithof <jkf@apache.org>
+Date:   Fri Apr 21 21:47:06 2006 +0000
+
+    indicated when methods/classes became deprecated, as to give us the possibility to remove deprecated methods in the future.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@396012 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 9af46a2ca05b7e2da738a1688ff679445f2c1a6e
+Author: Jesse N. Glick <jglick@apache.org>
+Date:   Mon Feb 27 22:24:26 2006 +0000
+
+    #38799: <junit> task should work so long as junit.jar
+    present in <classpath> even if not among Ant libs.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@381467 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 176d949191a5af21228710331f2c174c194e9b1e
+Author: Jacobus Martinus Kruithof <jkf@apache.org>
+Date:   Sun Dec 18 21:40:58 2005 +0000
+
+    Removing unused imports.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@357509 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e12c63a6ee1b0bb45e9821ff84392c9391d76bd9
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Fri Dec 16 06:36:28 2005 +0000
+
+    more systematic handling of URIs, delegation of work to the JDK
+    for toURI and fromURI
+    patches prepared by Jesse Glick, Bugzilla 8031
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@357131 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6a7128309916100dc611f641797b7793ab087a3d
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Mon Nov 28 23:14:24 2005 +0000
+
+    properly convert URIs back to file paths when non ascii characters are percent-encoded
+    matches with the change in FileUtils.toURI recently done
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@349552 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 54b56c89e0ac748cf76d0246eb1c96f7f010fb0c
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Wed Nov 23 20:53:49 2005 +0000
+
+    make bootstrap on JDK 1.2
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@348558 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 44cf7f076ca177df7147e98e5dc72b0f81e7728b
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Fri Oct 21 00:57:48 2005 +0000
+
+    solve problem refering jars specfied by Class-Path attribute in manifest of a ant task jar file, when this ant task jar file is located in a directory with space. Bugzilla Report 37085.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@327061 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 67c71a89e9e02b6e4841f748c79350b7ca190a00
+Author: Jesse N. Glick <jglick@apache.org>
+Date:   Tue Mar 29 19:56:15 2005 +0000
+
+    #27285: simplify AntClassLoader by removing reflection hacks
+    (and separate ACL2) only needed for JDK 1.1 support.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@278074 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3c129d0e9a994aa1214b5a56625340fcab44f8c7
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Mon Mar 14 09:19:27 2005 +0000
+
+    add cast to allow java1.5 to compile without whining
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277918 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 823aadf5aa3424d8dcda444b8af0f3d63147cb24
+Author: Jacobus Martinus Kruithof <jkf@apache.org>
+Date:   Fri Mar 11 18:51:03 2005 +0000
+
+    Removed superfluous cast
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277909 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 34e871493800a9f8490021f83a1ce0d43897249a
+Author: Steve Loughran <stevel@apache.org>
+Date:   Mon Mar 7 15:10:56 2005 +0000
+
+    deal with javac1.5 whinings
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277810 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6005d26265a3c14f2aed8beeb87f58380bf2837e
+Author: Jacobus Martinus Kruithof <jkf@apache.org>
+Date:   Thu Mar 3 13:58:25 2005 +0000
+
+    Removed unecessary cast,
+    Removed caught Throwable while Exception was expected
+    Documented empty blocks
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277770 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 257dadeaf0fb8588b80fa71b24ee3aca38ea19b7
+Author: Jacobus Martinus Kruithof <jkf@apache.org>
+Date:   Thu Jan 6 12:05:10 2005 +0000
+
+    Make use of FileUtils in a uniform way via the getFileUtils method and a static final reference in the using files.
+    Also removed unused/* imports along the way.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277295 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 569f22aceb8dfbe9b8876721d313edbbbfc2a3a2
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Wed Dec 1 17:52:25 2004 +0000
+
+    checkstyle
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277105 13f79535-47bb-0310-9956-ffa450edef68
+
+commit db48fbb829447064857a6b918e78cdab0b0c89b1
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Nov 22 09:23:37 2004 +0000
+
+    Various checkstyle violations
+    
+    Submitted by:	Larry Shatzer
+    
+    And some
+    
+    (untabify (point-min) (point-max))
+    
+    on some files.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277063 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 29b76e0c0106639914aec76b2f1c7d7b63b1c0d4
+Author: Steve Loughran <stevel@apache.org>
+Date:   Wed Nov 10 00:37:31 2004 +0000
+
+    These are all patches to stop java1.5 whining about varargs.
+    In java.15 some of the reflection APIs are overloaded to be
+    usable via varargs, so untyped things cause confusion. These
+    are everywhere that bootstrap complains.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277008 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8fdf272627418e1e55adcfe8a52feb9125515be0
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Tue Jul 27 07:02:07 2004 +0000
+
+    Impossible to use implicit classpath for <taskdef> when Ant core loader != Java application loader and Path.systemClassPath taken from ${java.class.path}
+    PR: 30161
+    Submitted by: Jesse Glick (jglick at netbeans dot org)
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276721 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a22c8c09c83a3a684cd003cf0661c7913291640f
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Jun 24 11:16:41 2004 +0000
+
+    Follow Conor's and Jose Alberto's advice - improved fix for PR 8689
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276622 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 55c133cecd1c4802f356b7013f5e851e94ebd8c3
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Apr 20 13:25:08 2004 +0000
+
+    Generate proper file URLs in AntClassLoader#getResource, PR: 28060
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276354 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c885f568369156a62e3ccb5b4b93b73b9d054443
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Tue Mar 9 16:49:09 2004 +0000
+
+    remove authors from files
+    PR: 27177
+    Obtained from: J.M. (Martijn) Kruithof
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276208 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 278781dcd669412e5e35cc95d8a96e0b2a278f50
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Mon Feb 9 21:05:47 2004 +0000
+
+    Copyright owner is The Apache Software Foundation
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276065 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 66555ca10d24bbfc55e710b9d65f809cfe713dab
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Wed Feb 4 20:38:09 2004 +0000
+
+    Remove trailing spaces in all java files
+    in order to make checkstyle happy
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276017 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ca1513552f7af7fc19de490fbe2d88adb6c993ad
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Tue Feb 3 22:44:50 2004 +0000
+
+    Switch to Apache Software License 2.0
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276010 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b25ce96904f9a4ab9d757913186d23ec1a0ac6c9
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Oct 24 08:59:58 2003 +0000
+
+    Some typo fixes
+    well formed != valid
+    better debug support in ApacheCatalogResolver
+    
+    PRs: 24059, 24060, 24069, 24070, 24074
+    Submitted by:	Jesse Glick <jglick at netbeans dot org>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@275565 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3de1a4577ed1aa9bf0c9a9f3ea05b9748045b363
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Tue Sep 9 16:52:03 2003 +0000
+
+    fix typeofs
+    Patch from Larry Shatzer
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@275207 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 5d4f445f37f39465ca8d550e57c8d80e61495af0
+Author: Conor MacNeill <conor@apache.org>
+Date:   Tue Aug 12 15:15:06 2003 +0000
+
+    Rename some enums ...
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@275058 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 5a2fc04fee94a9c05081780a146ea421d2427455
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Fri Jul 25 18:44:39 2003 +0000
+
+    checkstyle
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274954 13f79535-47bb-0310-9956-ffa450edef68
+
+commit cc8099c252f0e69f4012bf8a9252b232e8a45266
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Jul 24 13:24:35 2003 +0000
+
+    Fix inconsistent synchronization
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274927 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 9e91a46373038df66d678fe3d220f01e74791f01
+Author: Conor MacNeill <conor@apache.org>
+Date:   Mon Jul 14 13:47:27 2003 +0000
+
+    Slightly better message
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274815 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 2450ee6bbfd3c37076216a687eec59b2ce215bae
+Author: Conor MacNeill <conor@apache.org>
+Date:   Mon Jul 14 13:42:34 2003 +0000
+
+    Remove use of InitializeClass now that we are JDK 1.2+
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274814 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e580392c2d28c2a3530ebe0e1005bae0d45c5b8b
+Author: Conor MacNeill <conor@apache.org>
+Date:   Sun Jul 6 09:57:37 2003 +0000
+
+    More cleanup
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274776 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1d35a8c41f12a617a4c1ef3aedc45926b8ea65c1
+Author: Conor MacNeill <conor@apache.org>
+Date:   Tue Jun 10 14:01:24 2003 +0000
+
+    Resolve memory leak when ejecuteJava cleans up AntClassLoader
+    
+    PR:	20264
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274658 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 91aa5050e61d7c719ff14feda8b956bf63ec6eb0
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Mar 7 14:43:17 2003 +0000
+
+    looks better that way
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274209 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 5a6b83a78a266caa935706c1c549c34aa892a03d
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Mar 7 14:41:10 2003 +0000
+
+    Improve log message when classloader fails to read a resource.
+    
+    Submitted by:	Sascha Freitag <freitag at objtec dot com>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274208 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1dc8a079057e191ca4c158f36843c2c9e9f9be52
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Feb 10 14:15:00 2003 +0000
+
+    Remove Jakarta Project from license
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274040 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a506341591609c92acc41b9d7e7f852f520f2815
+Author: Conor MacNeill <conor@apache.org>
+Date:   Sat Jan 25 15:03:16 2003 +0000
+
+    Include jars from the manifest's classpath into the classloader
+    
+    PR:	6921
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273881 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 50ab3762949b456ef74fcde982f16fc4922897f6
+Author: Conor MacNeill <conor@apache.org>
+Date:   Fri Jan 24 14:18:23 2003 +0000
+
+    Add support for Package information to the ClassLoader
+    
+    Rather than using reflection I have created a JDK 1.2+ specific
+    subclass of the AntClassLoader. This has necessitated replacing
+    direct construction of the classloader with a factory method in
+    Project. This factory method will attempt to create the new
+    class loader dynamically and then fall back to the current version if
+    the new loader is not available.
+    
+    Existing users who construct the classloader directly will continue to
+    work as at Ant 1.5 - i.e. no package information is created. All Ant
+    code (except classloader) uses the new factory method
+    
+    PR:	11196
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273874 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 9ba9e537806964229b7d62ba59803a8380c551d9
+Author: Costin Manolache <costin@apache.org>
+Date:   Tue Dec 24 01:31:56 2002 +0000
+
+    Made the messages for loading with direct and reverse delegation different.
+    
+    Added a small message to display the source of the class ( like the
+    verbose:class option )
+    
+    PR:
+    Obtained from:
+    Submitted by:
+    Reviewed by:
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273690 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3c2bbbcda3cfbe3aff8b17b766538149385ceed2
+Author: Magesh Umasankar <umagesh@apache.org>
+Date:   Wed Dec 4 16:42:34 2002 +0000
+
+    Real tired of seeing email address being abused.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273610 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 9feeebfbf8b732a0791a387fd83fc90d8eff217c
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Dec 3 12:29:15 2002 +0000
+
+    Add download from mirror links
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273604 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c8d9f6406f460bd18f1816ec8944d08b7ff36319
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Dec 3 09:01:52 2002 +0000
+
+    Don't append a dot to package roots if there already is one.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273601 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ea4bf0e8e7c2c017d15413a77656ad77ecb96537
+Author: Steve Loughran <stevel@apache.org>
+Date:   Thu Aug 22 18:24:14 2002 +0000
+
+    Costins need reminded me to turn on the java version specific system library stuff; though I would still like a good test for this.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273245 13f79535-47bb-0310-9956-ffa450edef68
+
+commit cef3b4c3429c87a5b97f9a5b5f09d7211153d1e8
+Author: Costin Manolache <costin@apache.org>
+Date:   Thu Aug 22 17:21:57 2002 +0000
+
+    Added org.w3c.dom too.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273241 13f79535-47bb-0310-9956-ffa450edef68
+
+commit aa5ace7d372daa8fcd2a367929b4868e4cd42041
+Author: Costin Manolache <costin@apache.org>
+Date:   Thu Aug 22 17:09:05 2002 +0000
+
+    Few fixes ( I hope it won't brake anything ).
+    
+    Added 'org.sax' and 'sun.reflect' to the list of system pacakges. There are
+    problems when using JDK1.4 with 'endorsed' not set up corectly. This allows
+    using a different parser, but doesn't allow the overriting of system classes.
+    
+    Made loadClass synchronized. Yes, it must be - there is a race condition,
+    we check if the class was not loaded and then load it, but 2 threads
+    may end up loading the class, and the second will get an exception.
+    This happen when using tomcat in ant for example - probably other
+    multithreaded tasks as well.
+    
+    I left the stack trace in, it shouldn't happen in normal cases ( AFAIK ),
+    but when something strange happens it helps a lot to know what was wrong.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273239 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8f413c12084a80db24f4cdfd6b8f908d4e75556f
+Author: Peter Donald <donaldp@apache.org>
+Date:   Thu Jul 25 15:21:25 2002 +0000
+
+    Remove unused imports, remove glob imports, sort imports.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273169 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e5235423ccd494cb7516a1df6e3e13a74a22b767
+Author: Erik Hatcher <ehatcher@apache.org>
+Date:   Tue Jul 9 18:49:49 2002 +0000
+
+    dIon's cleanup and doc patches.  I put this on the HEAD branch so as to not touch 1.5 branch right before the release.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273080 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6bd8d6e938a45868902ecd1092858e8372933c7c
+Author: Magesh Umasankar <umagesh@apache.org>
+Date:   Sat Jun 22 23:38:38 2002 +0000
+
+    Merge changes made to 1.5 Beta2.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@272967 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ca91f8cb7e4f2bfe1a191dea6126a32649af9565
+Author: Magesh Umasankar <umagesh@apache.org>
+Date:   Sat Jun 1 12:26:43 2002 +0000
+
+    Merge changes made to 1.5 Beta1.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@272826 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e2e194c8543e4e70514a4f19ca5d256f9c307439
+Author: Conor MacNeill <conor@apache.org>
+Date:   Wed Apr 24 06:16:46 2002 +0000
+
+    Make sure generic jar is not help open by loader
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@272563 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 0c253dc762efa243956ee90970e13fae9aec4d2f
+Author: Conor MacNeill <conor@apache.org>
+Date:   Tue Apr 9 15:27:08 2002 +0000
+
+    Coding standard conformance
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@272320 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f458059b9c8c584be9928c3cec8e8d3d32ace46e
+Author: Jon Skeet <jskeet@apache.org>
+Date:   Wed Mar 27 09:48:20 2002 +0000
+
+    Fixed up JavaDoc comments again.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@272049 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 37cd9404c739254d3ef459f80549e30fddf526cf
+Author: Magesh Umasankar <umagesh@apache.org>
+Date:   Tue Mar 19 22:45:06 2002 +0000
+
+    New attribute - ignoreSstemClasses - added to <available>.
+    
+    PR: 6031
+    Submitted by: peterj@liberate.com (Peter Janes)
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@271903 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a5ec3f179dae0cd625f5e28ede525ce538966e0c
+Author: Conor MacNeill <conor@apache.org>
+Date:   Mon Mar 18 02:44:31 2002 +0000
+
+    Ah! cruel ones, leave me alone now
+    While I murmur a little and ponder
+    
+    Anti-Spam
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@271885 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 24bb66e6547c68c19855f363e211606e03eeb17f
+Author: Conor MacNeill <conor@apache.org>
+Date:   Fri Mar 15 14:04:35 2002 +0000
+
+    Cleanup of style
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@271855 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 50fb7f5643cba98640e7d4ce2b00736e9d42cbab
+Author: Conor MacNeill <conor@apache.org>
+Date:   Tue Mar 12 23:08:06 2002 +0000
+
+    Fix up context class loader setting with regard to build.sysclasspath
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@271834 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 598017b1cdec8da5d9ac7002f6625561aca80ac7
+Author: Conor MacNeill <conor@apache.org>
+Date:   Mon Mar 11 09:40:21 2002 +0000
+
+    Restore 1.1 operation
+    Refactor context class loader methods into a utility class
+    Add URL method to FileUtils (still need to pick that up in Project)
+    Rename xcatalog to XMLCatalog
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@271813 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 50d4e58dfdadf26bd3b1749c5aefe41b457fc2bd
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Mar 8 11:16:14 2002 +0000
+
+    give conext classloaders in <junit> another try, catch Xalan errors in
+    TraxLiaisonTest.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@271796 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6a8c1d1dbb5eba0119381bc3f56a3a5fd5611942
+Author: Jon Skeet <jskeet@apache.org>
+Date:   Mon Feb 25 15:10:27 2002 +0000
+
+    First pass of JavaDoc work just to get rid of warnings.
+    When this is complete, whole source tree should JavaDoc (with 1.4)
+    with no warnings. (With JDK1.3.1 the 1.4-regexp stuff generates
+    warnings, but that's all.)
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@271543 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f181fda33d7f510ddff9a51ea3860f37f736c4ec
+Author: Jon Skeet <jskeet@apache.org>
+Date:   Sun Feb 24 08:57:02 2002 +0000
+
+    JavaDoc comments.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@271533 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a45ed20242bd108126f9f35b642ceee711b4d2e5
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Feb 20 14:54:28 2002 +0000
+
+    @exception -> @throws
+    
+    Submitted by:	Jon Skeet <jon.skeet@peramon.com>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@271454 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1ef4d3ea869c19a408aae99300a1c04b485917b1
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Feb 14 15:22:44 2002 +0000
+
+    Submitted by:	Jon Skeet <jon.skeet@peramon.com>
+    
+    Jon's message:
+    
+    There is one small code change (which may very briefly reduce the
+    footprint of Ant by about 3K :) and two comments which suggests further
+    code changes (look for XXX). The rest is, I believe, entirely comments.
+    I've:
+    
+    o Made sure that all occurences of null/true/false are surrounded by
+    <code></code>
+    o Wrapped comments to under 80 columns (in some ways this is more
+    important than wrapping code)
+    o Made sure that all fields and methods have JavaDoc documentation.
+    o All used method parameters are documented, including documentation of
+    whether they can be null or not
+    o All return types are documented
+    o All checked exceptions are documented
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@271349 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3c7ae9e72597eae42af15839f7d0b3ea87cfdb30
+Author: Stephane Bailliez <sbailliez@apache.org>
+Date:   Sat Jan 26 19:42:45 2002 +0000
+
+    Fix violations
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270906 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3fe197c6e72549b8a58b4fe78d46b98ea30ab3f5
+Author: Magesh Umasankar <umagesh@apache.org>
+Date:   Fri Jan 18 15:26:50 2002 +0000
+
+    Modified the hack to initialize a class such that the side effect of having to create a valid object is not there anymore.
+    
+    PR: 4107
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270780 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3fddc0bcfddb3f6226843481094795c89862bf5f
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Jan 10 11:21:21 2002 +0000
+
+    License police on documentation files:
+    
+    (1) Make sure all years in which a file has been modified are
+    listed.
+    
+    (2) Make sure the format is consistent, i.e. separate consecutive
+    years with a dash, not a comma.
+    
+    Also: the initial checkin into this CVS module was in 2000, not 1999.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270657 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a8d83a45281081252613a1d0028f05ac5d546474
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Jan 7 15:41:10 2002 +0000
+
+    Don't lie about the CLASSPATH being used - build.sysclasspath changes
+    everything.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270617 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d12e6411ccc654bc10c102c8a085b6b0e4634f8b
+Author: Stephane Bailliez <sbailliez@apache.org>
+Date:   Sun Oct 28 21:31:01 2001 +0000
+
+    Code clean up:
+     - removed useless/duplicate imports
+     - added explicit imports rather than *
+     - changed specifiers order to be conform to JLS.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269827 13f79535-47bb-0310-9956-ffa450edef68
+
+commit df14132289636640ade9cc52ecf8bfdc4ba52433
+Author: Conor MacNeill <conor@apache.org>
+Date:   Thu Aug 30 13:26:38 2001 +0000
+
+    Merge in 1.4 src changes
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269663 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 5cf91961ce3510f52a221bac8e907a39393018b7
+Author: Conor MacNeill <conor@apache.org>
+Date:   Mon Aug 6 09:58:36 2001 +0000
+
+    Define backward compatability constructor
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269470 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 55dcf2dee8cad363de7fd0a2d8317c857349c6bb
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Aug 3 16:38:21 2001 +0000
+
+    New task <condition>.
+    
+    This is a first cut of the generalization of <available> and
+    <uptodate> that is on the list for Ant2. This task supports a single
+    condition and sets a property if it holds true - conditions can be
+    containers for other conditions in turn, giving it the opportunity to
+    support boolean logic.
+    
+    Built in conditions as of now:
+    
+    * <available> and <uptodate> (slightly modified the tasks to allow them to
+    be used as conditions)
+    
+    * containers <and>, <or> and <not>
+    
+    * New conditions <equals> (compares to Strings) and <os> which should
+    give easier access to os.name.
+    
+    More extensive documentation to follow.  Take a look at Ant's build
+    file, it uses the task to detect whether javamail is available now.
+    
+    I had to perform some ugly tricks to make sure that project gets
+    passed to every object that will need it - this will be very different
+    in the future I hope.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269456 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 5a06139617f54f4fcdb1da8734d5e0753644e4f8
+Author: Conor MacNeill <conor@apache.org>
+Date:   Tue Jul 24 14:53:40 2001 +0000
+
+    Make resource load failures only print under debug. Up to the caller
+    to decide whether this is an error
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269382 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f1bfa329163db7a4992c25741e2d2db243a69fa0
+Author: Conor MacNeill <conor@apache.org>
+Date:   Wed Jul 18 03:16:05 2001 +0000
+
+    More classloader improvements
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269353 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b839a3ed0f3a0ad050579c33f2ede3e8b8542fea
+Author: Conor MacNeill <conor@apache.org>
+Date:   Wed Jul 18 02:29:34 2001 +0000
+
+    Improve the performance of the classloader - The classloader will, however,
+    now have the jars open.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269352 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6f1b5ab0797dd7510ce517de95cf4b80574ee262
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Jul 17 14:32:04 2001 +0000
+
+    Tell us which class you cannot find, please.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269350 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c234e7e18342b186b88cd7ddd65d3cc8c9946fd1
+Author: Conor MacNeill <conor@apache.org>
+Date:   Tue Jul 17 14:19:12 2001 +0000
+
+    Set the thread context class loader when running <java> tasks
+    
+    PR:	1085
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269349 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 0fcac6aa36d856294f2f1829c09b943bb4420f5a
+Author: Conor MacNeill <conor@apache.org>
+Date:   Tue Jul 17 12:12:39 2001 +0000
+
+    Add a new front end fro Ant which will perform many of the functions
+    of the current ant launcher scripts. Also allows many of the classes
+    necessary for Ant to be hidden from Java tasks run in VM.
+    
+    Changes to the classloader to allow the parent loader to be specified.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269347 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 07736d7ee1669883169c7a10b0060e7b0afa315f
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Jul 11 09:58:09 2001 +0000
+
+    help the garbage collector by cleaning out references in
+    AntClassLoader and IntrospectionHelper after the build has finished.
+    
+    This helps applications that run Ant in the same VM over and over
+    again like CruiseControl or wrappers that run Ant in incremental mode.
+    
+    PR: 2568
+    Submitted by:	robert.watkins@qsipayments.com (Robert Watkins)
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269316 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8339c7f3e8a6ef73c3b8f53fdef7ae42734020df
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Jul 11 06:50:45 2001 +0000
+
+    Add debug information to the getResource methods.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269310 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 04c15d05cf12263aacf020550b75e249e4cb7781
+Author: Conor MacNeill <conor@apache.org>
+Date:   Tue Jul 10 14:55:48 2001 +0000
+
+    CHange most usage of the classloader so that it loads from the
+    system classpath first.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269308 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ed46c7920d232d5cbee18f489acce73c346a00a6
+Author: Conor MacNeill <conor@apache.org>
+Date:   Sat Jul 7 13:54:40 2001 +0000
+
+    AntClassLoader now ignores paths which are invalid relative to the
+    project.
+    
+    PR:	381
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269287 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 54dc62a5423e69c080592ae4bef2276bd24e63cf
+Author: Conor MacNeill <conor@apache.org>
+Date:   Sat Jul 7 13:51:12 2001 +0000
+
+    Remove unnecessary use of Project.resolveFile by converting arguments to
+    Files from Strings
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269286 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 0bd52245181ac0fb464599e349ced9332e9dc3cc
+Author: Conor MacNeill <conor@apache.org>
+Date:   Mon Jul 2 09:55:41 2001 +0000
+
+    Add support for getResources to the classloader
+    
+    Submitted by:	David A. Herman <hermand@alumni.grinnell.edu>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269258 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 5c4140f46938604503e556dd490f2817f185526f
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri May 11 06:27:03 2001 +0000
+
+    Class.newInstance throws a NoSuchMethodError in JDK 1.1 if there is no
+    no-arg constructor.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269024 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a6c6685f620a5c1aa7bdd2597095c970b6df56d9
+Author: Conor MacNeill <conor@apache.org>
+Date:   Thu May 10 15:23:00 2001 +0000
+
+    Initialize classes which are loaded through a classloader. Note that the
+    approach here uses newInstance to achieve initialisation for JDK 1.1
+    compatability. Under JDK 1.2, both initialization and the classloader to
+    use can be specified to Class.forName();
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269021 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b150eb636265982c43bbb004dd5b4d68c4f4d5f0
+Author: Conor MacNeill <conor@apache.org>
+Date:   Wed May 9 15:14:46 2001 +0000
+
+    Add getResource() implementation to AntClassLoader
+    
+    PR:	749
+    Submitted by:	mlauer-ssci@lauer-edv.com <mlauer-ssci@lauer-edv.com>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269018 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b31472d21fcd29fc5104562036e9dd98da76f9de
+Author: Conor MacNeill <conor@apache.org>
+Date:   Thu Mar 15 13:53:29 2001 +0000
+
+    Make the AntClassLoader load resources in the same order as it currently
+    loads classes.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268841 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 7435b27b914764c3845b4821363ffeb4ddfe89cd
+Author: Conor MacNeill <conor@apache.org>
+Date:   Sun Feb 18 13:44:44 2001 +0000
+
+    Merge 1.3 branch changes into MAIN
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268691 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 559fe1af187c27c6253ef3a1b639783f0a372f50
+Author: Conor MacNeill <conor@apache.org>
+Date:   Sun Feb 4 02:34:28 2001 +0000
+
+    Fixes to AntClassLoader.
+    
+    Changes AntClassLoader so it does not use the primordial class
+    loader for system classes. This is needed when the classloader itself was not
+    loaded with the primordial loader.
+    
+    Submitted by:	Jesse Glick <Jesse.Glick@netbeans.com>Reviewed by:
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268573 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b3cb9a9d4f526df3bfef0706e46bc82857babdc3
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Jan 19 13:27:00 2001 +0000
+
+    Changed the handling of build.sysclasspath so that Ant should behave
+    the same way as Ant 1.2 did - if build.sysclasspath has not been set.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268480 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 2f3fc4ceb269ba3d0285afb816295ff76e503b10
+Author: Sam Ruby <rubys@apache.org>
+Date:   Fri Jan 5 14:26:27 2001 +0000
+
+    Address anomolies where classpath is now being interpreted differently by
+    different tasks due to my change to javac and the introduction of
+    ${build.sysclasspath}
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268407 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6c287080d460efa63e022407e88a04558b9fdbb6
+Author: Conor MacNeill <conor@apache.org>
+Date:   Wed Jan 3 14:18:52 2001 +0000
+
+    Make licence statements mention Ant in place of Tomcat
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268392 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 30385849b7585faad000b0d2e2a303768fc51f68
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Oct 12 06:53:51 2000 +0000
+
+    Made AntClassLoader always add java.* and javax.* to the list of
+    packages to load via the system classloaders.
+    
+    This fixes the problem reported by Erik Meade <emeade@geekfarm.org>.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268074 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 47dce162e8c5dbd403a4456eb427ae439171ca99
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Oct 5 09:12:07 2000 +0000
+
+    Allow the user to specify a classpath to <junit> even if fork="off".
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268059 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 33107ab10098823c23924741100a6c3faf9fd267
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Sep 29 15:51:13 2000 +0000
+
+    - Add new attributes onerror= (continue, stop, abort) to <sql>
+    - Add new nested element <transaction> to <sql> which allows executing
+      multiple transactions, multiple files on the same connection.
+    - Added documentation on sql.html
+    - Modified AntClassLoader.java to send most of the "loading class..."
+      messages to MSG_DEBUG instead of MSG_VERBOSE. So that it does not
+      cluter debugging other tasks.
+    - Add new attributes 'rdbms="product"' and 'version="release"'
+      if those versions do not match what is returned by the connection, the
+      task will be skipped.
+    
+    Submitted by:	Jose  Alberto Fernandez <JFernandez@viquity.com>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268049 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e6a52064b983a4152dbfb75b1597efed46d02e2d
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Sep 27 07:42:23 2000 +0000
+
+    Allow the driver for <sql> to be loaded from a different CLASSPATH.
+    Submitted by:	Julian M. Savage <jsavage@fisci.com>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268039 13f79535-47bb-0310-9956-ffa450edef68
+
+commit dddcf551a908df7a6f9ccb7db4b49ce441844375
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Sep 26 11:05:46 2000 +0000
+
+    Loading tasks from a ClassLoader other than the default one now works
+    on JDK 1.1 as well.
+    
+    Added org.apache.tools.ant to the list of packages that need to be
+    loaded via the system class loader as the loaded class wouldn't be an
+    instance of Task (loaded by default loader) otherwise.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268038 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 655df7f9e198a141defc9dcfb45f7f14cd7749f8
+Author: Conor MacNeill <conor@apache.org>
+Date:   Mon Aug 14 11:14:05 2000 +0000
+
+    Upgraded Classloader to allow more control over which classes are loaded
+    by the system classloader
+    Upgrade Ejbc task and its helper to use the new facilities of the classloader
+    Runs the weblogic.ejbc task in the ant VM. Examines the build.compiler setting and
+    uses Jikes if it is selected.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@267929 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c30a78b74e835e3a37d3a23ac8a223e9fe497553
+Author: Conor MacNeill <conor@apache.org>
+Date:   Wed Aug 9 14:45:00 2000 +0000
+
+    Do not try to load from jars which don't exist
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@267907 13f79535-47bb-0310-9956-ffa450edef68
+
+commit abd5987913a0a10ee5c1fbbe6232c468986d889b
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Jul 24 15:53:06 2000 +0000
+
+    Made Path resolve relative paths through Project. Moved it to the
+    types package on the same instance, so I had to touch a lot of ather
+    files as well.
+    Reported by:	Frederic Lavigne <fred@L2FProd.com>
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@267827 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8b613e7fb2924211824146110e777f7cdc5a120f
+Author: Conor MacNeill <conor@apache.org>
+Date:   Sun Jul 23 14:20:26 2000 +0000
+
+    Add Javadoc to AntClassLoader
+    Clean up the Javadoc (a little) in the new FileSet and PatternSet classes
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@267817 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3e49b015c51a6c6deaedf791ad96a464af3b0454
+Author: Conor MacNeill <conor@apache.org>
+Date:   Wed Jul 19 12:35:12 2000 +0000
+
+    Provides an Ant Class loader.
+    
+    This class loader allows a Java task to be run with a separate classpath
+    without requiring a new java instance to be created.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@267798 13f79535-47bb-0310-9956-ffa450edef68

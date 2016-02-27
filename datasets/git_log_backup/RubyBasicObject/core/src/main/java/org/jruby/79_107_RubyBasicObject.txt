@@ -1,0 +1,917 @@
+commit d8a6401ebaf9e75db4c111518c1d6c472c4c0300
+Merge: 3efcd1d e92030e
+Author: kares <self@kares.org>
+Date:   Tue Aug 18 13:24:28 2015 +0200
+
+    Merge branch 'jruby-1_7'
+    
+    * jruby-1_7:
+      some more comparable asserts including for the Java compareTo part
+      native RubySymbol#compareTo since we expect to always be able to sort
+      should not-rewrite jump exceptions twice as well (not just raise ones)
+      delete un-used imports
+      [ji] do not rewrite stack-trace twice for Ruby (raise) exceptions
+      base compareTo should not silence all Ruby raised exceptions (fixes #2232)
+      re-arrange rescue spec (we're about to spec some more behavior)
+      only test nil return from Object cmp on 1.9 (on 1.8.7 its expected to raise)
+      more of correct $! restore + use get/setErrorInfo for better predictability
+      another incorrect $! with numeric coercion on <=> + cleanup getRuntime()
+      Fix some consumers for #1601.  Don't leak out  if we are swallowing the raised exception
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/Main.java
+    	core/src/main/java/org/jruby/RubyBasicObject.java
+    	core/src/main/java/org/jruby/RubyClass.java
+    	core/src/main/java/org/jruby/RubyComparable.java
+    	core/src/main/java/org/jruby/RubyNumeric.java
+    	core/src/main/java/org/jruby/RubySymbol.java
+    	core/src/main/java/org/jruby/RubyTime.java
+    	core/src/main/java/org/jruby/javasupport/JavaCallable.java
+
+commit 771afb025d962871b35eb3dc304d5260ae3972ab
+Author: kares <self@kares.org>
+Date:   Mon Aug 17 14:05:23 2015 +0200
+
+    base compareTo should not silence all Ruby raised exceptions (fixes #2232)
+    
+    this no longer makese sense - and leads to confusing behavior when Ruby objects are used within Java (delegating to <=> which might be user-defined)
+    
+    every-one is expected to handle <=> on 1.9 (and return nil if not comparable)
+    on 1.8 we still swallow a NoMethodError as Object does not provide <=>
+
+commit df6cf576a9e1dbb70e4415286c3bae97e0d01374
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Aug 6 13:12:26 2015 -0500
+
+    Add respond_to-aware hashCode and equals to RubyBasicObject.
+    
+    We use Object#hashCode and #equals in our Hash impl among other
+    places. When the object key is RubyObject or a descendant, we
+    would dispatch dynamically to the appropriate methods in Ruby.
+    However, RubyBasicObject did not override either method, so they
+    both just used base JVM impls and ignored user-defined #hash and
+    
+    This patch adds "checked" versions of these methods to
+    RubyBasicObject and fixes #3227.
+
+commit b4aa8600cd082715ddf60e01de78a626283f6c58
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jul 20 17:44:37 2015 -0500
+
+    Fix Java-based optimized respond_to? protocol.
+
+commit bc9a5bea272b16fcc338ccd2c2b76184ba4ae18e
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Jul 2 13:35:05 2015 -0500
+
+    GH #2416 (partial). Kill last vestiges of breakjump
+
+commit 62f4721cc59c9e07a926d28af4886372526f7c05
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Jun 2 13:20:47 2015 -0500
+
+    Fixes #3007. splats with non-array like values.  @JRubyMethod will create two DynamicMethod instances if the method is marked as module=true.  So builtin check needs to check against both builtins
+
+commit 40beb472cb17c6c0cbf46ba199a9461e0e7bd877
+Merge: c0c086e e237201
+Author: kares <self@kares.org>
+Date:   Mon May 25 16:54:09 2015 +0200
+
+    Merge branch 'jruby-1_7'
+    
+    * jruby-1_7: (54 commits)
+      [travis-ci] re-try sudo: false
+      dry out the two (Java helper) respond_to_p19 methods
+      respondsTo JRuby API under 1.9.3 does not do respond_to_missing? like MRI does
+      sleep should convert it's "time interval" argument the same way as MRI
+      respond_to_missing? should always get a symbol name passed (fixes #2946)
+      add a respond_to_missing unit test (on 1.9)
+      introduce and use conversion( just like MRI does) on #timeout's sec argument
+      add missing ' ' (space) in exception message ... TypeError from `sleep('invalid')`
+      DateTime.iso8601 fails with an error if a second fraction is present
+      [build] switch to 1.7.21-SNAPSHOT for test-jruby-jars
+      refactor Timeout's scheduled tasks to an inner class (for easier identification)
+      further hand drying of the Timeout module impl
+      less (int) casting noiz
+      add some (internal) generics for an improved readability xp
+      inner class' Finalizer fields id and finalized can be final
+      generix-ize the environment field (at least internally) + use a StringBuilder
+      unnecessary (int) cast
+      missing throw statement in RubyString's concat
+      tune timeout to work when scheduling or argument convenrsion throws (see #2940)
+      return empty Ruby array for empty dir list
+      ...
+    
+    Conflicts:
+    	.gitignore
+    	.travis.yml
+    	VERSION
+    	core/pom.xml
+    	core/src/main/java/org/jruby/RubyArray.java
+    	core/src/main/java/org/jruby/RubyBasicObject.java
+    	core/src/main/java/org/jruby/RubyDir.java
+    	core/src/main/java/org/jruby/RubyEnumerable.java
+    	core/src/main/java/org/jruby/RubyFile.java
+    	core/src/main/java/org/jruby/RubyGlobal.java
+    	core/src/main/java/org/jruby/RubyIO.java
+    	core/src/main/java/org/jruby/RubyKernel.java
+    	core/src/main/java/org/jruby/RubyModule.java
+    	core/src/main/java/org/jruby/RubyString.java
+    	core/src/main/java/org/jruby/RubyTime.java
+    	core/src/main/java/org/jruby/ext/timeout/Timeout.java
+    	core/src/main/java/org/jruby/java/proxies/JavaProxy.java
+    	core/src/main/java/org/jruby/util/Dir.java
+    	core/src/main/java/org/jruby/util/encoding/CharsetTranscoder.java
+    	docs/man/pom.xml
+    	docs/pom.xml
+    	ext/pom.xml
+    	ext/readline/pom.xml
+    	ext/ripper/pom.xml
+    	lib/pom.xml
+    	lib/ruby/1.9/date/format.rb
+    	lib/ruby/1.9/io/linux_console.rb
+    	lib/ruby/shared/gauntlet_rubygems.rb
+    	lib/ruby/shared/rubygems.rb
+    	lib/ruby/shared/rubygems/available_set.rb
+    	lib/ruby/shared/rubygems/basic_specification.rb
+    	lib/ruby/shared/rubygems/command.rb
+    	lib/ruby/shared/rubygems/command_manager.rb
+    	lib/ruby/shared/rubygems/commands/cert_command.rb
+    	lib/ruby/shared/rubygems/commands/cleanup_command.rb
+    	lib/ruby/shared/rubygems/commands/contents_command.rb
+    	lib/ruby/shared/rubygems/commands/dependency_command.rb
+    	lib/ruby/shared/rubygems/commands/environment_command.rb
+    	lib/ruby/shared/rubygems/commands/generate_index_command.rb
+    	lib/ruby/shared/rubygems/commands/help_command.rb
+    	lib/ruby/shared/rubygems/commands/install_command.rb
+    	lib/ruby/shared/rubygems/commands/list_command.rb
+    	lib/ruby/shared/rubygems/commands/mirror_command.rb
+    	lib/ruby/shared/rubygems/commands/outdated_command.rb
+    	lib/ruby/shared/rubygems/commands/owner_command.rb
+    	lib/ruby/shared/rubygems/commands/pristine_command.rb
+    	lib/ruby/shared/rubygems/commands/push_command.rb
+    	lib/ruby/shared/rubygems/commands/query_command.rb
+    	lib/ruby/shared/rubygems/commands/search_command.rb
+    	lib/ruby/shared/rubygems/commands/setup_command.rb
+    	lib/ruby/shared/rubygems/commands/specification_command.rb
+    	lib/ruby/shared/rubygems/commands/uninstall_command.rb
+    	lib/ruby/shared/rubygems/commands/unpack_command.rb
+    	lib/ruby/shared/rubygems/commands/update_command.rb
+    	lib/ruby/shared/rubygems/commands/which_command.rb
+    	lib/ruby/shared/rubygems/commands/yank_command.rb
+    	lib/ruby/shared/rubygems/compatibility.rb
+    	lib/ruby/shared/rubygems/config_file.rb
+    	lib/ruby/shared/rubygems/core_ext/kernel_gem.rb
+    	lib/ruby/shared/rubygems/core_ext/kernel_require.rb
+    	lib/ruby/shared/rubygems/defaults.rb
+    	lib/ruby/shared/rubygems/dependency.rb
+    	lib/ruby/shared/rubygems/dependency_installer.rb
+    	lib/ruby/shared/rubygems/dependency_list.rb
+    	lib/ruby/shared/rubygems/deprecate.rb
+    	lib/ruby/shared/rubygems/doctor.rb
+    	lib/ruby/shared/rubygems/errors.rb
+    	lib/ruby/shared/rubygems/exceptions.rb
+    	lib/ruby/shared/rubygems/ext.rb
+    	lib/ruby/shared/rubygems/ext/builder.rb
+    	lib/ruby/shared/rubygems/ext/cmake_builder.rb
+    	lib/ruby/shared/rubygems/ext/configure_builder.rb
+    	lib/ruby/shared/rubygems/ext/ext_conf_builder.rb
+    	lib/ruby/shared/rubygems/ext/rake_builder.rb
+    	lib/ruby/shared/rubygems/gemcutter_utilities.rb
+    	lib/ruby/shared/rubygems/indexer.rb
+    	lib/ruby/shared/rubygems/install_update_options.rb
+    	lib/ruby/shared/rubygems/installer.rb
+    	lib/ruby/shared/rubygems/installer_test_case.rb
+    	lib/ruby/shared/rubygems/local_remote_options.rb
+    	lib/ruby/shared/rubygems/name_tuple.rb
+    	lib/ruby/shared/rubygems/package.rb
+    	lib/ruby/shared/rubygems/package/old.rb
+    	lib/ruby/shared/rubygems/package/tar_header.rb
+    	lib/ruby/shared/rubygems/package/tar_reader/entry.rb
+    	lib/ruby/shared/rubygems/package/tar_writer.rb
+    	lib/ruby/shared/rubygems/path_support.rb
+    	lib/ruby/shared/rubygems/platform.rb
+    	lib/ruby/shared/rubygems/psych_additions.rb
+    	lib/ruby/shared/rubygems/rdoc.rb
+    	lib/ruby/shared/rubygems/remote_fetcher.rb
+    	lib/ruby/shared/rubygems/request.rb
+    	lib/ruby/shared/rubygems/request_set.rb
+    	lib/ruby/shared/rubygems/request_set/gem_dependency_api.rb
+    	lib/ruby/shared/rubygems/requirement.rb
+    	lib/ruby/shared/rubygems/resolver/current_set.rb
+    	lib/ruby/shared/rubygems/security.rb
+    	lib/ruby/shared/rubygems/security/policy.rb
+    	lib/ruby/shared/rubygems/security/signer.rb
+    	lib/ruby/shared/rubygems/security/trust_dir.rb
+    	lib/ruby/shared/rubygems/server.rb
+    	lib/ruby/shared/rubygems/source.rb
+    	lib/ruby/shared/rubygems/source/installed.rb
+    	lib/ruby/shared/rubygems/source/local.rb
+    	lib/ruby/shared/rubygems/source/specific_file.rb
+    	lib/ruby/shared/rubygems/source_list.rb
+    	lib/ruby/shared/rubygems/spec_fetcher.rb
+    	lib/ruby/shared/rubygems/specification.rb
+    	lib/ruby/shared/rubygems/ssl_certs/AddTrustExternalCARoot.pem
+    	lib/ruby/shared/rubygems/stub_specification.rb
+    	lib/ruby/shared/rubygems/syck_hack.rb
+    	lib/ruby/shared/rubygems/test_case.rb
+    	lib/ruby/shared/rubygems/test_utilities.rb
+    	lib/ruby/shared/rubygems/text.rb
+    	lib/ruby/shared/rubygems/uninstaller.rb
+    	lib/ruby/shared/rubygems/uri_formatter.rb
+    	lib/ruby/shared/rubygems/user_interaction.rb
+    	lib/ruby/shared/rubygems/util/list.rb
+    	lib/ruby/shared/rubygems/validator.rb
+    	lib/ruby/shared/rubygems/version.rb
+    	maven/jruby-complete/pom.xml
+    	maven/jruby-dist/pom.xml
+    	maven/jruby-jars/pom.xml
+    	maven/jruby-noasm/pom.xml
+    	maven/jruby-rake-plugin/pom.xml
+    	maven/jruby-stdlib/pom.xml
+    	maven/jruby/pom.xml
+    	maven/pom.xml
+    	pom.xml
+    	test/pom.xml
+    	test/test_dir.rb
+    	test/test_kernel.rb
+    	test/test_respond_to.rb
+    	test/test_timeout.rb
+
+commit e07e277129186c56cd8e87c408ad50f39654fcf5
+Author: kares <self@kares.org>
+Date:   Mon May 25 10:50:33 2015 +0200
+
+    dry out the two (Java helper) respond_to_p19 methods
+
+commit d246f977c2cb8237292a0ef7a2dc126c61bf255c
+Author: kares <self@kares.org>
+Date:   Mon May 25 10:28:45 2015 +0200
+
+    respondsTo JRuby API under 1.9.3 does not do respond_to_missing? like MRI does
+    
+    ... wasn't noticeable too much previously but now Rails 4.2 started using respond_to_missing? on places such as AS::Duration thus it's require for us to get things such as `sleep 5.seconds` working
+    
+    (with convertTimeInterval argument parsing resolves #2940)
+
+commit 4ed3010fd985f23b08971043be7c0639eb6403ee
+Author: kares <self@kares.org>
+Date:   Sun May 24 12:53:27 2015 +0200
+
+    respond_to_missing? should always get a symbol name passed (fixes #2946)
+
+commit e266e6481da1efb1b1c02205facb8da1f8c511fb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri May 22 09:36:43 2015 -0500
+
+    Make BasicObject "check" methods use proper protocol. #2563
+
+commit 139a5587fb8abfbc41e77c3f2199f62b0fba353b
+Author: kares <self@kares.org>
+Date:   Fri May 15 12:34:05 2015 +0200
+
+    inner class' Finalizer fields id and finalized can be final
+
+commit d9ccc133c7a57d39bdcf8eb695301ee8a91c0cc1
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Apr 15 09:03:10 2015 -0500
+
+    Re-refactor fixes for mocha and MRI suite back into place.
+
+commit a9ce5d33940c38e0112f2d41eef2c36cbfaa3d27
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Apr 14 19:51:39 2015 -0500
+
+    Bring introspection methods in line behaviorally with MRI.
+    
+    This should fix remaining issues running mocha head's tests.
+
+commit 487938c6d0ff8d1c482d6d814e6c81761bd12af9
+Merge: be01825 aaf1681
+Author: kares <self@kares.org>
+Date:   Tue Apr 7 16:15:45 2015 +0200
+
+    Merge branch 'jruby-1_7'
+    
+    * jruby-1_7:
+      fix compilation error left-over from 7774be525ac71997cd2ed75ef641c47078a704bc
+      some more var-args tests - make sure var-arg (overload) methods are covered
+      move ALLOCATOR into a static field
+      guess the ivar list size (most objects have only @ variables)
+      private can be static
+      handle Ruby super -> Java constructor with var-args correctly (fixes cases in #2375)
+      mark generated proxy class constructor with @java.lang.SafeVarargs if super is var-args
+      time to start sharing the generic (handles var-args) argument toJava conversion
+      use (and cache) the more Java [array] version of the API to retrieve proxy constructors
+      avoid deprecated JavaMethod.create + make sub-class helpers final
+      do the toJava conversion on site instead of constant indirection esp. in loops
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/RubyModule.java
+    	core/src/main/java/org/jruby/java/invokers/ConstructorInvoker.java
+    	core/src/main/java/org/jruby/java/invokers/InstanceMethodInvoker.java
+    	core/src/main/java/org/jruby/java/invokers/SingletonMethodInvoker.java
+    	core/src/main/java/org/jruby/java/invokers/StaticMethodInvoker.java
+    	test/test_higher_javasupport.rb
+
+commit d06ab373562e1977b2dd1717c79eec70b476b4ea
+Author: kares <self@kares.org>
+Date:   Mon Mar 30 12:09:09 2015 +0200
+
+    guess the ivar list size (most objects have only @ variables)
+
+commit 7774be525ac71997cd2ed75ef641c47078a704bc
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Apr 6 11:20:08 2015 -0500
+
+    Use target obj as self for instance_eval. Fixes #2301.
+
+commit 7708f4cea657337f27ca24b5aa070be927212b86
+Author: Chris Heald <cheald@gmail.com>
+Date:   Sat Apr 4 13:29:52 2015 -0700
+
+    Don't depend on method.getName() to have the right name for respond_to/respond_to_missing
+
+commit fe8c87a099a34b1cbc6d8b7d5979af54b0532fe4
+Author: Chris Heald <cheald@gmail.com>
+Date:   Thu Apr 2 10:45:39 2015 -0700
+
+    Support respond_to_missing? in respondsTo() lookups
+    
+    RubyBasicObject assumes that if respond_to? is undefined, it can just fast-track
+    method lookups. We have to also check for respond_to_missing?; failure to do so causes
+    Javaland respondsTo() calls to fail when an object defines respond_to_missing? (despite
+    the documentation's admonishment to not use it)
+    
+    The practical case for this is ActiveSupport::Duration in ActiveSupport 4.2.1
+
+commit 3b067b7b76d6ff629394cfca8c7172d6778bb318
+Merge: 92d2cc7 5433238
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Mar 12 15:38:51 2015 -0500
+
+    Merge remote-tracking branch 'origin/jruby-1_7'
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/RubyBasicObject.java
+    	core/src/main/java/org/jruby/java/proxies/ArrayJavaProxy.java
+
+commit 142fce8b26e21d4239fe3abe2c1b5abbeeeb14e3
+Author: kares <self@kares.org>
+Date:   Wed Mar 11 12:48:26 2015 +0100
+
+    simplify RubyBasicObject's "generic" toJava method internal (unwrap getValue once)
+
+commit 777284ba19e167ceba8fefd3ac3acd7389e8bff5
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Mar 9 10:39:33 2015 -0500
+
+    "refine" and "using" implementations (currently unused).
+
+commit 78e968ef4da7880c2f9f2c31098fc0d7d5eb39db
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Fri Feb 13 23:43:16 2015 -0600
+
+    Save/restore $! properly in the JRuby runtime
+    
+    * Whenever a RaiseException is caught and handled, the $! should
+      be the restored to the previous value of the exception before
+      the try-catch was entered.
+    
+    * This fixes #1601 and #2491 but additional code auditing and
+      discussion will be helpful.
+
+commit 0ce0215d22c022869ef191341213e17e77018a17
+Author: Erik Michaels-Ober <sferik@gmail.com>
+Date:   Wed Jan 28 10:27:50 2015 -0800
+
+    Remove deprecated Object#id method (removed in Ruby 1.9.3)
+
+commit 519fd7540b690c8de03b315f6d65ad407aaa4220
+Author: Erik Michaels-Ober <sferik@gmail.com>
+Date:   Tue Jan 27 19:15:56 2015 -0800
+
+    Move #object_id method from BasicObject to Object
+
+commit c2184b5cdbbb59c7f2a59af88f994e3fa76ea74f
+Author: Erik Michaels-Ober <sferik@gmail.com>
+Date:   Mon Jan 26 18:18:07 2015 -0800
+
+    Move #itself from BasicObject to Object
+
+commit b5b730563b948b340fa6044fe104b3baea972d06
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Dec 17 14:50:27 2014 -0600
+
+    Fix #2301
+
+commit 73df3d230b9d92c7237d581c6366df1b92ad9b2b
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Dec 16 12:58:47 2014 -0600
+
+    evalSimple path no longer has duplicated scope (messiness to be cleaned up after evalWithBinding
+    removes its additionalScope).
+    Reinstated NoVars assertion because we no longer erroneously ask 'phantom' scope for a block
+    value which is never there...ooooooo spooky
+    SClasses should not need to get closure
+
+commit 40c2915572517714d4a4964c59826ce5ac8ad8c3
+Merge: 7edda48 15f651b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Dec 2 17:33:13 2014 -0600
+
+    Merge remote-tracking branch 'origin/jruby-1_7'
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/runtime/Block.java
+
+commit 15f651b6361d1a8470bc9f0fc625a4dd42c27741
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Dec 2 17:28:04 2014 -0600
+
+    Less broken but more grosser fix for #1290 and #1547.
+    
+    MRI manages the frame's self differently, just saving it into the
+    binding and then putting it in the sole global state field that
+    represents the current thread's active frame. In our case, we use
+    the entire Frame object as a carrier for frame data, so we need
+    to keep the object the same for mutable frame fields like backref
+    to propagate. As a result, the only fix possible for this on 1.7
+    is to change the self back after instance_eval.
+    
+    We may be able to fix this better on master, where the runtime
+    has been restructured and may support a more correct notion of the
+    current frame's self.
+
+commit f568e2eb6d46d172cc4467daba3fc6f7ca7f6525
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Sep 18 14:27:47 2014 -0500
+
+    Clean up block cloning for instance_eval and friends.
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/RubyBasicObject.java
+    	core/src/main/java/org/jruby/RubySymbol.java
+
+commit def74264880b464265acf3837fe92ad07efb74a2
+Merge: d872b7d 9585c81
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Nov 12 07:35:30 2014 -0600
+
+    Merge pull request #2178 from cheald/fix_frozen
+    
+    Fix frozen checks and exceptions
+
+commit 9585c81c4b19f6e4a63581838b2bffb610c94a7f
+Author: Chris Heald <cheald@gmail.com>
+Date:   Wed Nov 12 02:03:52 2014 -0700
+
+    Fix freeze enforcement and exceptions for immediate values. Passes test
+    suite and rubyspec suite now.
+
+commit 45266f2ecd730343ce24fbc6d0d1c625115540c4
+Author: Chris Heald <cheald@gmail.com>
+Date:   Tue Nov 11 23:59:23 2014 -0700
+
+    Revert "Move frozen checks to getSingletonClass() - this allows for MRI-compliant behavior"
+    
+    This reverts commit 7ff0a1f47358e834d52ea1473b235ec83c8d19c6.
+
+commit 5caaf346132af832e0feefd04976c979ed719109
+Author: Chris Heald <cheald@gmail.com>
+Date:   Tue Nov 11 10:05:12 2014 -0700
+
+    bitCoerce now attempts to coerce given arguments for bitwise operations
+    into fixnums or bignums, and raises an exception if it is unable to do so.
+
+commit dad0ca518835438f326ef75a4bda5fd63bbb8746
+Author: Chris Heald <cheald@gmail.com>
+Date:   Mon Nov 10 17:05:11 2014 -0700
+
+    BasicObject#inspect no longer calls #to_s, per feature 6130.
+
+commit 7ff0a1f47358e834d52ea1473b235ec83c8d19c6
+Author: Chris Heald <cheald@gmail.com>
+Date:   Mon Nov 10 16:21:53 2014 -0700
+
+    Move frozen checks to getSingletonClass() - this allows for MRI-compliant behavior
+    where only non-singleton frozen objects (ie, things that aren't nil or literals)
+    perform frozen checking.
+
+commit e9fb25412cb9725c830767b1c3cc66e654e7b4b9
+Author: Chris Heald <cheald@gmail.com>
+Date:   Mon Nov 10 12:35:24 2014 -0700
+
+    Check the arity of user-defined respond_to? methods and pass parameters accordingly
+
+commit 55f7384bf4e9b8bae756e5b720fd78c33b4cc8e9
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Nov 8 17:22:31 2014 -0600
+
+    Minor fixes to frozen error messages.
+
+commit 7cbd2e57420289da1d7e6b28353bf85f4ff62be8
+Author: Chris Heald <cheald@gmail.com>
+Date:   Thu Nov 6 17:43:34 2014 -0700
+
+    Implement Object#itself, per ruby-feature 6373
+
+commit efabe068af794db64902e920453165bb11b957ff
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Oct 20 10:36:43 2014 -0500
+
+    Lift constant handle caching to all objects and wire it up.
+    
+    Added handle reuse for:
+    
+    * true/false
+    * nil
+    * runtime
+    
+    And fixed handling for fixnums and symbols.
+    
+    See #2058.
+
+commit 92396a81ce6fb0923afdda1ef749f283c8c6c5d4
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Oct 20 09:19:38 2014 -0500
+
+    Encapsulate and generalize "constant" creation for core types.
+    
+    Part of work for #2058.
+
+commit 35141a4aa462575044d540f9c23b9301ae8516c8
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Sep 18 14:27:47 2014 -0500
+
+    Clean up block cloning for instance_eval and friends.
+
+commit 2676a1ce936a89deaab7db9f11a6a0d63fdf8610
+Merge: c8d269d c57ad62
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 9 12:55:04 2014 -0500
+
+    Merge remote-tracking branch 'origin/master' into new_transcoder
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/RubyConverter.java
+    	test/mri/excludes/TestMethod.rb
+    	test/mri/excludes/TestModule.rb
+
+commit 7791321ff35529b84e83c0480c621af7dbe5c247
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Jul 6 14:32:53 2014 -0500
+
+    Move toward better metadata in native core methods.
+    
+    * Fully-specify methods that read/write frame or scope fields.
+    * Attach additional "caller" CallConfig to methods for later use.
+    * Eliminate static lists of scope/frame consumers (full field
+      specification means those methods will get picked up on boot.
+    
+    This change moves us toward having full framing information in the
+    DynamicMethod object associated with a given native method. This
+    will allow us to do a better job of late-framed calls (don't
+    frame or scope until we call a method that needs it), alias
+    warnings (only warn when aliasing a method that has framing
+    requirements), and ultimately better frame elimination in the new
+    IR runtime.
+
+commit 6225d60e792b3f60adbd76b15958ba3b221f2279
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Mon Jun 30 23:59:03 2014 -0500
+
+    Death to rubyclass stack: Part 2 of 2
+    
+    * This patch builds on the previous commit and eliminates all
+      traces of rubyclass stack from the codebase.
+    
+      - Remove the push/pop/get from thread-context and use sites.
+      - Removed klass arg from method calls.
+    
+    * TODO: embed used to inject values into the current-module obtained
+      from the rubyclass stack. That code needs investigation.
+    
+    * Replaced the hacky if (klass==null) prepareSelf(binding) calls
+      with information about actual execution context. The primary reason
+      to use binding.self instead of self argument in blocks is when
+      the block is being used in a binding-eval context. The same soln.
+      is applicable in other contexts where this pattern was used (and
+      currently marked with SSS FIXME annotations in code comments).
+    
+    * All tests continue to pass.
+
+commit 4fd036b2c3d515db5a9c5ab7e249b59f8ea79692
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Mon Jun 30 23:10:57 2014 -0500
+
+    Death to rubyclass stack: Part 1 of 2
+    
+    * When methods are defined, aliased, undefined, the runtime has to
+      determine the method container that is affected by the changes.
+    
+      Thus far, this was done by manipulating a rubyclass stack that
+      is updated at several places in the runtime and weaves its way
+      through frame, binding, yield, instance/module/binding evals,
+      and is updated on every call.
+    
+    * This patch implements a fairly straightforward algorithm for
+      determining the method container at the time it is needed by
+      examining the contents of the lexical scoping tree starting at
+      the scope where the method is manipulated. This examination is
+      affected by runtime flags set on lexical scopes (always blocks)
+      based on whether any of them are being executed in the context of
+      instance/module/binding evals. There are couple special cases to
+      this algorithm. Nevertheless, it is far more straightforward and
+      easy to grok than the existing runtime implementation.
+    
+      In this patch, the rubyclass stack manipulation code is turned off
+      in ThreadContext.java but the rubyclass stack and its traces in
+      the various parts of the runtime are left behind.
+    
+      The algorithm relies on annotation of block scopes when they are
+      being executed in the context of evals. The bulk of this patch
+      involves setting up these annotations in RubyModule, RubyObject,
+      RubyBasicObject and passing them to DynamicScope via Block, BlockBody,
+      IRBlockBody, and InterpretedIRBlockBody.
+    
+      The algorithm also relies on annotation of static scopes with the
+      IR scope type. The other bulk of this patch is in setting up those
+      annotations on IR static scopes.
+    
+    * The algorithm itself is in ir/runtime/IRRuntimeHelpers.java
+      - findInstanceMethodContainer(..)
+    
+      It is easy to split this up into static/dynamic since there are
+      scenarios where the container is statically determined. But, there
+      is no real benefit that we foresee from the static resolution
+      scenarios, and the algorithm is simpler the way it is currently
+      coded up.
+    
+    * This passes all MRI tests and Rubyspecs plus other contrived
+      tests (they need cleaning up -- will probably add them in a later
+      patch).
+
+commit 28588ed678aa94b85a71cf41d555c00fbf76dff0
+Merge: 02eb2f4 1d03c28
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jun 23 14:16:24 2014 -0500
+
+    Merge remote-tracking branch 'origin/master' into new_transcoder
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/RubyBasicObject.java
+    	core/src/main/java/org/jruby/RubyIO.java
+
+commit 9463e6cbab92f69eb85514774c95500a92e1116d
+Author: Christian Meier <m.kristian@web.de>
+Date:   Mon Jun 23 14:24:09 2014 +0100
+
+    Revert "GH #1758: Don't clobber self while setting up block for evals."
+    
+    This reverts commit d29b5ba01418cfa0a92aab34c958de5115907737.
+
+commit d29b5ba01418cfa0a92aab34c958de5115907737
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Sat Jun 21 17:02:22 2014 -0500
+
+    GH #1758: Don't clobber self while setting up block for evals.
+    
+    * Related: see commit 901b47a664f31cfd96ccd938c68f188d01397495
+    * Added a spec to prevent regressions.
+
+commit a8c5cfe344b1aa65e135bd0fc0e2e16ad91ec453
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Jun 9 17:09:05 2014 -0500
+
+    More old interpreter removal
+
+commit 7621334c9b4bef55cc1ac326dcc8d13ce8c36a56
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Jun 9 09:40:27 2014 -0500
+
+    Start removing old interpreter
+
+commit 11281db562d4bd3aa974ac863f47236102c9d12b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jun 4 21:37:55 2014 -0500
+
+    Numerous fixes to get CI specs 100% again.
+    
+    * OpenFile needs to register as finalizable to flush on exit
+    * Kernel#p needed some port cleanup
+    * String#gsub's logic needed port cleanup
+    * Removed passing tags for String#inspect and String#scrub.
+
+commit 239a6bfa4f5a38b379983c864e476855faea4a26
+Merge: fda9e60 ea1d6ff
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed May 21 10:18:48 2014 -0500
+
+    Merge remote-tracking branch 'origin/master' into new_transcoder
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/RubyFile.java
+    	core/src/main/java/org/jruby/RubyIO.java
+
+commit 78f196d80559e5927c24ce8cf146330399f6f039
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon May 19 19:37:16 2014 -0500
+
+    Working through more logic... sysopen, seek, reopen, init_copy.
+
+commit 1c09ad7a3d65189776c13de9c6cd6a6aebbf5fa8
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Tue May 13 19:10:26 2014 -0500
+
+    ISSUE 1601: save/restore $! properly in the runtime
+    
+    * Eliminates one more rubyspec error -- now down to to one
+      failure before rubyspec run is green in IR mode.
+    
+    * This also fixes the error with "bundle exec rake" with the
+      gem "analytics-ruby" line in Gemfile in IR mode (reported
+      by nirvdrum on IRC).
+    
+    * This still requires another set of eyes going over all the
+      files and see if other instances have been missed.
+
+commit f97bf3082cd0f6966f9395bf1b829242d8122d4a
+Merge: f377d1c 86f0346
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Apr 16 15:27:46 2014 -0500
+
+    Merge
+
+commit 8af2cffdbf3bb4e19c57ee60ed9e1a02df3d6f1e
+Author: Daniel Marcotte <dmarcotte@gmail.com>
+Date:   Sat Apr 12 14:13:32 2014 -0700
+
+    Fix compare_to for to_java'ed Ruby objects
+    
+    Flip incorrect nil check which was resulting in #compare_to always
+    returning 0 for many to_java'ed Ruby objects (anything not internally
+    represented by a class which overrides RubyBasicObject#compareTo)
+
+commit 93c81b3a3c6c0e2dd071b0a35bb74145797b8156
+Merge: 92d5552 bfb2683
+Author: Thomas E Enebo <tom.enebo@gmail.com>
+Date:   Mon Apr 14 09:57:10 2014 -0500
+
+    Merge pull request #1626 from dmarcotte/test-compare-to
+    
+    Fix compare_to for to_java'ed Ruby objects
+
+commit 92d55525d1d20959a8b860fe8ed96665cf66bf6d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Apr 13 14:14:36 2014 -0500
+
+    Avoid constructing a Fixnum and a String for sort logic.
+
+commit bfb26837120cb9e18f9fca88428de822f86b9653
+Author: Daniel Marcotte <dmarcotte@gmail.com>
+Date:   Sat Apr 12 14:13:32 2014 -0700
+
+    Fix compare_to for to_java'ed Ruby objects
+    
+    Flip incorrect nil check which was resulting in #compare_to always
+    returning 0 for many to_java'ed Ruby objects (anything not internally
+    represented by a class which overrides RubyBasicObject#compareTo)
+
+commit 2e4cddee033cea9e8b772659bb13207d1b2755e5
+Author: Edward Anderson <nilbus@nilbus.com>
+Date:   Mon Mar 24 15:16:06 2014 -0400
+
+    Use common spelling of falsey
+    
+    Metric: rspec, google search result count for: `ruby "falsey"` and `ruby "falsy"`
+
+commit 6d7b1debef7ba102c91b4d416ced0d1e75da406f
+Author: Edward Anderson <nilbus@nilbus.com>
+Date:   Sat Mar 22 12:02:54 2014 -0400
+
+    Clarify documentation for isTrue, isFalse
+    
+    `BasicRubyObject.isTrue` and `.isFalse` correspond to whether the RubyObject is
+    truthy or falsy, not just whether or not it is an instance of TrueClass or
+    FalseClass. This documentation change makes that clear.
+    
+    I confirmed this by calling `isTrue` on a RubyString, which returned true.
+
+commit e9aa98fb9d27638cc8c169211bfd184c15ae2456
+Author: Edward Anderson <nilbus@nilbus.com>
+Date:   Mon Mar 24 15:16:06 2014 -0400
+
+    Use common spelling of falsey
+    
+    Metric: rspec, google search result count for: `ruby "falsey"` and `ruby "falsy"`
+
+commit ba01bc244d5ca8adb2eb994b837b14232fa7e04c
+Author: Edward Anderson <nilbus@nilbus.com>
+Date:   Sat Mar 22 12:02:54 2014 -0400
+
+    Clarify documentation for isTrue, isFalse
+    
+    `BasicRubyObject.isTrue` and `.isFalse` correspond to whether the RubyObject is
+    truthy or falsy, not just whether or not it is an instance of TrueClass or
+    FalseClass. This documentation change makes that clear.
+    
+    I confirmed this by calling `isTrue` on a RubyString, which returned true.
+
+commit 91277a0b220d47821647c670ab40eaa66ff246a8
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Nov 7 12:39:33 2013 -0600
+
+    Remove Cext support.
+
+commit 0c7100e6c17a9a9879f0f94128f1b9e9d19770ea
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Oct 30 18:22:35 2013 -0500
+
+    Remove "untrust", since it is being deprecated in 2.1
+    
+    See ruby/ruby@1f828497d1e8df2b7b68ac2a093ab4439585d88a
+
+commit d87b1e769fee63ba233137d7d3a1fac13e3d8fe8
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Oct 21 14:34:49 2013 -0500
+
+    Reverting #1143. This has too many changes in one commit.  I will add some comments in #1143
+
+commit 7ad21e106453547cf8caa9e74f532db2bd45b833
+Author: Daniel Marcotte <dmarcotte@gmail.com>
+Date:   Sun Oct 20 14:39:59 2013 -0700
+
+    Improve consistency/correctness of arg handling
+    
+    Employ RubyProc.prepareArgs in a very central place, improving
+    consistency of how args are handled between both yield and block.call.
+    
+    This involves migrating many calls to pass an IRubyObject[] of args
+    rather than prematurely wrapping that array in a RubyArray (which makes
+    it impossible for deeper calls to determine if they have one Array arg,
+    or multiple args).
+    
+    As an added side effect, JavaInternalBlockBody now gets correct arg
+    treatment, and can be used to get RubyEnumerable cleaner and fully
+    rubyspec-compliant.
+
+commit 52dee103f83e2f37953d675b60284634f333b5bf
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Oct 10 09:13:48 2013 -0500
+
+    De-version Nil
+
+commit eac9749d07948baa1f9f76767bac15b27ba201a1
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Oct 7 16:56:47 2013 -0500
+
+    De-version Object+BasicObject
+
+commit 697e6895affa646849a685ed58f6f84795c853aa
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Oct 4 23:37:52 2013 -0500
+
+    Eliminate calls to Ruby.is1_8 and is1_9.
+
+commit d1f89e004fdc78dff75407c82123e6c9e8b406bb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Sep 12 18:48:16 2013 +0200
+
+    Make ClassIndex into an enum, to prevent issues like #1004.
+
+commit 1ea388df6618a4df2c592c9938e23345ddbfb496
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 24 18:04:35 2013 -0500
+
+    Decode #send symbols the same way as regular symbols.
+    
+    Symbols must be decoded using raw bytes, so that we can match
+    MRI logic. In MRI, symbols are unique to their raw bytes rather
+    than their logic character content, which allows differently-
+    encoded Strings to map to different Symbol objects, and those
+    Symbol objects can preserve their original encoding.
+    
+    decoding of the bytes, which caused multibyte strings to map to
+    a different Symbol object via send than via other mechanisms like
+    String#to_sym or parsing. I attempted to make all Symbols decode
+    properly, but this breaks the above-mentioned MRI compatibility.
+    
+    This change modifies all #send paths to decode incoming strings
+    the same way as symbols in the rest of the system, so they will
+    dispatch to the same-encoded symbolic name.
+    
+    Note: This does mean that multi-byte identifiers throughout the
+    system are often represented as their raw byte form rather than
+    their proper encoded form, and the resulting Java String will
+    sometimes be unintelligible. Until we can find a way to support
+    real decoded symbols and maintain compatibility with MRI's raw
+    byte representation of symbols, we can do nothing to prevent this.
+    
+    Fixes #736 and potentially other symbol-related issues.
+
+commit 28c6fbc4e883bc1c9e9242d1da1cb2b785f55339
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 3 12:46:45 2013 -0500
+
+    Move to @mkristian's proposed layout, with some modifications.

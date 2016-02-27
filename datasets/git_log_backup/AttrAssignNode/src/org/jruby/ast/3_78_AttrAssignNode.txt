@@ -1,0 +1,234 @@
+commit bb98e4b8decffc0361b70a6c99c1ade5fed0abcb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Mar 28 10:02:33 2013 +0000
+
+    Move RuntimeHelpers to org.jruby.runtime.Helpers.
+
+commit 61678ac1a2514a9932276f8d527816a5980a94b3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Feb 25 20:41:40 2013 +1100
+
+    Fix more references to CPL.
+    
+    The phrase "Common Public License" was split across two lines in
+    our default header, which caused it to be missed during earlier
+    search/replace. Also, we did not replace the CPL URL in the
+    header with the EPL URL.
+
+commit 330fef3b0fc18af477ccea19bd278669667f31bb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 12 14:49:29 2013 -0600
+
+    Switch JRuby's CPL license to EPL.
+    
+    Governance of the CPL license was moved to the Eclipse Foundation
+    at some point in the past, and Eclipse blessed the EPL (Eclipse
+    Public License v1.0) as the successor to CPL. Because the CPL
+    contains a clause allowing transparent upgrades to future blessed
+    successor licenses, we can make the move to EPL without
+    re-contacting past contributors.
+    
+    The change in going from CPL to EPL largely just removes some
+    punitive language that apparently made many companies nervous. All
+    other language in the license remains identical.
+    
+    Several documents about Eclipse's move from CPL to EPL are here:
+    
+    http://www.eclipse.org/legal/cpl2epl/
+    
+    Note that Eclipse's move came before the blessing of EPL as the
+    upgrade path for CPL, so they had to do a bit more legal juggling.
+    With Eclipse now the administrator of CPL and with their blessing
+    of EPL as the upgrade path for CPL, all we need to do is make the
+    move.
+
+commit b03d0bc89aefca13deaff7a568e5d9118a9ca2a8
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Sep 17 01:42:22 2012 -0700
+
+    Performance improvements for defined? logic.
+    
+    * Return a cached, frozen string rather than recreating each time.
+    * Cache variable accessors for ivar defined? checks.
+
+commit 1d06ff5a2fe82955a0e80928ddafb7f9985a7d72
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon May 16 00:26:48 2011 -0500
+
+    Improve perf of defined? by avoiding the constant encoding of Java String + ByteList construction + Ruby String.
+
+commit 38539306c47caec741243f5e15be0e345757f069
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Dec 28 01:52:13 2008 +0000
+
+    Bombs away! Eliinate nodeId field from Node and add a method to all nodes of interest to return the value instead. Probably a little slower, but we're moving away from using NodeType on critical path code and the memory savings are pretty substantial (4-8 bytes per node).
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8485 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 24befe5cf0587885f08f7dc82217f141cc500550
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Dec 18 06:51:54 2008 +0000
+
+    House cleaning! Delete a bunch of unused and/or deprecated classes of strange and wonderful origins, eliminate all deprecated Callback-related code, reduce environment lookup to a simple System.getenv call, kill off the last of the old stackless interpreter's "Instruction" interface, and other miscellaneous cleanup.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8395 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 886c42b9f8e2a6f686112b60f25727f2ede2e198
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Sep 23 18:15:51 2008 +0000
+
+    First round of interpreter cleanups, from A up through L.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7766 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d5959fa23b776036a47c955356e09692cb9b1d69
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Sep 8 08:12:47 2008 +0000
+
+    Refactor InlineCachingCallSite into abstract CachingCallSite and Normal/Functional/Variable subtypes.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7656 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 323570a26bbac1eb350e04e87bf4b50530a784c3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Sep 8 08:12:12 2008 +0000
+
+    No more half-complete projects: propagate caller sig changes in CallSite. Stop the madness!
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7655 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 304b540ba200c6b000223af4f25a263583e84933
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Aug 10 02:45:03 2008 +0000
+
+    * Eliminate visibility checking for almost all fcall and vcall paths.
+    * Outline some method_missing logic
+    * Start adding some specific-arity paths for method_missing; still too much boxing, but the code isn't in normal call paths now.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7417 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit e72ca1a779973651923c718589f36379ac01280f
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Mon Jul 7 23:41:03 2008 +0000
+
+    Miscellaneous crap: rubyobject.getRuntime to TC.getRuntime; @overrides; searchMethod change
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7122 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 064eb7f1c5889a52e2949d53d9849ba0652ad00e
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Thu Jul 3 16:46:24 2008 +0000
+
+    [interp] Move Definition logic into node
+    [interp] Make CallNode do one less searchMethod per definition
+    [interp] Use specialized getEnclosingModule (bi-morphic between colon2 and colon3)
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7096 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 27438e0e6117ae74e0838c19e4af058b790cb48c
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Wed Jun 18 19:16:13 2008 +0000
+
+    [interp] Unboxed attrassign node (2-3x speedup)
+    assign is now based on same mechanism as interpret
+    FCallOneArgNode has slower ASTInterpreter.getBlock instead of this.getBlock
+    converted consumers of ASTInterpreter.eval to Node.interpret
+    converted all consumers of ASTAssignment.assign to Node.assign
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6993 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit dbcdcdbac451af5838c377b299289b2a7b94d9e2
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Thu Jun 12 21:28:49 2008 +0000
+
+    Tom Bomb! New Interpreter landing
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6946 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 9266993bf06b30bc9a642175c88aa70c63de9667
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Wed Jun 4 21:41:37 2008 +0000
+
+    Add callsite adapter(s) for attrassignnode
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6894 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 35eb534bae9bad04a2693301f5fc1612944d444d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jan 25 09:05:44 2008 +0000
+
+    Remaining fixes for JRUBY-2033, poor performance for attr assignment. Extends "fast" specific-arity attr assignment to all cases.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5725 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 16e5550655d971eca1eeea0a2fe8794b86928b97
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Thu Oct 25 18:14:24 2007 +0000
+
+    Lexer jumbo patch.  Speeds up general parsing 10-15%.  Cold parses are about 30% faster.   Code has been refactored to the point that additional optimizations can be considered (like bytelist identifiers for alloc-less identifiers; same for uninterpolated string nodes).
+    
+    intern'ing of identifiers now happen in lexer rather than being smattered through AST
+    Reader -> InputStream for LexerSource
+    A new ByteList LexerSource for evals
+    
+    Additional bugs fixed:
+    JRUBY-1408: JRuby crashes with error: can't find string "EOF" anywhere before EOF (SyntaxError)
+    JRUBY-1443: Wrong position information for a CallNode with parentheses
+    JRUBY-1435: YieldNodes sometimes have wrong position information
+    JRUBY-1416: eval of a "proc" with setting the line number for something lower than 1 to adjust the line number causes "java.lang.ArrayIndexOutOfBoundsException: -1 (NativeException)"
+    JRUBY-1432: NFE from RubyYaccLexer.yylex
+    
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4731 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 47f0d75fbf8f6519ed3527d077e724f0b9264552
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Wed Aug 29 21:20:40 2007 +0000
+
+    NodeTypes now and enum called NodeType
+    Various warning removal
+    Minor Block refactoring
+    More boilerplate fixing
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4233 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit df1ae61d89ae343bb981d2727d29b7379371a310
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Tue Aug 28 20:43:52 2007 +0000
+
+    A couple more callAdapter additions to nodes that can support them
+    Remove annoying generics warnings that IDEs like to give for un typed collections
+    Change boilerplate in ast so that netbeans can have them closed by default (and javadocs will not contain them)
+    Remove last vestiges of serialization from AST
+    MethodIndex moved into DefaultAdapter
+    Smaller smattering and things I cannot remember
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4214 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 19129d0d0d6db68a9994ff1fae95ea3df4499bcd
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Mon Jul 16 19:37:06 2007 +0000
+
+    JRUBY-1205: String as condition of if be parsed as MatchNode
+    
+    Remove serializable from asts since we no long serialize them
+    Remove some unused imports
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4034 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 8f98f8d2437ffaad45cdb379daf49bcd84f5f728
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Tue Jan 2 19:01:08 2007 +0000
+
+    JRUBY-387: assignment problem!
+    Move some parser visitor into small switch loops
+    In some cases we would re-create CallNodes during parse...No longer
+    Compiler stuff I added is wrong for attrasgnnode (it still emulates callnode)
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2646 961051c9-f516-0410-bf72-c9f7e237a7b7

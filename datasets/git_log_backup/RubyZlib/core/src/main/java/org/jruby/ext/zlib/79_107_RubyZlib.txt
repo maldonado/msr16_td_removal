@@ -1,0 +1,117 @@
+commit f29649f70f5e85c267fdbc18804439a484b4dec1
+Author: Chris Heald <cheald@gmail.com>
+Date:   Wed Nov 5 18:16:55 2014 -0700
+
+    Expose Zlib.deflate as a module function
+
+commit 30e38eac79f7c7e3a34ed384b0d65d3e57745926
+Merge: 4b8c034 41298a6
+Author: Christian Meier <m.kristian@web.de>
+Date:   Thu Jul 17 18:22:09 2014 +0100
+
+    Merge branch 'jruby-1_7'
+    
+    Conflicts:
+    	.travis.yml
+    	lib/ruby/1.9/date.rb
+    	maven/jruby-dist/pom.rb
+    	maven/jruby-dist/pom.xml
+    	maven/jruby-jars/Mavenfile
+    	maven/jruby-jars/pom.xml
+    	maven/jruby/src/it/jetty/pom.xml
+    	maven/jruby/src/it/tomcat/pom.rb
+    	maven/jruby/src/it/tomcat/pom.xml
+
+commit a8a35402d8892bbbdd20e3d69592656319b1b6d9
+Author: Gustav Munkby <grddev@gmail.com>
+Date:   Fri Jul 11 13:27:59 2014 +0200
+
+    Use CRC-32 table from JZlib
+
+commit b378bf5d92cf2d08128f083328cdefb4cb51418d
+Author: Gustav Munkby <grddev@gmail.com>
+Date:   Fri Jul 11 11:29:52 2014 +0200
+
+    Inline CRC32Ext
+    
+    Compared to the inlined version of Adler32, this one unfortunately still
+    relies on reflection for adjusting the starting checksum. This is due
+    to the fact that crc32_combine is much more expensive, and completely
+    dominates the runtime up to quite long byte lists.
+    
+    However, in the event that the reflection trick stops working, we now
+    fall back to the slower approach, ensuring compatibility with an
+    unlikely future Java release where the internal CRC32 field name is
+    changed.
+    
+    Compared to CRC32Ext, however, neither the reflection nor the slow path
+    is used when the starting checksum matches the default.
+
+commit 089ff210e62e9a0001d1621b75aef8fb2eb9e009
+Author: Gustav Munkby <grddev@gmail.com>
+Date:   Fri Jul 11 11:18:49 2014 +0200
+
+    Inline Adler32Ext
+    
+    As an improvement, the new implementation does not rely on reflection
+    to adjust for a starting checksum. Instead, it uses adler32_combine, as
+    that computation is reasonably cheap anyhow.
+    
+    Compared to Adler32Ext, the adjustment is also only performed when a
+    starting checksum other than the default is provided.
+
+commit 049de281a5248e9a897c3b2fe2f99eb8517299be
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Oct 30 22:57:13 2013 -0500
+
+    De-version zlib library
+
+commit 817aa2cfac4e931bd3bfdea3b82cab97c59d929a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Oct 10 00:36:45 2013 -0500
+
+    Rework some GZipWriter construction logic to fix #1088
+    
+    * Fix open->newInstance sequence so initialize has the right arity
+    * Process level and strategy on the way in
+    * Pass level to jzlib
+    * Peel off opt hash correctly
+    
+    Still to do:
+    
+    * Pass strategy to jzlib
+    * Match MRI call args for deflateInit2
+    * Other tweakery to match MRI logic.
+    
+    See also #1108
+
+commit 32a2f33dc80818b497e20b73a8551094c38106a8
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Oct 10 00:36:45 2013 -0500
+
+    Rework some GZipWriter construction logic to fix #1088
+    
+    * Fix open->newInstance sequence so initialize has the right arity
+    * Process level and strategy on the way in
+    * Pass level to jzlib
+    * Peel off opt hash correctly
+    
+    Still to do:
+    
+    * Pass strategy to jzlib
+    * Match MRI call args for deflateInit2
+    * Other tweakery to match MRI logic.
+    
+    See also #1108
+
+commit 697e6895affa646849a685ed58f6f84795c853aa
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Oct 4 23:37:52 2013 -0500
+
+    Eliminate calls to Ruby.is1_8 and is1_9.
+
+commit 28c6fbc4e883bc1c9e9242d1da1cb2b785f55339
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 3 12:46:45 2013 -0500
+
+    Move to @mkristian's proposed layout, with some modifications.

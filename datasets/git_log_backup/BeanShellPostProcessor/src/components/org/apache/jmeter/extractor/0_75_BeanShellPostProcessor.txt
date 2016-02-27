@@ -1,0 +1,173 @@
+commit 7810d409aa4c8aafb2b1c9cf40af3f1f9ce89708
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Nov 27 00:11:55 2012 +0000
+
+    Move to Java 6
+    add @Override for interface implementations
+    Bugzilla Id: 54199
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1413954 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6572ccd24deea5e6946001872a193a88b61574cd
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Thu Oct 13 17:23:58 2011 +0000
+
+    Bug 51876 - Functionnality to search in Samplers TreeView
+    
+    Implemented search in AbstractTestElement and refactored already implemented subclasses to use ancestor method.
+    Added search features on additionnal configuration elements to:
+    - BeanShellTestElement
+    - AbstractScopedElement
+    - CSVDataSet
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1182997 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 30860c40ecf6f3bf7ef35ce5579ed94b7a15abf5
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Tue Oct 11 20:01:55 2011 +0000
+
+    Bug 51876 - Functionnality to search in Samplers TreeView
+    
+    Factored in AbstractTestElement method testField.
+    Implemented search for BeanShellPostProcessor, RegexExtractor, XPathExtractor
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1182059 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c7f390d778061e0bd2040c1951dd2fb0e9fc0a41
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Jan 7 03:30:04 2011 +0000
+
+    All BeansShell test elements now have the script variables "prev" and "Label" defined.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1056181 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e3604deedf5949293e1410b3eba2b2175be46d70
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu Jan 28 23:57:47 2010 +0000
+
+    Don't process null samples and don't report incorrect message if BSH not found
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@904312 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1f8a709ef1717e0df7392e5b37c0095d3fb5a6c9
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Aug 14 19:10:55 2009 +0000
+
+    Add @Override and @Deprecated annotations
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@804325 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 95ad11b6e77eefdbcc36f9cc93bacb586a1cdddd
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Jul 6 21:47:12 2008 +0000
+
+    Detab
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@674351 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ce29a577ac29d22bd7a66680191641a576bc3f1d
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Feb 5 01:55:02 2008 +0000
+
+    Add some missing svn:eol-style native properties
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@618508 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e4a71daea7d067d2aefb2a34410ebe73d31be5fb
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Wed Sep 19 16:29:45 2007 +0000
+
+    Add support for Parameters and scriptfile to BeanShell TestBean Gui elements
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@577345 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f2119f089716e1523267cd115ba7bd97b8fd0412
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Jun 22 18:15:33 2007 +0000
+
+    Bug 42660 - BeanShell* : add property to specify if "testStarted" etc methods should be called
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-2@549919 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c77fa950c19fef057d83ac34ca8ab7b0bd0673e0
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Jun 10 21:55:11 2007 +0000
+
+    Simplify BeanShell init and logging
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-2@545952 13f79535-47bb-0310-9956-ffa450edef68
+
+commit bae3b1d72e764b1a76e03c2a4b381d570047bfea
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Jun 10 21:26:49 2007 +0000
+
+    Suppress default logging of failed listener invocations
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-2@545946 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 92cd12785db462ac7aab58e93cfe28a1e78297bc
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Jun 9 21:51:13 2007 +0000
+
+    Add TestListener and ThreadListener support to BeanShell test elements
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-2@545799 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e416bae98d32b44b69416b21454f73e8afe88903
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Jan 7 17:28:00 2007 +0000
+
+    Update license (remove copyright)
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-2@493777 13f79535-47bb-0310-9956-ffa450edef68
+
+commit dac133afe3a481175a94cb5d1648ad28c75549bd
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Dec 3 20:05:14 2006 +0000
+
+    Better behaviour when BeanShell jar is missing
+    Update serialVerId
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-2@481872 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 579cc180c8264f705ba91399b19e8d84863ff4c4
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Dec 3 20:02:45 2006 +0000
+
+    Better behaviour when BeanShell jar is missing
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-2@481871 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 990727a0141394cd5dd801ecb615987119a69f5c
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Dec 3 19:54:36 2006 +0000
+
+    Don't ignore samples with zero-length data
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-2@481868 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 72efb762502e8ffbc7bff9035610a87560823935
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Wed Apr 5 19:09:46 2006 +0000
+
+    Ensure the transient object is recreated by the server
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-1@391725 13f79535-47bb-0310-9956-ffa450edef68
+
+commit fe603eec9c2f8e60731beb53e796fe6926627b88
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Mar 31 23:04:52 2006 +0000
+
+    ResponseData can never be null; use length instead
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-1@390535 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6562a9aada4508558613ae391646f646d9d3e8b3
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Mar 14 18:57:55 2006 +0000
+
+    Rename BSH test elements. Include basic process() code.
+    TODO: add file handling and script arguments
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-1@385855 13f79535-47bb-0310-9956-ffa450edef68

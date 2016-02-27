@@ -1,0 +1,838 @@
+commit cb20f508808afb48e73cab035f8de3661f294caf
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Sun Dec 15 03:47:15 2013 +0000
+
+    removing the restricted attributes from what gets fed to macrodefs, Bugzilla Report 55885
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1550999 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ba19f6fab911784a9ef6f0a154795b52988a0b2b
+Author: Jesse N. Glick <jglick@apache.org>
+Date:   Tue May 21 11:44:39 2013 +0000
+
+    #43362 follow-ups: missing/incorrect @since; minor doc improvements and corrections.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1484767 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 46c940785aaa80d86df0bd49cd11bd2035d557bf
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Sun May 5 23:49:49 2013 +0000
+
+    adding if and unless namespaces allowing to put conditions on all tasks and nested elements. Code written by Peter Reilly. Bugzilla PR 43362.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1479422 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3d706ab8188a674936880b6f4530b0cf3991758b
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Mon Aug 20 17:49:13 2012 +0000
+
+    java 5 updates
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1375137 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e5f3393251f3b7b8b8df1e5300559828bc73d8f0
+Author: Nicolas Lalevee <hibou@apache.org>
+Date:   Mon Jul 30 21:11:17 2012 +0000
+
+    Allow Object to be injected as attribute of tasks
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1367303 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 84abb27b2f8c970557388bb60f09f1c3409d8f75
+Author: Jesse N. Glick <jglick@apache.org>
+Date:   Thu Feb 23 22:15:43 2012 +0000
+
+    #52621: restore default behavior from #42046 for compatibility, but make it configurable.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1292985 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 7d1ecbc1bb5db282ffbf95b6589eb49900ad163d
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Tue Nov 22 12:47:40 2011 +0000
+
+    don't expand properties twice in attributes of macrodef'ed tasks
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@1204961 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ec26cc419a571b4c74e126bd26a3423b08f534e6
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Mon Apr 12 18:34:56 2010 +0000
+
+    add serialVersionUID
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@933352 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1038e813e3eccdf970c5a2a82d8b0286370f4270
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Mon Apr 12 18:24:10 2010 +0000
+
+    Now that we are on Java 1.4, track RuntimeConfigurable attributes using
+    a LinkedHashMap instead of List/Map combination.  Priority of 'refid' preserved;
+    bug whereby setting an attribute multiple times would add it multiple times
+    to the attribute names list is also corrected.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@933350 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c767541c7d35c9eef55bf65e686373b02b71af2a
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Feb 18 11:00:58 2010 +0000
+
+    As Jesse points out, equalsIgnoreCase is not locale-sensitive
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@911324 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 58f0bb04db9c5c8a858d7a3be7719608f25f2f49
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Feb 17 12:58:50 2010 +0000
+
+    if user input is compared to fixed strings in a case insensitive manner we should use the default locale.  Use Locale.ENGLISH consistently
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@910955 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 028ba47c8246f510012ef061d879d05240b90c71
+Author: Jesse N. Glick <jglick@apache.org>
+Date:   Wed Aug 26 18:48:21 2009 +0000
+
+    Some miscellaneous updates given that JDK 1.4 can be assumed.
+    The biggest outstanding JDK 1.3 code is in Locator but I am scared to touch it.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@808156 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1e599c6651b3baafbf807462fe32a975b416f1d1
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Sun Jul 8 17:23:25 2007 +0000
+
+    BZ 42736: PropertyHelper API changes
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@554394 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ef789dfa9beeacb682048b47977f21819bbb1e78
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Tue Oct 3 21:35:06 2006 +0000
+
+    Always handle refid first.
+    Refid normally cannot be used with other
+    attributes and some types check for this.
+    The code is broken in a number of places -
+    if refid is not set first. To fix this,
+    runtimeconfigurable will now always process
+    refid first.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@452635 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d2cdd21fe5e70186b972633f590d96937e2f059a
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Wed Sep 27 22:27:55 2006 +0000
+
+    Bugzilla 40621: fix ordering of add and addconfigured
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@450605 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e028c281003e4139ab97bdef658acdc260b4c820
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Wed Sep 20 22:38:11 2006 +0000
+
+    Performance:
+      if a task does not have an id, do not bother
+      to replace the unknownelement in the tasks list of the target
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@448382 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 2e897819a83981a1f4de2e1cc72e33f080fcf573
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Sep 1 18:49:27 2006 +0000
+
+    copy2license.pl
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@439418 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 7eb22e8cdc4c161dcf8e89d40a8e072930db5d8f
+Author: Jacobus Martinus Kruithof <jkf@apache.org>
+Date:   Fri Apr 21 21:47:06 2006 +0000
+
+    indicated when methods/classes became deprecated, as to give us the possibility to remove deprecated methods in the future.
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@396012 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6ca846600896d24b4f9962fd85d579e8df8f8283
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Fri Jan 7 21:57:00 2005 +0000
+
+    Add clone task.
+    PR: 32631
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277320 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3e919cffbef3ed88a7920a9e79c1b355524b3403
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Thu Dec 16 21:10:32 2004 +0000
+
+    LOC
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277229 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 49fd65528ee0fa09d3695f8d3e48252f2f0e5e8e
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Thu Dec 16 17:43:40 2004 +0000
+
+    Small refactoring
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277226 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 960cd2a7117d0fa96b4247c3081da7b5363ba0d8
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Wed Dec 15 23:44:06 2004 +0000
+
+    More javadoc work and LOC bumming.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277215 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 49eb4db50c7b2ef6a3b658675ffcdb3cea4a5d33
+Author: Matthew Jason Benson <mbenson@apache.org>
+Date:   Mon Dec 13 19:12:36 2004 +0000
+
+    Remove unnecessary empty Hashtable instantiations,
+    LOC bumming and Javadoc fixes.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@277191 13f79535-47bb-0310-9956-ffa450edef68
+
+commit fc4482c26037181da153088678dd2b4853eb9293
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Mon Sep 27 09:03:17 2004 +0000
+
+    remove modifying exception code for unknown<attribute/element>exception
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276891 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d4ebf04094c0866a1d3608f45a3ca80d46ad2702
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Fri Sep 24 08:45:50 2004 +0000
+
+    Try to get the correct task/type name for an unsupported attribute/element
+    exception thrown by IntrospectionHelper
+    PR: 31389 and 29499
+    Reported by: Tamas Szeredi and Jesse Glick
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276882 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e0b5c60458d06a2f2bc4509311f2f88e807a62ac
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Sat Jul 17 16:31:40 2004 +0000
+
+    Javadoc fixes for RuntimeConfigurable, Project, Location
+    PR: 30160
+    Submitted by: Jesse Glick (jglick at netbeans dot org)
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276709 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 476678d4a660bd6077ae4a8389cc29f42fbde0c9
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Mon May 24 15:09:57 2004 +0000
+
+    DynamicConfiguratorNS
+    Initial code for dynamicConfiguratorNS.
+    Change from patch the qualified name is given and
+    not the prefix.
+    PR: 28426
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276473 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c885f568369156a62e3ccb5b4b93b73b9d054443
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Tue Mar 9 16:49:09 2004 +0000
+
+    remove authors from files
+    PR: 27177
+    Obtained from: J.M. (Martijn) Kruithof
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276208 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 278781dcd669412e5e35cc95d8a96e0b2a278f50
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Mon Feb 9 21:05:47 2004 +0000
+
+    Copyright owner is The Apache Software Foundation
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276065 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 66555ca10d24bbfc55e710b9d65f809cfe713dab
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Wed Feb 4 20:38:09 2004 +0000
+
+    Remove trailing spaces in all java files
+    in order to make checkstyle happy
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276017 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ca1513552f7af7fc19de490fbe2d88adb6c993ad
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Tue Feb 3 22:44:50 2004 +0000
+
+    Switch to Apache Software License 2.0
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@276010 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 47fa568d321d64f801f7108e842985b627608431
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Thu Nov 6 09:04:08 2003 +0000
+
+    fixes for presetdef's handling of attributes
+    PR: 24411
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@275617 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 74f58bf0f81de6bc03df6bc1d5315bef92d8f0e4
+Author: Antoine Levy-Lambert <antoine@apache.org>
+Date:   Fri Sep 12 20:56:46 2003 +0000
+
+    Typos
+    Submitted by: Larry Shatzer (larry dot shatzer at servent dot com)
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@275232 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 9434671efa81b38a4ebc571a5ea531375b541758
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Wed Aug 13 14:46:15 2003 +0000
+
+    removing enum variable
+    PR: 22345
+    Obtained from:
+    Submitted by:
+    Reviewed by:
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@275074 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ca5799fd8c1780abcc25f63745faf95bd2cdb06a
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Wed Aug 13 13:18:54 2003 +0000
+
+    Add ns support
+    Also split Definer.java in a base class (DefBase) to allow
+    it to be used for other defining tasks
+    Also add AntlibInterface to allow antlib to set uri and
+    classloader for other tasks/types that Definer.
+    
+    Bugzilla: 19897
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@275064 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 9dd757251f95ce453320bc94e9bd3cd462acd315
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Fri Jul 25 08:37:50 2003 +0000
+
+    checkstyle
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274940 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 5460755b447223e93e926e11a08e4df4f0e0ddb5
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Wed Jul 23 12:06:04 2003 +0000
+
+    This commit implements:
+        - addConfigured(Type) to introspection rules
+        - ant-type magic polymorhic attribute
+        - allow types that have Project as a constructor to
+          be used in addName(Type) and addConfiguredName(Type) methods
+        - allow addName and addConfiguredName methods to have higher
+          presedence that createName() methods.
+    
+    PR: 19897
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274906 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1f71acf427e164e75bc4f90b1ddaecd51998709b
+Author: Conor MacNeill <conor@apache.org>
+Date:   Fri Jul 18 12:45:58 2003 +0000
+
+    Coding conventions
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274856 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 46c40044e121ccf6096148a2def4159a4887e405
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Jul 7 08:20:52 2003 +0000
+
+    Move EmptyEnumeration to CollectionUtils
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274781 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e580392c2d28c2a3530ebe0e1005bae0d45c5b8b
+Author: Conor MacNeill <conor@apache.org>
+Date:   Sun Jul 6 09:57:37 2003 +0000
+
+    More cleanup
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274776 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 481c5c51f381f28c27eeb44ea1acc2b87a4ff728
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Jul 4 08:52:44 2003 +0000
+
+    Indentation changes
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274760 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 348ff7bdea3d7ca9373a0bc64f2da194a97c2aa6
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Jul 4 08:44:50 2003 +0000
+
+    Reduce memory consumption by using lazy initialization.
+    Speed things up a little by using unsynchronized collections.
+    PR: 21296
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274758 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8701272b2418d74536d09b289f118d1833d42217
+Author: Peter Reilly <peterreilly@apache.org>
+Date:   Thu Jun 26 08:54:29 2003 +0000
+
+    Second patch from antlib update as described in
+    http://issues.apache.org/bugzilla/show_bug.cgi?id=19897
+    This patch
+       * unifies the type and task definitions into one table
+       * types and tasks are represented by a AntTypeDefinition object
+       * taskadapter has been generalized to a typeadapter
+       * <typedef/> has a number of new attributes:
+           - adapter
+           - adaptto
+           - onerror
+       * <taskdef/> html page updated to refer to <typedef/> page
+    
+    PR: 19897
+    Submitted by:	Peter Reilly
+    Reviewed by:
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274718 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b198322c41db0cb673217f89ab43cb179d98a54d
+Author: Conor MacNeill <conor@apache.org>
+Date:   Mon Jun 9 13:38:07 2003 +0000
+
+    Allow tasks to be defined on the fly using scripts
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274654 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c2e2310e718f046b21292a187713d838b4dd6249
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Apr 28 12:42:47 2003 +0000
+
+    Only tasks should be case-sensitive inside TaskContainers - simply the
+    code a little.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274527 13f79535-47bb-0310-9956-ffa450edef68
+
+commit adb971260c7328e1914b7716ac1691c52d2c88a5
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Apr 28 12:19:18 2003 +0000
+
+    Enable mixed-case task names inside task-containers while trying to
+    keep backwards compatibility for all other cases (all "normal" nested
+    element names get converted to lower case).
+    
+    PR: 19323
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274525 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a60251157378e7231a85b7e3d1e5cf972a646f78
+Author: Conor MacNeill <conor@apache.org>
+Date:   Mon Apr 14 11:58:04 2003 +0000
+
+    style fixes
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274441 13f79535-47bb-0310-9956-ffa450edef68
+
+commit bfad69862eaa347901bb7895a2bcc81fe274f67d
+Author: Conor MacNeill <conor@apache.org>
+Date:   Sun Apr 6 09:30:57 2003 +0000
+
+    Fix up handling of TaskContainer configuration.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274402 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1aca5cf03666b5bd7b1d17eb16e727338681d525
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Apr 4 13:51:12 2003 +0000
+
+    Avoid reusing StringBuffers to work around JDK 1.4.1 memory leak.
+    
+    I'm sure that my changes in most cases are of the paranoid type,
+    ResourceUtils and FixCRLF look as if they really had a chance of
+    running into trouble.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274397 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8d3002cf8ab1b9f87d38b0b4e5682d15ffb7002a
+Author: Conor MacNeill <conor@apache.org>
+Date:   Wed Apr 2 11:43:41 2003 +0000
+
+    Tweak the handling of config of tasks in task containers.
+    Tasks in task containers are not configured until they are used.
+    Other elements in Task containers (which is now supported by 1.6)
+    will be configured when the task container itself is configured.
+    
+    Remove override in Sequential as it is no longer necessary
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274370 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 41029abcb82602cab20a9e236260e03712196320
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Apr 2 06:24:34 2003 +0000
+
+    2003
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274368 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6540a295cd786c80c28c14f6c544aa1d64ab3778
+Author: Conor MacNeill <conor@apache.org>
+Date:   Tue Apr 1 11:25:26 2003 +0000
+
+    Small cleanup
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274355 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 24436a1c922162464396caca82dd88c9c04d6d6a
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Mar 7 11:23:16 2003 +0000
+
+    Remove email address from sources
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274203 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1dc8a079057e191ca4c158f36843c2c9e9f9be52
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Feb 10 14:15:00 2003 +0000
+
+    Remove Jakarta Project from license
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@274040 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8de9e2154d49bf4cdedd5e3841759f8d4c030546
+Author: Costin Manolache <costin@apache.org>
+Date:   Sun Dec 29 07:31:26 2002 +0000
+
+    Fix the CRLF failure.
+    
+    The test relies on the order of attributes ( cr set before eol ). Probably
+    other tasks are in the same situation.
+    
+    The original change tried to reduce the dependencies on SAX - we may
+    use DOM or direct API calls in future, and the code will become very
+    complex. I just used the same thing that SAX is using ( 2 Vectors to
+    preserve the order ). We could also pick one ( SAX2 attributes ) and use
+    it in all cases.
+    
+    PR:
+    Obtained from:
+    Submitted by:
+    Reviewed by:
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273725 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e9c9b00132450f5e9d68e521130571d938308f65
+Author: Costin Manolache <costin@apache.org>
+Date:   Sat Dec 28 21:25:43 2002 +0000
+
+    Call project.replaceProperties(). Probably should call PropertyHelper directly,
+    but Grant ( and others ) may extend project and override it.
+    
+    PR:
+    Obtained from:
+    Submitted by:
+    Reviewed by:
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273713 13f79535-47bb-0310-9956-ffa450edef68
+
+commit eed11060d56db6336cccec940722e8e972e110ed
+Author: Costin Manolache <costin@apache.org>
+Date:   Fri Dec 27 18:11:15 2002 +0000
+
+    A change in ProjectHelper2 - RC doesn't need to depend on SAX2.
+    The attributes are just stored in a Hashtable, you can construct the
+    UE/RC tree without using any SAX at all.
+    
+    I added @deprecated tags to the SAX1 attributes as well.
+    
+    Also added a (harmless - I hope ) Serializable interface to RC, and
+    transient to the fields that don't need to be serialized.
+    
+    PR:
+    Obtained from:
+    Submitted by:
+    Reviewed by:
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273704 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b345410bb2be9ca58d6482f7dd772f4d1747b77d
+Author: Costin Manolache <costin@apache.org>
+Date:   Fri Dec 13 21:55:45 2002 +0000
+
+    Add accessor for the text content.
+    
+    PR:
+    Obtained from:
+    Submitted by:
+    Reviewed by:
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273666 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 7f60f6397763a4da7afb05022b7374397a389e05
+Author: Conor MacNeill <conor@apache.org>
+Date:   Fri Dec 13 14:51:03 2002 +0000
+
+    addConfiguredXXX was not working for TaskAdpater wrapped classes
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273664 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 34bf2cc2188dc53e0a35c136f2abc49319637986
+Author: Costin Manolache <costin@apache.org>
+Date:   Fri Dec 13 00:47:59 2002 +0000
+
+    Added support for SAX2 attributes.
+    
+    This is merged from RuntimeConfigurable2 ( sorry for the indentation
+    changes ).
+    
+    PR:
+    Obtained from:
+    Submitted by:
+    Reviewed by:
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273654 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 89cec29e1da25659d137c27a8552523578aaa03e
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Jul 22 12:39:33 2002 +0000
+
+    fix should go into 1.5.1
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273145 13f79535-47bb-0310-9956-ffa450edef68
+
+commit aa07dd46111d63136bca8100a984722f36e36d41
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Jul 22 12:28:57 2002 +0000
+
+    Make task replacements recreate their child elements when they get redefined.
+    
+    PR: 10904
+    
+    This should also fix the Axis build failure Sam has reported.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@273144 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6bd8d6e938a45868902ecd1092858e8372933c7c
+Author: Magesh Umasankar <umagesh@apache.org>
+Date:   Sat Jun 22 23:38:38 2002 +0000
+
+    Merge changes made to 1.5 Beta2.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@272967 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 0c253dc762efa243956ee90970e13fae9aec4d2f
+Author: Conor MacNeill <conor@apache.org>
+Date:   Tue Apr 9 15:27:08 2002 +0000
+
+    Coding standard conformance
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@272320 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c3405caac549521de3ff36018beaeb07a0176251
+Author: Jon Skeet <jskeet@apache.org>
+Date:   Fri Mar 1 16:29:15 2002 +0000
+
+    JavaDoc changes.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@271641 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3fddc0bcfddb3f6226843481094795c89862bf5f
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Jan 10 11:21:21 2002 +0000
+
+    License police on documentation files:
+    
+    (1) Make sure all years in which a file has been modified are
+    listed.
+    
+    (2) Make sure the format is consistent, i.e. separate consecutive
+    years with a dash, not a comma.
+    
+    Also: the initial checkin into this CVS module was in 2000, not 1999.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270657 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 4f98ab89b6dbdd6bb5d3d38d7a3c751282dc2dea
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Fri Dec 14 11:15:42 2001 +0000
+
+    Fix taskdef testcase in a rather hacky way.  This one doesn't address
+    child elements of user defined tasks that override built-in tasks.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270141 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 17e5ca87217a81f888ded1b2d9dac971503ac796
+Author: Magesh Umasankar <umagesh@apache.org>
+Date:   Tue Nov 27 18:04:54 2001 +0000
+
+    Convert tabs to spaces...
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270031 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d17f3c4f2af31dd15b59bc9a2a42fdf2a6854c92
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed Oct 31 11:05:00 2001 +0000
+
+    Use locale independent methods to identify OS or match attributes and
+    elements in build files.
+    
+    PR: 4100
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269847 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f2bc3fe7c89755a2e53e79aaf636b4177fe8928d
+Author: Conor MacNeill <conor@apache.org>
+Date:   Wed Aug 1 11:41:15 2001 +0000
+
+    New Introspection capability. Methods which have the signature
+    addConfiguredXXX will be called for nested elements named XXX
+    but will be called only once the XXX object has been configured
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269430 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 9932ed799bd36ab3e9176ffe4e27cf32e2f04d12
+Author: glennm <glennm@unknown>
+Date:   Mon Jul 23 03:56:12 2001 +0000
+
+    Fix for id/refid data type bug.  Delays adding the
+    id to the list of references till runtime when the
+    data type is inside a target.  Without this change,
+    if multiple data types have the same id, only the
+    one that is last refered to in the file *and* is
+    configured at runtime (i.e. its target is executed)
+    will work properly.  Otherwise, you will end up
+    using an unconfigured data type.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269374 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 84b68cc9457b2353502494044aef647d00a3c614
+Author: glennm <glennm@unknown>
+Date:   Wed Jul 4 19:02:45 2001 +0000
+
+    Provide more descriptive error messages whenunknown attributes and elements are encountered in the build file.Bugzilla: 1722
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269269 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c31e31c52a1f624e72be505d788db9be42b87e5d
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Wed May 23 16:58:36 2001 +0000
+
+    Make usage of my email address consistent (probably going to change
+    home provider).
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@269046 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6c287080d460efa63e022407e88a04558b9fdbb6
+Author: Conor MacNeill <conor@apache.org>
+Date:   Wed Jan 3 14:18:52 2001 +0000
+
+    Make licence statements mention Ant in place of Tomcat
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268392 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ad48a0d3923fa8be67618640c8c2505084944d44
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Sep 21 07:19:50 2000 +0000
+
+    Make the handling of nested #PCDATA more predictable by not stripping
+    anything. The older version depended upon the parser (does it invoke
+    characters once per #PCDATA section or once per line).
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268024 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8c59db789549a81eb86b2d1161a9b8294da2da17
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Mon Sep 18 14:04:59 2000 +0000
+
+    Allow tasks to be added at runtime and only fail if they cannot be
+    found at runtime.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@268005 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6ecbe242189a8d7feba3d56c8ec89582e77b1b29
+Author: Stefan Bodewig <bodewig@apache.org>
+Date:   Thu Sep 14 07:19:52 2000 +0000
+
+    Moved ${} expansion and task evaluation to runtime.
+    
+    This has a lot of consequences, most notably those listed in
+    WHATSNEW. This also affects the behavior of several other tasks like
+    <available> who will now do their job at runtime instead of parser
+    time as well.
+    
+    I've changed the version number in build.xml to reflect this bigger
+    change.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@267988 13f79535-47bb-0310-9956-ffa450edef68

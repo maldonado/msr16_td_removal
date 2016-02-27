@@ -1,0 +1,117 @@
+commit 67f111ecc3c2f795d922c076b105aa21917289fe
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Oct 15 16:54:18 2012 -0500
+
+    Fix JRUBY-6932
+    
+    ruby block without arguments for itemStateChanged in 1.9 can fail
+    
+    We were forcing all blocks-as-interfaces to be LAMBDA, rather than
+    just going with the natural type of the block. Changed to use
+    natural type.
+
+commit b8181cda909f6e42d7c0b7fffaabbe2a502f273b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jul 27 02:19:54 2012 -0500
+
+    Inline all calls to ThreadContext.getRuntime to access the field.
+
+commit faad708339ca7243e62a68ca4e53fee2b78bc1d5
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Aug 12 17:04:44 2011 -0500
+
+    Fix JRUBY-5980: Unable to call varargs constructor with 0 arguments.
+    
+    * Allow zero args to match a method with only varargs
+
+commit e05b969291d44e3d42e14861e30ce189a52f1b5f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun May 2 02:09:26 2010 -0500
+
+    Miscellaneous cleanup:
+    
+    * A number of findbugs items in the "threadsafe", "performance", "malcious code", and "experimental" warnings
+    * Tidied up all NetBeans "yellows" in the files I touched
+    * Removed now-defunct JRubyServer/Client/Service
+    * Removed now-defunct ssa.rb and DAGBuilder
+
+commit 02d99f3d42d4fc3d252be39828c01886d2fca9a9
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Apr 20 15:56:16 2010 -0500
+
+    Miscellaneous perf improvements for Ruby to Java dispatch:
+    
+    * Fix primitive return type coercion to actually use the precached converter, rather than doing a hash hit every time
+    * Eliminate an instanceof check that would actually constitute a bug, and shouldn't be seen at runtime
+    * Eliminate synchronization and volatility on every call by removing laziness in RubyToJavaInvoker initialization
+
+commit 0a99a6a5c8722359df9c123888d2333056b5e9bb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Apr 12 01:52:10 2010 -0500
+
+    Minor cleanup of some unused parameters in method selection.
+
+commit 155c446a806df981e5ea5b259c44455584ee3f61
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Dec 29 02:29:37 2009 -0600
+
+    Move JavaCallable construction logic up into RubyToJavaInvoker using abstract creator/accessors in the method/constructor-related subclasses.
+
+commit af31aebf97bc3a976b30b84b49bde9c4df1609b2
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Dec 28 21:24:44 2009 -0600
+
+    Varargs support for method dispatch! Should fix JRUBY-195, but I don't like the impl much so far. Needs additional cleanup.
+
+commit c56bba4bf76191004ed284b4ba61b2c1e3ece038
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Dec 10 11:09:42 2009 -0600
+
+    Eliminate some and reduce other setAccessible calls for JRUBY-4246.
+    
+    * For all methods in all classes encountered by JRuby, we were doing setAccessible one at a time. This meant that even if the class was never directly used (and lazily initialized) we still called setAccessible for all methods. For classes that were directly used, we ended up doing a second round of setAccessible calls for each named group of methods. The latter remains, but is now the only setAccessible for methods and constructors.
+    * All fields were being setAccessible. In the case of static public final fields, which we create constants for, this was obviously unnecessary. In the case of regular fields, we only ever retrieved the list of public fields, so it was again unnecessary. Also note that in both cases we did the setAccessible calls eagerly.
+
+commit f26816a48bef76948639094e7c9e01fa0260d092
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Oct 24 16:59:27 2009 -0500
+
+    Improvements to JavaProxy-wrapped Java objects:
+    
+    * Lazily allocate the inner JavaObject, so if we don't use it we never create it.
+    * Don't enter newly-constructed Objects into the proxy cache immediately.
+
+commit 272f5c3ffdf04c8a2da6360c27c8d97159820157
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Jul 12 23:08:23 2009 -0500
+
+    Same refactoring for constructors as for methods:
+    
+    * Delay constructing arg array as long as possible
+    * Simplify return path
+    * Cleanup, refactoring for readability
+
+commit 7c66de78a91d12da1989fce526aa92ef9ceaf9ae
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Mon Mar 9 16:18:48 2009 +0000
+
+    Fix more issues where a restricted security environment can be problematic
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9385 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 8f47cc9d9fb3bdc54072bed4a8720d5c62dfc465
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Tue Aug 26 01:38:00 2008 +0000
+
+    JRUBY-2833: Can't reference Java's constants that start with a lower case character
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7538 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit cccee6a71b44aceff3680d5970584f676ba0118e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Aug 8 03:10:54 2008 +0000
+
+    More "new JI" class moves: all new Invoker classes to org.jruby.java.invokers
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7408 961051c9-f516-0410-bf72-c9f7e237a7b7

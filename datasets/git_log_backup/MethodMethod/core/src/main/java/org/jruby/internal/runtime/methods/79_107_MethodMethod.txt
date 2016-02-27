@@ -1,0 +1,30 @@
+commit 838c8d7a991d1914357ce47db62f594aca27bc78
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jul 24 22:32:10 2015 -0500
+
+    CallConfiguration is not used by any DynamicMethods anymore.
+    
+    CallConfiguration used to be needed to determine how to frame and
+    scope all methods in the system. However, in JRuby 9k it is no
+    longer needed.
+    
+    * Core methods that need frame/scope have the pre/post logic
+      generated in bytecode (for generated invokers) or in handles
+      (for MethodHandle-based invokers).
+    * Interpreted IR methods have their own flags for frame/scope, or
+      have instructions that perform the pre/post logic.
+    * Jitted IR methods always have emit bytecode to do the pre/post
+      logic.
+    
+    After a quick inspection I found that there's no other uses of
+    the callConfig field in DynamicMethod, so this commit removes it
+    and deprecates the constructors and accessors. This should shrink
+    all DynamicMethod subclasses by at least 4 bytes and perhaps 8. It
+    also reduces the size and overhead of our generated populators,
+    which might have a slight effect on startup.
+
+commit 28c6fbc4e883bc1c9e9242d1da1cb2b785f55339
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 3 12:46:45 2013 -0500
+
+    Move to @mkristian's proposed layout, with some modifications.

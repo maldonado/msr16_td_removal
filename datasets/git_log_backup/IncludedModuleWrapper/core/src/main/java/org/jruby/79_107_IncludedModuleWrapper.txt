@@ -1,0 +1,63 @@
+commit b9473af1412b482111c3c83a563a980cc273efa9
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Apr 21 16:17:19 2015 -0500
+
+    Re-fix searching of prepended modules-in-a-module. Fixes #2864.
+    
+    The original problem was that we only searched the target module's
+    method table, which is empty in the presence of prepends. The new
+    issue was that my depth-limiting fix to IncludedModuleWrapper's
+    searchMethodCommon did not start from the right place (`this`
+    instead of `origin`) and the condition was not right.
+
+commit c725c6984de7e9b1b4132d9fb8cd10739b7050c7
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Apr 17 10:21:24 2015 -0500
+
+    Need to limit this search so we don't walk module-included modules.
+
+commit 7ac2331d0567943fbea023274a6d9a23b9dd7d18
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Apr 15 11:19:50 2015 -0500
+
+    Make a terrifying change to allow prepends to work on modules.
+
+commit f4fe2203f240bf8c296f74c8b5cf3cce63aa6dc0
+Author: tduehr <tduehr@gmail.com>
+Date:   Thu Nov 13 17:43:18 2014 -0600
+
+    cleanup, pickup, put away
+    
+    clear out extra code and comments
+
+commit b7910aceef1568da27dffbc829a60e833e5aec78
+Author: tduehr <tduehr@gmail.com>
+Date:   Mon Oct 27 16:29:20 2014 -0500
+
+    current MRI prepend implementation
+
+commit 8f1e39e489000c0705e0ce5d93d02eb4ba1135da
+Author: tduehr <tduehr@gmail.com>
+Date:   Mon Jul 21 08:36:34 2014 -0500
+
+    methodLocation
+
+commit a34469e8a92ff3eb965a797211314758641aae90
+Author: tduehr <tduehr@gmail.com>
+Date:   Mon Jun 30 17:49:10 2014 -0500
+
+    rework prepends to match flow of includes
+
+commit 164dd8eb0041a6eaaf04cfbee746a90722ae0b59
+Author: tduehr <tduehr@gmail.com>
+Date:   Thu Jun 12 16:24:38 2014 -0500
+
+    Module#prepend
+    
+    abstracts included modules a little more and adds prepending modules
+
+commit 28c6fbc4e883bc1c9e9242d1da1cb2b785f55339
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 3 12:46:45 2013 -0500
+
+    Move to @mkristian's proposed layout, with some modifications.

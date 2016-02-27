@@ -1,0 +1,128 @@
+commit 8ea9c001fdde4ee06d501fe2c1b8054f92299ecd
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Thu Aug 6 10:51:55 2009 +0200
+
+    Convert almost all of Convert
+
+commit da0fdfeab2d6639be42bc787f11456a6d998e460
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Wed Aug 5 21:41:08 2009 +0200
+
+    Remove some tags and make conversion from bytes to longs/bigintegers use the same methods as MRI. First part of converting Convert.
+
+commit bdd7fdef25af24761a0b8f8d86c375d5409b28ec
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Jun 24 15:00:05 2009 -0500
+
+    JRUBY-3748: RubySpec: Kernel.Integer raises an ArgumentError if there is a space between the + and number (plus missed spec tag removal from last commit)
+
+commit c36f9c5c368d989fbf2b5aa505cf8fdcdfe2ea57
+Author: Vladimir Sizikov <vsizikov@gmail.com>
+Date:   Fri Jan 18 19:42:01 2008 +0000
+
+    JRUBY-2001: Sprintf returns result in incorrect register with 'x' pattern.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5660 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 327a5a6978ef72338212352711e6ae8117490253
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Tue Dec 18 16:47:58 2007 +0000
+
+    JRUBY-1737: String#% can't handle some string arguments with underscores (patch by Vladimir Sizikov)
+    JRUBY-1738: Kernel.sprintf with argument of some non-standard type doesn't invoke to_int on it (patch by Vladimir Sizikov)
+    JRUBY-1742: String#% with %s and %p handles tainted status of ar (patch by Vladimir Sizikov)
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5293 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit df2ca1c3fa6b7a7f10f547051ba588486d9b8d32
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Mon Dec 17 19:19:44 2007 +0000
+
+    JRUBY-1733: String conversions with 0dNNN and 0oNNN formats are incorrect (patch by Vladimir Sizikov)
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5286 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 7490f482ca373bbbaf166d15ef2d6d7265f76f27
+Author: Bill Dortch <bill.dortch@gmail.com>
+Date:   Thu Jul 19 09:43:41 2007 +0000
+
+    Fix for JRUBY-1215, don't skip first non-numeric char in whitespace tests for strict mode.
+    Changed all whitespace tests in Convert.java to be MRI-compliant.
+    Small cleanup in check for "NaN"/"Inf".
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4046 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit b1742e48d5561cdc2e90fca3b335c89a0f3d9a84
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Fri Apr 20 02:08:54 2007 +0000
+
+    JRUBY-840: Cow fixes, Enumerable rewrite and arraycopy hunt (Marcin)
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3511 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 59065e50642ce9376adc8950d663f285c7f99425
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Mon Apr 16 13:05:19 2007 +0000
+
+    Lots and lots of fixes for Marshalling, JRUBY-531
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3472 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 0320b51ff913c6fcd25a386065cac05f57cc12c2
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Wed Apr 4 17:44:27 2007 +0000
+
+    Merging non-specific things from my sandbox to get diff smaller:
+    
+    - remove unused imports
+    - remove deprecated methods convertToType and convertToTypeWithCaller and converted all consumers
+       [Note: If extensions were using these functions they are broken now]
+    - attr_accessor was checking Frame args when it could just use the args it is given
+    - removed unused variables
+    - comment out some debugging methods so they are not reported as a warning
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3385 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 5523c947b4bf9c8276ad0cd201d7b803818a90d4
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Thu Mar 29 18:25:46 2007 +0000
+
+    Fix a few convert bugs
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3332 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit bcd3301fcd97db90d50558b5bb3c60d7d9226beb
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sat Mar 10 00:20:02 2007 +0000
+
+    The Bill Dortch sprintf special commit....
+    
+    JRUBY-667: String#to_f and Float(str) do not support MRI behavior
+    JRUBY-609: PrintfFormat needs to be completely rewritten
+    JRUBY-39: Floating point formatting discrepancy: "%02f" % '5'
+    JRUBY-581: Kernel.(format|sprintf) does not correspond to MRI's behaviour
+    JRUBY-678: RubyBignum test assertion failure in build 3151
+    
+    In addition to this fix I also removed old PrintfFormat and a few stragglers...There could be some follow work in method_missing in RubyObject and RubyKernel since I removed those old printfformat consumers in a pretty innefficient way.
+    
+    Thanks Bill it is great stuff!!!
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3152 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 2b5f0be891b0b28c7c343518989c056fb7643a9f
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Mon Mar 5 19:47:19 2007 +0000
+
+    Fixing java 1.4 breakage
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3133 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 9dfc2a4c0f16b7dc845c70dd5c8df31df285c276
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Tue Feb 27 09:59:15 2007 +0000
+
+    Fix for JRUBY-628 and JRUBY-625, by Bill Dortch.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3084 961051c9-f516-0410-bf72-c9f7e237a7b7

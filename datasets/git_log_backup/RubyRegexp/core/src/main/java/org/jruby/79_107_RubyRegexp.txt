@@ -1,0 +1,379 @@
+commit 2f7aebdf30680493a700fe203446bc98575f4329
+Author: Kevin Menard <kevin@nirvdrum.com>
+Date:   Tue Jun 2 17:24:19 2015 -0400
+
+    Introduced a RegexpSupport to house shared regexp utility methods.
+
+commit 53342fbf89d33e8e90786b212f476575adb1c128
+Author: Kevin Menard <kevin@nirvdrum.com>
+Date:   Tue Jun 2 15:09:42 2015 -0400
+
+    Inlined the getEncoding helper method.
+
+commit 27b4cc143ada77aea297d70ac8783d63348efb3e
+Author: Kevin Menard <kevin@nirvdrum.com>
+Date:   Tue Jun 2 15:08:39 2015 -0400
+
+    removed redundant modifier.
+
+commit 2bab6f98fbdb64c8b5af64081a18e573b7de3c43
+Author: Kevin Menard <kevin@nirvdrum.com>
+Date:   Tue Jun 2 15:08:15 2015 -0400
+
+    Removed dead code.
+
+commit 7be2875324910347b2cff71912b11bd2b4de8f32
+Merge: e002633 ad4dcf0
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Tue Mar 31 07:46:18 2015 +0100
+
+    Merge branch 'master' into truffle-head
+    
+    Conflicts:
+    	truffle/src/main/java/org/jruby/truffle/nodes/core/ArrayNodes.java
+    	truffle/src/main/java/org/jruby/truffle/nodes/core/KernelNodes.java
+    	truffle/src/main/java/org/jruby/truffle/nodes/core/StringNodes.java
+
+commit ad4dcf09f78a9b32f71d4709d853852ea11d166c
+Author: Kevin Menard <kevin@nirvdrum.com>
+Date:   Mon Mar 30 22:44:16 2015 -0400
+
+    [Truffle] Fixed the 'character_ascii_p' primitive.
+
+commit d19ab4631e7679abe75c25387b4db0fc1be9c1ae
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Mar 25 13:27:48 2015 -0500
+
+    Rename this for better clarity.
+
+commit 861b3835f8aac0b6dfd03705a970dfdec7d48a50
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Mar 23 18:30:34 2015 -0500
+
+    Explain i == 0 encoding set.
+
+commit 1e01d8e191da009e41d5a890759ca5e5e7483381
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Mar 23 18:30:15 2015 -0500
+
+    Use already-retrieved arg var.
+
+commit 4d9c8c2019a0cc3f659183d294f6081c8ae15041
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Mar 23 18:29:51 2015 -0500
+
+    Single-arg version of Regexp.union should go through init.
+
+commit 911c6c05e0888ce7cf14541b3a86b2d7c8372a87
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Mar 23 15:28:01 2015 -0500
+
+    Use MBCLEN "macro" here.
+
+commit 78589a941b98be5857cb203ee1a7a64950877f25
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Mar 23 15:27:31 2015 -0500
+
+    Missing logic for high bytes in US-ASCII regexp source.
+
+commit 0c9ebf67f6b0dfaadf64fb404714facc5db6740e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Mar 20 18:24:57 2015 -0500
+
+    Tidy up semantics of matchdata out param in search/match.
+    
+    Previously the semantics were a bit of a mix; some consumers
+    passed the out param *and* wanted the matchdata set into context,
+    some did not want it set, and some did not pass an out param. The
+    modified logic always uses *either* context.setBackref *or* the
+    out param in all cases.
+    
+    Methods that use regexp match/search and need matchdata set now
+    skip passing the out param, localizing backref setting for those
+    methods back to where it should live.
+    
+    This also fixes matchPos to not require the IRubyObject[] out param
+    if the caller is not interested in the coerced string.
+
+commit cc62cf983d8f85d76779c505266d2a963845d0b8
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Mar 19 17:58:24 2015 -0500
+
+    Base base for position.
+
+commit 38ade0208971044255be9daa0348552c29ddb2ef
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Mar 19 17:38:43 2015 -0500
+
+    Wrong base for end.
+
+commit f874bb1cc68aaf9d0e1ac2b9cc76983e9439bc2a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Mar 19 16:35:16 2015 -0500
+
+    Make MatchData#begin match MRI and fix typo in our rb_enc_mbclen.
+
+commit 9715da5fb81a86d8a373a0bf6b74056472a81739
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Mar 19 15:35:52 2015 -0500
+
+    Re-port Regexp#=~ and some downstream functions.
+
+commit e05baa20361e309e864876762a45def414f61ee3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Mar 4 11:51:41 2015 -0600
+
+    Remove kcode from regexp options; not used anymore.
+    
+    Leaving it in place broke the "none" flag, since kcode EUC and
+    NONE shared the value 32.
+
+commit 0a6a2b904cc45c20ecd7fa189e9b3df2ea125b0a
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Fri Jan 30 09:49:47 2015 +0000
+
+    [Truffle] Hide ignored flags warning.
+
+commit ecee892bce90b5b909d844bcef1e91dbd04f1039
+Author: Kevin Menard <kevin@nirvdrum.com>
+Date:   Tue Dec 23 21:53:06 2014 -0500
+
+    Removed a static method that wasn't being used anywhere.
+
+commit a23bde848ddcc23a02478bcb6f6f488b60f0a7d3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Nov 23 14:55:26 2014 -0600
+
+    Add test for regex cache retention. #2078.
+
+commit 5203c39a9f16843c3c18ce44e87e30f29b7d95fa
+Merge: 3bb5c15 b70ef5a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Nov 23 14:18:42 2014 -0600
+
+    Merge remote-tracking branch 'origin/jruby-1_7'
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/RubyRegexp.java
+
+commit b70ef5aa5064aa141ee7f5281d5d21447b7ab0cf
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Nov 23 13:42:01 2014 -0600
+
+    Remove custom regex cache and just use a weak-valued map. #2078.
+
+commit 11281db562d4bd3aa974ac863f47236102c9d12b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jun 4 21:37:55 2014 -0500
+
+    Numerous fixes to get CI specs 100% again.
+    
+    * OpenFile needs to register as finalizable to flush on exit
+    * Kernel#p needed some port cleanup
+    * String#gsub's logic needed port cleanup
+    * Removed passing tags for String#inspect and String#scrub.
+
+commit 706b4539517e1c444250334ea261ac56542d02cf
+Merge: 75887be c3e7c29
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu May 8 04:54:10 2014 -0500
+
+    Merge branch 'master' into new_transcoder
+    
+    Conflicts:
+    	core/pom.xml
+    	core/src/main/java/org/jruby/RubyFile.java
+    	core/src/main/java/org/jruby/util/TypeConverter.java
+
+commit d269590c79eb56175689e1aea710956fa7472786
+Merge: ae5ad64 78d80b5
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu May 1 09:54:27 2014 -0500
+
+    largish merge from jruby-1_7
+
+commit da065192f0e9bde48e05ce46b9e5f56dfd1d3c9e
+Author: Alex Tambellini <atambellini@gmail.com>
+Date:   Mon Apr 21 00:42:34 2014 -0400
+
+    Fixes #1638 "Regexp Interrrupted" Typo
+
+commit 9c758b4f31c0eeb50d77b3dad28438aca365e857
+Author: tduehr <tduehr@gmail.com>
+Date:   Thu Feb 27 21:54:56 2014 -0600
+
+    fix initialize visibility
+
+commit c2336e5b46c116d766dbd6eb95a23c1205e633e8
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Mar 14 13:20:10 2014 -0500
+
+    More port-fixing for regsub and other stuff.
+    
+    * More exact port of rb_reg_regsub
+    * Reverted fix to ASCGET logic that breaks a test; unknown reason
+    * Expanded strBufCat and related methods to take byte[].
+
+commit 50efa498c59cd268ff5be9baeb928f5500807eb0
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Mar 4 09:43:26 2014 -0600
+
+    Reimpl a bit of gsub pipeline to match MRI better.
+
+commit acf5d258db69e9ba73f329b809c0924d7e843c82
+Author: tduehr <tduehr@gmail.com>
+Date:   Thu Feb 20 16:22:22 2014 -0600
+
+    correct visibility of initialize* and respond_to_missing? methods
+
+commit 2877eda429f9bb87fbf568ec825ae81e913d8f72
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Feb 7 12:56:36 2014 -0600
+
+    [IR] Implement Regexp (literal).
+
+commit e511995bc40a10cfa6e52dd902ee6dcb6c472bc5
+Merge: f854344 feb9540
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Feb 5 14:17:30 2014 -0600
+
+    Merge with jruby-1_7
+
+commit feb9540725d33034da36a669aa580fde07dedc5d
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Feb 5 14:09:26 2014 -0600
+
+    Fixes #1392. NullPointerException loading `rouge` gem
+
+commit e9e8c545211e322a8ab6a2736aaf28be84c3a101
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Sun Jan 19 03:07:04 2014 +0000
+
+    [Truffle] Use Joni for regexps.
+
+commit d7451082eaf9859e3aef72a33ce79bc84b66c3fa
+Author: Christian Meier <m.kristian@web.de>
+Date:   Wed Dec 4 16:09:00 2013 +0000
+
+    replaced JavaUtilLoggingLogger with StandardErrorLogger using the same format. removed any import or usage of java.util.logging
+
+commit 664790d8dccde946c88be14be2a856f6b20be097
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Oct 30 22:54:43 2013 -0500
+
+    Finish de-versioning Regexp
+
+commit ba38c44fc33f714a0aff82917bcb3e70b0e505c7
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Oct 10 16:45:44 2013 -0500
+
+    De-version Regexp
+
+commit 697e6895affa646849a685ed58f6f84795c853aa
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Oct 4 23:37:52 2013 -0500
+
+    Eliminate calls to Ruby.is1_8 and is1_9.
+
+commit d1f89e004fdc78dff75407c82123e6c9e8b406bb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Sep 12 18:48:16 2013 +0200
+
+    Make ClassIndex into an enum, to prevent issues like #1004.
+
+commit ea17aec12165615440b7157569ee5803bd512f2c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Aug 21 13:08:03 2013 -0500
+
+    Fix bug where dregexp would break its own options.
+    
+    A DRegexp node would construct its Regexp by passing the
+    RegexpOptions along directly. However, some construction paths
+    proceed to modify those options, setting "fixed" if the incoming
+    string is ASCII-8BIT. Because the options were never copied, this
+    broke the original DRegexp node causing all future regexp to also
+    be marked "fixed".
+    
+    I modified the construction paths the interprter uses to always
+    clone the incoming RegexpOptions.
+    
+    We should make RegexpOptions immutable in the future, to avoid
+    this sort of issue.
+
+commit a9415db3cff112c283fbed50aa1bc87376c8e718
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Aug 21 09:31:20 2013 -0500
+
+    Guard RubyString.makeShared with 1_9 checks, so encoding is set.
+    
+    We have a number of places in 1.9 logic where it eventually falls
+    back into 1.8 logic due to lack of version-splitting. In the case
+    of JRUBY-7195, the element grab from a MatchData shared the logic
+    in RubyRegexp.nth_match between 1.8 and 1.9 modes. However, the
+    logic there does not properly create new strings, leaving their
+    encoding set to default.
+    
+    This commit modifies all paths to RubyString.makeShared I could
+    find with logic to use the "19" version if in 1.9 mode.
+    
+    Fixes JRUBY-7195.
+
+commit 6729d3be83e8a7feead3e636d8bb8018c6af2dbb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Aug 15 11:45:37 2013 +0200
+
+    Use normal "new" logic in Regexp. Fixes #955.
+
+commit 862b067e8ac2dd83498f4f9a12fb48b4da33af05
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 24 20:06:55 2013 -0500
+
+    Reduce object overhead for dregexp.
+    
+    * Share a single Encoding[] for the fixedEnc out param
+    * Add a "light" path to element preprocessing, since the bytelist
+      produced was not used.
+    
+    See #302.
+    
+    Performance improves as follows:
+    
+    Before:
+    
+    ```
+                                                   user     system      total        real
+    1m x10 /abcd#{foo}ijkl/                    5.500000   0.150000   5.650000 (  2.164000)
+    1m x10 /abcd#{foo}ijkl/u                   1.850000   0.010000   1.860000 (  1.429000)
+    1m x10 /abcd#{foo}ijkl/o                   0.730000   0.010000   0.740000 (  0.402000)
+                                                   user     system      total        real
+    1m x10 /abcd#{foo}ijkl/                    1.180000   0.000000   1.180000 (  1.176000)
+    1m x10 /abcd#{foo}ijkl/u                   1.160000   0.010000   1.170000 (  1.092000)
+    1m x10 /abcd#{foo}ijkl/o                   0.100000   0.000000   0.100000 (  0.107000)
+                                                   user     system      total        real
+    1m x10 /abcd#{foo}ijkl/                    0.910000   0.000000   0.910000 (  0.902000)
+    1m x10 /abcd#{foo}ijkl/u                   0.930000   0.020000   0.950000 (  0.927000)
+    1m x10 /abcd#{foo}ijkl/o                   0.110000   0.000000   0.110000 (  0.108000)
+    ```
+    
+    After:
+    
+    ```
+                                                   user     system      total        real
+    1m x10 /abcd#{foo}ijkl/                    2.680000   0.090000   2.770000 (  1.431000)
+    1m x10 /abcd#{foo}ijkl/u                   1.360000   0.010000   1.370000 (  1.081000)
+    1m x10 /abcd#{foo}ijkl/o                   0.490000   0.000000   0.490000 (  0.275000)
+                                                   user     system      total        real
+    1m x10 /abcd#{foo}ijkl/                    0.830000   0.000000   0.830000 (  0.826000)
+    1m x10 /abcd#{foo}ijkl/u                   0.860000   0.010000   0.870000 (  0.850000)
+    1m x10 /abcd#{foo}ijkl/o                   0.120000   0.000000   0.120000 (  0.117000)
+                                                   user     system      total        real
+    1m x10 /abcd#{foo}ijkl/                    0.840000   0.000000   0.840000 (  0.824000)
+    1m x10 /abcd#{foo}ijkl/u                   0.860000   0.010000   0.870000 (  0.847000)
+    1m x10 /abcd#{foo}ijkl/o                   0.100000   0.000000   0.100000 (  0.107000)
+    ```
+
+commit 28c6fbc4e883bc1c9e9242d1da1cb2b785f55339
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 3 12:46:45 2013 -0500
+
+    Move to @mkristian's proposed layout, with some modifications.

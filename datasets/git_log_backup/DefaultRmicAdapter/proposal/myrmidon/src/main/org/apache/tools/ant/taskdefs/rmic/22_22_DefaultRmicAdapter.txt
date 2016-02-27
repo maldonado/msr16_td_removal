@@ -1,0 +1,193 @@
+commit 2afc643a3ea676cc68f2f010ea3a7560b7a0a3af
+Author: adammurdoch <dev-null@apache.org>
+Date:   Mon Mar 4 02:44:15 2002 +0000
+
+    * Moved FileNameMapper to framework.  Got rid of setTo() and setFrom()
+      from the interface, as these are no longer needed.
+    
+    * Changed tasks to accept a FileNameMapper directly, rather than using Mapper.
+    
+    * Removed the 'flatten' attribute from the <copy> task.
+    
+    * Removed the 'ext' attribute from the <native2ascii> task.
+    
+    * Removed Mapper and MapperType.
+    
+    * Moved <flatten> mapper to antlib.
+    
+    * Made ExtMapper available as <map-extension> and moved to antlib.
+    
+    * Added <prefix> mapper, to apply a fixed prefix to names.
+    
+    * Added <chain> mapper, to apply a chain of mappers to names.
+    
+    * Added <mapped-fileset>, a fileset that transforms nested filesets using a mapper.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@271715 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 0fa0e394dcd0e4f9ebf0547ac4fc25d3b46f118b
+Author: Peter Donald <donaldp@apache.org>
+Date:   Sun Mar 3 07:11:40 2002 +0000
+
+    Move all rmc stuff into its own package
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@271701 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 36a0800e7ea144680d92d4233585363120643b5d
+Author: Peter Donald <donaldp@apache.org>
+Date:   Wed Feb 6 13:38:45 2002 +0000
+
+    Style touchups
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@271189 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8ce1de2178a0422105fa437c327b49fb5637ff28
+Author: Stephane Bailliez <sbailliez@apache.org>
+Date:   Sun Jan 20 17:35:02 2002 +0000
+
+    - Fix order of modifiers
+    - Fix duplicate/unecessary imports
+    - Fix single if/else and loop without block
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270813 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 38dce34edfdb4041103530c656e12e6ed61e2bd6
+Author: Peter Donald <donaldp@apache.org>
+Date:   Sun Jan 20 02:11:45 2002 +0000
+
+    Did some create->add munging
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270797 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 29cd889775d70bb1dad99b6bbfb08e826feda1f4
+Author: Peter Donald <donaldp@apache.org>
+Date:   Sat Jan 19 07:26:23 2002 +0000
+
+    The attached patch makes <path> useable as a data-type in myrmidon.
+    
+    * Added a String -> Path converter.
+    
+    * Added the appropriate declarations to ant1-ant-descriptor.xml.
+    
+    * PathLocation is now only used internally by Path.  This means a <path> may
+    not contain nested <pathlocation> elements any more.  Nested <path> elements
+    can be used to do the same thing.
+    
+    * Removed Path.systemClasspath and Path.concatSystemClassPath().  The goal
+    is to add specialised <systemclasspath>, <antruntime>, and <javaruntime>
+    data-types to control this explicitly.  I left it unfinished, because the
+    as-yet-unwritten Java util stuff will determine how it should be done.
+    
+    * Moved Path.addExtdirs() -> DefaultCompilerAdaptor.  This was the only
+    place it was used.
+    
+    * Cleaned out a few more Path createX() methods.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270786 13f79535-47bb-0310-9956-ffa450edef68
+
+commit eb278f795eee59165a03a7046586dc20b589f600
+Author: Peter Donald <donaldp@apache.org>
+Date:   Sun Jan 13 04:45:01 2002 +0000
+
+    Move mappers into their own package
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270726 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 37879f0723eadaec6ce4c357b4c41338f55a86d9
+Author: Peter Donald <donaldp@apache.org>
+Date:   Sun Dec 30 01:14:59 2001 +0000
+
+    Removed Project.getVersion() replaced it with getJavaVersion() (inherited from AbstractTask) where necessary and removed all checks for java 1.1
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270442 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ee5b9c7e25776b05f051515e1d801ff3c9a9dc38
+Author: Peter Donald <donaldp@apache.org>
+Date:   Sun Dec 30 00:21:52 2001 +0000
+
+    Update classes so that Path no longer accepts a Project object in its constructor and there is no setProject in ProjectComponent objects
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270424 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 669a7eae15ea1cf4d43f78955eb15a1b757717f5
+Author: Peter Donald <donaldp@apache.org>
+Date:   Sun Dec 23 14:25:02 2001 +0000
+
+    Start updating logging to myrmidon style logging
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270367 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 255020c002e99c42ba08342cbc874a0a5737d24c
+Author: Peter Donald <donaldp@apache.org>
+Date:   Sun Dec 23 06:35:02 2001 +0000
+
+    Fix up license banner.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270362 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 4058f2a97f7dc93772debc5bfd54f193e51f0256
+Author: Peter Donald <donaldp@apache.org>
+Date:   Sat Dec 22 12:58:59 2001 +0000
+
+    restyled
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270312 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 5f6832bd82418c0d62e243e5d6ae5dcdb95b7446
+Author: Peter Donald <donaldp@apache.org>
+Date:   Fri Dec 21 14:21:24 2001 +0000
+
+    Move to using Java2 collections API
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270291 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b400039e78b1149debb827a773cd17da95edb11a
+Author: Peter Donald <donaldp@apache.org>
+Date:   Sun Dec 16 02:05:43 2001 +0000
+
+    BuildException -> TaskException
+    
+    39 errors to go
+    39 errors to go
+    hey ho we're merry now for theres
+    39 errors to go
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270170 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b8c50342cacdaa5bc7e3e4e72eb8351da5824716
+Author: Peter Donald <donaldp@apache.org>
+Date:   Sun Dec 16 00:39:05 2001 +0000
+
+    BuildException -> TaskException
+    
+    Removed uneeded imports.
+    
+    Processed code through style formatter.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270166 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d1064deab4fcb65519fda168052576c3b44eb45e
+Author: Peter Donald <donaldp@apache.org>
+Date:   Sat Dec 15 12:06:33 2001 +0000
+
+    Add in a clone of the main ant source tree so that it can undergo some heavy refactoring.
+    
+    Initial stages involves just making the Ant1.x tasks implement Ant2 interface and refactoring BuildException such that it can be easily be replaced by TaskException etc.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270153 13f79535-47bb-0310-9956-ffa450edef68

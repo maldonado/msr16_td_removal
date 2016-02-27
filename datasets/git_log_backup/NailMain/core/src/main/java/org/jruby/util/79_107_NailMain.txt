@@ -1,0 +1,33 @@
+commit 45aee57f7edc4802f62eb6fee7d425eb79cc0282
+Author: Benoit Daloze <eregontp@gmail.com>
+Date:   Fri Jun 19 17:09:54 2015 +0200
+
+    Properly type RubyInstanceConfig.optionGlobals
+
+commit ed54aab184bed0dc9dbaaf90b357c8f793c33696
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Sep 17 13:40:36 2014 -0500
+
+    Rip out the guts! Removing many non-9k runtime classes.
+    
+    * ClassCache is gone; it was hacky and problematic when compiled
+      code held classloader-level (static) data, as when using indy
+      call sites. Java 8 has also eliminated permgen, greatly reducing
+      the hassle and overhead of loading jitted code. Finally, Rails
+      and the other Ruby frameworks are now officially "thread safe"
+      (or the teams are committed to them being so) and the multiple
+      JRuby model of deployment is discouraged (or even deprecated).
+    * All old JIT code is gone. It won't be useful for the new
+      JIT.
+    * Removed the last vestiges of Callback-based functions. If I
+      remember right, there's some ext out there using them...we must
+      find it.
+    * Rewired JITCompiler to use the new JIT.
+    * Rewired InterpretedIRMethod to use JITCompiler.
+    * Moved OneShotClassLoader out of ClassCache (in org.jruby.util)
+
+commit 28c6fbc4e883bc1c9e9242d1da1cb2b785f55339
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 3 12:46:45 2013 -0500
+
+    Move to @mkristian's proposed layout, with some modifications.

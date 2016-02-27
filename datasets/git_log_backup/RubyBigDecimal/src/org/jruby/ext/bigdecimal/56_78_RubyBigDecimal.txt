@@ -1,0 +1,216 @@
+commit 7c8bbf280c7cebec9221741aa3e6801a43b63fd9
+Author: Alex Tambellini <atambellini@gmail.com>
+Date:   Sat Jun 22 18:49:01 2013 -0400
+
+    BigDecimal#hash should ignore scale. Fixes #772
+    
+    Tests added to rubyspec:
+    https://github.com/rubyspec/rubyspec/pull/228
+
+commit b5069f80858b14b1ee83584c5488936a2ce3e0ac
+Author: Sébastien Le Callonnec <sebastien@weblogism.com>
+Date:   Tue May 28 23:43:16 2013 +0100
+
+    Fix BigDecimal#/
+    
+    When dividing BigDecimal by a Float, the Float is converted to
+    Rational “for higher precision,” and then divides the numerator
+    by the denominator.  However, when doing that division, `div19`
+    was being used which does a `floor` on the returned float.  This
+    commit replaces the call to `div19` with `op_div`.
+    This commit also addresses issues with return type of the result,
+    which changes from version to version in Ruby.
+    See https://github.com/rubyspec/rubyspec/pull/220 for tests.
+    
+    Use java.math.BigDecimal to compute rational and float value.
+    
+    Make test applicable for 1.9/2.0 only.
+    
+    Code cleanup.
+    
+    A bit of housekeeping, adding whitespaces after commas, and around
+    equals.
+    
+    Return Float when BigDecimal is divided by Float in 1.9.
+    
+    Recent versions of 1.9.3 now exhibit the same behaviour as 2.0.
+
+commit 716d51867373c9b5a0eb5186809b79e513a213cc
+Author: Alex Tambellini <atambellini@gmail.com>
+Date:   Fri May 17 02:50:28 2013 -0400
+
+    Bigdecimal#/ should handle a positive or negative zero numerator
+
+commit 66c45fe9d10f10a2bfa6f80d5af8153e18550591
+Author: Alex Tambellini <atambellini@gmail.com>
+Date:   Sun Apr 28 15:40:17 2013 -0400
+
+    BigDecimal#div should raise FloatDomainError if (+|-) Infinity divided by 1 and no precision given
+
+commit 3f1aab3178ec54876740fc27dea4c9ab2152bae1
+Author: Alex Tambellini <atambellini@gmail.com>
+Date:   Sun Apr 28 15:25:14 2013 -0400
+
+    BigDecimal#div should raise ZeroDivisionError if divided by zero and no precision given in 1.9
+
+commit fbc83a737229bc20455c321b43c2961719a2f7d5
+Author: Alex Tambellini <atambellini@gmail.com>
+Date:   Sun Apr 28 15:18:22 2013 -0400
+
+    BigDecimal#div should return 0 if divided by Infinity and no precision given in 1.9
+
+commit 393d264a78cdf3e24579a832eba2ec8f6394d048
+Author: Alex Tambellini <atambellini@gmail.com>
+Date:   Sun Apr 28 15:05:24 2013 -0400
+
+    BigDecimal#div should raise FloatDomainError if NaN is involved in 1.9
+
+commit 61678ac1a2514a9932276f8d527816a5980a94b3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Feb 25 20:41:40 2013 +1100
+
+    Fix more references to CPL.
+    
+    The phrase "Common Public License" was split across two lines in
+    our default header, which caused it to be missed during earlier
+    search/replace. Also, we did not replace the CPL URL in the
+    header with the EPL URL.
+
+commit 330fef3b0fc18af477ccea19bd278669667f31bb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 12 14:49:29 2013 -0600
+
+    Switch JRuby's CPL license to EPL.
+    
+    Governance of the CPL license was moved to the Eclipse Foundation
+    at some point in the past, and Eclipse blessed the EPL (Eclipse
+    Public License v1.0) as the successor to CPL. Because the CPL
+    contains a clause allowing transparent upgrades to future blessed
+    successor licenses, we can make the move to EPL without
+    re-contacting past contributors.
+    
+    The change in going from CPL to EPL largely just removes some
+    punitive language that apparently made many companies nervous. All
+    other language in the license remains identical.
+    
+    Several documents about Eclipse's move from CPL to EPL are here:
+    
+    http://www.eclipse.org/legal/cpl2epl/
+    
+    Note that Eclipse's move came before the blessing of EPL as the
+    upgrade path for CPL, so they had to do a bit more legal juggling.
+    With Eclipse now the administrator of CPL and with their blessing
+    of EPL as the upgrade path for CPL, all we need to do is make the
+    move.
+
+commit d0da16d3dc7e62f90a4c7841f1828ec31077c288
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Oct 29 23:54:46 2012 -0500
+
+    Fix #198
+    
+    This does not fix the flawed allocate+initialize sequence, but it
+    does cause our custom "new" to do the right thing. We still need
+    to fix the general case for subclasses that define their own
+    initialize method.
+
+commit b16f8c38a41d96761b97f83b46d10f1219e4c725
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Aug 29 12:20:16 2012 -0500
+
+    Fixes for JRUBY-6632 and other BigDecimal issues.
+    
+    JRUBY-6632: BigDecimal.new fails when passed anything but string (Float, BigDecimal, Fixnum)
+    
+    Also miscellaneous fixes for missing constants, other coercion
+    types, and some error handling.
+
+commit 8ff1b9ef4f776f1812de0fb8e5c9162a38e9afe5
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Aug 1 16:43:24 2012 -0500
+
+    Fix JRUBY-6428
+    
+    Regression: Float#to_d doesn't work on 1.7 (did in 1.6)
+    
+    I added specialized logic for instanceof RubyFloat and 1.9 mode,
+    which appears to fix the issue without introducing regressions.
+    The test patched here fails under 1.9.3 as well.
+
+commit b8181cda909f6e42d7c0b7fffaabbe2a502f273b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jul 27 02:19:54 2012 -0500
+
+    Inline all calls to ThreadContext.getRuntime to access the field.
+
+commit a4abf290d7ee744b66236a685b842615976b33a1
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Apr 11 08:12:09 2012 -0500
+
+    BigDecimal can now be divided by Float again (WIP - more tests/fixes needed)
+
+commit 693b9ef25aba030fee3053b02d7132b1c5d39e72
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Mar 22 13:39:03 2012 -0500
+
+    JRUBY-6556: BigDecimal divided by Rational gives nil in --1.9 mode
+
+commit 1cadc16da80bfe75d9b64ebca85d37df62a1fc74
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Thu Nov 24 00:10:22 2011 -0600
+
+    Fix Bignum#% specs. The branching logic is not completely refined, since we should really refactor the logic present in this, 'div' and 'divmod' methods.
+
+commit 1b3818df705a30a3c2b5da642b5ac7a3ec05103d
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Mon Nov 21 23:36:27 2011 -0600
+
+    Add @Overrate annotation for some methods.
+
+commit fe7a46000e942dadab643d609142789a211e29d6
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Mon Nov 21 23:32:55 2011 -0600
+
+    Fix BigDecimal#truncate for 1.9 mode.
+
+commit fbcfde4c965cd202e5ec166d6b6f78a63061be37
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Mon Nov 21 22:30:06 2011 -0600
+
+    Fix BigDecimal#** specs for 1.9 mode.
+
+commit ca11a486fb971eaf47298f25a9329ea70b85c926
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Mon Nov 21 18:59:15 2011 -0600
+
+    Fix BigDecimal#divmod in the 1.9 mode, according to RubySpec.
+
+commit 2fb79980280f29eea7222c8a49dcfe7b386dfd7f
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Sat Nov 19 21:52:12 2011 -0500
+
+    In 1.9, BigDecimal("Infinity").div BigDecimal("1") raise FloatDomainError.
+
+commit f32aeff4fdf02c2f7b65c321e19899345e6e1e3a
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Sat Nov 19 21:40:17 2011 -0500
+
+    In 1.9, throw ZeroDivisionError if arg for BigDecimal#div is 0 and no precision is given.
+
+commit 77714961bc353750015ed30aced2aa71f1aab7ac
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Sat Nov 19 21:29:22 2011 -0500
+
+    In 1.9, BigDecimal#div(INFINITY) returns 0
+
+commit 390a9b45808181c432a31bfb4a9e9fe9574bcf93
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Sat Nov 19 20:57:50 2011 -0500
+
+    In 1.9, BigDecimal#div raises FloatDomainError if self or argument is a NaN.
+
+commit 96bb3e5651d4c326403448e066a6c0f8eee32551
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Sep 12 15:16:28 2011 -0500
+
+    Move 'bigdecimal' bits under org.jruby.ext.bigdecimal.

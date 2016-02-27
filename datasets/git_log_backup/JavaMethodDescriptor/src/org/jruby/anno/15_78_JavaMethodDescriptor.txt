@@ -1,0 +1,93 @@
+commit 4f1ff5a953eb96f31d4cf6883c9a9a2cb1099c3b
+Author: Sébastien Le Callonnec <sebastien@weblogism.com>
+Date:   Sat Apr 27 13:43:55 2013 +0100
+
+    Add license header to anno package classes.
+
+commit cdc242ddc54b6fe1a964a9e073ee76a54599586b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Mar 20 00:26:27 2013 -0500
+
+    Mostly wire up core class method binding with IndyMethodFactory.
+    
+    Core class methods now can be bound using MethodHandles
+    exclusively. This continues work to allow us to strip out
+    generated invokers and populators and ship a smaller jar for Java
+    7+ with invokedynamic available.
+    
+    TODO:
+    
+    * No arity-checking logic for variable-arity paths
+    * No arity error for variable-arity call with no good target
+    * Trace calls
+    
+    Performance with populators and invokers removed and this factory
+    active is 2-2.5x slower than generated populators and invokers,
+    but that could be an artifact of the extra work being done by
+    the default populators. We may need to look into a way to do more
+    work at build time to determine the eventual structure of MH-based
+    invokers, rather than programmatically doing it on every boot.
+
+commit 8b65be86fbdbdc7294b22a3415ea493ae914bdca
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Mar 9 14:27:02 2012 -0600
+
+    Better error for static JRuby methods with no self argument.
+
+commit e1b6cfbd32e7380356167353730a972ca3fc8455
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Apr 25 06:57:04 2009 +0200
+
+    Allow annotation-bound methods to have void return values; in Ruby they will return nil. Also finally add the beginning of a test for the method factories.
+
+commit 77cddf4e3a70c3942438ce366efc21c0c84b25d8
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jan 26 02:05:21 2009 +0000
+
+    Fix Java 6-only use of Arrays.copyRange and modify NB project to force Java 5.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8891 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 85d98923ff1f5819107953b68e3dd33d7d6f1c61
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Jan 25 20:34:09 2009 +0000
+
+    Add logic to automatically coerce incoming IRubyObject to RubyString in the invoker, rather than requiring all receiver methods to do it. Beginning of coercion formalization.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8890 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 4ed75c65753391805f77e517075f139d1d579fa4
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Aug 11 21:37:33 2008 +0000
+
+    Add support for arity-splitting pure restarg methods. No support yet for required + restarg, but this helps a lot of "meta" cases like Object#send and Method#call.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7439 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 531a4c218b85db30d5d8be31b1ceec9588eea4e1
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Apr 16 17:43:10 2008 +0000
+
+    Offline invoker generation step 1: eliminate references to Class fields of desc during invoker generation.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6510 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 1e2bb746d73d2986ff9a1e8b3e81316b3eee90f7
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Mar 20 17:13:19 2008 +0000
+
+    Modifying the normal annotated method path to not require an actual reflected Method object directly.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6297 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a0ed4fd9d001c606a0c3f8c30a6d38506afe88d8
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Mar 8 05:40:36 2008 +0000
+
+    Abstract the idea of a "descriptor" given a method and its annotation into a separate structure we can pass around and store.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6152 961051c9-f516-0410-bf72-c9f7e237a7b7

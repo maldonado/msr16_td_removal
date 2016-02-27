@@ -1,0 +1,129 @@
+commit 36a0800e7ea144680d92d4233585363120643b5d
+Author: Peter Donald <donaldp@apache.org>
+Date:   Wed Feb 6 13:38:45 2002 +0000
+
+    Style touchups
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@271189 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ce7d0dd681c1949f5886476cfedfc73c79c17539
+Author: Peter Donald <donaldp@apache.org>
+Date:   Tue Jan 22 12:14:08 2002 +0000
+
+    Zap whitespace
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270830 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 480c59459b1d02b626b2a29b1aa8dfbadcb31c4d
+Author: Peter Donald <donaldp@apache.org>
+Date:   Sun Jan 20 09:55:12 2002 +0000
+
+    Moved toURL from Path to PathUtils
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270808 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 69b275e120885474d0d21a78bb6c7f7cb5eca90d
+Author: Peter Donald <donaldp@apache.org>
+Date:   Sat Jan 12 05:01:06 2002 +0000
+
+    Migrate all the ant-independent code for
+    
+    native execution
+    environment loading
+    os detection
+    
+    into a new hierarchy aut.
+    
+    AUT basically being completely independent of Ant.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270681 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a6ab0235192d311e0846d196589b71a02e2a7a43
+Author: Peter Donald <donaldp@apache.org>
+Date:   Sun Dec 30 10:46:59 2001 +0000
+
+    Restyled.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270479 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d6f0a60ec63c68967be2e558c74a3dee03efad56
+Author: Peter Donald <donaldp@apache.org>
+Date:   Sun Dec 30 06:46:37 2001 +0000
+
+    Made SysProeprties a top level class.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270462 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 093967db0e29ab675eef29fbe21d840f3467c5a7
+Author: Peter Donald <donaldp@apache.org>
+Date:   Sun Dec 30 03:33:58 2001 +0000
+
+    Removed AntClassLoader and replaced it with URLClassLoader. Now new ClassLoaders do not include the ant runtime by default
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270450 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e86450aa2346a5465be82499e2a4f6c0daad611e
+Author: Peter Donald <donaldp@apache.org>
+Date:   Sun Dec 30 01:26:55 2001 +0000
+
+    Rmove more unused cruft from Project
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270445 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 255020c002e99c42ba08342cbc874a0a5737d24c
+Author: Peter Donald <donaldp@apache.org>
+Date:   Sun Dec 23 06:35:02 2001 +0000
+
+    Fix up license banner.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270362 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b8c50342cacdaa5bc7e3e4e72eb8351da5824716
+Author: Peter Donald <donaldp@apache.org>
+Date:   Sun Dec 16 00:39:05 2001 +0000
+
+    BuildException -> TaskException
+    
+    Removed uneeded imports.
+    
+    Processed code through style formatter.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270166 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 7a3448dcea316f454dd0ba470f8b0825504ae309
+Author: Peter Donald <donaldp@apache.org>
+Date:   Sat Dec 15 14:56:00 2001 +0000
+
+    Started refactoring.
+    
+    Made BuildException extend TaskException. Now BuildException is no longer a RuntimException and needs to be declared everywhere it could be thrown
+    
+    Removed the constructors that took location info for BuildException. Location is something known about byt the container and the tasks them selves should not be worrying about that sort of thing
+    
+    Removed a bunch of deprecated methods and features. Also moved all file handling utilities outside iof the Project class. To aid the transition I added a resolveFile method to the base ProjectComponent class.
+    
+    480 odd compile errors left to clean up.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270158 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d1064deab4fcb65519fda168052576c3b44eb45e
+Author: Peter Donald <donaldp@apache.org>
+Date:   Sat Dec 15 12:06:33 2001 +0000
+
+    Add in a clone of the main ant source tree so that it can undergo some heavy refactoring.
+    
+    Initial stages involves just making the Ant1.x tasks implement Ant2 interface and refactoring BuildException such that it can be easily be replaced by TaskException etc.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@270153 13f79535-47bb-0310-9956-ffa450edef68

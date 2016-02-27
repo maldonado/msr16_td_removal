@@ -1,0 +1,441 @@
+commit dd30d6171d031d3288c7d31da303823dccee03c2
+Author: Felix Schumacher <fschumacher@apache.org>
+Date:   Fri Jan 2 17:06:11 2015 +0000
+
+    Bug 57193: Add param and return tags to javadoc
+    Bugzilla Id: 57193
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1649078 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d2dc649d2ce5781c1476305ecb73a8a72d6069e8
+Author: Bruno Demion <milamber@apache.org>
+Date:   Tue Nov 4 15:53:59 2014 +0000
+
+    JMSSampler: For input string: "" java.lang.NumberFormatException (for Expiration or Priority fields)
+    - fix the bug
+    - simplify some code arround getPropertyAsString() vs Constant fields for Priority and Expiration
+    - add documentation for these fields in User Manual (JMS Publisher and JMS Point-to-Point)
+    - update screenshots
+    - add time unit in the GUI for expiration field and indicate the range 0-9 for priority level too.
+    Bugzilla Id: 57183
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1636619 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a0e2ac54db32330226aadc9c4a7818725846be2e
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Fri Aug 22 21:11:17 2014 +0000
+
+    Bug 56809 - JMSSampler closes InitialContext too early
+    Bugzilla Id: 56809
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1619932 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c618458c0799cd959888000f6bf56ff96a1ae57a
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Tue Jul 1 20:54:07 2014 +0000
+
+    Bug 56510 - JMS Publisher/Point to Point: Add JMSPriority and JMSExpiration
+    Bugzilla Id: 56510
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1607183 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 53e1d0a1075f8ed70af54afe4b362c48b86e3008
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Fri Feb 28 23:06:52 2014 +0000
+
+    Bug 56198 - JMSSampler : NullPointerException is thrown when JNDI underlying implementation of JMS provider does not comply with Context.getEnvironment contract
+    Apply check on every call of Context.getEnvironment
+    Bugzilla Id: 56198
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1573108 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 17388ca94200b20ef9a27d334cb79fbc042b4b78
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Fri Feb 28 22:53:29 2014 +0000
+
+    Bug 56198 - JMSSampler : NullPointerException is thrown when log level is DEBUG and JNDI underlying implementation of JMS provider does not comply with Context.getEnvironment contract
+    Bugzilla Id: 56198
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1573105 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 595eb1070b0f7dd6379629071553974868eb4f70
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Sun Nov 24 22:21:58 2013 +0000
+
+    Bug 55589 - JMS Publisher/Point to Point : Add ability to set typed values in JMS header properties.
+    Bugzilla Id: 55589
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1545089 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 334ec094d3985f6b7f4eea35571aee9c73f71e86
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Mon Jul 22 14:40:45 2013 +0000
+
+    Javadoc fixes
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1505695 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 085a747c38d7df1ce401a7695287a40cd952c84f
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Nov 27 00:19:20 2012 +0000
+
+    Move to Java 6
+    add @Override for interface implementations
+    Bugzilla Id: 54199
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1413958 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 724d5485b5976425ece166c7c1038fcd4f0a6b17
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Sun Oct 28 11:09:53 2012 +0000
+
+    Fixed potential NPE when object not found in Context
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1402973 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a81b678d62a693b65fba6ebac8a22d3810e7c65a
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Wed Aug 22 22:56:54 2012 +0000
+
+    TestListener interface could perhaps be split up.
+    Bugzilla Id: 53749
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1376300 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e9ec41c85a3381cb92a31055720a48a9d8495b7f
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Mon Aug 20 23:47:50 2012 +0000
+
+    Standardise on static final
+    No code change
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1375325 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6ce0160bff37b4ae63d8137e317883661922bd97
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Sun Mar 11 09:00:56 2012 +0000
+
+    Bug 52810 - Enable setting JMS Properties through JMS Publisher sampler
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1299341 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 38a343057a556781eed4b9d0c9ddbe1fe7708cd8
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Jan 3 19:37:22 2012 +0000
+
+    Redundant null checks (Findbugs)
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1226928 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 5f5370df4585c86c12fc88b7fc17dc1354df0c04
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Tue Oct 25 20:34:25 2011 +0000
+
+    Bug 52088 - JMS Sampler : Add a selector when REQUEST / RESPONSE is chosen
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1188896 13f79535-47bb-0310-9956-ffa450edef68
+
+commit dd1c543db404f0b84743012e08988d6273120ca0
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Mon Oct 24 16:39:42 2011 +0000
+
+    Generic for loops
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1188215 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f4a66db25452bae919f8370df3cd061d34568dcc
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Mon Jun 21 16:23:59 2010 +0000
+
+    Simplify code by using Utils.close() methods
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@956636 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 81fddf64df64cb848bc70e48d92fffd1e2ea14f0
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Jun 18 12:01:28 2010 +0000
+
+    Bug 46142 - JMS Point-to-Point correlation problems
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@955958 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 30303d9ab100bc190c9250f05ae2f26489679c15
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Mon May 3 01:31:50 2010 +0000
+
+    sendQueue does not need to be an instance variable
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@940345 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 445c7fc3af0a1b6b2efee947c25d326e8a135919
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun May 2 13:39:15 2010 +0000
+
+    Add SampleResult request and response headers
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@940220 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 574114c14b71e8315c7fb48fb4d6370df066a1b5
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Mon Apr 26 21:29:00 2010 +0000
+
+    Bug 49111 - "Message With ID Not Found" Error on JMS P2P sampler.
+    Fixed rest of bug
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@938247 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 33757c7cf4a7c29363f144cf301cbe3e8c60e98f
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Mon Apr 26 13:09:10 2010 +0000
+
+    Better handling of errors
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@938030 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 7552e7f4b99dc4496609d997d35a1ec0d4ddc7bd
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Apr 24 17:56:44 2010 +0000
+
+    Use setResponseData(String, null) where default charset is OK
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@937663 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1b870d0fb6eb7c01373ae7d47b7ab427ab89d672
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Feb 23 16:09:09 2010 +0000
+
+    Remove trailing spaces
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@915405 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c1c50391ab022d16f2ac525eaf5a53aa26a14a05
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Feb 9 21:09:23 2010 +0000
+
+    Javadoc
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@908219 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 3083bc712584a04040418275e3a02af885c39e0e
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Nov 15 01:49:25 2009 +0000
+
+    Bug 47556 - JMS-PoinToPoint-Sampler Timout field should use Strings
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@836310 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 7f49ce41aea0919c998d56af5d5f8f4a02685b69
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Aug 15 17:20:34 2009 +0000
+
+    Fix up some raw types
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@804491 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 4bdf9c6650ba4ede2039a0e29a353224f3127cc9
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Aug 14 19:08:38 2009 +0000
+
+    Add @Override and @Deprecated annotations
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@804323 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b593b0ea92e02c4f3053397779e9b00a7f897ab3
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun May 10 18:14:20 2009 +0000
+
+    Tab police
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@773376 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 624583024e436f4f68aca673546f8b4e21172ed6
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Nov 7 00:17:46 2008 +0000
+
+    Bug 45458 - Point to Point JMS in combination with authentication
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@712018 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8a6897bff3752f4709e9e3811eca6d06e349471b
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Mon Oct 20 14:52:56 2008 +0000
+
+    Bug 46016 - avoid possible NPE in JMSSampler
+    Replace inefficient iterator usage
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@706313 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 52eb292754ec4b6069b709ff5cf4d2db71692001
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu Oct 2 19:23:05 2008 +0000
+
+    Bug 45571 - JMS Sampler correlation enhancement
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@701218 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 4d537c3beb6c7138655d0d2f6162f3a3e5f79d51
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Jul 22 16:14:59 2008 +0000
+
+    Update class Javadoc
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@678790 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6bf94deccce242cd1bba95592f54fd78a90dfc3e
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Jul 6 23:56:15 2008 +0000
+
+    Detab
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@674365 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6e2f4dcc1e1a6c5ba4c0db0e9854ef772f5ef31c
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu Apr 10 01:21:09 2008 +0000
+
+    Ensure if and for statements always use blocks
+    Other minor tidyups
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@646610 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d1a2dc99d6ffaca56dc40fb05698a583c28cd825
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Nov 20 16:00:49 2007 +0000
+
+    Javadoc fixups
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@596725 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 506f8e50f80ead52f0d60893a55fa41a4358eb1a
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Sep 1 18:36:13 2007 +0000
+
+    Bug 403873 - add JMS point-to-point non-persistent delivery option
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-2@571853 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 15c06aac326bd8ec9015ba584b7f4d8a715bcc2f
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Sep 1 17:51:00 2007 +0000
+
+    Hide variables that should not be exposed (force access via get/set methods)
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-2@571842 13f79535-47bb-0310-9956-ffa450edef68
+
+commit dfd3eef77a5526e1dbf848681a72579bae220fb7
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Jun 9 17:42:55 2007 +0000
+
+    Unnecessary to enable ThreadListener for all TestElements
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-2@545780 13f79535-47bb-0310-9956-ffa450edef68
+
+commit dbbfc6e17e2b9c68a7ab75dbb8d75dc870f66ff8
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Wed Feb 21 00:00:40 2007 +0000
+
+    Make non-serialisable field transient
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-2@509821 13f79535-47bb-0310-9956-ffa450edef68
+
+commit db8dedbff2834a7eb4e0429a307ecbdd731a53d8
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Jan 7 18:10:21 2007 +0000
+
+    Update license (remove copyright)
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-2@493789 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c08ec5b10a7878e920a30309f90b104e7655924b
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Nov 13 22:26:52 2005 +0000
+
+    Use entrySet iterator instead of keySet + get
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-1@343988 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 76159a5b953d9dc5518b2ccb03bfbc1c4908837d
+Author: Michael Stover <mstover1@apache.org>
+Date:   Tue Jul 12 20:51:09 2005 +0000
+
+    Formatting Code to basic Java Standard
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@325542 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ecce0c8abefba0c469586bece17765fabca7b3ba
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu Jun 23 00:39:39 2005 +0000
+
+    Add ASF licence
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@325491 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1c0cca74544627da1a2872f031a4c284f813d66f
+Author: Martijn Blankestijn <mblankestijn@apache.org>
+Date:   Wed Jun 1 17:55:08 2005 +0000
+
+    Fixed ASF Bugzilla Bug 35133, receiver thread is stopped at the end
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@325418 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1fe1e56f55f66488c3196ec1a695352d0b5fa3fa
+Author: Martijn Blankestijn <mblankestijn@apache.org>
+Date:   Thu May 19 15:37:46 2005 +0000
+
+    Added getters, added isDebugEnabled, throws Exception if no session exists
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@325364 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6c34da4dd6ecaa3a0b4d9387df19b448ce237aa1
+Author: Martijn Blankestijn <mblankestijn@apache.org>
+Date:   Sat May 7 08:15:23 2005 +0000
+
+    Fixed error reporting
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@325319 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 55061aea8077fca36244f824352d18f0fdf8e6a9
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Apr 24 19:24:11 2005 +0000
+
+    Use standard JMeter logging package
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@325286 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e9a9590d552c826aaacdb731c18cc7ae39d93919
+Author: Martijn Blankestijn <mblankestijn@apache.org>
+Date:   Mon Mar 21 19:05:23 2005 +0000
+
+    Adherence to coding standards. Changing of logging to jorphan.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@325236 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d4cc6f479e20b1fdfc65ff02dcb095efa9f77727
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Wed Jan 5 03:01:14 2005 +0000
+
+    Remove unused import(s)
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@325084 13f79535-47bb-0310-9956-ffa450edef68
+
+commit becf2f962b2db027c0ad642fdd6595adc8c97677
+Author: Peter Lin <woolfel@apache.org>
+Date:   Thu Oct 28 04:52:36 2004 +0000
+
+    checking in the classes for the new JMS sampler
+    
+    peter
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@325001 13f79535-47bb-0310-9956-ffa450edef68

@@ -1,0 +1,30 @@
+commit da8ec4fa38d1b9a6a558e0cc7ffe9c5a439141d6
+Author: Peter Donald <donaldp@apache.org>
+Date:   Thu Feb 21 09:27:22 2002 +0000
+
+    Reworked the ExecManager service so that the Execute adapter object becomes responsible for combining supplied env vars with native env vars if required
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@271466 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d09fc12e5806f0129b029350af8e7b75ab8743fe
+Author: Peter Donald <donaldp@apache.org>
+Date:   Sun Feb 10 01:01:13 2002 +0000
+
+    Removed throwsIOException from Execute.execute() as it was never thrown.
+    
+    Made some tasks specify expected return code rather than checkin it themselves.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@271266 13f79535-47bb-0310-9956-ffa450edef68
+
+commit ca77bf7cd306d07ef1a37b97a97b1de17f07f701
+Author: Peter Donald <donaldp@apache.org>
+Date:   Sun Feb 10 00:46:51 2002 +0000
+
+    Renamed Execute2 to Execute and moved it into the myrmidon.framework package.
+    
+    Cleaned up its code a little. ALso reworked it so that the user can specify an expectedReturnCode and if the value is not the one expected a TaskException is thrown.
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/ant/core/trunk@271265 13f79535-47bb-0310-9956-ffa450edef68

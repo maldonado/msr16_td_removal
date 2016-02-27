@@ -1,0 +1,417 @@
+commit bb98e4b8decffc0361b70a6c99c1ade5fed0abcb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Mar 28 10:02:33 2013 +0000
+
+    Move RuntimeHelpers to org.jruby.runtime.Helpers.
+
+commit 61678ac1a2514a9932276f8d527816a5980a94b3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Feb 25 20:41:40 2013 +1100
+
+    Fix more references to CPL.
+    
+    The phrase "Common Public License" was split across two lines in
+    our default header, which caused it to be missed during earlier
+    search/replace. Also, we did not replace the CPL URL in the
+    header with the EPL URL.
+
+commit 330fef3b0fc18af477ccea19bd278669667f31bb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 12 14:49:29 2013 -0600
+
+    Switch JRuby's CPL license to EPL.
+    
+    Governance of the CPL license was moved to the Eclipse Foundation
+    at some point in the past, and Eclipse blessed the EPL (Eclipse
+    Public License v1.0) as the successor to CPL. Because the CPL
+    contains a clause allowing transparent upgrades to future blessed
+    successor licenses, we can make the move to EPL without
+    re-contacting past contributors.
+    
+    The change in going from CPL to EPL largely just removes some
+    punitive language that apparently made many companies nervous. All
+    other language in the license remains identical.
+    
+    Several documents about Eclipse's move from CPL to EPL are here:
+    
+    http://www.eclipse.org/legal/cpl2epl/
+    
+    Note that Eclipse's move came before the blessing of EPL as the
+    upgrade path for CPL, so they had to do a bit more legal juggling.
+    With Eclipse now the administrator of CPL and with their blessing
+    of EPL as the upgrade path for CPL, all we need to do is make the
+    move.
+
+commit 6b13c46b6880b7a7b1f4b71102c0620eeb542d73
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Nov 7 20:19:07 2012 -0600
+
+    Fix JRUBY-6978
+    
+    Allow Java exceptions to be rescued by StandardError as well.
+    
+    Java exceptions do not fit into the Ruby exception hierarchy, so
+    we have to special-case logic to handle them. You can rescue a
+    Java exception using any of the following:
+    
+    rescue Object # rescues all Ruby and Java exceptions
+    rescue Exception # rescues all Ruby and Java exceptions
+    rescue StandardError # rescues StandardError and Java exceptions
+    rescue NativeException # rescues and wraps Java exceptions
+    rescue <actual Java type> # rescues that type of Java exception
+    
+    Java exceptions should duck-type as Ruby exceptions, but users
+    must keep in mind that Java exceptions will not always be the
+    exact type they are rescuing.
+
+commit 0b0f2b34c5dba02da6452f1352c5dd10f307e76d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Oct 9 16:49:27 2012 -1000
+
+    Fix JRUBY-6907
+    
+    Regression: ruby,java(thread),ruby exception path results in nilClass exception
+    
+    This is another case where removal of the $! setting we did before
+    running exception-handling blocks appeared to be premature or
+    incorrect. There appears to be some paths through exception
+    handling -- perhaps only in the interpreter -- that fail to set
+    $! properly beforehand. I have restored one of these sets, and the
+    case given in the bug report now passes.
+    
+    We should get these cases rolled in; would appreciate if you can
+    adapt them to our JI specs and send us a PR.
+
+commit 9b1cc7b25e3b4e56f667c04917f118a0eed98469
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Aug 3 11:32:14 2012 -0500
+
+    Fix JRUBY-6812: 1.7 regression handling Java exceptions
+    
+    We were shortcutting the logic to convert the rescued exception
+    into its appropriate Ruby nature. Specifically, we went straight
+    to wrapping it with a proxy object rather than checking if it was
+    a Ruby subclass that already had an object associated with it.
+    
+    The fix was to go through appropriate channels, specifically
+    JavaUtil.convertJavaToUsableRubyObject, which checks for Ruby
+    subclasses before proceeding to wrap blindly.
+    
+    This only affected the interpreter. Compiled code was already
+    doing the right thing.
+
+commit 20632af6e1fa511fd9b762beda2a60d39bf3c859
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Tue May 8 17:09:14 2012 -0500
+
+    Fix RubyThread.join to set "$!" in the calling thread when the target
+    thread exits with an exception.  This lets us gets rid of a hack in both
+    AST and IR interpreters where on catching an exception, "$!" is set
+    before passing control to the rescue handlers.  This in turn makes the
+    exception handlers in IR interpreter loop identical for a couple
+    scenarios which can then let us compact exception tables for the IR JIT.
+
+commit 33919667a45607aa3e7a23765e396d2dd940d643
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Apr 9 10:40:30 2012 -0500
+
+    Propagate Java exceptions without wrapping in NativeException.
+    
+    Fix for JRUBY-6149 and others.
+    
+    Previous versions of JRuby wrapped Java exceptions raised from
+    calling Java methods inside NativeException. This provided a way
+    to rescue them, but also caused them to remain wrapped when they
+    eventually leave Ruby-space. This in turn prevented some libraries
+    that depend on the *original* exception propagating from working
+    correctly, like Clojure wanting IllegalStateException to know an
+    STM commit should be run again.
+    
+    This change removes NativeException from propagating, and instead
+    actually propagates the original Java exception in JI-wrapped
+    form. Rescue NativeException still works, but it rescues the real
+    Java exception instead of a NativeException instance. This may
+    need to be modified to wrap in NativeException.
+
+commit e055dbe2e6a793916c7a8383d5a6f6aa0d1e6e7f
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Thu Oct 14 15:51:53 2010 -0400
+
+    Formatting change. Avoid dangling 'if' clause on a line by itself. Also, reformat multi-line boolean conditions so that it is clearer that they indeed span multiple lines.
+
+commit bfc7eb3bc9a6d6296e00a923b054d92045998126
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Wed Jun 16 16:37:03 2010 -0500
+
+    JRUBY-4885: Fix 'else' handling in begin ... rescue ... else ... end
+
+commit 323ba1e629f578e916b0779c421f4fae43a8aece
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Apr 6 01:30:30 2010 -0500
+
+    Fix for JRUBY-4677: Java exceptions can't be rescued with "rescue Exception"
+    
+    This fixes the problem by modifying all rescue blocks to handle Java exceptions when they're rescueing "Exception" as well as handling Ruby exceptions. It feels like the way it should work from the Ruby side, but I worry about it from the Java side. I had to introduce a new Unrescuable marker to allow some internal exceptions to propagate. All tests pass, specs pass the same.
+
+commit 61b91d0f249964cd71d601991fb6dee54e641a46
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue May 19 17:08:26 2009 -0500
+
+    Changes for JRUBY-3588: Allow rescuing Java Throwables.
+
+commit eb783290f6206280063137b6bd90c40e8c8b1f76
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Jan 10 00:32:57 2009 +0000
+
+    Remove some extraneous argument passing during exception handling logic.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8673 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 38539306c47caec741243f5e15be0e345757f069
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Dec 28 01:52:13 2008 +0000
+
+    Bombs away! Eliinate nodeId field from Node and add a method to all nodes of interest to return the value instead. Probably a little slower, but we're moving away from using NodeType on critical path code and the memory savings are pretty substantial (4-8 bytes per node).
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8485 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 24befe5cf0587885f08f7dc82217f141cc500550
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Dec 18 06:51:54 2008 +0000
+
+    House cleaning! Delete a bunch of unused and/or deprecated classes of strange and wonderful origins, eliminate all deprecated Callback-related code, reduce environment lookup to a simple System.getenv call, kill off the last of the old stackless interpreter's "Instruction" interface, and other miscellaneous cleanup.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8395 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 6d5573817f49c3f69016dc100ad267aa49b1a0cf
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Aug 3 05:36:51 2008 +0000
+
+    Final fixes for "rescue can handle Java exceptions": generate our own little "Unsafe" to use instead of Sun's.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7357 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit f08b92da6c3504f4c68b456809a9b1d3b4e075bf
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Aug 3 03:52:44 2008 +0000
+
+    Adding Java exception rescuing to the compiler as well.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7356 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 29df8f743ff505b68cb99bbdefe1a7955818109b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Aug 3 03:52:35 2008 +0000
+
+    * Allow rescue to rescue non-wrapped Java exceptions (immediately wrapped if handled; interpreter only at the moment)
+    * Allow $! to be assigned a wrapped Java exception
+    * Added beginnings of an Unsafe mimic to use for necessary purposes (like rethrowing exceptions)
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7355 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 50e1cda4dd957669144a1ce10a66964f3330897c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jul 8 03:35:00 2008 +0000
+
+    More outlining in RescueNode; about as clean as it can get now.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7125 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 8cd3dcd2e1cf06a31bb188308dec754e0ff8bbdd
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jul 8 00:11:02 2008 +0000
+
+    Outline some stuff in RescueNode to simplify it a bit.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7123 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a5d95662f6f6ea3a6b7c152edbeb92c9bca875e4
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Tue Jul 1 00:36:50 2008 +0000
+
+    JRUBY-2709: Interpreter crashes on a new rubyspecs for rescue (oligatory ruby.mn commit).  Add spec-all-interpreted task
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7058 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit dbcdcdbac451af5838c377b299289b2a7b94d9e2
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Thu Jun 12 21:28:49 2008 +0000
+
+    Tom Bomb! New Interpreter landing
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6946 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 47f0d75fbf8f6519ed3527d077e724f0b9264552
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Wed Aug 29 21:20:40 2007 +0000
+
+    NodeTypes now and enum called NodeType
+    Various warning removal
+    Minor Block refactoring
+    More boilerplate fixing
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4233 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit df1ae61d89ae343bb981d2727d29b7379371a310
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Tue Aug 28 20:43:52 2007 +0000
+
+    A couple more callAdapter additions to nodes that can support them
+    Remove annoying generics warnings that IDEs like to give for un typed collections
+    Change boilerplate in ast so that netbeans can have them closed by default (and javadocs will not contain them)
+    Remove last vestiges of serialization from AST
+    MethodIndex moved into DefaultAdapter
+    Smaller smattering and things I cannot remember
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4214 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 19129d0d0d6db68a9994ff1fae95ea3df4499bcd
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Mon Jul 16 19:37:06 2007 +0000
+
+    JRUBY-1205: String as condition of if be parsed as MatchNode
+    
+    Remove serializable from asts since we no long serialize them
+    Remove some unused imports
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4034 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 6e15491217631472c05c6928672f9c7064a978b3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Oct 9 22:13:11 2006 +0000
+
+    merging new interpreter plus a few minor fixes to trunk. JRUBY-185
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2319 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit ddd084d66677f4d56386f5657874c3efc265d68b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Nov 4 01:34:25 2005 +0000
+
+    merging refactor/rename changes for machine/instruction stuff
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1822 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 41adc9d73b44b14dd25593e772188d405ec00f2f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Oct 26 05:34:12 2005 +0000
+
+    removing revision keywords
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1810 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit f5643d27aa7a2dd836ef19c758a0a13351434da4
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Oct 21 01:04:27 2005 +0000
+
+    merging cnutter_work2 to HEAD...damn the torpedos! full speed ahead!
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1807 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 282a8299b59e8bae8e366fa3f7610886e984d200
+Author: David Corbin <dcorbin@users.sourceforge.net>
+Date:   Sun Oct 9 00:28:13 2005 +0000
+
+    Clean up "childNodes" logic so that null nodes are never returned.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1799 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit ed6bb95c6265be4d7b596b5c8ee1d8c7bdb9bf0e
+Author: David Corbin <dcorbin@users.sourceforge.net>
+Date:   Sun Oct 2 17:19:14 2005 +0000
+
+    Enabled project-specific compiler error/warnings and set IGNORE for discouraged access on three projects.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1783 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 3437afe431124a2f60cf7e37c579b0c60ed0bf95
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Fri Sep 30 17:39:23 2005 +0000
+
+    Merge of TOM_RDT_POSITION branch
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1780 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 7a83c48af56081c1c2132111d535f28d10cf3afb
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Fri Dec 31 20:55:52 2004 +0000
+
+    Update license to GPL/LGPL/CPL
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1574 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit c15ab526440e25745b45a2ab3aaab1b5a7334d1f
+Author: Stefan Matthias Aust <sma@3plus4.de>
+Date:   Sun Nov 28 14:54:57 2004 +0000
+
+    code cleanup
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1428 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 035c46fd66ac254cb294f8151bb458a672b46112
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sat Oct 30 22:27:08 2004 +0000
+
+    Remove unlikely to be used soon abstractions and simplify lexing
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1373 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 38c9a31079ded2e81365f0c0f226c6d805ea1444
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sat Apr 17 21:28:30 2004 +0000
+
+    ruby 1.8 grammar landing
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1290 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a16b4a3596853f2153bfe0df0a8cbe54382d5d58
+Author: Anders Bengtsson <ndrsbngtssn@yahoo.se>
+Date:   Sat Feb 28 23:00:58 2004 +0000
+
+    Removed a lot of old IndexedCallback stuff.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1254 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit ab0c0820889f955f3de4c8df77ebda2a4177416d
+Author: Jan Arne Petersen <jpetersen@uni-bonn.de>
+Date:   Sat Oct 26 17:07:53 2002 +0000
+
+    - Add Serial UID to nodes
+    - Lexer refactorizations
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1034 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 0cb16425d41b5aac2b06b3147b1616a19ca17a50
+Author: Anders Bengtsson <ndrsbngtssn@yahoo.se>
+Date:   Sat Oct 26 00:53:49 2002 +0000
+
+    Made some more nodes immutable (or at least less mutable).
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1030 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit c77b91f42c4f3810140d44cbe603248a1d52b7ee
+Author: Jan Arne Petersen <jpetersen@uni-bonn.de>
+Date:   Tue Sep 10 15:18:12 2002 +0000
+
+    - restructure of the code tree.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@782 961051c9-f516-0410-bf72-c9f7e237a7b7

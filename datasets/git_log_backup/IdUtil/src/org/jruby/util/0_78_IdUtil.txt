@@ -1,0 +1,158 @@
+commit 61678ac1a2514a9932276f8d527816a5980a94b3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Feb 25 20:41:40 2013 +1100
+
+    Fix more references to CPL.
+    
+    The phrase "Common Public License" was split across two lines in
+    our default header, which caused it to be missed during earlier
+    search/replace. Also, we did not replace the CPL URL in the
+    header with the EPL URL.
+
+commit 330fef3b0fc18af477ccea19bd278669667f31bb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 12 14:49:29 2013 -0600
+
+    Switch JRuby's CPL license to EPL.
+    
+    Governance of the CPL license was moved to the Eclipse Foundation
+    at some point in the past, and Eclipse blessed the EPL (Eclipse
+    Public License v1.0) as the successor to CPL. Because the CPL
+    contains a clause allowing transparent upgrades to future blessed
+    successor licenses, we can make the move to EPL without
+    re-contacting past contributors.
+    
+    The change in going from CPL to EPL largely just removes some
+    punitive language that apparently made many companies nervous. All
+    other language in the license remains identical.
+    
+    Several documents about Eclipse's move from CPL to EPL are here:
+    
+    http://www.eclipse.org/legal/cpl2epl/
+    
+    Note that Eclipse's move came before the blessing of EPL as the
+    upgrade path for CPL, so they had to do a bit more legal juggling.
+    With Eclipse now the administrator of CPL and with their blessing
+    of EPL as the upgrade path for CPL, all we need to do is make the
+    move.
+
+commit bef3b7040c09e8d85f7042cf7360d55dbd369ed4
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Aug 27 11:36:21 2012 -0500
+
+    Fix JRUBY-6865
+    
+    JRuby allows invalid attr_accessor (MRI raises exception)
+    
+    Our test for local variable names (which applies in both JRuby and
+    MRI to attr names) did not check for trailing ?. I added that one
+    case.
+    
+    Note that in MRI all of this passes through ID parsing, which has
+    logic for checking the type of ID I did not attempt to sort out.
+    There are other cases we probably let through that MRI does not.
+    
+    Test submitted to MRI via https://github.com/ruby/ruby/pull/171
+
+commit 0a1ed62c94ef3c07d28932d7e99434b56d2c35be
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Dec 14 17:02:00 2011 -0600
+
+    Get MRI's tests running in JRuby's test suite.
+    
+    * Get minitest/excludes.rb in for minitest exclude support
+    * Update test/externals/ruby1.9/*
+    * Fixes to get tests running:
+    ** Add dummy "continuation" library
+    ** Add dummy "io/nonblock" library
+    ** Fixes to Psych{Parser,Emitter} for recent changes to Psych proper
+    ** Be more permissive on constant names, to allow encodings
+    * Update externals for previously unexcluded failures
+
+commit 1a87714ed4824680eb24005bf01ae5b56472f119
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Apr 1 00:12:48 2009 +0000
+
+    Initial round of work on new ivar table.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9508 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 16e5550655d971eca1eeea0a2fe8794b86928b97
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Thu Oct 25 18:14:24 2007 +0000
+
+    Lexer jumbo patch.  Speeds up general parsing 10-15%.  Cold parses are about 30% faster.   Code has been refactored to the point that additional optimizations can be considered (like bytelist identifiers for alloc-less identifiers; same for uninterpolated string nodes).
+    
+    intern'ing of identifiers now happen in lexer rather than being smattered through AST
+    Reader -> InputStream for LexerSource
+    A new ByteList LexerSource for evals
+    
+    Additional bugs fixed:
+    JRUBY-1408: JRuby crashes with error: can't find string "EOF" anywhere before EOF (SyntaxError)
+    JRUBY-1443: Wrong position information for a CallNode with parentheses
+    JRUBY-1435: YieldNodes sometimes have wrong position information
+    JRUBY-1416: eval of a "proc" with setting the line number for something lower than 1 to adjust the line number causes "java.lang.ArrayIndexOutOfBoundsException: -1 (NativeException)"
+    JRUBY-1432: NFE from RubyYaccLexer.yylex
+    
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4731 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit f9c19e6d686460124342a009f9ac2bb8d65ed6c1
+Author: Bill Dortch <bill.dortch@gmail.com>
+Date:   Thu Oct 4 07:19:31 2007 +0000
+
+    Add unit tests for JRUBY-1295. Remove final modifiers from IdUtil.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4480 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 4849e41a0f6979f2dbb73018290dfad2447ee6e4
+Author: Bill Dortch <bill.dortch@gmail.com>
+Date:   Wed Aug 29 00:46:58 2007 +0000
+
+    JRUBY-1295: fix ivar/cvar/constant name validation.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4217 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 3f5368e5f4eae3b254072edd177512a86a7f08c4
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Tue Jan 9 13:12:22 2007 +0000
+
+    Tighten up our variable usage further, and also fix a few indexoutofbounds just waiting to happen
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2708 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit e38dc21bbf4ac67bef7bf9521eff5a58b5092c5e
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sun Oct 22 18:39:17 2006 +0000
+
+    Landing 'enebo' branch.  Most notable:
+    - Merge in fixes from original refactoring patch form Mirko and friends.
+    - Fixes many many positioning issues.
+    - Simplify and refactor portions of lexing and parsing.
+    - Reduce gratuitious object creation (like making a token which immediately
+       becomes a node).
+    - Comments are now added to parser result as a list.  IDE people can
+      do a second pass to associate these nodes to the appropriate AST nodes.
+    - offsets in ISourcePosition now represent a position 'between' characters.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2367 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 7a83c48af56081c1c2132111d535f28d10cf3afb
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Fri Dec 31 20:55:52 2004 +0000
+
+    Update license to GPL/LGPL/CPL
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1574 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit c77b91f42c4f3810140d44cbe603248a1d52b7ee
+Author: Jan Arne Petersen <jpetersen@uni-bonn.de>
+Date:   Tue Sep 10 15:18:12 2002 +0000
+
+    - restructure of the code tree.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@782 961051c9-f516-0410-bf72-c9f7e237a7b7

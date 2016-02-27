@@ -1,0 +1,604 @@
+commit 798b0b70381f20c6a238471a258d732adc3948e7
+Author: Jake Goulding <jake.goulding@gmail.com>
+Date:   Mon Feb 18 20:59:07 2013 -0500
+
+    Symbols can have encodings that need to be Marshaled
+    
+    Add a new interface to the few special objects that can be Marshaled
+    with encodings.
+
+commit 61678ac1a2514a9932276f8d527816a5980a94b3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Feb 25 20:41:40 2013 +1100
+
+    Fix more references to CPL.
+    
+    The phrase "Common Public License" was split across two lines in
+    our default header, which caused it to be missed during earlier
+    search/replace. Also, we did not replace the CPL URL in the
+    header with the EPL URL.
+
+commit 82cda78b396b75efa037f90c0fbf5909b25001f7
+Author: Jake Goulding <jake.goulding@gmail.com>
+Date:   Sun Jan 20 16:21:14 2013 -0500
+
+    Support marshaling and unmarshaling strings with repeated encodings
+    
+    When an encoding other than UTF-8 or US-ASCII is used, the encoding is
+    marshaled as a String, which means that the value can be reused via
+    the `LINK` type.
+
+commit 330fef3b0fc18af477ccea19bd278669667f31bb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 12 14:49:29 2013 -0600
+
+    Switch JRuby's CPL license to EPL.
+    
+    Governance of the CPL license was moved to the Eclipse Foundation
+    at some point in the past, and Eclipse blessed the EPL (Eclipse
+    Public License v1.0) as the successor to CPL. Because the CPL
+    contains a clause allowing transparent upgrades to future blessed
+    successor licenses, we can make the move to EPL without
+    re-contacting past contributors.
+    
+    The change in going from CPL to EPL largely just removes some
+    punitive language that apparently made many companies nervous. All
+    other language in the license remains identical.
+    
+    Several documents about Eclipse's move from CPL to EPL are here:
+    
+    http://www.eclipse.org/legal/cpl2epl/
+    
+    Note that Eclipse's move came before the blessing of EPL as the
+    upgrade path for CPL, so they had to do a bit more legal juggling.
+    With Eclipse now the administrator of CPL and with their blessing
+    of EPL as the upgrade path for CPL, all we need to do is make the
+    move.
+
+commit e10d952383901465568215a99ad11bf326aa6bff
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Apr 30 16:41:52 2012 -0500
+
+    Additional fixes for 1.9 Time marshaling.
+
+commit 2597a800fd810208ad8b493fcd560c6a1e4ede9b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Feb 4 16:01:37 2011 -0600
+
+    [1.9] BasicObject subclasses marshal like Object subclasses.
+
+commit a82ea6a9f9876c4d23eadb3d2488905baa624922
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Feb 4 12:50:42 2011 -0600
+
+    [1.9] Get Marshal.dump specs working for almost all remaining cases.
+    
+    * Regexp w/ encoding
+    * Subclasses of Regexp and String w/ encoding
+    * Propagate untrust from the object graph to resulting string
+    * Random marshaling is only remaining failure
+
+commit 095a36a4798e627dd7004c46aedafe71716edd41
+Author: Hiroshi Nakamura <nahi@ruby-lang.org>
+Date:   Mon Jan 3 23:59:17 2011 +0900
+
+    JRUBY-5004: remove unused imports
+    
+    This commit is based on the patch from Douglas Campos <qmx@qmx.me>.
+
+commit 6f35166f6068a4fa940a8cce793686c79bf74a57
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Dec 7 01:36:33 2010 -0600
+
+    Implement caching logic for user marshaling, to avoid extra overhead of checking for it when on non-user-marshaled classes.
+
+commit ce007975d51de24eea69109fb2120d9a072db7dd
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Dec 3 13:30:20 2010 -0600
+
+    [1.9] Implement String encoding marshalling. No tags go away, because our default internal/external are still wrong.
+
+commit 9b1f32c2ad5ef8aa7c81d470dd855b49d601d4bc
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Mar 25 20:05:47 2010 -0500
+
+    Minor perf improvements to marshalling and simplification of lazily-initialized collections in RubyModule.
+
+commit 199026f4e6a79111c359c44c05e3bea96a6464e6
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Sat Jan 9 15:34:28 2010 +0100
+
+    Fix half of JRUBY-4414 - make dumping taint the output correctly
+
+commit 2f3802343d0de9440a71e099002d3b66f51c0a51
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Dec 23 00:40:00 2009 -0600
+
+    Use accessors for those pesky ByteList fields and update bytelist.jar to a current version with accessors and deprecated fields (for compile warnings and because we'll want to privatize them some day).
+
+commit efa166d75dbc2e2a8c5e1e4d6fbb80de08ac5aff
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed May 20 20:38:01 2009 -0500
+
+    JRUBY-3680: closed stream error when using druby to copy a file
+
+commit 59a4474a6105bdf80cea3b1772b2cdf5ed36390d
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue May 19 15:57:18 2009 -0500
+
+    Whoops main part of patch missing from last commit
+
+commit 717a5467bba9564f37122b6f3cbb419de1a4edbe
+Author: John F. Douthat <johndouthat@gmail.com>
+Date:   Sat May 16 19:16:00 2009 -0500
+
+    Fix for JRUBY-3357: Marshal load and dump rubyspec failures, part 2, Regexp
+
+commit 3b266cf69f39ba501c32cc238cb898b24ed5a24c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Apr 1 00:13:14 2009 +0000
+
+    Get remaining variables using the new ivar table, and get all tests running (minus one cvar issue I need to dig into).
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9509 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 1c1c85534290f1628d5314dd5ccb83fa932d4f62
+Author: Wayne Meissner <wmeissner@gmail.com>
+Date:   Thu Aug 7 04:42:32 2008 +0000
+
+    Cleanup more low-hanging-fruit, this time in org.jruby.runtime
+    - final fields where possible
+    - deprecate unused classes
+    - tag a few enum-like classes with FIXME to see if we want to convert to an enum
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7400 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 94664e72ddd93b793e38f34f3f2c1f360db10aff
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Fri Apr 18 16:37:25 2008 +0000
+
+    Fix error in Marshalling that causes variables to be dumped for Modules in some circumstances.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6531 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d453074b05d87823a52422fdfc0e092b359dc54a
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Wed Mar 12 17:26:27 2008 +0000
+
+    JRUBY-2257: Marshal.dump and load don't treat ints the same (patch by Matt Burke)
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6180 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 2b1a005a405839ca4eb268288816294e88f20a2b
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sun Feb 3 18:37:14 2008 +0000
+
+    JRUBY-2062: Add ids and convenient data to SyntaxException and IRubyWarning interface to make their life easier
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5806 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 22f119fa762a3c7b8f9b650a27ba62bb3475e4c5
+Author: Vladimir Sizikov <vsizikov@gmail.com>
+Date:   Thu Jan 17 10:23:00 2008 +0000
+
+    JRUBY-1980: Marshal#dump incorrerctly serializes objects that respond to _dump.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5638 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 0b2378f08102063a1cfe643792d7aa71605ca5de
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Jan 13 09:23:00 2008 +0000
+
+    Add "def" benchmark and fix a fatal crash in MarshalStream preventing specs from running.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5585 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 73557bfaf6bdfb2d56aa807d136327bb20032c6a
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Fri Jan 4 01:20:30 2008 +0000
+
+    JRUBY-1877: Fix unmarshalling when an object uses a custom marshal_load/dump. The object
+    needs to be registered in the cache before unmarshalling its children.
+    Also moved around the register methods on the marshal side (possibly unnecessary), but makes
+    the code a little more symmetric and hopefully easier to match up.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5484 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit ff120491b21359d374e6e50a98e8950f963f49cb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Nov 26 06:36:34 2007 +0000
+
+    Remove two more IRubyObject methods:
+    - getNativeTypeIndex moved to a separate interface; former uses now cast to that interface, rather than requiring all IRubyObject instances to specify a native type index directly. Marshalling should probably be refactored to not use this at all (and instead polymorphically dispatch to a method on the target object, similar to how it used to be).
+    - isKindOf moved to RubyModule as isInstance and all references updated to use that version. This maps better to the type being in charge of what is or is not an instance, and mimics Java reflection API (Class#isInstance).
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5045 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 0097f930d29e59cc34d915e274ad711838a41329
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Nov 21 06:52:58 2007 +0000
+
+    Removing some limited-use, unnecessary, or badly located methods from IRubyObject
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4981 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 95c346df5368a3f5f06fa9d14022efb85eaa6809
+Author: Bill Dortch <bill.dortch@gmail.com>
+Date:   Mon Oct 15 07:45:22 2007 +0000
+
+    Vars have landed. Does not include concurrent SymbolTable (will follow in the next day or so). Also need multi-threaded unit tests, work in progress.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4588 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 3e88cfab0d224fb9efa8d18336993e2c78ce495e
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Thu Sep 27 16:40:57 2007 +0000
+
+    - Identified and extracted construction paths for class/module/singleton/IncludedModuleWrapper, now there's no unnecessary null checks or assignments in their constructors (they take very few arguments so even asserts are not needed).
+    Each of those constructors have a comment what is it the responsible for, also, two RubyClass.newClass() and two RubyModule.newModule() methods have been extracted.
+    - Fixed logic that sets the parent/constant for Modules, now matches MRI (only setConstant/getConstantAt are used here).
+    - RubyClass rewritten, special attention has been put on allocation logic, now Class.new(...) doesn't fire a separate allocator class. (btw, logic of "class B < A;end" and "Class.new(A)" must be split since in second case superclass and allocator are not known until initialize is called). Class/Object allocation implementation mimics MRI's weirdest quirks in behavior, is _much_ simpler that it has been and much faster. This also allowed creation of generalized clone/dup implementations matching MRI. (only our special ivars need a care here).
+    - Rewritten bootstrapping of Object/Class/Module.
+    - Core classes (except Exception hierarchy, they should also be in future) are now cached in runtime (MRI caches them in static VALUE's like rb_cObject) Ruby.getClass(String), Ruby.getModule(String) and Ruby.getClassFromPath(String) should be used only by either interpreter or compiler and when the class name is not known at compile time.
+    - Fixed and simplified nodes: classNode, moduleNode, sclassNode, defsNode. Compiler has been synchronized here as well.
+    - No more __attached__ as ivar, it is now MetaClass field (which means lazy ivars for singletons). Compiler also updated.
+    - added and dosumented isModule() to IRubyObject (isClass(), isSintleton() documented).
+    - Fixed test_autoload test (Object.class_eval do;autoload :SomeClass, 'somefile';class SomeClass; end;end) should raise LoadError, now matches MRI.
+    
+    - Fixed a number of minor bugs:
+       1.instance_eval, was creating a metaclass for Fixnum instances (also affected Symbol/FalseClass/TrueClass/NilClass)
+       marshaler objects were kept in singleton classes
+       Range.inspect, was modifying the begin field (when it was a String)
+       Many bulletproofings in Marshal/Unmarshal (like unmarshaling an instance of nonexistant class), TypeErrors/ArgumentErrors matching MRI.
+       Fiber.new in 1.9, doesn't call #initialize method by funcall, fixed
+       number of method arity fixes and many methods are made fast now
+       fixed initialize/initialize_copy logic, further simplification, no ClassCastExceptions possible now
+       Fixed defineClass(under)/defineModule(under) logic
+       bulletproofed cases such: class A;end;module A;end
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4409 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 60c6188f616b688239dfeafb0b46774d1afecdbb
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Sat Apr 21 20:25:16 2007 +0000
+
+    Handle the marshalling and unmarshalling of Structs very much more correctly
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3521 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 4eb72d1e480c204f6bbc3930cc921d70770fb502
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Sat Apr 21 19:06:23 2007 +0000
+
+    Make subclassing of non objects with included modules marshal correctly. Fixes two more errors in MRI test_marshal
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3520 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 79a3d917fb161985b186521380603eaf8444e776
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Fri Apr 20 14:26:55 2007 +0000
+
+    Handle extension of core classes correctly
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3515 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 1808fbb45f3de98627808352562088921d0be418
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Fri Apr 20 13:28:06 2007 +0000
+
+    Handle marshalling of negative fixnums larger than the fixnum marshalling limit but smaller than the fixnum size in JRuby correctly. Also turn on some tests that now works.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3514 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 33e376a77689bacfe1346c564224053d5b4ba8ae
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Fri Apr 20 13:01:35 2007 +0000
+
+    Handle _dump instance variables correctly, including rewriting RubyTime to add ivars to the string generated, so they will be generated.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3513 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit b1742e48d5561cdc2e90fca3b335c89a0f3d9a84
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Fri Apr 20 02:08:54 2007 +0000
+
+    JRUBY-840: Cow fixes, Enumerable rewrite and arraycopy hunt (Marcin)
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3511 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 59065e50642ce9376adc8950d663f285c7f99425
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Mon Apr 16 13:05:19 2007 +0000
+
+    Lots and lots of fixes for Marshalling, JRUBY-531
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3472 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 7a77daca5662ec40025900d080e4e71c7271a278
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Apr 15 01:44:36 2007 +0000
+
+    Committing Marcin's excellent Hash and String copy-on-write work for JRUBY-818. ant test is solid, mephisto appears to work well, and with one small bug fix, activesupport, actionpack, and actionmailer appear to run the same as on trunk (maybe a little better?). Also, I found and fixed a small bottleneck that now shows patched JRuby rdoc'ing faster than trunk. So we're gonna go for it.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3462 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a99dfedbe1f3e72bbf1f61b79102ec418443be1b
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Fri Mar 30 16:31:39 2007 +0000
+
+    Fix so that extended objects will be dumped correctly
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3340 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 577348047e655434fb272dcf8cc36848879e5a52
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Thu Mar 29 10:53:16 2007 +0000
+
+    Fix for marshalling, the cache needs to be identity, and we should check for singleton methods
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3325 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 6f122bb298742834bd41398378a5c4b24caba506
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Wed Mar 28 21:31:42 2007 +0000
+
+    Partial fix for marshalling, handle metaclasses more correctly, but not perfect yet
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3316 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a2107e60085a5063bca76d897783a512bbd7eddc
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sun Feb 18 15:18:18 2007 +0000
+
+    JRUBY-606: Get rid of un/under-used IRuby interface
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3022 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 52449e2b7bfb92b4e6fbb8ec2093c644770a372f
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Sat Feb 10 15:27:25 2007 +0000
+
+    Fix for JRUBY-576, flash regression, by making classes anchors for symbols, for native classes too.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2979 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit edb8139e505263a0791c37b10988ded4fc0ae5ed
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Thu Feb 8 11:16:27 2007 +0000
+
+    Improve marshalling of Strings
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2964 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit e28bbcfd717e71f859d5b3d3e5b567ddb477a2be
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jan 30 17:02:35 2007 +0000
+
+    Fix for JRUBY-483. It appears user-marshalled classes (at least) should marshal out singleton objects as though they were the original class. We we marshalling with the singleton class name, which wasn't re-loadable.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2883 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 48d627937370824ed3e8f316b4ada567133d0995
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Jan 28 21:03:17 2007 +0000
+
+    Additional fixes for JRUBY-472, ensuring that user-marshalled classes symlink correctly. Added tests for Time, which user-marshals.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2869 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 1c9db4cbbcca01aa65287532b82330e37ff81173
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Jan 28 03:44:22 2007 +0000
+
+    Big set of changes for marshalling bug JRUBY-472; getting closer to having things sorted out. One known failure in "ant
+    test" is due to our modules defining methods on a singleton class, which appears to be incorrect and harder to fix. I'm
+    on it though.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2857 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 10798d5cf8c4844c2961ee35e4e5c3005dd8108d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Jan 27 19:36:06 2007 +0000
+
+    First fixes for JRUBY-472: refactor marshal logic a bit, provide a means to register marshals for classes without typecodes, fix RubyRange to marshal correctly.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2855 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 2cde59259fb93b0b32d8a77b81e3caa935641d56
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Thu Dec 21 17:17:42 2006 +0000
+
+    Fixfix
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2587 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 8ae1450338f7575374e8b0b394caa2920b6a2d24
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Thu Dec 21 15:09:33 2006 +0000
+
+    Fix for JRUBY-340
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2586 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 174e3d01468001668ab299227d4af11aea65341c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Nov 14 03:09:59 2006 +0000
+
+    damn the torpedos! full speed ahead! landing enebo_lexical branch changes plus TC-passing optimizations and a few small compiler updates
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2423 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 8ba215b45e1c5d4c7c521b253d9715a3cfdd6a34
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Mon Oct 9 12:34:03 2006 +0000
+
+    Next version of inspect. Makes instanceVariables synchronized, and adds better inspect for RubyFile and RubyModule. Fixes JRUBY-170
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2316 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 0c6656e193276f864e264f71a2dd36e3f62a911f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Oct 4 14:33:55 2006 +0000
+
+    JRUBY-112: marshalled messages in Rails getting "stuck" in session
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2279 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d70012034b8795a6917f9e3b903281a59f12d372
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Tue Jun 20 03:05:48 2006 +0000
+
+    Make Hash marshal and unmarshal derived types well-enough for ROR flash to work... [melange of Tom and Charlie hacks -- Marshalling will get fixed for 0.9.1]
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2079 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 9f2efc63a858fa0507245b207025eab027840a04
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sun Apr 9 20:58:31 2006 +0000
+
+    Make RubyString use a StringBuffer instead of a String as its internal representation.  This change makes one test case go from 262 s to 0.7s.  Various other function fixes thrown in (with quite a few new unit tests) and some conversion to make more mutable functions use StringBuffer APIs more.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1974 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit be39b7c9e013c9c9bf67c16526b0a0da08dc8b2c
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sat Apr 8 00:55:21 2006 +0000
+
+    Time marshalling and unmarshalling + 1.8 new user marshal (Ola Bini)
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1973 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 41adc9d73b44b14dd25593e772188d405ec00f2f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Oct 26 05:34:12 2005 +0000
+
+    removing revision keywords
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1810 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 4dfdacd80c56018084c618f3bbab7b542653d95e
+Author: David Corbin <dcorbin@users.sourceforge.net>
+Date:   Sat Oct 8 13:07:06 2005 +0000
+
+    Introduced IRuby interface for Ruby runtime object.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1798 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit ca6b16e996ea9af83ce593594b9c69b9364a9924
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sun Aug 28 13:29:33 2005 +0000
+
+    Kill RubyClasses (core class/modules now initialized in Ruby)
+    Store all top-level classes as constants within Object (fixes things like Object.constants) instead of second datastore
+    Always load all core classes (remove lazy loading)
+    Convenience function RubyModule#getClass added
+    Convenience function Ruby#getObject added
+    JavaObject and JavaArray are now Java::JavaObject and Java::JavaArray to be consistent
+    classes defined under another class/module are now defined in the parents creation routine
+    Removed some masking warnings
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1739 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 7a83c48af56081c1c2132111d535f28d10cf3afb
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Fri Dec 31 20:55:52 2004 +0000
+
+    Update license to GPL/LGPL/CPL
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1574 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 870e1da9b41bfdbae259e1fc5f18fc8b76686998
+Author: Stefan Matthias Aust <sma@3plus4.de>
+Date:   Sun Dec 12 09:25:42 2004 +0000
+
+    removes the instance variable runtime in RubyObject
+    reintroduces the variable in RubyNil, RubyBoolean, and RubyClass
+    delegates all calls to Fixnum,Array,Boolean,String,ArgumentError,IndexError and TypeError.newXXX to Ruby
+    fixes all imports
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1469 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit c15ab526440e25745b45a2ab3aaab1b5a7334d1f
+Author: Stefan Matthias Aust <sma@3plus4.de>
+Date:   Sun Nov 28 14:54:57 2004 +0000
+
+    code cleanup
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1428 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit b1562832239a5e5d73b1ee98dade51601e343257
+Author: Jan Arne Petersen <jpetersen@uni-bonn.de>
+Date:   Tue Nov 16 20:30:04 2004 +0000
+
+    Rename references of org.jruby.Ruby from ruby to runtime.
+    Remove unused methods from the IRubyErrorHandler interface.
+    Add "same" method to RubyObject to fix "equal?"
+    Fix JavaObject cache.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1408 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 1083ab53ca4095ed9f4cb8edd2bdf7938ff20339
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Nov 6 21:35:53 2004 +0000
+
+    added flush of output stream after full graph has been marshalled
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1392 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 158bab74478b3ca0925ddbd2a5c73d4ef53d75f3
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Fri Mar 12 19:38:42 2004 +0000
+
+    Coalecse various getName signatures to just one
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1280 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a16b4a3596853f2153bfe0df0a8cbe54382d5d58
+Author: Anders Bengtsson <ndrsbngtssn@yahoo.se>
+Date:   Sat Feb 28 23:00:58 2004 +0000
+
+    Removed a lot of old IndexedCallback stuff.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1254 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 06f34f3a6e4941994e00090d1365045e229680be
+Author: Jan Arne Petersen <jpetersen@uni-bonn.de>
+Date:   Sat Sep 21 23:05:19 2002 +0000
+
+    - Some MetaClass refactorizations,
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@881 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit c77b91f42c4f3810140d44cbe603248a1d52b7ee
+Author: Jan Arne Petersen <jpetersen@uni-bonn.de>
+Date:   Tue Sep 10 15:18:12 2002 +0000
+
+    - restructure of the code tree.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@782 961051c9-f516-0410-bf72-c9f7e237a7b7

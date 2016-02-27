@@ -1,0 +1,175 @@
+commit df6cf576a9e1dbb70e4415286c3bae97e0d01374
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Aug 6 13:12:26 2015 -0500
+
+    Add respond_to-aware hashCode and equals to RubyBasicObject.
+    
+    We use Object#hashCode and #equals in our Hash impl among other
+    places. When the object key is RubyObject or a descendant, we
+    would dispatch dynamically to the appropriate methods in Ruby.
+    However, RubyBasicObject did not override either method, so they
+    both just used base JVM impls and ignored user-defined #hash and
+    
+    This patch adds "checked" versions of these methods to
+    RubyBasicObject and fixes #3227.
+
+commit 872792d77752d51512afcdc6fa2dc251d09119b6
+Merge: 8f973b7 7906a10
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Mar 23 23:55:25 2015 -0500
+
+    Merge remote-tracking branch 'origin/master' into string-quagmire
+
+commit 802927c330d8e011f33a5939347d7f1d35ad7052
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Mar 23 10:05:25 2015 -0500
+
+    Restructuring of Array#inspect and missing enc checks rb_inspect.
+
+commit f2b9bf70c30160c1463ab59e76de9e477bed467c
+Merge: acd4108 adeb887
+Author: kares <self@kares.org>
+Date:   Thu Mar 19 19:17:58 2015 +0100
+
+    Merge branch 'jruby-1_7' into master
+    
+    * jruby-1_7: (24 commits)
+      calculate 'sofisticated' type preference when ambiguous callables found (fixes #2595)
+      in case there's an exact parameter match - do not proceed with argument matching
+      do not do equals on Class objects (just compare by identity) + remove unused imports
+      re-factored candidate matching loops - for more readability and less implicit iterator use
+      cleanup the constructor search - keeping redundant ~ 'intended' code as comments
+      a slight Java integration (mostly bootstrap internals) cleanup
+      update CallableSelector's (Map) cache internals - so we can easily refactor further
+      move Java.method_missing into native
+      loadPaths list generics - easier to guess for JavaEmbedUtils consumers
+      add a factory onto ClassValue since we're be instantiating the same (based on opt)
+      one JRubyMethod with 2 names is enough to have
+      more base-class sharing between JavaCallable method/constructor impl + minor tweaks
+      move getArity/getParameterTypes into base class as finals + help used methods to JIT
+      guess name-class hash-map size without internal resizing (currently <= 48 elements)
+      after several concurrency fixes in Java integration - un-comment a multi-threaded test
+      non need to cast intValue to (int)
+      move (and tune) error logic from CallableSelector into the invoker impl where it's used
+      align JavaField's value/static_value conversions and return values + test functionality
+      correct (Java) equals/hashCode semantics for JavaAccessibleObject + minor tweaks
+      Try turning off sudo:false to fix build issues.
+      ...
+    
+    Conflicts:
+    	.travis.yml
+    	core/src/main/java/org/jruby/RubyObject.java
+    	core/src/main/java/org/jruby/java/proxies/MapJavaProxy.java
+    	core/src/main/java/org/jruby/javasupport/JavaCallable.java
+    	core/src/main/java/org/jruby/javasupport/JavaEmbedUtils.java
+    	core/src/main/java/org/jruby/javasupport/JavaSupport.java
+    	core/src/main/java/org/jruby/runtime/Helpers.java
+    	core/src/main/java/org/jruby/util/CodegenUtils.java
+    	core/src/main/ruby/jruby/java.rb
+    	core/src/test/java/org/jruby/test/TestCodeCache.java
+    	test/test_higher_javasupport.rb
+
+commit 1c5c4a3edb4814a9cf4990be5b494c0815fbfa53
+Author: kares <self@kares.org>
+Date:   Thu Mar 12 08:52:03 2015 +0100
+
+    non need to cast intValue to (int)
+
+commit 8999c9c9ca7a6c0c6de4e623579319155568c152
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Tue Feb 10 20:21:05 2015 +0000
+
+    Don't look for methods in Object, as there aren't any.
+
+commit 5040d48633ecb52ff8e775d2f31a146fc9394cab
+Author: Erik Michaels-Ober <sferik@gmail.com>
+Date:   Wed Jan 28 13:36:15 2015 -0800
+
+    Move #itself and #object_id from Object to Kernel
+
+commit 519fd7540b690c8de03b315f6d65ad407aaa4220
+Author: Erik Michaels-Ober <sferik@gmail.com>
+Date:   Tue Jan 27 19:15:56 2015 -0800
+
+    Move #object_id method from BasicObject to Object
+
+commit c2184b5cdbbb59c7f2a59af88f994e3fa76ea74f
+Author: Erik Michaels-Ober <sferik@gmail.com>
+Date:   Mon Jan 26 18:18:07 2015 -0800
+
+    Move #itself from BasicObject to Object
+
+commit 4fd036b2c3d515db5a9c5ab7e249b59f8ea79692
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Mon Jun 30 23:10:57 2014 -0500
+
+    Death to rubyclass stack: Part 1 of 2
+    
+    * When methods are defined, aliased, undefined, the runtime has to
+      determine the method container that is affected by the changes.
+    
+      Thus far, this was done by manipulating a rubyclass stack that
+      is updated at several places in the runtime and weaves its way
+      through frame, binding, yield, instance/module/binding evals,
+      and is updated on every call.
+    
+    * This patch implements a fairly straightforward algorithm for
+      determining the method container at the time it is needed by
+      examining the contents of the lexical scoping tree starting at
+      the scope where the method is manipulated. This examination is
+      affected by runtime flags set on lexical scopes (always blocks)
+      based on whether any of them are being executed in the context of
+      instance/module/binding evals. There are couple special cases to
+      this algorithm. Nevertheless, it is far more straightforward and
+      easy to grok than the existing runtime implementation.
+    
+      In this patch, the rubyclass stack manipulation code is turned off
+      in ThreadContext.java but the rubyclass stack and its traces in
+      the various parts of the runtime are left behind.
+    
+      The algorithm relies on annotation of block scopes when they are
+      being executed in the context of evals. The bulk of this patch
+      involves setting up these annotations in RubyModule, RubyObject,
+      RubyBasicObject and passing them to DynamicScope via Block, BlockBody,
+      IRBlockBody, and InterpretedIRBlockBody.
+    
+      The algorithm also relies on annotation of static scopes with the
+      IR scope type. The other bulk of this patch is in setting up those
+      annotations on IR static scopes.
+    
+    * The algorithm itself is in ir/runtime/IRRuntimeHelpers.java
+      - findInstanceMethodContainer(..)
+    
+      It is easy to split this up into static/dynamic since there are
+      scenarios where the container is statically determined. But, there
+      is no real benefit that we foresee from the static resolution
+      scenarios, and the algorithm is simpler the way it is currently
+      coded up.
+    
+    * This passes all MRI tests and Rubyspecs plus other contrived
+      tests (they need cleaning up -- will probably add them in a later
+      patch).
+
+commit eac9749d07948baa1f9f76767bac15b27ba201a1
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Oct 7 16:56:47 2013 -0500
+
+    De-version Object+BasicObject
+
+commit 697e6895affa646849a685ed58f6f84795c853aa
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Oct 4 23:37:52 2013 -0500
+
+    Eliminate calls to Ruby.is1_8 and is1_9.
+
+commit d1f89e004fdc78dff75407c82123e6c9e8b406bb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Sep 12 18:48:16 2013 +0200
+
+    Make ClassIndex into an enum, to prevent issues like #1004.
+
+commit 28c6fbc4e883bc1c9e9242d1da1cb2b785f55339
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 3 12:46:45 2013 -0500
+
+    Move to @mkristian's proposed layout, with some modifications.

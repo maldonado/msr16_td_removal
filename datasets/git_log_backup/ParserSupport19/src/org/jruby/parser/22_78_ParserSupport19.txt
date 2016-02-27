@@ -1,0 +1,179 @@
+commit 61678ac1a2514a9932276f8d527816a5980a94b3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Feb 25 20:41:40 2013 +1100
+
+    Fix more references to CPL.
+    
+    The phrase "Common Public License" was split across two lines in
+    our default header, which caused it to be missed during earlier
+    search/replace. Also, we did not replace the CPL URL in the
+    header with the EPL URL.
+
+commit 330fef3b0fc18af477ccea19bd278669667f31bb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 12 14:49:29 2013 -0600
+
+    Switch JRuby's CPL license to EPL.
+    
+    Governance of the CPL license was moved to the Eclipse Foundation
+    at some point in the past, and Eclipse blessed the EPL (Eclipse
+    Public License v1.0) as the successor to CPL. Because the CPL
+    contains a clause allowing transparent upgrades to future blessed
+    successor licenses, we can make the move to EPL without
+    re-contacting past contributors.
+    
+    The change in going from CPL to EPL largely just removes some
+    punitive language that apparently made many companies nervous. All
+    other language in the license remains identical.
+    
+    Several documents about Eclipse's move from CPL to EPL are here:
+    
+    http://www.eclipse.org/legal/cpl2epl/
+    
+    Note that Eclipse's move came before the blessing of EPL as the
+    upgrade path for CPL, so they had to do a bit more legal juggling.
+    With Eclipse now the administrator of CPL and with their blessing
+    of EPL as the upgrade path for CPL, all we need to do is make the
+    move.
+
+commit ebb46f0c02471309496059b1235a76c74e2185b2
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Nov 8 13:00:43 2012 -0600
+
+    2.0 grammar will call assignable with tLABEL for keyword argument
+
+commit 153b1736e9af88baca86c2d687f49bed2e5b1ca4
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Feb 14 17:19:04 2012 -0600
+
+    Keywords are not valid captures as regexp names
+
+commit 25304e1732564eab585991df35149df17eb384db
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Feb 6 13:21:55 2012 -0600
+
+    Match up some MRI methods against ours
+
+commit d888b9ef0941a88491eb9eb28b176130c43d0dc8
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Jan 16 16:22:12 2012 -0600
+
+    Better yield 1.9 logic?
+
+commit b27f0ebea31a60d948b89db225393ce29f81ab65
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Feb 22 17:45:05 2011 -0600
+
+    JRUBY-2167: Regexp parse errors should not be rescueable
+
+commit ff3e3f8a63d0a4bdd288f18030d27849264644ac
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Sat Jan 22 08:47:46 2011 -0600
+
+    JRUBY-5016: 1.9 SyntaxError when a block var shadows local var
+
+commit f88040b6a008cc03034581ecb94524494f45db72
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Jan 6 16:41:01 2011 -0600
+
+    Only make Match2Capture when there are in fact captures
+
+commit 982edd03e0a70726a23fcafdf1b1d61a94cce3c8
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Jan 6 09:43:06 2011 -0600
+
+    JRUBY-5311: Named capture-based local variables do not scope correctly
+
+commit 36050ca1da31c6e24dc9f676b19d6be9bcbec76b
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Jan 4 09:58:49 2011 -0600
+
+    local variables from regexps...hell yeah
+
+commit 2163ef3ff41fb0f3c478e90bb3ef54ee3a53a048
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Dec 29 12:30:48 2010 -0600
+
+    Make DStr propagate encoding (fixes the other two defined? regressions as well as fixing a few random specs)
+
+commit 52192272b2f4afbc7bae4b6ab4c81eb24a098c8e
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Dec 9 13:10:33 2010 -0600
+
+    Initial stab at magic comments...bleh
+
+commit 47d0614e3a6ccb640167b77b926f08a2873eadbb
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Mar 11 16:48:29 2010 -0600
+
+    Yeah static outlined methods and some getPosition simplification
+
+commit 95f8f246b041ffe6bba46c2daf60cd6d71738b99
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri Dec 18 17:03:18 2009 -0600
+
+    JRUBY-4355: [19] Splat operator behavior is slightly different in Ruby 1.9 (patch by David Calavera)
+
+commit f7831f79f1a435814c16e88943f1a794845beb06
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Aug 4 17:25:47 2009 -0500
+
+    [1.9] Make sure block parms do not capture from enclosing scope but make new local
+
+commit ff0ab6e097f56eb056bb7f548611b1e6cbb04b1f
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Jun 18 15:36:10 2009 -0500
+
+    JRUBY-382: Better error output from parser
+
+commit 8b409009ec5f2156dbe04d5f15e0f5fa706cc691
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sun Mar 29 23:30:20 2009 +0000
+
+    Union removal ... (ParserSupport19)
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9500 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 46cbe671df68216203eadea6ba5ceccbb067330f
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Tue Jan 13 16:23:05 2009 +0000
+
+    JRUBY-3303: [1.9] splat of array at front of assignment broken (same for other grammatical constructs)
+    
+    Simple omission and lack of understanding of what splat_array is supposed to do.  Interpreter working with this change and compiler doesn't (hey it didn't before either for this case so we are no worse off, but at least the AST is correct now).
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8745 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 75f48785fa21e4aff89581353bb425648c2ec7c4
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jan 12 22:37:21 2009 +0000
+
+    Revert "Change how we do case/when in AST.  Remove rewriter tests and position tests until they move to jruby-parser project on Kenai"
+    
+    This reverts commit 195ec6a446134c05697686c1b885e13579a220f1.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8728 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d7361b88d4e224e6837111e9e111342ca9581406
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Mon Jan 12 21:01:09 2009 +0000
+
+    Change how we do case/when in AST.  Remove rewriter tests and position tests until they move to jruby-parser project on Kenai
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8726 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit ac8e4c3c45b6dbd07d7c893b013f6fb6f17235cb
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Tue Dec 16 22:04:46 2008 +0000
+
+    guard for lexer/parser warnings
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8373 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit bf8db0bc4acaeed7900b867e821e959f254be0be
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sat Nov 22 22:57:11 2008 +0000
+
+    Biggest commit eva (1.9 parser+1.9-runtime-related-changes landing)
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8099 961051c9-f516-0410-bf72-c9f7e237a7b7

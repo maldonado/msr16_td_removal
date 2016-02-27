@@ -1,0 +1,134 @@
+commit bb98e4b8decffc0361b70a6c99c1ade5fed0abcb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Mar 28 10:02:33 2013 +0000
+
+    Move RuntimeHelpers to org.jruby.runtime.Helpers.
+
+commit 3856da14eaac69262b5fdf20de638ffb97f9865e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jun 28 17:36:48 2011 -0500
+
+    Fix JRUBY-5773: assignment in a method with default argument strip off other arguments.
+    
+    * setEndArgValues in *DynamicScope were not lining up fields properly.
+
+commit 6e66cedba30922992c1bd13e3c684704841478a5
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Mar 9 03:56:08 2009 +0000
+
+    Some cleanup for DynamicScope and subtypes in preparation for generation logic.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9380 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit bf8db0bc4acaeed7900b867e821e959f254be0be
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sat Nov 22 22:57:11 2008 +0000
+
+    Biggest commit eva (1.9 parser+1.9-runtime-related-changes landing)
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8099 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit e275166475540e7663a5c6830e9a7bea5e564961
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Sep 7 22:44:43 2008 +0000
+
+    Outlining logic showing up as "too big" to inline during logged bench_string_ops run.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7650 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 36247fea442ff881dc81a00ed3e67420a3527709
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Wed Aug 20 20:51:45 2008 +0000
+
+    Add signatures (currently unused) for dynamic scopes to assign args without needing to box them first.  We will use these later and I want to reduce patch size for an experimental patch.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7504 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 3187530acd3e00809b114e345a1d91afa273b7c9
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jul 14 07:08:38 2008 +0000
+
+    Set up hierarchy ThreeVar < TwoVar < OneVar < NoVar to reduce repetition and simplify implementation of higher-order scopes.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7160 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit fd4b104d0e7193fc8c7f6e66c529cacaf7d15e62
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jul 14 07:08:07 2008 +0000
+
+    Add "index two" entry points into DynamicScope.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7158 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 083720f9ac7668892e5b7b044c9a9871a6dd55a8
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jul 11 06:03:42 2008 +0000
+
+    Various fixes to TwoVarDynamicScope, but it's still not enabled. Also a fix to OneVar for super args; it wasn't passing everything correctly.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7139 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit b14872d45736680f5b49d580b243823d9c63a1d9
+Author: Vladimir Sizikov <vsizikov@gmail.com>
+Date:   Tue Jun 24 08:39:44 2008 +0000
+
+    JRUBY-2320: Remove of unused imports in package org.jruby
+    JRUBY-2321: Remove of unused imports in all packages
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7023 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d290a3e2a288191f08c43e2c9dd0c60e31ab0cc0
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Apr 28 08:16:00 2008 +0000
+
+    Adding microoptz for local variable assignment; reduces amount of stack-juggling necessary. Still needs a fix for one case, where assigning the result of a "while" to a local varaible.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6582 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 7be3e62c35796d36ea332a1ecacf7455d73dce4c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Apr 28 08:15:35 2008 +0000
+
+    Multiple microoptz to compiled output:
+    * all int loads now use smallest bytecode possible (biload, siload)
+    * removed extraneous runtime params from several methods
+    * split range instantiation into exclusive/inclusive versions
+    * moved some array/splatting methods out of ASTInterpreter and into RuntimeHelpers
+    * Modified Fixnum creation to use efficient int loading bytecode when possible
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6579 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a694709e87e269be436ed1d176a688712beb9d5d
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Tue Jan 1 05:09:53 2008 +0000
+
+    Remove unused callbackfactorys
+    Add partial impl of Etc with some cooler pieces of it still commented
+    Remove many warnings
+    Some generics to lessen warnings
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5456 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d50ba810da64fe9ced82db246c55ec890a39da47
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Nov 24 20:05:44 2007 +0000
+
+    Last captured var optimization for now: have compiler unwrap to appropriate depth, rather than recursive call to get/setVar.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5029 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d237a30fee4b2a8b2a34303eea80583c8a8872fd
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Nov 24 12:39:37 2007 +0000
+
+    Added no-var and two-var versions of DynamicScope.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5019 961051c9-f516-0410-bf72-c9f7e237a7b7

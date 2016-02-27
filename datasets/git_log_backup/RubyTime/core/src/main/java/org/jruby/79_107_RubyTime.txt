@@ -1,0 +1,867 @@
+commit d8a6401ebaf9e75db4c111518c1d6c472c4c0300
+Merge: 3efcd1d e92030e
+Author: kares <self@kares.org>
+Date:   Tue Aug 18 13:24:28 2015 +0200
+
+    Merge branch 'jruby-1_7'
+    
+    * jruby-1_7:
+      some more comparable asserts including for the Java compareTo part
+      native RubySymbol#compareTo since we expect to always be able to sort
+      should not-rewrite jump exceptions twice as well (not just raise ones)
+      delete un-used imports
+      [ji] do not rewrite stack-trace twice for Ruby (raise) exceptions
+      base compareTo should not silence all Ruby raised exceptions (fixes #2232)
+      re-arrange rescue spec (we're about to spec some more behavior)
+      only test nil return from Object cmp on 1.9 (on 1.8.7 its expected to raise)
+      more of correct $! restore + use get/setErrorInfo for better predictability
+      another incorrect $! with numeric coercion on <=> + cleanup getRuntime()
+      Fix some consumers for #1601.  Don't leak out  if we are swallowing the raised exception
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/Main.java
+    	core/src/main/java/org/jruby/RubyBasicObject.java
+    	core/src/main/java/org/jruby/RubyClass.java
+    	core/src/main/java/org/jruby/RubyComparable.java
+    	core/src/main/java/org/jruby/RubyNumeric.java
+    	core/src/main/java/org/jruby/RubySymbol.java
+    	core/src/main/java/org/jruby/RubyTime.java
+    	core/src/main/java/org/jruby/javasupport/JavaCallable.java
+
+commit adda8552d84c217886c0dfb40ea38b8a6906c326
+Author: kares <self@kares.org>
+Date:   Mon Aug 17 11:54:42 2015 +0200
+
+    more of correct $! restore + use get/setErrorInfo for better predictability
+    
+    semi-picked from 78e968ef4da7880c2f9f2c31098fc0d7d5eb39db (#1601)
+
+commit 40beb472cb17c6c0cbf46ba199a9461e0e7bd877
+Merge: c0c086e e237201
+Author: kares <self@kares.org>
+Date:   Mon May 25 16:54:09 2015 +0200
+
+    Merge branch 'jruby-1_7'
+    
+    * jruby-1_7: (54 commits)
+      [travis-ci] re-try sudo: false
+      dry out the two (Java helper) respond_to_p19 methods
+      respondsTo JRuby API under 1.9.3 does not do respond_to_missing? like MRI does
+      sleep should convert it's "time interval" argument the same way as MRI
+      respond_to_missing? should always get a symbol name passed (fixes #2946)
+      add a respond_to_missing unit test (on 1.9)
+      introduce and use conversion( just like MRI does) on #timeout's sec argument
+      add missing ' ' (space) in exception message ... TypeError from `sleep('invalid')`
+      DateTime.iso8601 fails with an error if a second fraction is present
+      [build] switch to 1.7.21-SNAPSHOT for test-jruby-jars
+      refactor Timeout's scheduled tasks to an inner class (for easier identification)
+      further hand drying of the Timeout module impl
+      less (int) casting noiz
+      add some (internal) generics for an improved readability xp
+      inner class' Finalizer fields id and finalized can be final
+      generix-ize the environment field (at least internally) + use a StringBuilder
+      unnecessary (int) cast
+      missing throw statement in RubyString's concat
+      tune timeout to work when scheduling or argument convenrsion throws (see #2940)
+      return empty Ruby array for empty dir list
+      ...
+    
+    Conflicts:
+    	.gitignore
+    	.travis.yml
+    	VERSION
+    	core/pom.xml
+    	core/src/main/java/org/jruby/RubyArray.java
+    	core/src/main/java/org/jruby/RubyBasicObject.java
+    	core/src/main/java/org/jruby/RubyDir.java
+    	core/src/main/java/org/jruby/RubyEnumerable.java
+    	core/src/main/java/org/jruby/RubyFile.java
+    	core/src/main/java/org/jruby/RubyGlobal.java
+    	core/src/main/java/org/jruby/RubyIO.java
+    	core/src/main/java/org/jruby/RubyKernel.java
+    	core/src/main/java/org/jruby/RubyModule.java
+    	core/src/main/java/org/jruby/RubyString.java
+    	core/src/main/java/org/jruby/RubyTime.java
+    	core/src/main/java/org/jruby/ext/timeout/Timeout.java
+    	core/src/main/java/org/jruby/java/proxies/JavaProxy.java
+    	core/src/main/java/org/jruby/util/Dir.java
+    	core/src/main/java/org/jruby/util/encoding/CharsetTranscoder.java
+    	docs/man/pom.xml
+    	docs/pom.xml
+    	ext/pom.xml
+    	ext/readline/pom.xml
+    	ext/ripper/pom.xml
+    	lib/pom.xml
+    	lib/ruby/1.9/date/format.rb
+    	lib/ruby/1.9/io/linux_console.rb
+    	lib/ruby/shared/gauntlet_rubygems.rb
+    	lib/ruby/shared/rubygems.rb
+    	lib/ruby/shared/rubygems/available_set.rb
+    	lib/ruby/shared/rubygems/basic_specification.rb
+    	lib/ruby/shared/rubygems/command.rb
+    	lib/ruby/shared/rubygems/command_manager.rb
+    	lib/ruby/shared/rubygems/commands/cert_command.rb
+    	lib/ruby/shared/rubygems/commands/cleanup_command.rb
+    	lib/ruby/shared/rubygems/commands/contents_command.rb
+    	lib/ruby/shared/rubygems/commands/dependency_command.rb
+    	lib/ruby/shared/rubygems/commands/environment_command.rb
+    	lib/ruby/shared/rubygems/commands/generate_index_command.rb
+    	lib/ruby/shared/rubygems/commands/help_command.rb
+    	lib/ruby/shared/rubygems/commands/install_command.rb
+    	lib/ruby/shared/rubygems/commands/list_command.rb
+    	lib/ruby/shared/rubygems/commands/mirror_command.rb
+    	lib/ruby/shared/rubygems/commands/outdated_command.rb
+    	lib/ruby/shared/rubygems/commands/owner_command.rb
+    	lib/ruby/shared/rubygems/commands/pristine_command.rb
+    	lib/ruby/shared/rubygems/commands/push_command.rb
+    	lib/ruby/shared/rubygems/commands/query_command.rb
+    	lib/ruby/shared/rubygems/commands/search_command.rb
+    	lib/ruby/shared/rubygems/commands/setup_command.rb
+    	lib/ruby/shared/rubygems/commands/specification_command.rb
+    	lib/ruby/shared/rubygems/commands/uninstall_command.rb
+    	lib/ruby/shared/rubygems/commands/unpack_command.rb
+    	lib/ruby/shared/rubygems/commands/update_command.rb
+    	lib/ruby/shared/rubygems/commands/which_command.rb
+    	lib/ruby/shared/rubygems/commands/yank_command.rb
+    	lib/ruby/shared/rubygems/compatibility.rb
+    	lib/ruby/shared/rubygems/config_file.rb
+    	lib/ruby/shared/rubygems/core_ext/kernel_gem.rb
+    	lib/ruby/shared/rubygems/core_ext/kernel_require.rb
+    	lib/ruby/shared/rubygems/defaults.rb
+    	lib/ruby/shared/rubygems/dependency.rb
+    	lib/ruby/shared/rubygems/dependency_installer.rb
+    	lib/ruby/shared/rubygems/dependency_list.rb
+    	lib/ruby/shared/rubygems/deprecate.rb
+    	lib/ruby/shared/rubygems/doctor.rb
+    	lib/ruby/shared/rubygems/errors.rb
+    	lib/ruby/shared/rubygems/exceptions.rb
+    	lib/ruby/shared/rubygems/ext.rb
+    	lib/ruby/shared/rubygems/ext/builder.rb
+    	lib/ruby/shared/rubygems/ext/cmake_builder.rb
+    	lib/ruby/shared/rubygems/ext/configure_builder.rb
+    	lib/ruby/shared/rubygems/ext/ext_conf_builder.rb
+    	lib/ruby/shared/rubygems/ext/rake_builder.rb
+    	lib/ruby/shared/rubygems/gemcutter_utilities.rb
+    	lib/ruby/shared/rubygems/indexer.rb
+    	lib/ruby/shared/rubygems/install_update_options.rb
+    	lib/ruby/shared/rubygems/installer.rb
+    	lib/ruby/shared/rubygems/installer_test_case.rb
+    	lib/ruby/shared/rubygems/local_remote_options.rb
+    	lib/ruby/shared/rubygems/name_tuple.rb
+    	lib/ruby/shared/rubygems/package.rb
+    	lib/ruby/shared/rubygems/package/old.rb
+    	lib/ruby/shared/rubygems/package/tar_header.rb
+    	lib/ruby/shared/rubygems/package/tar_reader/entry.rb
+    	lib/ruby/shared/rubygems/package/tar_writer.rb
+    	lib/ruby/shared/rubygems/path_support.rb
+    	lib/ruby/shared/rubygems/platform.rb
+    	lib/ruby/shared/rubygems/psych_additions.rb
+    	lib/ruby/shared/rubygems/rdoc.rb
+    	lib/ruby/shared/rubygems/remote_fetcher.rb
+    	lib/ruby/shared/rubygems/request.rb
+    	lib/ruby/shared/rubygems/request_set.rb
+    	lib/ruby/shared/rubygems/request_set/gem_dependency_api.rb
+    	lib/ruby/shared/rubygems/requirement.rb
+    	lib/ruby/shared/rubygems/resolver/current_set.rb
+    	lib/ruby/shared/rubygems/security.rb
+    	lib/ruby/shared/rubygems/security/policy.rb
+    	lib/ruby/shared/rubygems/security/signer.rb
+    	lib/ruby/shared/rubygems/security/trust_dir.rb
+    	lib/ruby/shared/rubygems/server.rb
+    	lib/ruby/shared/rubygems/source.rb
+    	lib/ruby/shared/rubygems/source/installed.rb
+    	lib/ruby/shared/rubygems/source/local.rb
+    	lib/ruby/shared/rubygems/source/specific_file.rb
+    	lib/ruby/shared/rubygems/source_list.rb
+    	lib/ruby/shared/rubygems/spec_fetcher.rb
+    	lib/ruby/shared/rubygems/specification.rb
+    	lib/ruby/shared/rubygems/ssl_certs/AddTrustExternalCARoot.pem
+    	lib/ruby/shared/rubygems/stub_specification.rb
+    	lib/ruby/shared/rubygems/syck_hack.rb
+    	lib/ruby/shared/rubygems/test_case.rb
+    	lib/ruby/shared/rubygems/test_utilities.rb
+    	lib/ruby/shared/rubygems/text.rb
+    	lib/ruby/shared/rubygems/uninstaller.rb
+    	lib/ruby/shared/rubygems/uri_formatter.rb
+    	lib/ruby/shared/rubygems/user_interaction.rb
+    	lib/ruby/shared/rubygems/util/list.rb
+    	lib/ruby/shared/rubygems/validator.rb
+    	lib/ruby/shared/rubygems/version.rb
+    	maven/jruby-complete/pom.xml
+    	maven/jruby-dist/pom.xml
+    	maven/jruby-jars/pom.xml
+    	maven/jruby-noasm/pom.xml
+    	maven/jruby-rake-plugin/pom.xml
+    	maven/jruby-stdlib/pom.xml
+    	maven/jruby/pom.xml
+    	maven/pom.xml
+    	pom.xml
+    	test/pom.xml
+    	test/test_dir.rb
+    	test/test_kernel.rb
+    	test/test_respond_to.rb
+    	test/test_timeout.rb
+
+commit 47ec519944417ed946ea84ae2e7cbac7b763021f
+Author: kares <self@kares.org>
+Date:   Sat May 23 22:56:16 2015 +0200
+
+    introduce and use conversion( just like MRI does) on #timeout's sec argument
+
+commit 25fd16ffee21f0bf8405dc8ef550b27b3d59e78e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Apr 2 18:31:12 2015 -0500
+
+    MRI does not have this warning, so don't make it non-verbose.
+    
+    Should be enough to fix #2759.
+
+commit 7fe7ec34cd3694275447ac0ae46cb182f3c80ba1
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Apr 2 18:31:12 2015 -0500
+
+    MRI does not have this warning, so don't make it non-verbose.
+    
+    Should be enough to fix #2759.
+
+commit ce61f484f7704ed4a299d38686838d00395a94b7
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Sun Feb 15 12:50:09 2015 +0000
+
+    Fix broken RubyTime#zone that I introduced.
+
+commit ae6e152600d1e25190f232a6a64829e57744b213
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Sun Feb 15 00:01:47 2015 +0000
+
+    [Truffle] Some more work on Time.
+
+commit b27868aa7137ab68eec2076b3ae9b9e8d42d6129
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Sat Feb 14 09:51:40 2015 -0600
+
+    Some more $! save/restore fixes + add comments for all of them
+
+commit 78e968ef4da7880c2f9f2c31098fc0d7d5eb39db
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Fri Feb 13 23:43:16 2015 -0600
+
+    Save/restore $! properly in the JRuby runtime
+    
+    * Whenever a RaiseException is caught and handled, the $! should
+      be the restored to the previous value of the exception before
+      the try-catch was entered.
+    
+    * This fixes #1601 and #2491 but additional code auditing and
+      discussion will be helpful.
+
+commit 2dd881b4f1e5c3ebd9b3684dc036697949faf8bd
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jan 9 17:20:42 2015 -0600
+
+    Do not allocate "TZ" string for every new Time object.
+
+commit 422d460d005fa0316019d96cc17cddb4ecd63c70
+Merge: fe7f9c7 dbf58e6
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Jan 7 15:31:55 2015 -0600
+
+    Merge branch 'jruby-1_7'
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/RubyTime.java
+
+commit dbf58e66f5bc2ba548264c204e9d516809a9091e
+Author: Chris Heald <cheald@gmail.com>
+Date:   Tue Nov 4 16:07:39 2014 -0700
+
+    Fix #localtime and #gmtime when they are given numeric offsets
+    
+    Both methods now use a common arg parser to determine the time zone from
+    the passed IRubyObject. Additionally, #localtime always modifies the receiver
+    now per the documentation, rather than returning a new object if an offset
+    was passed.
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/RubyTime.java
+    
+    [Addendum: Noticed some mistakes in original commit so I changed exactNum a bit]
+
+commit 1e26dedff042c90448cc40ffb9f8b228aeca20c3
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Fri Jan 2 23:54:53 2015 +0000
+
+    [Truffle] Bring in more of the Rubinius primitive system.
+
+commit 69317cc4b39d0011cf5ac200bb94659b637fb853
+Merge: c5207d5 8fe3ae7
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Dec 15 14:03:04 2014 -0600
+
+    Merge remote-tracking branch 'origin/jruby-1_7'
+    
+    Conflicts:
+    	.travis.yml
+    	core/pom.xml
+    	core/src/main/java/org/jruby/RubyIO.java
+
+commit 8fe3ae7b07bb1732ea98402226581c2dcea5aa71
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Dec 15 14:00:36 2014 -0600
+
+    Time#getlocal(nil) should act like no-arg. Fixes #2310.
+
+commit f9190ce071b23b90f34ff8bb701c319230b12f89
+Author: Christian Meier <m.kristian@web.de>
+Date:   Fri Nov 14 21:54:46 2014 +0000
+
+    fix another joda-2.5 exception
+    
+    one exception I see only locally and the other I see only on travis - no idea why. treat both
+    as RangeError on the ruby side which honors the test-case.
+
+commit 8c6750d76d027cc9cad8e33de3ce9ade2bf50074
+Merge: 254a327 4d402cd
+Author: Christian Meier <m.kristian@web.de>
+Date:   Thu Nov 20 21:06:53 2014 +0000
+
+    Merge branch 'jruby-1_7'
+    
+    Conflicts:
+    	.travis.yml
+    	build.xml
+    	maven/jruby/pom.rb
+    	maven/jruby/pom.xml
+    	test/pom.rb
+
+commit 254a32779c769f77a3898fcf1a998e38c579edbe
+Merge: 16c4b16 2a9ccce
+Author: Christian Meier <m.kristian@web.de>
+Date:   Thu Nov 20 13:14:43 2014 +0000
+
+    Merge branch 'jruby-1_7'
+    
+    Conflicts:
+    	.gitignore
+    	.travis.yml
+    	build.xml
+    	core/pom.xml
+    	core/src/main/java/org/jruby/RubyInstanceConfig.java
+    	core/src/main/java/org/jruby/RubyModule.java
+    	core/src/main/java/org/jruby/RubyTime.java
+    	core/src/main/java/org/jruby/compiler/ASTCompiler.java
+    	core/src/main/java/org/jruby/compiler/BodyCompiler.java
+    	core/src/main/java/org/jruby/compiler/impl/BaseBodyCompiler.java
+    	core/src/main/java/org/jruby/ext/bigdecimal/RubyBigDecimal.java
+    	core/src/main/java/org/jruby/internal/runtime/methods/DefaultMethod.java
+    	core/src/main/java/org/jruby/lexer/yacc/RubyYaccLexer.java
+    	core/src/main/java/org/jruby/lexer/yacc/StringTerm.java
+    	core/src/main/java/org/jruby/parser/ParserConfiguration.java
+    	core/src/main/java/org/jruby/runtime/Helpers.java
+    	core/src/test/java/org/jruby/test/MainTestSuite.java
+    	docs/CodeConventions.txt
+    	lib/pom.rb
+    	lib/ruby/1.8/resolv.rb
+    	lib/ruby/1.8/rexml/document.rb
+    	lib/ruby/1.8/rexml/entity.rb
+    	lib/ruby/1.8/rexml/rexml.rb
+    	lib/ruby/1.8/rexml/text.rb
+    	lib/ruby/1.9/cgi/core.rb
+    	lib/ruby/1.9/dl/func.rb
+    	lib/ruby/1.9/drb/ssl.rb
+    	lib/ruby/1.9/gserver.rb
+    	lib/ruby/1.9/ipaddr.rb
+    	lib/ruby/1.9/net/http.rb
+    	lib/ruby/1.9/net/imap.rb
+    	lib/ruby/1.9/net/pop.rb
+    	lib/ruby/1.9/net/smtp.rb
+    	lib/ruby/1.9/open-uri.rb
+    	lib/ruby/1.9/optparse.rb
+    	lib/ruby/1.9/rake.rb
+    	lib/ruby/1.9/rake/alt_system.rb
+    	lib/ruby/1.9/rake/application.rb
+    	lib/ruby/1.9/rake/clean.rb
+    	lib/ruby/1.9/rake/cloneable.rb
+    	lib/ruby/1.9/rake/contrib/ftptools.rb
+    	lib/ruby/1.9/rake/contrib/sys.rb
+    	lib/ruby/1.9/rake/dsl_definition.rb
+    	lib/ruby/1.9/rake/ext/core.rb
+    	lib/ruby/1.9/rake/ext/module.rb
+    	lib/ruby/1.9/rake/ext/string.rb
+    	lib/ruby/1.9/rake/ext/time.rb
+    	lib/ruby/1.9/rake/file_list.rb
+    	lib/ruby/1.9/rake/file_task.rb
+    	lib/ruby/1.9/rake/file_utils.rb
+    	lib/ruby/1.9/rake/file_utils_ext.rb
+    	lib/ruby/1.9/rake/gempackagetask.rb
+    	lib/ruby/1.9/rake/invocation_chain.rb
+    	lib/ruby/1.9/rake/multi_task.rb
+    	lib/ruby/1.9/rake/packagetask.rb
+    	lib/ruby/1.9/rake/pseudo_status.rb
+    	lib/ruby/1.9/rake/rake_module.rb
+    	lib/ruby/1.9/rake/rdoctask.rb
+    	lib/ruby/1.9/rake/ruby182_test_unit_fix.rb
+    	lib/ruby/1.9/rake/runtest.rb
+    	lib/ruby/1.9/rake/task.rb
+    	lib/ruby/1.9/rake/task_arguments.rb
+    	lib/ruby/1.9/rake/task_manager.rb
+    	lib/ruby/1.9/rake/tasklib.rb
+    	lib/ruby/1.9/rake/testtask.rb
+    	lib/ruby/1.9/rake/version.rb
+    	lib/ruby/1.9/rake/win32.rb
+    	lib/ruby/1.9/resolv.rb
+    	lib/ruby/1.9/rexml/document.rb
+    	lib/ruby/1.9/rexml/entity.rb
+    	lib/ruby/1.9/rexml/text.rb
+    	lib/ruby/1.9/ripper/lexer.rb
+    	lib/ruby/1.9/socket.rb
+    	lib/ruby/1.9/time.rb
+    	lib/ruby/1.9/webrick/htmlutils.rb
+    	lib/ruby/1.9/webrick/httputils.rb
+    	lib/ruby/1.9/yaml.rb
+    	lib/ruby/2.0/bigdecimal/util.rb
+    	lib/ruby/2.0/cgi/core.rb
+    	lib/ruby/2.0/csv.rb
+    	lib/ruby/2.0/erb.rb
+    	lib/ruby/2.0/fileutils.rb
+    	lib/ruby/2.0/gserver.rb
+    	lib/ruby/2.0/net/ftp.rb
+    	lib/ruby/2.0/net/http/response.rb
+    	lib/ruby/2.0/net/imap.rb
+    	lib/ruby/2.0/net/pop.rb
+    	lib/ruby/2.0/net/protocol.rb
+    	lib/ruby/2.0/net/smtp.rb
+    	lib/ruby/2.0/open-uri.rb
+    	lib/ruby/2.0/racc/rdoc/grammar.en.rdoc
+    	lib/ruby/2.0/rdoc/generator/template/darkfish/js/jquery.js
+    	lib/ruby/2.0/rdoc/rd/block_parser.rb
+    	lib/ruby/2.0/resolv.rb
+    	lib/ruby/2.0/rexml/entity.rb
+    	lib/ruby/2.0/rinda/tuplespace.rb
+    	lib/ruby/2.0/socket.rb
+    	lib/ruby/2.0/ssl.rb
+    	lib/ruby/2.0/test/unit/parallel.rb
+    	lib/ruby/2.0/thread.rb
+    	lib/ruby/2.0/time.rb
+    	lib/ruby/2.0/uri/common.rb
+    	lib/ruby/2.0/uri/generic.rb
+    	lib/ruby/2.0/webrick/htmlutils.rb
+    	lib/ruby/2.0/webrick/httprequest.rb
+    	lib/ruby/2.0/webrick/httputils.rb
+    	lib/ruby/2.0/xmlrpc/client.rb
+    	lib/ruby/2.0/xmlrpc/server.rb
+    	lib/ruby/2.0/yaml.rb
+    	maven/jruby-complete/src/it/integrity/verify.bsh
+    	maven/jruby-dist/src/it/integrity/verify.bsh
+    	maven/jruby-jars/src/it/integrity/verify.bsh
+    	maven/jruby-noasm/src/it/integrity/verify.bsh
+    	maven/jruby/src/it/integrity/verify.bsh
+    	pom.xml
+    	spec/ffi/async_callback_spec.rb
+    	spec/ffi/bool_spec.rb
+    	spec/ffi/buffer_spec.rb
+    	spec/ffi/callback_spec.rb
+    	spec/ffi/custom_param_type.rb
+    	spec/ffi/custom_type_spec.rb
+    	spec/ffi/dup_spec.rb
+    	spec/ffi/enum_spec.rb
+    	spec/ffi/errno_spec.rb
+    	spec/ffi/ffi_spec.rb
+    	spec/ffi/function_spec.rb
+    	spec/ffi/io_spec.rb
+    	spec/ffi/library_spec.rb
+    	spec/ffi/long_double.rb
+    	spec/ffi/managed_struct_spec.rb
+    	spec/ffi/memorypointer_spec.rb
+    	spec/ffi/number_spec.rb
+    	spec/ffi/platform_spec.rb
+    	spec/ffi/pointer_spec.rb
+    	spec/ffi/rbx/attach_function_spec.rb
+    	spec/ffi/rbx/memory_pointer_spec.rb
+    	spec/ffi/rbx/spec_helper.rb
+    	spec/ffi/rbx/struct_spec.rb
+    	spec/ffi/string_spec.rb
+    	spec/ffi/strptr_spec.rb
+    	spec/ffi/struct_by_ref_spec.rb
+    	spec/ffi/struct_callback_spec.rb
+    	spec/ffi/struct_initialize_spec.rb
+    	spec/ffi/struct_packed_spec.rb
+    	spec/ffi/struct_spec.rb
+    	spec/ffi/typedef_spec.rb
+    	spec/ffi/union_spec.rb
+    	spec/ffi/variadic_spec.rb
+    	spec/ruby/optional/ffi/library_spec.rb
+    	spec/ruby/optional/ffi/spec_helper.rb
+    	test/mri.1.8.index
+    	test/pom.rb
+    	test/rubicon/test_object_space.rb
+    	test/test_command_line_switches.rb
+    	test/test_dir.rb
+    	test/test_file.rb
+    	test/test_higher_javasupport.rb
+    	test/test_io.rb
+    	test/test_jar_on_load_path.rb
+    	test/test_jarred_gems_with_spaces_in_directory.rb
+    	test/test_launching_by_shell_script.rb
+    	test/test_load_compiled_ruby_class_from_classpath.rb
+    	tool/globals_1_8_7.rb
+    	tool/globals_1_9_3.rb
+    	tool/globals_2_0_0.rb
+
+commit baddc69cb2ccdccc4d70f97583d0d3f16f15de66
+Author: Chris Heald <cheald@gmail.com>
+Date:   Sat Nov 15 01:05:25 2014 -0700
+
+    Permit HH:MM:SS for time zone formats
+
+commit 9722c954231153b5fa1846999450011a9845ce0e
+Author: Chris Heald <cheald@gmail.com>
+Date:   Sat Nov 15 01:04:29 2014 -0700
+
+    Fix encoding for formatted dates to be equivalent to MRI
+
+commit bd61d8600836e6ae2ddc4c33408209aa6eaec0fb
+Author: Christian Meier <m.kristian@web.de>
+Date:   Fri Nov 14 21:54:46 2014 +0000
+
+    fix another joda-2.5 exception
+    
+    one exception I see only locally and the other I see only on travis - no idea why. treat both
+    as RangeError on the ruby side which honors the test-case.
+
+commit ef6182ffe7c8bf8e76473af818c5c976ce31225b
+Author: Christian Meier <m.kristian@web.de>
+Date:   Fri Nov 14 19:58:49 2014 +0000
+
+    dealing with joda-time-2.5 ArithmeticException
+
+commit 24a70ed5423ca7471e99223ceb56ca74547445aa
+Author: Benoit Daloze <eregontp@gmail.com>
+Date:   Wed Aug 13 13:59:00 2014 +0200
+
+    Rework TZ parsing and marshal the Time zone
+    
+    * Much less duplication for HHMM parsing.
+    * Stricter and clearer methods for getting a DateTimeZone.
+    * Fixes incorrect types for offset.
+    * Fixes #1837 and #957.
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/RubyTime.java
+    	test/mri/excludes/TestTime.rb
+
+commit 982d522af7e0e321c5b58ff5b145c7655a5ad5d5
+Author: Chris Heald <cheald@gmail.com>
+Date:   Tue Nov 4 16:07:39 2014 -0700
+
+    Fix #localtime and #gmtime when they are given numeric offsets
+    
+    Both methods now use a common arg parser to determine the time zone from
+    the passed IRubyObject. Additionally, #localtime always modifies the receiver
+    now per the documentation, rather than returning a new object if an offset
+    was passed.
+
+commit 3b65e0d795bdb7e0a99755e30358a1154db57b50
+Author: Benoit Daloze <eregontp@gmail.com>
+Date:   Thu Aug 28 21:15:57 2014 +0200
+
+    Remove unused private constant in RubyTime.
+    
+    * See https://github.com/jruby/jruby/issues/215#issuecomment-52156000.
+
+commit 64b0cb75092ae72dec8a2f5ce5939557687f0d09
+Author: Benoit Daloze <eregontp@gmail.com>
+Date:   Wed Aug 13 13:59:00 2014 +0200
+
+    Rework TZ parsing and marshal the Time zone
+    
+    * Much less duplication for HHMM parsing.
+    * Stricter and clearer methods for getting a DateTimeZone.
+    * Fixes incorrect types for offset.
+    * Fixes #1837.
+
+commit 4b16ae8975b3da52b4b2bac273ed452f358011c3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Aug 7 11:31:08 2014 -0500
+
+    Revert "Marshal Time zone and accept ENV["TZ"] values such as "JST-9""
+    
+    This reverts commit 06d132639dd7f2bdf00f5338b86c2a340b0a0d2a.
+
+commit 06d132639dd7f2bdf00f5338b86c2a340b0a0d2a
+Author: Benoit Daloze <eregontp@gmail.com>
+Date:   Fri Aug 1 16:29:51 2014 +0200
+
+    Marshal Time zone and accept ENV["TZ"] values such as "JST-9"
+    
+    Also fixes incorrect types for offset.
+    
+    Fixes #1837.
+
+commit cd49333474ad00c9205c6ef5f6fce27ffa59bb25
+Author: Robin Dupret <robin.dupret@gmail.com>
+Date:   Sat Jul 5 12:21:35 2014 +0200
+
+    Make Time#to_r consistent with MRI
+    
+    Let's make JRuby matches the behavior of MRI when calling to_r on a Time
+    object. It used to return only the numerator of the Rational object if
+    the denominator was equal to 1.
+
+commit e96da121d98f707068eb07dcfb1753a595ca9a23
+Author: Robin Dupret <robin.dupret@gmail.com>
+Date:   Sat Jul 5 12:21:35 2014 +0200
+
+    Make Time#to_r consistent with MRI
+    
+    Let's make JRuby matches the behavior of MRI when calling to_r on a Time
+    object. It used to return only the numerator of the Rational object if
+    the denominator was equal to 1.
+
+commit 60442ef0cdc7fadf7ede5dba93507c9a12f295a3
+Merge: fc287fa fc9bed1
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Sat Jun 14 08:20:47 2014 -0500
+
+    Merging with jruby-1_7
+
+commit 6b311075677b869a4478d0234aea28bc7842c1d2
+Author: kiichi <k77ch7@gmail.com>
+Date:   Tue May 6 22:58:19 2014 +0900
+
+    fixed issue 1517
+
+commit 9c758b4f31c0eeb50d77b3dad28438aca365e857
+Author: tduehr <tduehr@gmail.com>
+Date:   Thu Feb 27 21:54:56 2014 -0600
+
+    fix initialize visibility
+
+commit 773aa712b1fbf176ffad9d74f3bdd94c44ddab23
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Apr 7 15:24:46 2014 -0500
+
+    Fix merge failure
+
+commit b37a0edd2d095550b43acd13fb5825a40d1e1011
+Merge: 8cb15d2 e05539b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Apr 7 12:32:21 2014 -0500
+
+    Merge remote-tracking branch 'origin/jruby-1_7'
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/RubyTime.java
+    	core/src/main/java/org/jruby/ext/psych/PsychLibrary.java
+    	lib/pom.rb
+    	pom.xml
+
+commit f5e228351db48d99dc55c30b88dd1f5a982c7fff
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Apr 2 17:05:31 2014 -0500
+
+    Fixes #1606. Exception when comparing Time with nil using ===
+
+commit 7190dcb42094e1eed6954cbaae09c092aa7b99d6
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Apr 2 17:05:31 2014 -0500
+
+    Fixes #1606. Exception when comparing Time with nil using ===
+
+commit e0dcc5967b436e75dc6b406ffb4688b9d6d0b228
+Merge: ca1bf5f acf5d25
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Feb 26 13:07:55 2014 -0600
+
+    Merge branch 'initialize_fix' of github.com:tduehr/jruby into tduehr-initialize_fix
+
+commit 7fc9189c622db3be8ac9ba21573e3263e7591884
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri Feb 21 16:13:59 2014 -0600
+
+    Make time 2 and 3 year checks against 1.8 only and add missing warns
+
+commit 77c921ee27fd6d106887f7b012b9102ba2b13e4c
+Merge: 5653f63 e0c4430
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri Feb 21 16:06:52 2014 -0600
+
+    Merging with 1.7
+
+commit acf5d258db69e9ba73f329b809c0924d7e843c82
+Author: tduehr <tduehr@gmail.com>
+Date:   Thu Feb 20 16:22:22 2014 -0600
+
+    correct visibility of initialize* and respond_to_missing? methods
+
+commit b5b17e42d88c4474071fc807c832ba950c78b860
+Author: Dmitry Ratnikov <ratnikov@google.com>
+Date:   Thu Feb 20 14:14:40 2014 -0500
+
+    Make RubyTime argument checking be same as mri.
+    
+    This should fix https://github.com/jruby/jruby/issues/1501
+
+commit d81b40cdc49fabf6cccbb385638a74ede807a977
+Author: Josh Ballanco <jballanc@gmail.com>
+Date:   Sat Dec 7 19:50:34 2013 +0200
+
+    Use `invcmp` for String and Time `<=>` operators
+
+commit adedb117bcbbc666321c8780e290d4e61ffce233
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Oct 10 15:33:21 2013 -0500
+
+    De-version Time
+
+commit 697e6895affa646849a685ed58f6f84795c853aa
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Oct 4 23:37:52 2013 -0500
+
+    Eliminate calls to Ruby.is1_8 and is1_9.
+
+commit d1f89e004fdc78dff75407c82123e6c9e8b406bb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Sep 12 18:48:16 2013 +0200
+
+    Make ClassIndex into an enum, to prevent issues like #1004.
+
+commit 55e0d93f6dc2682b720b3061fa6ea5f997957fec
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Oct 4 09:09:12 2013 -0500
+
+    Restore RubyDateFormat and TimeOutputFormatter. Closes #1081
+
+commit 497eae45771fdd2783e3d0899e4daa2652775b0e
+Author: Benoit Daloze <eregontp@gmail.com>
+Date:   Thu Sep 19 17:44:01 2013 +0200
+
+    taint resulting String in Date#strftime
+
+commit 5b40997a333d2829f3d592ead3b393fbe4976cdc
+Author: Benoit Daloze <eregontp@gmail.com>
+Date:   Thu Sep 19 01:30:23 2013 +0200
+
+    use Date arbitrary precision in #strftime (%N,%L) output
+    
+    * need ThreadContext, use constructor to pass it
+    * pass all related Date/DateTime tests
+    * more arguments, but casting from Object (long versus Rational) seems bad
+
+commit d45754bba69a808acaab0faa05e07c181e9c8ce4
+Author: Benoit Daloze <eregontp@gmail.com>
+Date:   Tue Sep 3 01:03:05 2013 +0200
+
+    add convenience and efficient method RubyDateFormat.compileAndFormat()
+    
+    * compileAndFormat() improves from 8.198 µs to 5.321 µs for Date#strftime("%Y-%m-%d")
+
+commit 6c50ba5c4a4c8d8d91c3b3b0b33a845deb6dcc77
+Author: Benoit Daloze <eregontp@gmail.com>
+Date:   Mon Sep 2 23:07:28 2013 +0200
+
+    use ByteList in RubyDateFormat and TimeOutputFormatter
+
+commit 9e6bbbf829e3c8b48adbbb7bf2ec73f5f79f390e
+Author: Benoit Daloze <eregontp@gmail.com>
+Date:   Fri Aug 23 13:41:12 2013 +0200
+
+    do not pretend to fit RubyDateFormat in Java's DateFormat
+    
+    * we want ByteList support
+    * Locale is not a concern
+    * having the pattern and data as internal state is bad for caching and usage
+    * only depends on ruby_1_9, might worth be moved in Runtime or even singleton if the context is passed
+
+commit db48776bec6301b656cf1574a6297ad8558647f9
+Merge: 302332a 4d388b8
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri Sep 6 13:51:17 2013 -0500
+
+    Merged PR#988 with some mild style tweaks
+
+commit 4d388b8ccf544e34f3387e5d921c7b03599bb54d
+Author: Chris Sinjakli <chris@sinjakli.co.uk>
+Date:   Wed Sep 4 23:10:31 2013 +0100
+
+    Fix handling of :dst Symbol in Time.new
+    
+    Completely fixes #948
+
+commit 480beb745c1bbd494fea040a377580420ce7c7c1
+Author: Chris Sinjakli <chris@sinjakli.co.uk>
+Date:   Wed Sep 4 23:09:39 2013 +0100
+
+    Fix handling of Time offsets at DST boundaries.
+    
+    Partly fixes #948
+
+commit a9ed79110f0d671ba3c2c7fd7fb129a91fcd1ceb
+Author: Benoit Daloze <eregontp@gmail.com>
+Date:   Thu Aug 22 15:22:49 2013 +0200
+
+    that should actually be ">=", RubyTime NSec range is [0, 999 999]
+
+commit 3e06cf8b09e459f6860c138f59ff359368a8f901
+Author: Benoit Daloze <eregontp@gmail.com>
+Date:   Thu Aug 22 14:05:43 2013 +0200
+
+    avoid NSec going above 10^6 in RubyTime
+
+commit e4d2d4b0aa2c0a3d6f2212e7a335ce1722cb2bb2
+Author: Benoit Daloze <eregontp@gmail.com>
+Date:   Wed Jul 17 22:40:40 2013 +0200
+
+    Refactor the whole Time/Date formatting (strftime): RubyDateFormat
+    
+    * Also fix negative timezone in getlocal19()
+    * And handle negative timezone with 0 hours
+    * Pass all sensible tests of MRI test_time.rb#test_strftime !!
+      (was not passing half before)
+    * No null checks in TimeOutputFormatter, use a DEFAULT_FORMATTER
+    * Specify type of argument with an enum: FieldType
+    * Handle # (change case), padding with changed default padder and others
+    * Enjoy much cleaner code
+    * Generic useful methods in TimeOutputFormatter:
+      formatNumber(), formatSignedNumber(), padding()
+    * Might need a little micro-optimization for padding()
+
+commit a2f2fcf7d1ee879ddf8b1c335c2e81122c8900e8
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 17 12:02:43 2013 -0500
+
+    Eliminate a bunch of one-off unnecessary anon classes.
+
+commit b3d8ec947e197c841a7147adea9b810a7202fd95
+Author: Benoit Daloze <eregontp@gmail.com>
+Date:   Tue Jul 16 22:21:21 2013 +0200
+
+    Really fix Time#round: handle overflow and use plusMillis() instead of withMillisOfSecond() directly
+
+commit eee891d242c2bdb40cdafedd65120b632a9d0e80
+Author: Benoit Daloze <eregontp@gmail.com>
+Date:   Tue Jul 16 22:07:52 2013 +0200
+
+    Time#round is supposed to return a Time instance
+
+commit 982973ef1ab8832637607e3e4b44d991da3c0475
+Author: Benoit Daloze <eregontp@gmail.com>
+Date:   Tue Jul 16 21:58:29 2013 +0200
+
+    Fix Time#round
+    
+    * account for sub-ms value
+    * maybe refactor the first line in a helper?
+    * use integer division, no conversion to double and back
+
+commit bff6ea7b37da3a2cc1868d5fb4a063b9d8365707
+Author: Benoit Daloze <eregontp@gmail.com>
+Date:   Tue Jul 16 17:45:11 2013 +0200
+
+    allow seconds as Rational in Time.local and set nanoseconds from it
+
+commit 28c6fbc4e883bc1c9e9242d1da1cb2b785f55339
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 3 12:46:45 2013 -0500
+
+    Move to @mkristian's proposed layout, with some modifications.

@@ -1,0 +1,445 @@
+commit bb98e4b8decffc0361b70a6c99c1ade5fed0abcb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Mar 28 10:02:33 2013 +0000
+
+    Move RuntimeHelpers to org.jruby.runtime.Helpers.
+
+commit 61678ac1a2514a9932276f8d527816a5980a94b3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Feb 25 20:41:40 2013 +1100
+
+    Fix more references to CPL.
+    
+    The phrase "Common Public License" was split across two lines in
+    our default header, which caused it to be missed during earlier
+    search/replace. Also, we did not replace the CPL URL in the
+    header with the EPL URL.
+
+commit 330fef3b0fc18af477ccea19bd278669667f31bb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 12 14:49:29 2013 -0600
+
+    Switch JRuby's CPL license to EPL.
+    
+    Governance of the CPL license was moved to the Eclipse Foundation
+    at some point in the past, and Eclipse blessed the EPL (Eclipse
+    Public License v1.0) as the successor to CPL. Because the CPL
+    contains a clause allowing transparent upgrades to future blessed
+    successor licenses, we can make the move to EPL without
+    re-contacting past contributors.
+    
+    The change in going from CPL to EPL largely just removes some
+    punitive language that apparently made many companies nervous. All
+    other language in the license remains identical.
+    
+    Several documents about Eclipse's move from CPL to EPL are here:
+    
+    http://www.eclipse.org/legal/cpl2epl/
+    
+    Note that Eclipse's move came before the blessing of EPL as the
+    upgrade path for CPL, so they had to do a bit more legal juggling.
+    With Eclipse now the administrator of CPL and with their blessing
+    of EPL as the upgrade path for CPL, all we need to do is make the
+    move.
+
+commit 8bc463d620dba0d82294ac9476c9e6f34a2f02af
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Nov 4 10:34:27 2012 -0700
+
+    Fix JRUBY-6983: UNIXServer.open ignores the block arg
+
+commit b8181cda909f6e42d7c0b7fffaabbe2a502f273b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jul 27 02:19:54 2012 -0500
+
+    Inline all calls to ThreadContext.getRuntime to access the field.
+
+commit 4b0f33320c36e52ad7e39c8500a442bf7bbf2008
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 18 13:21:16 2012 -0500
+
+    Fix build-time invoker, binder generation.
+
+commit 6ecfcee3afb2afffc8c0b7058fdc2c2ffc49da47
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Jul 5 15:05:59 2012 -0500
+
+    Mostly fix JRUBY-6760: ArgumentError output
+    
+    It's not possible right now for us to have ArgumentError report
+    the file:line of the called method, since arity checking occurs
+    outside the method body. However, we usually do have the called
+    name available at that point, so we can include it in the error
+    message.
+
+commit cd18b42dfe59e8823275f4e10fcd43f084a7fec3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Mar 12 21:33:11 2012 -0500
+
+    Spec cleanup relating to recent socket work.
+    
+    * Untag a bunch of specs for things now working
+    * Tag some UNIXSocket specs that need work
+    * Update to enxio 2.0-SNAPSHOT
+
+commit 3767e7fc413d46155de20135ce987f172c897a73
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Mar 12 17:27:30 2012 -0500
+
+    Refactoring, cleanup, and test-passing for new UNIX sockets.
+
+commit 71f1b3e2194c7bc60ee2ed057b653f410f5de6e6
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Mar 12 15:52:25 2012 -0500
+
+    Move to using jnr-unixsocket for UNIXSocket and UNIXServer.
+
+commit a57a324c7fface8ad1ef9592f11c6e8a77505dfe
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Mar 9 17:06:30 2012 -0600
+
+    More BasicSocket work.
+    
+    * Add Socket::Option class
+    * Rewrite getsockopt
+    * Add option-getting to SocketType
+    * Propagate jnr-constants enums more places
+
+commit 790e9b91fff1fc6b8d8891867594b652589eb44d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Mar 7 16:32:18 2012 -0600
+
+    First pass refactoring RubyBasicSocket.
+
+commit 4a09d081fa10b293f65d0ca058605a5b6b4ba04f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jan 31 10:34:29 2012 -0600
+
+    First large-scale refactoring to better support IO encodings.
+
+commit 606bd2e150aae13320f6441bf31d3d1a549fce4a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Jan 26 19:58:39 2012 -0600
+
+    More of the epic IO/Socket refactoring.
+
+commit 0f7c9ce8261d46ebfb7ef6e17e7da2f86f5d5ba5
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Sep 12 12:48:51 2011 -0500
+
+    Update to ASM 4.0 RC2 and master builds of jnr-{ffi,posix,constants,netdb}.
+    
+    Squashed commit of the following:
+    
+    commit ce02afcf40ede2c485ab357435866ce754cd2671
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Mon Sep 12 12:46:44 2011 -0500
+    
+        Fix group id for jnr-posix and version numbers for modified libs.
+    
+    commit 0b5632be85dce5500c35d3533fa5d7cd240bf515
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Mon Sep 12 12:39:24 2011 -0500
+    
+        Fixes to get ASM 4.0 RC2 passing tests.
+    
+        * Update jnr-* to master versions, since some depend on ASM and had to be updated too.
+        * Fix ASM-related errors due to new class hierarchy.
+        * fix skinnymethodadapter_spec to use new h_ prefix for handles and to filter "asm" constants.
+    
+    commit 4ac391fb3bf2f53dd42f8e4c5f3a0e36ca638e1b
+    Author: Charles Oliver Nutter <headius@headius.com>
+    Date:   Mon Sep 12 10:35:08 2011 -0500
+    
+        Remaining tweaks to get jruby compiling with ASM 4.0 RC2.
+    
+    commit 3801518505d0d38bf045a39fd8ca6eb80ef50126
+    Author: Douglas Campos <qmx@qmx.me>
+    Date:   Mon Sep 12 00:21:54 2011 -0300
+    
+        updated InvokeDynamicSupport
+    
+    commit 2aabc1894d38b717cca2b4546f51596b8b03db6e
+    Author: Douglas Campos <qmx@qmx.me>
+    Date:   Sun Sep 11 12:43:39 2011 -0300
+    
+        updating asm version
+
+commit 6f159fe5dd51c062a5b1aab64a8ede916990877a
+Author: Hiroshi Nakamura <nahi@ruby-lang.org>
+Date:   Mon Jul 11 03:36:17 2011 +0900
+
+    Deprecation of fast constant access paths.
+    
+    Each os those has the same definition as non-fast verision.
+
+commit 9fd4ada22e3f3f3ac94f65276c73c0b455765edb
+Author: Wayne Meissner <wmeissner@gmail.com>
+Date:   Mon Jul 4 23:01:30 2011 +1000
+
+    Replace usage of com.kenai.constantine with jnr.constants
+
+commit 15832d3b4dc4f4023b40b710db43f66ce9d0a2b7
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Feb 17 14:46:38 2011 -0600
+
+    Fix JRUBY-5514: Errno::EBADF is sometimes raised instead of IOError when TCPSocket#readline is called after TCPSocket#close
+    
+    The problem here is that under real concurrency, EBADF or equivalent are perfectly valid to see. Eventually you have to make a low-level IO call, and under concurrent load that could happen just slightly after another thread calls #close. There's little we can do to eliminate EBADF, but I have cleaned up some paths that raised it unnecessarily and others that raised EPIPE when they should not.
+    
+    I also cleaned up several places that could cause a NullPointerException when under concurrent load, because a stream gets nulled out after it has already been checked for non-nullness.
+
+commit 057ba46d534722105ae07c6c5af6bd2dc24be364
+Author: Wayne Meissner <wmeissner@gmail.com>
+Date:   Mon Feb 14 19:02:34 2011 +1000
+
+    Fix JRUBY-5502 by allocating the buffer to exactly the size required.
+
+commit 1c6e5609b45528b80c956a4f69f86f232e98fb51
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue May 4 15:58:27 2010 -0500
+
+    Rework fileno/descriptor registration to live entirely within ChannelDescriptor. This avoids descriptors being unregistered prematurely by RubyIO finalization, eliminates RubyIO finalization, and centralizes registration much more neatly. An additional map is added to Ruby to allow 0, 1, and 2 to always map to the current runtime's notion of in, out, and err.
+
+commit 027cc02c67c440378c6d4897c44ef0f42133a15f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Jan 21 13:42:02 2010 -0600
+
+    fix for JRUBY-4511: UNIXSocket.open leaks file descriptors on error
+
+commit 9d57dbc3b7b0d10dd4d8c6d49b73cf1af2e8e287
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Thu Dec 24 12:02:04 2009 -0600
+
+    JRUBY-61, JRUBY-2140, JRUBY-4253: Merry Christmas JRuby windows users!
+    
+    Three-year old bug finally squashed!
+
+commit 2f3802343d0de9440a71e099002d3b66f51c0a51
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Dec 23 00:40:00 2009 -0600
+
+    Use accessors for those pesky ByteList fields and update bytelist.jar to a current version with accessors and deprecated fields (for compile warnings and because we'll want to privatize them some day).
+
+commit 538a1021c775d1ec2a86c9b338a2748f650d6841
+Author: Hongli Lai (Phusion) <hongli@phusion.nl>
+Date:   Wed Nov 25 11:07:49 2009 +0100
+
+    JRUBY-4274: Implement UNIXSocket#close_read and #close_write.
+    
+    This resolves the UNIXSocket Rubyspec faliures as well.
+    
+    Signed-off-by: Vladimir Sizikov <vsizikov@gmail.com>
+
+commit 050152777466ee06bb8eb92bfd2a2823cf3f5608
+Author: Hongli Lai (Phusion) <hongli@phusion.nl>
+Date:   Wed Nov 25 11:08:26 2009 +0100
+
+    JRUBY-4275: UNIXSocket#read without argument loops infinitely
+    
+    Fix a bug in UNIXSocket#read: if called without arguments on an EOF
+    socket, it would inifinite loop.
+    
+    Signed-off-by: Vladimir Sizikov <vsizikov@gmail.com>
+
+commit 7601d02883e571a46f5e31d0ca9dff703bf965a2
+Author: Vladimir Sizikov <vsizikov@gmail.com>
+Date:   Sun Oct 4 20:57:18 2009 +0200
+
+    - JRUBY-4046: UNIXSocket and UNIXServer should not be defined on Windows
+    - Unexcluded a couple of UNIXSocket unit tests, since they now pass
+    - Removed outdated comments from UNIXSocket tests
+
+commit 434b524b928bbe4fa7bc5da1b97c51992aaa8776
+Author: Wayne Meissner <wmeissner@gmail.com>
+Date:   Mon Sep 14 13:00:53 2009 +1000
+
+    Remove commented out code
+
+commit 994e672692c2d4ad79ebcae5c0ce857bb07320be
+Author: Wayne Meissner <wmeissner@gmail.com>
+Date:   Mon Sep 14 12:20:58 2009 +1000
+
+    Update to jaffl 0.3 and enable unix socket+tests on solaris
+
+commit be2fcda969f04106772af8beed8d8269845a3b45
+Author: Wayne Meissner <wmeissner@gmail.com>
+Date:   Fri Jun 5 17:32:13 2009 +1000
+
+    Convert Unix sockets to use jaffl instead of jna
+
+commit ca72fa787c2da409792132ecb08adeaa8c5c6582
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Mar 3 00:14:41 2009 +0000
+
+    Remove all "throws Exception" from RubyUNIXServer and RubyUNIXSocket.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9338 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 6031c0932b0107fcb6dba49bc9d8b5034aab4d2b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Feb 5 00:53:23 2009 +0000
+
+    Use Constantine for fcntl constants in RubyUNIXServer. Work for JRUBY-2223, but did not appear to help.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9004 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 5a2bf93b221217617d81ac60cd5be3838acce9b9
+Author: Wayne Meissner <wmeissner@gmail.com>
+Date:   Thu Jan 22 23:07:32 2009 +0000
+
+    Change some Socket constants to use constantine instead of hard-coded
+    fake values.
+    
+    Also add proper support for TCP_NODELAY, which was previously broken,
+    and broke some tests when different values for IPPROTO_IP and SOL_IP are
+    used.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8871 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit aa4cc160db6b29fb45a1c9278aae93613078e991
+Author: Wayne Meissner <wmeissner@gmail.com>
+Date:   Tue Nov 11 04:15:21 2008 +0000
+
+    Backout Socket constants changes.  Need a better way to ensure that all constants are defined in JRuby, even when the underlying OS doesn't support them
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8042 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 6bf0c7f033597d83974e848d7111630dda65927a
+Author: Wayne Meissner <wmeissner@gmail.com>
+Date:   Mon Nov 10 23:55:29 2008 +0000
+
+    Use constantine constants for AF_* and PF_*
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8041 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit c93970075482bc7f12eb96b0ab02c477c9514229
+Author: Wayne Meissner <wmeissner@gmail.com>
+Date:   Mon Nov 10 22:11:41 2008 +0000
+
+    Use constantine constants for Socket::SO_BROADCAST and friends
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8040 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 704f2b49af62a1c59700dfca329501504ae2d3ab
+Author: Wayne Meissner <wmeissner@gmail.com>
+Date:   Mon Sep 29 11:08:28 2008 +0000
+
+    IRubyObject#getRuntime() -> ThreadContext#getRuntime() sweep for src/org/jruby/ext/socket
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7802 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 16c2535acd64558d402fb75f37709dc1644cbcb8
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Aug 10 21:21:51 2008 +0000
+
+    Clean up numerous cases where we box args unnecessarily by calling newer specific-arity "invoke" methods on RuntimeHelpers.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7429 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a85973e9a76fe08c741fe226662a339d2f3e0fc0
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Mon May 12 18:53:14 2008 +0000
+
+    Cache remaining core exceptions in the runtime so we don't get NPE's when they're reassigned.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6683 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit ef7a973db1cbb1b6bb04d887ea5cb92a59c9bd37
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Apr 10 02:58:38 2008 +0000
+
+    Cleaning up CallbackFactory use in BasicSocket, UNIXServer, UNIXSocket, JavaCallable, JavaField, JavaProxyConstructor, and the remaining thread library classes.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6448 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 778d005667fec85c805c0f8f219d28ef3896e09c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Apr 9 20:00:15 2008 +0000
+
+    More elimination of CallbackFactory usage.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6439 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 424a1cbff5aea37f2f92cc208d29d2544f092828
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Wed Mar 19 12:21:15 2008 +0000
+
+    Annotate the rest of the Java classes with names, parents and inclusions. Also add a warning to install_doc.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6291 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 852d904134ad970a20497fdcc5d752dd4ae49766
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Fri Mar 7 22:04:54 2008 +0000
+
+    The RC3 Surprise!
+    
+    Allow annotation defined ruby methods to optionally specify ThreadContext as first parameter
+    Convert easiest and most common methods to accept ThreadContext when method or child method can use context
+    
+    These changes give about 15% improvement on petstore bench and about 10% in ar-bench.  In ar-bench getCurrentContext calls go from 14 million down to 2 million.  The remaining calls largely can be removed but they were much more invasive.
+    
+    IRubyObject op_eqq and op_equal both not have ThreadContext consumer, but we could see no use of this in any extensions and figured it worth the trouble of converting.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6143 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit f3a6356b18309daeb389cf90ca630442feff4810
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Wed Mar 5 22:43:32 2008 +0000
+
+    Wrap socketpair as well
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6113 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 44b7fafe498626732556438b71b2a6b5d15388c6
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Wed Mar 5 22:30:33 2008 +0000
+
+    Try to catch UnsatsifiedLinkError gracefully
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6112 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a3b11f12f86587770a69406a14346ee3c9038dee
+Author: Vladimir Sizikov <vsizikov@gmail.com>
+Date:   Wed Mar 5 13:38:15 2008 +0000
+
+    JRUBY-2213: UNUXServer is completely broken on Linux
+    (patch by Wayne Meissner, with modifications)
+    
+    Also, the socket tests were updated and re-added to the index.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6102 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 1614241d51bdf6c5e9de02a4ee68f5ce64bc16f2
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Wed Feb 6 22:34:36 2008 +0000
+
+    Make UNIX Domain sockets work with Mysql pure ruby driver, fix closing issues, some misplaced nonblocking settings and also working setsockopt for a few values.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5852 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 7bebbdd1977b250fb8a0a78574c307240a7f6494
+Author: Vladimir Sizikov <vsizikov@gmail.com>
+Date:   Wed Feb 6 21:10:53 2008 +0000
+
+    JRUBY-2081: Gem server fails.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5850 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit c090a3211fb860057412a4ec684c7fede88405dd
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Tue Feb 5 17:11:12 2008 +0000
+
+    Fix for JRUBY-2061, implement UNIXSockets using JNA. Also fix some Errno problems
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5826 961051c9-f516-0410-bf72-c9f7e237a7b7

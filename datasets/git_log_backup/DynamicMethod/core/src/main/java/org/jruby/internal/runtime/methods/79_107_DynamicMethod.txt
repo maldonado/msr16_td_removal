@@ -1,0 +1,124 @@
+commit 963d34365e0e5e9b795c77e45b9d77a939d91775
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Aug 5 17:35:08 2015 +0200
+
+    Replace Visibility enum reference with a byte ordinal.
+    
+    This is for space-saving on the root class of all methods in the
+    system.
+
+commit edc0cb5fd7696dd6072645fc812bc337d93009fe
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Aug 2 12:20:40 2015 +0200
+
+    Move NativeCall stuff down to JavaMethod.
+    
+    Only methods down-hierarchy from JavaMethod ever actually have
+    NativeCall so the extra size in all DynamicMethod subclasses is
+    unnecessary.
+
+commit 838c8d7a991d1914357ce47db62f594aca27bc78
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jul 24 22:32:10 2015 -0500
+
+    CallConfiguration is not used by any DynamicMethods anymore.
+    
+    CallConfiguration used to be needed to determine how to frame and
+    scope all methods in the system. However, in JRuby 9k it is no
+    longer needed.
+    
+    * Core methods that need frame/scope have the pre/post logic
+      generated in bytecode (for generated invokers) or in handles
+      (for MethodHandle-based invokers).
+    * Interpreted IR methods have their own flags for frame/scope, or
+      have instructions that perform the pre/post logic.
+    * Jitted IR methods always have emit bytecode to do the pre/post
+      logic.
+    
+    After a quick inspection I found that there's no other uses of
+    the callConfig field in DynamicMethod, so this commit removes it
+    and deprecates the constructors and accessors. This should shrink
+    all DynamicMethod subclasses by at least 4 bytes and perhaps 8. It
+    also reduces the size and overhead of our generated populators,
+    which might have a slight effect on startup.
+
+commit ced83c4fcfb87f729bcac769091201eecf7b30e2
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jul 24 22:06:24 2015 -0500
+
+    I suck at bits.
+
+commit 29b8640a5a779ec941a57d3f6dff39a8b0ae9acb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jul 24 20:16:59 2015 -0500
+
+    Push DynamicMethod flags into bits.
+
+commit 66eeaeb13f219ff3e02b280caf1161f6b3ecb58e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jul 24 20:16:30 2015 -0500
+
+    Remove unused NativeCall[10] from DynamicMethod.
+
+commit 3c936bdc5f68fe5d20ae5d2d7db354f4861d7097
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Jul 2 15:10:58 2015 -0500
+
+    GH #2416 (partial). Kill last vestiges of redojump and some returnjump
+
+commit bc9a5bea272b16fcc338ccd2c2b76184ba4ae18e
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Jul 2 13:35:05 2015 -0500
+
+    GH #2416 (partial). Kill last vestiges of breakjump
+
+commit 512b0a5ab4e129a2e05e6ca83113520252a0048a
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Apr 16 10:49:28 2015 -0500
+
+    StaticScope now has Signature instead of three individual fields.  All other
+    changes were made to support this.  We encode/decode scopes with a full
+    Signature.  Blocks are all rooted in providing a Signature.  All IR*Method
+    will provide a Signature.  Unfortunately, I stopped at IR level for method
+    types.  Over time those should get converted.
+    
+    This corrects all arity issues involving methods and blocks in interp.  JIT
+    is still somewhere passing in the wrong values but I will correct that in
+    a followup (this is not a regression).
+    
+    spec:fast:ruby and test:mri both pass so do JIT variants of those tests
+    but I strong suspect we are shelling out in some way and running some of
+    these tests in interp mode.
+    
+    On other note of distinction is that for builtin functions we only construct
+    a subset of information that Signature wants because Arity is only a subset
+    of the info Signature needs.  Since there are no exotic signatures in builtins
+    there is a Signature.from(Arity) which will convert to a reasonable analogue
+    or throw if it is special in some way.
+    
+    I tried to leave all deprecated versions of methods and constructors but
+    I might have spaced out a few.
+
+commit 73d5f0f02dd627bd8191727d3c7c82e60d384e9d
+Author: Kevin Menard <kevin@nirvdrum.com>
+Date:   Wed Jan 14 15:03:36 2015 -0500
+
+    Fixed a typo.
+
+commit 2078209f9457749568ce38316bd555117b6e0df0
+Author: tduehr <tduehr@gmail.com>
+Date:   Tue Nov 11 17:51:19 2014 -0600
+
+    isImplementedBy
+
+commit b7910aceef1568da27dffbc829a60e833e5aec78
+Author: tduehr <tduehr@gmail.com>
+Date:   Mon Oct 27 16:29:20 2014 -0500
+
+    current MRI prepend implementation
+
+commit 28c6fbc4e883bc1c9e9242d1da1cb2b785f55339
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 3 12:46:45 2013 -0500
+
+    Move to @mkristian's proposed layout, with some modifications.

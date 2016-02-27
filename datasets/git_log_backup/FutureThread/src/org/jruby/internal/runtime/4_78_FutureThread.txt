@@ -1,0 +1,193 @@
+commit 7dba21754899867f048559d3712442996ec07a77
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jun 25 11:48:15 2013 -0500
+
+    Implement thread retval for 1.9's Open3.popen3. JRUBY-6409
+    
+    It turns out that the thread value returned from 1.9's popen3 is
+    actually easy to support by simply calling java.lang.Process's
+    waitFor method. This is, in fact, much more reliable than a normal
+    popen + waitpid due to our racing the JVM to the waitpid call.
+    
+    There's still issues with the interactivity of the streams (on
+    some JVMs/versions) and overall JRuby process management, but this
+    patch should allow popen3 to work properly.
+    
+    Unexcluded some popen3 tests that pass now, too (yay!)
+
+commit 61678ac1a2514a9932276f8d527816a5980a94b3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Feb 25 20:41:40 2013 +1100
+
+    Fix more references to CPL.
+    
+    The phrase "Common Public License" was split across two lines in
+    our default header, which caused it to be missed during earlier
+    search/replace. Also, we did not replace the CPL URL in the
+    header with the EPL URL.
+
+commit 330fef3b0fc18af477ccea19bd278669667f31bb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 12 14:49:29 2013 -0600
+
+    Switch JRuby's CPL license to EPL.
+    
+    Governance of the CPL license was moved to the Eclipse Foundation
+    at some point in the past, and Eclipse blessed the EPL (Eclipse
+    Public License v1.0) as the successor to CPL. Because the CPL
+    contains a clause allowing transparent upgrades to future blessed
+    successor licenses, we can make the move to EPL without
+    re-contacting past contributors.
+    
+    The change in going from CPL to EPL largely just removes some
+    punitive language that apparently made many companies nervous. All
+    other language in the license remains identical.
+    
+    Several documents about Eclipse's move from CPL to EPL are here:
+    
+    http://www.eclipse.org/legal/cpl2epl/
+    
+    Note that Eclipse's move came before the blessing of EPL as the
+    upgrade path for CPL, so they had to do a bit more legal juggling.
+    With Eclipse now the administrator of CPL and with their blessing
+    of EPL as the upgrade path for CPL, all we need to do is make the
+    move.
+
+commit affd4d8a90b84e4d0adb47228b30ff2305715dc6
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Mar 6 12:42:57 2012 -0600
+
+    Fixes for test_thread in thread pooling mode
+    
+    * Allow setting priorities for pooled threads
+    * Aggregate "dispose" functionality for threads
+    * Reset pooled thread priorities to initial
+    * Remove undefined-behavior "dead thread" priority test
+    * Make Thread.current keys test permissive about extra keys
+
+commit a2cbfdec7e845846c9fd3cf2a063c71fa7f516e9
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Jan 26 12:48:16 2012 -0600
+
+    Eliminate unnecessary cache of Thread priority Fixnum.
+
+commit 6d9f08c8945f0be72a2bb4ceae3bee922f31127d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jan 20 12:44:36 2012 -0600
+
+    Fix threadpooled threading to associate the native thread right.
+    
+    Discovered by the assertion I added to RubyThread.unlockAll in
+    order to remove synchronization there. Thread-pooled threads will
+    now have a "native thread" associated once they've started
+    executing, and so the assertion will pass (as will any code that
+    depends on being able to get a native Thread from RubyThread).
+
+commit 7f5e2dee4aaaf53dcfe38093f3ddd1ba57264498
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed May 20 04:39:57 2009 -0500
+
+    Fix for JRUBY-3575: Memory leak when -Djruby.thread.pool.enabled=true
+
+commit 83700452557c3ceeb53ce8117006fc94c6227456
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jan 26 07:44:29 2009 +0000
+
+    Juggle thread association around again to get some Thread.list tests passing more reliably in pooled mode. Really needs a refactoring one of these days.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8892 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit b6bbe1aa6075d62b42978a4541cfbbe97d4435d3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Aug 3 23:25:54 2008 +0000
+
+    Likely fix for test-all problems on build machine: if future is null, it just means the thread hasn't been started (java) but that still means it has been created (ruby) which means it's running or about to run. So we flop some conditions to make that the case, and I added docs to FutureThread.isAlive.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7367 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 521e9e65ed94d12fa9e480c54acd00c2de7eaf13
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Aug 1 09:02:33 2008 +0000
+
+    * Various minor framing cleanups, mostly to eliminate passing nulls and default values that get ignored or replaced with others. No obvious perf difference.
+    * Cost reductions for thread spin-up, largely by reducing default size of stacks from 50 to 10 but also reducing construction/startup overhead for RubyThread and the two ThreadLike types. Pooled thread spin-up now appears to be as fast as Ruby 1.8.6.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7338 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit f2843a06b2fbac91091cc11d4ec80bf303a4fe26
+Author: Vladimir Sizikov <vsizikov@gmail.com>
+Date:   Wed Mar 26 19:18:34 2008 +0000
+
+    JRUBY-2111: test_thread failure in run-junit-compiled-threadpool
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6344 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit fa35eadfbcc47235cb4e7ebf90cb37c0dbe03264
+Author: Vladimir Sizikov <vsizikov@gmail.com>
+Date:   Wed Mar 26 17:15:22 2008 +0000
+
+    JRUBY-2315: Kernel#exit does not work from within Thread.
+    
+    Regression test added.
+    
+    Reviewed by Tom.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6343 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit c52ef1b3855534b17842ace62394f352e1105af6
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Mar 6 18:04:59 2008 +0000
+
+    Fixes for JRUBY-1799, allow the thread pool size and ttl to be configurable. Added configuration properties, --properties help, and moved the executor from a static field of FutureThread to an instance field on Ruby, so each runtime can have its own pool.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6122 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 2e04166f0493df5107d2a3429fe8c8355a53da74
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Nov 16 05:54:35 2007 +0000
+
+    Multiple fixes for threadpool-based execution, and enable threadpool tests in test-all.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4949 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 47df9c02421773ee4fe2fe8adf1090eea2fcdf7e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Aug 6 18:48:52 2007 +0000
+
+    Eliminate use of backport java.util.concurrent in favor of actual java.util.concurrent, since Java 1.4 will use the retroweaved JAR anyway.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4102 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 3c35bf8ce79004ec6ab075a17dfc1f3040ddd6e6
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Apr 7 07:23:12 2007 +0000
+
+    JRUBY-770 fixes to make both normal threads spun up by Ruby and pooled threads act as daemon threads.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3408 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 75827c4aafdd52fc14766119e65133e1c9c01924
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Mar 27 10:26:14 2007 +0000
+
+    Adding or updating license preamble
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3292 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit e2a4127c1c11154b019c43b5156ebdc3dda9f275
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Mar 27 09:53:25 2007 +0000
+
+    Added backport of java.util.concurrent APIs and thread-pooling code. Use -Djruby.thread.pooling=true to enable the use of a thread pool for new Ruby thread instances.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3288 961051c9-f516-0410-bf72-c9f7e237a7b7

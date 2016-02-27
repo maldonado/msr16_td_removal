@@ -1,0 +1,453 @@
+commit aeb0793e3a2f8f7d494f9cd03f1e0dac1558d193
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Mar 17 23:28:26 2013 +0000
+
+    Tab police - also remove trailing spaces in same files
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1457590 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1ae87995b7ee476e2a209f18ced021b9303dcbbc
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Dec 8 13:57:27 2012 +0000
+
+    Also show noDelay config item
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1418672 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 218b09437ea7091212bf7fac883557123089d575
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Dec 8 13:09:48 2012 +0000
+
+    Delete unused method.
+    It was broken anyway, as the value should be stored as a boolProp
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1418669 13f79535-47bb-0310-9956-ffa450edef68
+
+commit cba9ab5cc966b5330a16332d7143f4c2fbb5f580
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Dec 8 13:08:09 2012 +0000
+
+    Delete unused method.
+    It was broken anyway, as the value should be stored as a boolProp
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1418668 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 2a4bb1f03cda7fb73d05f32e4b52eb3b15302a50
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Dec 8 13:04:23 2012 +0000
+
+    Use constant for reuse connection default
+    Ensure default is correctly applied if omitted from JMX and used in non-GUI test
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1418667 13f79535-47bb-0310-9956-ffa450edef68
+
+commit c391648e8ffaf9f4e81f525da54aee7384268656
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Dec 8 12:32:29 2012 +0000
+
+    Protect debug log
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1418660 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6b4a1aaf25c1c417aac030787b2d3218e80d9368
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Dec 8 12:31:46 2012 +0000
+
+    Show a bit more info in the request pane
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1418659 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 14f0e4398da3392c5c0bbd2070a22c9cf412c9a5
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Dec 7 15:52:08 2012 +0000
+
+    TCP Sampler, additions of "Close Connection", "SO_LINGER" and "End of line(EOL) byte value" options
+    Bugzilla Id: 54230
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1418365 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 085a747c38d7df1ce401a7695287a40cd952c84f
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Nov 27 00:19:20 2012 +0000
+
+    Move to Java 6
+    add @Override for interface implementations
+    Bugzilla Id: 54199
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1413958 13f79535-47bb-0310-9956-ffa450edef68
+
+commit aa43c67b6b54b469e09da0e7a3cf5d2798bb3825
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Sep 9 14:50:11 2012 +0000
+
+    Pressing "Stop" does not interrupt the TCP sampler
+    Bugzilla Id: 53838
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1382510 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 472da1514d311de44fe5569b48be26d8f6946785
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Thu Aug 23 00:48:23 2012 +0000
+
+    Bug 53765 - Switch to commons-lang3-3.1
+    Bugzilla Id: 53765
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1376337 13f79535-47bb-0310-9956-ffa450edef68
+
+commit df9e54baa0ec8cbc7efc4dba6c8fa65df23a7141
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Sat Apr 7 19:42:56 2012 +0000
+
+    Bug 53042 - Introduce a new Interface to be implemented by AbstractSampler to allow Sampler to decide wether a config element applies to Sampler
+    
+    Make TCP Sampler only merge 3 config elements
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1310835 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 4bb6c817e3ed803978703262ef4793a14314c0b6
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Sat Feb 4 15:01:11 2012 +0000
+
+    Bug 51737 - TCPSampler : Packet gets converted/corrupted
+    Added encoding to SampleResult
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1240514 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b2fd024917560df5dfaba72c2268bdfd59f49950
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Jan 3 01:09:25 2012 +0000
+
+    Only generate socketKey once per sample
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1226592 13f79535-47bb-0310-9956-ffa450edef68
+
+commit fa7eadca60b25ffcc40db8262ba813304cf24c66
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Sat Dec 31 10:52:39 2011 +0000
+
+    Bug 52396 - TCP Sampler in "reuse connection mode" reuses previous sampler's connection even if it's configured with other host, port, user or password
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1226061 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 61b45c8b552011a83535d05012f3fa7ecd7be7c2
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Thu Dec 29 16:45:11 2011 +0000
+
+    Bug 52396 - TCP Sampler in "reuse connection mode" reuses previous sampler's connection even if it's configured with other host, port, user or password
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1225587 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 9374a757b98cf32f95d8ebf6da2058b55e789132
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Thu Nov 10 08:25:32 2011 +0000
+
+    Bug 52104 - TCP Sampler handles badly errors
+    Bug 52087 - TCPClient interface does not allow for partial reads
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jmeter/trunk@1200210 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 23dd59efc94a21d3536916568d0a1f516f23e602
+Author: Philippe Mouawad <pmouawad@apache.org>
+Date:   Thu Oct 27 20:45:11 2011 +0000
+
+    Bug 52104 - TCP Sampler handles badly errors
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1190014 13f79535-47bb-0310-9956-ffa450edef68
+
+commit e4e02e5edd13be6e3150d4d7f6b69a9c4526fa3a
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Oct 25 18:33:27 2011 +0000
+
+    Should close socket on Exception as well
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1188850 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 02339b58e82e5921ba566ff5b4c04450841eed10
+Author: Bruno Demion <milamber@apache.org>
+Date:   Mon Mar 28 22:18:47 2011 +0000
+
+    Bug 50977 - Unable to set TCP Sampler for individual samples
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1086424 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 5b9d400b52d607f0abbbbaee3498c2d608396308
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Mar 18 12:19:46 2011 +0000
+
+    Bug 50937 - TCP Sampler does not provide for / honor connect timeout
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@1082883 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 07ac4f6a48399b853df9f2d5d04f5f5be8cd010f
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Mon Jun 28 19:05:04 2010 +0000
+
+    Bug 48709 - TCP Sampler Config setting "classname" has no effect
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@958685 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 7552e7f4b99dc4496609d997d35a1ec0d4ddc7bd
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Apr 24 17:56:44 2010 +0000
+
+    Use setResponseData(String, null) where default charset is OK
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@937663 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 1b870d0fb6eb7c01373ae7d47b7ab427ab89d672
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Feb 23 16:09:09 2010 +0000
+
+    Remove trailing spaces
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@915405 13f79535-47bb-0310-9956-ffa450edef68
+
+commit cac27cf1451ba02fea54f73a80b7815fe9e45103
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Feb 16 15:21:18 2010 +0000
+
+    Bug 48747 - TCP Sampler swallows exceptions
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@910559 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 7f49ce41aea0919c998d56af5d5f8f4a02685b69
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Aug 15 17:20:34 2009 +0000
+
+    Fix up some raw types
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@804491 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 5532eab69447b260cc3d47e916febadec68092e4
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Aug 14 22:37:19 2009 +0000
+
+    Make ThreadLocal variables type-safe
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@804399 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 4bdf9c6650ba4ede2039a0e29a353224f3127cc9
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Fri Aug 14 19:08:38 2009 +0000
+
+    Add @Override and @Deprecated annotations
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@804323 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d89a1ea71e8e8d5c96f351e9840d6e32228d378b
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Wed Nov 5 16:55:29 2008 +0000
+
+    TCP sampler now calls setupTest() and teardownTest() methods
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@711614 13f79535-47bb-0310-9956-ffa450edef68
+
+commit feb4819a54fb4803badc80c8df955fa4dfb8a6d8
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu Oct 23 01:33:30 2008 +0000
+
+    Add classname field to TCP Sampler GUIs
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@707243 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 413d3f24baddd42541a5310843cb69ce187611d3
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Oct 5 01:02:48 2008 +0000
+
+    Add serialVersionUIDs
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@701738 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d9a20b1f331deb4586cf922d1cb1391a4f4aa958
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Thu Sep 25 11:51:20 2008 +0000
+
+    Bug 45887 - TCPSampler: timeout property incorrectly set
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@698931 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 6bf94deccce242cd1bba95592f54fd78a90dfc3e
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Jul 6 23:56:15 2008 +0000
+
+    Detab
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@674365 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 0c1e9a1d65e618c8afe4e7364db1f98c0c432baf
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Wed Apr 30 12:48:07 2008 +0000
+
+    Bug 44910 - close previous socket (if any) in TCP Sampler
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@652380 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 97f5943089bcb0248170d09431a17b8a745d5aa6
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Apr 29 21:10:55 2008 +0000
+
+    Ensure that static variables are final to ensure visibility
+    Trim variable name parameter in function calls
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@652128 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 5388d5f9d6dc84a4203cd46336e84d7260a2d1f5
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Mon Feb 12 23:09:08 2007 +0000
+
+    Fix some possible file close failures
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-2@506737 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 34da4f867eef36204e943885add881097d2dc0e1
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Feb 3 23:41:17 2007 +0000
+
+    Reduce logging output
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-2@503335 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a97b9aa2ea8b646e955ee93944571d313cd040ac
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Wed Jan 31 20:42:01 2007 +0000
+
+    Bug 41457 - Add TCP Sampler option to not re-use connections
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-2@501981 13f79535-47bb-0310-9956-ffa450edef68
+
+commit db8dedbff2834a7eb4e0429a307ecbdd731a53d8
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Jan 7 18:10:21 2007 +0000
+
+    Update license (remove copyright)
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-2@493789 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 189cf653504f242eedada0cfd38edb547016f476
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Nov 13 23:24:37 2005 +0000
+
+    Use setResponseCodeOK()
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-1@344003 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 248ae736bba6012aa8a7380c03f1cf9bca47415c
+Author: Peter Lin <woolfel@apache.org>
+Date:   Thu Aug 11 22:05:21 2005 +0000
+
+    applying bug fix from HEAD to 2.1 branch
+    peter
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/branches/rel-2-1@325616 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 76159a5b953d9dc5518b2ccb03bfbc1c4908837d
+Author: Michael Stover <mstover1@apache.org>
+Date:   Tue Jul 12 20:51:09 2005 +0000
+
+    Formatting Code to basic Java Standard
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@325542 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 52c7ea13167f4a9a41be5f17e18674b4cc575a0a
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Mar 20 21:20:54 2005 +0000
+
+    Minor tidy up
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@325230 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 33a338ba4f520ed60fd15f414f7a869ecb76aa9d
+Author: Michael Stover <mstover1@apache.org>
+Date:   Wed Oct 6 14:43:57 2004 +0000
+
+    Merging 2-0 to HEAD
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@324917 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 70f822c7fc9170907f8072488715f690aac39bef
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Mon Aug 9 17:58:43 2004 +0000
+
+    Change info message to debug
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@324807 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 5349a7263e4cd424f950bb58d6f9d6b6e162d9b9
+Author: Michael Stover <mstover1@apache.org>
+Date:   Sat Jun 12 17:11:46 2004 +0000
+
+    Merging latest from 2_0 branch
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@324677 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 9667a2f9ed229dcec2ba51208dce8899a46cc560
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Jun 6 22:27:39 2004 +0000
+
+    Make log final and private
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@324628 13f79535-47bb-0310-9956-ffa450edef68
+
+commit b76babd908d241d0775e26664b51bee40ea5c1fb
+Author: Michael Stover <mstover1@apache.org>
+Date:   Fri Apr 16 13:21:45 2004 +0000
+
+    Merging rel-2_0 branch to main
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@324548 13f79535-47bb-0310-9956-ffa450edef68
+
+commit a2b1619ae73507fc1708f4a9b5967ed222935a3e
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Mar 30 18:08:09 2004 +0000
+
+    Remove my @author tags
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@324515 13f79535-47bb-0310-9956-ffa450edef68
+
+commit f5cebfcde295715b3c3ac984e44f4fc8563cf20c
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Tue Feb 10 00:39:37 2004 +0000
+
+    ASF L V2
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@324234 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 8b9a9f488605599eef51e963d7e2370e49e82b5a
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Wed Jan 21 23:33:56 2004 +0000
+
+    Add ASL
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@324136 13f79535-47bb-0310-9956-ffa450edef68
+
+commit 312ba629d9d741bc1c74e3d5bb0100acda221b6f
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sat Dec 20 00:58:22 2003 +0000
+
+    Use sampleStart/End instead of setTime
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323928 13f79535-47bb-0310-9956-ffa450edef68
+
+commit d39afcc4c0aa79117aae3d6e7bfeb7f4ab375f03
+Author: Sebastian Bazley <sebb@apache.org>
+Date:   Sun Nov 16 02:09:06 2003 +0000
+
+    Initial release
+    
+    
+    git-svn-id: https://svn.apache.org/repos/asf/jakarta/jmeter/trunk@323687 13f79535-47bb-0310-9956-ffa450edef68

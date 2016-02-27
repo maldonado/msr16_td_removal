@@ -1,0 +1,244 @@
+commit 838c8d7a991d1914357ce47db62f594aca27bc78
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jul 24 22:32:10 2015 -0500
+
+    CallConfiguration is not used by any DynamicMethods anymore.
+    
+    CallConfiguration used to be needed to determine how to frame and
+    scope all methods in the system. However, in JRuby 9k it is no
+    longer needed.
+    
+    * Core methods that need frame/scope have the pre/post logic
+      generated in bytecode (for generated invokers) or in handles
+      (for MethodHandle-based invokers).
+    * Interpreted IR methods have their own flags for frame/scope, or
+      have instructions that perform the pre/post logic.
+    * Jitted IR methods always have emit bytecode to do the pre/post
+      logic.
+    
+    After a quick inspection I found that there's no other uses of
+    the callConfig field in DynamicMethod, so this commit removes it
+    and deprecates the constructors and accessors. This should shrink
+    all DynamicMethod subclasses by at least 4 bytes and perhaps 8. It
+    also reduces the size and overhead of our generated populators,
+    which might have a slight effect on startup.
+
+commit 7b2bf653fb4fdea139b5026531cc8c9deba3cdb6
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Jul 4 10:53:14 2015 -0500
+
+    Remove generated invokers and get handle-based invokers passing.
+
+commit 3f44a103f8ab613701f76203ed37d279a57362a7
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jun 30 15:05:20 2015 -0500
+
+    Kill unused method invoker logic and related classes.
+    
+    We have largely committed to JRuby 9k being Java 7+, and to
+    simplify the process of binding jitted method bodies we are using
+    MethodHandle exclusively. Because of this, and because MHs work
+    anywhere reflection works, we are removing the bytecode-generate
+    CompiledMethod and the Reflected*Method.
+    
+    There's also a bit of peripheral cleanup for code that is defunct
+    with these classes removed.
+
+commit e1c0f7dbc0d8dfa9dcc07f0337eb2ac535c5313d
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri Jun 12 15:54:43 2015 -0500
+
+    Fixes #3040. parameters on non-Ruby method with special arity will NPE
+    
+    Actually, I fixed this for all ASM-generated invokers.  We were using the named
+    versions of rest/opt instead of the anonymous versions.  Since native methods
+    have no names associated with the parameters I switched to anon versions.
+
+commit 72c6c0b8226893575df7dd0d19912011541d7106
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri May 8 19:01:18 2015 -0500
+
+    Refactor argument metadata representation and rendering.
+
+commit d06fd823d9054ce8905cd06b4ee36180d296f414
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri Apr 17 09:49:14 2015 -0500
+
+    No more requireArgument optionalArguments individual count methods on StaticScope.  getSignature
+    replaces it.
+    
+    Remove Arity usage from JIT.  All information of a JIT'd method can come from signature on
+    StaticScope now.
+    
+    What is remaining is pushing more Arity out of *Method types, but pre2 is dragging on and this
+    last push will be to use new Signature info to properly implement kwargs.
+
+commit 367c2bcd7db1524833484db5af23bac92fa8a531
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Apr 14 16:19:21 2015 -0500
+
+    - DynamicScope+children removed no longer used {get,set}ArgValues methods since they are dead.
+    - ArgsNode getRest() replaced by hasRest() or retrieving getRestArgNode directly.
+    - Slight rearrangement internally of fields in ArgsNode.
+    - Remove accidental println from last commit.
+
+commit 20be9894f868c5d9bfb9c5aa20242c066e29ac09
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Mar 11 18:17:16 2015 -0500
+
+    Fix typo and restore interface type.
+
+commit b45a7f080c2b48669fe379f80fc7c750b11e74f2
+Author: Christian Meier <m.kristian@web.de>
+Date:   Sat Nov 29 12:03:27 2014 +0000
+
+    make JRubyClassLoader binary compatible to jruby-1.7.x again
+    
+    and still keep the extra features restricted to runtime.getJRubyClassLoaders.
+    all other internal CL will be ClassDefiningJRubyClassLoader.
+
+commit 1a93885ded18e4f55848878dd89ab8cb0c97807b
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Sun Oct 26 20:22:36 2014 +0000
+
+    Tests for new detailed source positions.
+
+commit ed54aab184bed0dc9dbaaf90b357c8f793c33696
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Sep 17 13:40:36 2014 -0500
+
+    Rip out the guts! Removing many non-9k runtime classes.
+    
+    * ClassCache is gone; it was hacky and problematic when compiled
+      code held classloader-level (static) data, as when using indy
+      call sites. Java 8 has also eliminated permgen, greatly reducing
+      the hassle and overhead of loading jitted code. Finally, Rails
+      and the other Ruby frameworks are now officially "thread safe"
+      (or the teams are committed to them being so) and the multiple
+      JRuby model of deployment is discouraged (or even deprecated).
+    * All old JIT code is gone. It won't be useful for the new
+      JIT.
+    * Removed the last vestiges of Callback-based functions. If I
+      remember right, there's some ext out there using them...we must
+      find it.
+    * Rewired JITCompiler to use the new JIT.
+    * Rewired InterpretedIRMethod to use JITCompiler.
+    * Moved OneShotClassLoader out of ClassCache (in org.jruby.util)
+
+commit 7791321ff35529b84e83c0480c621af7dbe5c247
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Jul 6 14:32:53 2014 -0500
+
+    Move toward better metadata in native core methods.
+    
+    * Fully-specify methods that read/write frame or scope fields.
+    * Attach additional "caller" CallConfig to methods for later use.
+    * Eliminate static lists of scope/frame consumers (full field
+      specification means those methods will get picked up on boot.
+    
+    This change moves us toward having full framing information in the
+    DynamicMethod object associated with a given native method. This
+    will allow us to do a better job of late-framed calls (don't
+    frame or scope until we call a method that needs it), alias
+    warnings (only warn when aliasing a method that has framing
+    requirements), and ultimately better frame elimination in the new
+    IR runtime.
+
+commit 05e1b11ad00be5b85a5df8419573aab4f98f2954
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Fri Jun 13 17:36:27 2014 +0100
+
+    Revert "[Truffle] Restore a basic version of set_trace_func."
+    
+    This reverts commit 077a4ffb881e62b4d1fab78270a81cc500c0c252.
+
+commit 077a4ffb881e62b4d1fab78270a81cc500c0c252
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Thu Jun 12 01:48:11 2014 +0100
+
+    [Truffle] Restore a basic version of set_trace_func.
+
+commit 97d1a4078243cb9cb3ec868acf5306ac32a69455
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Thu Jan 9 16:30:37 2014 +0000
+
+    [Truffle] Allow access to original nodes in most method objects.
+
+commit d3c07143fef64cf3d04962089e944e150b6bb3b5
+Merge: 3ca2a90 17cb0b2
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Nov 21 20:02:16 2013 -0600
+
+    Merge branch 'jruby-1_7'
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/ext/pathname/RubyPathname.java
+
+commit e50a20f879b242d7203ac669679ab987784fd2d1
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Nov 21 16:27:43 2013 -0600
+
+    Don't search for pregen'ed AOT invokers, due to failure cost.
+    
+    When AOT compiling code, or when JITing code that has "def" in it,
+    we must generate a stub to wrap the target method as either a
+    DynamicMethod or some type of block callback. These stubs are
+    normally generated at runtime when the AOT script boots, or when
+    the JITed method containing a def or block is run.
+    
+    The logic here originally tried to load existing stubs, for the
+    rare case where the user has AOT-compiled their application *and*
+    pregenerated those invokers, such as for environments without code
+    loading capabilities or to force compiled code into the boot
+    classloader. However, since 99% of AOT users did not also pregen
+    the stubs, N method definitions executed in a script meant N
+    ClassNotFoundException getting raised for the missing stubs, plus
+    the overhead of proceeding to generate and load the stubs at
+    runtime.
+    
+    Because there are likely no users pregenerating the stubs (we
+    have never publicized the feature and it generates far more
+    classes than just doing it lazily at runtime), we should prefer
+    startup time of typical AOT situations. This patch removes the
+    attempt to load AOT-compiled method stubs before generating them,
+    instead allowing them to generate and falling back on classloading
+    if the generated code fails to link.
+    
+    For a simple experiment -- running -X+C -S rake -T in the JRuby
+    codebase -- my total execution time went from 5.3s down to 4.9s.
+    Another user saw improvements as well in normal jitted execution,
+    which is an unexpected benefit.
+    
+    Note that this does make the pregenerated-stub feature moot; since
+    we now always try to generate at runtime, those pregenerated stubs
+    will almost never be seen. This may impact performance for
+    applications that pregenerate stubs, but it's unlikely to be
+    considerably slower since the heaviest lifting is from the
+    bytecode parsing and linking that always has to happen anyway.
+
+commit cfc4e7db82b30e4bc8d093049a08bad0e5baf539
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Nov 21 14:45:39 2013 -0600
+
+    Use lighter-weight check for origin classloader of invokers.
+    
+    Instead of using somewhat expensive getMethod calls, this uses
+    a simple comparison of the found class's superclass an expected
+    class from the current classloader context. The effect should be
+    the same...that is, if an invoker comes from a higher classloader
+    with mismatched JRuby classes, it will fail this check just as it
+    failed the getMethod check.
+    
+    See JRUBY-5038 and related commits.
+
+commit 45823586876293329d34ad92d53b0315d8547aac
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Nov 19 10:23:41 2013 -0600
+
+    Only capture callNumber when needed for non-local return.
+
+commit 28c6fbc4e883bc1c9e9242d1da1cb2b785f55339
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 3 12:46:45 2013 -0500
+
+    Move to @mkristian's proposed layout, with some modifications.

@@ -1,0 +1,273 @@
+commit 1214de1fcffdea5c0b658922d96e50cd68fdd17b
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Feb 4 15:16:50 2010 -0600
+
+    New Variable subtypes for IR
+
+commit 5a08b5476f504d5f0cbbc628a85d88816f9df97b
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Jan 26 15:59:21 2010 -0600
+
+    Trivial IR changes littering my tree
+
+commit 237f6fccd437bd1c9315f1f27361b0c68537855f
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Jan 7 16:11:16 2010 -0600
+
+    A little more refactoring for style and a little DRY'ing of var/label index generation
+
+commit fd5db54803738633dbed63308d1a712b8d07941e
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Jan 7 14:17:14 2010 -0600
+
+    Very minor style changes except for internal variable logic on scope impl
+
+commit a9819ccf07d7091f3b402502b00a93261d18eed7
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Fri Dec 18 01:42:58 2009 -0600
+
+    - More cleanup of scoping and removing old crud from when I didn't understand some of the scoping semantics properly; Added a metaclass object to encapsulate construction of the metaclass and keep some code clean.  All of this will need couple more passes and some more fixup.
+
+commit cfea1d96e575a6b00d53eddf1c4a175cd6587dc0
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Mon Nov 30 22:38:01 2009 -0600
+
+    - First pass at generating IR for rescue blocks: probably buggy, incomplete (ensure blocks, retries, other fixmes) + not yet integrated into cfg generation.
+
+commit 15d7d44d7b26584ca251a4918e3555b43da8d7c0
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Sat Nov 28 21:30:23 2009 -0600
+
+    - Few bug fixes + started changing coding style to conform with existing
+      coding style + translated SClassNode + added several additional fixmes
+      + added timing output.
+
+commit f426951fb2a525a24d22cb99f6f89271a7aada31
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Wed Oct 28 06:55:48 2009 -0500
+
+    - Added some more code for frame load/store placement analyses +
+      additional testing and bug fixes; requires more testing + bug fixing.
+
+commit 63753dc47fcb715bdd2710fce5dc22126b68eaa9
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Fri Oct 23 23:59:56 2009 -0500
+
+    - First round of attempting to add alloc-frame, load-from-frame &
+      store-to-frame instructions for closures.  2 separate dataflow passes
+      to insert load and store instructions where required -- partially
+      working, still some pieces to fall in place.
+
+commit e60f8666aabc8496bb40dd03498d08a1b343cdcd
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Sun Oct 18 01:36:20 2009 -0500
+
+    - Replaced tabs with spaces.
+
+commit 78dfc2798b99f35d866a4bd7b033a4d1e6fa98c3
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Sun Oct 18 00:02:08 2009 -0500
+
+    - Bug fixes in ir generation + one more ir node translated (more ruby
+      code now successfully processed - ir built, cfg built, local opts
+      done, dom tree built, lva done, dead code eliminated).
+
+commit dc0b3a049c641482c1161afe84c91d898aeca413
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Wed Oct 14 18:58:12 2009 -0500
+
+    - Cleaned up the scope setup some more; Integrated (not fully tested &
+      debugged) closures into live variable anaysis code; Added instructions
+      to allocate heap frame, load / store variables from frame (not
+      integrated yet);
+
+commit 16cea81b40c77d9a035baa2b3914d9edf0883fba
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Fri Oct 9 00:12:37 2009 -0500
+
+    - Some more progress towards integrating closures into analyses & optimizations; Next step: integrating them into LVA.
+
+commit 4f595491aab0136e9abd762abb85bee0de951d6f
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Thu Oct 8 00:16:31 2009 -0500
+
+    - Few more bug fixes in ir generation -- ir for non-closure break instructions fixed up.
+
+commit 0a2edf9d95b2c1a18cb434df86cd1162a414a8d5
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Wed Oct 7 18:03:18 2009 -0500
+
+    - Closures are handled better w.r.t. IR printing + cfgs are built for
+      closures too now + added a BUILD_CLOSURE IR instruction + fixed some
+      bugs (can now build ir and cfg and run local opts on much larger code
+      bodies).
+
+commit 58996aeb051c474a8409506a3058634d81cb90dd
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Sun Oct 4 16:52:40 2009 -0500
+
+    - Bug fixes in ir and cfg construction; canonicalized cfg; added
+      improved visit order to dataflow framework; first pass (stubs) at
+      dealing with method aliases.
+
+commit 8d92c98c80f94b7c4e8b0e15fc98f1cadee6cb37
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Fri Sep 25 10:29:45 2009 -0500
+
+    - Some more code cleanup + implemented dead code elimination pass
+
+commit f78cf63ac77bbf74f6d3968fcdfe6bf4e65beb92
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Mon Aug 31 17:41:14 2009 -0500
+
+    - Updated local optimization pass to optimistically optimize fixnum & float arithmetic, and array accesses while adding method version guards; Not yet added code to recover from version failures and de-optimize method
+
+commit 26971842a0b03a49e4d3610e9759f478c76ca775
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Thu Aug 27 17:56:41 2009 -0500
+
+    - Continuing cleanup of scoping code;  IR_Class now extends IR_Module; filled out some more stubs to optimize some core class method calls for constant arguments;
+
+commit a6996526b87550659f9e1ff43bc05df3cc5dc1dc
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Thu Aug 27 13:43:46 2009 -0500
+
+    - Bug fixes in constant put/get (for class definitions).
+
+commit b802028b86902e552c7e453719043abaf4cc603b
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Thu Aug 27 01:46:01 2009 -0500
+
+    - [ Hmm .. git newbie here .. somehow lost the commit .. trying again ] Fixed couple bugs with scope canonicalization; implemented ir output as a compiler pass; added code-version-token for IR_Method and added several method stubs to start optimizing calls
+
+commit de4bbdb33fcd601dc1a837a768cd84eda6509788
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Tue Aug 25 00:35:15 2009 -0500
+
+    - Cleaned up code to enable running compiler passes without having to write a lot of same boilerplate code all the time.  This will keep evolving and changing.  Just the first pass.
+
+commit e505306e54e6494f07092b18d42d4d348b981fd3
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Sat Aug 8 01:57:16 2009 -0500
+
+    - One final fix.
+
+commit b2852d3f64a2679a1c6a3b8d75cb19d9afb35c85
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Sat Aug 8 01:19:01 2009 -0500
+
+    - Fixed problem with non-atomic values.  I think i have it fixed.
+
+commit d7e29b3be44236fca6f412886f65bcdac025baf5
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Thu Aug 6 19:45:39 2009 -0500
+
+    - First pass of copy & constant propagation peephole opt. in place.  Compound values are not handled correcty yet.  I can only propagate the reference to the compound value, not the entire value.  Will fix this in next round of fixes.
+
+commit f7751803e0d5eeadee218a995b48e062c257fedc
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Thu Aug 6 15:06:13 2009 -0500
+
+    - Committing some code that I forgot to commit from 2 weeks back -- mostly code cleanup.
+
+commit ddaf4c565c871ce4a59cf23683c59bcc2429fec9
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Thu Jul 23 17:37:09 2009 -0500
+
+    - Moved all operands to operands/ and instructions to instructions/ and fixed up imports.  Added some commented out code to start running peephole opts on the IR -- which will also serve as a basis for SCCP passes later on.
+
+commit c401b85047857427a7b421d4bcadc480364afc97
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jul 17 00:54:34 2009 -0500
+
+    Add the beginnings of a JVM emitter.
+
+commit 9fa49de6750aa4ab1946d547f03ef8e29909369a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Jul 16 22:06:30 2009 -0500
+
+    Add "live variables" output to IR_ScopeImpl, to show extent of variable liveness.
+
+commit e6e8f20b12f4ff5b0411e8996d1d03a2d26eb433
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Tue Jul 7 14:05:02 2009 -0500
+
+    - A few bug fixes && ZSuperNode translated
+
+commit fc6ff506204028c43476c948c4c734ab00013aa8
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Mon Jul 6 22:36:07 2009 -0500
+
+    - More cleanup; now, methods can only be added in class scopes!  Added def_class_method and def_instance_method instructions; cleaned up more toString output; now class definitions are handled properly; added return (for implicit return case) to methods.
+
+commit 2518c936eda036aa18d0f0865c5b8de9077a04d8
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Sun Jul 5 21:31:28 2009 -0500
+
+    - Several tweaks to class structure and toString methods to get cleaner IR output
+
+commit 754815517e1238162cd18eb27f24ee6cfaf3fdc6
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Jul 5 19:08:32 2009 -0500
+
+    Numerous tweaks to get some basic toString working for a number of IR nodes.
+
+commit 4ea49d9ce6ad4d8e22747458daa293e66008184c
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Sat Jul 4 19:38:48 2009 -0500
+
+    - Many more compile errors fixed; 50 more to go!
+
+commit 3eb979fe140a545b12ea9b21551d8e4be812ee40
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Sat Jul 4 14:54:25 2009 -0500
+
+    - Several fixes to get this thing to start compiling ... lots more to go!
+
+commit 93b30b35e99723717b2adea7e611eec80476e7e5
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Thu Jul 2 19:04:34 2009 -0500
+
+    - Fixed scope implementations so that the parent scope can be a dynamic operand rather than a static scope!
+
+commit a7b4c64e647921df9536cd67047f5180ba57ba28
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Thu Jul 2 17:05:03 2009 -0500
+
+    - added get_const & put_const instructions and translated colon2 nodes
+
+commit 955209fba77336e0f9bd5b31b39a44acd5f4a785
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Sat Jun 27 20:01:56 2009 -0500
+
+    - Added IR_Loop; implemented loop stack in IR_Scope; translated while and converted break & next to jumps for non-closure cases
+
+commit 946699ed39373dfb0f6448405c2326c5d8803aac
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Wed Jun 24 16:50:17 2009 -0500
+
+    - More nodes translated; did some cleanup of buildRoot and added code to the various scopes to handle buildRoot.
+
+commit d17b345770bb027a5781f8f7753bad1cddcffe00
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Fri Jun 19 01:08:42 2009 -0500
+
+    - Further fixes to the handling of constants.
+
+commit 2b4a871b6d1ce143b4e87c12267064bdd064149c
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Fri Jun 19 00:52:11 2009 -0500
+
+    - More methods translated; several more FIXMEs recorded; more methods added to IR_Scope and its implementations.
+
+commit fa87249ced704d4f1cf3a4ce2041f95e0c035f3e
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Thu Jun 18 08:04:12 2009 -0500
+
+    - Built a few more nodes (hash, symbol)
+
+commit 52d8e906327c15925d2feb3be2f3b658eac439d9
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Wed Jun 17 22:59:56 2009 -0500
+
+    - Renamed IR_BuilderContext to IR_Scope, added THREAD_POLL instruction and added them in place of the FIXMEs

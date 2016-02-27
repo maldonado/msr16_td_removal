@@ -1,0 +1,371 @@
+commit bcc26747f56e05bd1ceda21d97fd4b0bc5255f0c
+Author: Ron Dahlgren <ronald.dahlgren@gmail.com>
+Date:   Fri May 17 16:15:20 2013 -0700
+
+    Use RubyModule.JavaClassKindOf fixes jruby/jruby#614
+    
+    I've changed all of the relevant cases of anonymous KindOf classes to
+    use the new JavaClassKindOf. This cuts down on some of the noise
+    produced by anonymous inner classes, especially given that these
+    replacement points all had identical implementations.
+
+commit 96cc3320be82dcf34af23f6c152f92df06181865
+Author: Alex Tambellini <atambellini@gmail.com>
+Date:   Tue May 7 00:39:34 2013 -0400
+
+    Complex#/ with a Numeric which responds to #real? with false should coerce the passed argument to Complex and divide the resulting elements
+
+commit d00e21dfd6291f1a205686458f9502a1e8fc86e2
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Apr 15 16:26:32 2013 -0500
+
+    Avoid using backref within native logic.
+    
+    Some native-implemented methods like String#to_r and to_c used
+    Regexp logic to break apart the string. Because they called
+    through the same paths that Ruby code calls through, they were
+    forced to prepare for and use backref ($~) to hold the MatchData
+    object. My changes provide a backref-free path in RubyRegexp and
+    modifies our native logic to use that path. This eliminates the
+    need for a DynamicScope to be created and pushed along those paths
+    and should provide a path forward for eliminating scopes from Ruby
+    code that does not directly reference $~ and friends.
+
+commit bb98e4b8decffc0361b70a6c99c1ade5fed0abcb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Mar 28 10:02:33 2013 +0000
+
+    Move RuntimeHelpers to org.jruby.runtime.Helpers.
+
+commit 61678ac1a2514a9932276f8d527816a5980a94b3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Feb 25 20:41:40 2013 +1100
+
+    Fix more references to CPL.
+    
+    The phrase "Common Public License" was split across two lines in
+    our default header, which caused it to be missed during earlier
+    search/replace. Also, we did not replace the CPL URL in the
+    header with the EPL URL.
+
+commit 330fef3b0fc18af477ccea19bd278669667f31bb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 12 14:49:29 2013 -0600
+
+    Switch JRuby's CPL license to EPL.
+    
+    Governance of the CPL license was moved to the Eclipse Foundation
+    at some point in the past, and Eclipse blessed the EPL (Eclipse
+    Public License v1.0) as the successor to CPL. Because the CPL
+    contains a clause allowing transparent upgrades to future blessed
+    successor licenses, we can make the move to EPL without
+    re-contacting past contributors.
+    
+    The change in going from CPL to EPL largely just removes some
+    punitive language that apparently made many companies nervous. All
+    other language in the license remains identical.
+    
+    Several documents about Eclipse's move from CPL to EPL are here:
+    
+    http://www.eclipse.org/legal/cpl2epl/
+    
+    Note that Eclipse's move came before the blessing of EPL as the
+    upgrade path for CPL, so they had to do a bit more legal juggling.
+    With Eclipse now the administrator of CPL and with their blessing
+    of EPL as the upgrade path for CPL, all we need to do is make the
+    move.
+
+commit c6013c59228b377aa9f8fb0626340fa7831af667
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Oct 17 10:59:42 2012 -0500
+
+    Move Java-sourced dynamic call logic to MethodNames enum.
+
+commit b8181cda909f6e42d7c0b7fffaabbe2a502f273b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jul 27 02:19:54 2012 -0500
+
+    Inline all calls to ThreadContext.getRuntime to access the field.
+
+commit 7ae0a32006acde558528e44f626a4731cbfa5efc
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Mon Jan 2 23:22:57 2012 -0500
+
+    Fix Complex#rationalize spec.
+
+commit 07864d2bd0cb1d060d7a8ef5056e3e54efd8a1c2
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Mon Jan 2 22:33:53 2012 -0500
+
+    Fix Complex#coerce spec when other is a Complex.
+
+commit dd0ede8696d8b684baacb15f5904279aff6debec
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Apr 2 12:20:27 2011 -0500
+
+    Replace most slow core-to-core calls to ==, hash, and <=> with lighter-weight global cache hits.
+
+commit 65f30012476d4efff6f47b984f8e14d32139976b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Dec 8 14:25:01 2010 -0600
+
+    Improve perf of Object#dup by implementing a new RubyBasicObject#syncVariables that's smart about the new variable table logic.
+
+commit 5a17b6e878c41160814b2b3710993daab04d4ccb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat May 22 19:50:04 2010 -0500
+
+    Fix TypeError in Complex.polar for 1.9 specs.
+
+commit f62fd5f556a5225078cbbde29b0e926297268b9c
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Wed Mar 17 09:11:16 2010 -0500
+
+    Allow Complex.polar to take only one argument in 1.9 mode.
+    Also tag a spec failure in Complex.polar, since MRI does, too. http://redmine.ruby-lang.org/issues/show/2830 suggests a planned system-wide change on TypeError in general for release after 1.9.2.
+
+commit 2f3802343d0de9440a71e099002d3b66f51c0a51
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Dec 23 00:40:00 2009 -0600
+
+    Use accessors for those pesky ByteList fields and update bytelist.jar to a current version with accessors and deprecated fields (for compile warnings and because we'll want to privatize them some day).
+
+commit 1784c47651b457093ac5c3eb7815def169805b41
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Dec 17 16:05:35 2009 -0600
+
+    JRUBY-3992: [1.9] Complex improvements to pass ruby specs
+
+commit 13c40aeb515d14e62db6cb469a560d900a27647e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Dec 16 00:59:55 2009 -0600
+
+    Set reified class for all the primary core classes, so they'll work properly when extended and an interface gets included.
+
+commit 4d2dd32a0386d8b936b127f3a0d14af423bc10d6
+Author: Vladimir Sizikov <vsizikov@gmail.com>
+Date:   Mon Dec 7 19:09:43 2009 +0100
+
+    Fixed test failures on JDK5.
+    
+    Thanks to Yoko for finding the root cause.
+
+commit 896aebbe3dc6fe8e78f535956b3c0811ee11d497
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Wed Dec 2 08:24:32 2009 -1000
+
+    JRUBY-4298: [1.9] Add Complex#rationalize
+    
+    Signed-off-by: Vladimir Sizikov <vsizikov@gmail.com>
+
+commit 2ec5894c8f02f8cbbf6a6047b77a6f0b2eab0b36
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Oct 27 13:05:38 2009 -0500
+
+    JRUBY-4072: mathn/complex and mathn/rational should be implemented (patch by Hiro Asari)
+
+commit cca7f4c241dfb41c2827fd82a0cbf01acbed6dc0
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri Sep 25 17:39:26 2009 -0500
+
+    Revert == logic for Complex since it does not match yri
+
+commit dc15450c0e0c812cf6dd94a2955896d757bdaf2b
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri Sep 25 16:36:25 2009 -0500
+
+    JRUBY-3992: [1.9] Complex improvements to pass ruby specs (patch by David Calavera)
+
+commit 1362efbba8329520f3baa80edd7bdeff68d72530
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Sun Aug 30 11:53:34 2009 -0500
+
+    [19] comment out two asserts which do not seem right (make rubyspec/complex run)
+
+commit 5d308a56f13a9253fe3b19add92aa78a5ca71342
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jul 13 02:29:28 2009 -0500
+
+    Some refactoring and cleanup of the coercion logic used for arguments passed to Java calls, including another hash of types to converters for numeric inputs. Seems to help numeric-passing benchmarks a bit.
+
+commit 66b28d6e25993dac775867702563e32e7bc75b41
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Apr 8 20:58:55 2009 -0500
+
+    Migrate to having backref/lastline on DynamicScope again, with inspector changes to ensure the scope is available. Does not yet pass all tests.
+
+commit 955c15925d2eab0c3a0374950c0263b6ed7c0bea
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Sun Jan 18 23:23:17 2009 +0000
+
+    Remove spurious check.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8833 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 5c1a9f0ad9a5761c79f895d13bcc70354e9fcf61
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Wed Jan 7 00:39:23 2009 +0000
+
+    Do not create RubyRegexp instance also for String#scan/sub/gsub String arguments. Saved tons of GC pressure for string heavy code.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8620 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 3026c231db32c9350535f27ed97dd197f07cf0d8
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Mon Dec 29 21:28:51 2008 +0000
+
+    Sync Complex error message to 1.9 trunk.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8502 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 7cf0d42331e4195cdc4be946f294b1654757acad
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Fri Dec 5 18:29:04 2008 +0000
+
+    Sync Complex#to_s/Complex#inspect
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8272 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit b45fdfcac35814da57da41cebe8b959d94dda4e9
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Fri Dec 5 18:11:03 2008 +0000
+
+    Complex sync: f_signbit fix.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8271 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit ef594fec7ba1446ac0b32362c7591e24b78f3245
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Wed Oct 29 18:22:24 2008 +0000
+
+    Add missing Complex/Rational allocators (used only by unmarshal streams).
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7944 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit dfad0fb87d7306773f09d066b5002d8031091b4c
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Wed Oct 29 17:49:35 2008 +0000
+
+    Sync Complex/Rational.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7943 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 70db003ff1fc7d6623018e05d3baaa1365700968
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Wed Sep 24 15:55:24 2008 +0000
+
+    Complex/Rational update.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7777 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 6f6b9d80be13f5c4c64bf5329ef6fba785667a77
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Tue Sep 23 20:28:56 2008 +0000
+
+    Complex/Rational update.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7771 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 3ad54f32161501494ca8f3620c7d6966b87a237f
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Sun Sep 21 15:40:06 2008 +0000
+
+    Complex/Rational update.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7749 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 35d52ebb75f858ae21db50567a35e9eaaaf670f7
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Sat Sep 20 19:02:22 2008 +0000
+
+    Complex/Rational update.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7728 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit cf04b35a0eed9da90eab8cd4da99e7706f6ab3cd
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Wed Sep 17 17:24:24 2008 +0000
+
+    Complex update.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7710 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 1b8a3a06dc4a06eb8a5c3f455569f19df3bca5d4
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Mon Sep 15 15:46:52 2008 +0000
+
+    Add Complex#eql?, fix Complex#hash and Rational#hash.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7705 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 7afdd1561bdf1f9d6b9bdca16aef54f22676f802
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Sun Sep 14 12:47:26 2008 +0000
+
+    Add Complex#-@.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7701 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 179a91a2df0b1cf036a326b725a278b9b0a0c27d
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Sat Sep 13 16:58:18 2008 +0000
+
+    Complex/Rational 1.9 update.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7691 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d365bb795dd7dbc2f4bd790e992c2535df804fa8
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Wed Sep 10 22:50:06 2008 +0000
+
+    More Complex/Rational fixes, test_rational (0/2), test_rational2 (0/0) test_complex (0/0).
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7676 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 95deffd2ea4ab51cd43a023d60c428142edfbb30
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Mon Sep 8 18:07:22 2008 +0000
+
+    Keep Complex/Rational work up to date (doesn't pass 1.9 tests yet though).
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7658 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 7dcdfddf1a2c73aed3c5de4429e05688320a89a6
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Mon Sep 1 18:59:00 2008 +0000
+
+    Sync to newest 1.9 Complex.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7624 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit e719c48d5531c59416b33ee3b6c830d487f277cd
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Sat Aug 30 10:43:01 2008 +0000
+
+    Sync to newest Complex/Rational.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7588 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 4bd2b3d6a1eb1f258f6c1e247db601717b185f79
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Tue Aug 26 22:07:20 2008 +0000
+
+    Sync to latest 1.9 Complex/Rational changes.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7551 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 46d0be164c1c48f594d06e8c4aa8af0380eeacb8
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Wed Aug 6 00:18:09 2008 +0000
+
+    Fix and simplify Complex allocator.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7380 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 55c83e74fc0219c30389455395f377eb4812bf3a
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Tue Aug 5 23:39:45 2008 +0000
+
+    Full implementation of 1.9 Complex/Rational. Those classes are _very_ tightly integrated with the rest of core library (Nil, Kernel, String, and all Numeric descendants). Lots of default behaviors are dramatically changed (e.g. 10 ** -5 returns Rational instance now) so it might be difficult to test it all at once. 1.9 Complex and Rational classes are not rubyspec compatible, we fail then the same way 1.9 does (in 1.9 mode, though jruby should fake requiring Complex and Rational then). 1.8 mode should stay unaffected.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7378 961051c9-f516-0410-bf72-c9f7e237a7b7

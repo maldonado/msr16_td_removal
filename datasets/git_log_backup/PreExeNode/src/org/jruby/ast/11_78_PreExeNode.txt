@@ -1,0 +1,89 @@
+commit 61678ac1a2514a9932276f8d527816a5980a94b3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Feb 25 20:41:40 2013 +1100
+
+    Fix more references to CPL.
+    
+    The phrase "Common Public License" was split across two lines in
+    our default header, which caused it to be missed during earlier
+    search/replace. Also, we did not replace the CPL URL in the
+    header with the EPL URL.
+
+commit 330fef3b0fc18af477ccea19bd278669667f31bb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 12 14:49:29 2013 -0600
+
+    Switch JRuby's CPL license to EPL.
+    
+    Governance of the CPL license was moved to the Eclipse Foundation
+    at some point in the past, and Eclipse blessed the EPL (Eclipse
+    Public License v1.0) as the successor to CPL. Because the CPL
+    contains a clause allowing transparent upgrades to future blessed
+    successor licenses, we can make the move to EPL without
+    re-contacting past contributors.
+    
+    The change in going from CPL to EPL largely just removes some
+    punitive language that apparently made many companies nervous. All
+    other language in the license remains identical.
+    
+    Several documents about Eclipse's move from CPL to EPL are here:
+    
+    http://www.eclipse.org/legal/cpl2epl/
+    
+    Note that Eclipse's move came before the blessing of EPL as the
+    upgrade path for CPL, so they had to do a bit more legal juggling.
+    With Eclipse now the administrator of CPL and with their blessing
+    of EPL as the upgrade path for CPL, all we need to do is make the
+    move.
+
+commit 3546d31b2a6c3afaae7714ed582f6c47989df1d4
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Dec 16 21:40:25 2010 -0600
+
+    Remove unused parameter to IterNode's 1.8 constructor.
+
+commit b95918ef774488858d499d9cf6b283bd2e40b89e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jan 18 15:20:30 2010 -0600
+
+    Fix BEGIN scope's module scoping in interpreter and update to pick up new BEGIN specs.
+
+commit 6ba2522adc631a2a6295bba2414aac6309f8841a
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Dec 31 17:00:47 2009 -0600
+
+    JRUBY-4180: [1.8.7] Blocks should be able to receive block arguments (interpreted-mode only + some internals)
+
+commit 38539306c47caec741243f5e15be0e345757f069
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Dec 28 01:52:13 2008 +0000
+
+    Bombs away! Eliinate nodeId field from Node and add a method to all nodes of interest to return the value instead. Probably a little slower, but we're moving away from using NodeType on critical path code and the memory savings are pretty substantial (4-8 bytes per node).
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8485 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 24befe5cf0587885f08f7dc82217f141cc500550
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Dec 18 06:51:54 2008 +0000
+
+    House cleaning! Delete a bunch of unused and/or deprecated classes of strange and wonderful origins, eliminate all deprecated Callback-related code, reduce environment lookup to a simple System.getenv call, kill off the last of the old stackless interpreter's "Instruction" interface, and other miscellaneous cleanup.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8395 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit dbcdcdbac451af5838c377b299289b2a7b94d9e2
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Thu Jun 12 21:28:49 2008 +0000
+
+    Tom Bomb! New Interpreter landing
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6946 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d5a9d67f499024e05eac1e7ea6bd25af8db19c86
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Tue Sep 25 17:04:38 2007 +0000
+
+    Add PreExeNode to represent BEGIN {} in AST.  Properly scope them like methods (even though they look like blocks).  Cleans up some old begin node logic in the parser also.
+    
+    END {} is not perfect, but it is good enough for any reasonable test I tried.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4397 961051c9-f516-0410-bf72-c9f7e237a7b7

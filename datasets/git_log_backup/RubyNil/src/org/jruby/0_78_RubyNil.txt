@@ -1,0 +1,619 @@
+commit af1d38770b1ebc1811e66ea33d9814b82826867d
+Author: Ryan Blue <rdblue@gmail.com>
+Date:   Sun Mar 17 15:08:56 2013 +0000
+
+    Fixing hashing consistency across JVM instances.
+    
+    Several of the core JRuby classes calculate hash codes based on java or ruby
+    object ids. This doesn't produce consistent hashing across JVM instances, which
+    is needed for distributed frameworks. For example, Hadoop uses hashCode values
+    to distribute keys from the map phase to the same reducer task (partitioning).
+    
+    This commit adds hashCode (and ruby's hash method) implementations for
+    RubyBoolean, RubyNil, and RubySymbol. RubyBoolean and RubyNil simply return
+    static, randomly-generated hashCode values that are hard-coded. This replaces
+    the default java Object#hashCode.
+    
+    For RubySymbol, the previous implementation of hashCode returned the symbol's
+    id, which could be different depending on the order in which symbols are
+    created. This updates it to calculate a hashCode based on the raw symbolBytes
+    like the RubyString implementation, but with a RubySymbol-specific seed and
+    without the encoding addition for 1.9. This value is calculated when symbols
+    are instantiated so the performance impact should be minimal.
+    
+    This commit also adds a RubyInstanceConfig setting and CLI option for
+    consistent hashing, jruby.consistent.hashing.enabled, which controls whether
+    the Ruby runtime's hash seeds (k0 and k1) are generated randomly. When set to
+    true, they are set to static values. These hash seeds are used to hash
+    RubyString objects, so this will make string hash codes consistent across JVMs.
+    
+    (later commit...)
+    
+    Updating hashCode implementations.
+    
+    Per discussion on the last commit's pull request [1], updating the
+    implementations of hashCode for RubyNil and RubyBoolean. Now the hashCode
+    behavior for nil and booleans will only change when consistent hashing is
+    enabled. Adds a hashCode instance variable to RubyBoolean and RubyNil that is
+    set in the constructor to the Object#hashCode value (using
+    System.identityHashCode) or a static value.
+    
+    [1]: https://github.com/jruby/jruby/pull/590
+
+commit 64b24c48afc3f6a2b8381f5a8c3f6c1bb6325c5d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Mar 9 02:05:50 2013 -0600
+
+    [2.0] Add to_h to nil and Struct.
+
+commit 61678ac1a2514a9932276f8d527816a5980a94b3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Feb 25 20:41:40 2013 +1100
+
+    Fix more references to CPL.
+    
+    The phrase "Common Public License" was split across two lines in
+    our default header, which caused it to be missed during earlier
+    search/replace. Also, we did not replace the CPL URL in the
+    header with the EPL URL.
+
+commit 330fef3b0fc18af477ccea19bd278669667f31bb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 12 14:49:29 2013 -0600
+
+    Switch JRuby's CPL license to EPL.
+    
+    Governance of the CPL license was moved to the Eclipse Foundation
+    at some point in the past, and Eclipse blessed the EPL (Eclipse
+    Public License v1.0) as the successor to CPL. Because the CPL
+    contains a clause allowing transparent upgrades to future blessed
+    successor licenses, we can make the move to EPL without
+    re-contacting past contributors.
+    
+    The change in going from CPL to EPL largely just removes some
+    punitive language that apparently made many companies nervous. All
+    other language in the license remains identical.
+    
+    Several documents about Eclipse's move from CPL to EPL are here:
+    
+    http://www.eclipse.org/legal/cpl2epl/
+    
+    Note that Eclipse's move came before the blessing of EPL as the
+    upgrade path for CPL, so they had to do a bit more legal juggling.
+    With Eclipse now the administrator of CPL and with their blessing
+    of EPL as the upgrade path for CPL, all we need to do is make the
+    move.
+
+commit 7ceb0f41140063e36f61785fbdbff0343d64f9de
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Aug 31 00:32:09 2012 -0500
+
+    Fix a few m17n issues and remove related excludes.
+
+commit b8181cda909f6e42d7c0b7fffaabbe2a502f273b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jul 27 02:19:54 2012 -0500
+
+    Inline all calls to ThreadContext.getRuntime to access the field.
+
+commit 0ed48885ea34b89fd30390742fb28fcd740eea3e
+Author: Marcin Mielzynski <lopx@gazeta.pl>
+Date:   Sun May 27 22:22:23 2012 +0200
+
+    whoops, fix compat version
+
+commit d9e4590d631e6a314ab570dd5418eac07d21fe3f
+Author: Marcin Mielzynski <lopx@gazeta.pl>
+Date:   Sun May 27 21:10:55 2012 +0200
+
+    no more Object#type in 1.9 mode
+
+commit 253442ee5ef6b87395a5b8a2935db41edac2cb46
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Dec 17 09:58:47 2011 -0600
+
+    Deprecate RubyBasicObject constructor with unused "canBeTainted" param.
+
+commit 1b919d492bd5cf2132383d291369c14972f47f63
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Apr 23 14:31:57 2010 -0500
+
+    Fixes (and more) for JRUBY-4737: Compatibility issue with Spring property from 1.4.0 to 1.5.0.RC1
+    
+    It appears that JRuby 1.4.0 allowed various objects to coerce to "void" by returning null, so this commit fixes that.
+    
+    In addition, I've tried to unify some of the toJava logic, making most implementations call super.toJava if they can't coerce to the requested type (allowing RubyBasicObject's implementation to try some other avenues or error out). I also added some additional coersion cases for Time to java.util.Calendar, java.sql.Date/Time/TimeStamp, and joda's DateTime (it already did java.util.Date).
+
+commit 13c40aeb515d14e62db6cb469a560d900a27647e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Dec 16 00:59:55 2009 -0600
+
+    Set reified class for all the primary core classes, so they'll work properly when extended and an interface gets included.
+
+commit 9adf1eea0e7b43f3f038a2e6c673bb324829682f
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Fri Dec 4 08:54:25 2009 -1000
+
+    Add nil.rationalize
+    
+    Signed-off-by: Vladimir Sizikov <vsizikov@gmail.com>
+
+commit 9798a0953ae7375991d63001b42783cc804f49a5
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Oct 16 16:22:08 2009 -0500
+
+    Fix for JRUBY-4038: nil implicitly casts to java.lang.Integer instead of java.lang.Long during method dispatch
+
+commit be1ce02e443cb0fcca88079595ea08c5ca6bb515
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Sep 22 12:27:32 2009 -0500
+
+    More consistency fixes for JI coercion:
+    * Move more places to calling toJava
+    * Move code away from calling convertRubyToJava, the old clunky coercion path
+    
+    Two behavior changes are introduced by this commit:
+    * When coming out of a collection (RubyArray, RubyHash) Fixnum will now coerce to the smallest java.lang.Number subtype its value can fit into. We already did this for calling methods that receive Object, but now also do it for many other cases of conversion to Object.
+    * nil values can now be assigned to or passed for primitive fields or arguments; nil will coerce as "0" in the smallest Number type possible.
+
+commit 7a67bd07c400f7ebfdcc09175e3fbee7f8cc3a9c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Sep 22 09:34:37 2009 -0500
+
+    Simplifications of existing coercion protocols; trying to reduce the weight of code that needs to be reworked.
+
+commit 86b9323d4e1a9c1219d906b518a3ce1e4227283e
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Wed Jan 7 20:40:27 2009 +0000
+
+    Immediates are freezable in 1.9.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8632 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 6a2765a63b37f70bc7423e077511e5a13ab33291
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Tue Oct 7 20:34:26 2008 +0000
+
+    Introduce canBeTainted flag and additional RubyObject constructor to ease constant propagating the fact that immediates shouldn't be tainted even when $SAFE >= 3.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7845 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 55c83e74fc0219c30389455395f377eb4812bf3a
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Tue Aug 5 23:39:45 2008 +0000
+
+    Full implementation of 1.9 Complex/Rational. Those classes are _very_ tightly integrated with the rest of core library (Nil, Kernel, String, and all Numeric descendants). Lots of default behaviors are dramatically changed (e.g. 10 ** -5 returns Rational instance now) so it might be difficult to test it all at once. 1.9 Complex and Rational classes are not rubyspec compatible, we fail then the same way 1.9 does (in 1.9 mode, though jruby should fake requiring Complex and Rational then). 1.8 mode should stay unaffected.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7378 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a38523897d27c829e6e20cd0fdb98c3959eba838
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jul 22 03:32:00 2008 +0000
+
+    Intermediate step to remove partially-coerced phase of ruby-calling-java. Still exists an intermediate object, and most paths are forced to box arguments. Remaining work coming shortly.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7258 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 72975c6c9467ac11677b86f3886e555911e50299
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Wed Jul 9 00:34:32 2008 +0000
+
+    lots of RO.getRuntime removal
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7131 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit abc3ec16a3f736c954a12d9c2ecc5241ce453654
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Thu May 8 18:11:02 2008 +0000
+
+    getRuntime().newString("") hunt in favor of empty shared strings.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6643 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 59ca34930cb08d32a9264d98865b0858cf1fb26b
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Fri Apr 18 17:52:30 2008 +0000
+
+    Remove RubyUndef and replace it by RubyObject.UNDEF static.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6533 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 424a1cbff5aea37f2f92cc208d29d2544f092828
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Wed Mar 19 12:21:15 2008 +0000
+
+    Annotate the rest of the Java classes with names, parents and inclusions. Also add a warning to install_doc.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6291 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 993f8c99ef835ed7c86910dc4ec34919b335131c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Mar 17 21:02:28 2008 +0000
+
+    A bunch of findbugs fixes from JRUBY-1173. Also renamed generated callbacks to be Callback in their name instead of Invoker, to distinguish from actual invokers.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6246 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit e74fa531a44397a7fa24c39da614eabf50c312bd
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Feb 25 01:24:44 2008 +0000
+
+    Eliminate polymorphic implementations of getRuntime by naming the real getter on RubyClass different and eliminating other instances. As much as 16% improvement for fib under Java 5 and a few percent under Javaa 6 too.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6020 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a694709e87e269be436ed1d176a688712beb9d5d
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Tue Jan 1 05:09:53 2008 +0000
+
+    Remove unused callbackfactorys
+    Add partial impl of Etc with some cooler pieces of it still commented
+    Remove many warnings
+    Some generics to lessen warnings
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5456 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d5b000caa10c3cc4c4a7ee26328bb1c8129eee4f
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Thu Dec 27 13:37:00 2007 +0000
+
+    Use newEmptyArray() instead of newArray(0) in appropriate places.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5384 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 5bd7b9ccb1f2dbfbfe1ef8ebe6500ddbe2bc3930
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Sun Dec 16 18:35:31 2007 +0000
+
+    Handle frozen/tainted a little better.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5280 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 1eb51095b1447ca07e086b2bd92d4d292fc0c545
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Nov 20 04:55:25 2007 +0000
+
+    JRUBY-1279: Changes and additions for GemStone's contributed patch to add a threadlocal runtime mode. This mode will be used in the near future for GemStone object persistence, as well as for Ruby use cases that do not require separate JRuby runtimes. This in turn enables things like generalized object serialization and the upcoming "compiler #2" that can produce normal, instantiable, callable Java types.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4971 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 8438de79af20af1a08d81c51f213db82ec483f4f
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Tue Nov 6 23:24:31 2007 +0000
+
+    JRUBY-1064: Rubinius core/object_spec failures (patch by Patrick Farley)
+    JRBUY-1106: Process.euid() not implemented, causes MailFactory failure
+    
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4867 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 95c346df5368a3f5f06fa9d14022efb85eaa6809
+Author: Bill Dortch <bill.dortch@gmail.com>
+Date:   Mon Oct 15 07:45:22 2007 +0000
+
+    Vars have landed. Does not include concurrent SymbolTable (will follow in the next day or so). Also need multi-threaded unit tests, work in progress.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4588 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 0b7a2dae2ec0baa531f313568ffc9b7382f89592
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Oct 12 01:50:08 2007 +0000
+
+    Migrate annotation-based method binding to generate DynamicMethod implementations directly, with arity checking built-in
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4575 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 8cce9fe1101716b31e810e1cbb40c79970af00c3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Oct 10 05:25:01 2007 +0000
+
+    Migrated NKF, Nil, NameError, and NoMethodError to annotation bindings
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4543 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 7c75e6d5744dba2d26a5fc3373145e503f9823f0
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Sun Sep 30 17:51:56 2007 +0000
+
+    Compatibility fixes for nil, false and true.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4439 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 3e88cfab0d224fb9efa8d18336993e2c78ce495e
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Thu Sep 27 16:40:57 2007 +0000
+
+    - Identified and extracted construction paths for class/module/singleton/IncludedModuleWrapper, now there's no unnecessary null checks or assignments in their constructors (they take very few arguments so even asserts are not needed).
+    Each of those constructors have a comment what is it the responsible for, also, two RubyClass.newClass() and two RubyModule.newModule() methods have been extracted.
+    - Fixed logic that sets the parent/constant for Modules, now matches MRI (only setConstant/getConstantAt are used here).
+    - RubyClass rewritten, special attention has been put on allocation logic, now Class.new(...) doesn't fire a separate allocator class. (btw, logic of "class B < A;end" and "Class.new(A)" must be split since in second case superclass and allocator are not known until initialize is called). Class/Object allocation implementation mimics MRI's weirdest quirks in behavior, is _much_ simpler that it has been and much faster. This also allowed creation of generalized clone/dup implementations matching MRI. (only our special ivars need a care here).
+    - Rewritten bootstrapping of Object/Class/Module.
+    - Core classes (except Exception hierarchy, they should also be in future) are now cached in runtime (MRI caches them in static VALUE's like rb_cObject) Ruby.getClass(String), Ruby.getModule(String) and Ruby.getClassFromPath(String) should be used only by either interpreter or compiler and when the class name is not known at compile time.
+    - Fixed and simplified nodes: classNode, moduleNode, sclassNode, defsNode. Compiler has been synchronized here as well.
+    - No more __attached__ as ivar, it is now MetaClass field (which means lazy ivars for singletons). Compiler also updated.
+    - added and dosumented isModule() to IRubyObject (isClass(), isSintleton() documented).
+    - Fixed test_autoload test (Object.class_eval do;autoload :SomeClass, 'somefile';class SomeClass; end;end) should raise LoadError, now matches MRI.
+    
+    - Fixed a number of minor bugs:
+       1.instance_eval, was creating a metaclass for Fixnum instances (also affected Symbol/FalseClass/TrueClass/NilClass)
+       marshaler objects were kept in singleton classes
+       Range.inspect, was modifying the begin field (when it was a String)
+       Many bulletproofings in Marshal/Unmarshal (like unmarshaling an instance of nonexistant class), TypeErrors/ArgumentErrors matching MRI.
+       Fiber.new in 1.9, doesn't call #initialize method by funcall, fixed
+       number of method arity fixes and many methods are made fast now
+       fixed initialize/initialize_copy logic, further simplification, no ClassCastExceptions possible now
+       Fixed defineClass(under)/defineModule(under) logic
+       bulletproofed cases such: class A;end;module A;end
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4409 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 78cbe773471d332a3c21735e15928769efb108f0
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jul 2 15:36:43 2007 +0000
+
+    Landing Marcin's flags/OS changes; the memory savings alone will make us rich beyond our wildest dreams.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3952 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 3855b2a7b32d013fbc4dbc8cdc3b4c6e9a9c8f0d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Jul 1 18:59:57 2007 +0000
+
+    Committing brand new dynamic STI generator; it's passing all tests, installs rake, runs rails. Any bugs, we'll find them in place.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3935 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 995566d78d56052cc5af00f77016d51ebf28cd1b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Apr 5 06:52:16 2007 +0000
+
+    Eliminate polymorphic getMetaClass implementations in child classes of RubyObject
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3391 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit b87c1519f52db8010cf9d64796aa081b8e44f598
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Mar 16 22:06:39 2007 +0000
+
+    Optimization to reduce overhead of isTrue...we'll see how it feels.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3212 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a2107e60085a5063bca76d897783a512bbd7eddc
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sun Feb 18 15:18:18 2007 +0000
+
+    JRUBY-606: Get rid of un/under-used IRuby interface
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3022 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 06cd42189f05a92f59d309a600820d466bd21854
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Thu Feb 8 13:48:39 2007 +0000
+
+    Improve startup by not using .class for IRubyObject. (since .class calls Class.forName)
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2966 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit beca166768368e248fbbb9ba945020d4d27c3253
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Mon Jan 29 19:32:57 2007 +0000
+
+    Remove most warnings in code (sans WIP areas)
+    Unbreak Java 5/4 problem
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2877 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 1c9db4cbbcca01aa65287532b82330e37ff81173
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Jan 28 03:44:22 2007 +0000
+
+    Big set of changes for marshalling bug JRUBY-472; getting closer to having things sorted out. One known failure in "ant
+    test" is due to our modules defining methods on a singleton class, which appears to be incorrect and harder to fix. I'm
+    on it though.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2857 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 5c0789044de8703f41bdf83f29552ba29ad048f6
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sat Jan 27 17:31:22 2007 +0000
+
+    JRUBY-484: Reverse Iter Call relationship in AST and also pass block via Java frame versus maintaining blocks in TC
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2851 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit b390103c285ce373130c474193f69b87f98fb013
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jan 9 01:04:33 2007 +0000
+
+    Damn the torpedos...full steam ahead! Committing fixes for JRUBY-408 to get them out in the wild. There are remaining fixes to be made, but ant test passes, gems install, rails starts, handles requests, and generates.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2700 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 32e3222d3defac9ee5f76c3651f4699f62271215
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Dec 30 22:00:22 2006 +0000
+
+    merging refactored method stuff plus fast/simple invocation changes to trunk
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2623 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit c8b66db475de1dc66f347884891dd70d9943689b
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Sat Nov 25 17:29:42 2006 +0000
+
+    Fix for JRUBY-266, adds basic working _id2ref, by Anders Bengtsson
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2479 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 4eb85a4aa5b1c369fedbce19adcc69a844fc7c69
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Wed Oct 4 16:42:09 2006 +0000
+
+    Landing charlies latest perf changes from his branch to trunk
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2280 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 4dfdacd80c56018084c618f3bbab7b542653d95e
+Author: David Corbin <dcorbin@users.sourceforge.net>
+Date:   Sat Oct 8 13:07:06 2005 +0000
+
+    Introduced IRuby interface for Ruby runtime object.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1798 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit ca6b16e996ea9af83ce593594b9c69b9364a9924
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sun Aug 28 13:29:33 2005 +0000
+
+    Kill RubyClasses (core class/modules now initialized in Ruby)
+    Store all top-level classes as constants within Object (fixes things like Object.constants) instead of second datastore
+    Always load all core classes (remove lazy loading)
+    Convenience function RubyModule#getClass added
+    Convenience function Ruby#getObject added
+    JavaObject and JavaArray are now Java::JavaObject and Java::JavaArray to be consistent
+    classes defined under another class/module are now defined in the parents creation routine
+    Removed some masking warnings
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1739 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 31d6374bddf26d6c286c9f865a85d5ac17ebb941
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Wed Jul 13 16:49:30 2005 +0000
+
+    New method caching system
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1730 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 7a83c48af56081c1c2132111d535f28d10cf3afb
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Fri Dec 31 20:55:52 2004 +0000
+
+    Update license to GPL/LGPL/CPL
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1574 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 8081fdc23459ab3e7b62155a53b7f18b561f93c1
+Author: Stefan Matthias Aust <sma@3plus4.de>
+Date:   Sun Dec 12 14:55:16 2004 +0000
+
+    removes type parameter from CallbackFactory.getXXXMethod()
+    and removes CallType from AbstractCallback and ReflectionCallback
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1476 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 870e1da9b41bfdbae259e1fc5f18fc8b76686998
+Author: Stefan Matthias Aust <sma@3plus4.de>
+Date:   Sun Dec 12 09:25:42 2004 +0000
+
+    removes the instance variable runtime in RubyObject
+    reintroduces the variable in RubyNil, RubyBoolean, and RubyClass
+    delegates all calls to Fixnum,Array,Boolean,String,ArgumentError,IndexError and TypeError.newXXX to Ruby
+    fixes all imports
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1469 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 39c53cd7958c3b95ef4124a65a62d1e1cac24c84
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Nov 21 05:36:33 2004 +0000
+
+    fixes for RubyNil being 1.6ish (no to_f) and unused
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1413 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit b1562832239a5e5d73b1ee98dade51601e343257
+Author: Jan Arne Petersen <jpetersen@uni-bonn.de>
+Date:   Tue Nov 16 20:30:04 2004 +0000
+
+    Rename references of org.jruby.Ruby from ruby to runtime.
+    Remove unused methods from the IRubyErrorHandler interface.
+    Add "same" method to RubyObject to fix "equal?"
+    Fix JavaObject cache.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1408 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 0b50e11e0e561da815ab36f1a518251aec4c6862
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sun Jun 20 16:56:19 2004 +0000
+
+    Add getImmediate to object + company so that objectstore can know not to add immediate objects
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1320 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit da1e0993189b265528a6aa5108d3ce668d87643f
+Author: Anders Bengtsson <ndrsbngtssn@yahoo.se>
+Date:   Sun Jan 11 14:39:44 2004 +0000
+
+    Added an (optional) CGLIB implementation of Callback.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1210 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 89f158f5087026cd7ecc6bda6bf3fc75889b0517
+Author: Anders Bengtsson <ndrsbngtssn@yahoo.se>
+Date:   Fri Dec 5 21:27:14 2003 +0000
+
+    Implemented Hash#values_at + few small cleanups.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1206 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d8c7bdab8430bb1f7826f7cad86d6c1aa9513a82
+Author: Anders Bengtsson <ndrsbngtssn@yahoo.se>
+Date:   Mon Dec 16 21:12:11 2002 +0000
+
+    Reworked class and module lookup.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1171 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 483b75207962bf79541bb54060254552c5f88ac4
+Author: Anders Bengtsson <ndrsbngtssn@yahoo.se>
+Date:   Tue Oct 8 12:16:47 2002 +0000
+
+    Renamed undefMethod to undefineMethod
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@958 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 06f34f3a6e4941994e00090d1365045e229680be
+Author: Jan Arne Petersen <jpetersen@uni-bonn.de>
+Date:   Sat Sep 21 23:05:19 2002 +0000
+
+    - Some MetaClass refactorizations,
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@881 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit c77b91f42c4f3810140d44cbe603248a1d52b7ee
+Author: Jan Arne Petersen <jpetersen@uni-bonn.de>
+Date:   Tue Sep 10 15:18:12 2002 +0000
+
+    - restructure of the code tree.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@782 961051c9-f516-0410-bf72-c9f7e237a7b7

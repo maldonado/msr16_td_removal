@@ -1,0 +1,445 @@
+commit ed0a495c611d967256722bb41aae3bb8b0f8f0c2
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Mar 16 16:16:47 2013 -0500
+
+    Remove support for and uses of deprecated Callback methods.
+
+commit 61678ac1a2514a9932276f8d527816a5980a94b3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Feb 25 20:41:40 2013 +1100
+
+    Fix more references to CPL.
+    
+    The phrase "Common Public License" was split across two lines in
+    our default header, which caused it to be missed during earlier
+    search/replace. Also, we did not replace the CPL URL in the
+    header with the EPL URL.
+
+commit 330fef3b0fc18af477ccea19bd278669667f31bb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 12 14:49:29 2013 -0600
+
+    Switch JRuby's CPL license to EPL.
+    
+    Governance of the CPL license was moved to the Eclipse Foundation
+    at some point in the past, and Eclipse blessed the EPL (Eclipse
+    Public License v1.0) as the successor to CPL. Because the CPL
+    contains a clause allowing transparent upgrades to future blessed
+    successor licenses, we can make the move to EPL without
+    re-contacting past contributors.
+    
+    The change in going from CPL to EPL largely just removes some
+    punitive language that apparently made many companies nervous. All
+    other language in the license remains identical.
+    
+    Several documents about Eclipse's move from CPL to EPL are here:
+    
+    http://www.eclipse.org/legal/cpl2epl/
+    
+    Note that Eclipse's move came before the blessing of EPL as the
+    upgrade path for CPL, so they had to do a bit more legal juggling.
+    With Eclipse now the administrator of CPL and with their blessing
+    of EPL as the upgrade path for CPL, all we need to do is make the
+    move.
+
+commit 4a8330815c3e6fc5407b424312fd7d65518203fc
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Oct 26 10:10:14 2011 -0500
+
+    Cleanup and centralize all property-based configuration settings.
+    
+    Properties for JRuby are now all in one location, combined with information
+    on valid options, defaults, and description. All properties going forward
+    should follow the same format, to ensure they're documented in the jruby
+    --properties output.
+    
+    I have added to this new form all properties I thought were interesting to
+    expose. There are a few still hidden that may be deleted soon.
+    
+    I also removed some long-defunct properties and removed unused code that related
+    to them.
+
+commit 4f9b2a38d70c95347c89f196ed76db414470a6bf
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Dec 29 18:02:50 2009 -0600
+
+    Fixes to make explicitly passing a Java array as the last argument to a varargs method work like it did before with varargs support still in place.
+
+commit 3526f249f7e915c357b9a257b28d26874d6e0dd5
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jul 13 23:42:16 2009 -0500
+
+    Move remaining two Callback generators into method factories, to finally centralize things.
+
+commit 04602b8b0c0dcf59ecb5c978870d6d433d8b13c3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jan 14 01:50:05 2009 +0000
+
+    1.9-compatible argument processing for blocks.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8753 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 9251dc20181c62b1fc289a05dc317bbbb4a6987f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Dec 18 07:15:02 2008 +0000
+
+    Grr...I suppose I should have checked this before, but Mongrel still uses CallbackFactory. We need to get them off it so we can delete it some day. Damn you, crufty old dependencies!
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8398 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 24befe5cf0587885f08f7dc82217f141cc500550
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Dec 18 06:51:54 2008 +0000
+
+    House cleaning! Delete a bunch of unused and/or deprecated classes of strange and wonderful origins, eliminate all deprecated Callback-related code, reduce environment lookup to a simple System.getenv call, kill off the last of the old stackless interpreter's "Instruction" interface, and other miscellaneous cleanup.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8395 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 8d6223353bf6f2df3c101ab9c2c7779d3065d97a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Aug 11 23:43:18 2008 +0000
+
+    Remove Dispatcher; this represents a minor API change, but this API wasn't really working anymore, wasn't used internally, and was deprecated in a number of places for multiple releases.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7440 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 1c1c85534290f1628d5314dd5ccb83fa932d4f62
+Author: Wayne Meissner <wmeissner@gmail.com>
+Date:   Thu Aug 7 04:42:32 2008 +0000
+
+    Cleanup more low-hanging-fruit, this time in org.jruby.runtime
+    - final fields where possible
+    - deprecate unused classes
+    - tag a few enum-like classes with FIXME to see if we want to convert to an enum
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7400 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 86c2ff38b1bf42933228b7e5b3441b9839727764
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Apr 11 17:58:30 2008 +0000
+
+    Last of the method-based callbacks. May they rest in peace.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6475 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 12b12d2c7f18a247be72e3357d2f06d258cd12c9
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Apr 11 17:58:22 2008 +0000
+
+    Eliminate CallbackFactory use in Module, Precision, TCPSocket, and JavaArrayUtilities, and clean up imports in others.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6474 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 3f257adced4b556da52c19f02d98d74188d8d1a1
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Apr 11 17:55:06 2008 +0000
+
+    Eliminate CallbackFactory use for Java, JavaUtilities, and JavaProxy modules.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6473 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit f5d0b3584f9f8fb28c2030b809327c8abffb0852
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Apr 10 20:32:04 2008 +0000
+
+    More CallbackFactory elimination, starting to get into the singleton methods used heavily by Java integration.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6457 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit cbfcf0c1b80b4cb7f306d268e5ca63c98732c522
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Apr 10 19:54:50 2008 +0000
+
+    Cleaning up more callback use, as well as an ugly one in RubyMethod. Also tagged existing unused callback factory entry points as deprecated. Almost there!
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6456 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a78db1a702e5cbf7125c0311a9cbecf7289b0dc1
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Dec 21 13:54:19 2007 +0000
+
+    Fix for JRUBY-1641 from Vladimir; safely check privileged system properties, since blowing up there kills JRuby.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5324 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 697648ac073d7f67c08be154342f8e663620bc22
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Fri Nov 9 21:47:50 2007 +0000
+
+    Nick+Tom classload cleanup pass
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4894 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 0b7a2dae2ec0baa531f313568ffc9b7382f89592
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Oct 12 01:50:08 2007 +0000
+
+    Migrate annotation-based method binding to generate DynamicMethod implementations directly, with arity checking built-in
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4575 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit eb244ba9e37961159fcd0dcca2afc16223e18795
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Sep 30 21:19:53 2007 +0000
+
+    Cleaned up and expanded the annotation-based method binding logic to support non-fast methods and potentially fast methods that want to accept a block. Moved most of the conditional callback-generation logic into InvocationCallbackFactory.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4442 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 4050f98c492fc2a726bf3f947d25d220e646a6fa
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Sep 27 20:46:54 2007 +0000
+
+    A number of additional fixes for the compiler to remedy inconsistent stack issues, and a whole slew of work to make apps run correctly with AOT-compiled stdlib. Very close to "complete" in my eyes.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4410 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit dc8c8156b2ece8bc3ec2b3b8f512c184828e58b5
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Sep 9 00:11:06 2007 +0000
+
+    Migrating compiled methods to be instance methods instead of static methods, to be a bit "safer" when sharing compiled classes across runtimes (no call-site caches colliding, etc).
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4281 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 66308a41bee1215d2b084c8fde04156bb8707781
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jul 9 23:36:57 2007 +0000
+
+    Merging CRef changes to trunk from enebo branch.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3984 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 08ba6cea4e61a30cd39d84d1307abe0a19ac7aa9
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jul 2 02:54:45 2007 +0000
+
+    Refactoring and cleanup of callback factories
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3937 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 3855b2a7b32d013fbc4dbc8cdc3b4c6e9a9c8f0d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Jul 1 18:59:57 2007 +0000
+
+    Committing brand new dynamic STI generator; it's passing all tests, installs rake, runs rails. Any bugs, we'll find them in place.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3935 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit b14d1b95cb126d60b00bfcd5a0843bccfcf5283a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Apr 30 03:51:39 2007 +0000
+
+    Modify class-generation sites to accept a classloader, to allow for garbage collection of generated classes where appropriate. This allows the JIT to generate methods continously without leaking.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3598 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit b19d79dff7e4f080d84a94a33195c020c2b091f6
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Apr 16 18:44:04 2007 +0000
+
+    Damian's fixes for applets in JRUBY-477
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3474 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 4bf7730033b7c072f073343beba1fce71634604a
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Thu Feb 22 18:22:00 2007 +0000
+
+    Dump generated classes to disk during the build process
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3059 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a2107e60085a5063bca76d897783a512bbd7eddc
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sun Feb 18 15:18:18 2007 +0000
+
+    JRUBY-606: Get rid of un/under-used IRuby interface
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3022 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit e0ed42c932f46989b573e96f4f0fa87bccf79496
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Feb 1 00:56:09 2007 +0000
+
+    More work on block compilation: lexically scoped vars all work, added zarray support, some cleanup
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2890 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit b93d6e96bcaec3dcdf4ecd75356ad023ae1a41cd
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jan 31 21:44:37 2007 +0000
+
+    Beginnings of block compilation. Only basic scenarios work at the moment, no args support, no local or block variables support.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2888 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 5c0789044de8703f41bdf83f29552ba29ad048f6
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sat Jan 27 17:31:22 2007 +0000
+
+    JRUBY-484: Reverse Iter Call relationship in AST and also pass block via Java frame versus maintaining blocks in TC
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2851 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 86b54294cdf24bea517bcc1fbb7917b30ec13ff7
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jan 17 14:04:19 2007 +0000
+
+    Modifications to the compiler to get away from MultiStub and wire into the standard method-binding mechanisms.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2764 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 4d5015f14704749870935576c883d97a6070b9f5
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Wed Jan 3 20:58:07 2007 +0000
+
+    First part of direct invocation generation. For now, set jruby.reflection=true to avoid the invocation behaviour. ReflectedMethod and ilk is still reflected though
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2655 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 524049357e360ba81a21756f54071c67d3796180
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Sep 7 01:40:03 2006 +0000
+
+    merging headius to trunk
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2232 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 7574ed61fde73d6f1ec85da344318faa7cbfa488
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Tue Jun 27 02:34:47 2006 +0000
+
+    Process::Status
+    File.join fixes
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2093 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 31d6374bddf26d6c286c9f865a85d5ac17ebb941
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Wed Jul 13 16:49:30 2005 +0000
+
+    New method caching system
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1730 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 7a83c48af56081c1c2132111d535f28d10cf3afb
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Fri Dec 31 20:55:52 2004 +0000
+
+    Update license to GPL/LGPL/CPL
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1574 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 8081fdc23459ab3e7b62155a53b7f18b561f93c1
+Author: Stefan Matthias Aust <sma@3plus4.de>
+Date:   Sun Dec 12 14:55:16 2004 +0000
+
+    removes type parameter from CallbackFactory.getXXXMethod()
+    and removes CallType from AbstractCallback and ReflectionCallback
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1476 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 91151881d5fc851783db87cf62772d994b657d36
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Oct 22 21:49:02 2004 +0000
+
+    Reverted to ReflectionCallbackFactory for now, removed Cglib implementations
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1358 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 177e803022ebff178750c6d8b9be9eac3ea33575
+Author: Anders Bengtsson <ndrsbngtssn@yahoo.se>
+Date:   Sun Jan 11 17:31:45 2004 +0000
+
+    Added support for CGLIB, optional at both compile-time and run-time; Converted RubyHash back to using Reflection/CGLIB.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1212 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit da1e0993189b265528a6aa5108d3ce668d87643f
+Author: Anders Bengtsson <ndrsbngtssn@yahoo.se>
+Date:   Sun Jan 11 14:39:44 2004 +0000
+
+    Added an (optional) CGLIB implementation of Callback.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1210 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit e7f721acfb6dd4252c6b7c20c7c1139b4a3a8e2f
+Author: Anders Bengtsson <ndrsbngtssn@yahoo.se>
+Date:   Thu Jan 8 18:32:22 2004 +0000
+
+    Moved Callbacks to their own package.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1209 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 1300280dbcf2d65ee8f09dfddf99fa09f733e83c
+Author: Anders Bengtsson <ndrsbngtssn@yahoo.se>
+Date:   Fri Dec 5 22:41:44 2003 +0000
+
+    Removed some dead code, plus some cleanup.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1207 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit b2d53194a5eb91413d9918cd2d4611aa5ecd0194
+Author: Benoit Cerrina <b.cerrina@wanadoo.fr>
+Date:   Mon Nov 18 11:01:26 2002 +0000
+
+    added a few explicit casts
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1131 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit eba3cad4ffa0fa5835a33bac6913b99673ca321f
+Author: Anders Bengtsson <ndrsbngtssn@yahoo.se>
+Date:   Wed Nov 6 23:25:12 2002 +0000
+
+    Renamed ReflectionCallbackMethod to ReflectionCallback.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1086 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 9e693afddc019d2f8d2b151dc4e047d018f2ebc2
+Author: Jan Arne Petersen <jpetersen@uni-bonn.de>
+Date:   Tue Sep 17 14:00:33 2002 +0000
+
+    - removing some other "new AClass[0]"
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@840 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit c77b91f42c4f3810140d44cbe603248a1d52b7ee
+Author: Jan Arne Petersen <jpetersen@uni-bonn.de>
+Date:   Tue Sep 10 15:18:12 2002 +0000
+
+    - restructure of the code tree.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@782 961051c9-f516-0410-bf72-c9f7e237a7b7

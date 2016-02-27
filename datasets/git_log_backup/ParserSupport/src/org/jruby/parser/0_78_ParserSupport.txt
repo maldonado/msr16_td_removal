@@ -1,0 +1,1568 @@
+commit 174cf21dd9bbc9a28e920453681b8fcd9918effa
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed May 8 15:57:08 2013 -0500
+
+    Doh.  Nixed 2.0 logic check for block arg in optimized args path
+
+commit c7238f63b61fb601f315eb8e8176215197e10624
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed May 8 11:46:37 2013 -0500
+
+    Fixed some logic in kwargs to not throw wrong # of arguments in a few cases.  Change keywordrestarg to store and allocate a local variable just like restarg. Mildly changed interp logic for kwargs processing
+
+commit 32e3b5ce803660ca23e0dcce10942d7d58766b54
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Feb 25 15:40:58 2013 -0600
+
+    Finish implementation of Ruby 2.0 %I{}, %i{}
+
+commit 61678ac1a2514a9932276f8d527816a5980a94b3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Feb 25 20:41:40 2013 +1100
+
+    Fix more references to CPL.
+    
+    The phrase "Common Public License" was split across two lines in
+    our default header, which caused it to be missed during earlier
+    search/replace. Also, we did not replace the CPL URL in the
+    header with the EPL URL.
+
+commit a803e464fdeb171a2701585a84912bdda550fb58
+Merge: c8d3eff 011edb6
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Feb 25 11:48:57 2013 -0600
+
+    Merge with master
+
+commit 330fef3b0fc18af477ccea19bd278669667f31bb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 12 14:49:29 2013 -0600
+
+    Switch JRuby's CPL license to EPL.
+    
+    Governance of the CPL license was moved to the Eclipse Foundation
+    at some point in the past, and Eclipse blessed the EPL (Eclipse
+    Public License v1.0) as the successor to CPL. Because the CPL
+    contains a clause allowing transparent upgrades to future blessed
+    successor licenses, we can make the move to EPL without
+    re-contacting past contributors.
+    
+    The change in going from CPL to EPL largely just removes some
+    punitive language that apparently made many companies nervous. All
+    other language in the license remains identical.
+    
+    Several documents about Eclipse's move from CPL to EPL are here:
+    
+    http://www.eclipse.org/legal/cpl2epl/
+    
+    Note that Eclipse's move came before the blessing of EPL as the
+    upgrade path for CPL, so they had to do a bit more legal juggling.
+    With Eclipse now the administrator of CPL and with their blessing
+    of EPL as the upgrade path for CPL, all we need to do is make the
+    move.
+
+commit 67f9343a0a4e2cb12198f9a506dc940fd1c15c47
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Jan 22 16:01:24 2013 -0600
+
+    Added slot allocation for lvars
+
+commit c3214b4445a2f936af50ea0c47ca952fb364a2e0
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Jan 22 15:56:19 2013 -0600
+
+    Simple def working but not finding its lvars
+
+commit a0fbe98b0dc11e90ceecc0b78082402a871129b6
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Jan 9 09:22:15 2013 -0600
+
+    Rekajigger indepdendent ripper parser to generate different signatures and to almost not depend on regular parser infrastrature at all
+
+commit b7afbc0f766f3e19837cdc593db29f0f1cd7a3f8
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri Dec 21 09:37:43 2012 -0600
+
+    Removal of more methods to their bare dipatch calls
+
+commit 675b54b3f35f2a66d2deb1f4440730a27b775ef8
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Dec 20 14:59:07 2012 -0600
+
+    No more errors in parser
+
+commit 2826229ddaf38d584c60c765b9fbc3885c65d183
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Dec 20 11:54:00 2012 -0600
+
+    Only lvar-related errors left
+
+commit 7c09442383ce7c6ada71ce7dd0d6fd60180af501
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Dec 20 10:55:09 2012 -0600
+
+    functionalized bodies to remove Jay type errors
+
+commit 3aee24f9948259dac67e2273edf67d8a09bfe5d8
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Dec 19 17:13:49 2012 -0600
+
+    Basic productions complete...now debug time
+
+commit c586e919b27529e2507e226b6e8e8a3cf8f9a08e
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Dec 19 16:58:02 2012 -0600
+
+    Much closer to being done with grammar productions before debugging them more
+
+commit 412b71b7e5a84ed04ae01b642344acc7b1b4d679
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Dec 19 15:40:57 2012 -0600
+
+    saved editing up to this point
+
+commit b6d12c34d5999718aef8b11cf62d85cc5b5e7eae
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Dec 19 14:09:55 2012 -0600
+
+    Moar production meat fixed
+
+commit fb89085286957e015189167d8e4de79b58da17b1
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Dec 19 13:50:04 2012 -0600
+
+    Most production meat fixed
+
+commit 7810c54fb94a303976478defbe0b6fff3779fa8c
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Dec 19 11:01:56 2012 -0600
+
+    More hookup of ripper methods
+
+commit d45eed7c1e1f614ece1621ff613cd3daebad497e
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Dec 17 15:28:09 2012 -0600
+
+    Sync
+
+commit 9cd3b4575c8dc90787c627c2ff34bbb3e1eb3595
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Dec 18 14:46:19 2012 -0600
+
+    Move all lhs {op}= rhs logic into ParserSupport
+
+commit f7d796e4b384803d24a47d6591e4061600c6858b
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Dec 17 13:32:40 2012 -0600
+
+    trivial: unused imports
+
+commit f0bf8e01c1dfd32c26c37985a807481db968d6bf
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Nov 13 13:17:58 2012 -0600
+
+    Basic keyword args support in interpreter.
+
+commit fad27318a45da2af493dd45c951c717e5761a99a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Nov 13 12:18:20 2012 -0600
+
+    Get keyword args propagating into AST correctly.
+
+commit 892e99b754ae85623ae9b028ead103cba7b3f11c
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Nov 8 09:51:05 2012 -0600
+
+    Some NPEs squashed
+
+commit 753c65afa682a023a97d6cabb2696fdb7bd26537
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Nov 7 16:34:39 2012 -0600
+
+    null protect since not all calls will have keywordrest args :)
+
+commit 103b5f9af7b2a0987c972f265f42c7f433df607c
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Nov 7 16:24:37 2012 -0600
+
+    Lots of stuff for populatiion of keyword args
+
+commit 20b1e2797ae2739cf39ad10cf3500efe7298200d
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Nov 7 14:43:47 2012 -0600
+
+    KeywordArg as new node type (for now)
+
+commit 1451108eb3923f4d27758f865a9edac3dba2c425
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Nov 7 14:25:13 2012 -0600
+
+    ArgsTailHolder to allow two new_args and fit better how grammar handles tail (kw, kwrest, block_arg) from the rest of the args
+
+commit b5db7e18fcfd38f1265c43a834472180d19c164c
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Nov 7 13:13:02 2012 -0600
+
+    Stub out new_args_tail
+
+commit 8c0e98c239c0ce29762b0522d7f16ac929f767c5
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Aug 22 17:01:06 2012 -0500
+
+    Fix JRUBY-6106
+    
+    JRuby 1.9 coverage library reports different results than ruby 1.9
+    
+    I have a basic understanding now of how MRI handles 'coverage'.
+    
+    Coverage support is turned on by loading the 'coverage' extension.
+    This sets a global "rb_coverages" to non-nil, as a Hash.
+    
+    At parse time, files parsed are added to the coverages hash as
+    having 'nil' for all lines. Files parsed before the 'coverage' ext
+    is loaded are not added to this hash. This is the first behavioral
+    difference in JRuby, since we're just adding lines to coverage for
+    any file+line encountered, regardless of whether the file was
+    loaded before or after 'coverage' ext loaded. See parse.y,
+    "coverage" function, called from yycompile0 to set up the array
+    for that file.
+    
+    At compile time (after parse) code lines get reset to zeros
+    whenever that line would potentially trigger a "line" event in
+    trace hooks. This is in compile.c in the ADD_TRACE macro.
+    Essentially, compile.c adds the tracing logic as it goes only to
+    the lines that should trigger a line event, and at the same time
+    zeros out that line in the coverages array.
+    
+    The determination of a "code line" happens in compile.c in the
+    iseq_compile_each function, right at the top, where it determines
+    the line is a newline.
+    
+        if (node->flags & NODE_FL_NEWLINE) {
+    	ADD_TRACE(ret, nd_line(node), RUBY_EVENT_LINE);
+        }
+    
+    So for every actual NEWLINE node in the AST, the according line in
+    the coverages array is reset to zero.
+    
+    Assuming our set of newline nodes matches MRI's (questionable), it
+    should basically mean we just need to do the same zeroing of the
+    according line when we construct a NewlineNode in our parser.
+    
+    The changes I made:
+    
+    * In ParserSupport.newline_node, call
+    ParserConfiguration.coverLine with the appropriate line number
+    
+    * In ParserConfiguration.coverLine, maintain a growing Integer[]
+    as lines are encountered. Zero the line being covered.
+    
+    * In Parser, at the end of parse associate the filename with that
+    Integer[] only if coverage is enabled.
+    
+    * In CoverageData's LINE event hook, only update lines for files
+    that already have an associated Integer[].
+    
+    This should basically mimic MRI's behavior, modulo any newline
+    nodes we're missing (which is an open question).
+    
+    There are a few places outside newline_node where we create
+    newlines. I did not add coverage calls there, because I'm unsure
+    if they're intended to be visitable lines or if they're outside of
+    normal executable code.
+
+commit a8a17c129cd02a61b09180a3860bf7c75d1bb6c7
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Feb 8 11:15:24 2012 -0600
+
+    JRUBY-6433: DRegexp with specific encodings were getting non-strict versions in 1.9 mode
+
+commit 82e23237b400aa3d3eacc972b0e066612844ab42
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Jan 17 14:04:10 2012 -0600
+
+    [19]: oh yeah.  No more known regexp encoding issues with dregexp
+
+commit 2827e7cb549747b06ca555334bb0ee1654dd5a76
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Dec 14 13:06:41 2011 -0600
+
+    1.9: when *[], false no longer explodes
+
+commit 4a8330815c3e6fc5407b424312fd7d65518203fc
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Oct 26 10:10:14 2011 -0500
+
+    Cleanup and centralize all property-based configuration settings.
+    
+    Properties for JRuby are now all in one location, combined with information
+    on valid options, defaults, and description. All properties going forward
+    should follow the same format, to ensure they're documented in the jruby
+    --properties output.
+    
+    I have added to this new form all properties I thought were interesting to
+    expose. There are a few still hidden that may be deleted soon.
+    
+    I also removed some long-defunct properties and removed unused code that related
+    to them.
+
+commit 356a7fbd2607aff47383c2f088738b9a401d4278
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri Oct 21 12:54:44 2011 -0500
+
+    Hmm, someone already did this...making single-line to match 1.6 branch fix
+
+commit c3d04c6f21c8c63488e7e06ed756e209a9588b9b
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Thu Oct 20 01:51:22 2011 -0400
+
+    Tweak commit 982bac0, which introduced 3 "defined" spec failures
+
+commit 982bac0d8d5b6d2879423ebd4d13300f71fdc387
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Oct 18 16:15:16 2011 -0500
+
+    19: Make regexps use encoding from options explicit encodings in a roundabout way...
+
+commit f592cbbfae1186c42fb9e0545e2d9c394e73312f
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Oct 10 16:42:24 2011 -0500
+
+    Use factory for standing up static scopes
+
+commit 4807459e7a2458de246cb41104075c10c5d0fafb
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Mon Sep 26 13:54:42 2011 -0500
+
+    * Added allocation methods to StaticScope to allocate the appropriate
+      static scopes and protected LocalStaticScope, BlockStaticScope and
+      EvalStaticScope constructors.  This will now let us allocate
+      IR-specific static scopes that IR execution requires.
+    * Also added isBlockScope test on StaticScope to eliminate instanceof
+      tests against BlockStaticScope and LocalStaticScope.
+    * Hand-patched auto-generated files Ruby19Parser.java and
+      DynamicScope.java.
+
+commit 6edec0249bd9fcdb4d5e43fa1c9ae718f80036dc
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Sep 20 10:48:11 2011 -0500
+
+    JRUBY-6073: "\x80".index("\x80")
+
+commit b5dd848386f9277784e1abf1f4b16efbf70be531
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Tue Aug 23 13:27:24 2011 -0500
+
+    Noticed we should be calling regexpFragmentCheck for all regexps.
+    
+    This ensures the encoding and options are properly set up all the
+    time, so that 'foo = "abc" ; /abc/n == /#{foo}/n' is true.
+
+commit 70b3b99b1fb99d88da10d6d8e5e60f255f732fea
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Mon Aug 1 13:05:09 2011 -0500
+
+    JRUBY-5622: Propagate encodings through to DStrs and DRegexps
+    
+    Fixes both interpreter and compiler
+
+commit 7588393ca5bfeba6182b87b8b47669ecab2fe403
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Jun 9 10:02:23 2011 -0500
+
+    Fix compilation issues under OpenJDK 7 after b142 with primitive + varargs now resolving as ambiguous.
+
+commit 3dbefe3f0894d1eb30f6e77085df60be4564943b
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Apr 11 11:29:19 2011 -0500
+
+    JRUBY-5615: __FILE__ corrupts cyrillic characters (partial/common case)
+
+commit a9091c3eea9ea880231788102aefe45846558032
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Mar 9 16:08:25 2011 -0600
+
+    JRUBY-5571: Exception when two parameters named identically
+
+commit 84ac6052e0d403615e95301f0a12e064556ec0b2
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Mar 9 15:13:31 2011 -0600
+
+    Add/fix syntax errors for duplicate variables
+
+commit b27f0ebea31a60d948b89db225393ce29f81ab65
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Feb 22 17:45:05 2011 -0600
+
+    JRUBY-2167: Regexp parse errors should not be rescueable
+
+commit 343ed5f7cf65674c7d4d79e87caa7a614d5044a6
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Feb 3 11:44:20 2011 -0600
+
+    WTF cygwin..why change all those permissions!!!
+
+commit 5b43e343d2ea516330e361b8e58d38e9956870dd
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Feb 2 12:09:21 2011 -0600
+
+    Move 1.9 setup code into RegexpOptions in anticipation of needing this in more than one place
+
+commit 40affff243e2f5f78b06ebdc5cdf212d7fa519fe
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Feb 1 15:54:45 2011 -0600
+
+    Make NONE be ASCII-8bit instead of usascii and also mark is none
+
+commit d1c27c7121f89c3e12d49d9eed340134d8e8bd26
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Feb 1 15:32:54 2011 -0600
+
+    Remove encoding from Regexp options since in 1.8 kcode has it and in 1.9 pattern has it.  The rest can be figured out based on explicit set kcode values
+
+commit c62b2166dfff41856a91ecf4564031c437b1de46
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Jan 31 17:32:43 2011 -0600
+
+    How the hell is this chmod'ing like that
+
+commit a3c9a89a2bca5bad9d259a59e483d728646c97bb
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Jan 31 17:31:45 2011 -0600
+
+    Add bizarre +/doo/ behavior back
+
+commit ad351694ef33b15a2d4f886043eec04a311a3cc0
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jan 28 13:57:31 2011 -0600
+
+    Move regexp options into a class.
+
+commit ff3e3f8a63d0a4bdd288f18030d27849264644ac
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Sat Jan 22 08:47:46 2011 -0600
+
+    JRUBY-5016: 1.9 SyntaxError when a block var shadows local var
+
+commit a4314d7308a8d8a892fbb2ffacd2984ad8550dfa
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Sun Jan 9 10:16:19 2011 -0600
+
+    S-JIS becomes Windows-32J for e regexp flag for 1.9.2
+
+commit 622b4f7a3f78c8f8a2f65ee809ac5f1776ca083f
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Sat Jan 8 16:56:04 2011 -0600
+
+    Most of regexp specs are running but this is sketchy
+
+commit 193c722ab9f3477f31398314de8446f1f8a967a2
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Jan 8 16:19:35 2011 -0600
+
+    [1.9] Fix remaining language/method_spec failures in interpreter.
+
+commit 06509b0fa9c2ea6ca093ae5c17d6d0210f119531
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri Jan 7 20:25:27 2011 -0600
+
+    Slight step sideways end of night code dump. StrNode is more accurate for encoding.  Regexp is somewhat better?  More specs fail though
+
+commit 06e4c04c5bbb0ddc14a98e5d8b668a1311123efb
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Jan 4 11:28:16 2011 -0600
+
+    Fix some defined? dregexp specs
+
+commit 36050ca1da31c6e24dc9f676b19d6be9bcbec76b
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Jan 4 09:58:49 2011 -0600
+
+    local variables from regexps...hell yeah
+
+commit 11440c3aef65e6540bda1453aeb349193d8fe56b
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Jan 3 13:02:14 2011 -0600
+
+    regexp in 1.9 will throw error during parse
+
+commit 42f6eedcb62083adb8e013605734405de9de5556
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Jan 3 11:39:09 2011 -0600
+
+    All 1.9 masgn mixed logic works now?
+
+commit b045b1d369d4f9396677f205870f5671e9512734
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri Dec 31 14:03:33 2010 -0600
+
+    1.9 regexp encoding work
+
+commit 0fdc07208aee471e451bc48271cbeb6a921ea719
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Dec 30 10:11:01 2010 -0600
+
+    Some more WIP towards Regexp encoding
+
+commit 2163ef3ff41fb0f3c478e90bb3ef54ee3a53a048
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Dec 29 12:30:48 2010 -0600
+
+    Make DStr propagate encoding (fixes the other two defined? regressions as well as fixing a few random specs)
+
+commit 3546d31b2a6c3afaae7714ed582f6c47989df1d4
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Dec 16 21:40:25 2010 -0600
+
+    Remove unused parameter to IterNode's 1.8 constructor.
+
+commit 52192272b2f4afbc7bae4b6ab4c81eb24a098c8e
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Dec 9 13:10:33 2010 -0600
+
+    Initial stab at magic comments...bleh
+
+commit 5289b379b511c3ea34ae69e8c1fba6b244e1267f
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Sat Sep 4 17:10:05 2010 -0500
+
+    No need concat'ing an empty head onto a tail for StrNode (reduces Object allocations a little bit during parsing)
+
+commit b51a74f2273100dcf65f57ea67321c1500847a08
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Sep 2 17:04:46 2010 -0500
+
+    Remove dead call (thankfully it ended up being dead :) )
+
+commit 4311721e1db42ae3c6cec07a4061a8c9e68a9f52
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Sep 2 16:33:03 2010 -0500
+
+    JRUBY-5062: Literal unary minus bignum/fixnum boundary lack of symmetry
+
+commit efd485a8c7908e0ca2d59eefa36722e7e26f22de
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Mon Jun 28 19:22:28 2010 -0500
+
+    Squelch "useless use of * in void context" warnings for evals where they actually ARE useful.
+    
+    Fixes a bunch of spurious output when running AR tests.
+
+commit 47d0614e3a6ccb640167b77b926f08a2873eadbb
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Mar 11 16:48:29 2010 -0600
+
+    Yeah static outlined methods and some getPosition simplification
+
+commit 04ee9fbd5bf6215c05e5fee525c21b28762b2864
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri Feb 19 16:34:37 2010 -0600
+
+    JRUBY-4549: parsing differs from MRI
+
+commit 6ba2522adc631a2a6295bba2414aac6309f8841a
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Dec 31 17:00:47 2009 -0600
+
+    JRUBY-4180: [1.8.7] Blocks should be able to receive block arguments (interpreted-mode only + some internals)
+
+commit c23ba2f99388c4e6cf6d2e0f7333db23b58b2b51
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Dec 22 10:59:26 2009 -0600
+
+    JRUBY-4119: alias should use symbols with quotationmarks
+
+commit 498a8743a12ed64e3fa6f994318caf62dfa73aa5
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Dec 21 14:52:39 2009 -0600
+
+    Ground work for JRUBY-4119.  New LiteralNode and proper parser changes to support quoted and dynamic symbols.  Zero-sum at this point.  Dynamic versions coming next
+
+commit 209c63c8e6667db6309ddbb1f32031f679de4db7
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri Dec 18 16:36:17 2009 -0600
+
+    Move SValue into parser support method.  Patch by David Calavera
+
+commit 551a22a6389ea2f2cad1dac28781cabae630efe9
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri Dec 18 16:11:09 2009 -0600
+
+    JRUBY-3960:  Wrong precedence for defined? and &&=, ||=.  JRUBY-4141: Odd ||= behavior with ENV
+
+commit 529360d18b13eb930a67e7aeb4707cde4c4e9438
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Dec 10 13:48:38 2009 -0600
+
+    JRUBY-4180: 1.8.7 block argument feature (parser-only) -- no worky, but no syntax error either
+
+commit 851f57c4ccf14e916daa71b99bfaf6f89d6b5821
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri Sep 18 21:13:51 2009 -0700
+
+    Add fast math ops and prime for aref fixnum opt in interp
+
+commit 05225807be7a3971c09186f59fff9a9eb6c39326
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri Aug 28 16:52:52 2009 -0500
+
+    [19] two steps forward. one step back.  more yield cases working with some known regressions in 1.9.
+
+commit cbaa657c6ee914b61a3d5df47b0b3ba2c72d9981
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri Jul 10 14:05:59 2009 +0900
+
+    Needed to regenerate 1.9 parser for new yield stuff
+
+commit 775e758371716b102fdf54e9f464b51120d0b339
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Jul 9 12:51:54 2009 +0900
+
+    Refactor interpreted Block assignment code.
+
+commit ff0ab6e097f56eb056bb7f548611b1e6cbb04b1f
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Jun 18 15:36:10 2009 -0500
+
+    JRUBY-382: Better error output from parser
+
+commit 1e7357ba02e536f324019edeeac3bab5aad93754
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Mon Mar 30 20:49:57 2009 +0000
+
+    getPosition wrangling
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9504 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 8b409009ec5f2156dbe04d5f15e0f5fa706cc691
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sun Mar 29 23:30:20 2009 +0000
+
+    Union removal ... (ParserSupport19)
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9500 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 3b86917487c2b0a057edee98ec73897699f16aae
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sun Mar 29 23:26:20 2009 +0000
+
+    Union removal ...
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9499 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit ae7130b1b4cc7fec11d16bc256d9ce0b0584a00d
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sun Mar 29 23:01:41 2009 +0000
+
+    Union removal ...
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9498 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 9467258b58f07c87007838b77ec8d8f80a8d80d5
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sun Mar 29 22:27:54 2009 +0000
+
+    IDE Position removal start (see JRubyParser project on Kenai if you need this)
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9495 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 8981241985a2b828b17f0d7c2202c6e05e2335aa
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Thu Mar 26 03:21:09 2009 +0000
+
+    __ENCODING__ returns an encoding
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9472 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit f2434974babed7fa52143f7fae79554fc08493bd
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Fri Mar 6 21:11:41 2009 +0000
+
+    JRUBY-3456: rails command causes project to be created in the wrong directory
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9366 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 2c813e9d06d454dbbce800bf961ec1c2a797e5c2
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Tue Jan 13 22:53:26 2009 +0000
+
+    Re-landing case/when AST refactoring
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8751 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 75f48785fa21e4aff89581353bb425648c2ec7c4
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jan 12 22:37:21 2009 +0000
+
+    Revert "Change how we do case/when in AST.  Remove rewriter tests and position tests until they move to jruby-parser project on Kenai"
+    
+    This reverts commit 195ec6a446134c05697686c1b885e13579a220f1.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8728 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d7361b88d4e224e6837111e9e111342ca9581406
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Mon Jan 12 21:01:09 2009 +0000
+
+    Change how we do case/when in AST.  Remove rewriter tests and position tests until they move to jruby-parser project on Kenai
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8726 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 38539306c47caec741243f5e15be0e345757f069
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Dec 28 01:52:13 2008 +0000
+
+    Bombs away! Eliinate nodeId field from Node and add a method to all nodes of interest to return the value instead. Probably a little slower, but we're moving away from using NodeType on critical path code and the memory savings are pretty substantial (4-8 bytes per node).
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8485 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit ac8e4c3c45b6dbd07d7c893b013f6fb6f17235cb
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Tue Dec 16 22:04:46 2008 +0000
+
+    guard for lexer/parser warnings
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8373 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 727101188b5a8f7a418590a5ddeac5c03080bc69
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Tue Nov 25 02:31:36 2008 +0000
+
+    Specialize colon2 (cpath) nodes
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8130 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit fa85e7262ceb02be9c18e699356c357f10b89ff0
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Tue Nov 25 00:37:02 2008 +0000
+
+    Add new_colon2/new_colon3 to parsersuport and grammars to specialize logic without needing to regenerate grammars
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8128 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit bf8db0bc4acaeed7900b867e821e959f254be0be
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sat Nov 22 22:57:11 2008 +0000
+
+    Biggest commit eva (1.9 parser+1.9-runtime-related-changes landing)
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8099 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d89b7dca1bb668124996b13074b2525919c72f65
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Tue Oct 14 23:23:03 2008 +0000
+
+    Add FileNode which extends StrNode so compiler can detect __FILE__
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7879 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a58a9f8e5adac206dd3d6f528e8f65f9c2f35f25
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Wed Sep 10 23:03:26 2008 +0000
+
+    JRUBY-2984: Interpreted case/when is much slower than MRI
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7677 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit f031d87522598b354e3e78796bfe05ed261ce2d7
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sat Aug 16 18:56:57 2008 +0000
+
+    2x improvement for attropasgnnodes with arity 1 (e.g. 'a[1] ||= foo') in interpreted mode
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7482 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 91a335fcf999c78bdb949b1cb12e5247dcfe967c
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sat Aug 16 16:15:05 2008 +0000
+
+    Finish Specialization of CallNode
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7480 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit e7be7e2f5013035f64625b127f899359235f68b2
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sat Aug 16 03:36:40 2008 +0000
+
+    Update jvYAML for eclipse+netbeans
+    Finish Specialization of FCallNode
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7473 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 99ec87344f56535932bdc1f609dfd9371e64fd92
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sat Jul 19 03:06:26 2008 +0000
+
+    JRUBY-2824: Regression: Lots of Interpreter crashes on empty expressions
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7223 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a17f82ce1f6b17a388c76dcacc55cf5effbc6384
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Mon Jul 7 05:20:06 2008 +0000
+
+    [interp] make arity specific block pass nodes for call/fcall nodes
+    Move TC.getContext impl into StaticScope
+    Remove unused specific-arity in fcall/call nodes since new node types replaced it
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7114 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 62d533d4552b1c2bc57f30186aaeff992eb0e68f
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Tue Jun 24 16:41:18 2008 +0000
+
+    StaticScope.names is not null.  Remove null checks.
+    Add toString() method to StaticScope, BlockStaticScope, LocalStaticScope
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7024 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 27438e0e6117ae74e0838c19e4af058b790cb48c
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Wed Jun 18 19:16:13 2008 +0000
+
+    [interp] Unboxed attrassign node (2-3x speedup)
+    assign is now based on same mechanism as interpret
+    FCallOneArgNode has slower ASTInterpreter.getBlock instead of this.getBlock
+    converted consumers of ASTInterpreter.eval to Node.interpret
+    converted all consumers of ASTAssignment.assign to Node.assign
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6993 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 4276012b3792bd5a98855288a2af728a538ff2b0
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Fri Jun 13 22:36:03 2008 +0000
+
+    Interp: Make aref[aref_args] use new_call so it can use argument unboxing
+    Minor cleanup
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6958 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit dbcdcdbac451af5838c377b299289b2a7b94d9e2
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Thu Jun 12 21:28:49 2008 +0000
+
+    Tom Bomb! New Interpreter landing
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6946 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit aeab6d30e7c8c28f86085ec526f6c0347bfe942c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Jun 5 23:57:24 2008 +0000
+
+    Various minor refactorings to shrink methods in the parser chain and elsewhere that HotSpot reported as "too big" to inline. Minimal performance boost, if any, but it's also somewhat cleaner code.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6897 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 176d23bb04d6fff1b0cba3afaf26fb9dff8e52e3
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Wed May 14 17:54:07 2008 +0000
+
+    All non-masgn nodes will get non-null value during parsing process (removes one source of null checks in interp/compiler)
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6699 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 461f09837930b56b2276e3823cfef0324892982a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Mar 25 00:57:25 2008 +0000
+
+    Fixes to support Tom's modified syntax plus the actual parser changes themselves.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6334 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 2b1a005a405839ca4eb268288816294e88f20a2b
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sun Feb 3 18:37:14 2008 +0000
+
+    JRUBY-2062: Add ids and convenient data to SyntaxException and IRubyWarning interface to make their life easier
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5806 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 346a02d5f372a4a5c1e546e7804bc1f2b0f2b8f9
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Mon Dec 31 18:36:02 2007 +0000
+
+    JRUBY-1541: The warinig message is not displayed when useless use of a quote symbol.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5451 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 2a704d55c70da5b9d6a52dd71deb846ebb5ba4af
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Wed Oct 31 15:45:50 2007 +0000
+
+    Don't delete last newline in string of newlines
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4832 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 16e5550655d971eca1eeea0a2fe8794b86928b97
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Thu Oct 25 18:14:24 2007 +0000
+
+    Lexer jumbo patch.  Speeds up general parsing 10-15%.  Cold parses are about 30% faster.   Code has been refactored to the point that additional optimizations can be considered (like bytelist identifiers for alloc-less identifiers; same for uninterpolated string nodes).
+    
+    intern'ing of identifiers now happen in lexer rather than being smattered through AST
+    Reader -> InputStream for LexerSource
+    A new ByteList LexerSource for evals
+    
+    Additional bugs fixed:
+    JRUBY-1408: JRuby crashes with error: can't find string "EOF" anywhere before EOF (SyntaxError)
+    JRUBY-1443: Wrong position information for a CallNode with parentheses
+    JRUBY-1435: YieldNodes sometimes have wrong position information
+    JRUBY-1416: eval of a "proc" with setting the line number for something lower than 1 to adjust the line number causes "java.lang.ArrayIndexOutOfBoundsException: -1 (NativeException)"
+    JRUBY-1432: NFE from RubyYaccLexer.yylex
+    
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4731 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 0e064d01a9459c50c40771caccab40c55623c009
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Fri Sep 28 17:15:44 2007 +0000
+
+    OPTNNODE no more...no more (for 1.1 only)
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4419 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d5a9d67f499024e05eac1e7ea6bd25af8db19c86
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Tue Sep 25 17:04:38 2007 +0000
+
+    Add PreExeNode to represent BEGIN {} in AST.  Properly scope them like methods (even though they look like blocks).  Cleans up some old begin node logic in the parser also.
+    
+    END {} is not perfect, but it is good enough for any reasonable test I tried.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4397 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 234eba3d829a9c0928b363e00f30e04e713ba2c6
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Fri Aug 31 17:16:54 2007 +0000
+
+    Flipnode never really worked until now....
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4252 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 47f0d75fbf8f6519ed3527d077e724f0b9264552
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Wed Aug 29 21:20:40 2007 +0000
+
+    NodeTypes now and enum called NodeType
+    Various warning removal
+    Minor Block refactoring
+    More boilerplate fixing
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4233 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 19129d0d0d6db68a9994ff1fae95ea3df4499bcd
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Mon Jul 16 19:37:06 2007 +0000
+
+    JRUBY-1205: String as condition of if be parsed as MatchNode
+    
+    Remove serializable from asts since we no long serialize them
+    Remove some unused imports
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4034 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit b317014af9c399cd10981d94ff398bb0cabfaf7a
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Mon Jul 16 18:20:31 2007 +0000
+
+    JRUBY-877: Sources not available during command-line debugging
+    
+    Parser interface juggling
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4033 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit ce56e1951b9d290e09e69c18c76c1f8648dacc82
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Thu Jun 28 17:53:16 2007 +0000
+
+    JRUBY-1174: Ranges in if and if_mod evaluate incorrectly
+    
+    Also added a couple of warnings in parser that are conditional on -e option
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3918 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a9ab9b77c1c3ef1bc5a529a035f9777d02d07c1b
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Mon Jun 25 16:14:55 2007 +0000
+
+    Remove extra sample scripts which were removed for 1.0
+    Last of ablaf is gone (clean up from removing serialization before 1.0)
+    Conditional support for parsing with/without extra positioning information for IDE:
+      - For runtime this saves considerable amount of memory/object creation during parsing
+      - Runtime can still parse with extra positioning information if desired
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3913 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 220cecff844f41c078c1e6e60fdbec1cce9c667a
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Tue May 22 16:17:40 2007 +0000
+
+    JRUBY-846: NPE parsing c.val =()
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3706 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 6a66824c7ed9e59b5ab3248f75f75aaeec07f6b4
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed May 16 19:09:42 2007 +0000
+
+    Fixes for JRUBY-695, adding a real RestArg node for IDE use. This should make it easy for IDE developers to migrate to using this node, and we will disable the old behavior (still enabled right now) once we have migrated execution to the new node.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3667 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 20733ca4c3207646405a9fc4a5178ea92a4ef6ec
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Wed Apr 25 19:18:41 2007 +0000
+
+    JRUBY-450: JRuby Accepts Multi-line Array Concatenation Syntax Error
+    JRUBY-669: Strings shouldn't have unary plus defined
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3560 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 0c8ff3d61fbd1b91188c5d3d6c57c5b419596ea3
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Fri Apr 20 23:06:17 2007 +0000
+
+    JRUBY-228: BEGIN { } throws an assertion error
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3517 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit c2f2bce45edcd70ef18a5436372cd334c858302d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Apr 4 05:57:03 2007 +0000
+
+    JRUBY-755 fixes from Marcin
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3377 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 0746c0235add197430666f28c1e4a043a1f12320
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Tue Mar 27 14:14:52 2007 +0000
+
+    JRUBY-376: fix NPE in parser when encountering empty parens (Mike McKinney)
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3299 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit debc2fb827a37c3f5b0c0a298a28205431a3d2df
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Fri Mar 23 12:04:20 2007 +0000
+
+    Fix for JRUBY-716, JRUBY-711 and JRUBY-707, by Mirko Stocker, Thomas Corbat and Bill Dortch respectively.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3268 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit cc145d7e7c8b904a9702059f74e2737669232d5e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Mar 13 06:18:02 2007 +0000
+
+    Simplify evalInternal by pulling some nodes out as methods, and modify ListNode to use a Node[] instead of an ArrayList.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3184 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit b9989198c4528e376f6a47ad673aa67f18c66703
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Sat Mar 3 14:18:47 2007 +0000
+
+    Fix for JRUBY-650, some positioning fixes by Lukas Felber
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3112 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 972877610a58418cc1a3317f59c8f7ae9ef8c1e8
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Tue Feb 20 23:05:11 2007 +0000
+
+    JRUBY-202: ::A = 1 should work
+    
+    Jira issue creation is down so I will explain other changes in detail here:
+    
+    1) Change D*Node (DStrNode, DRegexp, DSymbolNode, ...) to use same logic as
+    MRI and also remove superfluous ArrayNodes + extra DStrNode for all D nodes
+    except DStrNode itself.   This may remove some cannot convert Foo to String
+    errors (though I could not come up with any test cases -- though I know
+    some exist).  This also includes an optimization of just grabbing bytelist data
+    is StrNode is an element (since there is not point in eval'ing that node).
+    
+    2) AST nodes which contain literal String data now hold that data as a
+    ByteList.  The overall benefit of this is that we only need a single clone
+    of the bytelist versus string to bytelist conversion each time we use the
+    literal.  BTW- You may wonder why we need to clone:
+    
+    1.upto(10) do
+      a = "aaaa"
+      # Add destructive op to a  here to screw up literal
+    end
+    
+    Once we get COW strings we can get rid of cloning.
+    
+    The next phase is making the parser/lexer itself fully work with ByteLists.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3033 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 88e96bc475c01488f7535901f17fe60db1c09d13
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Sun Feb 4 20:00:34 2007 +0000
+
+    Fix for JRUBY-557, code by Mirko Stocker. Thankssvn stat
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2943 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 4b55963a2db74e8e91fc6a659af40f70c21f008b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Feb 2 05:45:37 2007 +0000
+
+    For JRUBY-518, disabling some "useless use" messages that print out too often until we can determine why they're so overbearing.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2913 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 4a2ee1190e77df99271070fa05f41e7d2f90af64
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Thu Feb 1 21:08:05 2007 +0000
+
+    JRUBY-466: Additional position fixes and rewriting utilities for AST
+    JRUBY-145: Adding Comments to the AST
+    
+    Remove getIter from various call nodes
+    Added more INameNodes to things with getName
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2901 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 5c0789044de8703f41bdf83f29552ba29ad048f6
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sat Jan 27 17:31:22 2007 +0000
+
+    JRUBY-484: Reverse Iter Call relationship in AST and also pass block via Java frame versus maintaining blocks in TC
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2851 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit cc7684b418179fb32878ac5f44c8c0f519b1b8bc
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sat Jan 6 01:20:21 2007 +0000
+
+    JRUBY-407: with JRUBY-387:  Happy together again (missed AttrAssignNode code in AssignmentVisitor)
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2684 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 893de7ed6400048558fc0a5189edae817d4bf3fe
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Fri Jan 5 23:37:56 2007 +0000
+
+    JRUBY:407 - revert attrset for a little while until I can figure out why this breaks rails routing
+    
+    Leaving issue open
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2680 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit b9e7b858777bb2493ca0bdbd1321e5d13b70c673
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Thu Jan 4 01:31:02 2007 +0000
+
+    JRUBY-239: Array *var works different from Ruby 1.8.4
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2660 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 8f98f8d2437ffaad45cdb379daf49bcd84f5f728
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Tue Jan 2 19:01:08 2007 +0000
+
+    JRUBY-387: assignment problem!
+    Move some parser visitor into small switch loops
+    In some cases we would re-create CallNodes during parse...No longer
+    Compiler stuff I added is wrong for attrasgnnode (it still emulates callnode)
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2646 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 174e3d01468001668ab299227d4af11aea65341c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Nov 14 03:09:59 2006 +0000
+
+    damn the torpedos! full speed ahead! landing enebo_lexical branch changes plus TC-passing optimizations and a few small compiler updates
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2423 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit e38dc21bbf4ac67bef7bf9521eff5a58b5092c5e
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sun Oct 22 18:39:17 2006 +0000
+
+    Landing 'enebo' branch.  Most notable:
+    - Merge in fixes from original refactoring patch form Mirko and friends.
+    - Fixes many many positioning issues.
+    - Simplify and refactor portions of lexing and parsing.
+    - Reduce gratuitious object creation (like making a token which immediately
+       becomes a node).
+    - Comments are now added to parser result as a list.  IDE people can
+      do a second pass to associate these nodes to the appropriate AST nodes.
+    - offsets in ISourcePosition now represent a position 'between' characters.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2367 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a8e5f733e3ba09d552f6821f85c7072a50dbe6f7
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Mon Jul 10 14:10:35 2006 +0000
+
+    Change assoc to match Ruby's parser for a few nonassoc tokens
+    Cull out extra newline nodes
+    Was Creating an ArrayNode which should be a BlockNode
+    
+    Unfortunately, none of these are amenable to unit testing.  Our
+    tests continue to work along with a gem install + rails app run.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2115 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 9bc3fc4d3c31f09ac9bc48080c0cf90ac710fe34
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sat Jun 10 18:01:41 2006 +0000
+
+    String AST fix for esoteric Ruby feature: a = "a" "b" (patch by Mirko Stocker")
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2059 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit e9bf476d31a1adc390bf346977ba9fb6e8419f5b
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Wed May 3 03:04:58 2006 +0000
+
+    Add some assignment position fixes (From Mirko Stocker)
+    literal_concat changes:
+     - Multiple StrNodes coallesce
+     - Extra DStrNodes are not getting created
+    
+    literal_concat speeds up my rails runs (6.8 s -> 6.1s)
+    ant test also goes from  19.1s -> 17.0s
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2029 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit e317467da9d979c91e25b86dd22f94b83ff1a27a
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Thu Apr 27 02:38:45 2006 +0000
+
+    - Allow constants to be declared outside module def:
+      class Foo; end; Foo::BAR = 1
+    - Allow constants to be declared outside module def in multiple assignment:
+        class Foo; end; Foo::BAR, a = 1, 1
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2020 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 13549bf865d35e626ce2deaa58d63646f96aba39
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sun Apr 16 00:52:29 2006 +0000
+
+    - modules/classes which undef_method should not see that method in instance_methods when actual method is defined in a derived class
+    - Remove bogus 'warning: Found '=' in conditional, should be '=='.' in logical && and || expressions
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1990 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 2932f0dbe36924152dfd06da243554dc7b974ea5
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Tue Mar 7 02:34:31 2006 +0000
+
+    Use provided position instead of gettign from value since we sometimes explcitly set value to null.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1911 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 981d76c8b595dfbe131493e89ca5ff7db5834a2e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Mar 6 15:52:40 2006 +0000
+
+    fix parser to know when it's called from within a block; dvar vs lvar decisions depend on it
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1908 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit cb50ab3c7036be75529b4052433dceb86b64349d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 14 17:44:29 2006 +0000
+
+    Modified Scope to use arrays for local var names and values instead of ArrayLists
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1882 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 891537786e5eb4b3643a5139887d9509805c3579
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sat Jan 7 02:41:23 2006 +0000
+
+    Bug 1286630 (ParserSupport.{get/set}ClassNest is dead code) plus some other unused code related to RubyParserConfiguration
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1854 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit b1293eda8454686e846e2a9837b348e2983bb423
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Wed Dec 21 14:30:32 2005 +0000
+
+    Positioning fixes
+    JRuby library added
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1845 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 3437afe431124a2f60cf7e37c579b0c60ed0bf95
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Fri Sep 30 17:39:23 2005 +0000
+
+    Merge of TOM_RDT_POSITION branch
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1780 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit ff959da537ac5a8cfb89eedb4cb92e110342f718
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Tue Sep 13 14:57:53 2005 +0000
+
+    Remove possibility of endless loop
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1764 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 757a24131701c96caf11d9fa48137c3093306a7e
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sat Sep 10 18:44:59 2005 +0000
+
+    void context checks (void context) should not check last statement in a block (for -w options of ruby)
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1760 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a36ff3729d6a7f2c61eb51273fcee3d3bd371350
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sat Jun 18 14:47:06 2005 +0000
+
+    More moving towards java.util.Stack contract for remaining Abstract Stack users
+    args are never null (we no longer null check with a few strategic asserts)
+    getPosition() always returns something from Nodes (we no longer null check)
+    Remove AttrSetNode (fake parser node) in favor of CallbackMethod
+    we were pushing/popping an extra dynamic vars set every yield
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1715 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 0db25dd3ae06c744963d9b04bf3465fa3673f030
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Thu Jun 16 14:54:07 2005 +0000
+
+    Move abstract stack users a few steps closer java.util.Stack contract
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1711 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 7a83c48af56081c1c2132111d535f28d10cf3afb
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Fri Dec 31 20:55:52 2004 +0000
+
+    Update license to GPL/LGPL/CPL
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1574 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit ac05712e069aeec833f2381d024af55e26f149b9
+Author: Stefan Matthias Aust <sma@3plus4.de>
+Date:   Sat Dec 18 09:24:31 2004 +0000
+
+    remove statics from classes ArgsUtil, ListNodeUtil and NodeUtil
+    remove meanless comments from ExpressionVisitor and BreakStmtVisitor
+    don't use static shared instances of those classes because that's not threadsafe
+    (I changed both DefaultParser.y and .java to keep them in sync without recreating the last from the first one)
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1495 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 0e219b9865b9d95b287ff161c83df5434039f9b1
+Author: Jan Arne Petersen <jpetersen@uni-bonn.de>
+Date:   Sun Dec 12 23:41:29 2004 +0000
+
+    - Replace IRubyErrorHandler with RubyWarnings and SyntaxException.
+    - Add deprecated warning to Object#type method.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1481 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 870e1da9b41bfdbae259e1fc5f18fc8b76686998
+Author: Stefan Matthias Aust <sma@3plus4.de>
+Date:   Sun Dec 12 09:25:42 2004 +0000
+
+    removes the instance variable runtime in RubyObject
+    reintroduces the variable in RubyNil, RubyBoolean, and RubyClass
+    delegates all calls to Fixnum,Array,Boolean,String,ArgumentError,IndexError and TypeError.newXXX to Ruby
+    fixes all imports
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1469 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 3688434d15771590d5d53322ba5ddc5e1da637e8
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Dec 11 01:12:57 2004 +0000
+
+    renamed Method to RubyMethod and UnboundMethod to RubyUnboundMethod
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1455 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 664acdcff2a3b2de45cf80ff245a99da049b0ecb
+Author: Stefan Matthias Aust <sma@3plus4.de>
+Date:   Sun Dec 5 16:13:20 2004 +0000
+
+    make local vars final
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1449 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit c15ab526440e25745b45a2ab3aaab1b5a7334d1f
+Author: Stefan Matthias Aust <sma@3plus4.de>
+Date:   Sun Nov 28 14:54:57 2004 +0000
+
+    code cleanup
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1428 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit b1562832239a5e5d73b1ee98dade51601e343257
+Author: Jan Arne Petersen <jpetersen@uni-bonn.de>
+Date:   Tue Nov 16 20:30:04 2004 +0000
+
+    Rename references of org.jruby.Ruby from ruby to runtime.
+    Remove unused methods from the IRubyErrorHandler interface.
+    Add "same" method to RubyObject to fix "equal?"
+    Fix JavaObject cache.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1408 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 035c46fd66ac254cb294f8151bb458a672b46112
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sat Oct 30 22:27:08 2004 +0000
+
+    Remove unlikely to be used soon abstractions and simplify lexing
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1373 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 31b3b8077d8b5489ae2bd40d4c07c2092693025e
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Mon Oct 11 14:48:42 2004 +0000
+
+    Wrapping args of form func(a, *b, &c) in an extra array
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1331 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit f5c9a1ebd775712f2dc086acfce1a14a123ec632
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Tue May 25 15:54:04 2004 +0000
+
+    Another round of star arg grammar fixes
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1302 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 38c9a31079ded2e81365f0c0f226c6d805ea1444
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sat Apr 17 21:28:30 2004 +0000
+
+    ruby 1.8 grammar landing
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1290 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a16b4a3596853f2153bfe0df0a8cbe54382d5d58
+Author: Anders Bengtsson <ndrsbngtssn@yahoo.se>
+Date:   Sat Feb 28 23:00:58 2004 +0000
+
+    Removed a lot of old IndexedCallback stuff.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1254 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 969b6c96a206cc78eaea46ebfdb88f0349700d8a
+Author: Anders Bengtsson <ndrsbngtssn@yahoo.se>
+Date:   Tue Oct 29 19:29:56 2002 +0000
+
+    Started cleaning up local variables.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1053 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit f2c5b50a3de024a91f072e6492c66ddd4ac31c8f
+Author: Anders Bengtsson <ndrsbngtssn@yahoo.se>
+Date:   Tue Oct 29 00:59:18 2002 +0000
+
+    Made FCallNode more like CallNode
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1051 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a2356b87a149e59eb28b972296652ca246c258a7
+Author: Anders Bengtsson <ndrsbngtssn@yahoo.se>
+Date:   Mon Oct 28 17:43:17 2002 +0000
+
+    Refactoring in some nodes.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1045 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit bcfb40bc46dc71ddf9bf66b744c50520f4c3cde6
+Author: Jan Arne Petersen <jpetersen@uni-bonn.de>
+Date:   Fri Oct 25 23:53:59 2002 +0000
+
+    - Replace int -> char.
+    - Convert NewlineNode into immutable object.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1028 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit c243f407b5038301528f9d7f750efcb2951e1440
+Author: Anders Bengtsson <ndrsbngtssn@yahoo.se>
+Date:   Wed Oct 23 16:28:28 2002 +0000
+
+    Converted some more Nodes into value objects.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1013 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 3cf04c7d63c943941c493ce74dfa36f2bd574148
+Author: Anders Bengtsson <ndrsbngtssn@yahoo.se>
+Date:   Wed Oct 23 14:21:06 2002 +0000
+
+    More refactoring around parser.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1012 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 1b9762cc35b0eda8c5103611e0c3632d66b40c4a
+Author: Jan Arne Petersen <jpetersen@uni-bonn.de>
+Date:   Sun Sep 15 00:27:00 2002 +0000
+
+    - refactorization
+    - fix mkdir bug in JRubySerialize
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@823 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit e99afd11d8db75f685ae3c24e84d889751a1dc2f
+Author: Anders Bengtsson <ndrsbngtssn@yahoo.se>
+Date:   Thu Sep 12 13:43:33 2002 +0000
+
+    Various cleanups.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@806 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit c77b91f42c4f3810140d44cbe603248a1d52b7ee
+Author: Jan Arne Petersen <jpetersen@uni-bonn.de>
+Date:   Tue Sep 10 15:18:12 2002 +0000
+
+    - restructure of the code tree.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@782 961051c9-f516-0410-bf72-c9f7e237a7b7

@@ -1,0 +1,2433 @@
+commit 84e286266e7fda6ad69822bd9d01709759c881f8
+Author: Dmitry Ratnikov <ratnikov@google.com>
+Date:   Mon Jun 24 18:29:16 2013 -0400
+
+    Make sure that jars that are symlinked to extensionless files are loaded correctly
+
+commit ae7b93ec49967b7a5a68ec61353f1f03ed031959
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Apr 29 18:31:31 2013 -0500
+
+    Add load timing to load and loadFromClasspath.
+
+commit 0d1ff021d17ab2498981501eaffe9cd1a47590d2
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Apr 28 13:13:33 2013 -0500
+
+    Fix #666 by implementing LoadError#path and related load logic.
+
+commit b8bd8e341e1152d78efecafb746e4e3941068c3c
+Author: Andrew Kiellor <akiellor@gmail.com>
+Date:   Tue Apr 16 11:19:22 2013 -0700
+
+    Fix for relative require from within a gem on the classpath.
+
+commit 5edded2e0acd2ffcfb8ce0e1d7cd301183aab04b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Mar 14 13:06:34 2013 -0500
+
+    Fix over-canonicalization in 1.8 mode that broke tracing tests.
+
+commit 9795c96728a4496c387232bc40fb30befa9bcc4b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Mar 13 22:16:35 2013 -0500
+
+    Re-fix loading to ignore C ext extensions if C exts are not on.
+
+commit 52f0d7e3bc29e96d47778db0912349493b03255a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Mar 13 22:09:07 2013 -0500
+
+    Unmodify ext extensions while I fix tests surrounding it.
+
+commit 8a626e121a6a824f1f700bc6a5adc8dd3bf12f74
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Mar 13 21:59:40 2013 -0500
+
+    Fix relative path logic for ./ and .. files.
+    
+    * Loading a file starting with ./ now replaces ./ with cwd.
+    * Loading a file that contains any embedded .. will canonicalize
+      before checking for file existance, since File#isFile will not
+      handle those .. properly.
+    * Canonicalize both such paths for __FILE__
+    
+    Fixes #575.
+
+commit 56c3053a15fa9d753b2c6c8c57f3aa1356eb86a2
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Mar 11 16:48:43 2013 -0500
+
+    Incorporate substantive code from 2.0 stdlib.
+    
+    This commit only pulls in the parts of 2.0 stdlib that differ
+    functionality-wise from their 1.9.3 equivalents. When running in
+    2.0 mode, the 2.0 dir will be searched before the 1.9 dir,
+    picking up the differing files. We opted to do this to reduce the
+    amount of duplicate content in our repository.
+    
+    JRuby 9000 will likely incorporate 2.0 stdlib en masse, and may
+    only be 2.0 compatible.
+    
+    Note that 2.0 stdlib is *not* included in jruby-complete or
+    jruby-jars, since it is still an unsupported mode and we don't
+    want to bloat up those artifacts any more than necessary.
+
+commit 61678ac1a2514a9932276f8d527816a5980a94b3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Feb 25 20:41:40 2013 +1100
+
+    Fix more references to CPL.
+    
+    The phrase "Common Public License" was split across two lines in
+    our default header, which caused it to be missed during earlier
+    search/replace. Also, we did not replace the CPL URL in the
+    header with the EPL URL.
+
+commit 330fef3b0fc18af477ccea19bd278669667f31bb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 12 14:49:29 2013 -0600
+
+    Switch JRuby's CPL license to EPL.
+    
+    Governance of the CPL license was moved to the Eclipse Foundation
+    at some point in the past, and Eclipse blessed the EPL (Eclipse
+    Public License v1.0) as the successor to CPL. Because the CPL
+    contains a clause allowing transparent upgrades to future blessed
+    successor licenses, we can make the move to EPL without
+    re-contacting past contributors.
+    
+    The change in going from CPL to EPL largely just removes some
+    punitive language that apparently made many companies nervous. All
+    other language in the license remains identical.
+    
+    Several documents about Eclipse's move from CPL to EPL are here:
+    
+    http://www.eclipse.org/legal/cpl2epl/
+    
+    Note that Eclipse's move came before the blessing of EPL as the
+    upgrade path for CPL, so they had to do a bit more legal juggling.
+    With Eclipse now the administrator of CPL and with their blessing
+    of EPL as the upgrade path for CPL, all we need to do is make the
+    move.
+
+commit a5432e60d1efb2dcc5f43d7a8af0a742295289f7
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri Dec 21 11:41:45 2012 -0600
+
+    Add not opimized but backwards compatible addLoadedFeature to not break torquebox (patch by Ben Browning)
+
+commit a93b72d7507e709c2a6429e0e84ff83043b4b2b8
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Dec 17 15:44:09 2012 -0600
+
+    Disable tracing during loaded features index check.
+
+commit c83dd6a6e788cbf574e293808c6fe3616dc6f0cc
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Dec 17 15:41:23 2012 -0600
+
+    Add helper method
+
+commit daba4d3c0ceafebcadca3eead61d4aaf12ed015b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Dec 17 13:29:34 2012 -0600
+
+    Implement loaded feature caching to reduce load path searching.
+    
+    This is an idea borrowed from Ruby 2.0.0, whereby the short names
+    of loaded features are held in an internal structure and used as
+    a first-line cache to avoid re-searching for re-required files.
+    Before this patch, in both JRuby and MRI, re-required files had to
+    do a full load path search every time because the loaded features
+    list only held the full canonical paths, which are only available
+    after searching for the proper load path entry under which the
+    file exists. With the patch in place, re-required files will
+    usually be immediately found in the cache.
+    
+    The population and invalidation of the cache proceeds as follows:
+    
+    * A reference is held to a dup of the loaded features array. When
+    this reference is captured.
+    * When adding a new feature to loaded features, we re-capture
+    the dup'ed features array and add the short name to a separate
+    internal cache.
+    * As long as the dup'ed features array is non-null and matches
+    the current loaded features array, we know we can safely use the
+    loaded features index.
+    * When the dup'ed features array does not match, we clear the
+    loaded features index and start populating it anew. Since most
+    typical Ruby code does not modify the loaded features array
+    directly, this should be rare.
+    
+    Numbers with and without this change show the performance gained.
+    The following benchmark populates load path with 1000 entries and
+    requires the same file 1000 times.
+    
+    Before:
+    
+    system ~/projects/jruby $ rvm jruby do jruby bench_loaded_features.rb 1000 1000
+      8.110000   3.880000  11.990000 (  9.708000)
+    
+    After:
+    
+    system ~/projects/jruby $ jruby bench_loaded_features.rb 1000 1000
+      0.990000   0.050000   1.040000 (  0.324000)
+
+commit 4b3ae58af9dafbff2cbe545f655983efd0852156
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Dec 7 09:46:19 2012 -0600
+
+    Reduce amount of stat calls during load/require searching.
+    
+    For every combination of load path + filename + extension, we were
+    using Java's File.isFile() to determine whether the file existed.
+    We then subsequently also called canRead() to know if we could
+    read the file. On a hunch, I modified the check to do *just* the
+    canRead call, which should return false if the file in question
+    does not exist, is not a file, or is not readable.
+    
+    The original logic made at least a stat call every time, mostly
+    for paths that failed the test. The new logic calls access(2) (at
+    least on BSD/Darwin) which might be cheaper (at least the call
+    signature does not require allocating a stat-like struct; it is
+    not clear whether it might do the same thing as stat internally).
+    
+    Before the change, here's dtruss counts of system calls for
+    bench_load_path 100:
+    
+    access                                       5588
+    dup2                                         5677
+    close                                        5724
+    open                                         5733
+    fstat64                                      5862
+    psynch_cvsignal                              6319
+    psynch_cvwait                                7998
+    fcntl                                       11410
+    lseek                                       12439
+    read                                        18006
+    stat64                                    1163895
+    
+    And here's the same run after the change:
+    
+    close                                        5760
+    open                                         5771
+    fstat64                                      5907
+    psynch_cvsignal                              7718
+    psynch_cvwait                                9326
+    fcntl                                       11486
+    stat64                                      11901
+    lseek                                       15162
+    read                                        20756
+    access                                    1163043
+
+commit 06cce637fb0c88645437c92d7673c649945724a5
+Author: Nick Muerdter <stuff@nickm.org>
+Date:   Sun Nov 11 18:59:04 2012 -0700
+
+    Fix 1.8 issue with loading JARs with spaces.
+
+commit f3797f93b6eaaa7a398d81e39357a8b31c2fb6dc
+Author: Nick Muerdter <stuff@nickm.org>
+Date:   Sun Nov 11 15:45:55 2012 -0700
+
+    Fix loading files from paths containing '#' symbols for JRUBY-6339.
+
+commit 617db1cba2dbcfda469c01e232315c7c74cc7690
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Nov 7 16:58:57 2012 -0600
+
+    Add -Xdebug.parser to print out real parser exception to stderr and to also not allow any internal jruby impl loading (a bit fragile :) )
+
+commit a116cbb26ecc380f078d7901105742418be583ba
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Sat Oct 6 11:23:12 2012 -0500
+
+    JRUBY=6912: __FILE__ has an extra preceding slash in windows
+
+commit 781ef4df523177a71fecba2e54aa4951854881e9
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Sep 19 01:19:18 2012 -0500
+
+    Fix JRUBY-6890
+    
+    Rework paths to be similar to MRI + redefinable + defined in one place only
+    
+    Patch by Bohuslav Kabrda.
+
+commit b37a0bd7e05955eecc9a6b60651df81cde78c58e
+Author: Uwe Kubosch <uwe@kubosch.no>
+Date:   Sun Sep 2 01:28:46 2012 +0200
+
+    * JRUBY-6875 JRuby should load some_path/some_file.jar.rb if some_path/some_file.jar is required and some_path/some_file.jar does not exist.
+    * Added '.jar.rb' to the suffixes that should be tried for extensions
+
+commit b9e669b7e23689c0b5aec1ef9f18976658919d42
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Jul 28 00:19:45 2012 -0500
+
+    Remove now-defunct site_ruby dirs from load path.
+
+commit 47fd4acb720385b7d7852e1876e28520aa0cf484
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jul 27 01:55:07 2012 -0500
+
+    Remove all safelevel checks throughout JRuby (plus misc cleanup).
+
+commit 7c4238ab08c1df6f238e7b0b79d1bc7f07ebf1d6
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Jul 26 17:16:43 2012 -0500
+
+    Fix JRUBY-6731
+    
+    Can't load class files in WARs compiled by warbler using jruby 1.7.0.preview1
+    
+    When requiring a file with an explicit .class extension, assume
+    the .class filename is the only filename to be searched.
+    
+    Because a require of .class almost always will indicate that the
+    user wants to load a specific precompiled Ruby file, there's no
+    good reason (I know of) to search for anything else.
+    
+    The original logic did not work at all; require 'foo.class' would
+    search for 'foo.class.rb' and 'foo.class.class' (in that order)
+    but never 'foo.class'.
+    
+    The claim is that this worked in 1.6.7.2, but I could not
+    reproduce that with a simple case. The logic involved does not
+    appear to have changed in a substantial way since well before
+    1.6.7.2, and in any case I believe the fix here is the right way
+    for it to work.
+
+commit 68e34fda1e793dc926fce935b1b1b3d2c58a7e2e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jun 20 12:26:36 2012 -0500
+
+    Fix loaded-features-destroying calls to LoadService.init.
+
+commit 28be3688b58a61fef305064b2e2bc0f66a0e4de4
+Author: Mateusz Lenik <mt.lenik@gmail.com>
+Date:   Sun Apr 1 09:48:53 2012 +0200
+
+    Fixes issue JRUBY-6389
+    
+    Fixes TypeError when $LOAD_PATH has non-string
+    element with `to_path` method.
+    JRuby behaviour is now compatible with MRI.
+    
+    Conflicts:
+    
+    	src/org/jruby/runtime/load/LoadService.java
+
+commit 3938c82e1d27e33a3878b2fae595d52e6a2bcad9
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri Mar 23 08:29:14 2012 -0500
+
+    Don't mutate name while processing loadpath entries
+
+commit 6e21baa84d2b32978a11c45fcc344a74ec320f4b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 7 15:14:50 2012 -0600
+
+    Fix classpath: load path entries to properly do a classloader search.
+
+commit 1922f2e888a7a059937b6d1c9a09a0786c3adc04
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jan 24 19:22:52 2012 -0600
+
+    IR-to-JVM backend refactoring.
+    
+    * Move compilation snippits into instructions
+    * Add argument to enable IR-to-JVM backend using -X+CIR
+    * Modifications and tweaks to get simple code working again
+
+commit 05bfbf49427bc31ccbae4b833bed58a0ccd31225
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Jan 7 01:49:43 2012 -0600
+
+    Use more direct classloader path for loading Ruby parts of JRuby.
+
+commit 6909da0def14ce6de60c7adb92df20bb282b760e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jan 4 09:24:48 2012 -0600
+
+    Fix SecureRandom regression on Windows.
+    
+    * Move shared lib back in front of version-specific libs, as it was under site_ruby
+    * Remove MRI versions of securerandom.rb from stdlib and sync
+
+commit 9fde0169df0b1279853df84f611b89965cb2b081
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jan 3 12:35:40 2012 -0600
+
+    Reorg RubyGems to avoid version-specific dirs.
+    
+    * RubyGems itself moves under lib/ruby/shared
+    * Gem installs go under lib/ruby/gems/shared
+    * Remaining site_lib files also moved under lib/ruby/shared
+    * We now have no JRuby-provided files under site_lib, as it should be
+
+commit 796f2d09c00cfc1b17ebf83230214dc6a560cb32
+Author: Hiroshi Nakamura <nahi@ruby-lang.org>
+Date:   Sat Dec 17 15:57:13 2011 +0900
+
+    Additional fix for JRUBY-6278
+    
+    The previous fix (9279536ed) wrongly unlock the object when the circular
+    require happens.  Boy, you must unlock only lock is succeeded.
+
+commit 9279536ed2b32f4db01ce0804e63dff69a6ac4f7
+Author: Hiroshi Nakamura <nahi@ruby-lang.org>
+Date:   Fri Dec 16 16:41:01 2011 +0900
+
+    JRUBY-6278: Double require bug in the handling of concurrent requires
+    
+    Try to re-acquire the lock if the locked object is not in the pool after
+    locking.  The locked object may removed from the pool by precedent
+    Thread.
+    
+    How other impls fixes it.
+    
+    CRuby: check if another Thread is trying to acquire the lock before
+           removing the lock from the pool.  GVL saves everything.
+    Rubinius: Get the object from the pool, then tries to lock.  I think
+              there's a race here.
+    
+    The difference from the previous fix (6c67f35b) is the existence check
+    of the pool after acquiring the lock.  The previous fix checks if it's
+    null or not, but under heavy concurrent situation, later Threads may
+    update the lock in the pool.  So we need to check if it's the same
+    object or not.
+
+commit 2f36c76f4c6ec4369eaad736b02eba21f473cedb
+Author: Hiroshi Nakamura <nahi@ruby-lang.org>
+Date:   Fri Dec 16 15:40:58 2011 +0900
+
+    Revert "JRUBY-6278: Double require bug in the handling of concurrent requires"
+    
+    This reverts commit 6c67f35b762df1844f407252fd0753bd44958385.
+    
+    The fix does not remove locks from the pool, and when I fixed it to
+    remove locks from the pool properly, it parks forever.  Something
+    wrong...
+
+commit 6c67f35b762df1844f407252fd0753bd44958385
+Author: Hiroshi Nakamura <nahi@ruby-lang.org>
+Date:   Fri Dec 16 14:56:46 2011 +0900
+
+    JRUBY-6278: Double require bug in the handling of concurrent requires
+    
+    Try to re-acquire the lock if the locked object is not in the pool after
+    locking.  The locked object may removed from the pool by precedent
+    Thread.
+    
+    Way to fix in other impls.
+      CRuby: check if another Thread is trying to acquire the lock before
+    	 removing the lock from the pool.  GVL saves everything.
+      Rubinius: Get the object from the pool, then tries to lock.  I think
+    	    there's a race here.
+
+commit 126a30c4e99bd6acc5fb5798c51980922d48504a
+Author: Uwe Kubosch <uwe@kubosch.no>
+Date:   Thu Dec 8 02:49:33 2011 +0100
+
+    * JRUBY-6320 Use the jar file cache when doing File operations on jar file content
+    
+    Signed-off-by: Charles Oliver Nutter <headius@headius.com>
+
+commit 120223bf2db2421c878cc29d8f05448d50151aa0
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Nov 19 23:54:28 2011 -0600
+
+    Add a config property to enable a single global require lock.
+    
+    The ability to require files in parallel in Ruby leads to many
+    threading bugs. Constants can be defined before they're ready for
+    use, classes can be modified while they're being used, global
+    state can be initialized at the same time it's in use. Bad news.
+    
+    This flag is experimental, and forces all requires to happen in
+    in serial. First thread to acquire the lock keeps it until it
+    returns from require. This prevents all potential threading bugs.
+    
+    It is not enabled by default, in case there's libraries out there
+    that require and never return. For example, if require has a side
+    effect of starting an event loop, and so it is usually required
+    within a new thread. That pattern will have to go away in order
+    for this flag to be useful (and by extension, for requires to be
+    made properly threadsafe).
+
+commit 080e23d7d5e8d32ba971568f1f874429c591616c
+Author: Uwe Kubosch <uwe@kubosch.no>
+Date:   Wed Nov 2 12:07:55 2011 +0100
+
+    * JRUBY-6172 Avoid using getCanonicalPath to expand JAR entry paths
+    
+    Signed-off-by: Hiro Asari <asari.ruby@gmail.com>
+
+commit cd8aae8f374a8a8a4cce94f78971bdb0818355fc
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Thu Oct 6 11:13:56 2011 -0700
+
+    Rearrange load suffixes; put .rb first, only load native suffix for platform
+    
+    Reduces file stats by about 10% during booting a Rails app (rake environment)
+
+commit 055dafb64bbb2277008c8035aef5495f306ee2c7
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Thu Oct 6 10:25:29 2011 -0700
+
+    Javadoc comment reformat.
+
+commit cee715e622c3a34c6addab805aa46445e4601d1f
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Thu Oct 6 10:18:41 2011 -0700
+
+    Whitespace changes only.
+
+commit 9134a8586ea12973995d1ff8100e9a078bfcc996
+Author: Yoko Harada <yokolet@gmail.com>
+Date:   Tue Oct 4 15:27:18 2011 -0400
+
+    Merges pull request from donV, ff9fa14f63817db7cd2e526341371d43c1b1513a
+
+commit 5ac18309ddb0465f81df37407deb9ae34a7d9e01
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Sep 19 23:02:37 2011 -0500
+
+    By popular demand, add optional colorization to console backtrace output.
+
+commit 122f676c9b1ab34ab42d207af224a223e238a097
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Sep 13 23:40:41 2011 -0500
+
+    Fix a test failure and move native/cext enabled flags to per-runtime (per-config).
+
+commit f804c1070fd01c308ee84c8baa4c949113f868e4
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Sep 13 16:17:30 2011 -0500
+
+    Provide a finer-grained switch for turning off *just* C extensions.
+
+commit e17cdf7b421401685be82fdc1696e667528bce52
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Sep 13 15:28:59 2011 -0500
+
+    Fix JRuby ext loading to report better errors (where it reported none before).
+    (cherry picked from commit 68976c39c44dda4618a49d8f47ddee2e59a663df)
+
+commit 6bf8b2cd8c4c8df88c49334b44a4f6cb8d94ceea
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Aug 16 23:48:12 2011 -0500
+
+    Add support for Ruby 1.9.2's "coverage" extension.
+
+commit f31ddd479011c67f14efaad9733bc16a24b877d4
+Merge: eef82e7 72ce56a
+Author: Hiroshi Nakamura <nahi@ruby-lang.org>
+Date:   Thu Jul 28 13:02:53 2011 +0900
+
+    Merge branch 'master' into autoload-threadsafe
+
+commit eef82e7708011596a23e23dc7c2f836b1d562f2f
+Author: Hiroshi Nakamura <nahi@ruby-lang.org>
+Date:   Fri Jul 22 15:13:35 2011 +0900
+
+    Merged autoloadMap at LoadService and autoloadingMap at RubyModule.
+    
+    Before CRuby 1.8, autoload only supported toplevel constants. From 1.8,
+    it started to support module constants. So there's no need to keep
+    autoloadMap in global LoadService.
+    
+    I moved the map to RubyModule and merged it with autoloadingMap I added
+    for this branch. It helps me adding proper synchronization around
+    autoload resources.
+
+commit f6731bd1ede70e29bcc4bae72633d12cb43892f7
+Author: Hiroshi Nakamura <nahi@ruby-lang.org>
+Date:   Tue Jul 19 15:07:47 2011 +0900
+
+    Avoid race condition.
+    
+    This sample crashed. Sigh.
+    
+    $: << '.'
+    loaded_features = $LOADED_FEATURES.dup
+    1000.times do
+      $LOADED_FEATURES.replace(loaded_features)
+      autoload :C, 'c'
+      t1 = Thread.new { C }
+      t2 = Thread.new { C }
+      [t1, t2].each(&:join)
+      class Object
+        remove_const :C
+      end
+    end
+    puts :OK
+    
+    Avoid race condition between looking up autoloadingMap in RubyModule and
+    autoloadMap in LoadService. This fix is too ad-hoc and must be refined
+    in the future. Moving autoloadMap to RubyModule?
+
+commit 050e0a5d4565e98c32ee16c222dd43aa36f41851
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jul 15 15:07:30 2011 -0500
+
+    native.enabled=false should disable cexts too.
+
+commit 43f7ec512ca712cd34b74e2428a18cfa5c4453e2
+Author: Douglas Campos <qmx@qmx.me>
+Date:   Wed Jul 13 04:10:30 2011 -0300
+
+    using jruby's log wrapper
+
+commit 9c953d93d232d8e4d4f6a2eb13cf9781cabb2ff2
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jul 12 14:38:32 2011 -0500
+
+    Move LoadService to slf4j for logging.
+
+commit e321f6b32a0e451b6e5d945bc9e81234ac85f444
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jul 11 10:33:00 2011 -0500
+
+    Fix deprecation warning on Script.load and propagate 'wrap' in more places.
+
+commit 6f159fe5dd51c062a5b1aab64a8ede916990877a
+Author: Hiroshi Nakamura <nahi@ruby-lang.org>
+Date:   Mon Jul 11 03:36:17 2011 +0900
+
+    Deprecation of fast constant access paths.
+    
+    Each os those has the same definition as non-fast verision.
+
+commit b7f33d38beb9e70b97ec0910f607c8fc50aa06c5
+Author: Hiroshi Nakamura <nahi@ruby-lang.org>
+Date:   Thu Jun 2 13:53:39 2011 +0900
+
+    Cosmetic: add loadTime comment
+    
+    Numbers dumped from loadTime dows not include lock waiting time.
+
+commit 60d89ba95154e84d6af392f3d6ca40ca920146a5
+Author: Hiroshi Nakamura <nahi@ruby-lang.org>
+Date:   Tue May 31 12:47:03 2011 +0900
+
+    Refactoring of load_path scanning.
+    
+    absolute/relative condition cleanup.
+    File#isFile() is the bottleneck. It's called iif needed already.
+
+commit 17ab324bdebf4cd1d9fa3c2e5b4b1ef1651d4650
+Author: Hiroshi Nakamura <nahi@ruby-lang.org>
+Date:   Tue May 31 10:48:20 2011 +0900
+
+    JRUBY-5833: Improve require performance
+    
+    Avoid unneccessary call of org.jruby.ext.posix.JavaSecuredFile.isFile()
+    and canRead() for debug print. 2 times faster.
+    
+      Patched:  2.86[sec]
+      1.6.2:    7.34[sec]
+      1.9.3dev: 3.68[sec]
+      1.8.7dev: 1.75[sec]
+    
+    % jruby bench/bench_full_load_path.rb 10000
+    Rehearsal ------------------------------------------------------------------------
+    empty counterpart                      0.349000   0.000000   0.349000 (  0.315000)
+    50 times require, 10000 in load path   4.274000   0.000000   4.274000 (  4.274000)
+    --------------------------------------------------------------- total: 4.623000sec
+    
+                                               user     system      total        real
+    empty counterpart                      0.024000   0.000000   0.024000 (  0.024000)
+    50 times require, 10000 in load path   2.879000   0.000000   2.879000 (  2.880000)
+    
+    % jruby162 bench/bench_full_load_path.rb 10000
+    Rehearsal ------------------------------------------------------------------------
+    empty counterpart                      0.335000   0.000000   0.335000 (  0.292000)
+    50 times require, 10000 in load path   8.956000   0.000000   8.956000 (  8.957000)
+    --------------------------------------------------------------- total: 9.291000sec
+    
+                                               user     system      total        real
+    empty counterpart                      0.031000   0.000000   0.031000 (  0.031000)
+    50 times require, 10000 in load path   7.371000   0.000000   7.371000 (  7.371000)
+    
+    % ruby bench/bench_full_load_path.rb 10000
+    Rehearsal -----------------------------------------------------------------------
+    empty counterpart                     0.030000   0.000000   0.030000 (  0.038330)
+    50 times require, 10000 in load path  2.920000   0.710000   3.630000 (  3.637675)
+    -------------------------------------------------------------- total: 3.660000sec
+    
+                                              user     system      total        real
+    empty counterpart                     0.030000   0.000000   0.030000 (  0.035932)
+    50 times require, 10000 in load path  3.050000   0.650000   3.700000 (  3.717986)
+    
+    % ruby187 bench/bench_full_load_path.rb 10000
+    Rehearsal ------------------------------------------------------------------------
+    empty counterpart                      0.060000   0.000000   0.060000 (  0.062232)
+    50 times require, 10000 in load path   0.750000   1.040000   1.790000 (  1.785194)
+    --------------------------------------------------------------- total: 1.850000sec
+    
+                                               user     system      total        real
+    empty counterpart                      0.040000   0.000000   0.040000 (  0.039573)
+    50 times require, 10000 in load path   0.750000   1.040000   1.790000 (  1.791693)
+
+commit 65c07ea2a5aa7827e415dd7f12ea475e17399bbf
+Author: Hiroshi Nakamura <nahi@ruby-lang.org>
+Date:   Mon May 23 12:44:17 2011 +0900
+
+    JRUBY-5320: remove case-insensitive LOADED_FEATURES scanning
+    
+    6394276 introduced case-insensitive LOADED_FEATURES search on case-insensitive
+    File System; Windows and Mac OS X. But in 1.9 (in both JRuby and CRuby),
+    LOADED_FEATURES stores expanded path so it should not be a problem as far as
+    we compare expanded path with LOADED_FEATURES. After merging require_protection
+    branch, master branch should handle expanded path correctly now.
+    So I revert the case-insensitive FS feature.
+    
+    It still be problematic in 1.8 mode but CRuby 1.8 has the same issue. 1.8
+    users should aware of this problem.
+    
+    NB: JRuby has extended feature loading for *.jar and *.class so it might cause
+    a problem for these extensions. I don't find any problem at present though.
+
+commit 952098af899cdae19c101fede9cd280c38e8c956
+Author: Hiroshi Nakamura <nahi@ruby-lang.org>
+Date:   Wed May 18 15:52:40 2011 +0900
+
+    LoadService refactoring: extract method for requireLock.
+    
+    Must have no visible change.
+
+commit d54bb64ee61fb46b3ed2836f76c25dc9d9ce1a2d
+Merge: 2156577 0434f01
+Author: Hiroshi Nakamura <nahi@ruby-lang.org>
+Date:   Wed May 18 14:02:25 2011 +0900
+
+    Merge branch 'require_protection'
+    
+    ant spec passes, ant test passes.
+    
+    No performance degrade for startup time:
+      [before]
+        time jruby -rubygems -e 0  2.72s user 0.19s system 209% cpu 1.387 total
+        time jruby -rubygems -e 0  2.72s user 0.29s system 213% cpu 1.407 total
+        time jruby -rubygems -e 0  2.73s user 0.28s system 209% cpu 1.438 total
+        time jruby -rubygems -e 0  2.78s user 0.22s system 215% cpu 1.395 total
+        time jruby -rubygems -e 0  2.72s user 0.30s system 216% cpu 1.396 total
+      [after]
+        time jruby -rubygems -e 0  2.83s user 0.24s system 214% cpu 1.433 total
+        time jruby -rubygems -e 0  2.71s user 0.33s system 213% cpu 1.427 total
+        time jruby -rubygems -e 0  2.77s user 0.27s system 220% cpu 1.382 total
+        time jruby -rubygems -e 0  2.75s user 0.29s system 212% cpu 1.430 total
+        time jruby -rubygems -e 0  2.76s user 0.34s system 216% cpu 1.430 total
+    
+    bench_time_require.rb gets faster:
+      [before]
+        require 'time' * 10000:          0.139 [sec]
+        require 'active_record' * 10000: 0.159 [sec]
+      [after]
+        require 'time' * 10000:          0.019 [sec]
+        require 'active_record' * 10000: 0.031 [sec]
+    
+    Conflicts:
+    	src/org/jruby/runtime/load/LoadService.java
+    	src/org/jruby/util/collections/StringArraySet.java
+
+commit 0434f01ee624b2916ec2bd321673de9e1079d121
+Author: Hiroshi Nakamura <nahi@ruby-lang.org>
+Date:   Wed May 18 13:07:42 2011 +0900
+
+    feature loaded checking perf optimization
+    
+    Add StringArraySet#containsString() which gets Java String (not RubyString) for
+    checking the element existense.
+    bench/bench_time_require.rb gets faster:
+    
+      require 'time' * 10000:          0.031 [sec]
+      require 'active_record' * 10000: 0.037 [sec]
+    ->
+      require 'time' * 10000:          0.019 [sec]
+      require 'active_record' * 10000: 0.031 [sec]
+    
+    See https://gist.github.com/976190 for more details.
+
+commit ae71148cfc371ac8313f0e1735b4b5b8130a4cc8
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon May 16 16:53:26 2011 -0500
+
+    Add a special RubyArray subclass for LOADED_FEATURES, to speed up searches during Kernel#require.
+    
+    Signed-off-by: Hiroshi Nakamura <nahi@ruby-lang.org>
+    
+    For require_protection branch, I changed the signature of featureAlreadyLoaded(RubyString) to
+    featureAlreadyLoaded(String).
+
+commit e4f670ee48ddf23fb15dda5d37bccf9c0bc1534b
+Author: Hiroshi Nakamura <nahi@ruby-lang.org>
+Date:   Tue May 17 17:04:17 2011 +0900
+
+    Circular require by autoload should not be warned
+    
+    Based on current require implementation of JRuby, autoload triggers circular require
+    when the autoload-defined feature is explicitly required such as;
+    
+      autoload :Java, 'java'
+      ...
+      require 'java'
+    
+    For such case, we should not warn users for 'circular require considered harmful'.
+    NB: circular require warnings are from 1.9 mode.
+
+commit 5bf25ac87602764406a2c0bbd501da6dab8cac22
+Author: Hiroshi Nakamura <nahi@ruby-lang.org>
+Date:   Tue May 17 16:50:53 2011 +0900
+
+    LoadService refactoring: let findFileForLoad handles file path
+
+commit be86b9ace6e2b218f6c25e2763519ee1723af98a
+Author: Hiroshi Nakamura <nahi@ruby-lang.org>
+Date:   Tue May 17 16:09:51 2011 +0900
+
+    JRUBY-3194: Make autoload thread-safe.
+    
+    To make autoload thread-safe, remove loadMethod from loadService.autoloadMap after loading file, not before.
+    Removing loadMethod before loading file would cause the second thread raising NameError since the target constant could not be defined yet.
+    
+    And this commit introduces 3 states as a resulting value of internal require method: LoadService#requireCommon()
+     * LOADED ........... specified file is loaded.
+     * ALREADY_LOADED ... specified file is already loaded.
+     * CIRCULAR ......... circular require.
+    
+    For Kernel.require, ALREADY_LOADED and CIRCULAR are treated as 'false' as a resulting value.
+    For Kenrel.autoload, when it gets CIRCULAR from requireCommon(), it returns nil instead of defined constant.
+    CIRCULAR helps the following autoload situation.
+    
+      autoload :Java, 'java'
+      require 'java' #=> 'module Java ...' => invoke autoload for :Java => circular require of 'java' => NameError since Java is not yet defined.
+    
+    NB: JRuby 1.6.1 does not have this circular autoload problem because 1.6.1 was using $LOADED_FEATURES for protecting runtime from threaded require.
+    Recursive autoload just returns nil since the feature is marked as 'already loaded'.
+
+commit 21565774f8800b3df6f839505365d340b573f253
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon May 16 16:53:26 2011 -0500
+
+    Add a special RubyArray subclass for LOADED_FEATURES, to speed up searches during Kernel#require.
+
+commit 9b2c28338dea54c3e6b635d6f1374382f6b98bcc
+Author: Hiroshi Nakamura <nahi@ruby-lang.org>
+Date:   Fri May 13 21:56:22 2011 +0900
+
+    Revert "LoadSearcher refactoring: reduce featureAlreadyLoaded usage"
+    
+    This reverts commit 1bb5fe092df8e1fc41caccda546bf5b4da4e46f2.
+    
+    I gathered featureAlreadyLoaded() invoking by thi commit, then tried to
+    change the method to use HashSet<String>(loadedFeaturesInternal) but it
+    slows down a little for require 'active_record'... I abondoned this
+    change for now.
+    
+    Conflicts:
+    
+    	src/org/jruby/runtime/load/LoadService.java
+
+commit a315f35068bbf4cfb71402b67d1e2aee663a9fc0
+Author: Hiroshi Nakamura <nahi@ruby-lang.org>
+Date:   Fri May 13 21:49:08 2011 +0900
+
+    LoadSearcher refactoring: reduce RubyString usage.
+    
+    CAUTION: I refactored caseInsensitiveFS == true case but it doesn't have
+    a test so it's not tested yet.
+
+commit 1bb5fe092df8e1fc41caccda546bf5b4da4e46f2
+Author: Hiroshi Nakamura <nahi@ruby-lang.org>
+Date:   Fri May 13 20:12:02 2011 +0900
+
+    LoadSearcher refactoring: reduce featureAlreadyLoaded usage
+    
+    Move featureAlreadyLoaded() check from smartLoadInternal() to
+    LoadSearcher.
+
+commit 069d0cbe5ce2102c4f6dbd9fb1fa25818f1b5a8d
+Author: Hiroshi Nakamura <nahi@ruby-lang.org>
+Date:   Fri May 13 19:07:32 2011 +0000
+
+    LoadSearcher refactoring: LoadError detection cleanup
+    
+    Throw LoadError after all search done and state.library == null. Before
+    this change, the last part of ScriptClassSearcher throwed LoadError.
+    ScriptClassSearcher located at the last of searchers so it worked as we
+    expected. Clean-up.
+
+commit e5420b235ab4a1b0e4c0ff0bca1a1265a6a709c4
+Author: Hiroshi Nakamura <nahi@ruby-lang.org>
+Date:   Fri May 13 18:45:49 2011 +0000
+
+    LoadSearcher refactoring: avoid to use Exception for flow control
+    
+    Change LoadSearcher#trySearch signature to return boolean instead of
+    throwing an AlreadyLoaded exception for performance.  'ant spec' passes.
+    
+    [BEFORE]
+    % jruby bench/bench_time_require.rb 10
+                                        user     system      total        real
+    require 'time'                  1.279000   0.000000   1.279000 (  1.137000)
+    require 'time'                  0.233000   0.000000   0.233000 (  0.233000)
+    require 'time'                  0.124000   0.000000   0.124000 (  0.124000)
+    require 'time'                  0.126000   0.000000   0.126000 (  0.126000)
+    require 'time'                  0.123000   0.000000   0.123000 (  0.123000)
+    require 'time'                  0.117000   0.000000   0.117000 (  0.117000)
+    require 'time'                  0.119000   0.000000   0.119000 (  0.119000)
+    require 'time'                  0.120000   0.000000   0.120000 (  0.120000)
+    require 'time'                  0.121000   0.000000   0.121000 (  0.122000)
+    require 'time'                  0.145000   0.000000   0.145000 (  0.146000)
+    
+    [AFTER]
+    % jruby bench/bench_time_require.rb 10
+                                        user     system      total        real
+    require 'time'                  1.104000   0.000000   1.104000 (  1.037000)
+    require 'time'                  0.183000   0.000000   0.183000 (  0.184000)
+    require 'time'                  0.073000   0.000000   0.073000 (  0.073000)
+    require 'time'                  0.031000   0.000000   0.031000 (  0.031000)
+    require 'time'                  0.035000   0.000000   0.035000 (  0.036000)
+    require 'time'                  0.036000   0.000000   0.036000 (  0.036000)
+    require 'time'                  0.020000   0.000000   0.020000 (  0.021000)
+    require 'time'                  0.021000   0.000000   0.021000 (  0.022000)
+    require 'time'                  0.021000   0.000000   0.021000 (  0.021000)
+    require 'time'                  0.020000   0.000000   0.020000 (  0.020000)
+    
+    The signature
+      boolean trySearch();
+    looks ugly so we should change the name if a better name exists...
+
+commit f6555aebd7f2fc77e3d9beb817dc171ae203be9f
+Author: Hiroshi Nakamura <nahi@ruby-lang.org>
+Date:   Wed May 11 14:02:00 2011 +0900
+
+    JRUBY-3343: threaded require serialization reimplemented
+    
+    A second thread requiring a file currently being required should block
+    and wait for that require to complete. My fix for JRUBY-5779 changed the
+    locking mechanism so I added a regression spec and fixed it.
+
+commit 02536ffb9101745c5018aaffb23e614bc6dcd184
+Author: Hiroshi Nakamura <nahi@ruby-lang.org>
+Date:   Wed May 11 00:06:03 2011 +0900
+
+    Refactoring: change variable name
+    
+    requireName -> searchName.
+
+commit 4f659b4caa663f9b78d825bb0d74774708268a23
+Author: Hiroshi Nakamura <nahi@ruby-lang.org>
+Date:   Tue May 10 23:30:03 2011 +0900
+
+    Fix threading issue of require.
+    
+    The logic for circular require detection wrongly releases a lock when 3
+    or more files are running. Do not release a lock in requireLocks when
+    circular require is detected.
+
+commit bc801f2db0646c7ae4af286a5bbaa3780074371f
+Author: Hiroshi Nakamura <nahi@ruby-lang.org>
+Date:   Tue May 10 15:15:26 2011 +0900
+
+    Cosmetic fix for backtrace at circular require.
+    
+     - A String returned by TraceType#printBackTrace() includes the last "\n".
+     - warn circular require only in 1.9 mode.
+
+commit d994fdac551e6b853768e66d2e4c3a5c8cfaa314
+Author: Hiroshi Nakamura <nahi@ruby-lang.org>
+Date:   Tue May 10 10:53:41 2011 +0900
+
+    JRUBY-5779: $LOADED_FEATURES is updated before loading finished
+    
+    Call addLoadedFeature(feature) after the feature is loaded. Existing
+    add-first logic worked for avoiding circular require so I added new
+    circular require detection logic at LoadService#require().
+    
+    At this moment, this change causes lots of constant redifinition
+    warnings for rubygems under 1.9 mode. Plus, builtin/javasupport looks to
+    have circular require in it.
+
+commit 5557645bb736286665103276f5c83eeea6822b96
+Author: Hiroshi Nakamura <nahi@ruby-lang.org>
+Date:   Mon May 9 23:45:02 2011 +0900
+
+    Make LoadService#smartLoad() @Deprecated.
+    
+    smartLoad() doesn't take a lock for required file. To avoid threading +
+    require issue, marked it @Deprecated.
+
+commit 8072fc0cbbc98a5a7014d2b1443063c68a4911c4
+Author: Hiroshi Nakamura <nahi@ruby-lang.org>
+Date:   Mon May 9 23:33:39 2011 +0900
+
+    Avoid require threading issue.
+    
+    Some ext libs (jruby-openssl, jruby-rack, etc.) are using
+    LoadService#require() but it doesn't take a lock for the lib. Let
+    LoadService#require() replace with LoadService#lockAndRequire().
+
+commit a3afa944b9d5c0f4f6c42d491b84c1dc4182e989
+Author: John Firebaugh <john_firebaugh@us.ibm.com>
+Date:   Thu May 5 16:29:32 2011 -0700
+
+    Improve require performance.
+
+commit 196873c9a40023525f60a4c4be3dd79761cbb816
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Wed Feb 23 13:08:56 2011 -0600
+
+    JRUBY-5337: Fix %20 appearing in scripts loaded from classpath
+
+commit 527be7924f6507d012871a16617f0923396c0e2e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Feb 15 18:17:14 2011 -0600
+
+    Fix JRUBY-5471: private method `verify_mode=' called with Bundler, net/https, jruby-openssl and RubyGems 1.5
+    
+    The problem here was that the extension loaded with the requirer's frame stil present on the stack. If the requirer had set visibility to "private", frame-sensitive methods like attr_accessor would use that for the method visibility. In MRI, extensions are most likely given a fresh frame in which to execute. We did not see this before because most core JRuby methods used to be framed (like Kernel.require) and so extensions implicitly got a clean environment.
+    
+    The update to RubyGems probably exposed this bug (likely present in RC1 as well) by setting OpenSSL attributes where it had not done so before.
+    
+    The fix is to push a fresh frame before loading extensions, so they execute in a clean environment with public visibility default.
+
+commit 23a1f3d2c1232f4ac5ead6ea0000ed685d08dda5
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Feb 7 16:49:29 2011 -0600
+
+    Fix for JRUBY-5153: File system access not checked by JVM security manager
+    
+    * Warn if loading from boot classpath and a security manager is installed
+
+commit 6c1d41aedfde705c969abf10cf5384e2be69f10a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Jan 27 01:13:30 2011 -0600
+
+    Partial fix for JRUBY-5352: Eliminate yecht.jar entirely, so that YAML can be loaded without nested jars
+    
+    * Move yecht.jar into build lib and stuff its contents into jruby[-complete].jar
+    * Add a lazy loading library to Ruby.java for YechtService
+    * Modify yaml files to load newly-located library
+
+commit 63942764fbd1bd49f9e4c6d52e2c7841dba4f59f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Jan 9 15:37:23 2011 -0600
+
+    Preliminary fix for JRUBY-5320: require needs to treat case-insensitive file paths in LOADED_FEATURES as case-insensitive for searching purposes
+
+commit 1cda7a9156fce640d5c4418dec358e59b02c9c71
+Author: Hiroshi Nakamura <nahi@ruby-lang.org>
+Date:   Wed Jan 5 01:51:43 2011 +0900
+
+    JRUBY-5004: removed unused local variable
+
+commit 095a36a4798e627dd7004c46aedafe71716edd41
+Author: Hiroshi Nakamura <nahi@ruby-lang.org>
+Date:   Mon Jan 3 23:59:17 2011 +0900
+
+    JRUBY-5004: remove unused imports
+    
+    This commit is based on the patch from Douglas Campos <qmx@qmx.me>.
+
+commit f8a862e6c6da687181f87716fcd366e668df4dcf
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Dec 22 14:09:30 2010 -0600
+
+    Fix for JRUBY-5251 and 1.9 "." load path spec.
+
+commit 20a255faa858e520022db0ed59dac2496b82870d
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Thu Dec 2 15:08:58 2010 -0600
+
+    JRUBY-4774, WARBLER-15: Fix classpath and load path issues related to file paths containing spaces
+
+commit 1add7925d6a03321415adcafbf4d76834231e10b
+Author: Tim Felgentreff <timfelgentreff@gmail.com>
+Date:   Fri Nov 12 13:12:15 2010 -0600
+
+    bail out early (e.g.: before searching) if a feature is in the loadedFeatures list
+
+commit fa40ca338bbd09e1a8483da23aacfe2441b8b1be
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Oct 22 01:33:16 2010 -0500
+
+    Fix for JRUBY-5045: C extensions are not considered for loading if a path contains ".."
+    
+    Simple fix: bail out of load path searching of the require/load resource starts with ./ (or ~/) since those indicate it's not going to resolve in load paths anyway. Bailing out prevents erroring before additioanl extension types can be searched, allowing extensions and jars to load properly.
+
+commit c2615b83cc793f8d042a1a93e7e3a3b040bb56ac
+Author: Hiroshi Nakamura <nahi@ruby-lang.org>
+Date:   Thu Sep 30 18:21:54 2010 +0900
+
+    Added org.jruby.runtime.load.LoadService$SearchState#toString for easier Loader debugging.
+
+commit 3ceede5cd748f7af1dea1b97db65e5737ddf81d9
+Merge: 414605b 69c2bac
+Author: Tim Felgentreff <timfelgentreff@gmail.com>
+Date:   Fri Sep 10 18:00:36 2010 +0200
+
+    Merge remote branch 'origin/master' into cext
+    
+    Conflicts:
+    	.gitignore => cext added cext build results
+    	build.xml => cext added osfamily-specifiers to git invocation
+    	lib/ruby/1.9/mkmf.rb => master added functions, cext added jruby support
+    	src/org/jruby/RubyBignum.java => cext made LONG_MIN, LONG_MAX and ULONG_MAX public fields
+
+commit d30fe0ec15605f6f48ffd5e1fb821f636a5bd00a
+Author: Tim Felgentreff <timfelgentreff@gmail.com>
+Date:   Mon Sep 6 00:12:04 2010 +0200
+
+    JRUBY-5032: Require extensions files even if a similarily named rb file has been loaded already
+
+commit 4904af11094ff5dcc9951e8df4abc4db2dd7cbb1
+Author: Tim Felgentreff <timfelgentreff@gmail.com>
+Date:   Sun Aug 22 21:02:45 2010 +0200
+
+    JRUBY-5033: LoadService should try loading platform specific extensions if .so->.jar fails
+
+commit 78ee2d9622b624e0db421ba91c3c22af70225066
+Author: Tim Felgentreff <timfelgentreff@gmail.com>
+Date:   Sun Aug 8 15:47:51 2010 +0200
+
+    JRUBY-4985: Split BailoutSearcher in SourceBailoutSearcher and default BailoutSearcher
+
+commit 0f397181b2fe2bc3d7de7cf2e66b1328e5baccec
+Author: Tim Felgentreff <timfelgentreff@gmail.com>
+Date:   Sun Aug 8 15:46:38 2010 +0200
+
+    JRUBY-4985: Fix for BailoutSearch not trying to load rb files if extensions with the same name have been loaded
+
+commit bcaad9d75369ea3bf000391220fb9171b2c50d8d
+Author: David Calavera <david.calavera@gmail.com>
+Date:   Tue Jul 6 20:58:13 2010 +0200
+
+    [1.9] The __FILE__ constant equals the absolute path of a file loaded by a relative path
+
+commit 24adc592334105ca1b588a92169056b07763305a
+Author: Tim Felgentreff <timfelgentreff@gmail.com>
+Date:   Mon Jul 5 01:03:17 2010 +0200
+
+    Include empty suffix in extensionSuffixes
+
+commit 717e5a527922b028e1d009ddc754a66b344e2d29
+Author: Tim Felgentreff <timfelgentreff@gmail.com>
+Date:   Mon Jun 28 14:06:10 2010 +0200
+
+    allow direct require of c-extensions
+    
+    Conflicts:
+    
+    	src/org/jruby/cext/ModuleLoader.java
+
+commit 071d9b808d4c66f8921ef4c38f4c927191cf7f8e
+Author: Tim Felgentreff <timfelgentreff@gmail.com>
+Date:   Thu Jun 17 01:02:05 2010 +0200
+
+    add extension suffixes for cext
+
+commit a3f318f90ee33060d2ac0d430cd2f47bb344f1a7
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Tue Jun 15 12:32:15 2010 -0500
+
+    Minor cleanup to clarify how we're using canonicalize path for jar paths
+
+commit 7ea09c7812ba3ec518f1f9bb8cc97da29f8d4d51
+Author: Garrett Conaty <garrett@conaty.net>
+Date:   Mon Jun 14 20:13:29 2010 -0700
+
+    Fix for JRUBY-4875 with testcase
+
+commit 5d226eba52162c9a7dc43665d2789398ba3097f6
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Mon May 24 15:43:03 2010 -0500
+
+    JRUBY-4821: Clear last error when calling #close during IO#open block
+
+commit 515a4c142250fd30b140c22728b061a54aaeacbe
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat May 22 14:44:37 2010 -0500
+
+    Various spec fixes:
+    
+    * Fix all 1.9 Array specs (other than pack, which doesn't seem to run with Ruby 1.9 at the moment).
+    * Backport 1.9's matrix to fix matrix failures
+    * Merge over a ruby_1_8 set.rb fix (ruby bug #118)
+    * Make Digests' #file raise EISDIR on dir
+    * Update rubyspec and mspec and tag remaining failures
+    * Kernel#require should expand ~
+    * $? should be read-only
+
+commit e05b969291d44e3d42e14861e30ce189a52f1b5f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun May 2 02:09:26 2010 -0500
+
+    Miscellaneous cleanup:
+    
+    * A number of findbugs items in the "threadsafe", "performance", "malcious code", and "experimental" warnings
+    * Tidied up all NetBeans "yellows" in the files I touched
+    * Removed now-defunct JRubyServer/Client/Service
+    * Removed now-defunct ssa.rb and DAGBuilder
+
+commit 646afeaa5739ba1e84ef94a8002e2e6bb5044693
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Mar 18 23:02:46 2010 -0500
+
+    Fix for JRUBY-4663: LoadService error in getClassPathResource when file location contains '+'
+    
+    Patch by Garrett Conaty
+
+commit 26323269fcfb2341ff8fa3b198037e1290982926
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Mar 10 16:21:23 2010 -0600
+
+    Fixes for JRUBY-4553: Scalability: JRuby suffers from Java Charset lock contention
+
+commit a44514e6740648f27a3a9ebf1cd84363c2b2db5d
+Author: David Calavera <david.calavera@gmail.com>
+Date:   Sun Feb 14 17:32:14 2010 +0100
+
+    fixes JRUBY-4543: Multiple RubySpec failures for Kernel's load() and require()
+    
+    Signed-off-by: Charles Oliver Nutter <headius@headius.com>
+
+commit 4f9d77c764c0f9e494a15a5bee96543d4644cd64
+Author: NAKAMURA <nakahiro@gmail.com>
+Date:   Tue Feb 23 07:24:50 2010 +0900
+
+    Show error detail of an error raised while feature load.
+    
+    Signed-off-by: Vladimir Sizikov <vsizikov@gmail.com>
+
+commit 7ba1eebaecfe40e6f55278177c53910dca538c95
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Wed Feb 17 12:26:41 2010 -0600
+
+    Kill some dead code no longer needed in LoadService
+
+commit 01cf6e0e9cbf3f1855102bc12e00e2e65541cc62
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Tue Feb 9 11:34:51 2010 -0600
+
+    Only dump relatively harmless ZipException under $DEBUG
+
+commit 0226925e76826e7818605dafa8fac0a266f05db4
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Mon Feb 8 21:57:31 2010 -0600
+
+    JRUBY-3299: Allow loading of classes and scripts from arbitrarily nested jar files
+    
+    Thanks to Stas Garifulin for the class loading implementation!
+
+commit 28663aa44154bdd01f4e409480fcd797b6d42b3b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jan 15 13:59:01 2010 -0600
+
+    Add logic to LoadService for coercing load path entries to string.
+
+commit 3e44eb3d51aaa9d50317b7d7f42083e422ff0ed0
+Author: Vladimir Sizikov <vsizikov@gmail.com>
+Date:   Tue Dec 22 23:09:36 2009 +0100
+
+    JRUBY-4378: JIRB from jnlp over HTTP is broken
+    
+    Also, introduced classpath:/ scheme to load resources
+    from the classpath.
+    
+    For example, JRuby's home can be set to:
+    classpath:/META-INF/jruby.home
+    and that should be pretty functional.
+    
+    But there are severe limitations, like there is
+    no proper globbing, and that makes rubygems non-functional.
+    
+    For now, classpath:/-style home is set only
+    for weird cases, like jnlp over HTTP. For regular/typcial
+    jruby-complete.jar stuff, we still use jar:file.
+
+commit 3487bba2fada506a4c56b7e643e82ae3b6294cb5
+Author: Vladimir Sizikov <vsizikov@gmail.com>
+Date:   Tue Dec 8 11:54:04 2009 +0100
+
+    Fixed JRUBY-4116 and JRUBY-3950 (IRB in Applet and WebStart environments).
+    
+    - JRUBY-4116: security error running org.jruby.demo.IRBConsole in jruby-complete
+    - JRUBY-3950: samples/irb-applet.html doesn't load the Applet
+
+commit 724b0ba5a5cd579c304eeedce12792a87ce9f072
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Dec 2 00:33:48 2009 -0600
+
+    A couple minor improvements to LoadService to reduce some unnecessary work and objects.
+
+commit bbc8136d44c23e39c92499ecbc65211b8da072fc
+Author: Hiro Asari <asari.ruby@gmail.com>
+Date:   Wed Nov 25 20:47:31 2009 -0600
+
+    JRUBY-4276: Set org.jruby.runtime.load.LoadService.DEBUG_LOAD_TIMINGS at run time.
+    
+    Based on patch by Hiro Asari plus additional modifications.
+    
+    Here's an example on how to enable this and other LoadService's interesting logging:
+    
+    jruby -b \
+      -J-Djruby.debug.loadService.timing=true \
+      -J-Djruby.debug.loadService=true -e "require 'yaml'"
+
+commit 71a6173d82b2e19bb87a69eb9bc0ad9c115d6395
+Author: Vladimir Sizikov <vsizikov@gmail.com>
+Date:   Tue Nov 24 14:25:39 2009 +0100
+
+    Added require()'s speed tracing to LoadService.
+    
+    To see the timings, enable DEBUG_LOAD_TIMINGS in the source.
+
+commit dac4f0fdd52b35b0f68f9f999d538c045d1b6cd8
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Oct 26 11:10:33 2009 -0500
+
+    Make almost everything at worst protected for JRUBY-4138, to allow recomposing/reimplementing in a child class.
+
+commit 37f91a381208f80c26161a0f0ca1d6e817e97bad
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Oct 26 10:38:30 2009 -0500
+
+    Make most of the key methods in LoadService be protected rather than private, so they can be overridden and accessed from subclasses. JRUBY-4138: Open up LoadService some more
+
+commit e24944aedbc05106f23b1466831dad4e443ea79d
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Oct 19 17:06:33 2009 -0500
+
+    JRUBY-4108: LoadService::SuffixType too private now for LoadService magic
+
+commit af199059e4cc41b02a8729e3c169784c287e3206
+Author: Vladimir Sizikov <vsizikov@gmail.com>
+Date:   Tue Oct 6 16:01:19 2009 +0200
+
+    JRUBY-3231: [windows] JRuby crashes if an empty string is present in $LOAD_PATH
+    
+    Regression test added as well.
+
+commit aeb8bf9785d9a0229c7ba310c4437ffddf5fc623
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Sep 26 15:37:40 2009 -0500
+
+    Fix for JRUBY-3977: "require" won't load jars with ".so" anywhere in the name
+    
+    Thanks to Jeremy Huiskamp for the patch.
+
+commit 2d2a73e84eb9a82bd0c9c44599147116e94f8f1b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Sep 26 15:32:57 2009 -0500
+
+    Add load service logging, by craig mcmillan, for JRUBY-3874.
+    
+    Squashed commit of the following:
+    
+    commit aa8c70ca0bca546bfd367792056f703c706e8ff4
+    Author: mccraig mccraig of the clan mccraig <craig@trampolinesystems.com>
+    Date:   Mon Sep 21 18:19:46 2009 +0100
+    
+        more explicit LoadService logging
+    
+    commit 3a23dd225605b3f41c0639407aa71c4d036460c2
+    Merge: a64cd1c 1d1d279
+    Author: mccraig mccraig of the clan mccraig <craig@trampolinesystems.com>
+    Date:   Mon Sep 21 17:53:49 2009 +0100
+    
+        Merge branch 'master' into load_service_debug_master
+    
+        Conflicts:
+        	src/org/jruby/runtime/load/LoadService.java
+    
+    commit a64cd1cab3b008311d6a2f6e9b06af417fbe937c
+    Author: mccraig mccraig of the clan mccraig <craig@trampolinesystems.com>
+    Date:   Thu Sep 17 20:21:58 2009 +0100
+    
+        adding LoadService debug logging for builtinLib search
+    
+    commit d323a4ea242c94e43dee9166cac2ef89d18d88e6
+    Author: mccraig mccraig of the clan mccraig <craig@trampolinesystems.com>
+    Date:   Fri Aug 21 11:45:14 2009 +0100
+    
+        fix merge of LoadService debugging from 1.3.1 branch
+    
+    commit dff28677f1d59314763e649a8b1cb9d61ba233fc
+    Author: mccraig mccraig of the clan mccraig <craig@trampolinesystems.com>
+    Date:   Wed Aug 12 11:20:41 2009 +0100
+    
+        make all logging code conditional
+    
+    commit 76c81b339db3f71c4b5e9e11a7e1f40307797ffa
+    Author: mccraig mccraig of the clan mccraig <craig@trampolinesystems.com>
+    Date:   Fri Aug 21 11:24:49 2009 +0100
+    
+        remove yucky hard tabs
+    
+        Conflicts:
+    
+        	src/org/jruby/runtime/load/LoadService.java
+    
+    commit 35f73b472582fade141bc62c3e47d729aa1e06c3
+    Author: mccraig mccraig of the clan mccraig <craig@trampolinesystems.com>
+    Date:   Fri Aug 21 11:21:14 2009 +0100
+    
+        add -Djruby.debug.loadService=true for stderr printouts of trys and
+        successes of LoadService
+    
+        Conflicts:
+    
+        	src/org/jruby/RubyInstanceConfig.java
+        	src/org/jruby/runtime/load/LoadService.java
+
+commit 2998019d69498722418a27ddcc0d27890b668205
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Tue Sep 22 22:56:08 2009 -0500
+
+    Get JRubyTestSuite working on windows.
+    
+    - `javac' must be on path
+    - path expansion should account for drive letter
+    - RubyString(): Get utf8 bytes out of a string instead of "plain" bytes
+    - Remove RubyString constructor that took a String; should be using CharSequence version
+    - Don't run Tempfile perms test on windows
+    - Fix Dir.entries on Windows
+
+commit 1bf7a3f05bf77011b1d30fa987a3e24a1d66c2d6
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Sep 13 17:17:29 2009 -0500
+
+    Fiber is now loaded at startup for 1.9.
+
+commit 90b1ddfed5a69cd1a17b38d27b3b9fd2a94a7710
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Sun Aug 30 12:56:38 2009 -0500
+
+    Move all common site_ruby stuff to a shared subdirectory and leave rubygems in 1.8 site lib since that is where rubygems likes to update it to
+
+commit d0a18981215523d5749ce0607ca51bb57031ef25
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Sun Aug 30 12:40:52 2009 -0500
+
+    [19] Let 1.9 share 1.9 sitelib (after it's own) to be happy with rubygems
+
+commit d927d14763387c2c6c11c408e99111e038aba3fe
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Aug 24 01:32:38 2009 -0500
+
+    Fix for JRUBY-3892: Running rake rdoc from within jruby-complete.jar results in "undefined method `key' for nil:NilClass"
+
+commit a8c0f3b578615bb0147229f17ae8be4b5e7b8e42
+Merge: e134376 2b6aedf
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Thu Aug 20 22:44:46 2009 -0500
+
+    Merge branch 'master' of nicksieger@git.kenai.com:jruby~main
+
+commit e134376d8e659fb9ebce8989977bcf8631517ede
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Thu Aug 20 22:43:23 2009 -0500
+
+    JRUBY-3777: Fix odd load service issue w/ rubygems and root CWD
+    
+    Not sure why we were trying to canonicalize a relative jar file path.
+    Not sure how it's worth it to write a test to avoid regressions here
+    either, the bug is so obscure.
+
+commit 8c0ae0347337e04275efaaf5a0c76f51bb5ac7f5
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Aug 20 16:34:32 2009 -0500
+
+    Remove lib/ruby/1.8/java and .so from load searching, to reduce the number of paths we try.
+
+commit f992b6b0fa726506c113a1d5dc96e30d9c6c4c8f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Aug 20 12:35:37 2009 -0500
+
+    Fix for JRUBY-3894: Problems with __FILE__ and file loaded from a jar
+    
+    Thanks to Rib Rdb for the fix :)
+
+commit e9671cee16262a3af15761e93eaeba90a7cc16cb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Aug 8 11:42:59 2009 -0400
+
+    Add a safety check for load path entries of zero length. JRUBY-3809.
+
+commit ae08dafe12e4f41a81c3e5dd5cea5c6f20dd5496
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Tue Aug 4 17:31:47 2009 +0200
+
+    Fix all test failures and remaining problems for 1.8.7 compatibility
+
+commit 777efc73695b27db5bb1a7696c16747e924762ac
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Tue Aug 4 16:02:30 2009 +0200
+
+    [1.8.7] Fix several require and load bugs and change some tags
+
+commit 0c2cc46999e5f82f140f94e62d3a3e6ecacfa50a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jul 27 09:45:15 2009 -0500
+
+    Improve cost of opening streams for local files during require, and load full contents as quickly as possible rather than pay buffering overhead. Improves startup measurably, but not a ton.
+
+commit f6216a99cdc21024ed1fb08528845ec283133ad0
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Jun 9 17:28:52 2009 -0500
+
+    JRUBY-3736: JRuby won't load a .jar if a .so is found too.
+
+commit 48ae162b97f57cac767622b8ff99c8353d33d6a0
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue May 19 13:09:12 2009 -0500
+
+    Fix for JRUBY-3343: Modify require logic to block when two threads require the same file at the same time
+
+commit bbc5022beb6da022da3e9b1b705ce2a148c7f215
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Apr 15 17:42:36 2009 -0500
+
+    Fixes for JRUBY-3511: jruby --1.9 picks up the wrong path for loading modules
+
+commit de43063f6807d957f108abee669833829652e741
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Apr 14 14:02:23 2009 -0500
+
+    Re-fix JRUBY-3447: Rails console gets stuck on "quit"
+    
+    It appears this fix was only applied to the 1_2 branch and never made it to trunk.
+
+commit e9e3128a87567d884edec5db3ee3275ff737ce47
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Mon Mar 9 16:18:58 2009 +0000
+
+    More fixes for secure environments
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9386 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a47bd7faa0da9dc66eb79c66e48edb44a3cb1d83
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Tue Feb 17 19:08:33 2009 +0000
+
+    Use Ruby.is1_9() where possible.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9217 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 94a9291f50c96dff6bcab99ba6ededd5463912a1
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Feb 12 02:38:03 2009 +0000
+
+    Enhancement for JRUBY-3065: New public LoadService#findFileToLoad method
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9107 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit b86ab57a6887a13a41c69fceb29012141caf977e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Jan 29 01:41:04 2009 +0000
+
+    Minor restructuring of the "jar URL" part of LoadService to avoid doing extension searches when it's not actually a jar or file URL.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8925 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit bc76c6d6aef357a0e211c0f0577f3ccf1e30ef47
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Dec 15 16:41:42 2008 +0000
+
+    Fix + test for JRUBY-3234: Difference in require behaviour with MRI with ".rb" suffix
+    
+    The problem here was that LoadService was not always registering the loaded feature with its appropriate extension. As a result, requiring through different paths caused the same require to get registered under different names, firing twice. Fixing all paths to use the found name + suffix resolved the issue.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8345 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 6892ca85e1cafed0d5d4fcf5eb20122993fdda89
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Dec 3 17:24:44 2008 +0000
+
+    Fixes for JRUBY-3173: require in 1.1.5 prefers files in the current directory despite loadpath (even with "." removed)
+    
+    Also fixes JRUBY-3210, from which I got some test cases as well.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8256 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 20c2afc02af5fa4647cf0ac15371bd52e95ec17d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Nov 28 09:18:06 2008 +0000
+
+    Fix for JRUBY-3078: require should be made either threadsafe or guaranteed to run the discovered file exactly once
+    
+    I went for the latter option here; now if two or more threads all try to require the same file, only one will actually sexecute it. The other threads will see that the feature has been added already and return false, indicating they did not actually execute the file. Added a simple test as well.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8188 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit af1d92e9b4affd41bdf68605e45d20f89f78f752
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Oct 25 09:13:07 2008 +0000
+
+    Fix for JRUBY-3059: load "foo.rb" should search for .class as well
+    
+    In order to make it easier to precompile .rb scripts and still have 'load' work without ugly either/or rb/class tricks, I've come around to the idea that load should try both when you request to load a .rb file. This also addresses one key problem with Rails, where its load process is much more conscripted, using its own load path and file-searching magic in concert with "load" instead of "require". Because a patch was needed to make this process accept precompiled .rb files, and because precompiled should generally be interchangeable with uncompiled, I've modified load to search both when a .rb file is specified.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7919 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 053bc273852da91eb7b733ab382ba015c5302bb1
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Oct 10 05:36:37 2008 +0000
+
+    Fixes and load logic modifications for JRUBY-2909: Tracing regression, full pathing in trace output
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7854 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 1b3f31c52dd7bd1c868f8f2fab829cf23cd5ca5e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Oct 7 22:25:30 2008 +0000
+
+    Refuse to load .so files from the filesystem. JRUBY-1263: JRuby is trying to parse .so files.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7847 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 554f07542e527f0bf6e18760c905794e5ae49d40
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Oct 4 05:10:50 2008 +0000
+
+    Add extension checking to "both" path for source extensions.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7826 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d933a22d8105a963164bcb96d5fba33785e00d30
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Oct 3 19:48:46 2008 +0000
+
+    Splice builtin-loading back into the normal load searching, where it's supposed to be. Fixes inability to load and use FFI correctly.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7821 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit c079c2d5e58cf7c2428a398708572890be2cea35
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Oct 3 04:23:43 2008 +0000
+
+    Another major refactoring of LoadService to search each directory for all appropriate extensions before moving to the next directory. Starting to actually make sense now. Should fix JRUBY-3029: .class files are loaded before .rb files ignoring the load path ordering
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7819 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 6124b602cfec6f92dc2b49a0c622570cb3adb3f2
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Oct 2 21:41:33 2008 +0000
+
+    Move "already loaded" bailout into its own LoadSearcher to come before the others; should speed load times for large numbers of libraries that all require the same things.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7818 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 346671ef89f4ca65cb55968402bfb1723d62b81a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Oct 2 21:41:27 2008 +0000
+
+    Move load-searching phases into LoadSearcher impls and iterate over the lot.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7817 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 076f05c497e4c3ca8176ad6e1f03440bd8985f81
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Oct 2 20:08:47 2008 +0000
+
+    Refactoring of LoadService.smartLoad, greatly simplifies comprehension and makes each phase a separate operation against a shared state object. Nibble nibble.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7816 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 777d326057b9e72b72a306a83006ac084643e7b7
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Oct 2 20:08:35 2008 +0000
+
+    Large refactoring of LoadService.smartLoad; doesn't pass all tests yet, but it's a lot cleaner. Fixing remaining issue.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7815 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 5f0e28b20d23d3030b8012bddb33972c1688499e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Oct 2 05:34:34 2008 +0000
+
+    Slowly, slowly nibbling at LoadService. It's a damn hard nut to crack.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7810 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d2b8c086f8cc3a575c1daf6f7c102b8d93db1c14
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Tue Aug 26 01:27:21 2008 +0000
+
+    trivial changes
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7536 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 1942db69e63f458101d92cfafe0d2525744f9a3a
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Tue Aug 19 12:21:39 2008 +0000
+
+    Fix JRUBY-2847, so that invalid Jar file entries on the load path doesn't blow up completely.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7497 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 56152c1172030a7921b0bfb4cdfe8bee48d9534f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Aug 6 02:34:52 2008 +0000
+
+    Taking the dive into Ruby 1.9 stdlib! Added lib/ruby/1.9 and three files relating to rational and complex. LoadService puts 1.9 paths ahead of 1.8 paths in 1.9 mode. Also added Numeric#fdiv from 1.9.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7382 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 1561011443e9a61505d31b7028506ceb2a952232
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Thu Jul 17 05:56:29 2008 +0000
+
+    JRUBY-2722 for real this time AND Rails works
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7205 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 5a42e896ddc2968cdd197aa4986bd94a258dbea1
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Thu Jul 17 02:28:25 2008 +0000
+
+    Backing out main part of fix for JRUBY-2722: It breaks Rails
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7201 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 50bad77e6d45909793dae606a5476dd163a8358b
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Thu Jul 17 00:03:09 2008 +0000
+
+    JRUBY-2722: Interpreter passes absolute path to the EventHook for 'require'ed files
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7198 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 5d715ca008fd0226429f602ef7b0c709490bfe4d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 16 23:07:53 2008 +0000
+
+    Add a catch and verbose log of ZipException during jar-based portion of load process. JRUBY-2782.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7196 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a3bb4a218cfd7dbef55da114459de3c9aea04f88
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jul 15 05:54:00 2008 +0000
+
+    Fix for JRUBY-2708 from Peter K Chan.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7173 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit b22a2cf6270c26637d598928c9a24d8046621050
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 2 23:56:00 2008 +0000
+
+    Peter Chan's fix for JRUBY-2707, LoadService loading the proper escaped name when trying .class compiled code.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7080 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit be7160af3ec5dffc795b2545a577a30139e22e0d
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Wed Jun 25 21:46:01 2008 +0000
+
+    [interp] Make BlockNode based on primitive array rather than ArrayList
+    Convert all users of RubyArray.add to RubyArray.append to avoid calling JI layer
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7028 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a7b41d876cb677ba653a997002aa397613468d83
+Author: Vladimir Sizikov <vsizikov@gmail.com>
+Date:   Fri Jun 20 13:20:17 2008 +0000
+
+    JRUBY-2682: Replace StringBuffer with StringBuilder.
+    
+    Patch by Wayne Meissner.
+    
+    Signed-off-by: Vladimir Sizikov <vsizikov@gmail.com>
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7004 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit e94919c9c32266d38b9889f48e951b0929e85f83
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat May 24 08:51:22 2008 +0000
+
+    Fix for JRUBY-1332, allow adding simple jar files to LOAD_PATH to be used for require/load.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6777 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 7a8c9567fa9eff2e544cd29d8bbf053edd802095
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Apr 21 15:55:48 2008 +0000
+
+    Additional fixes for JRUBY-2363, to actually shut down the main thread when exit! is called from a controller.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6543 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit ca0a3922e593bd76f5d344f6cdcde363d1d2218b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Apr 16 18:48:42 2008 +0000
+
+    Fixes for JRUBY-1628, to allow loading compiled Ruby code from JAR files in classpath.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6514 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 9442ea80d2614d9a69f5b79b3ffed5c4baf7f072
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Fri Apr 11 13:04:55 2008 +0000
+
+    Add skeletal support for replacing net/protocol
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6460 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 97cc19ce258a8d9a22ab9ef3b45fb153f9ffd1f0
+Author: Vladimir Sizikov <vsizikov@gmail.com>
+Date:   Fri Apr 4 12:50:08 2008 +0000
+
+    JRUBY-2361: Kernel.load and Kernel.require can't handle paths with ~/
+    and ~username/.
+    
+    This fixes 3 new rubyspec failures.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6402 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 852d904134ad970a20497fdcc5d752dd4ae49766
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Fri Mar 7 22:04:54 2008 +0000
+
+    The RC3 Surprise!
+    
+    Allow annotation defined ruby methods to optionally specify ThreadContext as first parameter
+    Convert easiest and most common methods to accept ThreadContext when method or child method can use context
+    
+    These changes give about 15% improvement on petstore bench and about 10% in ar-bench.  In ar-bench getCurrentContext calls go from 14 million down to 2 million.  The remaining calls largely can be removed but they were much more invasive.
+    
+    IRubyObject op_eqq and op_equal both not have ThreadContext consumer, but we could see no use of this in any extensions and figured it worth the trouble of converting.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6143 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 420e07a53740caacecd1aec08ec42b709e71a8fa
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Feb 16 18:48:37 2008 +0000
+
+    Provide a separate quiet and verbose versions of JavaSupport.loadJavaClass, for internal use that shouldn't print stack traces.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5947 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 967ae41af93687629c7875096b94a2d1c2694ff8
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Mon Feb 11 13:51:54 2008 +0000
+
+    Fix for JRUBY-1713, JRUBY-1050 and possibly JRUBY-1915. Fix the load order to always do CWD loading last
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5901 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 9ae5eeeb0fca80ff8a08f6467a9526b8ee05e41c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jan 16 11:09:09 2008 +0000
+
+    Large refactoring of Main.java and Ruby.java, with some additional work on LoadService and RubyGlobals. Cleaned up loading logic, reordered into actual dependency order, and broke up into appropriat emethods. Inlined and simplified Main logic. Set up LoadService to be constructed immediately and initialized during init, as preparation for loadpath/classpath unification.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5628 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a694709e87e269be436ed1d176a688712beb9d5d
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Tue Jan 1 05:09:53 2008 +0000
+
+    Remove unused callbackfactorys
+    Add partial impl of Etc with some cooler pieces of it still commented
+    Remove many warnings
+    Some generics to lessen warnings
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5456 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 18a3481d081dbc5aeede9094911d3488c8423b7b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Dec 30 00:54:41 2007 +0000
+
+    Fix for JRUBY-1842.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5433 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d5edd038a6f0356e46d6307c3391182f12211e9d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Dec 28 21:54:03 2007 +0000
+
+    Fix for JRUBY-1812, load should accept a "wrap" parameter that causes it to load in a new top self.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5400 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 44bd63ae7a53a02b4dd41042b9f3239019c2b619
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Thu Dec 27 15:43:02 2007 +0000
+
+    Fix a lovely typo
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5387 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 2dc5c6a840d9fb5e16140cbca30ced31ffc7ec45
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Thu Dec 27 15:42:23 2007 +0000
+
+    Make sure that jar cannonical path actually always uses slashes.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5386 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 014ba11a30f5d7aed08986c77a2aea3f6748839e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Dec 21 21:08:48 2007 +0000
+
+    More security fixes for applets, specifically to allow IRB to run again. For JRUBY-1762, from Vladimir.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5329 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a78db1a702e5cbf7125c0311a9cbecf7289b0dc1
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Dec 21 13:54:19 2007 +0000
+
+    Fix for JRUBY-1641 from Vladimir; safely check privileged system properties, since blowing up there kills JRuby.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5324 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit dbe674be67c43cb20bba421e2132cdc29daedd42
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Fri Dec 7 14:39:55 2007 +0000
+
+    Add better support for loading within jar files - including non-canonical paths
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5185 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 13abdc35de3d5d75add057e2471a8f624fe9bdf4
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Fri Dec 7 13:52:52 2007 +0000
+
+    More fixes to allow require to work on files within Jar files
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5184 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit fdedce7c5de578e05ccc29fba214fc6fea72cbbf
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Fri Dec 7 11:40:52 2007 +0000
+
+    Make it possible to have relative load paths work within jar files too
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5183 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 176b6520e772dd7ab88808330c80d1cdec1ad5e9
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Dec 4 23:02:30 2007 +0000
+
+    Fix for issue on CI machine where a require with a / at the end causes an index exception.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5164 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit fa0e97a1269111030482cae9b3701580566e515b
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Thu Nov 29 11:55:58 2007 +0000
+
+    Remove most toString dependencies, fixing a bug in ByteList#dup(length) and hopefully improve performance of StringIO#gets
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5101 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit ffa6088f72fe2d1efabdb94d80885488db05fe5f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Nov 15 21:43:42 2007 +0000
+
+    Clean up duplication in junit-based test targets, add a few missing ones, clean up duplication in spec targets.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4943 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 697648ac073d7f67c08be154342f8e663620bc22
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Fri Nov 9 21:47:50 2007 +0000
+
+    Nick+Tom classload cleanup pass
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4894 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 8403ac1b78d7fe5a9ee27f1ca9a210b2d5baa32f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Oct 25 15:05:21 2007 +0000
+
+    Fix for JRUBY-1121, Kernel#load should not load from current directory by default (as require does)
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4728 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit de507acaf6945b4aaed0138c3a1d39ec23084091
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Tue Oct 16 16:00:33 2007 +0000
+
+    Don't throw exception when trying to require stuff that doesn't create a valid class name
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4596 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 95c346df5368a3f5f06fa9d14022efb85eaa6809
+Author: Bill Dortch <bill.dortch@gmail.com>
+Date:   Mon Oct 15 07:45:22 2007 +0000
+
+    Vars have landed. Does not include concurrent SymbolTable (will follow in the next day or so). Also need multi-threaded unit tests, work in progress.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4588 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 52df7ab62682179df7828b602f7ace3f0475b24a
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Oct 8 23:44:59 2007 +0000
+
+    Migrating Enumerator to annotation binding; new defineAnnotatedMethod is not very efficient
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4526 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a10e46cec019a3964c75ebb6b2ec648c3b449ed3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Oct 8 18:23:45 2007 +0000
+
+    Migrate Hash to annotating bindings, rename and remap all equality methods to new conventions
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4514 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit b5bf8d563b2104945ed95107c2ea222ba4e71d1e
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Wed Oct 3 23:52:03 2007 +0000
+
+    Catch Throwable instead of Exception in LoadService to improve error handling of loading extensions - i.e. don't blow up on loading an extension with missing classes etc
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4474 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 4050f98c492fc2a726bf3f947d25d220e646a6fa
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Sep 27 20:46:54 2007 +0000
+
+    A number of additional fixes for the compiler to remedy inconsistent stack issues, and a whole slew of work to make apps run correctly with AOT-compiled stdlib. Very close to "complete" in my eyes.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4410 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit aef4e5a965b9b1ede594ad738d2cfeed9982a96c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jun 1 02:39:07 2007 +0000
+
+    Damian's fixes for JRUBY-918, more fine-grained, less strict checking for security restrictions, to allow JRuby to run under security managers that aren't so restrictive.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3800 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit f80fc40afb290aea57f97aec4664ee33ae300042
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Thu May 24 22:00:02 2007 +0000
+
+    JRUBY-994: Remove jruby serialization feature
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3734 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit c6d18693cb7cc7d005ae8d6fed874530ba0453e6
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue May 22 18:50:32 2007 +0000
+
+    Simple fix for dumb bug JRUBY-938...don't hardcode path separator for splitting RUBYLIB var.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3711 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit f016a9c7bd0a45bc55a73c3c86fb5575bacfbf8b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue May 22 04:13:00 2007 +0000
+
+    Remove use of deprecated File#toURL method and add deprecation="true" to all javac tasks in ant.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3699 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit cd470f21a1a52aefb0f5f52a38c4848e383b1ed8
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Mon May 14 18:57:35 2007 +0000
+
+    JRUBY-935: unable to load language if CLASSPATH contains empty paths
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3649 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 5e8ecd81738e7e61a8b7d8a50c47d6095472550e
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sun May 6 23:40:41 2007 +0000
+
+    JRUBY-916: Kernel.autoload has a couple of problems [active_scaffold blocker]
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3629 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 90f192d442c901ddb49743c1483858b0bc3d7857
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Fri May 4 18:47:54 2007 +0000
+
+    JRUBY-79: RUBYLIB environment variable ignored (patch by Koichiro Ohba)
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3621 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit f2ca18b729557ff56a8cd9cd72f171f2daf701a2
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Fri May 4 17:45:38 2007 +0000
+
+    Fix for JRUBY-908. Doing a require on an actual jar-file shouldn't set last exception constant.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3619 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 1acfeee277dbcac5101de45fff4201b62e135de3
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Mon Apr 30 13:10:42 2007 +0000
+
+    Fix for JRUBY-819. Due to externalizing openssl, the openssl.rb file never got loaded, which means that some important helpers didn't appear, including closed?
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3600 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 9a83f935b7b93469480ac7c103561e69e56a4dff
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Sun Apr 29 19:06:25 2007 +0000
+
+    Adding jar:-files to load-path was broken; fixed.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3595 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 8140d1b4f6da0ee61665941906fcc6b0ef0a0061
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Fri Apr 27 07:54:51 2007 +0000
+
+    Fix for JRUBY-890. We don't respect manually added entries to LOADED_FEATURES, which means we'll load the same file twice in certain circumstances, triggering constant redefinition warnings.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3570 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d9e39625c923f3ca9402550ec3b5a30ed6cf5a24
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Thu Apr 26 19:54:12 2007 +0000
+
+    Make LoadService extendible in a better way, and also make the Ruby runtime accept ways of changing the default LoadService
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3566 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d79b88bb913d757f38ed2563d659d630d0bca409
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Apr 24 17:41:50 2007 +0000
+
+    Fix a Java 1.4 incompatibility
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3550 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 76b88c9c47201d7844df3a8725b25a443e0a2dc7
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Apr 24 06:06:44 2007 +0000
+
+    Adding support for compiling classes. All cases should be implemented, so it should technically be "safe", but it's not as robust as it ought to be (missing a try/finally around TC manipulation).
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3547 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit ead1268abbfb69f4df594b564e4fc2c46d727a73
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Apr 18 08:14:54 2007 +0000
+
+    Minor fix for JRUBY-753, handle requiring an empty string safely
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3494 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit b19d79dff7e4f080d84a94a33195c020c2b091f6
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Apr 16 18:44:04 2007 +0000
+
+    Damian's fixes for applets in JRUBY-477
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3474 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit c8c1ef8a243f982cb276ecdf3df8163214dbf19b
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Mon Apr 2 10:39:49 2007 +0000
+
+    Improve a few regexps used for require
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3353 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a5afb64866084b3cc16518518143aeafe5ffc415
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Thu Mar 22 10:52:28 2007 +0000
+
+    Fix for JRUBY-709, handle unknown extensions in loading correctly
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3263 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 88481a47f750f6251cfa263cf1614844f2fe94ea
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Mon Feb 26 13:41:56 2007 +0000
+
+    Do a first line check on loading a name before checking the filesystem
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3082 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a2107e60085a5063bca76d897783a512bbd7eddc
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sun Feb 18 15:18:18 2007 +0000
+
+    JRUBY-606: Get rid of un/under-used IRuby interface
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3022 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit bb20e69fca02df78c52e9c534db24e9f4dda0509
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sat Feb 17 22:29:59 2007 +0000
+
+    JRUBY-599: JRuby needs a COW, primitive array backed builtin Array
+    JRUBY-604: Hash#sort raises exception
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@3014 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 74021949e8b021701844310ef3b11175a9650932
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Sun Feb 4 16:14:14 2007 +0000
+
+    The BIG one. JRUBY-71. Not perfect yet. The code mostly by Kresten Krab Thorup, with corrections by me.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2942 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit beca166768368e248fbbb9ba945020d4d27c3253
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Mon Jan 29 19:32:57 2007 +0000
+
+    Remove most warnings in code (sans WIP areas)
+    Unbreak Java 5/4 problem
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2877 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d0d5abe49fedfbc4a0e95e24a85d02a0408c6358
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Fri Jan 26 03:40:05 2007 +0000
+
+    JRUBY-474: fix LoadService loaded features baked state bug
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2841 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 201a41ace1641fe1baf03f91da8f670318f739b7
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Mon Jan 8 02:34:07 2007 +0000
+
+    - JRUBY-418: jruby home and configuration updates
+    
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2696 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 99a1bfe3c7258334537b9353e424b9b8c3d3312d
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Tue Jan 2 10:26:26 2007 +0000
+
+    Partial fix for JRUBY-335. Should speed up loading on Windows, when the load path is very big
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2645 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 02dffaee08295452fd23b448589ada66ccdc1c1f
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Sat Dec 30 17:43:41 2006 +0000
+
+    Added support for profile, to allow Sandbox
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2622 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit df365ec2c2e8b2c1348f22f8102d3515fbe4217c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Dec 24 08:40:32 2006 +0000
+
+    A few fixes to the JRUBY-335 changes that prevented Rails from working fully
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2596 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit fe11f82bc6236dc6746a228a50d4bac6d467618e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Dec 24 01:18:48 2006 +0000
+
+    Various fixes and cleanups for loading semantics for JRUBY-335:
+    - More correct logic for require regarding handling of extensions
+    - Simpler, shorter load and search heuristic that minimized classloader resource lookups
+    - Removed extensions and load paths we know aren't being used at present
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2592 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a89ca3e8d0311b5d48b81fc6cf8fa03aecee048c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Dec 22 04:17:20 2006 +0000
+
+    Cleaning up some excess comments and bad indentation
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2591 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d38821551a58969cd2593b463d93df5f32bf3c14
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Dec 8 15:48:04 2006 +0000
+
+    Fix for JRUBY-336 and JRUBY-337: add support for applets by catching (and ignoring) access violation exceptions, and adds applet and standalone consoles
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2567 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 3cd87a03d9ff599871bd14f49c218d1045bca20b
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Sun Dec 3 14:26:43 2006 +0000
+
+    Fix better autoload for Camping, and autoload? as per JRUBY-322
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2534 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 2b03a33fdc382e7dc10b580dfa638c0a974dfc97
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Sat Nov 25 11:57:15 2006 +0000
+
+    Merging of openssl branch
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2463 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 524049357e360ba81a21756f54071c67d3796180
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Sep 7 01:40:03 2006 +0000
+
+    merging headius to trunk
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2232 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 8030c1430bebc20295632b57cbd2b32cb9b39304
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jun 30 20:25:51 2006 +0000
+
+    fixed require (via smartLoad) to load literal filename if it ends with a known extension; otherwise, try extensions in turn
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2099 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 8118fa3a6254dba78b15dde7b0b1c65f3f9c9aae
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Fri Jun 30 19:49:30 2006 +0000
+
+    Make load follow proper semantics (Charlie)
+    Bad test cases for load and require
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@2098 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit e52313ec7cad67f45d6b45807821971ece3a1004
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Mar 21 22:37:06 2006 +0000
+
+    fixes for LoadService (to use CWD during load) and zlib (add CRC32Ext and fix GZipWriter.initialize defaults)
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1933 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a1b8fc1d456e3d5c6e01579b88773383068aa85c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Feb 10 21:53:27 2006 +0000
+
+    merging changes from cnutter_work1:
+    - cref fixes
+    - loadservice fixes for irb
+    - binding
+    - misc other fixes from playing with irb and RoR generate script
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1878 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 066d6dc273bc73d5592600f3d0df28373a150758
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sat Feb 4 22:11:17 2006 +0000
+
+    Allow absolute paths in windows (UNC paths) to be required.  Simple fix is let this get abstracted by logic in java.io.File. (Rails extensively uses __FILE__ + "somefile" pattern).
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1874 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 1dd061e800c87a70038a6459ff6e9ca519dad5e8
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jan 25 05:46:27 2006 +0000
+
+    normalizing all file paths to use forward-slash as path separator
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1867 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 81b5aaa51a9bfd2e89a4bb4b2058749dd3a5eacf
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Jan 22 20:47:58 2006 +0000
+
+    committing loadedFeatures HashSet fix
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1860 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 278a8ee09c9c4b51d7c2a31d4ce273e9c79b8056
+Author: David Corbin <dcorbin@users.sourceforge.net>
+Date:   Fri Dec 23 16:23:18 2005 +0000
+
+    More work towards Rails support.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1848 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit a080f0616890fa8c07f2220e805ec10c07f3e34a
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sun Nov 13 14:23:59 2005 +0000
+
+    Make filename represented in a stack trace display based off of loadpath element and not URL path representation
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1828 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 41adc9d73b44b14dd25593e772188d405ec00f2f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Oct 26 05:34:12 2005 +0000
+
+    removing revision keywords
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1810 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 4dfdacd80c56018084c618f3bbab7b542653d95e
+Author: David Corbin <dcorbin@users.sourceforge.net>
+Date:   Sat Oct 8 13:07:06 2005 +0000
+
+    Introduced IRuby interface for Ruby runtime object.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1798 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 35d53d166de629779bfb76d9c9842646a41defeb
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sat Oct 1 19:22:50 2005 +0000
+
+    Consistency of Libraries (since I want to make a new one and have it follow similiar conventions to the others):
+    - Remove ILoadService and LoadServiceFactory (file under your are not gonna need it [YANGNI])
+    - Rename and move libraries so they use the same conventions for names and locations
+      - Mutex becomes RubyMutex (like BasicSocket)
+      - RbConfig becomes RbConfigLibrary
+      - SocketLibrary moved to same package as other libraries
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@1781 961051c9-f516-0410-bf72-c9f7e237a7b7

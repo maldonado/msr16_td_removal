@@ -1,0 +1,62 @@
+commit dad257bed59ad612a328ef4b73fbda5810136ba7
+Author: kares <self@kares.org>
+Date:   Tue Aug 25 10:50:14 2015 +0200
+
+    less intermediate strings on proxy class name generation
+
+commit b8c12ff27c5c47b3876317d07da47cd0d38c1500
+Author: kares <self@kares.org>
+Date:   Tue Aug 25 09:04:01 2015 +0200
+
+    some notes on Java proxy invocation handler class hierarchy + un-used import
+
+commit cb85ace814a16fb15577e5dbd024d5c17789c527
+Author: kares <self@kares.org>
+Date:   Tue Aug 25 08:58:07 2015 +0200
+
+    make generated Java proxy class fields final
+
+commit 5fa2cb144e53dd6d4532f3b8ea1446515ce9a49b
+Author: kares <self@kares.org>
+Date:   Fri Mar 27 15:26:21 2015 +0100
+
+    handle Ruby super -> Java constructor with var-args correctly (fixes cases in #2375)
+    
+    ... since we're storing an annotation "flag" on the gen constructor thus can support this
+    should be safe to land on JRuby 1.7 since users should not assume raising behaviour !
+
+commit 03ed29a90879244a0989c43338dc8233aa7f3ec7
+Author: kares <self@kares.org>
+Date:   Fri Mar 27 15:05:16 2015 +0100
+
+    mark generated proxy class constructor with @java.lang.SafeVarargs if super is var-args
+
+commit 836113738e7bc2cf2dc996c0c327f198ad8ffc8d
+Author: kares <self@kares.org>
+Date:   Thu Mar 19 12:02:33 2015 +0100
+
+    empty class array count-- and make sure correct name is annotated with @JRubyClass
+
+commit 9f423fe3cc57caacc4e63af310f00e8f40b15148
+Author: kares <self@kares.org>
+Date:   Thu Feb 5 15:12:31 2015 +0100
+
+    log defineClass setup failure + re-arrange and rename constants for better readability
+
+commit 847655f0b8a466c945e047b8e7f224fc03497c4b
+Author: kares <self@kares.org>
+Date:   Thu Feb 5 14:54:21 2015 +0100
+
+    use an AtomicInteger instead of synchronized int field + share EMPTY_ARRAY_CLASS
+
+commit 26e0a2205eeb1ddaf79b4a8846c7ec7af7cec88b
+Author: kares <self@kares.org>
+Date:   Thu Feb 5 11:46:01 2015 +0100
+
+    generix-ize, avoid unused fields and add exception logging into JavaProxyClassFactory
+
+commit 28c6fbc4e883bc1c9e9242d1da1cb2b785f55339
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 3 12:46:45 2013 -0500
+
+    Move to @mkristian's proposed layout, with some modifications.

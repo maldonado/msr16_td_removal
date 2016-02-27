@@ -40,7 +40,8 @@ connection = None
 connection = psycopg2.connect(host='localhost', port='5432', database='comment_classification', user='evermal', password='')
 cursor = connection.cursor()
 
-cursor.execute("select processed_comment_id, project_name, file_name, comment_type, comment_text from technical_debt_summary where file_name not in ('PropertyHelper.java', 'TransactionController.java') order by 2,3 ")
+cursor.execute("select processed_comment_id, project_name, file_name, comment_type, comment_text from technical_debt_summary order by 2,3 ")
+# cursor.execute("select processed_comment_id, project_name, file_name, comment_type, comment_text from technical_debt_summary where file_name not in ('PropertyHelper.java', 'JavaConstructor.java', 'JavaMethod.java') order by 2,3 ")
 results = cursor.fetchall()
 
 total_files_to_process = len(results)
@@ -65,7 +66,7 @@ for result in results:
         comment = parse_block_comment(comment_text)
         # print comment
     
-    cursor.execute("select commit_hash, author_name from git_commit where project_name = %s and file_name = %s  order by author_date", (project_name, file_name))
+    cursor.execute("select commit_hash, author_name from git_commit where project_name = %s and file_name = %s and commit_hash not in ('2ebc17d579e5e8a3ca1db259e25ecd370e945a34', '5f836b1236b44148df75df38a82e4862c3bdbc75', '5f836b1236b44148df75df38a82e4862c3bdbc75') order by author_date", (project_name, file_name))
     commit_list = cursor.fetchall()
 
     for commit in commit_list:
@@ -77,7 +78,7 @@ for result in results:
         # print commit_hash
 
         found_in_version = False
-        with open (get_repository_directory(project_name) + commit_hash + ".java" ,'r') as f:
+        with open (get_repository_directory(project_name) + file_name.replace('.java','') + "/" + commit_hash + ".java" ,'r') as f:
             
             comment_index = 0
             comment_total_distance = 0
@@ -85,25 +86,11 @@ for result in results:
             java_file = []
             
             for line in f:
-                # print line
-                # print comment[comment_index]
-
-                # value = distance.levenshtein(comment[comment_index], line.strip())
-                # print value
-
-                # print str(value)+' - '+line 
-                # if value < 0:
-
+    
                 if comment[comment_index] in line:
 
                     found_in_version = True
-                    # print str(value)+' - '+line 
-                    # print str(value)+' - '+comment[comment_index]
-                    
-                    # print line 
-                    # print comment[comment_index]
-
-                    # comment_total_distance = comment_total_distance + value
+    
                     comment_index = comment_index + 1
                     if comment_index == len(comment):
                         break

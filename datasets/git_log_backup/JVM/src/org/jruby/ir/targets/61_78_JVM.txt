@@ -1,0 +1,89 @@
+commit 8678c98db9a71841d587c7e417f769557f60bd94
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Sun Oct 28 02:28:58 2012 -0500
+
+    [IR JIT] Playing with JIT, minor updates and minor code cleanup.
+
+commit 2c1f5b80d281aedc214f4ce5b44ccd49240c0e30
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon May 7 22:31:19 2012 -0500
+
+    IR2JVM: Basics of binding construction, storing, loading
+    
+    * Push creates binding and keeps in temp local, but no push
+    * No pop or finally logic
+    * Handling and throwing exceptions stubbed out
+    * No logic for creating a closure yet
+
+commit 6a98f2cf2378c4a9d3de3049527b3771cee502c7
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Apr 30 14:10:32 2012 -0500
+
+    Add a visitor structure to IR and rework JVM compiler to use it.
+
+commit 48d68d787540fb25e463af8903c518ed5276e9b3
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Apr 28 15:37:28 2012 -0500
+
+    IR2JVM: Fix indy call paths for targets that receive block.
+
+commit febf996ae9de05bf86a712975626d5a23be9b4a1
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Apr 28 13:50:15 2012 -0500
+
+    IR2JVM: Yield and receiving closure argument in compiled bodies.
+
+commit 68a2204b58d2af85e10fba1004710f96564ee5ab
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Apr 28 13:12:47 2012 -0500
+
+    IR2JVM: Metaclass definition and processing.
+
+commit 719b7420de03a60776ce09060ed4087e54f68a0c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Apr 28 12:19:16 2012 -0500
+
+    IR2JVM: Module definition and processing.
+
+commit ab2fd7543f92cdf59dce27e9af5dec8987e5bcc9
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Apr 26 21:07:12 2012 -0500
+
+    IR2JVM: implement and fix bits needed for "complex" fib bench.
+
+commit 453975f37f799c4f018c109d6fe01674dea1f1b5
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Apr 22 15:45:05 2012 -0500
+
+    IR2JVM: Add StaticScope to argument lists.
+
+commit c68d233b7d64647196c02625e645479bec138d74
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Apr 7 17:41:07 2012 -0500
+
+    Implement Array operand IR2JVM.
+
+commit 80f6601208ccf9b71a0c39bd8b3cfcaaf63baaa7
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Apr 7 15:56:09 2012 -0500
+
+    Implement AliasInstr IR2JVM.
+
+commit 1db3bd06817dc824db24947a8ebb6a212286b1c7
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Sun Mar 18 12:12:37 2012 -0500
+
+    [IR] Get rid of existing CurrentModule and CurrentScope operands and
+    and renamed WrappedIRScope and LiveScopeModule to CurrentScope and
+    CurrentModule (since they contained the same info).  In addition,
+    the module value can be recovered from the scope value -
+    LiveScopeModule can be removed -- to be cleaned up.
+
+commit 53945eb6cd55a8e2a78c00f7166574fc09d4e845
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Tue Mar 13 09:33:12 2012 -0500
+
+    [IR] Package restructuring:
+    org.jruby.compiler.ir -> org.jruby.ir
+    org.jruby.ir.compiler_passes -> org.jruby.ir.passes
+    org.jruby.interpreter -> org.jruby.ir.interpreter

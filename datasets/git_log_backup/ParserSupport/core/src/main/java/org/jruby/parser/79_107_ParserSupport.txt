@@ -1,0 +1,428 @@
+commit 85769d959a01ae3ac4d1229257ecfec809ddd2f1
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Wed Sep 2 12:41:28 2015 +0100
+
+    [Truffle] Don't abstract over options and remove a few old ones.
+
+commit 6a74df67341b118379bb5907889a158fbb844596
+Merge: 5cfdf5a e645219
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Sat Aug 22 01:55:50 2015 +0100
+
+    Merge branch 'master' into truffle-new-require
+    
+    Conflicts:
+    	truffle/src/main/java/org/jruby/truffle/runtime/RubyContext.java
+    	truffle/src/main/java/org/jruby/truffle/runtime/loader/FeatureLoader.java
+
+commit e590e5d2a4d5cab9e3ed87f83392d317f9a9db89
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri Aug 21 14:44:10 2015 -0500
+
+    Fixes #1328. Encoding of symbol literals does not respect the encoding of the source file
+
+commit 1c8c9b1d11e9c056c96b488ccaab14051de7fde8
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Thu Aug 20 00:58:05 2015 +0100
+
+    [Truffle] Add -Xtruffle.core.load_path option to load the core from outside the jar.
+
+commit 1becd155337770540dfce5421ac5b2b0e5c6b925
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Wed Aug 19 22:39:36 2015 +0100
+
+    [Truffle] Fix Rubinius core warnings.
+
+commit 48ad16ebd9aabebc48e596addf3d587aa7fcd7a4
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Aug 11 12:58:33 2015 -0500
+
+    Fix #3245. Parser fails on  expresion
+
+commit c293b6310122c9cbc3264e7c23ce5051108a46f6
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Aug 6 16:47:35 2015 -0500
+
+    Remove newline node for memory savings and simplicity (~1.1M on empty Rails app)
+
+commit 04e0ee32ac1dfac801d9600227a8bef38d307bb0
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Jun 30 16:38:52 2015 -0500
+
+    Special regexp named captures cannot make an lvar with a capital letter
+
+commit f1d88dd1e3c085ed532b7e45c52c5d28da7702df
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Jun 29 16:46:09 2015 -0500
+
+    Fixes #3085. proc {} in fcall hash with fcall receiving a do block does not parse
+
+commit f6b39eceebd34dac200e916ef9dd3b8d1b9dbd65
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri Jun 19 17:08:34 2015 -0500
+
+    Convert SyntaxException to be based on file and line vs ISourcePosition.
+    Made compile_error method which accepts PID
+
+commit d9f12ca8d6b32ba7a0eb62b0b44667fd26f47e50
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri Jun 19 15:54:14 2015 -0500
+
+    Store file on StaticScope and on RootNode.
+    Replace SourcePosition in BuildLambdaInstr to not use ISourcePosition
+    IR now retrieves file from rootnode.
+
+commit fb14533183f4533c2d9f81487c82ef4631ebd3f9
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri Jun 19 12:36:38 2015 -0500
+
+    Lexer.getFile() and use it within parsing
+
+commit 1da2096704f4a4cfcda70afcbdc029bc0a988df8
+Merge: acec36b 7b22490
+Author: Kevin Menard <kevin@nirvdrum.com>
+Date:   Thu Jun 18 14:44:45 2015 -0400
+
+    Merge branch 'master' into rbx-2.5.6-upgrade
+    
+    Conflicts:
+    	truffle/src/main/java/org/jruby/truffle/nodes/core/RangeNodes.java
+    	truffle/src/main/java/org/jruby/truffle/nodes/rubinius/PosixNodes.java
+    	truffle/src/main/java/org/jruby/truffle/runtime/core/CoreLibrary.java
+
+commit 2294de271476bb8b9fe6ee932b4126d58096117f
+Author: Kevin Menard <kevin@nirvdrum.com>
+Date:   Wed Jun 17 22:12:33 2015 -0400
+
+    [Truffle] Suppress warnings parsing Rubinius core files.
+
+commit 40d257ce377bc0760caf16935b66bb3e6d730a6a
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Jun 17 09:32:57 2015 -0500
+
+    ListNode is backed by primitive array + size field vs ArrayList.
+    New companion method children().
+    
+    This is primarily to save memory (rails server on empty app with --dev uses ~1MB less memory).
+    It was hoped this may warmup faster but it seems about the same (or a tiny tiny bit faster).  The
+    difference is easily written off as noise.
+
+commit a57eba4b7a19647c3732f1d00bbbd049ee224001
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri Jun 12 13:58:54 2015 -0500
+
+    Fixes #1887. parser bug.
+    Fixes #3039. SyntaxError: test.rb:3: syntax error, unexpected kDO_BLOCK
+
+commit f07a4b73c38a35c923902b6e323323c0e8c718cf
+Author: Kevin Menard <kevin@nirvdrum.com>
+Date:   Fri Jun 5 10:28:29 2015 -0400
+
+    Fixed reversed receiver & value in Match3Node.
+
+commit 7bee67ce4235bc7fe5c5599e24673ea1c4cfd56b
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue May 5 17:50:54 2015 -0500
+
+    Remove expandedArguments field as it is tot
+
+commit 4e61175ea470efe9e099f8fbfd1b72d3eaae7e26
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue May 5 17:41:17 2015 -0500
+
+    We only use one yield type now
+
+commit 6ac15ee3c02fb47a5ff71a1eab91dd3d1c888b0c
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue May 5 16:08:18 2015 -0500
+
+    Removed specialized OpElementAsgn nodes since they are dead
+
+commit 9425fbd35c7d770f909f822ea8c6f3570ca8199e
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue May 5 15:51:17 2015 -0500
+
+    MultipleAsgnNode is dead.  Long live MultipleAsgnNode!
+
+commit 3ebe3c9ebf14d8e62356ec07c508537b34b742e9
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue May 5 14:08:57 2015 -0500
+
+    We stopped checking for invalid masgn in conditionals: puts 'GOAL' if (a,b=1,2)
+
+commit bff01ddcef8fc6ca6e0a260a6ff1765635d4379f
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Apr 16 14:02:16 2015 -0500
+
+    1. staticScope.setSignature now only happens when ArgsNode is created and nowhere else (well some dead code which needs to be removed yet).  For AOT, IR persistence still needs to be corrected so that we can popular signature when we reify the StaticScope (to be done in a followup commit).
+    2. CompiledIRMethod now implements IRMethodArgs so this fixed all JIT methods arity errors.
+
+commit 815427accab4fede5c221bf72947dca84fd6cc7b
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Sun Apr 5 11:31:37 2015 -0500
+
+    DetailedSourceposition is back for truffle but not quite working. temporarily commented out some tests
+
+commit f4db00c2f8bbad6124c72c679906e4358f0753d9
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri Apr 3 12:05:10 2015 -0500
+
+    fix a majority of linenumber positioning bugs.  make magic comment line encoding only happen at the right lines
+
+commit fbaf0389687e543bcbdd2d416d3f3e67a3a2b5b5
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Apr 1 14:13:44 2015 -0500
+
+    New lexer running plenty of stuff but missing some features like SCRIPT_LINES and with some bad line position info
+
+commit 3ffcfa9ea0a3042c49a17c44dac25803f4c07ac1
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Mar 13 15:11:45 2015 -0500
+
+    Fix literal regexp syntax errors to actually be SyntaxError.
+
+commit 77d57370d88d419d38b326be852f7301f34224e0
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Feb 10 15:48:12 2015 -0600
+
+    Flow control nodes changed to never receive a null value.  This simplifies truffle and IR
+    since it does not need to do implicit nil check AND a null check.
+
+commit ac370122671a2a388c4fc5b0632af33517176fc4
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Feb 10 14:55:13 2015 -0600
+
+    All numeric Nodes in AST extend from the same NumericNode type.  I am propagating whether
+    subtrees have assignments in them and having more specific nodes makes it easier to know
+    whether I need to check whether it has an assignment or not in it (numeric types cannot).
+
+commit 1e3d305d8675c1eee89a45fd303b614e2b757f10
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Dec 30 14:41:36 2014 -0600
+
+    Remove some arity-split AST nodes which we no longer use
+
+commit 89f548ea9bc8ecfd9db099b0c594bc1ca82f8492
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Dec 11 15:03:42 2014 -0600
+
+    Fixes #2172: Symbols need to support UTF-8 names
+
+commit 3e4e4791add33bc704fb512c59da1180dad7a976
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Fri Dec 5 10:21:19 2014 -0600
+
+    Fix position info for rootnode and highest block node in presence of only BEGIN nodes
+
+commit 20b476765a731887c8aea4b20989fe2b07e90449
+Author: Benoit Daloze <eregontp@gmail.com>
+Date:   Fri Nov 28 14:41:45 2014 +0100
+
+    Implement negation of Complex and Rational nodes.
+
+commit 1a93885ded18e4f55848878dd89ab8cb0c97807b
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Sun Oct 26 20:22:36 2014 +0000
+
+    Tests for new detailed source positions.
+
+commit 1c19167b1b2dc321fcdc23e669f4f36b31588862
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Sun Oct 26 17:50:19 2014 +0000
+
+    Fix incomplete source section work.
+
+commit 1a17a439185b0a1936f74ccc1cb7f828221b27d7
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Tue Aug 26 22:06:37 2014 +0100
+
+    [Truffle] Disable all parser warnings that appear in specs.
+
+commit c8079ef3a2a214947dddc7d9ea0b1e06614bd5dd
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Tue Aug 26 20:35:35 2014 +0100
+
+    [Truffle] Disable parser warnings in Maven rather than in JRuby.
+
+commit ce4b4b73bfdb0cc4cf0dc2782a77a55582cab63d
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Aug 20 12:47:05 2014 -0500
+
+    vcall's need to use tokline or they will get next lines position
+
+commit bc35f07010fea447bda449eff95f856e8981d3d3
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Tue Aug 19 22:56:11 2014 +0100
+
+    [Truffle] Disable a warning we can't filter yet when running RubySpec.
+
+commit 17078beb358833d0752210dc3df226097700c9fe
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Aug 19 15:43:53 2014 -0500
+
+    Make keywords return their position instead of their string for yaccValue.  Now all leading keyword productions have zero work accurate positions
+
+commit c8297b673018024a755d26955d2200388f547f63
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Sat Aug 16 11:20:04 2014 -0500
+
+    Remove use of Token from parser
+
+commit b90a5c513d5eaa166d1c7f6e7cade84a633b7adc
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Jun 9 15:12:40 2014 -0500
+
+    More removal of old interpreter
+
+commit 5ecc536d1702883c55464c77895a0e1e99d0177e
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Jun 9 13:44:27 2014 -0500
+
+    Remove FCall arity nodes from old interpreter
+
+commit f4ce7b7677d9b2b5ced4acfc0ae84404877a13e5
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Jun 9 11:05:17 2014 -0500
+
+    Remove special unused versions of Callnode from old interpreter
+
+commit 7621334c9b4bef55cc1ac326dcc8d13ce8c36a56
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Jun 9 09:40:27 2014 -0500
+
+    Start removing old interpreter
+
+commit d566ed2931f43c468883bcad2df9f8478ac087e4
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Sun May 18 01:25:06 2014 +0100
+
+    Add an option to disable the 'useless use of' warning.
+
+commit c3e7c29ff20a3b049b948c67af29facc695f17c4
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed May 7 16:49:23 2014 -0500
+
+    Holy cannelloni.  Dead code removal in ParserSupport
+
+commit 4263fd079715a58a930462054628632830b8e09a
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu May 1 16:54:59 2014 -0500
+
+    Be gone! You vestigial appendix of the Colon2Nodes
+
+commit 430f1569d7511d73cc9c2bfd2a9b93c422d8e5ec
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Mar 26 11:26:38 2014 -0500
+
+    BlockArg18Node removal
+
+commit f0096b9e1e55f6efdd68784d6ef0de2ea9ae7de8
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Feb 26 11:12:59 2014 -0600
+
+    10+ years of wanting to change this name....YES! (RubyYaccLexer -> RubyLexer)
+
+commit 42c1f11dc40339e76b01518e9bb7a062ff9d1fb9
+Merge: cf1f9c0 da94ad8
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Feb 6 11:19:44 2014 -0600
+
+    Merge with jruby-1_7
+
+commit da94ad856f31ca1721d3d737c340dbb2d2ff4e4f
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Feb 6 11:17:59 2014 -0600
+
+    Fixes #272. Bad error message for block pass through with return statement
+
+commit b823d2d48544bfc5a1e475b5a6912c6c04ae7beb
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Jan 23 12:32:34 2014 -0800
+
+    Allow def foo(**);end to work in parser
+
+commit 7dbc9c07e77ab36d114fc13f9e28fc5727966e92
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Jan 23 11:36:45 2014 -0800
+
+    Advance lexing enough so i,r,ri suffixes parse but return nil
+
+commit 21b0b9a082c8ada69abd03593a9e14adbfe72f7e
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Jan 22 16:49:58 2014 -0800
+
+    RegexpOptions.setup19 -> setup
+
+commit 7d112cf0857493d381284e57c8d91899c987d6ec
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Jan 22 16:35:26 2014 -0800
+
+    Remove Splat19Node to a single SplatNode
+
+commit 64c95fa7745a3d1068bba342fca6ad8c2933aa6f
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Jan 22 16:29:00 2014 -0800
+
+    Remove SValue19Node to a single SValueNode
+
+commit 6bdbd07739470fdbf4aacb2fd04401e7b7f7dd34
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Jan 22 16:17:01 2014 -0800
+
+    Remove ParserSupport19
+
+commit 5a0b41a2fb467904dc4bd4d566a7f49cd86a09ea
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Jan 22 16:04:19 2014 -0800
+
+    Updated 2.1 grammar with some non-working bits (like imaginary and rational literals)
+
+commit b9ab568342636cddfca95899a10c112e4491b2ff
+Merge: 4c39748 14f7c47
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jan 17 01:09:52 2014 -0600
+
+    Merge remote-tracking branch 'origin/jruby-1_7'
+
+commit f8a07c562cac8363f7ee3b72ae4c0c92d5cebb5e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Jan 16 14:52:08 2014 -0600
+
+    Eliminate some Java 5 iteration of AST node lists.
+    
+    Java 5 iteration along hot or boot paths causes a lot of transient
+    iterator objects to be created. This patch removes some such cases
+    that appear to be along hot paths or paths hit heavily at boot.
+
+commit 1bb6298040457cdf096d92ddef293ba1b69217b2
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Nov 21 01:04:08 2013 -0600
+
+    Remove more compat version references and deprecate some stuff.
+
+commit be589b58fd936e17ec0de456fc91c7a42a5880c7
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Oct 30 22:58:37 2013 -0500
+
+    De-version some miscellany
+
+commit 2c255a646887388b812a4500071b782ece87189e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Sep 30 09:52:33 2013 -0500
+
+    Make def return the name as a symbol rather than nil.
+    
+    This is for 2.1 support, but has no significant impact on earlier
+    compatibility.
+
+commit fc9e3ce089c4dbf8512730f94b150328fbbbc8cb
+Author: Mark Warren <mwarren42@gmail.com>
+Date:   Sat Aug 24 01:23:53 2013 -0400
+
+    fix for issue #969 (missing string intern for symbols in literal symbol array)
+
+commit 28c6fbc4e883bc1c9e9242d1da1cb2b785f55339
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 3 12:46:45 2013 -0500
+
+    Move to @mkristian's proposed layout, with some modifications.

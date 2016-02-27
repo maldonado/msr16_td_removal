@@ -36,3 +36,6 @@ connection.close()
 
 print 'restoring database'
 subprocess.call("pg_restore -Uevermal -dcomment_classification -c /Users/evermal/Downloads/technical_debt_summary_temp.dump", shell= True)
+
+
+copy (select a.project_name, a.file_name, b.repository_directory , a.commit_hash, a.author_date , a.file_checkout from git_commit a, git_log_files b where a.file_directory = b.file_directory order by a.project_name, a.author_date) to '/Users/evermal/Downloads/crash.csv' (format csv,  header true)

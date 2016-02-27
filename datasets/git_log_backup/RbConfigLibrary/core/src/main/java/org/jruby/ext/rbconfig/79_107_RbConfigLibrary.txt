@@ -1,0 +1,105 @@
+commit 214dea5ba2f6355ff62db9a2650b202906af2ca9
+Author: Kevin Menard <kevin@nirvdrum.com>
+Date:   Tue Apr 21 15:58:00 2015 -0400
+
+    Updated RbConfig::CONFIG['ruby_version'] to match MRI.
+
+commit 28b7248eaadd57eda85485f86ed98bfafd3a29f2
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jan 16 12:41:35 2015 -0600
+
+    RbConfig::ruby should not be an instance/module method.
+
+commit 3d066ae2232f13469088b618e610c91d5dfc73bb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jan 6 17:46:55 2015 -0600
+
+    Add RUBYW values to rbconfig.
+
+commit 2c3147e674967e87cd227ed6afd379cb192008a7
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Oct 29 14:04:41 2014 -0500
+
+    Reorg of stdlib files.
+    
+    * lib/ruby/2.2 => lib/ruby/stdlib
+    * lib/ruby/shared => lib/ruby/stdlib
+    * added minitest, test-unit, and power_assert to default gems
+    * fixes and config changes throughout to support these moves
+
+commit 309b13942f6c52fbc02398f9859e2b06b57ce958
+Merge: f425c87 d481131
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Aug 21 15:02:12 2014 -0500
+
+    Merge remote-tracking branch 'origin/jruby-1_7'
+    
+    Conflicts:
+    	build.xml
+    	core/src/main/java/org/jruby/util/URLResource.java
+    	core/src/main/java/org/jruby/util/cli/OutputStrings.java
+    	maven/jruby-complete/pom-generated.xml
+    	maven/jruby-complete/pom.rb
+    	maven/jruby-complete/pom.xml
+    	maven/jruby-complete/src/it/legacy-osgi-test/pom.xml
+    	maven/jruby-complete/src/it/osgi-test/pom.xml
+    	maven/jruby-complete/src/it/osgi-test/pom.xml.skip
+    	maven/jruby-dist/pom.rb
+    	maven/jruby-jars/Mavenfile
+    	maven/jruby-jars/pom.xml
+    	maven/jruby-noasm/pom.rb
+    	maven/jruby-noasm/pom.xml
+    	maven/jruby-rake-plugin/pom.xml
+    	maven/jruby-stdlib/pom.rb
+    	maven/jruby-stdlib/pom.xml
+    	maven/jruby/pom.rb
+    	maven/jruby/pom.xml
+    	maven/pom.rb
+    	maven/pom.xml
+    	pom.xml
+
+commit 311bec242165a4fb339516afc414f44cb650cd80
+Author: Christian Meier <m.kristian@web.de>
+Date:   Tue Aug 19 19:07:26 2014 +0200
+
+    introduce an uri: protocol for generic classloaders and uri:classloader: for the
+    Thread.currentThread.conttextClassLoader
+
+commit f4ab1c660ce71ce9880ac4e1f0ea20152c8ceb89
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Oct 30 22:55:29 2013 -0500
+
+    De-version RbConfig
+
+commit eb7e0628c5a7b7cdf9eac2d634a54d27e06d2105
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Oct 30 18:32:51 2013 -0500
+
+    Fix a few remaining references to 1.9 logic.
+
+commit 6d5ddacf7ef3011b3e6856df4d7c430a33cedd9e
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Oct 8 15:21:32 2013 -0500
+
+    Bump up execution mode and stdlib to 2.1 (head).
+
+commit 697e6895affa646849a685ed58f6f84795c853aa
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Oct 4 23:37:52 2013 -0500
+
+    Eliminate calls to Ruby.is1_8 and is1_9.
+
+commit e74c72bfc6c2639a315c1d5002497a206703c85b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Oct 4 22:38:27 2013 -0500
+
+    IT HAS BEGUN!
+    
+    Remove 1.8 tests and stdlib and start migrating boot logic toward
+    a single runtime compatibility mode.
+
+commit 28c6fbc4e883bc1c9e9242d1da1cb2b785f55339
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 3 12:46:45 2013 -0500
+
+    Move to @mkristian's proposed layout, with some modifications.

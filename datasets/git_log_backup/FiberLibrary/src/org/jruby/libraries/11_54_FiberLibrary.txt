@@ -1,0 +1,220 @@
+commit 6c12546e0749ff292aa9b8719db40821051a54df
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Mar 8 14:24:59 2011 -0600
+
+    Improved Fiber context-switching using j.u.c.SynchronousQueue.
+
+commit 282126570e79430f48c2a9b925effe03cf2d4fe6
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 7 23:09:31 2010 -0500
+
+    Move all inner-class libraries/extensions into top-level classes, to avoid future occurrences of JRUBY-4785.
+
+commit 9f1b216d45602b4357e072605231887a90adbcf4
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Tue May 25 17:04:51 2010 -0500
+
+    More improvements and re-tag fiber specs since core/library split
+
+commit c2f126a48e4e722c3a9fb875622fb1613976091c
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Sat May 1 23:00:18 2010 -0500
+
+    Improve fiber library implementation relative to YRI.
+    
+    - require 'fiber' now works
+    - FiberError defined and raised in some cases
+    - Fiber starts out alive before it is resumed
+    - Some methods only appear after require 'fiber'
+
+commit e05b969291d44e3d42e14861e30ce189a52f1b5f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun May 2 02:09:26 2010 -0500
+
+    Miscellaneous cleanup:
+    
+    * A number of findbugs items in the "threadsafe", "performance", "malcious code", and "experimental" warnings
+    * Tidied up all NetBeans "yellows" in the files I touched
+    * Removed now-defunct JRubyServer/Client/Service
+    * Removed now-defunct ssa.rb and DAGBuilder
+
+commit 5a8623b874e2046a96b8821da3078043f61205d7
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Feb 18 14:55:24 2010 -0600
+
+    Clean up all @JRubyMethod bindings that are throwing bare Java exceptions (JRUBY-4494)
+
+commit 6ac1a1759909a57f356a46bbe7e4ab196a84e9ba
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Jan 18 17:21:34 2010 -0600
+
+    Turn on 1.9 spec run for spec-short and tag/fix issues that went red since I last checked.
+
+commit 7497017d0098fb909c9d6459ea8bff180ed502f8
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Nov 5 18:50:45 2009 -0800
+
+    * Update some templates where the .java version got edits instead
+    * Fix some newArray with NULL_ARRAY to call newEmptyArray
+    * Add separate paths for "array" and "nonarray" in block dispatch, to eliminate the avalue bool
+
+commit 1bf7a3f05bf77011b1d30fa987a3e24a1d66c2d6
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Sep 13 17:17:29 2009 -0500
+
+    Fiber is now loaded at startup for 1.9.
+
+commit 31f11c8fef37da5acfb2e452ab5bc17077fdb23a
+Author: MenTaLguY <mental@rydia.net>
+Date:   Thu Jun 18 01:01:31 2009 -0400
+
+    rename DynamicContext to ExecutionContext
+
+commit 11f98b9b1c6d6ab68c8023147c689181b916f9d5
+Author: MenTaLguY <mental@rydia.net>
+Date:   Wed Jun 17 21:02:29 2009 -0400
+
+    reasonably efficient Java implementations of thread- and fiber-local variables
+
+commit 4dbcd09417d93d3ebb923b4a1f12eff9c9c001e1
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue May 19 17:19:00 2009 -0500
+
+    For JRUBY-1800, use existing thread pool for Fiber if present, otherwise create a new one.
+
+commit bf56a4c4596f136857a44995cf5a7ff22e931e9f
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon May 11 18:27:52 2009 -0500
+
+    Fix for JRUBY-3615: Fiber.yield crahes if called without arguments
+
+commit 873835cccb86d7bf94927ed0ec124e7c49215955
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Feb 21 08:23:43 2009 +0000
+
+    Oops, remove an @Override that Java 5 seems to choke on.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9257 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 7f64e0e91e7c144d678da2a9a057e03f9bef5ef1
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Feb 20 22:40:50 2009 +0000
+
+    Basic thread pooling for Fiber.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9251 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit bf8db0bc4acaeed7900b867e821e959f254be0be
+Author: Thomas Enebo <tom.enebo@gmail.com>
+Date:   Sat Nov 22 22:57:11 2008 +0000
+
+    Biggest commit eva (1.9 parser+1.9-runtime-related-changes landing)
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8099 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 46e62f8d028de2cd227aa5c1533219fb0f3d4eed
+Author: Wayne Meissner <wmeissner@gmail.com>
+Date:   Sun Aug 10 06:09:16 2008 +0000
+
+    Cleanup some more packages
+    - final fields
+    - Pass in ThreadContext as a first arg and use ThreadContext#getRuntime() instead of IRubyObject#getRuntime()
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@7420 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 26402ba5859b0632d9f41afdc868397bc317d0b2
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sun Apr 13 15:02:15 2008 +0000
+
+    Incorporate the binding-logic pregenerator into the main build, to help with startup time a bit.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6488 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 778d005667fec85c805c0f8f219d28ef3896e09c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Apr 9 20:00:15 2008 +0000
+
+    More elimination of CallbackFactory usage.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6439 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 424a1cbff5aea37f2f92cc208d29d2544f092828
+Author: Ola Bini <ola.bini@gmail.com>
+Date:   Wed Mar 19 12:21:15 2008 +0000
+
+    Annotate the rest of the Java classes with names, parents and inclusions. Also add a warning to install_doc.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@6291 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit d5edd038a6f0356e46d6307c3391182f12211e9d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Dec 28 21:54:03 2007 +0000
+
+    Fix for JRUBY-1812, load should accept a "wrap" parameter that causes it to load in a new top self.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@5400 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 25e56efa7dd9310dc04c58330627f00ea3b277d8
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Sun Sep 30 16:08:33 2007 +0000
+
+    Further work related to Core class caching in runtime.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4436 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 3e88cfab0d224fb9efa8d18336993e2c78ce495e
+Author: Marcin Mielżyński <lopx@gazeta.pl>
+Date:   Thu Sep 27 16:40:57 2007 +0000
+
+    - Identified and extracted construction paths for class/module/singleton/IncludedModuleWrapper, now there's no unnecessary null checks or assignments in their constructors (they take very few arguments so even asserts are not needed).
+    Each of those constructors have a comment what is it the responsible for, also, two RubyClass.newClass() and two RubyModule.newModule() methods have been extracted.
+    - Fixed logic that sets the parent/constant for Modules, now matches MRI (only setConstant/getConstantAt are used here).
+    - RubyClass rewritten, special attention has been put on allocation logic, now Class.new(...) doesn't fire a separate allocator class. (btw, logic of "class B < A;end" and "Class.new(A)" must be split since in second case superclass and allocator are not known until initialize is called). Class/Object allocation implementation mimics MRI's weirdest quirks in behavior, is _much_ simpler that it has been and much faster. This also allowed creation of generalized clone/dup implementations matching MRI. (only our special ivars need a care here).
+    - Rewritten bootstrapping of Object/Class/Module.
+    - Core classes (except Exception hierarchy, they should also be in future) are now cached in runtime (MRI caches them in static VALUE's like rb_cObject) Ruby.getClass(String), Ruby.getModule(String) and Ruby.getClassFromPath(String) should be used only by either interpreter or compiler and when the class name is not known at compile time.
+    - Fixed and simplified nodes: classNode, moduleNode, sclassNode, defsNode. Compiler has been synchronized here as well.
+    - No more __attached__ as ivar, it is now MetaClass field (which means lazy ivars for singletons). Compiler also updated.
+    - added and dosumented isModule() to IRubyObject (isClass(), isSintleton() documented).
+    - Fixed test_autoload test (Object.class_eval do;autoload :SomeClass, 'somefile';class SomeClass; end;end) should raise LoadError, now matches MRI.
+    
+    - Fixed a number of minor bugs:
+       1.instance_eval, was creating a metaclass for Fixnum instances (also affected Symbol/FalseClass/TrueClass/NilClass)
+       marshaler objects were kept in singleton classes
+       Range.inspect, was modifying the begin field (when it was a String)
+       Many bulletproofings in Marshal/Unmarshal (like unmarshaling an instance of nonexistant class), TypeErrors/ArgumentErrors matching MRI.
+       Fiber.new in 1.9, doesn't call #initialize method by funcall, fixed
+       number of method arity fixes and many methods are made fast now
+       fixed initialize/initialize_copy logic, further simplification, no ClassCastExceptions possible now
+       Fixed defineClass(under)/defineModule(under) logic
+       bulletproofed cases such: class A;end;module A;end
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4409 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 8cb991364189d99ecc478f884a6b6356832dafc8
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Aug 27 19:51:32 2007 +0000
+
+    fixing imports
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4212 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 5f588849f38efe0261d72cb242137e03d404a9aa
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Aug 27 19:50:47 2007 +0000
+
+    fixing javadoc to not have mentalguy's name
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4211 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit c187d01e4b83fb3477c4d327c4ed825dc34a27df
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Aug 27 15:21:11 2007 +0000
+
+    Adding basic Fiber support using native threads. Fairly primitive, but the non-brutal tests from YARV pass, as well as most demo code I've found online.
+    
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@4207 961051c9-f516-0410-bf72-c9f7e237a7b7

@@ -1,0 +1,164 @@
+commit 838c8d7a991d1914357ce47db62f594aca27bc78
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jul 24 22:32:10 2015 -0500
+
+    CallConfiguration is not used by any DynamicMethods anymore.
+    
+    CallConfiguration used to be needed to determine how to frame and
+    scope all methods in the system. However, in JRuby 9k it is no
+    longer needed.
+    
+    * Core methods that need frame/scope have the pre/post logic
+      generated in bytecode (for generated invokers) or in handles
+      (for MethodHandle-based invokers).
+    * Interpreted IR methods have their own flags for frame/scope, or
+      have instructions that perform the pre/post logic.
+    * Jitted IR methods always have emit bytecode to do the pre/post
+      logic.
+    
+    After a quick inspection I found that there's no other uses of
+    the callConfig field in DynamicMethod, so this commit removes it
+    and deprecates the constructors and accessors. This should shrink
+    all DynamicMethod subclasses by at least 4 bytes and perhaps 8. It
+    also reduces the size and overhead of our generated populators,
+    which might have a slight effect on startup.
+
+commit ad4a92ef43cbba19f28a828814d8d19e13d0c1c9
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Mon Feb 9 17:40:10 2015 -0600
+
+    Re-apply fix.  I think merge replaced it GH-2182
+
+commit ec237599e08b27c17a9fbb425f3dbda3fb4ad8e2
+Author: Chris Heald <cheald@gmail.com>
+Date:   Mon Nov 10 00:02:47 2014 -0700
+
+    Fixes for #test_bad_initialize_copy - ensure that frozen objects are not copyable. Fix a type check bug in RubyMatchData#initialize_copy
+
+commit 2dccd72cbf656d5a4cfccade54d8f306252e80c5
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Nov 10 09:44:25 2014 -0600
+
+    Struct#inspect already adds a space after class name.
+
+commit 4bd5abe9b344410c7b783852c6baae214a6f3dd9
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Nov 6 11:54:05 2014 -0600
+
+    Partial fix for mri/ruby/test_struct test_inspect.
+
+commit 5f717bd67690fddbc317646f90c30d3e1aaa731f
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Tue Oct 28 19:57:21 2014 -0500
+
+    Fix RubyStruct to set the proper eval-type for new struct bodies.
+    
+    * Added new unit tests for JRuby (perhaps this should go into
+      rubyspec as well).
+
+commit 6225d60e792b3f60adbd76b15958ba3b221f2279
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Mon Jun 30 23:59:03 2014 -0500
+
+    Death to rubyclass stack: Part 2 of 2
+    
+    * This patch builds on the previous commit and eliminates all
+      traces of rubyclass stack from the codebase.
+    
+      - Remove the push/pop/get from thread-context and use sites.
+      - Removed klass arg from method calls.
+    
+    * TODO: embed used to inject values into the current-module obtained
+      from the rubyclass stack. That code needs investigation.
+    
+    * Replaced the hacky if (klass==null) prepareSelf(binding) calls
+      with information about actual execution context. The primary reason
+      to use binding.self instead of self argument in blocks is when
+      the block is being used in a binding-eval context. The same soln.
+      is applicable in other contexts where this pattern was used (and
+      currently marked with SSS FIXME annotations in code comments).
+    
+    * All tests continue to pass.
+
+commit acf5d258db69e9ba73f329b809c0924d7e843c82
+Author: tduehr <tduehr@gmail.com>
+Date:   Thu Feb 20 16:22:22 2014 -0600
+
+    correct visibility of initialize* and respond_to_missing? methods
+
+commit 184c4888144f0f0a26dd0d4704ede5e236d841b8
+Author: Daniel Marcotte <dmarcotte@gmail.com>
+Date:   Fri Dec 13 08:15:44 2013 -0800
+
+    Enumerator#size support for structs
+
+commit f4fc3454a562c7dbb69889e4c44a26265238f02f
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Dec 3 12:44:26 2013 -0600
+
+    Unbreak master..poor merge
+
+commit 95ae9cef2471c849540b0c59217a5d53a175a73a
+Merge: 5455c95 af53238
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Tue Dec 3 09:44:48 2013 -0600
+
+    Merge jruby-1_7
+
+commit 7b373491793fe1ca0d8d1844cc4c7d5c632a4a69
+Author: Daniel Marcotte <dmarcotte@gmail.com>
+Date:   Fri Nov 29 11:43:18 2013 -0800
+
+    1.9+ blockless Struct#select returns an enumerator
+
+commit 031d58e95b21e1d15f43e79ca9509cf2dda8ce02
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Oct 30 23:52:03 2013 -0500
+
+    Remove most non-parser references to CompatVersion.
+    
+    This also removes compat logic from annotation-based method
+    binding and invoker generation. I believe only the parser remains
+    to be de-versioned.
+
+commit 426252d05b158f1479dbd0313d131efe69901ce3
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Oct 10 16:23:00 2013 -0500
+
+    Removing dead code in unmarshallFrom
+
+commit 3b28bb9225ba26103b7fbbabedacb8098aa975d6
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Oct 10 16:18:25 2013 -0500
+
+    De-version Struct
+
+commit 697e6895affa646849a685ed58f6f84795c853aa
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Oct 4 23:37:52 2013 -0500
+
+    Eliminate calls to Ruby.is1_8 and is1_9.
+
+commit d1f89e004fdc78dff75407c82123e6c9e8b406bb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Sep 12 18:48:16 2013 +0200
+
+    Make ClassIndex into an enum, to prevent issues like #1004.
+
+commit 2c6e1fcb88b6ed618310d5ccee56d3412d92a9eb
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Jul 11 12:48:36 2013 -0500
+
+    Trivial: favor context.runtime over getRuntime()
+
+commit 2ed03ef87f2dc7b97437b670012485982128196a
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu Jul 11 12:38:54 2013 -0500
+
+    Struct.new.to_h blows up + new helper methods __member__()
+
+commit 28c6fbc4e883bc1c9e9242d1da1cb2b785f55339
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 3 12:46:45 2013 -0500
+
+    Move to @mkristian's proposed layout, with some modifications.

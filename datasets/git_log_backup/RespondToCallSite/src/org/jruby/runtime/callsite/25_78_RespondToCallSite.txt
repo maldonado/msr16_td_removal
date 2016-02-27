@@ -1,0 +1,129 @@
+commit ede89b51bd897c4792f8a3cc79a35922be202c96
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jul 27 14:47:25 2012 -0500
+
+    Apparently my refactoring fu is weak. Removing more TC.getRuntime.
+
+commit b8181cda909f6e42d7c0b7fffaabbe2a502f273b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jul 27 02:19:54 2012 -0500
+
+    Inline all calls to ThreadContext.getRuntime to access the field.
+
+commit 846be19993cc1f76d0bf0d1c9ec4ed8ad0772793
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Tue Jul 24 16:56:16 2012 -0500
+
+    Fix JRUBY-6766
+    
+    --profile slows down Array#join , which distorts profiling results
+    
+    This turned out to be a really good find.
+    
+    In order to avoid the cost of dispatching to methods like
+    respond_to? and method_missing for value coercion, we pre-cache
+    those methods in org.jruby.Ruby and use identity checks to
+    shortcut faster, non-dynamic logic. This works well during normal
+    execution, but under profiling all method objects are wrapped
+    with ProfilingDynamicMethod objects that do the profile gathering.
+    Because the identity of the original method then becomes obscured
+    by the wrapper (which is created on a per-class basis) we always
+    followed the slow path. The slow path in the case of
+    method_missing raises an exception, and the exception backtraces
+    were the source of profiling slowdown.
+    
+    I modified DelegatingDynamicMethod, the superclass of
+    ProfilingDynamicMethod, to override equals() to consider only the
+    wrapped method and fixed all related == comparisons to use
+    equals(), ensuring that regardless of which wrapper was
+    encountered the identity of the method would not be obscured. This
+    returned profiled performance for e.g. Array#join to normal
+    levels.
+    
+    I should note that this fix improves profiling performance for all
+    coercion paths and methods that do coercion, so it has far-
+    reaching implications.
+    
+    Thanks for reporting this :)
+
+commit d1c2344f89a8eebc9077198b3886511963d5a9f6
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jun 27 14:14:52 2012 -0500
+
+    Fix JRUBY-6740
+    
+    BasicObject.respond_to? raises a "undefined method `respond_to_missing?'"
+    
+    The caching logic for respond_to? was unconditionally calling
+    respond_to_missing? even for custom respond_to? methods. It should
+    only be calling it for the builtin respond_to? logic. However, in
+    order to make it work properly, respond_to_missing? logic would
+    need to be added to the caching logic, meaning we would need to
+    additionally check whether respond_to_missing? was also builtin
+    and invalidate appropriately. Due to the complexity of adding
+    another dimension to respond_to? caching, I'm just disabling the
+    caching logic altogether for 1.9 mode and have filed JRUBY-6749
+    to track us getting it reenabled.
+    
+    FWIW, indy dispatch does not do any respond_to? caching for either
+    1.8 or 1.9 mode, and was unaffected by this bug.
+
+commit f6367310477a36b1c98b7c15b66bd845b4e456aa
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Apr 27 19:52:14 2011 -0500
+
+    Fix JRUBY-5729: Process.respond_to?(:fork) must return false
+    
+    DynamicMethod now has setNotImplemented and isNotImplemented, to indicate whether this is a "not implemented" method. JRubyMethod annotations specify notImplemented = true to change from the default false. Only patched fork, because ideally notImplemented methods would have no bodies at all and share an invoker.
+
+commit 92557783f383f4e45edfa9994c5eaa30a73c2a42
+Author: Nick Sieger <nick@nicksieger.com>
+Date:   Tue Jul 20 11:04:35 2010 -0500
+
+    JRUBY-4954: Fix RespondToCallSite caching issue
+
+commit 6c3d5408e9b38e2f454936f6cc4061fde3d2953b
+Author: David Calavera <david.calavera@gmail.com>
+Date:   Mon Jul 5 22:33:34 2010 +0200
+
+    [1.9] fix Kernel#respond_to_missing? is called when #respond_to? is false
+
+commit 32d0ecf3010c3c80b02d11831e818b62f70c4060
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Feb 11 14:42:49 2010 -0600
+
+    Fixes for JRUBY-4548: There appears to be a threading issue with respond_to. When called from multiple threads it sometimes returns incorrectly.
+    
+    The logic in RespondToCallSite was never really threadsafe, even with some quick hacks I had made. The new version replaces the multiple fields with a single tuple, updated in one shot and otherwise held in local variables. It also meshes better with the normal call site caching logic, and only tries to do respond_to caching under appropriate circumstances. Performance looks very solid.
+
+commit 888e2f97c391b6050358c35f7b808ac13cfb9ec2
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Nov 2 17:43:00 2009 -0800
+
+    Remove a volatile modifier from inline cache and start reducing guard-checking to all static calls.
+
+commit cfcdd474601cdac87adf2a395fef76a19bd2c137
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Mar 5 20:14:00 2009 +0000
+
+    Fix for JRUBY-3466: NPE at org.jruby.runtime.callsite.RespondToCallSite.isCacheInvalid
+    
+    The problem here was lack of atomicity/synchronization around the updates to the cached fields. This resulted in some threads seeing a partially-initialized cache and blowing up. I modified it to never blow up (init the CacheEntry to the NULL_CACHE singleton), volatile fields, and synchronization around anything doing non-atomic field checks. Performance on bench_respond_to degraded from 0.07s to around 0.11s, but it's still generally 2x the C impls. I also added a TODO to look at less perf-damaging alternatives.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@9352 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 31c770cb5e1dea738cac6a3ef564edeb04ed36c4
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jan 23 09:04:07 2009 +0000
+
+    Add respond_to? call-site optimization inspired by Yehuda Katz. Should be 100% safe, but a good 20-25% faster than original.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8877 961051c9-f516-0410-bf72-c9f7e237a7b7
+
+commit 0746d04376d5a16802b95e5062fe586c687d2ae6
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jan 23 09:04:02 2009 +0000
+
+    Improved Yehuda respond_to optimization.
+    
+    git-svn-id: http://svn.codehaus.org/jruby/trunk/jruby@8876 961051c9-f516-0410-bf72-c9f7e237a7b7

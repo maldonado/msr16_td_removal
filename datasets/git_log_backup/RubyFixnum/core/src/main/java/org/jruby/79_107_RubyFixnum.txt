@@ -1,0 +1,207 @@
+commit 4b213d7938e2950f970bdb9403d3205dc5cfe137
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu May 7 10:45:44 2015 -0500
+
+    Reduce usage of ZERO_ARGS by replacing with Signature.NO_ARGS checks.  Eliminate null checks for signature by passing in one to NullBlockBody
+
+commit aea099d11f531ba6826e391b056151fc7fd4278d
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed May 6 13:19:54 2015 -0500
+
+    Remove usage ofr block.arity()
+
+commit 0eba37264f87e9045b5ab97d26b35f771d0549c6
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jan 16 11:43:10 2015 -0600
+
+    Add Fixnum#bit_length.
+
+commit 4cbde20099ea898520f976332c2d7fc8a5cfa756
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jan 16 11:42:39 2015 -0600
+
+    Fixnum does not define its own #pred (at least not on Ruby side).
+
+commit 755f48692bb1ae99ed14c1ddc854cebb6a7c80a8
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jan 16 11:38:25 2015 -0600
+
+    Fixnum#id2name no longer exists in MRI.
+
+commit 5caaf346132af832e0feefd04976c979ed719109
+Author: Chris Heald <cheald@gmail.com>
+Date:   Tue Nov 11 10:05:12 2014 -0700
+
+    bitCoerce now attempts to coerce given arguments for bitwise operations
+    into fixnums or bignums, and raises an exception if it is unable to do so.
+
+commit 22640908c874852acce2c6d724b7cc804d7f84e7
+Author: Chris Heald <cheald@gmail.com>
+Date:   Mon Nov 10 00:47:07 2014 -0700
+
+    Numeric types, booleans, and nil should be frozen
+
+commit fe76c3775ee7719adfdc3e83c9cdedb1b399ee9c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Oct 20 13:09:36 2014 -0500
+
+    Fix alignment of fixnum constant cache.
+
+commit efabe068af794db64902e920453165bb11b957ff
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Oct 20 10:36:43 2014 -0500
+
+    Lift constant handle caching to all objects and wire it up.
+    
+    Added handle reuse for:
+    
+    * true/false
+    * nil
+    * runtime
+    
+    And fixed handling for fixnums and symbols.
+    
+    See #2058.
+
+commit 92396a81ce6fb0923afdda1ef749f283c8c6c5d4
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Oct 20 09:19:38 2014 -0500
+
+    Encapsulate and generalize "constant" creation for core types.
+    
+    Part of work for #2058.
+
+commit 69fa5fea15f288f5a39987aa3a6743183f1bfac2
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Aug 11 11:44:05 2014 -0500
+
+    Actually implement RubyNumeric.getIntValue and document behavior.
+
+commit 706b4539517e1c444250334ea261ac56542d02cf
+Merge: 75887be c3e7c29
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu May 8 04:54:10 2014 -0500
+
+    Merge branch 'master' into new_transcoder
+    
+    Conflicts:
+    	core/pom.xml
+    	core/src/main/java/org/jruby/RubyFile.java
+    	core/src/main/java/org/jruby/util/TypeConverter.java
+
+commit d269590c79eb56175689e1aea710956fa7472786
+Merge: ae5ad64 78d80b5
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Thu May 1 09:54:27 2014 -0500
+
+    largish merge from jruby-1_7
+
+commit 2133142cbb8be4419e52fe922aae17128379d86d
+Author: Thomas E. Enebo <tom.enebo@gmail.com>
+Date:   Wed Apr 30 16:59:00 2014 -0500
+
+    Remove context.is19
+
+commit fb79510b4d1947bf5c11100ebe55e4f35e5ab35a
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Sun Apr 27 18:07:33 2014 +0100
+
+    [Truffle] Isolate all of divmod in a single node and add profiles.
+
+commit 9ac1b9299cb3b1aad44df6281cceb83bcee01c0e
+Author: Chris Seaton <chris@chrisseaton.com>
+Date:   Sun Apr 27 04:50:23 2014 +0100
+
+    [Truffle] Add more long specialisations to get pidgits compiling again.
+
+commit 05865c190248229da6e37e91eaa0dd2300224d83
+Author: Lucas Allan Amorim <lucas.allan@gmail.com>
+Date:   Mon Apr 21 16:34:16 2014 -0700
+
+    GH-1551 - Adding regression specs.
+
+commit 8cd70f6ed5b579323b3a343e8c93515270d88217
+Author: Lucas Allan Amorim <lucas.allan@gmail.com>
+Date:   Fri Apr 18 14:57:35 2014 -0700
+
+    GH-1551 - Fixing: Fixnum#to_s seems to generate strings immune to #[]=
+
+commit b37a0edd2d095550b43acd13fb5825a40d1e1011
+Merge: 8cb15d2 e05539b
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Apr 7 12:32:21 2014 -0500
+
+    Merge remote-tracking branch 'origin/jruby-1_7'
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/RubyTime.java
+    	core/src/main/java/org/jruby/ext/psych/PsychLibrary.java
+    	lib/pom.rb
+    	pom.xml
+
+commit 4e6e7e6b30f6be92cd95f0419aaca3fd2fe6b06c
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Apr 7 12:24:33 2014 -0500
+
+    Various fixes for Kernel.Integer().
+    
+    * Localize conversion logic in TypeConverter.
+    * Add missing "badcheck" logic for String to Bignum. Fixes #1608.
+    * Fix last failure in ruby/test_integer.rb by defining
+      Fixnum#succ.
+    
+    Still needs tests or specs.
+
+commit 5819f73ee7502d7396cc31a6f9b3e56557b36ab0
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Mar 12 14:55:44 2014 -0500
+
+    Move add/subtract overflow methods out of RubyFixnum.
+
+commit fbe18f5ed3a77ed4a6ea0494da598d09baf29879
+Author: Daniel Marcotte <dmarcotte@gmail.com>
+Date:   Thu Dec 5 18:10:03 2013 -0800
+
+    Java enumerators lazily compute Enumerator#size
+    
+    For internally created enumerators (i.e. created with
+    enumeratorizeWithSize), ensure that calls to Enumerator#size reflect the
+    current size of the underlying object being enumerated by
+    introducing a function type which can be lazily computed on calls to
+    Enumerator#size.
+
+commit d1efddd1c5f4420a98bdcaf36112b98dbb6a9f4a
+Author: Daniel Marcotte <dmarcotte@gmail.com>
+Date:   Sat Nov 30 10:03:10 2013 -0800
+
+    Enumerator#size support for loops
+
+commit 523b7fc52bc75360c28e0f4b56e2932f0f73ae77
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Mon Oct 7 23:20:22 2013 -0500
+
+    De-version Fixnum.
+
+commit 29ad807b198dfc82bffb30106f1e5f89b2cbc983
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Sat Oct 5 00:12:50 2013 -0500
+
+    Oopsed one line that should not be there for 1.9+.
+
+commit 697e6895affa646849a685ed58f6f84795c853aa
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Oct 4 23:37:52 2013 -0500
+
+    Eliminate calls to Ruby.is1_8 and is1_9.
+
+commit d1f89e004fdc78dff75407c82123e6c9e8b406bb
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Thu Sep 12 18:48:16 2013 +0200
+
+    Make ClassIndex into an enum, to prevent issues like #1004.
+
+commit 28c6fbc4e883bc1c9e9242d1da1cb2b785f55339
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 3 12:46:45 2013 -0500
+
+    Move to @mkristian's proposed layout, with some modifications.

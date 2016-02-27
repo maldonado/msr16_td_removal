@@ -1,0 +1,76 @@
+commit deecb15587322d06eceb7d9e048227a59d53f7cd
+Merge: e788e1d f959d12
+Author: Christian Meier <m.kristian@web.de>
+Date:   Sat Apr 11 10:57:09 2015 +0530
+
+    Merge branch 'jruby-1_7'
+    
+    Conflicts:
+    	core/src/main/java/org/jruby/Main.java
+    	maven/jruby/pom.rb
+
+commit f959d12a760842fb9cca0f3e0a53679a2ac0ab1a
+Author: Christian Meier <m.kristian@web.de>
+Date:   Fri Apr 10 03:20:58 2015 +0530
+
+    ensure MBean names are unique by using a timestamp
+    
+    merging the ruby.runtime_number with a timestamp with milli granularity
+    for the MBean name
+    
+    fixes #2582
+    
+    Sponsored by Lookout Inc.
+
+commit ed54aab184bed0dc9dbaaf90b357c8f793c33696
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Sep 17 13:40:36 2014 -0500
+
+    Rip out the guts! Removing many non-9k runtime classes.
+    
+    * ClassCache is gone; it was hacky and problematic when compiled
+      code held classloader-level (static) data, as when using indy
+      call sites. Java 8 has also eliminated permgen, greatly reducing
+      the hassle and overhead of loading jitted code. Finally, Rails
+      and the other Ruby frameworks are now officially "thread safe"
+      (or the teams are committed to them being so) and the multiple
+      JRuby model of deployment is discouraged (or even deprecated).
+    * All old JIT code is gone. It won't be useful for the new
+      JIT.
+    * Removed the last vestiges of Callback-based functions. If I
+      remember right, there's some ext out there using them...we must
+      find it.
+    * Rewired JITCompiler to use the new JIT.
+    * Rewired InterpretedIRMethod to use JITCompiler.
+    * Moved OneShotClassLoader out of ClassCache (in org.jruby.util)
+
+commit 6b7bee24328ea6f523825e27b4891c780145ac3d
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Jul 25 13:24:06 2014 -0500
+
+    Before a native, in-process exec, shut down JMX agent.
+    
+    If the JRuby JVM is started with the remote JMX agent enabled,
+    subsequence native exec of JRuby (basically restarting JRuby in
+    the same process space) can fail because the port remains bound.
+    This change uses internal OpenJDK classes to shut down the JMX
+    agent before a native exec, so it can restart in the new JVM.
+    
+    A side effect of this is that if native exec fails, we must
+    attempt to restart the agent as well. This will break connections
+    for existing clients, but they would have lost connection had the
+    exec succeeded. I don't see this as a problem.
+    
+    Fixes #1859.
+
+commit 9c47b17ad3fe2a76d19449e3456f393212264003
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Fri Feb 21 10:58:58 2014 -0600
+
+    Add Ruby "runtime number" to all thread names.
+
+commit 28c6fbc4e883bc1c9e9242d1da1cb2b785f55339
+Author: Charles Oliver Nutter <headius@headius.com>
+Date:   Wed Jul 3 12:46:45 2013 -0500
+
+    Move to @mkristian's proposed layout, with some modifications.

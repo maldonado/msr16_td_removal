@@ -1,0 +1,26 @@
+commit dc0b3a049c641482c1161afe84c91d898aeca413
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Wed Oct 14 18:58:12 2009 -0500
+
+    - Cleaned up the scope setup some more; Integrated (not fully tested &
+      debugged) closures into live variable anaysis code; Added instructions
+      to allocate heap frame, load / store variables from frame (not
+      integrated yet);
+
+commit ddaf4c565c871ce4a59cf23683c59bcc2429fec9
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Thu Jul 23 17:37:09 2009 -0500
+
+    - Moved all operands to operands/ and instructions to instructions/ and fixed up imports.  Added some commented out code to start running peephole opts on the IR -- which will also serve as a basis for SCCP passes later on.
+
+commit 07e7ef2ca0c28f49871837a419b20e06d70266a8
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Mon Jun 29 17:32:59 2009 -0500
+
+    - Added stubs for redo & retry instructions
+
+commit 955209fba77336e0f9bd5b31b39a44acd5f4a785
+Author: Subramanya Sastry <sss.lists@gmail.com>
+Date:   Sat Jun 27 20:01:56 2009 -0500
+
+    - Added IR_Loop; implemented loop stack in IR_Scope; translated while and converted break & next to jumps for non-closure cases
