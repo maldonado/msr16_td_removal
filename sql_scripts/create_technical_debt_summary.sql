@@ -358,11 +358,10 @@ keep temp
 investigate 
 18704
 
-
+*****************************************************************************************************************************
 select a.processed_comment_id , a.project_name, a.file_name, a.class_name,  a.version_removed_name , a.comment_text,  b.version_removed_name from technical_debt_summary a , technical_debt_summary_temp b where a.processed_comment_id = b.processed_comment_id and a.version_removed_name != b.version_removed_name and a.processed_comment_id in ('2013','17697','78171','1811','79431','2545','76720','4276','17413','77263','79426','79185','79312','398','1173','79309','12254','17696','17508','14875','17670')
 update technical_debt_summary_temp set version_removed_name = null, version_removed_hash =  null where processed_comment_id in ('78857','76715','77300','78016','76105','77649','79417','288','17639','78655','78668','17508','17697','17670','17696','17413')
 update technical_debt_summary_temp set version_removed_name = null, version_removed_hash =  null where processed_comment_id not in ('2013','78171','1811','79431','2545','76720','4276','77263','79426','79185','79312','398','1173','79309','12254','14875','1285')
-
 
 select processed_comment_id, version_removed_name , version_removed_hash from technical_debt_summary_temp where version_removed_name != 'not_removed' and processed_comment_id in ('2013','78171','1811','79431','2545','76720','4276','77263','79426','79185','79312','398','1173','79309','12254','14875','1285')
 update technical_debt_summary_temp set last_version_that_comment_was_found_name = '1.7.22' , last_version_that_comment_was_found_hash = 'c28f4926e498e07a0d141846a3f04e13c3c125cd' where processed_comment_id in ('78171','79431','79426','79312','79185');
@@ -374,5 +373,20 @@ update technical_debt_summary set version_removed_name = t.version_removed_name,
 
 select * from technical_debt_summary where version_removed_name = 'not_removed' and version_removed_author is not null;
 update technical_debt_summary set version_removed_commit_hash = null, version_removed_author= null where version_removed_name = 'not_removed'  and version_removed_author is not null;
+*****************************************************************************************************************************
+
+Package test 
+1- deleting old information 
+
+update technical_debt_summary set version_introduced_name = null, version_introduced_hash = null, version_introduced_dependencies_number = null, version_removed_name = null, version_removed_hash = null, last_version_that_comment_was_found_name = null, last_version_that_comment_was_found_hash = null, last_version_that_comment_was_found_dependencies_number = null, version_introduced_commit_hash = null, version_introduced_author = null, version_introduced_lines = null, version_removed_commit_hash = null, version_removed_author = null, version_removed_lines = null, last_version_that_comment_was_found_lines = null where processed_comment_id in ('18704','18047','18046','17997');
+update technical_debt_summary_temp set version_introduced_name = null, version_introduced_hash = null, version_introduced_dependencies_number = null, version_removed_name = null, version_removed_hash = null, last_version_that_comment_was_found_name = null, last_version_that_comment_was_found_hash = null, last_version_that_comment_was_found_dependencies_number = null, version_introduced_commit_hash = null, version_introduced_author = null, version_introduced_lines = null, version_removed_commit_hash = null, version_removed_author = null, version_removed_lines = null, last_version_that_comment_was_found_lines = null where processed_comment_id in ('18704','18047','18046','17997');
+
+
+
+with temp as (select processed_comment_id , version_introduced_commit_hash, version_introduced_author, version_introduced_lines, version_removed_commit_hash, version_removed_author, version_removed_lines, last_version_that_comment_was_found_lines from technical_debt_summary_temp)
+update technical_debt_summary set version_introduced_commit_hash = t.version_introduced_commit_hash, version_introduced_author = t.version_introduced_author, version_introduced_lines = t.version_introduced_lines, version_removed_commit_hash = t.version_removed_commit_hash, version_removed_author = t.version_removed_author, version_removed_lines = t.version_removed_lines, last_version_that_comment_was_found_lines = t.last_version_that_comment_was_found_lines from temp t where t.processed_comment_id = technical_debt_summary.processed_comment_id
+
+ 
+
 
 

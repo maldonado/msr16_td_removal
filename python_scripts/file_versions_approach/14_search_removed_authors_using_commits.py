@@ -44,7 +44,7 @@ connection = psycopg2.connect(host='localhost', port='5432', database='comment_c
 cursor = connection.cursor()
 
 # WARNING: using technical_debt_summary_temp in this script !!! 
-cursor.execute("select a.processed_comment_id, a.project_name, a.file_name, a.comment_type, a.comment_text, b.version_introduced_commit_hash from technical_debt_summary a , technical_debt_summary_temp b where  a.processed_comment_id = b.processed_comment_id and  a.version_removed_name != 'not_removed' order by 2,3 ")
+cursor.execute("select a.processed_comment_id, a.project_name, a.file_name, a.comment_type, a.comment_text, b.version_introduced_commit_hash from technical_debt_summary a , technical_debt_summary_temp b where  a.processed_comment_id = b.processed_comment_id and  a.version_removed_name != 'not_removed' and b.version_removed_author is null order by 2,3 ")
 results = cursor.fetchall()
 
 total_files_to_process = len(results)
@@ -70,7 +70,7 @@ for result in results:
         comment = parse_block_comment(comment_text)
         # print comment
     
-    cursor.execute("select commit_hash, author_name from git_commit where project_name = %s and file_name = %s and  author_date >= (select author_date from git_commit where commit_hash = %s and file_name = %s ) order by author_date", (project_name, file_name, version_introduced_commit_hash, file_name))
+    cursor.execute("select commit_hash, author_name from git_commit where project_name = %s and file_name = %s and  author_date >= (select author_date from git_commit where commit_hash = %s and file_name = %s ) and commit_hash not in ('75f48785fa21e4aff89581353bb425648c2ec7c4') order by author_date", (project_name, file_name, version_introduced_commit_hash, file_name))
     # cursor.execute("select commit_hash, author_name from git_commit where project_name = %s and file_name = %s and commit_hash not in ('a6f20b63a56aff2e1bce74f89078234bc4c34446', '75f48785fa21e4aff89581353bb425648c2ec7c4') order by author_date", (project_name, file_name))
     commit_list = cursor.fetchall()
 
