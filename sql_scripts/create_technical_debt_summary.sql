@@ -387,6 +387,9 @@ with temp as (select processed_comment_id , version_introduced_commit_hash, vers
 update technical_debt_summary set version_introduced_commit_hash = t.version_introduced_commit_hash, version_introduced_author = t.version_introduced_author, version_introduced_lines = t.version_introduced_lines, version_removed_commit_hash = t.version_removed_commit_hash, version_removed_author = t.version_removed_author, version_removed_lines = t.version_removed_lines, last_version_that_comment_was_found_lines = t.last_version_that_comment_was_found_lines from temp t where t.processed_comment_id = technical_debt_summary.processed_comment_id
 
  
-
+with temp as (select processed_comment_id , version_introduced_commit_hash, version_introduced_author, version_removed_commit_hash, version_removed_author from technical_debt_summary_temp where processed_comment_id in ('80216','79669','78668','77649','78675','77300','79082','17577','79027','4913','15165','78961','78655','81750','79042','78683','79820'))
+update technical_debt_summary set version_introduced_commit_hash = t.version_introduced_commit_hash, version_introduced_author = t.version_introduced_author, version_removed_commit_hash = t.version_removed_commit_hash, version_removed_author = t.version_removed_author  from temp t where t.processed_comment_id = technical_debt_summary.processed_comment_id
+update technical_debt_summary set version_removed_commit_hash = '564c53fe61a99b37894d7e1d8f94016cf2537b59' , version_removed_author = 'kares' where processed_comment_id = '77709'
+  update technical_debt_summary set version_introduced_author = 'Subramanya Sastry', version_introduced_commit_hash = 'ddaf4c565c871ce4a59cf23683c59bcc2429fec9', version_removed_commit_hash = '53945eb6cd55a8e2a78c00f7166574fc09d4e845' , version_removed_author = 'Subramanya Sastry' where processed_comment_id = '79353'
 
 

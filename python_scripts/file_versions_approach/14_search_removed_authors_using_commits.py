@@ -43,8 +43,11 @@ connection = None
 connection = psycopg2.connect(host='localhost', port='5432', database='comment_classification', user='evermal', password='')
 cursor = connection.cursor()
 
+
 # WARNING: using technical_debt_summary_temp in this script !!! 
-cursor.execute("select a.processed_comment_id, a.project_name, a.file_name, a.comment_type, a.comment_text, b.version_introduced_commit_hash from technical_debt_summary a , technical_debt_summary_temp b where  a.processed_comment_id = b.processed_comment_id and  a.version_removed_name != 'not_removed' and b.version_removed_author is null order by 2,3 ")
+cursor.execute("select a.processed_comment_id, a.project_name, a.file_name, a.comment_type, a.comment_text, b.version_introduced_commit_hash from technical_debt_summary a , technical_debt_summary_temp b where  a.processed_comment_id = b.processed_comment_id and  a.processed_comment_id in ('80216','79669','78668','77649','78675','77300','79082','17577','79027','4913','15165','78961','78655','81750','79042','78683','79820') order by 2,3 ")
+# cursor.execute("select a.processed_comment_id, a.project_name, a.file_name, a.comment_type, a.comment_text, b.version_introduced_commit_hash from technical_debt_summary a , technical_debt_summary_temp b where  a.processed_comment_id = b.processed_comment_id and  a.processed_comment_id in ('80216','79669','18704','78668','77649','18047','78675','77709','77300','79082','17577','79027','4913','15165','78961','78655','81750','18046','79042','17997','79353','78683','79820') order by 2,3 ")
+# cursor.execute("select a.processed_comment_id, a.project_name, a.file_name, a.comment_type, a.comment_text, b.version_introduced_commit_hash from technical_debt_summary a , technical_debt_summary_temp b where  a.processed_comment_id = b.processed_comment_id and  a.version_removed_name != 'not_removed' and b.version_removed_author is null order by 2,3 ")
 results = cursor.fetchall()
 
 total_files_to_process = len(results)
@@ -93,6 +96,10 @@ for result in results:
             
             for line in f:
                 if comment[comment_index] in line:
+                    # print "here"
+                    # print line
+                    # print len(comment)
+                    # print comment
                     # print comment[comment_index]
                     # print line
 

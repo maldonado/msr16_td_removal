@@ -40,7 +40,9 @@ connection = None
 connection = psycopg2.connect(host='localhost', port='5432', database='comment_classification', user='evermal', password='')
 cursor = connection.cursor()
 
-cursor.execute("select processed_comment_id, project_name, file_name, comment_type, comment_text from technical_debt_summary order by 2,3 ")
+
+cursor.execute("select processed_comment_id, project_name, file_name, comment_type, comment_text from technical_debt_summary where processed_comment_id in ('80216','79669','78668','77649','78675','77300','79082','17577','79027','4913','15165','78961','78655','81750','79042','78683','79820') order by 2,3 ")
+# cursor.execute("select processed_comment_id, project_name, file_name, comment_type, comment_text from technical_debt_summary order by 2,3 ")
 # cursor.execute("select processed_comment_id, project_name, file_name, comment_type, comment_text from technical_debt_summary where file_name not in ('PropertyHelper.java', 'JavaConstructor.java', 'JavaMethod.java') order by 2,3 ")
 results = cursor.fetchall()
 
@@ -65,7 +67,7 @@ for result in results:
     else:
         comment = parse_block_comment(comment_text)
         # print comment
-    
+
     cursor.execute("select commit_hash, author_name from git_commit where project_name = %s and file_name = %s and commit_hash not in ('2ebc17d579e5e8a3ca1db259e25ecd370e945a34', '5f836b1236b44148df75df38a82e4862c3bdbc75', '5f836b1236b44148df75df38a82e4862c3bdbc75') order by author_date", (project_name, file_name))
     commit_list = cursor.fetchall()
 
@@ -89,10 +91,11 @@ for result in results:
     
                 if comment[comment_index] in line:
 
-                    found_in_version = True
+                    
     
                     comment_index = comment_index + 1
                     if comment_index == len(comment):
+                        found_in_version = True
                         break
 
             if found_in_version:
