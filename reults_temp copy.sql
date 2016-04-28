@@ -1,89 +1,120 @@
+#################################
+#        Manual dataset         #
+#################################
+
+##########################################################################
+## RQ1 - How much of design self-admitted technical debt gets removed ? ##
+##########################################################################
 
 -- show all comments that the TD was removed
-select project_name, file_name , version_introduced_author, version_removed_author from technical_debt_summary where version_removed_name != 'not_removed' order by 1,2;
-
-RQ1 - How much of self-admitted technical debt gets removed ? [repeat]
-(consistency of code and comment co-change) 
-
-
-
+select project_name, file_name , version_introduced_author, version_removed_author from technical_debt_summary where version_removed_name != 'not_removed' and comment_classification = 'DESIGN' order by 1,2;
 
 -- total of TD comments
-select count(*) from technical_debt_summary;
-1127
+select count(*) from technical_debt_summary where comment_classification = 'DESIGN';
+754
 
 -- per project
-select project_name, count(*) from technical_debt_summary group by 1;
+select project_name, count(*) from technical_debt_summary where comment_classification = 'DESIGN' group by 1;
+project_name   | count
 ---------------+-------
- jruby         |   622
- apache-ant    |   131
- apache-jmeter |   374
+apache-ant     |    95
+apache-jmeter  |   316
+jruby          |   343
+
+-- total of TD comments removed
+select count(*) from technical_debt_summary where comment_classification = 'DESIGN' and version_removed_name != 'not_removed';
+224
 
 -- removed per project
- select project_name, count(*) from technical_debt_summary where version_removed_name != 'not_removed' group by 1;
-project_name  | count
----------------+-------
- jruby         |   398
- apache-ant    |    19
- apache-jmeter |    22
+select project_name, count(*) from technical_debt_summary where version_removed_name != 'not_removed' and comment_classification = 'DESIGN' group by 1;
+project_name   | count
+--------------+-------
+jruby         |   197
+apache-ant    |    10
+apache-jmeter |    17
+
+-- self removal
+select count(*) from technical_debt_summary where version_removed_name != 'not_removed' and version_removed_author = version_introduced_author and comment_classification = 'DESIGN';
+62
 
 -- self removal per project
- select project_name, count(*) from technical_debt_summary where version_removed_name != 'not_removed' and version_removed_author = version_introduced_author group by 1;
+select project_name, count(*) from technical_debt_summary where version_removed_name != 'not_removed' and version_removed_author = version_introduced_author and comment_classification = 'DESIGN' group by 1;
+--------------+-------
+jruby         |    56
+apache-ant    |     4
+apache-jmeter |     2
 
--- found in 491 files:
-select count(distinct(file_name)) from technical_debt_summary;
-491
+-- non-self removal
+select count(*) from technical_debt_summary where version_introduced_author != version_removed_author and version_removed_name != 'not_removed' and comment_classification = 'DESIGN';
+162
 
--- of these comments, 439 was removed
-select count(*) from technical_debt_summary where version_removed_name != 'not_removed';
-439
+-- non-self removal per project
+select project_name, count(*) from technical_debt_summary where version_removed_name != 'not_removed' and version_removed_author != version_introduced_author and comment_classification = 'DESIGN' group by 1;
+--------------+-------
+jruby         |   141
+apache-ant    |     6
+apache-jmeter |    15
 
---  still 688 technical debt comments remains in the code
-select count(*) from technical_debt_summary where version_removed_name = 'not_removed';
-688
+-- found in 400 files:
+select count(distinct(file_name)) from technical_debt_summary where comment_classification = 'DESIGN';
+400
 
--- meaning that 376 files remains with technical debt (make the percentage of the total , separate per project)
-select count(distinct(file_name)) from technical_debt_summary where version_removed_name = 'not_removed';
-376
+-- of these comments, 224 was removed
+select count(*) from technical_debt_summary where version_removed_name != 'not_removed' and comment_classification = 'DESIGN';
+224
 
--- and 155 files got technical debt removed from them (which does not mean that more td comments were not introduced) 
-select count(distinct(file_name)) from technical_debt_summary where version_removed_name != 'not_removed';
-155
+-- still 529 technical debt comments remains in the code
+select count(*) from technical_debt_summary where version_removed_name = 'not_removed' and comment_classification = 'DESIGN';
+529
 
-RQ2 - How long does it take to remove technical debt in case of self-removal?
+-- meaning that 310 files remains with technical debt (make the percentage of the total , separate per project)
+select count(distinct(file_name)) from technical_debt_summary where version_removed_name = 'not_removed' and comment_classification = 'DESIGN';
+310
 
-select count(*) from technical_debt_summary where version_introduced_author = version_removed_author and version_removed_name != 'not_removed'
-257
-select count(*) from technical_debt_summary where version_introduced_author != version_removed_author and version_removed_name != 'not_removed'
-183
+-- and 115 files got technical debt removed from them (which does not mean that more td comments were not introduced) 
+select count(distinct(file_name)) from technical_debt_summary where version_removed_name != 'not_removed' and comment_classification = 'DESIGN';
+115
+
+
+###################################################################################
+## RQ2 - How long does it take to remove technical debt in case of self-removal? ##
+###################################################################################
+
+-- self removal
+select count(*) from technical_debt_summary where version_introduced_author = version_removed_author and version_removed_name != 'not_removed' and comment_classification = 'DESIGN'
+62
+
+-- non-self removal
+select count(*) from technical_debt_summary where version_introduced_author != version_removed_author and version_removed_name != 'not_removed' and comment_classification = 'DESIGN';
+162
+
 -- average days from self removal
-select  avg(a.epoch_time_to_remove)/86400 from time_to_remove_td a, technical_debt_summary b where a.processed_comment_id = b.processed_comment_id and b.version_introduced_author = b.version_removed_author;
+select  avg(a.epoch_time_to_remove)/86400 from time_to_remove_td a, technical_debt_summary b where a.processed_comment_id = b.processed_comment_id and b.version_introduced_author = b.version_removed_author and b.comment_classification = 'DESIGN';
  ?column?
 -----------------------
- 1833.9384720865885417
+ 1707.0319313769414352
 
 -- average days from self removal per project (plot these values)
-select  a.project_name, avg(a.epoch_time_to_remove)/86400 from time_to_remove_td a, technical_debt_summary b where a.processed_comment_id = b.processed_comment_id and b.version_introduced_author = b.version_removed_author group by 1  
+select  a.project_name, avg(a.epoch_time_to_remove)/86400 from time_to_remove_td a, technical_debt_summary b where a.processed_comment_id = b.processed_comment_id and b.version_introduced_author = b.version_removed_author and b.comment_classification = 'DESIGN' group by 1  
 project_name  |       ?column?
----------------+-----------------------
- jruby         | 1871.7270381191658565
- apache-ant    |  730.6279629629629630
- apache-jmeter |  978.7876554232804233
+---------------+-----------------
+ jruby         | 1734.1075797784391204
+ apache-ant    | 1707.8277141203703704
+ apache-jmeter |  947.3222106481481481
 
 -- average days from NON self removal (plot these values)
-select  avg(a.epoch_time_to_remove)/86400 from time_to_remove_td a, technical_debt_summary b where a.processed_comment_id = b.processed_comment_id and b.version_introduced_author != b.version_removed_author and b.version_removed_name != 'not_removed' 
+select  avg(a.epoch_time_to_remove)/86400 from time_to_remove_td a, technical_debt_summary b where a.processed_comment_id = b.processed_comment_id and b.version_introduced_author != b.version_removed_author and b.version_removed_name != 'not_removed' and b.comment_classification = 'DESIGN' 
        ?column?
 -----------------------
- 1878.7273883070229167
-
+ 1836.9338911751256944
 
 -- average days from NON self removal per project (plot these values)
-select  a.project_name, avg(a.epoch_time_to_remove)/86400 from time_to_remove_td a, technical_debt_summary b where a.processed_comment_id = b.processed_comment_id and b.version_introduced_author != b.version_removed_author and b.version_removed_name != 'not_removed'  group by 1  
+select  a.project_name, avg(a.epoch_time_to_remove)/86400 from time_to_remove_td a, technical_debt_summary b where a.processed_comment_id = b.processed_comment_id and b.version_introduced_author != b.version_removed_author and b.version_removed_name != 'not_removed' and b.comment_classification = 'DESIGN' group by 1  
 project_name  |       ?column?
----------------+-----------------------
- apache-ant    | 1991.5555823206018519
- jruby         | 1942.5938311708089120
- apache-jmeter | 1111.1973603395061728
+ ---------------+-----------------------
+ jruby         | 1882.9216046920146991
+ apache-ant    | 2556.7979417438271991
+ apache-jmeter | 1116.7037638888888889
 
 -- which tells us that NON self removal actually takes longer than self removal
 
