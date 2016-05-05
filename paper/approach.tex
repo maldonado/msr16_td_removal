@@ -1,20 +1,64 @@
 % -*- root: main.tex -*-
 
-The main goal of our study is to understand what happens with \SATD comments after they are introduced in projects. To do that, we divided our study in two main parts. First, we use a manually classified dataset that contains \SATD comments from three open source projects. Then, we trace each \SATD finding when and by who the technical debt was introduced/removed. Lastly, we run our analysis and examine the results. Second, to scale our approach to more projects we implement a process that does not depends on a manually classified dataset. Using this approach we extracted \SATD comments from other five open source projects, and similarly we analyze the \SATD comments of these projects. Figure~\ref{} shows an overview of our manual approach, Figure~\ref{} shows an overview of our automatic approach, and the following subsections detail each step.
+The main goal of our study is to understand what happens with \SATD comments after they are introduced in projects. To do that, we divided our study in two main parts. First, we use a manually classified dataset that contains \SATD comments from three open source projects. Then, we trace each \SATD finding when and by who the technical debt was introduced and removed. After that, we run our analysis and examine the results. Second, to scale our approach to more projects we implement a process that does not depends on a manually classified dataset. Using this approach we extracted \SATD comments from other five open source projects, and similarly we analyze the \SATD comments of these projects. Figure~\ref{fig:manually_classified_data_approach_overview} shows an overview of our manual approach, Figure~\ref{fig:automatically_classified_data_approach_overview} shows an overview of our automatic approach, and the following subsections detail each step.
+
+\begin{figure*}[thb!]
+  \centering
+  \includegraphics[width=1\textwidth]{figures/manually_classified_data_approach.pdf}
+  \caption{Manually Classified Data Approach Overview}
+  \label{fig:manually_classified_data_approach_overview}
+\end{figure*}
+
+\subsection*{Manually Classified Data Approach}
+\label{sub:manually_classified_data_approach}
+
+As shown in previous work, technical debt can be classified into different types ~\cite{Alves2014MTD}. However, design technical debt is the most common ~\cite{Maldonado2015MTD} and impactful ~\cite{Ernst2015FSE} type of debt. Therefore, to perform our study, we use manually classified \SATD comments from three different projects, namely Apache Ant, Apache Jmeter and Jruby. The analyzed dataset consists of 754 \SATD design comments distributed between the three projects. We choose to analyze Apache Ant, Apache Jmeter and Jruby as the version that contains the manually classified comments has enough past and future versions to be analyzed. Moreover, they have git repositories that are currently maintained enabling us to apply our approach. 
+
+The manually classified comments are part of a bigger dataset of \SATD comments created during ours previous studies ~\cite{Maldonado2015MTD,Maldonado2015TSE}. Basically, during these previous works, we created a public available dataset containing 62,566 comments extracted from ten open source projects. These comments were classified as \SATD comments or as regular comments (i.e., comments without technical debt). The dataset was classified by the first author and later, to mitigate the risk of bias, another student was asked to classify a statistically significant sample of the dataset. The Cohen's kappa coefficient ~\cite{cohen1960coefficient} (i.e., the level of agreement between both reviewer) was of +0.81. The resulting coefficient is scaled to range between -1 and +1, where negative value means poorer than chance agreement, zero indicates exactly chance agreement, and positive value indicates better than chance agreement ~\cite{fleiss1973equivalence}.
+
+\subsubsection*{Technical Debt Files Identification}
+\label{subsub:technical_debt_files_identification}
+The manually classified dataset contains the fully qualified name (i.e., file path plus the file name) for each one of the files that contains at least one of the 754 \SATD design debt comments. However, there is no guarantee that the file will not be moved in future versions. Therefore, we need to know the file path in the latest future version that the file was available. falar do checouk interativo fazendo o matching dos nomes
+
+falar sobre todas versoes que temos que fazer checkout , do passado que fazemos isso identificando o nome dos arquivos e depois fazemos a mesma coisa pra versoes futuras . talvez podemos falar que o follow funciona pro passado mas nao pro futuro , ou como nossas versoes analizadas estao no meio da vida dos projetos nos escolhemos determinar os arquivos pelo nome no passado e no futuro. 
+
+\subsubsection*{Checkout All Versions of Technical Debt Files}
+\label{subsub:checkout_all_versions_of_technical_debt_files}
+
+\subsubsection*{Identify Author Who Introduced the Technical Debt}
+\label{subsub:identify_author_who_introduced_the_technical_debt}
+more strait forward , first found
+
+\subsubsection*{Identify Author Who Removed the Technical Debt}
+\label{subsub:identify_author_who_removed_the_technical_debt}
+need to add the strategy for removed files
+
+\begin{figure*}[thb!]
+  \centering
+  \includegraphics[width=1\textwidth]{figures/automatically_classified_data_approach.pdf}
+  \caption{Automatically Classified Data Approach Overview}
+  \label{fig:automatically_classified_data_approach_overview}
+\end{figure*}
+
+\subsection*{Automatically Classified Data Approach}
+\label{sub:automatically_classified_data_approach}
+
+\subsubsection*{Project Data Extraction}
+\label{subsub:project_data_extraction}
+
+\subsubsection*{Checkout All Versions of Files}
+\label{subsub:checkout_all_versions_of_files}
+
+\subsubsection*{Parse Source Code}
+\label{subsub:parse_source_code}
+
+\subsubsection*{Filtering Comments}
+\label{subsub:filtering_comments}
+
+\subsubsection*{NLP Classification}
+\label{subsub:nlp_classification}
+
+\subsubsection*{Find Technical Debt Authors}
+\label{subsub:find_technical_debt_authors}
 
 
-% \subsection*{Manual Examination}
-% \label{sub:manual_examination}
-
-% \subsubsection*{Project Data Extraction}
-% \label{subsub:manual_project_data_extaction}
-
-% falar dos projetos selecionados, falar que o dataset eh oriundo de outro projeto. falar que selecionamos apenas design technical debt porque ele da melhores resultados em precisao nos vamos discutir isso depois. falar que foi manualmente classificado e agreement betwe
-% criar tabela com dados dos projetos manuais.
-
-% \subsubsection*{Extracting Different Versions of Technical Debt}
-
-% \subsubsection*{Find Technical Debt Authors}
-
-
-% \subsection*{Automatic Examination}
