@@ -18,12 +18,25 @@ The manually classified comments are part of a bigger dataset of \SATD comments 
 
 \subsubsection*{Technical Debt Files Identification}
 \label{subsub:technical_debt_files_identification}
-The manually classified dataset contains the fully qualified name (i.e., file path plus the file name) for each one of the files that contains at least one of the 754 \SATD design debt comments. However, there is no guarantee that the file will not be moved in future versions. Therefore, we need to know the file path in the latest future version that the file was available. falar do checouk interativo fazendo o matching dos nomes
 
-falar sobre todas versoes que temos que fazer checkout , do passado que fazemos isso identificando o nome dos arquivos e depois fazemos a mesma coisa pra versoes futuras . talvez podemos falar que o follow funciona pro passado mas nao pro futuro , ou como nossas versoes analizadas estao no meio da vida dos projetos nos escolhemos determinar os arquivos pelo nome no passado e no futuro. 
+We use the fully qualified name of the file (i.e., file path plus file name) to mine information from the source code repository, and the manually classified dataset contains the fully qualified name of each file that contains at least one \SATD design debt comment. However, the fully qualified name of the manually dataset does not correspond to the latest available version, and there is the possibility that the file has been moved around in future versions. The same problem could happen in past versions as well. Therefore, we need to identify the fully qualified name of each file on each future and past versions. 
+
+In order to do that, we first extract the all versions of an project. Second, we incrementally try to match the fully qualified name in these versions. Every time that we have a match means that the file has not been moved. When we are not able to match the fully qualified name of the file we try to match just the file name. In the case that we have a single match using the file name we consider that the file has simply been moved to a different folder. In the case that we have more than one match using the file name we compare the similarity between the files (i.e., shortest added distance) and consider the most similar of the files as the file that has been moved. Lastly in the case that all these methods fails to find a match we consider that the file has been removed in the analyzed version.  
+
+This process results in a mapping containing the fully qualified name for each version, and we store this information back in the database for future use.
 
 \subsubsection*{Checkout All Versions of Technical Debt Files}
 \label{subsub:checkout_all_versions_of_technical_debt_files}
+
+Once that we identified the fully qualified name of the \SATD files we can mine from the source code repository all the different versions of these files. Having all versions of the \SATD files allow us to pinpoint the exact moment that the \SATD comment was introduced and if it was later removed.
+
+% First, we group the different fully qualified names that we obtained for each file. For example, if ``file1'' was in ``path1'' during 10 versions and then it was moved to ``path2''. The group of fully qualified names for ``file1'' would have two items: ``path1/file1'' and ``path2/file1''. Then, we extract the list of changes done 
+
+% As we identified all fully qualified names of each file in the previous step we can use this information to get all commits that changed the file 
+% First, we identifyall the commits that touched that particular file. Then, we use the commit hash place the repository in the time that the change was made. As we identi
+
+
+
 
 \subsubsection*{Identify Author Who Introduced the Technical Debt}
 \label{subsub:identify_author_who_introduced_the_technical_debt}
