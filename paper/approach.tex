@@ -60,9 +60,20 @@ It is also possible that during the development of the project the \SATD file ha
 \subsection*{Automatically Classified Data Approach}
 \label{sub:automatically_classified_data_approach}
 
+We developed a Python based tool that is capable of mining all the necessary information for our study based on a git repository URL. In a nutshell the tool first clones the analyzed repository locally. Second, it identifies all Java source code files in the repository. By analyzing the history of the project the tool identifies even the files that were already removed. Third, we use a third part library to parse the source code and extract the information that we use in our analysis. Fourth, we apply filtering heuristics that aims to eliminate non \SATD comments. Fifth, it uses NLP techniques to classify the comments as \SATD. Lastly, the tool identifies the authors that are responsible for the introduction and removal of the \SATD comments. 
+
+In an effort to evaluate the performance of our tool we compare the \SATD classification obtained doing this process with the manually classified dataset. 
 
 \subsubsection*{Project Data Extraction}
 \label{subsub:project_data_extraction}
+
+To perform our study we selected five open source projects namely, Apache Camel  
+  % 9 | gerrit | master        | https://github.com/gerrit-review/gerrit.git | 2016-04-05 14:26:39.899985
+  % 6 | hadoop | trunk         | https://github.com/apache/hadoop            | 2016-03-29 15:43:32.239268
+  % 3 | jmeter | trunk         | https://github.com/apache/jmeter.git        | 2016-03-15 14:06:17.311904
+  % 4 | jruby  | master        | https://github.com/jruby/jruby.git          | 2016-03-15 14:07:18.291681
+  % 8 | log4j  | trunk         | https://github.com/apache/log4j             | 2016-03-29 15:45:07.198918
+  % 7 | tomcat
 
 \subsubsection*{Checkout All Versions of Files}
 \label{subsub:checkout_all_versions_of_files}
