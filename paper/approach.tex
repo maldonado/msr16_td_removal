@@ -28,23 +28,27 @@ This process results in a mapping containing the fully qualified name for each v
 \subsubsection*{Checkout All Versions of Technical Debt Files}
 \label{subsub:checkout_all_versions_of_technical_debt_files}
 
-Once that we identified the fully qualified name of the \SATD files we can mine from the source code repository all the different versions of these files. Having all versions of the \SATD files allow us to pinpoint the exact moment that the \SATD comment was introduced and if it was later removed.
+Once that we identified the fully qualified name of the \SATD files we can extract from the source code repository all the different versions of these files. Having all versions of the \SATD files allow us to pinpoint the exact moment that the \SATD comment was introduced and if it was later removed.
 
-% First, we group the different fully qualified names that we obtained for each file. For example, if ``file1'' was in ``path1'' during 10 versions and then it was moved to ``path2''. The group of fully qualified names for ``file1'' would have two items: ``path1/file1'' and ``path2/file1''. Then, we extract the list of changes done 
+First, we group the different fully qualified names that we obtained for each file. For example, if ``file1'' was in ``path1'' during 10 versions and then it was moved to ``path2''. The group of fully qualified names for ``file1'' would have two items: ``path1/file1'' and ``path2/file1''. 
 
-% As we identified all fully qualified names of each file in the previous step we can use this information to get all commits that changed the file 
-% First, we identifyall the commits that touched that particular file. Then, we use the commit hash place the repository in the time that the change was made. As we identi
+Second, we identify the latest version (i.e., tag) that corresponding to each fully qualified name. This way we can checkout the repository to the desired version and extract all the changes (i.e., commits) done to the file considering the fully qualified name. This information is parsed and inserted into our database, providing us quick access to all commits that touched each \SATD file. 
 
-
-
+Third, we use the commit list of each \SATD file to checkout all changed versions. This computation results in a collection of files that represents the full history of the \SATD file.  
 
 \subsubsection*{Identify Author Who Introduced the Technical Debt}
 \label{subsub:identify_author_who_introduced_the_technical_debt}
-more strait forward , first found
+
+The next step is to identify the author who introduced the technical debt. In order to do so, we search for each \SATD comment that was manually classified in all different file versions that it belongs. We start by analyzing the oldest version of the \SATD file looking for a match. In the case that the match is negative we move to the next \SATD file version. We repeat this process until we find the exact match of the \SATD comment. 
+
+We consider that we found the introduction of the \SATD comment when we have a exact match of the manual classified \SATD comment. In some cases the \SATD comment possess multiple lines, and it is possible to this comment to have partial matches (i.e., not all lines) across the files. However, we consider that the manual classified \SATD comment offers us the certainty that the comment is in fact a \SATD and should be considered in full while searching the version that it was introduced.
 
 \subsubsection*{Identify Author Who Removed the Technical Debt}
 \label{subsub:identify_author_who_removed_the_technical_debt}
-need to add the strategy for removed files
+
+To identify the author who removed the technical debt we start by analyzing the next file version that the \SATD comment was found. We incrementally check all future versions of the file until we can not find a match anymore. In the case that we are able to find the \SATD comment in all future versions means that the \SATD comment was not removed, and therefore has not a removed author to be identified. 
+
+It is also possible that during the development of the project the \SATD file has been removed. As we have the mapping between the fully qualified name of the file and the version that it belongs we can also identify if they were removed. When we identify that the file was removed, we assume that the author responsible for the deletion is also the author who removed the \SATD comments that were in that file.
 
 \begin{figure*}[thb!]
   \centering
@@ -55,6 +59,7 @@ need to add the strategy for removed files
 
 \subsection*{Automatically Classified Data Approach}
 \label{sub:automatically_classified_data_approach}
+
 
 \subsubsection*{Project Data Extraction}
 \label{subsub:project_data_extraction}
