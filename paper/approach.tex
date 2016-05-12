@@ -67,19 +67,32 @@ In an effort to evaluate the performance of our tool we compare the \SATD classi
 \subsubsection*{Project Data Extraction}
 \label{subsub:project_data_extraction}
 
-To perform our study we selected five open source projects namely Camel, Gerrit, Hadoop, Log4j and Tomcat. These projects belongs to different application domains, and accordingly with openhub, they are well commented projects  with high level of developer activity. \todo{explain open hub}
-
+To perform our study we selected five open source projects namely Camel, Gerrit, Hadoop, Log4j and Tomcat. These projects belongs to different application domains, and accordingly with OpenHub, they are well commented projects  with high level of developer activity. OpenHub is an on-line community and public directory that offers analytics, search services and tools for open source software \cite{Openhub:home}.
 
 \subsubsection*{Checkout All Versions of Files}
 \label{subsub:checkout_all_versions_of_files}
 
 \subsubsection*{Parse Source Code}
 \label{subsub:parse_source_code}
-We use SrcML \cite{srcml} to parse the source code files that we identified in the repository. SrcML is a open source library that parses source code files into a XML structure. The resulting XML file has specifics tags that allow us to easily identify elements that we want to extract. This way we extract all comments from the source code files and information related to them for example, the line that each comment starts, finishes and the type of the comment (i.e., Javadoc, Line or Block).
 
+We use SrcML \cite{srcml} to parse the source code files that we identified in the repository. SrcML is a open source library that parses source code files into a XML structure. The resulting XML file has specifics tags that allow us to easily identify elements that we want to extract. This way we extract all comments from the source code files and information related to them for example, the line that each comment starts, finishes and the type of the comment (i.e., Javadoc, Line or Block).
 
 \subsubsection*{Filtering Comments}
 \label{subsub:filtering_comments}
+
+Comments are found in most of software projects.
+
+License comments are not very likely to contain self-admitted technical debt, and are commonly added before the declaration of the class. We create a heuristic that removes comments that are placed before the class declaration. Since we know the line number that the class was declared we can easily check for comments that are placed before that line and remove them. In order to decrease the chances of removing a self-admitted technical debt comment while executing this filter we calibrated this heuristic to not remove comments containing one of task annotations (i.e., ``TODO:'', ``FIXME:'', or ``XXX:'') ~\cite{Storey2008ICSE}. Task annotations are an extended functionality provided by most of the popular Java \textit{IDEs} including Eclipse, InteliJ and NetBeans. When one of these words are used inside a comment the IDE will automatically keep track of the comment creating a centralized list of tasks that can be conveniently accessed later on.
+
+Long comments that are created using multiple \emph{Single-line} comments instead of a \emph{Block} comment can hinder the understanding of the message considering the case that the reader (i.e., human or machine) analyzes each one of these comments independently. To solve that problem, we create a heuristic that searches for consecutive Single-line comments and groups them as one comment.
+ 
+Commented source code is found in the projects due to many different reasons. One of the possibilities is that the code is not currently being used. Other is that, the code is used for debugging purposes only. Based on our analysis, commented source code does not have self-admitted technical debt. Our heuristic removes commented source code using a simple regular expression that captures typical Java code structures.
+
+Automatically generated comments by the IDE are filtered out as well. These comments are inserted as part of code snippets used to generate constructors, methods and try catch blocks, and have a fixed format (i.e., ``Auto-generated constructor stub'', ``Auto-generated method stub'', and ``Auto-generated catch block''). Therefore our heuristic searches for these automatically generated comments and removes them. 
+
+Javadoc comments rarely mention self-admitted technical debt. For the Javadoc comments that do mention self-admitted technical debt, we notice that they usually contain one of the task annotations (i.e., ``TODO:'', ``FIXME:'', or ``XXX:''). Therefore, our heuristic removes all comments of the type Javadoc unless they contain at least one of the task annotations  To do so, we create a simple regular expression that searches for the task annotations before removing the comment.  
+
+The steps mentioned above significantly reduced the number of comments in our dataset and helped us focus on the most applicable and insightful comments. For example, in the Ant project, applying the above steps helped to reduce the number of comments from 21,587 to 4,137 meaning a reduction of 80.83\% in the number of comments to be manually analyzed. Using the filtering heuristics we were able to remove from 39.25\% to 85.89\% of all comments. Table \ref{tab:project_details} provides the number of comments kept after the filtering heuristics for each project.
 
 \subsubsection*{NLP Classification}
 \label{subsub:nlp_classification}
@@ -88,6 +101,6 @@ We use SrcML \cite{srcml} to parse the source code files that we identified in t
 \subsubsection*{Find Technical Debt Authors}
 \label{subsub:find_technical_debt_authors}
 
-Once we have classified all comments as \SATD or non \SATD we can search for the authors responsible for the introduction and eventual removal of the \SATD comments. As described in subsection \todo{add sub section} we have stored all different versions of all source code files. Therefore, to find the author who introduced a \SATD comment we look into the oldest version of the file containing the analyzed comment, and incrementally search through all future versions of that file until we find the first time that the comment appears for the first time. Once found, we keep tracking the \SATD comment in the remaining future versions of the file checking if  the \SATD comment was removed. 
+Once we have classified all comments as \SATD or non \SATD we can search for the authors responsible for the introduction and eventual removal of the \SATD comments. As described in subsection \ref{subsub:checkout_all_versions_of_files} we have stored all different versions of all source code files. Therefore, to find the author who introduced a \SATD comment we look into the oldest version of the file containing the analyzed comment, and incrementally search through all future versions of that file until we find the first time that the comment appears for the first time. Once found, we keep tracking the \SATD comment in the remaining future versions of the file checking if  the \SATD comment was removed. 
 
 Additionally, when searching for authors who removed \SATD comments we have to take into consideration deleted files. As we also identify the files that once was removed we can check if the last version of the file before removal contained \SATD comments. If that is the case, the author who removed the file is also the author who removed the \SATD comments. 
