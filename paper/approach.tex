@@ -67,19 +67,16 @@ In an effort to evaluate the performance of our tool we compare the \SATD classi
 \subsubsection*{Project Data Extraction}
 \label{subsub:project_data_extraction}
 
-To perform our study we selected five open source projects namely, Apache Camel  
-  % 9 | gerrit | master        | https://github.com/gerrit-review/gerrit.git | 2016-04-05 14:26:39.899985
-  % 6 | hadoop | trunk         | https://github.com/apache/hadoop            | 2016-03-29 15:43:32.239268
-  % 3 | jmeter | trunk         | https://github.com/apache/jmeter.git        | 2016-03-15 14:06:17.311904
-  % 4 | jruby  | master        | https://github.com/jruby/jruby.git          | 2016-03-15 14:07:18.291681
-  % 8 | log4j  | trunk         | https://github.com/apache/log4j             | 2016-03-29 15:45:07.198918
-  % 7 | tomcat
+To perform our study we selected five open source projects namely Camel, Gerrit, Hadoop, Log4j and Tomcat. These projects belongs to different application domains, and accordingly with openhub, they are well commented projects  with high level of developer activity. \todo{explain open hub}
+
 
 \subsubsection*{Checkout All Versions of Files}
 \label{subsub:checkout_all_versions_of_files}
 
 \subsubsection*{Parse Source Code}
 \label{subsub:parse_source_code}
+We use SrcML \cite{srcml} to parse the source code files that we identified in the repository. SrcML is a open source library that parses source code files into a XML structure. The resulting XML file has specifics tags that allow us to easily identify elements that we want to extract. This way we extract all comments from the source code files and information related to them for example, the line that each comment starts, finishes and the type of the comment (i.e., Javadoc, Line or Block).
+
 
 \subsubsection*{Filtering Comments}
 \label{subsub:filtering_comments}
