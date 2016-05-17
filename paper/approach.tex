@@ -1,13 +1,117 @@
 % -*- root: main.tex -*-
 
-The main goal of our study is to understand what happens with \SATD comments after they are introduced in projects. To do that, we divided our study in two main parts. First, we use a manually classified dataset that contains \SATD comments from three open source projects. Then, we trace each \SATD finding when and by who the technical debt was introduced and removed. After that, we run our analysis and examine the results. Second, to scale our approach to more projects we implement a process that does not depends on a manually classified dataset. Using this approach we extracted \SATD comments from other five open source projects, and similarly we analyze the \SATD comments of these projects. Figure~\ref{fig:manually_classified_data_approach_overview} shows an overview of our manual approach, Figure~\ref{fig:automatically_classified_data_approach_overview} shows an overview of our automatic approach, and the following subsections detail each step.
-
 \begin{figure*}[thb!]
   \centering
-  \includegraphics[width=1\textwidth]{figures/manually_classified_data_approach.pdf}
-  \caption{Manually Classified Data Approach Overview}
-  \label{fig:manually_classified_data_approach_overview}
+  \includegraphics[width=1\textwidth]{figures/automatically_classified_data_approach.pdf}
+  \caption{Automatically Classified Data Approach Overview}
+  \label{fig:automatically_classified_data_approach_overview}
 \end{figure*}
+
+The main goal of our study is to understand what happens with \SATD comments after they get introduced into projects, and most specifically, who are the authors responsible for the introduction and removal of these comments. To do that, we divided our study in two main parts. First, we developed a tool that allow us to extract and classify \SATD comments based on NLP techniques. Using this tool we extracted and classified the comments of five open source projects. Second, we analyze the performance of our tool in terms of precision and recall using two other open source projects which we have manually classified the \SATD comments. 
+
+In a nutshell the tool first clones the analyzed repository locally. Second, it identifies all Java source code files in the repository. By analyzing the history of the project we are able to identify even files that were already removed. Third, we use a third part library to parse the source code and extract the information that we use in our analysis. Fourth, we apply four filtering heuristics that aims to eliminate non \SATD comments. Fifth, it uses NLP techniques to classify the comments as \SATD. Lastly, the tool identifies the authors that are responsible for the introduction and removal of the \SATD comments. 
+
+Figure~\ref{fig:automatically_classified_data_approach_overview} shows an overview of our approach, and the following subsections detail each step.
+
+\subsection{Project Data Extraction}
+\label{sub:project_data_extraction}
+
+The main key to perform our study is source code comments. Based on the comments found in the source code files we are able to identify and later analyze \SATD. We decided to extract the source code comments of five open source projects, namely Camel, Gerrit, Hadoop, Log4j and Tomcat. We select these projects since they belong to different application domains, are well commented, vary in size, number of contributors, and with a high activity level. Additionally, we selected projects that have git as their source code repository.
+
+Table ~\ref{tab:project_details} provide details about each of the projects used in our study. The columns of Table \ref{tab:project_details} present the number of java files analyzed, followed by the total source lines of code (SLOC), the number of different file versions that we find analyzing the history of the project, the number of contributors, the number of extracted comments, the number of comments analyzed after applying our filtering heuristics, the number of comments that were classified as \SATD and finally the number of comments unique \SATD comments. To calculate the unique \SATD number we take in cosideration only the first time that the comment appears on any of the different file versions. 
+
+Since there are many different definitions for the SLOC metric we clarify that, in our study, a source line of code contains at least one valid character, which is not a blank space or a source code comment. In addition, we only use the Java files to calculate the SLOC, and to do so, we use the SLOCCount tool~\cite{wheeler2004:home}. 
+
+The number of contributors and the level of activity was extracted from OpenHub, an on-line community and public directory that offers analytics, search services and tools for open source software \cite{Openhub:home}. Activity level is a metric provided by OpenHub, and it is based on a combination of contributor count and commit count, with more weight placed on contributors. These two metrics are combined so that recent activity is much more heavily weighted, i.e., a contribution this past month is far more important in determining activity level than a contribution a year ago \cite{Openhub:activity_level}. 
+
+It is important to note that the number of comments shown for each project does not represent the number of commented lines, but rather the number of Single-line, Block and Javadoc comments. In total, we obtained 7,749,969 comments, found in 30,915 Java classes, and its 446,775 different versions. The size of the selected projects varies between 30,287 and 800,488 SLOC, and the number of contributors of these projects ranges from 32 to 289. 
+
+\begin{table*}[thb!]
+    \begin{center}
+    \caption{Details of Studied Projects}
+    \label{tab:project_details}
+    
+            \begin{tabular}{l| c c r c || c c c c }
+            \toprule
+            
+            \multirow{5}{*}{\textbf{\thead{Project}}} & \multicolumn{4}{c||}{\textbf{\thead{Project details}}} & \multicolumn{4}{c}{\textbf{\thead{Comments details}}} 
+
+            \\
+            \cmidrule{2-9}
+
+            & \textbf{\thead{\# of files}} & \textbf{\thead{SLOC}} & \textbf{\thead{\# of file\\versions}} & \textbf{\thead{\# of \\contributors}}  & \textbf{\thead{\# of \\comments}}   & \textbf{\thead{\# of \\comments \\after filtering}} & \textbf{\thead{\# of \\TD \\comments}}  & \textbf{\thead{\# of \\unique TD \\comments}}\\ 
+            \midrule 
+            \textbf{Camel}     & 15,091 & 800,488 & 254,920 & 289  &  1,634,361 &   700,412  &  20,141 &  4,331   \\
+            \textbf{Gerrit}    &  3,059 & 222,476 &  53,298 & 270  &  1,018,006 &   129,023  &   4,810 &   271    \\
+            \textbf{Hadoop}    &  8,466 & 996,877 &  79,232 & 160  &  2,512,673 &  1,172,051 &  18,927 &  1,164   \\
+            \textbf{Log4j}     &  1,112 & 30,287  &  12,609 & 35   &    248,276 &    61,690  &   1,893 &   135    \\
+            \textbf{Tomcat}    &  3,187 & 297,828 &  46,716 & 32   &  2,336,653 &  1,081,492 &  26,725 &  1,317   \\
+            \bottomrule             
+        \end{tabular}
+    \end{center}
+\end{table*}
+
+\subsection{Checkout All Versions of Files}
+\label{sub:checkout_all_versions_of_files}
+
+% The life cycle of a software project is very dynamic and it comprehends a lot of changes. New Features are being introduced while old ones are being fixed and sometimes removed. The same happens with source code comments, which in consequence means that \satd comments are being removed and introduced during the evolution of the software project. In our study we take the ever changing nature of software projects into account. Our approach to identify \SATD analyzes independently all different file versions of the project, and then we track  
+
+\subsubsection*{Parse Source Code}
+\label{subsub:parse_source_code}
+
+We use SrcML \cite{srcml} to parse the source code files that we identified in the repository. SrcML is a open source library that parses source code files into a XML structure. The resulting XML file has specifics tags that allow us to easily identify elements that we want to extract. This way we extract all comments from the source code files and information related to them for example, the line that each comment starts, finishes and the type of the comment (i.e., Javadoc, Line or Block).
+
+\subsubsection*{Filtering Comments}
+\label{subsub:filtering_comments}
+
+Comments are found in most of software projects.
+
+License comments are not very likely to contain self-admitted technical debt, and are commonly added before the declaration of the class. We create a heuristic that removes comments that are placed before the class declaration. Since we know the line number that the class was declared we can easily check for comments that are placed before that line and remove them. In order to decrease the chances of removing a self-admitted technical debt comment while executing this filter we calibrated this heuristic to not remove comments containing one of task annotations (i.e., ``TODO:'', ``FIXME:'', or ``XXX:'') ~\cite{Storey2008ICSE}. Task annotations are an extended functionality provided by most of the popular Java \textit{IDEs} including Eclipse, InteliJ and NetBeans. When one of these words are used inside a comment the IDE will automatically keep track of the comment creating a centralized list of tasks that can be conveniently accessed later on.
+
+Long comments that are created using multiple \emph{Single-line} comments instead of a \emph{Block} comment can hinder the understanding of the message considering the case that the reader (i.e., human or machine) analyzes each one of these comments independently. To solve that problem, we create a heuristic that searches for consecutive Single-line comments and groups them as one comment.
+ 
+Commented source code is found in the projects due to many different reasons. One of the possibilities is that the code is not currently being used. Other is that, the code is used for debugging purposes only. Based on our analysis, commented source code does not have self-admitted technical debt. Our heuristic removes commented source code using a simple regular expression that captures typical Java code structures.
+
+Automatically generated comments by the IDE are filtered out as well. These comments are inserted as part of code snippets used to generate constructors, methods and try catch blocks, and have a fixed format (i.e., ``Auto-generated constructor stub'', ``Auto-generated method stub'', and ``Auto-generated catch block''). Therefore our heuristic searches for these automatically generated comments and removes them. 
+
+Javadoc comments rarely mention self-admitted technical debt. For the Javadoc comments that do mention self-admitted technical debt, we notice that they usually contain one of the task annotations (i.e., ``TODO:'', ``FIXME:'', or ``XXX:''). Therefore, our heuristic removes all comments of the type Javadoc unless they contain at least one of the task annotations  To do so, we create a simple regular expression that searches for the task annotations before removing the comment.  
+
+The steps mentioned above significantly reduced the number of comments in our dataset and helped us focus on the most applicable and insightful comments. For example, in the Ant project, applying the above steps helped to reduce the number of comments from 21,587 to 4,137 meaning a reduction of 80.83\% in the number of comments to be manually analyzed. Using the filtering heuristics we were able to remove from 39.25\% to 85.89\% of all comments. Table \ref{tab:project_details} provides the number of comments kept after the filtering heuristics for each project.
+
+\subsubsection*{NLP Classification}
+\label{subsub:nlp_classification}
+\todo{falar que procuramos debto tec en todos os arquivos}
+
+\subsubsection*{Find Technical Debt Authors}
+\label{subsub:find_technical_debt_authors}
+
+Once we have classified all comments as \SATD or non \SATD we can search for the authors responsible for the introduction and eventual removal of the \SATD comments. As described in subsection \ref{subsub:checkout_all_versions_of_files} we have stored all different versions of all source code files. Therefore, to find the author who introduced a \SATD comment we look into the oldest version of the file containing the analyzed comment, and incrementally search through all future versions of that file until we find the first time that the comment appears for the first time. Once found, we keep tracking the \SATD comment in the remaining future versions of the file checking if  the \SATD comment was removed. 
+
+Additionally, when searching for authors who removed \SATD comments we have to take into consideration deleted files. As we also identify the files that once was removed we can check if the last version of the file before removal contained \SATD comments. If that is the case, the author who removed the file is also the author who removed the \SATD comments. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 \subsection*{Manually Classified Data Approach}
 \label{sub:manually_classified_data_approach}
@@ -50,19 +154,14 @@ To identify the author who removed the technical debt we start by analyzing the 
 
 It is also possible that during the development of the project the \SATD file has been removed. As we have the mapping between the fully qualified name of the file and the version that it belongs we can also identify if they were removed. When we identify that the file was removed, we assume that the author responsible for the deletion is also the author who removed the \SATD comments that were in that file.
 
-\begin{figure*}[thb!]
-  \centering
-  \includegraphics[width=1\textwidth]{figures/automatically_classified_data_approach.pdf}
-  \caption{Automatically Classified Data Approach Overview}
-  \label{fig:automatically_classified_data_approach_overview}
-\end{figure*}
 
-\subsection*{Automatically Classified Data Approach}
-\label{sub:automatically_classified_data_approach}
 
-We developed a Python based tool that is capable of mining all the necessary information for our study based on a git repository URL. In a nutshell the tool first clones the analyzed repository locally. Second, it identifies all Java source code files in the repository. By analyzing the history of the project the tool identifies even the files that were already removed. Third, we use a third part library to parse the source code and extract the information that we use in our analysis. Fourth, we apply filtering heuristics that aims to eliminate non \SATD comments. Fifth, it uses NLP techniques to classify the comments as \SATD. Lastly, the tool identifies the authors that are responsible for the introduction and removal of the \SATD comments. 
+% \subsection*{Automatically Classified Data Approach}
+% \label{sub:automatically_classified_data_approach}
 
-In an effort to evaluate the performance of our tool we compare the \SATD classification obtained doing this process with the manually classified dataset. 
+% We developed a Python based tool that is capable of mining all the necessary information for our study based on a git repository URL. In a nutshell the tool first clones the analyzed repository locally. Second, it identifies all Java source code files in the repository. By analyzing the history of the project the tool identifies even the files that were already removed. Third, we use a third part library to parse the source code and extract the information that we use in our analysis. Fourth, we apply filtering heuristics that aims to eliminate non \SATD comments. Fifth, it uses NLP techniques to classify the comments as \SATD. Lastly, the tool identifies the authors that are responsible for the introduction and removal of the \SATD comments. 
+
+% In an effort to evaluate the performance of our tool we compare the \SATD classification obtained doing this process with the manually classified dataset. 
 
 \subsubsection*{Project Data Extraction}
 \label{subsub:project_data_extraction}
