@@ -1,0 +1,106 @@
+% -*- root: main.tex -*-
+
+The main goal of our study is to understand what happens with \SATD comments after they are introduced in projects. To do that, we divided our study in two main parts. First, we use a manually classified dataset that contains \SATD comments from three open source projects. Then, we trace each \SATD finding when and by who the technical debt was introduced and removed. After that, we run our analysis and examine the results. Second, to scale our approach to more projects we implement a process that does not depends on a manually classified dataset. Using this approach we extracted \SATD comments from other five open source projects, and similarly we analyze the \SATD comments of these projects. Figure~\ref{fig:manually_classified_data_approach_overview} shows an overview of our manual approach, Figure~\ref{fig:automatically_classified_data_approach_overview} shows an overview of our automatic approach, and the following subsections detail each step.
+
+\begin{figure*}[thb!]
+  \centering
+  \includegraphics[width=1\textwidth]{figures/manually_classified_data_approach.pdf}
+  \caption{Manually Classified Data Approach Overview}
+  \label{fig:manually_classified_data_approach_overview}
+\end{figure*}
+
+\subsection*{Manually Classified Data Approach}
+\label{sub:manually_classified_data_approach}
+
+As shown in previous work, technical debt can be classified into different types ~\cite{Alves2014MTD}. However, design technical debt is the most common ~\cite{Maldonado2015MTD} and impactful ~\cite{Ernst2015FSE} type of debt. Therefore, to perform our study, we use manually classified \SATD comments from three different projects, namely Apache Ant, Apache Jmeter and Jruby. The analyzed dataset consists of 754 \SATD design comments distributed between the three projects. We choose to analyze Apache Ant, Apache Jmeter and Jruby as the version that contains the manually classified comments has enough past and future versions to be analyzed. Moreover, they have git repositories that are currently maintained enabling us to apply our approach. 
+
+The manually classified comments are part of a bigger dataset of \SATD comments created during ours previous studies ~\cite{Maldonado2015MTD,Maldonado2015TSE}. Basically, during these previous works, we created a public available dataset containing 62,566 comments extracted from ten open source projects. These comments were classified as \SATD comments or as regular comments (i.e., comments without technical debt). The dataset was classified by the first author and later, to mitigate the risk of bias, another student was asked to classify a statistically significant sample of the dataset. The Cohen's kappa coefficient ~\cite{cohen1960coefficient} (i.e., the level of agreement between both reviewer) was of +0.81. The resulting coefficient is scaled to range between -1 and +1, where negative value means poorer than chance agreement, zero indicates exactly chance agreement, and positive value indicates better than chance agreement ~\cite{fleiss1973equivalence}.
+
+\subsubsection*{Technical Debt Files Identification}
+\label{subsub:technical_debt_files_identification}
+
+We use the fully qualified name of the file (i.e., file path plus file name) to mine information from the source code repository, and the manually classified dataset contains the fully qualified name of each file that contains at least one \SATD design debt comment. However, the fully qualified name of the manually dataset does not correspond to the latest available version, and there is the possibility that the file has been moved around in future versions. The same problem could happen in past versions as well. Therefore, we need to identify the fully qualified name of each file on each future and past versions. 
+
+In order to do that, we first extract the all versions of an project. Second, we incrementally try to match the fully qualified name in these versions. Every time that we have a match means that the file has not been moved. When we are not able to match the fully qualified name of the file we try to match just the file name. In the case that we have a single match using the file name we consider that the file has simply been moved to a different folder. In the case that we have more than one match using the file name we compare the similarity between the files (i.e., shortest added distance) and consider the most similar of the files as the file that has been moved. Lastly in the case that all these methods fails to find a match we consider that the file has been removed in the analyzed version.  
+
+This process results in a mapping containing the fully qualified name for each version, and we store this information back in the database for future use.
+
+\subsubsection*{Checkout All Versions of Technical Debt Files}
+\label{subsub:checkout_all_versions_of_technical_debt_files}
+
+Once that we identified the fully qualified name of the \SATD files we can extract from the source code repository all the different versions of these files. Having all versions of the \SATD files allow us to pinpoint the exact moment that the \SATD comment was introduced and if it was later removed.
+
+First, we group the different fully qualified names that we obtained for each file. For example, if ``file1'' was in ``path1'' during 10 versions and then it was moved to ``path2''. The group of fully qualified names for ``file1'' would have two items: ``path1/file1'' and ``path2/file1''. 
+
+Second, we identify the latest version (i.e., tag) that corresponding to each fully qualified name. This way we can checkout the repository to the desired version and extract all the changes (i.e., commits) done to the file considering the fully qualified name. This information is parsed and inserted into our database, providing us quick access to all commits that touched each \SATD file. 
+
+Third, we use the commit list of each \SATD file to checkout all changed versions. This computation results in a collection of files that represents the full history of the \SATD file.  
+
+\subsubsection*{Identify Author Who Introduced the Technical Debt}
+\label{subsub:identify_author_who_introduced_the_technical_debt}
+
+The next step is to identify the author who introduced the technical debt. In order to do so, we search for each \SATD comment that was manually classified in all different file versions that it belongs. We start by analyzing the oldest version of the \SATD file looking for a match. In the case that the match is negative we move to the next \SATD file version. We repeat this process until we find the exact match of the \SATD comment. 
+
+We consider that we found the introduction of the \SATD comment when we have a exact match of the manual classified \SATD comment. In some cases the \SATD comment possess multiple lines, and it is possible to this comment to have partial matches (i.e., not all lines) across the files. However, we consider that the manual classified \SATD comment offers us the certainty that the comment is in fact a \SATD and should be considered in full while searching the version that it was introduced.
+
+\subsubsection*{Identify Author Who Removed the Technical Debt}
+\label{subsub:identify_author_who_removed_the_technical_debt}
+
+To identify the author who removed the technical debt we start by analyzing the next file version that the \SATD comment was found. We incrementally check all future versions of the file until we can not find a match anymore. In the case that we are able to find the \SATD comment in all future versions means that the \SATD comment was not removed, and therefore has not a removed author to be identified. 
+
+It is also possible that during the development of the project the \SATD file has been removed. As we have the mapping between the fully qualified name of the file and the version that it belongs we can also identify if they were removed. When we identify that the file was removed, we assume that the author responsible for the deletion is also the author who removed the \SATD comments that were in that file.
+
+\begin{figure*}[thb!]
+  \centering
+  \includegraphics[width=1\textwidth]{figures/automatically_classified_data_approach.pdf}
+  \caption{Automatically Classified Data Approach Overview}
+  \label{fig:automatically_classified_data_approach_overview}
+\end{figure*}
+
+\subsection*{Automatically Classified Data Approach}
+\label{sub:automatically_classified_data_approach}
+
+We developed a Python based tool that is capable of mining all the necessary information for our study based on a git repository URL. In a nutshell the tool first clones the analyzed repository locally. Second, it identifies all Java source code files in the repository. By analyzing the history of the project the tool identifies even the files that were already removed. Third, we use a third part library to parse the source code and extract the information that we use in our analysis. Fourth, we apply filtering heuristics that aims to eliminate non \SATD comments. Fifth, it uses NLP techniques to classify the comments as \SATD. Lastly, the tool identifies the authors that are responsible for the introduction and removal of the \SATD comments. 
+
+In an effort to evaluate the performance of our tool we compare the \SATD classification obtained doing this process with the manually classified dataset. 
+
+\subsubsection*{Project Data Extraction}
+\label{subsub:project_data_extraction}
+
+To perform our study we selected five open source projects namely Camel, Gerrit, Hadoop, Log4j and Tomcat. These projects belongs to different application domains, and accordingly with OpenHub, they are well commented projects  with high level of developer activity. OpenHub is an on-line community and public directory that offers analytics, search services and tools for open source software \cite{Openhub:home}.
+
+\subsubsection*{Checkout All Versions of Files}
+\label{subsub:checkout_all_versions_of_files}
+
+\subsubsection*{Parse Source Code}
+\label{subsub:parse_source_code}
+
+We use SrcML \cite{srcml} to parse the source code files that we identified in the repository. SrcML is a open source library that parses source code files into a XML structure. The resulting XML file has specifics tags that allow us to easily identify elements that we want to extract. This way we extract all comments from the source code files and information related to them for example, the line that each comment starts, finishes and the type of the comment (i.e., Javadoc, Line or Block).
+
+\subsubsection*{Filtering Comments}
+\label{subsub:filtering_comments}
+
+Comments are found in most of software projects.
+
+License comments are not very likely to contain self-admitted technical debt, and are commonly added before the declaration of the class. We create a heuristic that removes comments that are placed before the class declaration. Since we know the line number that the class was declared we can easily check for comments that are placed before that line and remove them. In order to decrease the chances of removing a self-admitted technical debt comment while executing this filter we calibrated this heuristic to not remove comments containing one of task annotations (i.e., ``TODO:'', ``FIXME:'', or ``XXX:'') ~\cite{Storey2008ICSE}. Task annotations are an extended functionality provided by most of the popular Java \textit{IDEs} including Eclipse, InteliJ and NetBeans. When one of these words are used inside a comment the IDE will automatically keep track of the comment creating a centralized list of tasks that can be conveniently accessed later on.
+
+Long comments that are created using multiple \emph{Single-line} comments instead of a \emph{Block} comment can hinder the understanding of the message considering the case that the reader (i.e., human or machine) analyzes each one of these comments independently. To solve that problem, we create a heuristic that searches for consecutive Single-line comments and groups them as one comment.
+ 
+Commented source code is found in the projects due to many different reasons. One of the possibilities is that the code is not currently being used. Other is that, the code is used for debugging purposes only. Based on our analysis, commented source code does not have self-admitted technical debt. Our heuristic removes commented source code using a simple regular expression that captures typical Java code structures.
+
+Automatically generated comments by the IDE are filtered out as well. These comments are inserted as part of code snippets used to generate constructors, methods and try catch blocks, and have a fixed format (i.e., ``Auto-generated constructor stub'', ``Auto-generated method stub'', and ``Auto-generated catch block''). Therefore our heuristic searches for these automatically generated comments and removes them. 
+
+Javadoc comments rarely mention self-admitted technical debt. For the Javadoc comments that do mention self-admitted technical debt, we notice that they usually contain one of the task annotations (i.e., ``TODO:'', ``FIXME:'', or ``XXX:''). Therefore, our heuristic removes all comments of the type Javadoc unless they contain at least one of the task annotations  To do so, we create a simple regular expression that searches for the task annotations before removing the comment.  
+
+The steps mentioned above significantly reduced the number of comments in our dataset and helped us focus on the most applicable and insightful comments. For example, in the Ant project, applying the above steps helped to reduce the number of comments from 21,587 to 4,137 meaning a reduction of 80.83\% in the number of comments to be manually analyzed. Using the filtering heuristics we were able to remove from 39.25\% to 85.89\% of all comments. Table \ref{tab:project_details} provides the number of comments kept after the filtering heuristics for each project.
+
+\subsubsection*{NLP Classification}
+\label{subsub:nlp_classification}
+\todo{falar que procuramos debto tec en todos os arquivos}
+
+\subsubsection*{Find Technical Debt Authors}
+\label{subsub:find_technical_debt_authors}
+
+Once we have classified all comments as \SATD or non \SATD we can search for the authors responsible for the introduction and eventual removal of the \SATD comments. As described in subsection \ref{subsub:checkout_all_versions_of_files} we have stored all different versions of all source code files. Therefore, to find the author who introduced a \SATD comment we look into the oldest version of the file containing the analyzed comment, and incrementally search through all future versions of that file until we find the first time that the comment appears for the first time. Once found, we keep tracking the \SATD comment in the remaining future versions of the file checking if  the \SATD comment was removed. 
+
+Additionally, when searching for authors who removed \SATD comments we have to take into consideration deleted files. As we also identify the files that once was removed we can check if the last version of the file before removal contained \SATD comments. If that is the case, the author who removed the file is also the author who removed the \SATD comments. 
