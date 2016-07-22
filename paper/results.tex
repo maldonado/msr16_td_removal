@@ -6,53 +6,75 @@ The main goal of our study is to better understand what happens to \SATD once it
 \vspace{3mm}
 
 \noindent \textbf{Motivation:} 
+Prior work showed that some technical debt may remain in the software system for a long time, up to 10 years in certain cases. 
 
 \vspace{1mm}
 \noindent \textbf{Approach:} 
+We measure the amount of SATD that gets removed, after it was introduced.
 
 \vspace{1mm}
 \noindent \textbf{Results:} 
 
-\conclusionbox{}
+\begin{itemize}
+\item Add table showing the amount that gets removed per project.
+\end{itemize}
+
+\conclusionbox{Avg. 73\%. Range: 40-90\% of TD gets removed.}
 
 \vspace{3mm}
 \noindent\rqii
 \vspace{3mm}
 
 \noindent \textbf{Motivation:} 
+Intuition tells us that it would be more difficult to have other address TD since 1) they need to know how to address the issue and 2) they may not know where the TD is.
 
 \vspace{1mm}
 \noindent \textbf{Approach:} 
+Looked at the commit authors to see if the remover is the same as the introducer.
 
 \vspace{1mm}
 \noindent \textbf{Results:} 
+\begin{itemize}
+\item Add table/figure showing the amount that is self-removed.
+\end{itemize}
 
-\conclusionbox{}
+
+\conclusionbox{Avg. 54\% is self-removed. Range 25-71\%.}
 
 \vspace{3mm}
 \noindent\rqiii
 \vspace{3mm}
 
 \noindent \textbf{Motivation:} 
-
+We would like to understand how long TD survives so that projects can know if it is typical to have TD in their project for that long or not.
 \vspace{1mm}
 \noindent \textbf{Approach:} 
+We examine the time between introduction and removal.
 
 \vspace{1mm}
 \noindent \textbf{Results:} 
+\begin{itemize}
+\item Add figures of distribution of removal time.
+\item Add survival plots
+\item file addition vs. removal
+\item Difference between self vs. non-self removal.
+\end{itemize}
 
-\conclusionbox{}
+\conclusionbox{Avg. median is 30 days.}
 
-% \vspace{3mm}
-% \noindent\rqiv
-% \vspace{3mm}
+ \vspace{3mm}
+ \noindent\rqiv
+ \vspace{3mm}
 
-% \noindent \textbf{Motivation:} 
-
-% \vspace{1mm}
-% \noindent \textbf{Approach:} 
-
-% \vspace{1mm}
-% \noindent \textbf{Results:} 
-
-% \conclusionbox{}
+ \noindent \textbf{Motivation:} 
+We want to know what activities tend to lead to the removal of TD.
+ \vspace{1mm}
+ \noindent \textbf{Approach:} 
+Examine the commits messages of the removal commits and run topic models.
+ \vspace{1mm}
+ 
+ \noindent \textbf{Results:} 
+\begin{itemize}
+\item Add topics/activities that lead to the removal.
+\end{itemize}
+ \conclusionbox{}
