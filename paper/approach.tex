@@ -2,14 +2,14 @@
 
 \begin{figure*}[thb!]
   \centering
-  \includegraphics[width=1\textwidth]{figures/automatically_classified_data_approach.pdf}
+  \includegraphics[width=1\textwidth]{figures/automatically_classified_data_approach2.pdf}
   \caption{Automatically Classified Data Approach Overview}
   \label{fig:automatically_classified_data_approach_overview}
 \end{figure*}
 
 The main goal of our study is to understand what happens with \SATD comments after they get introduced into projects, and most specifically, who are the authors responsible for the introduction and removal of these comments. To do that, we divided our study in two main parts. First, we developed a tool that allow us to extract and classify \SATD comments based on NLP techniques. Using this tool we extracted and classified the comments of five open source projects. Second, we analyze the performance of our tool in terms of precision and recall using two other open source projects which we have manually classified the \SATD comments. 
 
-In a nutshell the tool first clones the analyzed repository locally. Second, it identifies all Java source code files in the repository. By analyzing the history of the project we are able to identify even files that were already removed. Third, we use a third part library to parse the source code and extract the information that we use in our analysis. Fourth, we apply four filtering heuristics that aims to eliminate non \SATD comments. Fifth, it uses NLP techniques to classify the comments as \SATD. Lastly, the tool identifies the authors that are responsible for the introduction and removal of the \SATD comments. 
+In a nutshell the tool first clones the analyzed repository locally. Second, it identifies all Java source code files in the repository. By analyzing the history of the project we are able to identify even files that were already removed. Third, we use a third part library to parse the source code and extract the information that we use in our analysis. Fourth, we apply four filtering heuristics that aims to eliminate non \SATD comments. Lastly, it uses NLP techniques to automatically classify \SATD comments. 
 
 Figure~\ref{fig:automatically_classified_data_approach_overview} shows an overview of our approach, and the following subsections detail each step.
 
