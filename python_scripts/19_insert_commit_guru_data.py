@@ -16,8 +16,8 @@ try:
 
     csv.field_size_limit(sys.maxsize)
 
-    project_name = 'jruby'
-    with open('/Users/evermal/git/msr16_td_removal/commit_guru/jruby.csv', 'rb') as csv_file:
+    project_name = 'log4j'
+    with open('/Users/evermal/Downloads/log4j.csv', 'rb') as csv_file:
         reader = csv.DictReader(csv_file)
         for row in reader:
             if row['commit_hash']:

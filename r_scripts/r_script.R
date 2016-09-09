@@ -13,7 +13,8 @@ postgresql <- dbSendQuery(con, "select epoch_time_to_remove from processed_comme
 data1 <- fetch(postgresql, n=-1)
 dim(data1)
 dbHasCompleted(postgresql)
-median(data1$epoch_time_to_remove/86400)
+seconds_in_a_day <- 86400
+median(data1$epoch_time_to_remove/seconds_in_a_day)
 
 # calculating the median in days from self-removal TD
 library(RPostgreSQL)
@@ -26,6 +27,7 @@ con <- dbConnect(drv, host='localhost', port='5432', dbname='comment_classificat
 # postgresql <- dbSendQuery(con, "select a.epoch_time_to_remove from time_to_remove_td a, technical_debt_summary b where a.processed_comment_id = b.processed_comment_id and b.version_introduced_author = b.version_removed_author and a.project_name = 'jruby'  and a.version_removed_name != 'not_removed' and b.comment_classification = 'DESIGN'")
 # postgresql <- dbSendQuery(con, "select a.epoch_time_to_remove from time_to_remove_td a, technical_debt_summary b where a.processed_comment_id = b.processed_comment_id and b.version_introduced_author = b.version_removed_author and a.version_removed_name != 'not_removed' and b.comment_classification = 'DESIGN'")
 ############################################################################################################################################################################################################################################################################################################################################################
+
 # postgresql <- dbSendQuery(con, "select epoch_time_to_remove from processed_comments where introduced_version_author = removed_version_author and repository_id = 2 and is_introduced_version is true")
 # postgresql <- dbSendQuery(con, "select epoch_time_to_remove from processed_comments where introduced_version_author = removed_version_author and repository_id = 3 and is_introduced_version is true")
 # postgresql <- dbSendQuery(con, "select epoch_time_to_remove from processed_comments where introduced_version_author = removed_version_author and repository_id = 5 and is_introduced_version is true")
@@ -37,7 +39,8 @@ postgresql <- dbSendQuery(con, "select epoch_time_to_remove from processed_comme
 data1 <- fetch(postgresql, n=-1)
 dim(data1)
 dbHasCompleted(postgresql)
-median(data1$epoch_time_to_remove/86400)
+seconds_in_a_day <- 86400
+median(data1$epoch_time_to_remove/seconds_in_a_day)
 
 
 # calculating the median in days from non self-removal TD
@@ -51,7 +54,8 @@ con <- dbConnect(drv, host='localhost', port='5432', dbname='comment_classificat
 # postgresql <- dbSendQuery(con, "select a.epoch_time_to_remove from time_to_remove_td a, technical_debt_summary b where a.processed_comment_id = b.processed_comment_id and b.version_introduced_author != b.version_removed_author and a.project_name = 'jruby'  and a.version_removed_name != 'not_removed' b.comment_classification = 'DESIGN'")
 # postgresql <- dbSendQuery(con, "select a.epoch_time_to_remove from time_to_remove_td a, technical_debt_summary b where a.processed_comment_id = b.processed_comment_id and b.version_introduced_author != b.version_removed_author  and a.version_removed_name != 'not_removed' b.comment_classification = 'DESIGN'")
 ############################################################################################################################################################################################################################################################################################################################################################
-# postgresql <- dbSendQuery(con, "select epoch_time_to_remove from processed_comments where introduced_version_author != removed_version_author and repository_id = 2 and is_introduced_version is true")
+
+postgresql <- dbSendQuery(con, "select epoch_time_to_remove from processed_comments where introduced_version_author != removed_version_author and repository_id = 2 and is_introduced_version is true")
 # postgresql <- dbSendQuery(con, "select epoch_time_to_remove from processed_comments where introduced_version_author != removed_version_author and repository_id = 3 and is_introduced_version is true")
 # postgresql <- dbSendQuery(con, "select epoch_time_to_remove from processed_comments where introduced_version_author != removed_version_author and repository_id = 5 and is_introduced_version is true")
 # postgresql <- dbSendQuery(con, "select epoch_time_to_remove from processed_comments where introduced_version_author != removed_version_author and repository_id = 6 and is_introduced_version is true")
@@ -62,7 +66,8 @@ postgresql <- dbSendQuery(con, "select epoch_time_to_remove from processed_comme
 data1 <- fetch(postgresql, n=-1)
 dim(data1)
 dbHasCompleted(postgresql)
-median(data1$epoch_time_to_remove/86400)
+seconds_in_a_day <- 86400
+median(data1$epoch_time_to_remove/seconds_in_a_day)
 
 
 # self-removal histogram (7x5)
@@ -74,7 +79,7 @@ con <- dbConnect(drv, host='localhost', port='5432', dbname='comment_classificat
 # Manual dataset
 # postgresql <- dbSendQuery(con, "select a.project_name, a.epoch_time_to_remove from time_to_remove_td a, technical_debt_summary b where a.processed_comment_id = b.processed_comment_id and b.version_introduced_author = b.version_removed_author and a.project_name = 'apache-ant' and a.version_removed_name != 'not_removed' and b.comment_classification = 'DESIGN'")
 # postgresql <- dbSendQuery(con, "select a.project_name, a.epoch_time_to_remove from time_to_remove_td a, technical_debt_summary b where a.processed_comment_id = b.processed_comment_id and b.version_introduced_author = b.version_removed_author and a.project_name = 'apache-jmeter' and a.version_removed_name != 'not_removed' and  b.comment_classification = 'DESIGN'")
-postgresql <- dbSendQuery(con, "select a.project_name, a.epoch_time_to_remove from time_to_remove_td a, technical_debt_summary b where a.processed_comment_id = b.processed_comment_id and b.version_introduced_author = b.version_removed_author and a.project_name = 'jruby'  and a.version_removed_name != 'not_removed' and b.comment_classification = 'DESIGN'")
+# postgresql <- dbSendQuery(con, "select a.project_name, a.epoch_time_to_remove from time_to_remove_td a, technical_debt_summary b where a.processed_comment_id = b.processed_comment_id and b.version_introduced_author = b.version_removed_author and a.project_name = 'jruby'  and a.version_removed_name != 'not_removed' and b.comment_classification = 'DESIGN'")
 # ####################################################################################################################################################################################################################################################################################################################################
 # postgresql <- dbSendQuery(con, "select 'Ant tool' as project_name, epoch_time_to_remove from processed_comments where repository_id = 2 and introduced_version_author = removed_version_author and is_introduced_version is true and has_removed_version is true and td_classification = 'DESIGN'")
 # postgresql <- dbSendQuery(con, "select 'Jmeter tool' as project_name, epoch_time_to_remove from processed_comments where repository_id = 3 and introduced_version_author = removed_version_author and is_introduced_version is true and has_removed_version is true and td_classification = 'DESIGN'")

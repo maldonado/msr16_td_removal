@@ -1,24 +1,23 @@
+#################################################################################################################
+-- 1- table technical_debt_summary is the old approach, where the dataset comprehends only Jruby, Ant and Jmeter.
+-- 2- the following queries represents the results for this old approach. Keeping this here just in case we need it.
+#################################################################################################################
 
 -- show all comments that the TD was removed
 select project_name, file_name , version_introduced_author, version_removed_author from technical_debt_summary where version_removed_name != 'not_removed' order by 1,2;
 
-RQ1 - How much of self-admitted technical debt gets removed ? [repeat]
-(consistency of code and comment co-change) 
-
-
-
-
+#################################################################################################################
+-- RQ1. How much self-admitted technical debt gets removed?
+#################################################################################################################
 -- total of TD comments
 select count(*) from technical_debt_summary;
 1127
-
 -- per project
 select project_name, count(*) from technical_debt_summary group by 1;
 ---------------+-------
  jruby         |   622
  apache-ant    |   131
  apache-jmeter |   374
-
 -- removed per project
  select project_name, count(*) from technical_debt_summary where version_removed_name != 'not_removed' group by 1;
 project_name  | count
@@ -27,9 +26,17 @@ project_name  | count
  apache-ant    |    19
  apache-jmeter |    22
 
--- self removal per project
- select project_name, count(*) from technical_debt_summary where version_removed_name != 'not_removed' and version_removed_author = version_introduced_author group by 1;
+#################################################################################################################
+-- RQ2. Who removes self-admitted technical debt? Is it most likely to be self-removed or removed by others? 
+#################################################################################################################
 
+-- self removal per project
+select project_name, count(*) from technical_debt_summary where version_removed_name != 'not_removed' and version_removed_author = version_introduced_author group by 1;
+---------------+-------
+ jruby         |   103
+ apache-ant    |     4
+ apache-jmeter |     2
+ 
 -- found in 491 files:
 select count(distinct(file_name)) from technical_debt_summary;
 491
