@@ -121,16 +121,16 @@ select b.classification, count(*) from processed_comments a , commit_guru b wher
 -- (non self-removal)
 select b.classification, count(*) from processed_comments a , commit_guru b where a.repository_id = 2 and a.is_introduced_version = true and b.commit_hash = a.removed_version_commit_hash and a.introduced_version_author != a.removed_version_author group by 1 order by 2;
 
--- (introduction of TD)       (general removal)            (self-removal)              (non self-removal)
-  classification  | count     classification  | count      classification  | count      classification  | count
-------------------+-------  ------------------+-------   ------------------+-------   ------------------+-------
- Non Functional   |    12    Merge            |     4     Non Functional   |     1     Merge            |     3
- Merge            |    18    Non Functional   |     6     Merge            |     1     Non Functional   |     5
- Perfective       |    22    Perfective       |    23     Preventative     |     5     Perfective       |     9
- Preventative     |    24    Corrective       |    43     Perfective       |    14     Corrective       |    22
- Corrective       |    80    Preventative     |    47     Corrective       |    21     Preventative     |    42
- None             |   256    Feature Addition |   108     Feature Addition |    63     Feature Addition |    45
- Feature Addition |   442    None             |   497     None             |   267     None             |   230
+-- (introduction of TD)       (general removal)            (self-removal)  51.09%           (non self-removal) 48.90%
+  classification  | count     classification  | count      classification  | count            classification  | count
+------------------+-------  ------------------+-------   ------------------+-------         ------------------+-------
+ Non Functional   |    12    Merge            |     4     Non Functional   |     1  0.26     Merge            |     3  0.84
+ Merge            |    18    Non Functional   |     6     Merge            |     1  0.26     Non Functional   |     5  1.40
+ Perfective       |    22    Perfective       |    23     Preventative     |     5  1.34     Perfective       |     9  2.52
+ Preventative     |    24    Corrective       |    43     Perfective       |    14  3.76     Corrective       |    22  6.17
+ Corrective       |    80    Preventative     |    47     Corrective       |    21  5.64     Preventative     |    42  11.79
+ None             |   256    Feature Addition |   108     Feature Addition |    63  16.93    Feature Addition |    45  12.64
+ Feature Addition |   442    None             |   497     None             |   267  71.77    None             |   230  64.60
 
 -- Jmeter
 -- (introduction)
@@ -142,16 +142,18 @@ select b.classification, count(*) from processed_comments a , commit_guru b wher
 -- (non self-removal)
 select b.classification, count(*) from processed_comments a , commit_guru b where a.repository_id = 3 and a.is_introduced_version = true and b.commit_hash = a.removed_version_commit_hash and a.introduced_version_author != a.removed_version_author group by 1 order by 2;
 
--- (introduction)              (general removal)            (self-removal)              (non self-removal)
-  classification  | count      classification  | count     classification  | count     classification  | count
-------------------+-------   ------------------+-------  ------------------+-------   ------------------+-------
- Perfective       |     4     Perfective       |     1    Perfective       |     1    Merge            |    10
- Merge            |    16     Merge            |    14    Merge            |     4    Non Functional   |    13
- Non Functional   |    55     Non Functional   |    25    Non Functional   |    12    Preventative     |    30
- Preventative     |   135     Preventative     |    80    Preventative     |    50    None             |    70
- Feature Addition |   255     Corrective       |   223    Corrective       |   135    Corrective       |    88
- Corrective       |   356     None             |   305    Feature Addition |   222    Feature Addition |    99
- None             |   424     Feature Addition |   321    None             |   235
+-- (introduction)              (general removal)           (self-removal)  68.00%           (non self-removal) 31.99%
+  classification  | count      classification  | count     classification  | count          classification  | count
+------------------+-------   ------------------+-------  ------------------+-------        ------------------+-------
+ Perfective       |     4     Perfective       |     1    Perfective       |     1  0.15    Merge            |    10   3.22  
+ Merge            |    16     Merge            |    14    Merge            |     4  0.60    Non Functional   |    13   4.19
+ Non Functional   |    55     Non Functional   |    25    Non Functional   |    12  1.82    Preventative     |    30   9.67
+ Preventative     |   135     Preventative     |    80    Preventative     |    50  7.58    None             |    70   22.58
+ Feature Addition |   255     Corrective       |   223    Corrective       |   135  20.48   Corrective       |    88   28.38
+ Corrective       |   356     None             |   305    Feature Addition |   222  33.68   Feature Addition |    99   31.93
+ None             |   424     Feature Addition |   321    None             |   235  35.66
+
+
 
 -- Camel
 -- (introduction)
@@ -164,16 +166,16 @@ select b.classification, count(*) from processed_comments a , commit_guru b wher
 select b.classification, count(*) from processed_comments a , commit_guru b where a.repository_id = 5 and a.is_introduced_version = true and b.commit_hash = a.removed_version_commit_hash and a.introduced_version_author != a.removed_version_author group by 1 order by 2;
 
 
--- (introduction)               -- (general removal)        (self-removal)             (non self-removal)
-  classification  | count       classification  | count     classification  | count    classification  | count
-------------------+-------    ------------------+-------  ------------------+-------  ------------------+-------
- Merge            |     3      Merge            |     2    Merge            |     2   Non Functional   |     5
- Perfective       |     4      Non Functional   |    10    Non Functional   |     5   Perfective       |     6
- Preventative     |   442      Perfective       |    13    Perfective       |     7   Preventative     |     8
- Corrective       |   490      Preventative     |    85    Preventative     |    77   Corrective       |   312
- Feature Addition |   972      Corrective       |   407    Corrective       |    95   None             |   386
- None             |  2416      Feature Addition |  1154    Feature Addition |   597   Feature Addition |   557
-                               None             |  2254    None             |  1868
+-- (introduction)               -- (general removal)        (self-removal) 67.54%           (non self-removal) 32.45%
+  classification  | count       classification  | count     classification  | count          classification  | count
+------------------+-------    ------------------+-------  ------------------+-------       ------------------+-------
+ Merge            |     3      Merge            |     2    Merge            |     2 0.07    Non Functional   |     5  0.39
+ Perfective       |     4      Non Functional   |    10    Non Functional   |     5 0.18    Perfective       |     6  0.47
+ Preventative     |   442      Perfective       |    13    Perfective       |     7 0.26    Preventative     |     8  0.62
+ Corrective       |   490      Preventative     |    85    Preventative     |    77 2.90    Corrective       |   312  24.48
+ Feature Addition |   972      Corrective       |   407    Corrective       |    95 3.58    None             |   386  30.29
+ None             |  2416      Feature Addition |  1154    Feature Addition |   597 22.51   Feature Addition |   557  43.72
+                               None             |  2254    None             |  1868 70.46
 
 -- Hadoop
 -- (introduction)
@@ -185,16 +187,17 @@ select b.classification, count(*) from processed_comments a , commit_guru b wher
 -- (non self-removal)
 select b.classification, count(*) from processed_comments a , commit_guru b where a.repository_id = 6 and a.is_introduced_version = true and b.commit_hash = a.removed_version_commit_hash and a.introduced_version_author != a.removed_version_author group by 1 order by 2;
 
- -- (introduction)           (general removal)            (self-removal)              (non self-removal)   
-  classification  | count    classification  | count      classification  | count     classification  | count
-------------------+------- ------------------+-------   ------------------+-------   ------------------+-------
- Perfective       |     7   Non Functional   |     1     Perfective       |     3    Non Functional   |     1
- Merge            |    18   Perfective       |     6     Preventative     |     9    Perfective       |     3
- Preventative     |    19   Merge            |     6     Feature Addition |    21    Preventative     |     4
- Corrective       |    72   Preventative     |    13     Corrective       |    22    Merge            |     6
- Feature Addition |   144   Feature Addition |    66     None             |    61    Feature Addition |    45
- Non Functional   |   219   Corrective       |    82                                 Corrective       |    60
- None             |   680   None             |   297                                 None             |   236
+ -- (introduction)           (general removal)            (self-removal) 24.62%           (non self-removal) 75.37%
+  classification  | count    classification  | count      classification  | count         classification  | count
+------------------+------- ------------------+-------   ------------------+-------       ------------------+-------
+ Perfective       |     7   Non Functional   |     1     Perfective       |     3 2.58    Non Functional   |     1  0.28
+ Merge            |    18   Perfective       |     6     Preventative     |     9 7.75    Perfective       |     3  0.84
+ Preventative     |    19   Merge            |     6     Feature Addition |    21 18.10   Preventative     |     4  1.12
+ Corrective       |    72   Preventative     |    13     Corrective       |    22 18.96   Merge            |     6  1.69
+ Feature Addition |   144   Feature Addition |    66     None             |    61 52.58   Feature Addition |    45  12.67
+ Non Functional   |   219   Corrective       |    82                                      Corrective       |    60  16.90
+ None             |   680   None             |   297                                      None             |   236  66.47
+
 
 -- Tomcat
 -- (introduction)
@@ -206,15 +209,15 @@ select b.classification, count(*) from processed_comments a , commit_guru b wher
 -- (non self-removal)
 select b.classification, count(*) from processed_comments a , commit_guru b where a.repository_id = 7 and a.is_introduced_version = true and b.commit_hash = a.removed_version_commit_hash and a.introduced_version_author != a.removed_version_author group by 1 order by 2;
 
--- (introduction)             -- (general removal)        -- (self-removal)           -- (non self-removal)
-  classification  | count     classification  | count     classification  | count     classification  | count
-------------------+-------  ------------------+-------  ------------------+-------  ------------------+-------
- Perfective       |    10    Non Functional   |    14    Non Functional   |     5    Preventative     |     2
- Preventative     |    41    Perfective       |    20    Perfective       |     8    Non Functional   |     9
- Non Functional   |    68    Preventative     |    30    Preventative     |    28    Perfective       |    12
- Corrective       |   215    Feature Addition |   185    Corrective       |   103    Feature Addition |    26
- None             |   367    Corrective       |   187    Feature Addition |   159    Corrective       |    84
- Feature Addition |   616    None             |   573    None             |   275    None             |   298
+-- (introduction)             -- (general removal)        -- (self-removal) 57.28%           -- (non self-removal) 42.71%
+  classification  | count     classification  | count     classification  | count             classification  | count
+------------------+-------  ------------------+-------  ------------------+-------          ------------------+-------
+ Perfective       |    10    Non Functional   |    14    Non Functional   |     5  0.86      Preventative     |     2  0.46
+ Preventative     |    41    Perfective       |    20    Perfective       |     8  1.38      Non Functional   |     9  2.08
+ Non Functional   |    68    Preventative     |    30    Preventative     |    28  4.84      Perfective       |    12  2.78
+ Corrective       |   215    Feature Addition |   185    Corrective       |   103  17.82     Feature Addition |    26  6.03
+ None             |   367    Corrective       |   187    Feature Addition |   159  27.50     Corrective       |    84  19.48
+ Feature Addition |   616    None             |   573    None             |   275  47.57     None             |   298  69.14
 
 -- Log4j
 -- (introduction)
@@ -226,13 +229,13 @@ select b.classification, count(*) from processed_comments a , commit_guru b wher
 -- (non self-removal)
 select b.classification, count(*) from processed_comments a , commit_guru b where a.repository_id = 8 and a.is_introduced_version = true and b.commit_hash = a.removed_version_commit_hash and a.introduced_version_author != a.removed_version_author group by 1 order by 2;
 
--- (introduction)              -- (general removal)       -- (self-removal)            -- (non self-removal)
-  classification  | count      classification  | count     classification  | count     classification  | count
-------------------+-------   ------------------+-------  ------------------+-------  ------------------+-------
- Non Functional   |     3     Preventative     |     1    Corrective       |     7    Preventative     |     1
- Preventative     |     4     Corrective       |    33    Feature Addition |    29    None             |     9
- Corrective       |    16     Feature Addition |    39    None             |    36    Feature Addition |    10
- None             |    46     None             |    45                                Corrective       |    26
+-- (introduction)              -- (general removal)       -- (self-removal) 61.01%      -- (non self-removal) 38.98%
+  classification  | count      classification  | count     classification  | count           classification  | count
+------------------+-------   ------------------+-------  ------------------+-------        ------------------+-------
+ Non Functional   |     3     Preventative     |     1    Corrective       |     7 9.72     Preventative     |     1   2.17
+ Preventative     |     4     Corrective       |    33    Feature Addition |    29 40.27    None             |     9  19.56
+ Corrective       |    16     Feature Addition |    39    None             |    36 50       Feature Addition |    10  21.73
+ None             |    46     None             |    45                                      Corrective       |    26  56.52
  Feature Addition |    66  
 
 
@@ -246,16 +249,15 @@ select b.classification, count(*) from processed_comments a , commit_guru b wher
 -- (non self-removal)
 select b.classification, count(*) from processed_comments a , commit_guru b where a.repository_id = 9 and a.is_introduced_version = true and b.commit_hash = a.removed_version_commit_hash and a.introduced_version_author != a.removed_version_author group by 1 order by 2;
 
--- (introduction)               (general removal)          (self-removal)            (non self-removal)
-  classification  | count     classification  | count    classification  | count     classification  | count
-------------------+-------  ------------------+------- ------------------+-------  ------------------+-------
- Perfective       |     4    Non Functional   |     2   Non Functional   |     1    Non Functional   |     1
- Non Functional   |     4    Merge            |     2   Perfective       |     1    Merge            |     1
- Corrective       |    45    Perfective       |     3   Merge            |     1    Perfective       |     2
- Merge            |    50    Feature Addition |    36   Feature Addition |    30    Feature Addition |     6
- None             |    71    None             |    79   None             |    44    Corrective       |    10
- Feature Addition |    87    Corrective       |    81   Corrective       |    71    None             |    35
-
+-- (introduction)               (general removal)          (self-removal) 72.90%          (non self-removal) 27.09%
+  classification  | count     classification  | count    classification  | count           classification  | count
+------------------+-------  ------------------+------- ------------------+-------        ------------------+-------
+ Perfective       |     4    Non Functional   |     2   Non Functional   |     1  0.67    Non Functional   |     1  1.81 
+ Non Functional   |     4    Merge            |     2   Perfective       |     1  0.67    Merge            |     1  1.81
+ Corrective       |    45    Perfective       |     3   Merge            |     1  0.67    Perfective       |     2  3.63
+ Merge            |    50    Feature Addition |    36   Feature Addition |    30  20.27   Feature Addition |     6  10.90
+ None             |    71    None             |    79   None             |    44  29.72   Corrective       |    10  18.18
+ Feature Addition |    87    Corrective       |    81   Corrective       |    71  47.97   None             |    35  63.63
 
 
 -- All projects 
@@ -269,13 +271,13 @@ select b.classification, count(*) from processed_comments a , commit_guru b wher
 select b.classification, count(*) from processed_comments a , commit_guru b where a.repository_id in (2,3,5,6,7,8,9) and a.is_introduced_version = true and b.commit_hash = a.removed_version_commit_hash and a.introduced_version_author != a.removed_version_author group by 1 order by 2;
 
 
--- (non self-removal)        -- (general removal)       -- (self-removal)           -- (non self-removal)
-  classification  | count    classification  | count    classification  | count     classification  | count
-------------------+------- ------------------+------- ------------------+-------  ------------------+-------
- Perfective       |    51   Merge            |    28   Merge            |     8    Merge            |    20
- Merge            |   105   Non Functional   |    58   Non Functional   |    24    Perfective       |    32
- Non Functional   |   361   Perfective       |    66   Perfective       |    34    Non Functional   |    34
- Preventative     |   665   Preventative     |   256   Preventative     |   169    Preventative     |    87
- Corrective       |  1274   Corrective       |  1056   Corrective       |   454    Corrective       |   602
- Feature Addition |  2582   Feature Addition |  1909   Feature Addition |  1121    Feature Addition |   788
- None             |  4260   None             |  4050   None             |  2786    None             |  1264
+-- (non self-removal)             -- (general removal)       -- (self-removal) 61.91%         -- (non self-removal) 38.08%
+  classification  | count         classification  | count    classification  | count          classification  | count
+------------------+-------      ------------------+------- ------------------+-------       ------------------+-------
+ Perfective       |    51 0.54   Merge            |    28   Merge            |     8 0.17    Merge            |    20   0.70
+ Merge            |   105 1.12   Non Functional   |    58   Non Functional   |    24 0.52    Perfective       |    32   1.13
+ Non Functional   |   361 3.88   Perfective       |    66   Perfective       |    34 0.73    Non Functional   |    34   1.20
+ Preventative     |   665 7.15   Preventative     |   256   Preventative     |   169 3.67    Preventative     |    87   3.07
+ Corrective       |  1274 13.70  Corrective       |  1056   Corrective       |   454 9.87    Corrective       |   602   21.29
+ Feature Addition |  2582 27.76  Feature Addition |  1909   Feature Addition |  1121 24.39   Feature Addition |   788   27.87
+ None             |  4260 45.81  None             |  4050   None             |  2786 60.61   None             |  1264   44.71
