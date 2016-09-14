@@ -81,8 +81,8 @@ con <- dbConnect(drv, host='localhost', port='5432', dbname='comment_classificat
 # postgresql <- dbSendQuery(con, "select a.project_name, a.epoch_time_to_remove from time_to_remove_td a, technical_debt_summary b where a.processed_comment_id = b.processed_comment_id and b.version_introduced_author = b.version_removed_author and a.project_name = 'apache-jmeter' and a.version_removed_name != 'not_removed' and  b.comment_classification = 'DESIGN'")
 # postgresql <- dbSendQuery(con, "select a.project_name, a.epoch_time_to_remove from time_to_remove_td a, technical_debt_summary b where a.processed_comment_id = b.processed_comment_id and b.version_introduced_author = b.version_removed_author and a.project_name = 'jruby'  and a.version_removed_name != 'not_removed' and b.comment_classification = 'DESIGN'")
 # ####################################################################################################################################################################################################################################################################################################################################
-# postgresql <- dbSendQuery(con, "select 'Ant tool' as project_name, epoch_time_to_remove from processed_comments where repository_id = 2 and introduced_version_author = removed_version_author and is_introduced_version is true and has_removed_version is true and td_classification = 'DESIGN'")
-# postgresql <- dbSendQuery(con, "select 'Jmeter tool' as project_name, epoch_time_to_remove from processed_comments where repository_id = 3 and introduced_version_author = removed_version_author and is_introduced_version is true and has_removed_version is true and td_classification = 'DESIGN'")
+# postgresql <- dbSendQuery(con, "select 'Ant' as project_name, epoch_time_to_remove from processed_comments where repository_id = 2 and introduced_version_author = removed_version_author and is_introduced_version is true and has_removed_version is true and td_classification = 'DESIGN'")
+# postgresql <- dbSendQuery(con, "select 'Jmeter' as project_name, epoch_time_to_remove from processed_comments where repository_id = 3 and introduced_version_author = removed_version_author and is_introduced_version is true and has_removed_version is true and td_classification = 'DESIGN'")
 # postgresql <- dbSendQuery(con, "select 'Camel' as project_name, epoch_time_to_remove from processed_comments where repository_id = 5 and introduced_version_author = removed_version_author and is_introduced_version is true and has_removed_version is true and td_classification = 'DESIGN'")
 # postgresql <- dbSendQuery(con, "select 'Hadoop' as project_name, epoch_time_to_remove from processed_comments where repository_id = 6 and introduced_version_author = removed_version_author and is_introduced_version is true and has_removed_version is true and td_classification = 'DESIGN'")
 # postgresql <- dbSendQuery(con, "select 'Tomcat' as project_name, epoch_time_to_remove from processed_comments where repository_id = 7 and introduced_version_author = removed_version_author and is_introduced_version is true and has_removed_version is true and td_classification = 'DESIGN'")
@@ -94,8 +94,7 @@ dim(data1)
 dbHasCompleted(postgresql)
 # hist(data1$epoch_time_to_remove/86400, xlab='Days to remove', main = paste('Self-removal histogram of ', data1$project_name[1]) )
 vioplot(data1$epoch_time_to_remove/86400, names=c(data1$project_name[1]),   col="gold")
-title(paste('Self-removal of ', data1$project_name[1]), ylab="Number of days")
-
+title(paste('Self-removal of ', data1$project_name[1]), ylab="Number of days", xlab = paste("N=", nrow(data1)," , ", "Mediam in days =", round(median(data1$epoch_time_to_remove/86400), digits = 0)))
 
 # non self-removal histogram
 library(RPostgreSQL)
@@ -108,21 +107,21 @@ con <- dbConnect(drv, host='localhost', port='5432', dbname='comment_classificat
 # postgresql <- dbSendQuery(con, "select a.project_name, a.epoch_time_to_remove from time_to_remove_td a, technical_debt_summary b where a.processed_comment_id = b.processed_comment_id and b.version_introduced_author != b.version_removed_author and a.project_name = 'apache-jmeter' and a.version_removed_name != 'not_removed' and b.comment_classification = 'DESIGN'")
 # postgresql <- dbSendQuery(con, "select a.project_name, a.epoch_time_to_remove from time_to_remove_td a, technical_debt_summary b where a.processed_comment_id = b.processed_comment_id and b.version_introduced_author != b.version_removed_author and a.project_name = 'jruby'  and a.version_removed_name != 'not_removed' and b.comment_classification = 'DESIGN'")
 # #################################################################################################################################################################################################################################################################################################################################### 
-# postgresql <- dbSendQuery(con, "select 'Ant tool' as project_name, epoch_time_to_remove from processed_comments where repository_id = 2 and introduced_version_author != removed_version_author and is_introduced_version is true and has_removed_version is true and td_classification = 'DESIGN'")
-# postgresql <- dbSendQuery(con, "select 'Jmeter tool' as project_name, epoch_time_to_remove from processed_comments where repository_id = 3 and introduced_version_author != removed_version_author and is_introduced_version is true and has_removed_version is true and td_classification = 'DESIGN'")
+# postgresql <- dbSendQuery(con, "select 'Ant' as project_name, epoch_time_to_remove from processed_comments where repository_id = 2 and introduced_version_author != removed_version_author and is_introduced_version is true and has_removed_version is true and td_classification = 'DESIGN'")
+# postgresql <- dbSendQuery(con, "select 'Jmeter' as project_name, epoch_time_to_remove from processed_comments where repository_id = 3 and introduced_version_author != removed_version_author and is_introduced_version is true and has_removed_version is true and td_classification = 'DESIGN'")
 # postgresql <- dbSendQuery(con, "select 'Camel' as project_name, epoch_time_to_remove from processed_comments where repository_id = 5 and introduced_version_author != removed_version_author and is_introduced_version is true and has_removed_version is true and td_classification = 'DESIGN'")
 # postgresql <- dbSendQuery(con, "select 'Hadoop' as project_name, epoch_time_to_remove from processed_comments where repository_id = 6 and introduced_version_author != removed_version_author and is_introduced_version is true and has_removed_version is true and td_classification = 'DESIGN'")
 # postgresql <- dbSendQuery(con, "select 'Tomcat' as project_name, epoch_time_to_remove from processed_comments where repository_id = 7 and introduced_version_author != removed_version_author and is_introduced_version is true and has_removed_version is true and td_classification = 'DESIGN'")
 # postgresql <- dbSendQuery(con, "select 'Log4j' as project_name, epoch_time_to_remove from processed_comments where repository_id = 8 and introduced_version_author != removed_version_author and is_introduced_version is true and has_removed_version is true and td_classification = 'DESIGN'")
 # postgresql <- dbSendQuery(con, "select 'Gerrit' as project_name, epoch_time_to_remove from processed_comments where repository_id = 9 and introduced_version_author != removed_version_author and is_introduced_version is true and has_removed_version is true and td_classification = 'DESIGN'")
-# postgresql <- dbSendQuery(con, "select 'All projects' as project_name, epoch_time_to_remove from processed_comments where repository_id in (2,3,5,6,7,8,9) and introduced_version_author != removed_version_author and is_introduced_version is true and has_removed_version is true and td_classification = 'DESIGN'")
+postgresql <- dbSendQuery(con, "select 'All projects' as project_name, epoch_time_to_remove from processed_comments where repository_id in (2,3,5,6,7,8,9) and introduced_version_author != removed_version_author and is_introduced_version is true and has_removed_version is true and td_classification = 'DESIGN'")
 
 data1 <- fetch(postgresql, n=-1)
 dim(data1)
 dbHasCompleted(postgresql)
 # hist(data1$epoch_time_to_remove/86400, xlab='Days to remove', main = paste('Non self-removal histogran of ', data1$project_name[1]) )
 vioplot(data1$epoch_time_to_remove/86400, names=c(data1$project_name[1]),   col="gold")
-title(paste('Non self-removal of ', data1$project_name[1]), ylab="Number of days")
+title(paste('Non self-removal of ', data1$project_name[1]), ylab="Number of days", xlab = paste("N=", nrow(data1)," , ", "Mediam in days =", round(median(data1$epoch_time_to_remove/86400), digits = 0)))
 
 ######################################################################################################################################################
 # calculating survival plots apache-ant

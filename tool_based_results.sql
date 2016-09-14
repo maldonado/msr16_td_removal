@@ -23,14 +23,15 @@ select repository_id, count(*) from processed_comments where  is_introduced_vers
  select repository_id, count(*) from processed_comments where  is_introduced_version = true and has_removed_version = true  group by 1 order by 1 ;
 -- 3  resulting table:
 
+
 repository_id     TD      Removed TD
 2             |   854  |   728
-3             |  1260  |   981
 5             |  4331  |  3926
-6             |  1164  |   472
-7             |  1317  |  1009
-8             |   135  |   118
 9             |   271  |   208
+6             |  1164  |   472
+3             |  1260  |   981
+8             |   135  |   118
+7             |  1317  |  1009
 
 #################################################################################################################
 -- RQ2. Who removes self-admitted technical debt? Is it most likely to be self-removed or removed by others?
@@ -44,15 +45,15 @@ select repository_id, count(*) from processed_comments where  is_introduced_vers
 select repository_id, count(*) from processed_comments where  is_introduced_version = true and has_removed_version = true and introduced_version_author != removed_version_author group by 1 order by 1 ;
 -- 4- resulting table:
 
-repository_id    Removed TD   self-removed      non self-removal
-2             |   728       |    372          |   356
-3             |   981       |    663          |   318
-5             |  3926       |   2652          |  1274
-6             |   472       |    116          |   356
-7             |  1009       |    578          |   431
-8             |   118       |     72          |    46
-9             |   208       |    149          |    59
-
+repository_id    Removed TD   self-removed | %             non self-removal | %
+2             |   728       |    372   51.0989011        |   356     48.9010989
+5             |  3926       |   2652   67.54966887       |  1274     32.45033113
+9             |   208       |    149   71.63461538       |    59     28.36538462
+6             |   472       |    116   24.57627119       |   356     75.42372881
+3             |   981       |    663   67.58409786       |   318     32.41590214
+8             |   118       |     72   61.01694915       |    46     38.98305085
+7             |  1009       |    578   57.28444004       |   431     42.71555996
+                                       57.24927766                   42.75072234
 
 ################################################################################################################
 -- RQ3. How long does self-admitted technical debt survive in a project?
@@ -271,7 +272,7 @@ select b.classification, count(*) from processed_comments a , commit_guru b wher
 select b.classification, count(*) from processed_comments a , commit_guru b where a.repository_id in (2,3,5,6,7,8,9) and a.is_introduced_version = true and b.commit_hash = a.removed_version_commit_hash and a.introduced_version_author != a.removed_version_author group by 1 order by 2;
 
 
--- (non self-removal)             -- (general removal)       -- (self-removal) 61.91%         -- (non self-removal) 38.08%
+-- (introduction)               -- (general removal)       -- (self-removal) 61.91%         -- (non self-removal) 38.08%
   classification  | count         classification  | count    classification  | count          classification  | count
 ------------------+-------      ------------------+------- ------------------+-------       ------------------+-------
  Perfective       |    51 0.54   Merge            |    28   Merge            |     8 0.17    Merge            |    20   0.70
