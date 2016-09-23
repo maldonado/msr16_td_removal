@@ -282,3 +282,40 @@ select b.classification, count(*) from processed_comments a , commit_guru b wher
  Corrective       |  1274 13.70  Corrective       |  1056   Corrective       |   454 9.87    Corrective       |   602   21.29
  Feature Addition |  2582 27.76  Feature Addition |  1909   Feature Addition |  1121 24.39   Feature Addition |   788   27.87
  None             |  4260 45.81  None             |  4050   None             |  2786 60.61   None             |  1264   44.71
+
+ 1. Add the number of unique developers who perform self-removal
+
+all distinct authors     distinct removal         distinct introduction
+ project_name  | count   repository_id | count    repository_id | count
+---------------+-------  ---------------+-------   ---------------+-------
+ apache-ant    |    56               2 |    25                2 |    40
+ apache-jmeter |    34               3 |    12                3 |    20
+ camel         |   311               5 |    36                5 |   102
+ gerrit        |   268               9 |    15                9 |    91
+ hadoop        |   155               6 |    37                6 |   124
+ log4j         |    21               8 |     7                8 |    14
+ tomcat        |    32               7 |    14                7 |    25
+
+2. Look at the violin plots for the Log4j (maybe not so interesting), Tomcat, Hadoop, Jmeter
+copy (select a.project_name, a.classification, a.commit_message from commit_guru a, processed_comments b where b.removed_version_commit_hash = a.commit_hash and b.introduced_version_author != b.removed_version_author and b.epoch_time_to_remove between 34560000 and 51840000 and b.repository_id = 6 order by 1,2) to '/Users/evermal/git/msr16_td_removal/resources/400_600_hadoop.csv' (format csv,  header true)
+hadoop
+400 34560000
+500 43200000
+600 51840000
+copy (select a.project_name, a.classification, a.commit_message from commit_guru a, processed_comments b where b.removed_version_commit_hash = a.commit_hash and b.introduced_version_author != b.removed_version_author and b.epoch_time_to_remove between 77760000 and 95040000 and b.repository_id = 6 order by 1,2) to '/Users/evermal/git/msr16_td_removal/resources/900_1100_hadoop.csv' (format csv,  header true)
+900   77760000
+1000  86400000
+1100  95040000
+
+Tomcat
+copy (select a.project_name, a.classification, a.commit_message from commit_guru a, processed_comments b where b.removed_version_commit_hash = a.commit_hash and b.introduced_version_author != b.removed_version_author and b.epoch_time_to_remove between 86400000 and 172800000 and b.repository_id = 7 order by 1,2) to '/Users/evermal/git/msr16_td_removal/resources/1000_2000_tomcat.csv' (format csv,  header true)
+1000  86400000
+2000  172800000
+3. Measure how many commits are empty or have 1-2 words only, to help explain why some commits are classified as None
+0 empty commmits and messages with 1-2 words can have clear meaning
+typo
+whitespace
+upgrade AntUnit
+
+4. Look at what activity leads to the removal and look at some commit messages from each category to see what is happening there
+copy (select a.project_name, a.classification, a.commit_message from commit_guru a, processed_comments b where b.removed_version_commit_hash = a.commit_hash order by 1,2) to '/Users/evermal/git/msr16_td_removal/resources/all_removal_messages.csv' (format csv,  header true)
