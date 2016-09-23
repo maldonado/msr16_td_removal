@@ -1,19 +1,21 @@
 % -*- root: main.tex -*-
-The main goal of our study is to better understand what happens to \SATD once it is introduced into software projects. To do so, our first step is to quantify how much of \SATD comments gets removed (RQ1). Then, we analyze if the developers have sense of ownership with they \SATD comments by analyzing who are the authors of the changes that introduced and then removed these \SATD comments (RQ2). 
+The main goal of our study is to better understand what happens to \SATD once it is introduced into software projects. To do so, our first step is to quantify how much of \SATD comments gets removed (RQ1). Then, we analyze if the developers have sense of ownership on \SATD comments by analyzing who are the authors of the changes that introduced and then removed these \SATD comments (RQ2). 
+\alexander{An option here would also be to confirm the findings by interviewing/surveying the developers.}
 
+\alexander{shouldn't the following discussion of the RQs be in the introduction?}
 \vspace{3mm}
 \noindent\rqi
 \vspace{3mm}
 
-\noindent \textbf{Motivation:} Previous work showed that technical debt is widespread, unavoidable and have a negative impact in the quality of software projects~\cite{Lim2012Software}. Therefore, intuitively we expect that removing technical debt from the source code is a concern to developers. To better understand how developers deal with technical debt we must first identify and quantify how much debt is introduced and removed. Also, answering this question will provide us insight if source code comments indeed helps developers to manage technical debt. 
+\noindent \textbf{Motivation:} Previous work showed that technical debt is widespread, unavoidable and has a negative impact ion the quality of software projects~\cite{Lim2012Software}. Therefore, intuitively we expect that removing technical debt from the source code is a concern to developers. To better understand how developers deal with technical debt we must first identify and quantify how much debt is introduced and removed. Also, answering this question will provide us insight if source code comments indeed helps developers to manage technical debt. 
 
 \vspace{1mm}
-\noindent \textbf{Approach:} To answer this question we automatically identify design self-admitted technical debt from the 7 analyzed projects. As described in subsection \ref{sub:checkout_all_versions_of_files} we have stored all different versions of all source code files. For each analyzed \SATD comment we take the oldest file version available on which the debt was found and incrementally search for matches in all latter versions of this file. The first time that the analyzed \SATD comments appears in a file points out to the exact file version that the \SATD comment was introduced in the system.
+\noindent \textbf{Approach:} To answer this question we automatically identify design self-admitted technical debt from the seven analyzed projects. As described in Section~\ref{sub:checkout_all_versions_of_files} we have stored all different versions of all source code files. For each analyzed \SATD comment we take the oldest file version available on which the debt was found and incrementally search for matches in all latter versions of this file. The first time that the analyzed \SATD comments appears in a file points out to the exact file version that the \SATD comment was introduced in the system.
 
 To analyze if the introduced \SATD comment was removed we keep searching for matches of the comment in the remaining file versions available. Therefore, the first file version that we are not able to find a match for the analyzed comment is also the version that the \SATD comment was removed. Another possible way to remove a \SATD comment is by deleting the file that contains it. 
 
 \vspace{1mm}
-\noindent \textbf{Results:} Table \ref{tbl:removed_self_admitted_technical_debt_per_project} presents the quantity of identified and removed \SATD comments. We find that the majority (i.e., on average 74.9\%) of the identified \SATD comments were removed. For example, we were able to find 854 unique instances of design \SATD comments when analyzing Ant project. 85.2\% (i.e., 738) of these \SATD comments were removed during the evolution of the project. Camel has the highest \SATD comments removal percentage (i.e., 90.6), whereas Hadoop has the lowest removal percentage achieving 40.5\%.
+\noindent \textbf{Results:} Table \ref{tbl:removed_self_admitted_technical_debt_per_project} presents the quantity of identified and removed \SATD comments. We find that the majority (i.e., on average 74.9\%, \alexander{how has this average been computed?}) of the identified \SATD comments were removed. For example, we were able to find 854 unique instances of design \SATD comments when analyzing Ant project. 85.2\% (i.e., 738) of these \SATD comments were removed during the evolution of the project. Camel has the highest \SATD comments removal percentage (i.e., 90.6), whereas Hadoop has the lowest removal percentage achieving 40.5\%.
 
 \begin{table}[!thb]
     \begin{center}
@@ -43,7 +45,7 @@ To analyze if the introduced \SATD comment was removed we keep searching for mat
 \noindent\rqii
 \vspace{3mm}
 
-\noindent \textbf{Motivation:} \SATD stands for technical debt ``confessed'' by the developers themselves. Intuition lead us to believe that it would be natural that the developer who expressed concern about the code would be also the one who fix it in the future. For example, it would be more difficult to have other developers to address \SATD since 1) they need to know how to address the issue and 2) they may not know where the \SATD is. 
+\noindent \textbf{Motivation:} \SATD stands for technical debt ``confessed'' by the developers themselves. This intuition leads us to believe that it would be natural that the developer who expressed concern about the code would be also the one who fixes it in the future. For example, it would be more difficult to have other developers to address \SATD since 1) they need to know how to address the issue and 2) they may not know where the \SATD is. 
 
 \vspace{1mm}
 \noindent \textbf{Approach:} To answer this question we analyzed the authors of the changes (i.e., commits from the source code repository) that introduced or removed \SATD comments. In order to do that, we first determine the change that the \SATD comment was added to a file, then we check the remaining file versions to determine if there is any change that removed the \SATD. Once that the changes are identified we compare the authors of the changes to see if they are the same or not. 
@@ -51,8 +53,9 @@ To analyze if the introduced \SATD comment was removed we keep searching for mat
 We take into consideration two attributes of the change when comparing authors, author name and email address. This is a necessary heuristic to mitigate the risk of misclassifying authors that changed their names in the source code repository during the evolution of the project.  
 
 \vspace{1mm}
-\noindent \textbf{Results:} We find that the majority of \SATD are removed by the same author who introduced it. For the sake of clarity, we address \SATD removed by the same author who introduced it as ``self-removed technical debt''. In average, 57.24\% of all removals are self-removed technical debt. The project with highest percentage of self-removed technical debt was Gerrit with 71.63\%. On the other hand, the project with the lowest percentage of self-removed technical debt was Hadoop with 24.57\%. Non self-removed technical debt, \SATD that was introduced by one author and then removed by a different author in the future, represented in average 42.75\% of the removals ranging from 28.36\% to 75.42\% in Hadoop and Gerrit, respectively. Table \ref{tbl:self_removed_technical_debt_vs_non_self_removed_technical_debt_per_project} presents detailed information per project.
+\noindent \textbf{Results:} We find that the majority of \SATD are removed by the same author who introduced it. For the sake of clarity, we address \SATD removed by the same author who introduced it as ``self-removed technical debt''. In average\alexander{as above, how has it been computed?}, 57.24\% of all removals are self-removed technical debt. The project with highest percentage of self-removed technical debt was Gerrit with 71.63\%. On the other hand, the project with the lowest percentage of self-removed technical debt was Hadoop with 24.57\%. \alexander{Can we include this information in the previous table?} Non self-removed technical debt, \SATD that was introduced by one author and then removed by a different author in the future, represented in average 42.75\% of the removals ranging from 28.36\% to 75.42\% in Hadoop and Gerrit, respectively. Table \ref{tbl:self_removed_technical_debt_vs_non_self_removed_technical_debt_per_project} presents detailed information per project.
 
+\alexander{The risk here is that the self-removal is not a consequence of the ``guilt confession'' but a side effect of one developer/small group of developers doing all the work in the project or in its part. Can we somehow check this?} 
 \begin{table*}[!thb]
     \begin{center}
         \caption{Self-Removed Technical Debt vs Non Self-Removed Technical Debt per Project}
@@ -75,7 +78,7 @@ We take into consideration two attributes of the change when comparing authors, 
     \end{center}    
 \end{table*}
 
-\conclusionbox{We find that in average self-removed technical debt represents 54.24\% of all removals. The percentage of removal ranges from 24.57 to 71.63\% across the analyzed projects, whereas non self-removed technical debt removal represents in average 42.75\% of the technical debt removals}
+\conclusionbox{We find that in average self-removed technical debt represents 54.24\% of all removals. The percentage of removal ranges from 24.57 to 71.63\% across the analyzed projects, whereas non self-removed technical debt removal represents in average 42.75\% of the technical debt removals}\alexander{I'm not a big fan of averages...}
 
 \vspace{3mm}
 \noindent\rqiii
@@ -86,7 +89,7 @@ We take into consideration two attributes of the change when comparing authors, 
 In addition, once we quantified the number of self-removed technical debt and the number of non self-removed technical debt we would like to understand if these two categories of removal have differences between them. For example, which one gets removed faster or which one is more likely to survive in the project once added. 
 
 \vspace{1mm}
-\noindent \textbf{Approach:} For each project analyzed we find all changes that introduced a \SATD comment, and similarly, whenever possible, the change that removed the \SATD comment. Each change commited to the source code repository possesses a collection of useful information that allows us to run a number of different analysis. 
+\noindent \textbf{Approach:} For each project analyzed we find all changes that introduced a \SATD comment, and similarly, whenever possible, the change that removed the \SATD comment. Each change committed to the source code repository possesses a collection of useful information \alexander{please rephrase} that allows us to run a number of different analyses. 
 
 To answer this question we examine the time between introduction and removal of each change related related to the \SATD comments that we previously were able to identify. In addition, we leverage the knowledge gathered so far to determine the authors of the change. 
 
