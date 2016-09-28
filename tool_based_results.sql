@@ -289,20 +289,20 @@ all distinct authors     distinct removal         distinct introduction
  project_name  | count   repository_id | count    repository_id | count
 ---------------+-------  ---------------+-------   ---------------+-------
  apache-ant    |    56               2 |    25                2 |    40
- apache-jmeter |    34               3 |    12                3 |    20
  camel         |   311               5 |    36                5 |   102
  gerrit        |   268               9 |    15                9 |    91
  hadoop        |   155               6 |    37                6 |   124
+ jmeter        |    34               3 |    12                3 |    20
  log4j         |    21               8 |     7                8 |    14
  tomcat        |    32               7 |    14                7 |    25
 
 2. Look at the violin plots for the Log4j (maybe not so interesting), Tomcat, Hadoop, Jmeter
-copy (select a.project_name, a.classification, a.commit_message from commit_guru a, processed_comments b where b.removed_version_commit_hash = a.commit_hash and b.introduced_version_author != b.removed_version_author and b.epoch_time_to_remove between 34560000 and 51840000 and b.repository_id = 6 order by 1,2) to '/Users/evermal/git/msr16_td_removal/resources/400_600_hadoop.csv' (format csv,  header true)
+copy (select a.project_name, a.classification, b.interval_time_in_the_system, a.commit_message from commit_guru a, processed_comments b where b.removed_version_commit_hash = a.commit_hash and b.introduced_version_author != b.removed_version_author and b.epoch_time_to_remove between 34560000 and 51840000 and b.repository_id = 6 order by 1,2) to '/Users/evermal/git/msr16_td_removal/resources/400_600_hadoop.csv' (format csv,  header true)
 hadoop
 400 34560000
 500 43200000
 600 51840000
-copy (select a.project_name, a.classification, a.commit_message from commit_guru a, processed_comments b where b.removed_version_commit_hash = a.commit_hash and b.introduced_version_author != b.removed_version_author and b.epoch_time_to_remove between 77760000 and 95040000 and b.repository_id = 6 order by 1,2) to '/Users/evermal/git/msr16_td_removal/resources/900_1100_hadoop.csv' (format csv,  header true)
+copy (select a.project_name, a.classification, b.interval_time_in_the_system, a.commit_message from commit_guru a, processed_comments b where b.removed_version_commit_hash = a.commit_hash and b.introduced_version_author != b.removed_version_author and b.epoch_time_to_remove between 77760000 and 95040000 and b.repository_id = 6 order by 1,2) to '/Users/evermal/git/msr16_td_removal/resources/900_1100_hadoop.csv' (format csv,  header true)
 900   77760000
 1000  86400000
 1100  95040000
@@ -318,4 +318,4 @@ whitespace
 upgrade AntUnit
 
 4. Look at what activity leads to the removal and look at some commit messages from each category to see what is happening there
-copy (select a.project_name, a.classification, a.commit_message from commit_guru a, processed_comments b where b.removed_version_commit_hash = a.commit_hash order by 1,2) to '/Users/evermal/git/msr16_td_removal/resources/all_removal_messages.csv' (format csv,  header true)
+copy (select a.commit_hash, a.project_name, a.classification, a.commit_message from commit_guru a, processed_comments b where b.removed_version_commit_hash = a.commit_hash order by 1,2) to '/Users/evermal/git/msr16_td_removal/resources/all_removal_messages.csv' (format csv,  header true)
