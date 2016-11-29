@@ -319,3 +319,10 @@ upgrade AntUnit
 
 4. Look at what activity leads to the removal and look at some commit messages from each category to see what is happening there
 copy (select a.commit_hash, a.project_name, a.classification, a.commit_message from commit_guru a, processed_comments b where b.removed_version_commit_hash = a.commit_hash order by 1,2) to '/Users/evermal/git/msr16_td_removal/resources/all_removal_messages.csv' (format csv,  header true)
+copy (select distinct(a.commit_hash), a.project_name, a.classification, a.commit_message from commit_guru a, processed_comments b where b.removed_version_commit_hash = a.commit_hash order by 1,2) to '/Users/evermal/git/msr16_td_removal/resources/distinct_removal_messages.csv' (format csv,  header true)
+
+
+5. Look at what activity that introduced technical debt and look at some commit messages from each category to see what is happening there
+copy (select a.commit_hash, a.project_name, a.classification, a.commit_message from commit_guru a, processed_comments b where b.introduced_version_commit_hash = a.commit_hash order by 1,2) to '/Users/evermal/git/msr16_td_removal/resources/all_introduction_messages.csv' (format csv,  header true)
+copy (select distinct(a.commit_hash), a.project_name, a.classification, a.commit_message from commit_guru a, processed_comments b where b.introduced_version_commit_hash = a.commit_hash order by 1,2) to '/Users/evermal/git/msr16_td_removal/resources/distinct_introduction_messages.csv' (format csv,  header true)
+
