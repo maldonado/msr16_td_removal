@@ -7,7 +7,7 @@
   \label{fig:automatically_classified_data_approach_overview}
 \end{figure*}
 
-The main goal of our study is to understand what happens with \SATD comments after they get introduced into projects, and most specifically, who are the authors responsible for the introduction and removal of these comments. To do that, we divided our study in two main parts. First, we developed a tool that allows us to extract and classify \SATD comments based on NLP techniques. Using this tool we extracted and classified the comments of five open source projects. Second, we analyze the performance of our tool in terms of precision and recall using two other open source projects which we have manually classified the \SATD comments. 
+The main goal of our study is to understand what happens with \SATD comments after they get introduced into projects, and most specifically, who are the authors responsible for the introduction and removal of these comments. To do that, we divided our study in two main parts. First, we developed a tool that allows us to extract and classify \SATD comments based on \todo{natural language processing} (NLP) techniques. Using this tool we extracted and classified the comments of five open source projects. Second, we analyze the performance of our tool in terms of precision and recall using two other open source projects which we have manually classified the \SATD comments. 
 
 In a nutshell the tool first clones the analyzed repository locally. Second, it identifies all Java source code files in the repository. By analyzing the history of the project we are able to identify even files that were already removed. Third, we use a third part library to parse the source code and extract the information that we use in our analysis. Fourth, we apply four filtering heuristics that aims to eliminate non \SATD comments. Lastly, it uses NLP techniques to automatically classify \SATD comments. 
 
@@ -59,6 +59,9 @@ It is important to note that the number of comments shown for each project does 
             \textbf{Hadoop}    &  8,466 & 996,877 &  79,232 & 160  &  2,512,673 &  1,172,051 &  18,927 &  1,164   \\
             \textbf{Log4j}     &  1,112 & 30,287  &  12,609 & 35   &    248,276 &    61,690  &   1,893 &   135    \\
             \textbf{Tomcat}    &  3,187 & 297,828 &  46,716 & 32   &  2,336,653 &  1,081,492 &  26,725 &  1,317   \\
+            \midrule            
+            \textbf{Ant}    &  &  &  &  &  &  &  &     \\
+            \textbf{Jmeter}    &  &  &  &  &  &  &  &     \\
             \bottomrule             
         \end{tabular}
     \end{center}
@@ -89,7 +92,7 @@ We use SrcML \cite{Collard2013SIE} to parse the source code files that we identi
 \subsection*{Filtering Comments}
 \label{sub:filtering_comments}
 
-Source code comments can be used for different purposes in a project, such as giving context, documenting, expressing thoughts, opinions and authorship, and in some cases, disabling source code from the program.\alexander{This is a nice statement but it somehow seems to call for a bibliographic reference.} Comments are used freely by developers and with limited formalities, if any at all. This informal environment allows developers to bring to light opinions, insights and even confessions (e.g., self-admitted technical debt). 
+Source code comments can be used for different purposes in a project, such as giving context, documenting, expressing thoughts, opinions and authorship, and in some cases, disabling source code from the program.\alexander{This is a nice statement but it somehow seems to call for a bibliographic reference.} \rabe{not sure about this \cite{Ying2005MSR}} Comments are used freely by developers and with limited formalities, if any at all. This informal environment allows developers to bring to light opinions, insights and even confessions (e.g., self-admitted technical debt). 
 
 Part of these comments can be identified as self-admitted technical debt \cite{Potdar2014ICSME}, \alexander{Would you consider the comments themselves as \SATD or merely as admissions, or indications that the technical debt is somewhere around the comment?} but they are not the majority of cases. With that in mind, we develop and apply five filtering heuristics \alexander{explicitly number the heuristics below} to narrow down the comments eliminating the ones that are less likely to be classified as self-admitted technical debt. 
 

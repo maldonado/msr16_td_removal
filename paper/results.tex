@@ -22,17 +22,18 @@ To analyze if the introduced \SATD comment was removed we keep searching for mat
     \begin{center}
         \caption{Removed Self-Admitted Technical Debt per Project}
         \label{tbl:removed_self_admitted_technical_debt_per_project}
-        \begin{tabular}{l| c c c}
+        \begin{tabular}{l| r r r}
         \toprule
-        \textbf{\thead{Project}} & \textbf{\thead{\# of\\identified\\technical\\debt}} & \textbf{\thead{\# of\\removed\\technical\\debt}} & \textbf{\thead{\% of\\removed\\technical\\debt}} \\ 
+        \textbf{\thead{Project}} & \textbf{\thead{\# of identified\\technical debt}} & \textbf{\thead{\# of removed\\technical debt}} & \textbf{\thead{\% of removed\\technical debt}} \\ 
         \midrule
+         \textbf{Camel }  &  4,331  & 3,926  & 90.6 \\
+         \textbf{Log4j }  &  135    & 118    & 87.4 \\ 
          \textbf{Ant   }  &  854    & 728    & 85.2 \\  
-         \textbf{Camel }  &  4,331  & 3,926  & 90.6 \\  
-         \textbf{Gerrit}  &  271    & 208    & 76.7 \\  
+         \textbf{Jmeter}  &  1,260  & 981    & 77.8 \\ 
+         \textbf{Gerrit}  &  271    & 208    & 76.7 \\
+         \textbf{Tomcat}  &  1,317  & 1,009  & 76.6 \\   
          \textbf{Hadoop}  &  1,164  & 472    & 40.5 \\  
-         \textbf{Jmeter}  &  1,260  & 981    & 77.8 \\  
-         \textbf{Log4j }  &  135    & 118    & 87.4 \\  
-         \textbf{Tomcat}  &  1,317  & 1,009  & 76.6 \\  
+        
          \midrule
          \textbf{Average} & -       & -      & 74.9 \\
         \bottomrule
@@ -65,7 +66,7 @@ We take into consideration two attributes of the change when comparing authors, 
         \label{tbl:self_removed_technical_debt_vs_non_self_removed_technical_debt_per_project}
         \begin{tabular}{l| c c c c c}
         \toprule
-        \textbf{\thead{Project}} & \textbf{\thead{\# of\\removed\\technical\\debt}} & \textbf{\thead{\# of\\self-removed\\technical\\debt}} & \textbf{\thead{\% of\\self-removed\\technical\\debt}} & \textbf{\thead{\# of\\non self-removed\\technical\\debt}} & \textbf{\thead{\% of\\non self-removed\\technical\\debt}} \\ 
+        \textbf{\thead{Project}} & \textbf{\thead{\# of removed\\technical debt}} & \textbf{\thead{\# of self-removed\\technical debt}} & \textbf{\thead{\% of self-removed\\technical debt}} & \textbf{\thead{\# of non self-removed\\technical debt}} & \textbf{\thead{\% of non self-removed\\technical debt}} \\ 
         \midrule
          \textbf{Ant   }   & 728   &  372  & 51.09 &   356  & 48.90 \\  
          \textbf{Camel }   & 3,926 & 2,652 & 67.54 &  1,274 & 32.45 \\  
@@ -101,18 +102,58 @@ To answer this question we examine the time between introduction and removal of 
 \vspace{1mm}
 \noindent \textbf{Results:} We find that self-removed technical debt gets removed faster than non self-removed technical debt. Figures \ref{fig:removal_comparison_gerrit}, \ref{fig:removal_comparison_hadoop} and \ref{fig:removal_comparison_tomcat} presents the comparison between self-removal and non self-removal of three projects, namely, Gerrit, Hadoop and Tomcat. We selected these projects as they represent the general behavior of the analyzed dataset. As we can observe in Figures \ref{fig:removal_comparison_gerrit}, \ref{fig:removal_comparison_hadoop} and \ref{fig:removal_comparison_tomcat} self-removal technical debt is removed faster then non self-removal technical debt when considering the amount of days that each technical debt was part of the analyzed system. The horizontal black line on each figure mark the median of the dataset, that also happens earlier for self-removed technical debt. In addition for each figure we plotted the number of occurrences measured on each dataset on the legend indicated by the letter `N'' followed by the precise median in days.
 
-\begin{figure}[thb!]
-  \centering
-  \includegraphics[width=0.49\textwidth]{figures/gerrit_beanplot.pdf}
-  \caption{Self-Removal vs Non Self-Removal for Gerrit}
-  \label{fig:removal_comparison_gerrit}
-  \includegraphics[width=0.49\textwidth]{figures/hadoop_beanplot.pdf}
-  \caption{Self-Removal vs Non Self-Removal for Hadoop}
-  \label{fig:removal_comparison_hadoop}
-  \includegraphics[width=0.49\textwidth]{figures/tomcat_beanplot.pdf}
-  \caption{Self-Removal vs Non Self-Removal for Tomcat}
-  \label{fig:removal_comparison_tomcat} 
-\end{figure}
+\begin{figure*}[t]
+	\centering
+	\begin{subfigure}[b]{0.33\textwidth}
+		\includegraphics[width=\textwidth]{figures/gerrit_beanplot.pdf}
+		\caption{Self-Removal vs \\ Non Self-Removal for Gerrit}
+		\label{fig:removal_comparison_gerrit}
+	\end{subfigure}
+  ~
+  ~
+  ~
+	\begin{subfigure}[b]{0.33\textwidth}
+		\includegraphics[width=\textwidth]{figures/hadoop_beanplot.pdf}
+		\caption{Self-Removal vs \\ Non Self-Removal for Hadoop}
+		\label{fig:removal_comparison_hadoop}
+	\end{subfigure}
+  ~ 
+  ~
+  ~ 
+	\begin{subfigure}[b]{0.33\textwidth}
+		\includegraphics[width=\textwidth]{figures/tomcat_beanplot.pdf}
+		\caption{Self-Removal vs \\ Non Self-Removal for Tomcat}
+		\label{fig:removal_comparison_tomcat} 
+	\end{subfigure}
+\end{figure*}
+
+
+
+
+\begin{table}[!thb]
+	\begin{center}
+		\caption{Mann-Whitney Test ($p$-value) and Cliff's Delta ($d$)}
+		\label{tbl:statistic}
+		\begin{tabular}{l| rrr}
+			\toprule
+			\textbf{\thead{Project}} & \textbf{\thead{$p$-value}} & \textbf{\thead{$d$}}\\ 
+			\midrule
+			\textbf{Ant   }   &    &    \\  
+			\textbf{Camel }   &    &    \\  
+			\textbf{Gerrit}   &    &    \\  
+			\textbf{Hadoop}   &    &    \\  
+			\textbf{Jmeter}   &    &    \\  
+			\textbf{Log4j }   &    &    \\  
+			\textbf{Tomcat}   &    &    \\  
+			\bottomrule
+		\end{tabular}
+	\end{center}    
+\end{table}
+
+
+
+
+
 
 One other thing that we evaluate to answer this question is the general nature of the removals. We divided all the removals into two categories. The first we call file edition and the second file removal. In other words, we want to better understand if the removals of technical debt are happening as the project evolves and resembles a ``floss refactoring'' type of maintenance or if the files just gets deleted after a time due to its entropy. 
 
