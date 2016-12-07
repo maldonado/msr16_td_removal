@@ -104,27 +104,72 @@ To answer this question we examine the time between introduction and removal of 
 
 \begin{figure*}[t]
 	\centering
-	\begin{subfigure}[b]{0.33\textwidth}
-		\includegraphics[width=\textwidth]{figures/gerrit_beanplot.pdf}
-		\caption{Self-Removal vs \\ Non Self-Removal for Gerrit}
+	
+	
+	\begin{subfigure}[b]{0.20\textwidth}
+		\includegraphics[width=\textwidth]{figures/test/ant_update.pdf}
+		%\caption{Self-Removal vs \\ Non Self-Removal for Gerrit}
 		\label{fig:removal_comparison_gerrit}
 	\end{subfigure}
   ~
   ~
   ~
-	\begin{subfigure}[b]{0.33\textwidth}
-		\includegraphics[width=\textwidth]{figures/hadoop_beanplot.pdf}
-		\caption{Self-Removal vs \\ Non Self-Removal for Hadoop}
+	\begin{subfigure}[b]{0.20\textwidth}
+		\includegraphics[width=\textwidth]{figures/test/camel_update.pdf}
+		%\caption{Self-Removal vs \\ Non Self-Removal for Hadoop}
 		\label{fig:removal_comparison_hadoop}
 	\end{subfigure}
   ~ 
   ~
   ~ 
-	\begin{subfigure}[b]{0.33\textwidth}
-		\includegraphics[width=\textwidth]{figures/tomcat_beanplot.pdf}
-		\caption{Self-Removal vs \\ Non Self-Removal for Tomcat}
+	\begin{subfigure}[b]{0.20\textwidth}
+		\includegraphics[width=\textwidth]{figures/test/gerrit_update.pdf}
+		%\caption{Self-Removal vs \\ Non Self-Removal for Tomcat}
 		\label{fig:removal_comparison_tomcat} 
 	\end{subfigure}
+	 ~ 
+	 ~
+	 ~ 
+	 \begin{subfigure}[b]{0.20\textwidth}
+	 	\includegraphics[width=\textwidth]{figures/test/hadoop_update.pdf}
+	 	%\caption{Self-Removal vs Non Self-Removal for Tomcat}
+	 	\label{fig:removal_comparison_tomcat} 
+	 \end{subfigure}
+	 
+	 
+	 
+	 	\begin{subfigure}[b]{0.20\textwidth}
+	 		\includegraphics[width=\textwidth]{figures/test/jmeter_update.pdf}
+	 		%\caption{Self-Removal vs \\ Non Self-Removal for Gerrit}
+	 		\label{fig:removal_comparison_gerrit}
+	 	\end{subfigure}
+	 	~
+	 	~
+	 	~
+	 	\begin{subfigure}[b]{0.20\textwidth}
+	 		\includegraphics[width=\textwidth]{figures/test/log4j_update.pdf}
+	 		%\caption{Self-Removal vs \\ Non Self-Removal for Hadoop}
+	 		\label{fig:removal_comparison_hadoop}
+	 	\end{subfigure}
+	 	~ 
+	 	~
+	 	~ 
+	 	\begin{subfigure}[b]{0.20\textwidth}
+	 		\includegraphics[width=\textwidth]{figures/test/tomcat_update.pdf}
+	 		%\caption{Self-Removal vs \\ Non Self-Removal for Tomcat}
+	 		\label{fig:removal_comparison_tomcat} 
+	 	\end{subfigure}
+	 	
+	 	~
+	 	~
+	 	~
+	\begin{subfigure}[b]{0.25\textwidth}
+		\includegraphics[width=\textwidth]{figures/test/legend.pdf}
+		%\caption{Self-Removal vs \\ Non Self-Removal for Tomcat}
+		%\label{fig:removal_comparison_tomcat} 
+	\end{subfigure}
+	\caption{Self-Removal vs Non Self-Removal for Hadoop}
+	 
 \end{figure*}
 
 
@@ -134,17 +179,17 @@ To answer this question we examine the time between introduction and removal of 
 	\begin{center}
 		\caption{Mann-Whitney Test ($p$-value) and Cliff's Delta ($d$)}
 		\label{tbl:statistic}
-		\begin{tabular}{l| rrr}
+		\begin{tabular}{l| rr}
 			\toprule
 			\textbf{\thead{Project}} & \textbf{\thead{$p$-value}} & \textbf{\thead{$d$}}\\ 
 			\midrule
-			\textbf{Ant   }   &    &    \\  
-			\textbf{Camel }   &    &    \\  
-			\textbf{Gerrit}   &    &    \\  
-			\textbf{Hadoop}   &    &    \\  
-			\textbf{Jmeter}   &    &    \\  
-			\textbf{Log4j }   &    &    \\  
-			\textbf{Tomcat}   &    &    \\  
+			\textbf{Ant   }   &  < 2.2e-16  &  -0.427(medium)  \\  
+			\textbf{Camel }   &  0.0001253  &  -0.075(negligible)  \\  
+			\textbf{Gerrit}   &  3.581e-14  &  -0.671(large)  \\  
+			\textbf{Hadoop}   &  < 2.2e-16  &  -0.531(large)  \\  
+			\textbf{Jmeter}   &  < 2.2e-16  &  -0.325(small)  \\  
+			\textbf{Log4j }   &  2.345e-06  &  -0.517(large)  \\  
+			\textbf{Tomcat}   &  2.2e-16    &  -0.820(large) \\  
 			\bottomrule
 		\end{tabular}
 	\end{center}    
