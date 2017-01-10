@@ -23,9 +23,9 @@ To analyze if the introduced \SATD comment was removed we keep searching for mat
     \begin{center}
         \caption{Removed Self-Admitted Technical Debt per Project}
         \label{tbl:removed_self_admitted_technical_debt_per_project}
-        \begin{tabular}{l| r r r}
+        \begin{tabular}{l|rrr}
         \toprule
-        \textbf{\thead{Project}} & \textbf{\thead{\# of identified\\technical debt}} & \textbf{\thead{\# of removed\\technical debt}} & \textbf{\thead{\% of removed\\technical debt}} \\ 
+        \textbf{\thead{Project}} & \textbf{\thead{\# of\\ identified\\technical \\debt}} & \textbf{\thead{\# of \\removed\\technical \\debt}} & \textbf{\thead{\% of \\removed\\technical \\debt}} \\ 
         \midrule
         \textbf{Ant   }  &  854    & 728    & 85.2 \\  
         \textbf{Camel }  &  4,331  & 3,926  & 90.6 \\
@@ -45,7 +45,7 @@ To analyze if the introduced \SATD comment was removed we keep searching for mat
     \end{center}    
 \end{table}
 
-\conclusionbox{We find that the majority of \SATD comments gets removed over the evolution of the project. Considering all projects the percentage of \SATD comments removal ranged from 40.5 to 90.6, and on average 74.9\% of the identified \SATD is removed.}
+\conclusion{We find that the majority of \SATD comments gets removed over the evolution of the project. Considering all projects the percentage of \SATD comments removal ranged from 40.5 to 90.6, and on average 74.9\% of the identified \SATD is removed.}
  
 \alexander{Here we need a baseline comparison: are \SATD comments being removed more or less often than regular comments.}
 
@@ -56,7 +56,7 @@ To analyze if the introduced \SATD comment was removed we keep searching for mat
 		\label{tbl:self_removed_technical_debt_vs_non_self_removed_technical_debt_per_project}
 		\begin{tabular}{l| c c c c c}
 			\toprule
-			\textbf{\thead{Project}} & \textbf{\thead{\# of removed\\technical debt}} & \textbf{\thead{\# of self-removed\\technical debt}} & \textbf{\thead{\% of self-removed\\technical debt}} & \textbf{\thead{\# of non self-removed\\technical debt}} & \textbf{\thead{\% of non self-removed\\technical debt}} \\ 
+			\textbf{\thead{Project}} & \textbf{\thead{\# of \\removed\\technical debt}} & \textbf{\thead{\# of \\self-removed\\technical debt}} & \textbf{\thead{\% of self-removed\\technical debt}} & \textbf{\thead{\# of \\non self-removed\\technical debt}} & \textbf{\thead{\% of \\non self-removed\\technical debt}} \\ 
 			\midrule
 			\textbf{Ant   }   & 728   &  372  & 51.09 &   356  & 48.90 \\  
 			\textbf{Camel }   & 3,926 & 2,652 & 67.54 &  1,274 & 32.45 \\  
@@ -90,7 +90,7 @@ We take into consideration two attributes of the change when comparing authors, 
 \alexander{The risk here is that the self-removal is not a consequence of the ``guilt confession'' but a side effect of one developer/small group of developers doing all the work in the project or in its part. Can we somehow check this?} 
 
 
-\conclusionbox{We find that in average self-removed technical debt represents 54.24\% of all removals. The percentage of removal ranges from 24.57 to 71.63\% across the analyzed projects, whereas non self-removed technical debt removal represents in average 42.75\% of the technical debt removals}
+\conclusion{We find that in average self-removed technical debt represents 54.24\% of all removals. The percentage of removal ranges from 24.57 to 71.63\% across the analyzed projects, whereas non self-removed technical debt removal represents in average 42.75\% of the technical debt removals}
 \alexander{I'm not a big fan of averages...}
 
 \vspace{2mm}
@@ -196,17 +196,17 @@ medium for 0.33  $\leq d<$ 0.474 and large for $d \geq$ 0.474.
 	\begin{center}
 		\caption{Self-Removal vs Non Self-Removal: Mann-Whitney Test ($p$-value) and Cliff's Delta ($d$)}
 		\label{tbl:statistic}
-		\begin{tabular}{l| rr}
+		\begin{tabular}{l| rrr}
 			\toprule
-			\textbf{\thead{Project}} & \textbf{\thead{$p$-value}} & \textbf{\thead{$d$}}\\ 
+			\textbf{\thead{Project}} & \textbf{\thead{$p$-value}}&~~~ & \textbf{\thead{$d$}}\\ 
 			\midrule
-			\textbf{Ant   }   &  < 2.2e-16  &  -0.427(medium)  \\  
-			\textbf{Camel }   &  0.0001253  &  -0.075(negligible)  \\  
-			\textbf{Gerrit}   &  3.581e-14  &  -0.671(large)  \\  
-			\textbf{Hadoop}   &  < 2.2e-16  &  -0.531(large)  \\  
-			\textbf{Jmeter}   &  < 2.2e-16  &  -0.325(small)  \\  
-			\textbf{Log4j }   &  2.345e-06  &  -0.517(large)  \\  
-			\textbf{Tomcat}   &  2.2e-16    &  -0.820(large) \\  
+			\textbf{Ant   }   &  < 2.2e-16& ~~~  &  -0.427(medium)  \\  
+			\textbf{Camel }   &  0.0001253& ~~~ &  -0.075(negligible)  \\  
+			\textbf{Gerrit}   &  3.581e-14& ~~~ &  -0.671(large)  \\  
+			\textbf{Hadoop}   &  < 2.2e-16& ~~~ &  -0.531(large)  \\  
+			\textbf{Jmeter}   &  < 2.2e-16& ~~~ &  -0.325(small)  \\  
+			\textbf{Log4j}   &  2.345e-06 & ~~~ &  -0.517(large)  \\  
+			\textbf{Tomcat}   &  2.2e-16  & ~~~ &  -0.820(large) \\  
 			\bottomrule
 		\end{tabular}
 	\end{center}    
@@ -230,7 +230,7 @@ We find that the majority of the removals happens during the edition of files an
 % \item Difference between self vs. non-self removal.
 % \end{itemize}
 
-\conclusionbox{We find that the median amount of time that self-removed technical debt stays in the project is 18 days whereas non self removal technical debt is 127 days. In addition we find that technical debt removals happens more when the files containing debt are edited than when they are removed.}
+\conclusion{We find that the median amount of time that self-removed technical debt stays in the project is 18 days whereas non self removal technical debt is 127 days. In addition we find that technical debt removals happens more when the files containing debt are edited than when they are removed.}
 
  \vspace{2mm}
  \noindent\rqiv
@@ -249,4 +249,4 @@ Examine the commits messages of the removal commits and run topic models.
 \begin{itemize}
 \item Add topics/activities that lead to the removal.
 \end{itemize}
- \conclusionbox{}
+ \conclusion{}

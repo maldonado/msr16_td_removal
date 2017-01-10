@@ -10,7 +10,7 @@
 \usepackage{graphicx}
 \usepackage{algorithm}
 \usepackage{algorithmic}
-\usepackage{times}
+%\usepackage{times}
 \usepackage{cite}
 \usepackage{url}
 \usepackage{booktabs}
@@ -24,6 +24,12 @@
 \usepackage{epstopdf}
 \usepackage{array}
 \usepackage{xspace}
+
+
+
+
+
+
 
 \graphicspath{ {../images/} }
 
@@ -45,6 +51,25 @@
        \vspace{2mm}
 }
 
+
+\newcommand{\conclusion}[1]{%
+\begin{center}
+	\noindent\thicklines\setlength{\fboxsep}{8pt}\cornersize{0.03}\Ovalbox{\begin{minipage}{3in}\textit{
+	\textbf{#1}
+}\end{minipage} }
+\end{center}
+}
+
+
+
+
+
+
+
+
+
+
+
 \newcommand{\rqi}{\textbf{RQ1. How much self-admitted technical debt gets removed?\\}}
 \newcommand{\rqii}{\textbf{RQ2. Who removes self-admitted technical debt? Is it most likely to be self-removed or removed by others?\\}}
 \newcommand{\rqiii}{\textbf{RQ3. How long does self-admitted technical debt survive in a project?\\}}
@@ -53,6 +78,7 @@
 
 \newcommand{\SATD}{self-admitted technical debt\xspace}
 \newcommand{\CSATD}{Self-admitted technical debt\xspace}
+
 
 
 \begin{document}
@@ -79,23 +105,19 @@
 % --- End of Author Metadata ---
 
 \title{An Empirical Study On Self-Admitted Technical Debt Life Cycle}
-
-\numberofauthors{2} 
+\numberofauthors{1} 
 \author{
-\alignauthor 
-       Everton da S. Maldonado, Rabe Abdalkareem, Emad Shihab\\
-   %    \affaddr{Department of Computer Science and Software Engineering}\\
-       \affaddr{Concordia University}\\
-       \affaddr{Montreal, Canada}\\
-       % \email{e\_silvam@encs.concordia.ca}
-       % \email{eshihab@cse.concordia.ca}
-\alignauthor 
-       Alexander Serebrenik\\ 
-       \affaddr{Eindhoven University of Technology}\\
-       \affaddr{Eindhoven, The Netherlands}\\
-       % \email{a.serebrenik@tue.nl}
+%	\alignauthor 
+	Everton da S. Maldonado\textsuperscript{\S}, Rabe Abdalkareem\textsuperscript{\S}, Emad Shihab\textsuperscript{\S}, Alexander Serebrenik\textsuperscript{\textdagger}\\
+	\affaddr{}
+	\affaddr{\textsuperscript{\S}Dept. Computer Science and Software Engineering, Concordia University, Montreal, Canada}\\
+	% \email{e\_silvam@encs.concordia.ca}
+	% \email{eshihab@cse.concordia.ca}
+%	\alignauthor 
+%	Alexander Serebrenik\\ 
+	\affaddr{\textsuperscript{\textdagger}Eindhoven University of Technology, Eindhoven, The Netherlands}\\
+	\email{\url{{e_silvam,rab_abdu,eshihab}@encs.concordia.ca}, \url{a.serebrenik@tue.nl}}
 }
-
 
 \maketitle
 \begin{abstract}
