@@ -124,6 +124,37 @@ Lastly, after training the NLP classifier, we process all comments that we extra
 
 \emad{I am missing here the evaluation of the classifier (precision/ recall) }
 
+
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+% \usepackage{multirow}
+\begin{table}[t]
+	\centering
+	\caption{Background of participants in online survey}
+	\label{survey_responses}
+	\begin{tabular}{@{}l|p{1.2in}|l|l|l@{}}
+		\toprule
+		\multirow{2}{*}{\textbf{\begin{tabular}[c]{@{}l@{}}Developer\\ Role\end{tabular}}} & \multirow{2}{*}{\textbf{\begin{tabular}[c]{@{}l@{}}Developer\\ Task\end{tabular}}} & \multicolumn{3}{c}{\textbf{\begin{tabular}[c]{@{}c@{}}Developer Exp. \\ (in years)\end{tabular}}} \\ \cmidrule(l){3-5} 
+		&  & \textbf{1-2} & \textbf{3-5} & \textbf{\textgreater5} \\ \midrule
+		\begin{tabular}[c]{@{}l@{}}A Contributor\\ Developer (8)\end{tabular} & BF, BF, NF, OTH, BF, BF, OTH, NF & 1 & 0 & 7 \\
+		\begin{tabular}[c]{@{}l@{}}A Core\\ Developer (6)\end{tabular} & NF, BF, OTH, NF, CR, NF & 0 & 1 & 5 \\ \bottomrule
+			
+			
+	\end{tabular}
+	BF=Bug Fixing, NF=New Feature, CR=Code Review, OTH=Other.
+\end{table}
+
+
+
+
+\subsection{Survey Design}
+To understand the type of activities that lead to the introduce and remove of self-admitted technical debt, we designed and sent an online survey. The survey includes three main sections; I)  questions regarding 
+participant role and development tasks in the projects, and experiences, II) Three multiple choice, likert scale, question about how often developers encounter, add, and address self-admitted technical debt. III) Two open ended questions about why do developers add or remove self-admitted technical debt. To identify the population of our survey, we collected the names and emails of all developers who added or removed technical debt detected from the previous sections. In total, we found 250 unique developers from the studied seven open source project and we successfully sent the survey to 188 developers.  
+
+We received 14 responses (7.4\% response rate). Table~\ref{survey_responses} shows the participants role in the projects, their main development tasks and developer experiences. Of the 14 participants, 8 (57\%) identified themselves as core developer, and 6 (43\%) are contributors to the projects. Five of the 14 participants work on fixing bug, and five work on implementing new features. Only one participant has the task of code review. Another 3 participants (21\%) indicted having different tasks (e.g., project user). Approximately 86\% of the participants have more than five years of development experiences, and two participants have less or equal than five yeas of development experiences.
+
+
+
 % \subsection*{Find Technical Debt Authors}
 % \label{sub:find_technical_debt_authors}
 

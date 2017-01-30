@@ -123,64 +123,49 @@ medium for 0.33  $\leq d<$ 0.474 and large for $d \geq$ 0.474.
 	\centering
 	
 	
-	\begin{subfigure}[b]{0.20\textwidth}
-		\includegraphics[width=\textwidth]{figures/test/ant_update.pdf}
+	\begin{subfigure}[b]{0.24\textwidth}
+		\includegraphics[width=\textwidth]{figures/test/Ant.pdf}
 		%\caption{Self-Removal vs \\ Non Self-Removal for Gerrit}
 		\label{fig:removal_comparison_gerrit}
 	\end{subfigure}
-  ~
-  ~
-  ~
-	\begin{subfigure}[b]{0.20\textwidth}
-		\includegraphics[width=\textwidth]{figures/test/camel_update.pdf}
+	\begin{subfigure}[b]{0.24\textwidth}
+		\includegraphics[width=\textwidth]{figures/test/Camel.pdf}
 		%\caption{Self-Removal vs \\ Non Self-Removal for Hadoop}
 		\label{fig:removal_comparison_hadoop}
 	\end{subfigure}
-  ~ 
-  ~
-  ~ 
-	\begin{subfigure}[b]{0.20\textwidth}
-		\includegraphics[width=\textwidth]{figures/test/gerrit_update.pdf}
+  	\begin{subfigure}[b]{0.24\textwidth}
+		\includegraphics[width=\textwidth]{figures/test/Guerrit.pdf}
 		%\caption{Self-Removal vs \\ Non Self-Removal for Tomcat}
 		\label{fig:removal_comparison_tomcat} 
 	\end{subfigure}
-	 ~ 
-	 ~
-	 ~ 
-	 \begin{subfigure}[b]{0.20\textwidth}
-	 	\includegraphics[width=\textwidth]{figures/test/hadoop_update.pdf}
+	 \begin{subfigure}[b]{0.24\textwidth}
+	 	\includegraphics[width=\textwidth]{figures/test/Hadoop.pdf}
 	 	%\caption{Self-Removal vs Non Self-Removal for Tomcat}
 	 	\label{fig:removal_comparison_tomcat} 
 	 \end{subfigure}
 	 
 	 
 	 
-	 	\begin{subfigure}[b]{0.20\textwidth}
-	 		\includegraphics[width=\textwidth]{figures/test/jmeter_update.pdf}
+	 	\begin{subfigure}[b]{0.24\textwidth}
+	 		\includegraphics[width=\textwidth]{figures/test/Jmeter.pdf}
 	 		%\caption{Self-Removal vs \\ Non Self-Removal for Gerrit}
 	 		\label{fig:removal_comparison_gerrit}
 	 	\end{subfigure}
-	 	~
-	 	~
-	 	~
-	 	\begin{subfigure}[b]{0.20\textwidth}
-	 		\includegraphics[width=\textwidth]{figures/test/log4j_update.pdf}
+	 	\begin{subfigure}[b]{0.24\textwidth}
+	 		\includegraphics[width=\textwidth]{figures/test/Log4j.pdf}
 	 		%\caption{Self-Removal vs \\ Non Self-Removal for Hadoop}
 	 		\label{fig:removal_comparison_hadoop}
 	 	\end{subfigure}
-	 	~ 
-	 	~
-	 	~ 
-	 	\begin{subfigure}[b]{0.20\textwidth}
-	 		\includegraphics[width=\textwidth]{figures/test/tomcat_update.pdf}
+	 	\begin{subfigure}[b]{0.24\textwidth}
+	 		\includegraphics[width=\textwidth]{figures/test/Tomcat.pdf}
 	 		%\caption{Self-Removal vs \\ Non Self-Removal for Tomcat}
 	 		\label{fig:removal_comparison_tomcat} 
 	 	\end{subfigure}
 	 	
-	 	~
-	 	~
-	 	~
-	\begin{subfigure}[b]{0.25\textwidth}
+%	 	~
+%	 	~
+%	 	~
+	\begin{subfigure}[b]{0.30\textwidth}
 		\includegraphics[width=\textwidth]{figures/test/legend.pdf}
 		%\caption{Self-Removal vs \\ Non Self-Removal for Tomcat}
 		%\label{fig:removal_comparison_tomcat} 
@@ -192,7 +177,39 @@ medium for 0.33  $\leq d<$ 0.474 and large for $d \geq$ 0.474.
 
 
 
-\begin{table}[!tb]
+
+\begin{figure}[tb]
+	\centering
+	\includegraphics[width=\columnwidth]{figures/test/responses_question.pdf}
+	\caption{Automatically Classified Data Approach Overview}
+	\label{fig:automatically_classified_data_approach_overview_}
+\end{figure}
+
+
+
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+\begin{table*}[]
+	\centering
+	\caption{My caption}
+	\label{my-label}
+	\begin{tabular}{@{}lrrrrr@{}}
+		\toprule
+		\textbf{} & \textbf{Never} & \textbf{Rarely} & \textbf{Sometimes} & \textbf{Often} & \textbf{Very Often} \\ \midrule
+		How often do developers encounter technical debt comments? & 0.0 & 0.0 & 50.0 & 21.4 & 28.6 \\
+		How often do developers add technical debt comments? & 7.1 & 28.6 & 42.9 & 7.1 & 14.3 \\
+		How often do developers address technical debt comments? & 0.0 & 50.0 & 28.6 & 21.4 & 0.0 \\ \bottomrule
+	\end{tabular}
+\end{table*}
+
+
+
+
+
+
+
+
+\begin{table}[tb]
 	\begin{center}
 		\caption{Self-Removal vs Non Self-Removal: Mann-Whitney Test ($p$-value) and Cliff's Delta ($d$)}
 		\label{tbl:statistic}
@@ -229,6 +246,9 @@ We find that the majority of the removals happens during the edition of files an
 % \item file addition vs. removal
 % \item Difference between self vs. non-self removal.
 % \end{itemize}
+
+
+
 
 \conclusion{We find that the median amount of time that self-removed technical debt stays in the project is 18 days whereas non self removal technical debt is 127 days. In addition we find that technical debt removals happens more when the files containing debt are edited than when they are removed.}
 
