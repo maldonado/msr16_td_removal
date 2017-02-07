@@ -172,6 +172,39 @@ non-parametric effect size measure~\cite{} \todo{add citation} for ordinal data.
 In addition, we also compare the time that self-removed and non self-removed \SATD lives in the system. We find that self-removed technical debt gets removed faster than non self-removed technical debt. Figures \ref{fig:removal_comparison_gerrit}, \ref{fig:removal_comparison_hadoop} and \ref{fig:removal_comparison_tomcat} presents the comparison between self-removal and non self-removal of three projects, namely, Gerrit, Hadoop and Tomcat. We selected these projects since they represent the general behaviour of the analyzed dataset. As we can observe in Figures \ref{fig:removal_comparison_gerrit}, \ref{fig:removal_comparison_hadoop} and \ref{fig:removal_comparison_tomcat} self-removal technical debt is removed faster than non self-removal technical debt when considering the amount of days that each technical debt was part of the analyzed system. The horizontal black line on each figure mark the median value of removal time. In addition for each figure we plotted the number of occurrences measured on each dataset, as shown in the legend indicated by the letter `N' followed by the precise median in days.
 
 
+%-------------------------------------------------------------------------------
+\begin{table*}[h!]
+	\centering
+	\caption{Distribution of the removed STD Comments}
+	\label{my-label}
+	\begin{tabular}{@{}lrrrrrr@{}}
+		\toprule
+		\textbf{Project} & \textbf{Min.} & \textbf{1st Qu.} & \textbf{Median} & \textbf{Mean} & \textbf{3rd Qu.} & \textbf{Max.} \\ \midrule
+		ANT & 0.003 & 21.570 & 91.910 & 427.100 & 282.900 & 4933 \\
+		Jmeter & 0.001 & 40.210 & 228.000 & 498.100 & 787.900 & 4866 \\
+		Camel & 0.0004 & 1.0910 & 18.1600 & 82.0300 & 47.8600 & 2930 \\
+		Hadoop & 0.0143 & 45.1700 & 159.0000 & 326.8000 & 512.1000 & 1608 \\
+		Tomcat & 0.000 & 5.752 & 164.900 & 613.200 & 1122.000 & 3610 \\
+		Log4j & 0.063 & 21.580 & 172.800 & 516.000 & 605.200 & 3686 \\
+		Guerrit & 0.002 & 8.111 & 10.840 & 177.000 & 113.800 & 2574 \\ \bottomrule
+	\end{tabular}
+\end{table*}
+
+
+
+
+\begin{figure}[thb!]
+	\centering
+	\includegraphics[width=\columnwidth]{figures/test/removed_all_STD_comments.pdf}
+	\caption{The distribution of all the removed STD comments}
+	\label{fig:removed_all_std_comments}
+\end{figure}
+
+
+
+%--------------------------------------------------------------------------------
+
+
 
 
 % Please add the following required packages to your document preamble:
