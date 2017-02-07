@@ -1,26 +1,44 @@
-% -*- root: main.tex -*-
-% !TEX root = main.tex
-\alexander{The following paragraph might be moved to the introduction/motivation.}
-In an earlier study Klinger et al. have conducted four interviews and observed that ``the individuals choosing to incur technical debt are usually different from those responsible for servicing the debt''~\cite{Klinger:etal}. 
-This observation has been questioned by Spinola et al., who have found that while the online-survey respondents tended to agree with the observation,
-the paper-survey respondents achieved high consensus in neither agreeing nor disagreeing with the observation~\cite{Spinola:etal}.
-Therefore, to complement these studies we analyse the source code.
-Indeed, if the observation of Klinger et al. holds for \SATD then we expect to see a clear separation between the individuals introducing \SATD and
-individuals removing \SATD, resulting in a low \SATD self-removal.
+In this section, we describe the related work. We divided the related work into two sections; work related to the management and the detection of technical debt in general and work related to the identification of self-admitted technical debt.
 
-Jian and Hassan have studied removal of comments in PostgreSQL from 1996 to 2005~\cite{Jiang:Hassan}. 
-They have observed that at each 30-day period 0--40\% of functions with header comments have been removed; similar observation has been made for functions with non-header comments. 
-Unfortunately, different focus of our studies (comments vs. functions, \SATD-comments vs. any comments) render our results incomparable.
+\noindent\textbf{The detection \& management of Technical Debt in general.} A number of earlier studies studied the management and detection of technical debt in general. Seaman \textit{et al.}~\cite{Seaman2011}, Kruchten \textit{et al.}~\cite{Kruchten2013IWMTD} and Brown \textit{et al.}~\cite{Brown2010MTD} made several reflections about the term `technical debt' and mentioned that it is commonly used to communicate development issues to managers. Other work by Zazworka \textit{et al.} \cite{Zazworka2013EASE} focused on the detection of technical debt, where they conducted experiments to compare the efficiency of automated tools in comparison with human elicitation in detecting technical debt. They found that there is a small overlap between the two approaches. They also concluded that automated tools are more efficient in finding defect debt, whereas developers can realize more abstract categories of technical debt. In follow up work, Zazworka \textit{et al.}~\cite{Zazworka2011MTD} conducted a study to measure the impact of technical debt on software quality. They focused on a particular kind of debt, namely design debt measured using God classes. They found that God classes are more likely to change, and therefore, have a higher impact on software quality. Other work by Fontana \textit{et al.}~\cite{Fontana2012MTD} investigated design technical debt appearing in the form of code smells, namely God Classes, Data Classes and Duplicated Code. They proposed an approach to classify which one of the different code smells should be addressed first, based on thier potential risk. Ernst \textit{et al.} ~\cite{Ernst2015FSE} conducted a survey involving more than 1,800 participants and found that architectural decisions are the most important source of technical debt.
 
 
 
-A number of earlier studies studied the detection and management of technical debt. Seaman \textit{et al.}~\cite{Seaman2011}, Kruchten \textit{et al.}~\cite{Kruchten2013IWMTD} and Brown \textit{et al.}~\cite{Brown2010MTD} made several reflections about the term `technical debt' and mentioned that it is commonly used to communicate development issues to managers. Other work by Zazworka \textit{et al.} \cite{Zazworka2013EASE} focused on the detection of technical debt, where they conducted experiments to compare the efficiency of automated tools in comparison with human elicitation in detecting technical debt. They found that there is a small overlap between the two approaches. They also concluded that automated tools are more efficient in finding defect debt, whereas developers can realize more abstract categories of technical debt. In follow up work, Zazworka \textit{et al.}~\cite{Zazworka2011MTD} conducted a study to measure the impact of technical debt on software quality. They focused on a particular kind of debt, namely design debt measured using God classes. They found that God classes are more likely to change, and therefore, have a higher impact on software quality. Other work by Fontana \textit{et al.}~\cite{Fontana2012MTD} investigated design technical debt appearing in the form of code smells, namely God Classes, Data Classes and Duplicated Code. They proposed an approach to classify which one of the different code smells should be addressed first, based on thier potential risk. Ernst \textit{et al.} ~\cite{Ernst2015FSE} conducted a survey involving more than 1,800 participants and found that architectural decisions are the most important source of technical debt.
+In an earlier study Klinger \textit{et al.} have conducted four interviews and observed that ``the individuals choosing to incur technical debt are usually different from those responsible for servicing the debt''~\cite{Klinger:etal}. 
+This observation has been questioned by Spinola~\textit{et al.}, who have found that while the online-survey respondents tended to agree with the observation, the paper-survey respondents achieved high consensus in neither agreeing nor disagreeing with the observation~\cite{Spinola:etal}. Therefore, to complement these studies we analyze the source code.
+Indeed, if the observation of Klinger~\textit{et al.} holds for \SATD then we expect to see a clear separation between the individuals introducing \SATD and individuals removing \SATD, resulting in a low \SATD self-removal.
+
+Jian and Hassan have studied removal of comments in PostgreSQL from 1996 to 2005~\cite{Jiang:Hassan}. They have observed that at each 30-day period 0--40\% of functions with header comments have been removed; similar observation has been made for functions with non-header comments. Unfortunately, different focus of our studies (comments vs. functions, \SATD-comments vs. any comments) render our results incomparable.
+
+
+
+
+
+
+
+
 
 Our work is different from the work that uses code smells to detect design technical debt, since we use code comments to detect technical debt. Moreover, our study is focused on the removal of self-admitted technical debt, rather than its identification or management issues.
 
-More recently, Potdar and Shihab~\cite{Potdar2014ICSME} extracted code comments of four projects and analyzed more than 100K comments to come up with 62  patterns that indicate self-admitted technical debt. Their findings show that 2.4\% - 31\% of the files in a project contain self-admitted technical debt. Bavota and Russo~\cite{Bavota2016MSR} replicated the study of self-admitted technical debt on a large set of Apache projects and confirmed the findings observed by Potdar and Shihab in their earlier work. Wehaibi \textit{et al.}~\cite{Wehaibi2016SANER} examined the impact of self-admitted technical debt and found that self-admitted technical debt leads to more complex changes in the future. All three of the aforementioned studies used the comment patterns approach to detect self-admitted technical debt. Other work~\cite{Maldonado2015MTD} examined more than ~33K comments to classify the different types of self-admitted technical debt found in source code comments. Farias \textit{et al.}~\cite{Farias2015MTD} proposed a contextualized vocabulary model for identifying technical debt in comments using word classes and code tags in the process. 
+
+
+
+\noindent\textbf{The detection \& management of self-admitted technical Debt.} Potdar and Shihab~\cite{Potdar2014ICSME} introduce the self-admitted technical debt. They extracted code comments of four projects and analyzed more than 100K comments to come up with 62  patterns that indicate self-admitted technical debt. Their findings show that 2.4\% - 31\% of the files in a project contain self-admitted technical debt. In a recently work, Maldonado~\textit{et al.}~\cite{Maldonado2015TSE} use natural language processing technical to identify self-admitted technical debt from source code comment. Their experiment showed that the proposed method achieved 90\% classification accuracy in identifying design and requirement self-admitted technical debt. Bavota and Russo~\cite{Bavota2016MSR} replicated the study of self-admitted technical debt on a large set of Apache projects and confirmed the findings observed by Potdar and Shihab in their earlier work~\cite{Potdar2014ICSME}. Maldonado and Shihab~\cite{Maldonado2015MTD} examined more than ~33K comments to classify the different types of self-admitted technical debt found in source code comments. Other work~ Farias \textit{et al.}~\cite{Farias2015MTD} proposed a contextualized vocabulary model for identifying technical debt in comments using word classes and code tags in the process.
+
+
+
+Other work studied the management and the impact of self-admitted technical debt. Wehaibi \textit{et al.}~\cite{Wehaibi2016SANER} examined the impact of self-admitted technical debt and found that self-admitted technical debt leads to more complex changes in the future. All three of the aforementioned studies used the comment patterns approach to detect self-admitted technical debt. Kamei~\textit{et al.}~\cite{kameiusingTDA2016}~proposed a method to measure technical debt interest using self-admitted technical debt comments in the source code. The found around 42\% of the technical debt in the studied projects incurs positive interest.
+
+ 
 
 Our work also uses code comments to detect self-admitted technical debt. However, we use the identified self-admitted technical debt to better understand its removal from software projects.
+
+
+
+
+
+
+
 
 
 
