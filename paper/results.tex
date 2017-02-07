@@ -97,45 +97,42 @@ We take into consideration two attributes of the change when comparing authors, 
 	\centering
 	
 	
-	\begin{subfigure}[b]{0.24\textwidth}
-		\includegraphics[width=\textwidth]{figures/test/Ant.pdf}
+	%\begin{subfigure}[b]{0.24\textwidth}
+	%	\includegraphics[width=\textwidth]{figures/test/Ant.pdf}
 		%\caption{Self-Removal vs \\ Non Self-Removal for Gerrit}
-		\label{fig:removal_comparison_gerrit}
-	\end{subfigure}
-	\begin{subfigure}[b]{0.24\textwidth}
+	%	\label{fig:removal_comparison_gerrit}
+	%\end{subfigure}
+	%\begin{subfigure}[b]{0.24\textwidth}
+	%	\includegraphics[width=\textwidth]{figures/test/Jmeter.pdf}
+	%\caption{Self-Removal vs \\ Non Self-Removal for Gerrit}
+	%	\label{fig:removal_comparison_gerrit}
+	%\end{subfigure}
+	\begin{subfigure}[b]{0.195\textwidth}
 		\includegraphics[width=\textwidth]{figures/test/Camel.pdf}
 		%\caption{Self-Removal vs \\ Non Self-Removal for Hadoop}
-		\label{fig:removal_comparison_hadoop}
+		\label{fig:removal_comparison_camel}
 	\end{subfigure}
-	\begin{subfigure}[b]{0.24\textwidth}
+	\begin{subfigure}[b]{0.195\textwidth}
 		\includegraphics[width=\textwidth]{figures/test/Guerrit.pdf}
 		%\caption{Self-Removal vs \\ Non Self-Removal for Tomcat}
-		\label{fig:removal_comparison_tomcat} 
+		\label{fig:removal_comparison_gerrit} 
 	\end{subfigure}
-	\begin{subfigure}[b]{0.24\textwidth}
+	\begin{subfigure}[b]{0.195\textwidth}
 		\includegraphics[width=\textwidth]{figures/test/Hadoop.pdf}
 		%\caption{Self-Removal vs Non Self-Removal for Tomcat}
-		\label{fig:removal_comparison_tomcat} 
+		\label{fig:removal_comparison_hadoop} 
 	\end{subfigure}
-	
-	
-	
-	\begin{subfigure}[b]{0.24\textwidth}
-		\includegraphics[width=\textwidth]{figures/test/Jmeter.pdf}
-		%\caption{Self-Removal vs \\ Non Self-Removal for Gerrit}
-		\label{fig:removal_comparison_gerrit}
-	\end{subfigure}
-	\begin{subfigure}[b]{0.24\textwidth}
+	\begin{subfigure}[b]{0.195\textwidth}
 		\includegraphics[width=\textwidth]{figures/test/Log4j.pdf}
 		%\caption{Self-Removal vs \\ Non Self-Removal for Hadoop}
-		\label{fig:removal_comparison_hadoop}
+		\label{fig:removal_comparison_log4j}
 	\end{subfigure}
-	\begin{subfigure}[b]{0.24\textwidth}
+	\begin{subfigure}[b]{0.195\textwidth}
 		\includegraphics[width=\textwidth]{figures/test/Tomcat.pdf}
 		%\caption{Self-Removal vs \\ Non Self-Removal for Tomcat}
 		\label{fig:removal_comparison_tomcat} 
 	\end{subfigure}
-	
+
 	%	 	~
 	%	 	~
 	%	 	~
@@ -172,22 +169,32 @@ In addition, we also compare the time that self-removed and non self-removed \SA
 
 
 %-------------------------------------------------------------------------------
-\begin{table*}[h!]
+
+\begin{table}[t]
 	\centering
 	\caption{Distribution of the removed STD Comments}
-	\label{my-label}
-	\begin{tabular}{@{}lrrrrrr@{}}
+	\label{tab:Distribution_of_the_removed_STD_Comments}
+	\begin{tabular}{@{}l|rrrr@{}}
 		\toprule
-		\textbf{Project} & \textbf{Min.} & \textbf{1st Qu.} & \textbf{Median} & \textbf{Mean} & \textbf{3rd Qu.} & \textbf{Max.} \\ \midrule
-		ANT & 0.003 & 21.570 & 91.910 & 427.100 & 282.900 & 4933 \\
-		Jmeter & 0.001 & 40.210 & 228.000 & 498.100 & 787.900 & 4866 \\
-		Camel & 0.0004 & 1.0910 & 18.1600 & 82.0300 & 47.8600 & 2930 \\
-		Hadoop & 0.0143 & 45.1700 & 159.0000 & 326.8000 & 512.1000 & 1608 \\
-		Tomcat & 0.000 & 5.752 & 164.900 & 613.200 & 1122.000 & 3610 \\
-		Log4j & 0.063 & 21.580 & 172.800 & 516.000 & 605.200 & 3686 \\
-		Guerrit & 0.002 & 8.111 & 10.840 & 177.000 & 113.800 & 2574 \\ \bottomrule
+		\textbf{Project} &~&\textbf{Median} &~& \textbf{Mean} \\ \midrule
+		\textbf{Camel} &~& 18.16 &~& 82.03 \\
+		\textbf{Hadoop} &~& 159.00 &~& 326.80 \\
+		\textbf{Tomcat} &~& 164.90 &~& 613.20 \\
+		\textbf{Log4j} &~& 172.80 &~& 516.00 \\
+		\textbf{Gerrit} &~& 10.84 &~& 177.00 \\ \midrule
+		\textbf{Mean} &~& 105.10 &~&343.00 \\
+		\textbf{Median} &~& 159.00 &~& 326.80 \\ \bottomrule
 	\end{tabular}
-\end{table*}
+\end{table}
+
+
+
+
+
+
+
+
+
 
 
 
