@@ -1,7 +1,8 @@
 % ----------------------------------------------------------------------------------------------------------------
 % For tracking purposes - this is V2.0 - May 2012
 
-\documentclass{sig-alternate}
+\documentclass[10pt, conference]{IEEEtran}
+
 
 \usepackage{amssymb,amsmath}
 \usepackage{wrapfig}
@@ -83,29 +84,7 @@
 
 \begin{document}
 
-
-\setcopyright{acmcopyright}
-
-% % DOI
-% \doi{10.475/123_4}
-
-% % ISBN
-% \isbn{123-4567-24-567/08/06}
-
-% %Conference
-% \conferenceinfo{PLDI '13}{June 16--19, 2013, Seattle, WA, USA}
-
-% \acmPrice{\$15.00}
-
-
-% --- Author Metadata here ---
-% \conferenceinfo{WOODSTOCK}{'97 El Paso, Texas USA}
-%\CopyrightYear{2007} % Allows default copyright year (20XX) to be over-ridden - IF NEED BE.
-%\crdata{0-12345-67-8/90/01}  % Allows default copyright data (0-89791-88-6/97/05) to be over-ridden - IF NEED BE.
-% --- End of Author Metadata ---
-
 \title{An Empirical Study On the Removal of Self-Admitted Technical Debt}
-\numberofauthors{1} 
 \author{
 %%	\alignauthor 
 %	Everton da S. Maldonado\textsuperscript{\S}, Rabe Abdalkareem\textsuperscript{\S}, Emad Shihab\textsuperscript{\S}, Alexander Serebrenik\textsuperscript{\textdagger}\\
@@ -118,6 +97,18 @@
 %	\affaddr{\textsuperscript{\textdagger}Eindhoven University of Technology, Eindhoven, The Netherlands}\\
 %	\email{\url{{e_silvam,rab_abdu,eshihab}@encs.concordia.ca}, \url{a.serebrenik@tue.nl}}
 }
+%\author{\IEEEauthorblockN{Authors Name/s per 1st Affiliation (Author)}
+%\IEEEauthorblockA{line 1 (of Affiliation): dept. name of organization\\
+%line 2: name of organization, acronyms acceptable\\
+%line 3: City, Country\\
+%line 4: Email: name@xyz.com}
+%\and
+%\IEEEauthorblockN{Authors Name/s per 2nd Affiliation (Author)}
+%\IEEEauthorblockA{line 1 (of Affiliation): dept. name of organization\\
+%line 2: name of organization, acronyms acceptable\\
+%line 3: City, Country\\
+%line 4: Email: name@xyz.com}
+%}
 
 \maketitle
 \begin{abstract}
@@ -126,14 +117,10 @@ Technical debt refers to the phenomena of taking shortcuts to achieve short term
 Therefore, in this paper, we study the removal of SATD. In an empirical study on five open source projects, we examine how much SATD is removed and who removes SATD? We also investigate for how long SATD lives in a project and what activities lead to the removal of SATD? Our findings indicate that, on average, 74.9\% of SATD is removed, that aprox. 54.3\% is self-removed (i.e., removed by the same person that introduced it) and that self-removed SATD is addressed within 18 days, whereas non-self-removed SATD takes 127 days to address, on median.
 \end{abstract}
 
-% A category with the (minimum) three required fields
-% \category{H.4}{Information Systems Applications}{Miscellaneous}
-%A category including the fourth, optional field follows...
-% \category{D.2.8}{Software Engineering}{Metrics}[complexity measures, performance measures]
+\begin{IEEEkeywords}
+Self-Admitted Technical Debt, Source Code Quality, Mining Software Repositories
+\end{IEEEkeywords}
 
-\terms{}
-
-\keywords{Self-Admitted Technical Debt, Source Code Quality, Mining Software Repositories}
 
 \section{Introduction}
 \label{sec:introduction}
