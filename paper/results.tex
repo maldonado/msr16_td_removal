@@ -163,13 +163,50 @@ non-parametric effect size measure for ordinal data. We consider the effect size
 
 
 
+
+Survival plots show the analysis that focuses typically on times to a given event. In our case, the survival plots show the analysis to present the percentage of self-admitted technical debt that survive in a projects overtime. For example, Figure~\ref{fig:removal_comparison_camel_survival} presents the survival plot of Camel project with the X axis representing the number of days  and the Y axis the percentage of self-admitted technical debt that survived.
+
 \noindent \textbf{Results:} \emad{we need to add the general result of how long SATD lives in a project period.}
 
 In addition, we also compare the time that self-removed and non self-removed \SATD lives in the system. We find that self-removed technical debt gets removed faster than non self-removed technical debt. Figures \ref{fig:removal_comparison_gerrit}, \ref{fig:removal_comparison_hadoop} and \ref{fig:removal_comparison_tomcat} presents the comparison between self-removal and non self-removal of three projects, namely, Gerrit, Hadoop and Tomcat. We selected these projects since they represent the general behaviour of the analyzed dataset. As we can observe in Figures \ref{fig:removal_comparison_gerrit}, \ref{fig:removal_comparison_hadoop} and \ref{fig:removal_comparison_tomcat} self-removal technical debt is removed faster than non self-removal technical debt when considering the amount of days that each technical debt was part of the analyzed system. The horizontal black line on each figure mark the median value of removal time. In addition for each figure we plotted the number of occurrences measured on each dataset, as shown in the legend indicated by the letter `N' followed by the precise median in days.
 
 
+
+
+
 %-------------------------------------------------------------------------------
 
+\begin{figure*}[t]
+	\centering
+	
+	\begin{subfigure}[b]{0.195\textwidth}
+		\includegraphics[width=\textwidth]{figures/Survival/camel.pdf}
+		%\caption{Self-Removal vs \\ Non Self-Removal for Hadoop}
+		\label{fig:removal_comparison_camel_survival}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.195\textwidth}
+		\includegraphics[width=\textwidth]{figures/Survival/hadoop.pdf}
+		%\caption{Self-Removal vs \\ Non Self-Removal for Tomcat}
+		\label{fig:removal_comparison_gerrit_survival} 
+	\end{subfigure}
+	\begin{subfigure}[b]{0.195\textwidth}
+		\includegraphics[width=\textwidth]{figures/Survival/tomcat.pdf}
+		%\caption{Self-Removal vs Non Self-Removal for Tomcat}
+		\label{fig:removal_comparison_hadoop_survival} 
+	\end{subfigure}
+	\begin{subfigure}[b]{0.195\textwidth}
+		\includegraphics[width=\textwidth]{figures/Survival/log4j.pdf}
+		%\caption{Self-Removal vs \\ Non Self-Removal for Hadoop}
+		\label{fig:removal_comparison_log4j_survival}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.195\textwidth}
+		\includegraphics[width=\textwidth]{figures/Survival/gerrit.pdf}
+		%\caption{Self-Removal vs \\ Non Self-Removal for Tomcat}
+		\label{fig:removal_comparison_tomcat_survival} 
+	\end{subfigure}
+	\caption{Survival plots show the probability of the removal of STD Comment for all studied projects}
+\end{figure*}
+%------------------------------------------------------------------------------
 \begin{table}[t]
 	\centering
 	\caption{Distribution of the removed STD Comments}
