@@ -288,6 +288,34 @@ Thus far, our analysis has been quantitative in nature. To triangulate our findi
 \noindent \textbf{Approach:} 
 To address this research question, we analyze the developer responses to the online survey described in section~\ref{Survey_Design}. The survey has two main sections: the first part asks questions related to likert-scale type questions about how often developers encounter, add and address technical debt comments; the second part contains two open-ended questions about the activities that developers perform to add and address self-admitted technical debt. For, the open-ended questions, we manually analyzed the free-text answers and identified 6 main reasons why developers add self-admitted technical debt and 5 main reasons for removing self-admitted technical debt.
 
+
+\begin{table}[t]
+	\centering
+	\caption{Background of participants in online survey}
+	\label{survey_responses}
+	\begin{tabular}{@{}l|p{1.2in}|l|l|l@{}}
+		\toprule
+		\multirow{2}{*}{\textbf{\begin{tabular}[c]{@{}l@{}}Developer\\ Role\end{tabular}}} & \multirow{2}{*}{\textbf{\begin{tabular}[c]{@{}l@{}}Developer\\ Task\end{tabular}}} & \multicolumn{3}{c}{\textbf{\begin{tabular}[c]{@{}c@{}}Developer Exp. \\ (in years)\end{tabular}}} \\ \cmidrule(l){3-5} 
+		&  & \textbf{1-2} & \textbf{3-5} & \textbf{\textgreater5} \\ \midrule
+		\begin{tabular}[c]{@{}c@{}}A Contributor\\ Developer (8)\end{tabular} & BF, BF, NF, OTH, BF, BF, OTH, NF & 1 & 0 & 7 \\
+		\begin{tabular}[c]{@{}l@{}}A Core\\ Developer (6)\end{tabular} & NF, BF, OTH, NF, CR, NF & 0 & 1 & 5 \\ \bottomrule
+			
+			
+	\end{tabular}
+	BF=Bug Fixing, NF=New Feature, CR=Code Review, OTH=Other.
+\end{table}
+
+
+
+
+\emad{pasted from section 2}
+To understand the type of activities that lead to the introduce and remove of self-admitted technical debt, we designed and sent an online survey. The survey includes three main sections; I)  questions regarding 
+participant role and development tasks in the projects, and experiences, II) Three multiple choice, likert scale, questions about how often developers encounter, add, and address self-admitted technical debt. III) Two open ended questions about why do developers add or remove self-admitted technical debt. To identify the population of our survey, we collected the names and emails of all developers who added or removed self-admitted technical debt detected from the previous sections. In total, we found 250 unique developers from the studied seven open source projects and we successfully sent the survey to 188 developers.  
+
+We received 14 responses (7.4\% response rate). Table~\ref{survey_responses} shows the participants role in the projects, their main development tasks and developer experiences. Of the 14 participants, 8 (57\%) of them identified themselves as core developer, and 6 (43\%) are contributors to the projects. Five of the 14 participants work on fixing bug, and five work on implementing new features. Only one participant has the task of code review. Another 3 participants (21\%) indicted having different tasks (e.g., project user). Approximately 86\% of the participants have more than five years of development experiences, and two participants have less than or equal to five yeas of development experiences.
+
+
+
 \noindent \textbf{Results:} 
 Figure~\ref{fig:encouner_add_address} shows the results of the likert scale questions about how often developers encounter, add, address self-admitted technical debt. Developers mostly agreed that they encounter source code comments indicting self-admitted technical debt. In 50\% of the responses, developers stated that they sometimes see such comments, and the other 50\% of them said they encounter such comments often or very often. When adding self-admitted technical debt, developer's responses vary from often adding self-admitted technical debt (approx. 21\%) to rarely (approx. 36\%). Another 43\% said that they sometimes added such comments. We also asked developers how often they address self-admitted technical debt. 50\% of the developers mentioned that they rarely address self-admitted technical debt, 29\% of respondents mentioned that they sometimes address self-admitted technical debt, and 21\% of the respondents mentioned that they often address self-admitted technical debt.
 

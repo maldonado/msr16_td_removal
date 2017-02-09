@@ -127,46 +127,25 @@ The steps mentioned above significantly reduced the number of comments in our da
 %\label{sub:nlp_classification}
 
 \emad{stopped here}
-\noindent\textbf{Applying the NLP Classifier.} Next, we use the classified \SATD comments as a training dataset for the Stanford NLP Classifier~\cite{Manning2014ACL}.
-An NLP Classifier, in general, takes as input a number of data items along with a classification for each data item, and automatically generates \textit{features} (\textit{i.e.,} words) from each \textit{datum}, which are associated with positive or negative numeric \textit{votes} for each class. The weights of the features are learned automatically based on the manually classified training data items (supervised learning). The NLP Classifier builds a \textit{maximum entropy model}~\cite{nigam1999using}, which is equivalent to a multi-class regression model, and it is trained to maximize the conditional likelihood of the classes taking into account feature dependences when calculating the feature weights.
+\noindent\textbf{Applying the NLP Classifier.} Next, we use an NLP classifier (i.e, the Stanford NLP Classifier~\cite{Manning2014ACL}) to classify \SATD comments.
+The NLP Classifier takes as input classified data items (comments), and automatically learns \textit{features} (\textit{i.e.,} words) from each \textit{datum} that are associated with positive or negative numeric \textit{votes} for each class. The weights of the features are learned automatically based on the manually classified training data items (supervised learning). The Stanford NLP Classifier builds a \textit{maximum entropy model}~\cite{nigam1999using}, which is equivalent to a multi-class regression model, and is trained to maximize the conditional likelihood of the classes taking into account feature dependences when calculating the feature weights.
 
-In our case, the training dataset is composed of source code comments and their corresponding manual classification. The manually classified comments are part of a bigger dataset of \SATD comments created during \todo{ours previous studies}~\cite{Maldonado2015MTD,Maldonado2015TSE}. Basically, \todo{during these previous works}, we created a public available dataset containing 62,566 comments extracted from \todo{ten} \emad{why not seven / or five}\everton{Because this dataset is based on the manually classified comments used in our previous study. We could had used any number of comments (or projects) that we wanted. We choose to use all available.}open source projects. These comments were classified as \SATD comments or as regular comments (\textit{i.e.,} comments without technical debt). The dataset was classified by the first author and later, to mitigate the risk of bias, another student was asked to classify a statistically significant sample of the dataset. The Cohen's kappa coefficient~\cite{cohen1960coefficient} (\textit{i.e.,} the level of agreement between both reviewer) was of +0.81. The resulting coefficient is scaled to range between -1 and +1, where negative value means poorer than chance agreement, zero indicates exactly chance agreement, and positive value indicates better than chance agreement~\cite{fleiss1973equivalence}. Although we were able to find different types of \SATD \todo{in previous studies} we focus our training dataset on \emph{design \SATD} as it is the most common and impactful\rabe{important source of technical debt}~\cite{Ernst2015FSE}. \alexander{is ``impactful'' a word?}\everton{Not sure, but I found it on Mac's dictionary with the following definition: having a major impact or effect: an eye-catching and impactful design.}
+To train the NLP classifier, we used the manually classified \SATD comments data set provided by Maldonado \emph{et al.}~\cite{Maldonado2015MTD}. The data set contains contains 62,566 comments extracted from ten open source projects. These comments were classified as \SATD comments or as regular comments (\textit{i.e.,} comments without technical debt). The manually classified data set was verified by the authors of the paper and they showed that two independent reviewers agreed on the classification, achieving a Cohen's Kappa value of +0.81. In addition, the work by Maldonado \emph{et al.}~\cite{Maldonado2015TSE} showed that the NLP classifier is correct in identifying \SATD with an average precision of 0.72 and recall of 0.56. Although these precision and recall values may not seem high, they do represent the state of the art and outperform the comment-patterns technique, which all prior work was built on top of (i.e., \todo{cite potdar, bavota and wehaibi)} by 230\%, on average. 
 
-Lastly, after training the NLP classifier, we process all comments that we extracted from the projects that we are analyzing. The resulting computation of this process is a classified source code comment. The classification can either be ``WITHOUT\_CLASSIFICATION'', meaning  that the classifier did not classify the comment as \SATD or ``DESIGN'' meaning that the classifier identified the comment as \SATD.
 
-\alexander{what is the relation between the heuristics described in the previous section and the NLP classification here? Are those competing approaches? Complementary ones?}\rabe{the heuristics described in the previous section is considered to be a preprocessing step}\everton{In this study we could opt for not using the heuristics. However, we would expend an awful amount of time classifying comments that are not likely to have TD. Is more about feasibility than anything else. (Even in the previous study it was considered necessary to make the task of manual classification possible)}
+%classified by the first author and later, to mitigate the risk of bias, another student was asked to classify a statistically significant sample of the dataset. The Cohen's kappa coefficient~\cite{cohen1960coefficient} (\textit{i.e.,} the level of agreement between both reviewer) was of +0.81. The resulting coefficient is scaled to range between -1 and +1, where negative value means poorer than chance agreement, zero indicates exactly chance agreement, and positive value indicates better than chance agreement~\cite{fleiss1973equivalence}. Although we were able to find different types of \SATD \todo{in previous studies} we focus our training dataset on \emph{design \SATD} as it is the most common and impactful\rabe{important source of technical debt}~\cite{Ernst2015FSE}. \alexander{is ``impactful'' a word?}\everton{Not sure, but I found it on Mac's dictionary with the following definition: having a major impact or effect: an eye-catching and impactful design.}
 
-\emad{I am missing here the evaluation of the classifier (precision/ recall) }\everton{We have all the precision and recall results in the TSE paper}
+%Lastly, after training the NLP classifier, we process all comments that we extracted from the projects that we are analyzing. The resulting computation of this process is a classified source code comment. The classification can either be ``WITHOUT\_CLASSIFICATION'', meaning  that the classifier did not classify the comment as \SATD or ``DESIGN'' meaning that the classifier identified the comment as \SATD.
+
+%\alexander{what is the relation between the heuristics described in the previous section and the NLP classification here? Are those competing approaches? Complementary ones?}\rabe{the heuristics described in the previous section is considered to be a preprocessing step}\everton{In this study we could opt for not using the heuristics. However, we would expend an awful amount of time classifying comments that are not likely to have TD. Is more about feasibility than anything else. (Even in the previous study it was considered necessary to make the task of manual classification possible)}
+
+%\emad{I am missing here the evaluation of the classifier (precision/ recall) }\everton{We have all the precision and recall results in the TSE paper}
 
 
 % Please add the following required packages to your document preamble:
 % \usepackage{booktabs}
 % \usepackage{multirow}
-\begin{table}[t]
-	\centering
-	\caption{Background of participants in online survey}
-	\label{survey_responses}
-	\begin{tabular}{@{}l|p{1.2in}|l|l|l@{}}
-		\toprule
-		\multirow{2}{*}{\textbf{\begin{tabular}[c]{@{}l@{}}Developer\\ Role\end{tabular}}} & \multirow{2}{*}{\textbf{\begin{tabular}[c]{@{}l@{}}Developer\\ Task\end{tabular}}} & \multicolumn{3}{c}{\textbf{\begin{tabular}[c]{@{}c@{}}Developer Exp. \\ (in years)\end{tabular}}} \\ \cmidrule(l){3-5} 
-		&  & \textbf{1-2} & \textbf{3-5} & \textbf{\textgreater5} \\ \midrule
-		\begin{tabular}[c]{@{}c@{}}A Contributor\\ Developer (8)\end{tabular} & BF, BF, NF, OTH, BF, BF, OTH, NF & 1 & 0 & 7 \\
-		\begin{tabular}[c]{@{}l@{}}A Core\\ Developer (6)\end{tabular} & NF, BF, OTH, NF, CR, NF & 0 & 1 & 5 \\ \bottomrule
-			
-			
-	\end{tabular}
-	BF=Bug Fixing, NF=New Feature, CR=Code Review, OTH=Other.
-\end{table}
 
-
-
-
-\subsection{Survey Design}
-\label{Survey_Design}
-To understand the type of activities that lead to the introduce and remove of self-admitted technical debt, we designed and sent an online survey. The survey includes three main sections; I)  questions regarding 
-participant role and development tasks in the projects, and experiences, II) Three multiple choice, likert scale, questions about how often developers encounter, add, and address self-admitted technical debt. III) Two open ended questions about why do developers add or remove self-admitted technical debt. To identify the population of our survey, we collected the names and emails of all developers who added or removed self-admitted technical debt detected from the previous sections. In total, we found 250 unique developers from the studied seven open source projects and we successfully sent the survey to 188 developers.  
-
-We received 14 responses (7.4\% response rate). Table~\ref{survey_responses} shows the participants role in the projects, their main development tasks and developer experiences. Of the 14 participants, 8 (57\%) of them identified themselves as core developer, and 6 (43\%) are contributors to the projects. Five of the 14 participants work on fixing bug, and five work on implementing new features. Only one participant has the task of code review. Another 3 participants (21\%) indicted having different tasks (e.g., project user). Approximately 86\% of the participants have more than five years of development experiences, and two participants have less than or equal to five yeas of development experiences.
 
 
 
