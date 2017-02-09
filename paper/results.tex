@@ -112,8 +112,8 @@ We take into consideration two attributes of the change when comparing authors, 
 		%\caption{Self-Removal vs \\ Non Self-Removal for Hadoop}
 		\label{fig:removal_comparison_camel}
 	\end{subfigure}
-	\begin{subfigure}[b]{0.195\textwidth}
-		\includegraphics[width=\textwidth]{figures/test/Guerrit.pdf}
+	\begin{subfigure}[b]{0.193\textwidth}
+		\includegraphics[width=\textwidth]{figures/test/Gerrit.pdf}
 		%\caption{Self-Removal vs \\ Non Self-Removal for Tomcat}
 		\label{fig:removal_comparison_gerrit} 
 	\end{subfigure}
@@ -122,7 +122,7 @@ We take into consideration two attributes of the change when comparing authors, 
 		%\caption{Self-Removal vs Non Self-Removal for Tomcat}
 		\label{fig:removal_comparison_hadoop} 
 	\end{subfigure}
-	\begin{subfigure}[b]{0.195\textwidth}
+	\begin{subfigure}[b]{0.191\textwidth}
 		\includegraphics[width=\textwidth]{figures/test/Log4j.pdf}
 		%\caption{Self-Removal vs \\ Non Self-Removal for Hadoop}
 		\label{fig:removal_comparison_log4j}
@@ -132,7 +132,6 @@ We take into consideration two attributes of the change when comparing authors, 
 		%\caption{Self-Removal vs \\ Non Self-Removal for Tomcat}
 		\label{fig:removal_comparison_tomcat} 
 	\end{subfigure}
-
 	%	 	~
 	%	 	~
 	%	 	~
@@ -185,14 +184,14 @@ In addition, we also compare the time that self-removed and non self-removed \SA
 		\label{fig:removal_comparison_camel_survival}
 	\end{subfigure}
 	\begin{subfigure}[b]{0.195\textwidth}
+		\includegraphics[width=\textwidth]{figures/Survival/gerrit.pdf}
+		%\caption{Self-Removal vs \\ Non Self-Removal for Tomcat}
+		\label{fig:removal_comparison_tomcat_survival} 
+	\end{subfigure}
+	\begin{subfigure}[b]{0.195\textwidth}
 		\includegraphics[width=\textwidth]{figures/Survival/hadoop.pdf}
 		%\caption{Self-Removal vs \\ Non Self-Removal for Tomcat}
 		\label{fig:removal_comparison_gerrit_survival} 
-	\end{subfigure}
-	\begin{subfigure}[b]{0.195\textwidth}
-		\includegraphics[width=\textwidth]{figures/Survival/tomcat.pdf}
-		%\caption{Self-Removal vs Non Self-Removal for Tomcat}
-		\label{fig:removal_comparison_hadoop_survival} 
 	\end{subfigure}
 	\begin{subfigure}[b]{0.195\textwidth}
 		\includegraphics[width=\textwidth]{figures/Survival/log4j.pdf}
@@ -200,9 +199,9 @@ In addition, we also compare the time that self-removed and non self-removed \SA
 		\label{fig:removal_comparison_log4j_survival}
 	\end{subfigure}
 	\begin{subfigure}[b]{0.195\textwidth}
-		\includegraphics[width=\textwidth]{figures/Survival/gerrit.pdf}
-		%\caption{Self-Removal vs \\ Non Self-Removal for Tomcat}
-		\label{fig:removal_comparison_tomcat_survival} 
+		\includegraphics[width=\textwidth]{figures/Survival/tomcat.pdf}
+		%\caption{Self-Removal vs Non Self-Removal for Tomcat}
+		\label{fig:removal_comparison_hadoop_survival} 
 	\end{subfigure}
 	\caption{Survival plots show the probability of the removal of STD Comment for all studied projects}
 \end{figure*}
@@ -215,11 +214,14 @@ In addition, we also compare the time that self-removed and non self-removed \SA
 		\toprule
 		\textbf{Project} &~&\textbf{Median} &~& \textbf{Mean} \\ \midrule
 		\textbf{Camel} &~& 18.16 &~& 82.03 \\
+		\textbf{Gerrit} &~& 10.84 &~& 177.00 \\
 		\textbf{Hadoop} &~& 159.00 &~& 326.80 \\
-		\textbf{Tomcat} &~& 164.90 &~& 613.20 \\
 		\textbf{Log4j} &~& 172.80 &~& 516.00 \\
-		\textbf{Gerrit} &~& 10.84 &~& 177.00 \\ \midrule
+		\textbf{Tomcat} &~& 164.90 &~& 613.20 \\			
+		\midrule
+		
 		\textbf{Mean} &~& 105.10 &~&343.00 \\
+		
 		\textbf{Median} &~& 159.00 &~& 326.80 \\ \bottomrule
 	\end{tabular}
 \end{table}
@@ -276,11 +278,11 @@ In addition, we also compare the time that self-removed and non self-removed \SA
 			\toprule
 			\textbf{\thead{Project}} & \textbf{\thead{$p$-value}}&~~~ & \textbf{\thead{$d$}}\\ 
 			\midrule
-			\textbf{Ant   }   &  < 2.2e-16& ~~~  &  -0.427(medium)  \\  
+			%\textbf{Ant   }   &  < 2.2e-16& ~~~  &  -0.427(medium)  \\  
 			\textbf{Camel }   &  0.0001253& ~~~ &  -0.075(negligible)  \\  
 			\textbf{Gerrit}   &  3.581e-14& ~~~ &  -0.671(large)  \\  
 			\textbf{Hadoop}   &  < 2.2e-16& ~~~ &  -0.531(large)  \\  
-			\textbf{Jmeter}   &  < 2.2e-16& ~~~ &  -0.325(small)  \\  
+			%\textbf{Jmeter}   &  < 2.2e-16& ~~~ &  -0.325(small)  \\  
 			\textbf{Log4j}   &  2.345e-06 & ~~~ &  -0.517(large)  \\  
 			\textbf{Tomcat}   &  2.2e-16  & ~~~ &  -0.820(large) \\  
 			\bottomrule
