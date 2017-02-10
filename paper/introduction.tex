@@ -16,27 +16,26 @@ SATD refers to the situation where developers know that the current implementati
 Eventhough previous work argues that SATD has negative impact on software~\cite{Wehaibi2016SANER,kameiusingTDA2016}, it has also showed that some SATD remains in a project for long periods of time (up to 10 years\alexander{where does this data come from? isn't this an answer to RQ3?}) after its introduction. Therefore, an important question becomes ``why does some SATD remain for so long?'' and whether ``all SATD needs to be paid back?''. Examining the removal of SATD can shed light on potentially healthy patterns of debt, that may need not be paid back.
 
 %What we do in this paper
-Hence, in this paper we perform a mix-match empirical study using seven large open source software projects, where we examine phenomena relating to the removal of SATD. In particular, we examine the following questions:
-\alexander{Why these questions? Motivaton!}
+Hence, in this paper we perform a mix-match empirical study of large open source software projects, and examine phenomena relating to the removal of SATD. In particular, we examine the following questions:
 \begin{itemize}
-	\item[\textbf{RQ}]\textbf{1:} How much self-admitted technical debt gets removed?
-	\item[\textbf{RQ}]\textbf{2:} Who removes self-admitted technical debt? Is it most likely to be self-removed or removed by others?
-	\item[\textbf{RQ}]\textbf{3:} How long does self-admitted technical debt survive in a project?
-	\item[\textbf{RQ}]\textbf{4:} What activities lead to the removal of self-admitted technical debt?
+	\item[\textbf{RQ}]\textbf{1:} \emph{How much self-admitted technical debt gets removed?} Non-removal of SATD suggests relative lack of importance of SATD for the developers. 
+	\item[\textbf{RQ}]\textbf{2:} \emph{Who removes self-admitted technical debt? Is it most likely to be self-removed or removed by others?} One would expect the person that introduced SATD is better aware of the presence of SATD, and, hence, a priori, is more likely to remove SATD, i.e., to pay it back.
+	\item[\textbf{RQ}]\textbf{3:} \emph{How long does self-admitted technical debt survive in a project?} Continuing the distinction between developers removing their own SATD as opposed to those removing SATD introduced by others, we would expect the former to remove SATD faster than the latter.
+	\item[\textbf{RQ}]\textbf{4:} \emph{What activities lead to the removal of self-admitted technical debt?} Developers conduct both activities such as refactoring or code improvement that might explicitly target removal of technical debt, and activities related to new functionality or bug fixing that might lead to SATD removal as a byproduct.
 \end{itemize}
-To answer those questions, we first devise a technique to determine SATD introduction and removal. In total, we examine 5,733 instances of SATD removals.
+To answer those questions, we first devise a technique to determine SATD introduction and removal. In total, we examine 5,733 SATD removals in five large open source systems.
 
 %Our findings
 \textbf{Paper contribution:} Our findings indicate that 
 \begin{itemize}
-	\item We find that the majority of \SATD comments gets removed over the evolution of the project. Considering all projects the percentage of \SATD comments removal ranges between 40.5 - 90.6\%, and on average 74.9\% of the identified \SATD is removed.
+	\item We find that the majority of \SATD comments gets removed over the evolution of the project. Considering all projects the percentage of \SATD comments removal ranges between 40.5--90.6\%, and on average 74.9\% of the identified \SATD is removed.
 	\item We find that most \SATD (on average 54.4\% and median 61.0\%) is self-removed.
-	\item We find that the median amount of time that self-removed technical debt stays in the project is 18 days whereas non self removal technical debt is 127 days. In addition we find that technical debt removals happens more when the files containing debt are edited than when they are removed.
+	\item We find that the median amount of time that self-removed technical debt stays in the project is 18 days whereas for the non-self-removal it is 127 days. In addition, we find that technical debt removals happens more when the files containing debt are edited than when they are removed.
 	\item Developer add \SATD to track potential future bugs, code that needs improvements or areas to implement new features. Developers mostly remove \SATD when they are fixing bugs or adding new features. Very seldom do developers remove \SATD as part of refactoring efforts or dedicated code improvement activities.
 \end{itemize}
 
 %Organization
-The rest of the paper is organized as follows; Section~\ref{sec:approach} details our case study setup. Section~\ref{sec:case_study_results} presents the results of our case study. Section~\ref{sec:discussion} discusses the implications of our findings. Section~\ref{sec:related_work} outlines the related work and puts our study in perspective. Section~\ref{sec:conclusion} concludes the paper and presents future work.
+The rest of the paper is organized as follows: after detailing the case study setup in Section~\ref{sec:approach} we presents the results in Section~\ref{sec:case_study_results} and discuss their implications in Section~\ref{sec:discussion}. We position our results with respect to the related work in Section~\ref{sec:related_work} and evaluate threats to validity in Section~\ref{sec:threats_to_validity}. Finally, Section~\ref{sec:conclusion} concludes and sketches future work.
 
 
 
