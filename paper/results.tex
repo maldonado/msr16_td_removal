@@ -26,20 +26,20 @@ Our findings indicate that developers tend to be aware and do care about \SATD. 
 	\begin{center}
 		\caption{Removed Self-Admitted Technical Debt per Project}
 		\label{tbl:removed_self_admitted_technical_debt_per_project}
-		\begin{tabular}{l|rrr}
+		\begin{tabular}{l|rrrr}
 			\toprule
-			\textbf{\thead{Project}} & \textbf{\thead{\#identified}} & \textbf{\thead{\#removed}} & \textbf{\thead{\% removed}} \\ 
+			\textbf{\thead{Project}} & \textbf{\thead{\#identified}} & \textbf{\thead{\#removed}} & \textbf{\thead{\% removed}} &  \textbf{\thead{\% remains}}  \\ 
 			\midrule
 			%\textbf{Ant   }  &  854    & 728    & 85.2 \\  
-			\textbf{Camel }  &  4,331  & 3,926  & 90.6 \\
-			\textbf{Gerrit}  &  271    & 208    & 76.7 \\
-			\textbf{Hadoop}  &  1,164  & 472    & 40.5 \\  
+			\textbf{Camel }  &  4,331  & 3,926  & 90.6  & 9.4\\
+			\textbf{Gerrit}  &  271    & 208    & 76.7 & 23.3 \\
+			\textbf{Hadoop}  &  1,164  & 472    & 40.5 & 59.5 \\  
 			%\textbf{Jmeter}  &  1,260  & 981    & 77.8 \\ 
-			\textbf{Log4j }  &  135    & 118    & 87.4 \\ 
-			\textbf{Tomcat}  &  1,317  & 1,009  & 76.6 \\   
+			\textbf{Log4j }  &  135    & 118    & 87.4 & 12.6\\ 
+			\textbf{Tomcat}  &  1,317  & 1,009  & 76.6 & 23.4\\   
 			\midrule
-			\textbf{Average} & -       & -      & 74.4 \\
-			\textbf{Median} & -       & -      & 76.7 \\
+			\textbf{Average} & -       & -      & 74.4 & 25.6\\
+			\textbf{Median} & -       & -      & 76.7 & 23.3\\
 			\bottomrule
 		\end{tabular}
 	\end{center}    
@@ -108,7 +108,7 @@ Hadoop tends to be an outlier in terms of self-removed \SATD, however, it is wor
 
 \subsubsection*{Motivation} We know that the majority of \SATD is removed and most of the time it is removed by the same developer who introduced it. Next, we would like to know how long \SATD lives in a project before it is actually removed. Answering this question helps us to understand for how long it is normal to have \SATD comments in the projects. In addition, once we quantify the number of self-removed technical debt and the number of non self-removed technical debt comments, we would like to understand if these two categories of removal have differences between them. For example, since we know that the majority of \SATD is self-removed, is it the case that it is removed faster since our intuition is that it would be easier to address. 
 
-\subsubsection*{Approach} To determine the amount of time that \SATD lives in a project, we use the time difference between the commit that introduces and removes the \SATD comment. The steps to identify the \SATD introducing and removing commits are the same as we outlined in RQs 1 and 2. We measure the average and median time for \SATD to be removed. Additionally, we generate survival plots for the removal of \SATD to determine how likely the technical debt will live in a project. Survival plots show the (general) trend times for a given even to occur. In our case, the survival plots show the  percentage of self-admitted technical debt that survives in a project overtime. Finally, we distinguish between self- and non-self-removed technical debt and compare the removal time of each. We compare the two distributions (i.e., self- and non-self-removal) using a Mann-Whitney test~\cite{mann1947test} to determine if the difference is statistically significant at $p$ $<$$=$ 0.05.
+\subsubsection*{Approach} To determine the amount of time that \SATD lives in a project, we use the time difference between the commit that introduces and removes the \SATD comment. The steps to identify the \SATD introducing and removing commits are the same as we outlined in RQs 1 and 2. We measure the average and median time for \SATD to be removed. Additionally, we generate survival plots for the removal of \SATD to determine how likely the technical debt will live in a project. Survival plots show the (general) trend times for a given even to occur. In our case, the survival plots show the  percentage of self-admitted technical debt that survives in a project overtime. Finally, we distinguish between self- and non-self-removed technical debt and compare the removal time of each. We compare the two distributions (\emph{i.e.}, self- and non-self-removal) using a Mann-Whitney test~\cite{mann1947test} to determine if the difference is statistically significant at the customary level of 0.05.
 
 %find all changes that introduced a \SATD comment, and similarly, whenever possible, the change that removed the \SATD comment. Each change committed to the source code repository possesses a collection of useful information \alexander{please rephrase} that allows us to run a number of different analyses. To answer this question we examine the time between introduction and removal of each change related related to the \SATD comments that we previously were able to identify. In addition, we leverage the knowledge gathered so far to determine the authors of the change. 
 %\alexander{We should perform a statistical analysis...}
@@ -116,14 +116,27 @@ Hadoop tends to be an outlier in terms of self-removed \SATD, however, it is wor
 
 %We also estimated the magnitude of the difference between self-removed technical debt and non self-removed technical debt using the Cliff's Delta (or $d$)~\cite{grissom2005effect}, a non-parametric effect size measure for ordinal data. We consider the effect size values: small for $d$ $<$ 0.33 (positive as well as negative values), medium for 0.33  $\leq d<$ 0.474 and large for $d \geq$ 0.474.
 
-\subsubsection*{Results} Figure~\ref{fig:removed_all_std_comments} shows the mean and median times for \SATD to be removed from the respective projects. From the Figure, we see that the distribution of \SATD removal is skewed, as indicated by plots and the difference in the mean and median removal times. In general, the time that \SATD lives in a project  varies from one project to another and varies between 18.2 - 172.8 days on median and 82 - 613.2 days on average. One clear finding however, is that in Camel and Gerrit, \SATD is removed faster Hadoop, Log4j and Tomcat.
+\subsubsection*{Results} Figure~\ref{fig:removed_all_std_comments} shows the mean and median times for \SATD to be removed from the respective projects. The distribution of \SATD removal is skewed, as indicated by plots and the difference in the mean and median removal times. In general, the time that \SATD stays in a project  varies from one project to another and varies between 18.2--172.8 days on median and 82--613.2 days on average. One clear finding however, is that in Camel and Gerrit, \SATD is removed faster than in Hadoop, Log4j and Tomcat.
 
-In addition, Figure~\ref{fig:survival_plots} shows the survival plots for the five studied projects. The plots show the survival function vs. time. We see that for all projects, there is a steep decline in the first few hundred days, although how steep the drop is and where it flattens out depends on the individual projects. For example, for the Camel project, there is a steep drop in \SATD after around 126 days and a long tail after that. This means that in Camel, the likelihood of \SATD surviving (i.e., existing in the system after introduction) drops significantly after 126 days, and after that time, the chance of surviving is less than 20\%, as indicated by the survival function. On the other hand, in Hadoop, the chance of \SATD surviving for more than 2,000 days is very high (approx. in 0.58\%). 
+Figure~\ref{fig:survival_plots} shows the survival plots of \SATD for the five studied projects. 
+Survival plot is a technique originating from the medical domain indicating the probability of 
+a patient to survive at least for $x$ days. To estimate this probability one would ideally like to 
+have complete information about the death time of all patients. Such an assumption is, however,
+usually not realistic as some patients might still be alive at the end of the observations, \emph{i.e.},
+the data is right-censored. Kaplan
+and Meier~\cite{kaplan1958nonparametric} have proposed a technique to estimate the survival
+in presence of right-censored data. As we have seen in Table~\ref{tbl:removed_self_admitted_technical_debt_per_project} some \SATD comments remained at
+the end of the observations, \emph{i.e.}, our data is also right-censored, in Figure~\ref{fig:survival_plots}
+we present the Kaplan-Meier estimators. The use of Kaplan-Meier estimators is common in 
+software evolution applications of survival analysis~\cite{samoladas2010survival,goeminne2015towards}.
 
-We also compare the time that self-removed and non self-removed \SATD exists in the system before it is removed. We find that self-removed technical debt gets removed faster than non self-removed technical debt. Figure~\ref{fig:removal_self_vs_nonself} shows that, on median for all projects, self-removed technical debt is removed earlier than non-self-removed technical debt. Our finding confirms our intuition, however, the exact reasons (e.g., is it because the remover is more familiar with the debt) as to why self-removals take less time warrant a study on its own.
+Inspecting Figure~\ref{fig:survival_plots} we observe that for all projects, there is a steep decline in the first few hundred days, suggesting that in all projects an important share of \SATD is rapidly removed. Projects do differ in how steep the drop is and where it flattens out. For example, for the Camel project, there is a steep drop in \SATD after around 126 days and a long tail after that. This means that in Camel, the likelihood of \SATD surviving (\emph{i.e.}, existing in the system after introduction) drops significantly after 126 days, and after that time, the chance of surviving is less than 20\%, as indicated by the survival function. Another extreme case is Hadoop, where the chance of \SATD surviving for more than 2,000 days is very high, close 59.5\%, the percentage
+of the \SATD comments remaining at the end of the observations reported in Table~\ref{tbl:removed_self_admitted_technical_debt_per_project}. 
+
+We also compare the time that self-removed and non self-removed \SATD exists in the system before it gets removed. We find that self-removed technical debt gets removed faster than non self-removed technical debt. Figure~\ref{fig:removal_self_vs_nonself} shows that, on median for all projects, self-removed technical debt is removed earlier than non-self-removed technical debt. Our finding confirms our intuition, however, the exact reasons (e.g., is it because the remover is more familiar with the debt) as to why self-removals take less time warrant a study on its own.\alexander{There is no Mann-Whitney here: either we report the results or we remove the discussion of M-W above. If we are doing statistics then we also need to report the effect size.}
 
 
-\conclusion{We find that the amount of time \SATD remains in a project before removal varies from one project to another and ranges between 18.2 - 172.8 days on median and 82 - 613.2 days on average. Moreover, we find that self-removed technical debt is removed faster than non-self-removed technical debt.}
+\conclusion{The amount of time \SATD remains in a project before removal varies from one project to another and ranges between 18.2--172.8 days on median and 82--613.2 days on average. Moreover, self-removed technical debt is removed faster than non-self-removed technical debt.}
 %presents the comparison between self-removal and non self-removal of three projects, namely, Gerrit, Hadoop and Tomcat. We selected these projects since they represent the general behaviour of the analyzed dataset. As we can observe in Figures \ref{fig:removal_comparison_gerrit}, \ref{fig:removal_comparison_hadoop} and \ref{fig:removal_comparison_tomcat} self-removal technical debt is removed faster than non self-removal technical debt when considering the amount of days that each technical debt was part of the analyzed system. The horizontal black line on each figure mark the median value of removal time. In addition for each figure we plotted the number of occurrences measured on each dataset, as shown in the legend indicated by the letter `N' followed by the precise median in days.
 
 %\begin{table}[tbh!]
