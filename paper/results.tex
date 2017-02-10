@@ -325,11 +325,11 @@ Thus far, our analysis has been quantitative in nature. To triangulate our findi
 
  
 \subsubsection*{Approach} 
-To understand the activities that lead to the introduction and removal of \SATD, we designed and sent an online survey. The survey included three main sections: 1)  questions regarding the participant's role and development tasks and experience in the project, 2) three multiple choice, likert-scale, questions about how often developers encounter, add, and address self-admitted technical debt, and 3) two open ended questions asking why developers add or remove \SATD. 
+To understand the activities that lead to the introduction and removal of \SATD, we designed an online survey. The survey included three main sections: 1)  questions regarding the participant's role and development tasks and experience in the project, 2) three Likert-scale questions about the frequency of developers encountering, adding, and addressing self-admitted technical debt, and 3) two open ended questions asking why developers add or remove \SATD. 
 
-To identify the population of our survey, we collected the names and emails of all developers who added or removed self-admitted technical debt in our dataset. In total, we found 250 unique developers from the studied projects and we successfully sent the survey to 188 of them.  We received 14 responses to our survey. Although this is smaller than usual response rate, the area of technical debt is difficult to discuss, especially since some developers may feel they will be negatively perceived. For, the open-ended questions, we manually analyzed the free-text answers and identified 6 main reasons why developers add self-admitted technical debt and 5 main reasons for removing self-admitted technical debt.
+To identify the target population, we collected the names and emails of all developers who added or removed self-admitted technical debt in our dataset. In total, we found 250 unique developers from the studied projects and we successfully sent the survey to 188 of them.  We received 14 responses, \emph{i.e.}, the response rate is 7.4\%. Although this is lower than the response rate reported in software engineering surveys \alexander{add a couple of references}, the area of technical debt is difficult to discuss, especially since some developers may feel they will be negatively perceived. For, the open-ended questions, we manually analyzed the free-text answers and identified six main reasons why developers add self-admitted technical debt and five main reasons for removing self-admitted technical debt.
 
-Table~\ref{survey_responses} shows the participant's role in the projects, their main development tasks and developer experiences. Of the 14 participants, 8 (57\%) of them identified themselves as core developer, and 6 (43\%) are contributors to the projects. Five of the 14 participants work on fixing bug, and five work on implementing new features. Only one participant has the task of code reviewer. Another 3 participants (21\%) indicted having different tasks (e.g., project user). Approximately 86\% of the participants have more than five years of development experiences, and two participants have less than or equal to five yeas of development experiences.
+Table~\ref{survey_responses} shows the respondent's role in the projects, their main development tasks and experience. Of the 14 respondents, eight identified themselves as core developers, and six as contributors to the projects. Five of the 14 respondents work on fixing bug, and five work on implementing new features. Only one respondent has the task of code reviewer. Another three respondents indicted having different tasks (\emph{e.g.}, project user). Twelve respondents have more than five years of experience.
 
 %To address this research question, we analyze the developer responses to the online survey described in section~\ref{Survey_Design}. The survey has two main sections: the first part asks questions related to likert-scale type questions about how often developers encounter, add and address technical debt comments; the second part contains two open-ended questions about the activities that developers perform to add and address self-admitted technical debt. 
 
@@ -338,12 +338,12 @@ Table~\ref{survey_responses} shows the participant's role in the projects, their
 	\centering
 	\caption{Background of participants in online survey}
 	\label{survey_responses}
-	\begin{tabular}{@{}l|p{1.2in}|l|l|l@{}}
+	\begin{tabular}{l|p{1.2in}|l|l|l}
 		\toprule
-		\multirow{2}{*}{\textbf{\begin{tabular}[c]{@{}l@{}}Developer\\ Role\end{tabular}}} & \multirow{2}{*}{\textbf{\begin{tabular}[c]{@{}l@{}}Developer\\ Task\end{tabular}}} & \multicolumn{3}{c}{\textbf{\begin{tabular}[c]{@{}c@{}}Developer Exp. \\ (in years)\end{tabular}}} \\ \cmidrule(l){3-5} 
-		&  & \textbf{1-2} & \textbf{3-5} & \textbf{\textgreater5} \\ \midrule
-		\begin{tabular}[c]{@{}c@{}}A Contributor\\ Developer (8)\end{tabular} & BF, BF, NF, OTH, BF, BF, OTH, NF & 1 & 0 & 7 \\
-		\begin{tabular}[c]{@{}l@{}}A Core\\ Developer (6)\end{tabular} & NF, BF, OTH, NF, CR, NF & 0 & 1 & 5 \\ \bottomrule
+		\multirow{2}{*}{\textbf{Role}} & \multirow{2}{*}{\textbf{Developer Tasks}} & \multicolumn{3}{p{.8in}}{\textbf{Developer Exp. (in years)}} \\ \cline{3-5} 
+		&  & \textbf{1-2} & \textbf{3-5} & \textbf{\textgreater5} \\ \hline
+		Contributor (8)& BF, BF, NF, OTH, BF, BF, OTH, NF & 1 & 0 & 7 \\
+		Core Developer (6) & NF, BF, OTH, NF, CR, NF & 0 & 1 & 5 \\ \bottomrule
 			
 			
 	\end{tabular}
@@ -352,11 +352,8 @@ Table~\ref{survey_responses} shows the participant's role in the projects, their
 \end{table}
 
 
-
-
-
 \subsubsection*{Results} 
-Figure~\ref{fig:encouner_add_address} shows the results of the likert-scale questions about how often developers encounter, add, address self-admitted technical debt. Developers mostly agreed that they encounter source code comments indicting self-admitted technical debt. In 50\% of the responses, developers stated that they sometimes (i.e., once a month) see such comments, and the other 50\% of them said they encounter such comments often or very often (i.e., everyday). When adding self-admitted technical debt, developer's responses vary from often (i.e., once a week) adding self-admitted technical debt (approx. 21\%) to rarely (approx. 36\%). Another 43\% said that they sometimes added such comments. We also asked developers how often they address self-admitted technical debt. 50\% of the developers mentioned that they rarely address self-admitted technical debt, 29\% of respondents mentioned that they sometimes address self-admitted technical debt, and 21\% of the respondents mentioned that they often address self-admitted technical debt. The finding is inline with our quantitative findings that approximately 50\% of \SATD is removed.
+Figure~\ref{fig:encouner_add_address} shows the results of the Likert-scale questions about how often developers encounter, add, address self-admitted technical debt. Developers mostly agreed that they encounter source code comments indicting self-admitted technical debt. In 50\% of the responses, developers stated that they sometimes (i.e., once a month) see such comments, and the other 50\% of them said they encounter such comments often or very often (i.e., everyday). When adding self-admitted technical debt, developer's responses vary from often (i.e., once a week) adding self-admitted technical debt (approx. 21\%) to rarely (approx. 36\%). Another 43\% said that they sometimes added such comments. We also asked developers how often they address self-admitted technical debt. 50\% of the developers mentioned that they rarely address self-admitted technical debt, 29\% of respondents mentioned that they sometimes address self-admitted technical debt, and 21\% of the respondents mentioned that they often address self-admitted technical debt. The finding is inline with our quantitative findings that approximately 50\% of \SATD is removed.
 
 As for why developers tend to add \SATD, approximately 64\% of developers (P1, P4, P5, P8, P9, P11, P12, P13, and P14) indicted that they add self-admitted technical debt as \emph{a tracker in the source code for potential bugs or source code that needs to be improved or document a need for a new feature}. For example, P12 states that \textit{"It is usually a marker in the source of a missing feature or known bug."}. Also, contrary to Postdar and Shihab~\cite{Potdar2014ICSME} we find that developers add self-admitted technical debt because of time pressure (approx. 36\% - P1, P2, P7, P13, and P14) to deliver tasks. For example, P1 \textit{"Because they want to deliver, and when balancing an early delivery against technical debt."} Some other reasons for adding self-admitted technical debt are very rare and are only mentioned once or twice (e.g,. a remainder or looking for feedback). For example, P5 said that \textit{"They are not sure about the effects of their code and want feedback..."}.
 
