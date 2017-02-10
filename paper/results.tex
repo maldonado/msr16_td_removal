@@ -113,7 +113,7 @@ Hadoop tends to be an outlier in terms of self-removed \SATD, however, it is wor
 
 %We also estimated the magnitude of the difference between self-removed technical debt and non self-removed technical debt using the Cliff's Delta (or $d$)~\cite{grissom2005effect}, a non-parametric effect size measure for ordinal data. We consider the effect size values: small for $d$ $<$ 0.33 (positive as well as negative values), medium for 0.33  $\leq d<$ 0.474 and large for $d \geq$ 0.474.
 
-\noindent \textbf{Results:} Table~\ref{tab:Distribution_of_the_removed_STD_Comments} shows the mean and median times for \SATD to be removed from the respective projects. From the Table, we see that the distribution of \SATD removal is skewed, as indicated by the difference in the mean and median removal times. In general, the time that \SATD lives in a project  varies from one project to another and varies between 18.2 - 172.8 days on median and 82 - 613.2 days on average. One clear finding however, is that in Camel and Gerrit, \SATD is removed faster Hadoop, Log4j and Tomcat.
+\noindent \textbf{Results:} Figure~\ref{fig:removed_all_std_comments} shows the mean and median times for \SATD to be removed from the respective projects. From the Figure, we see that the distribution of \SATD removal is skewed, as indicated by plots and the difference in the mean and median removal times. In general, the time that \SATD lives in a project  varies from one project to another and varies between 18.2 - 172.8 days on median and 82 - 613.2 days on average. One clear finding however, is that in Camel and Gerrit, \SATD is removed faster Hadoop, Log4j and Tomcat.
 
 In addition, Figure~\ref{fig:survival_plots} shows the survival plots for the five studied projects. The plots show the survival function vs. time. We see that for all projects, there is a steep decline in the first few hundred days, although how steep the drop is and where it flattens out depends on the individual projects. For example, for the Camel project, there is a steep drop in \SATD after \todo{100 days?} and a long tail after that. This means that in Camel, the likelihood of \SATD surviving (i.e., existing in the system after introduction) drops significantly after \todo{100 days}, and after that time, the chance of surviving is less than 20\%, as indicated by the suvival function. On the other hand, in Hadoop, the chance of \SATD surviving for more than 2,000 days is very high (approx. in \todo{55\%}). 
 
@@ -123,30 +123,38 @@ We also compare the time that self-removed and non self-removed \SATD exists in 
 \conclusion{We find that the amount of time \SATD remains in a project before removal varies from one project to another and ranges between 18.2 - 172.8 days on median and 82 - 613.2 days on average. Moreover, we find that self-removed technical debt is removed faster than non-self-removed technical debt.}
 %presents the comparison between self-removal and non self-removal of three projects, namely, Gerrit, Hadoop and Tomcat. We selected these projects since they represent the general behaviour of the analyzed dataset. As we can observe in Figures \ref{fig:removal_comparison_gerrit}, \ref{fig:removal_comparison_hadoop} and \ref{fig:removal_comparison_tomcat} self-removal technical debt is removed faster than non self-removal technical debt when considering the amount of days that each technical debt was part of the analyzed system. The horizontal black line on each figure mark the median value of removal time. In addition for each figure we plotted the number of occurrences measured on each dataset, as shown in the legend indicated by the letter `N' followed by the precise median in days.
 
-\begin{table}[tbh!]
-	\centering
-	\caption{Mean and Median Time to Remove Saelf-Admitted Technical Debt per Project}
-	\label{tab:Distribution_of_the_removed_STD_Comments}
-	\begin{tabular}{@{}l|rrrr@{}}
-		\toprule
-		\textbf{Project} &~&\textbf{Median} &~& \textbf{Mean} \\ \midrule
-		\textbf{Camel} &~& 18.16 &~& 82.03 \\
-		\textbf{Gerrit} &~& 10.84 &~& 177.00 \\
-		\textbf{Hadoop} &~& 159.00 &~& 326.80 \\
-		\textbf{Log4j} &~& 172.80 &~& 516.00 \\
-		\textbf{Tomcat} &~& 164.90 &~& 613.20 \\			
-		%\midrule
-		
-		%\textbf{Mean} &~& 105.10 &~&343.00 \\
-		
-		%\textbf{Median} &~& 159.00 &~& 326.80 \\ 
-		\bottomrule
-	\end{tabular}
-\end{table}
+%\begin{table}[tbh!]
+%	\centering
+%	\caption{Mean and Median Time to Remove Saelf-Admitted Technical Debt per Project}
+%	\label{tab:Distribution_of_the_removed_STD_Comments}
+%	\begin{tabular}{@{}l|rrrr@{}}
+%		\toprule
+%		\textbf{Project} &~&\textbf{Median} &~& \textbf{Mean} \\ \midrule
+%		\textbf{Camel} &~& 18.16 &~& 82.03 \\
+%		\textbf{Gerrit} &~& 10.84 &~& 177.00 \\
+%		\textbf{Hadoop} &~& 159.00 &~& 326.80 \\
+%		\textbf{Log4j} &~& 172.80 &~& 516.00 \\
+%		\textbf{Tomcat} &~& 164.90 &~& 613.20 \\			
+%		%\midrule
+%		
+%		%\textbf{Mean} &~& 105.10 &~&343.00 \\
+%		
+%		%\textbf{Median} &~& 159.00 &~& 326.80 \\ 
+%		\bottomrule
+%	\end{tabular}
+%\end{table}
 
 
 
 %-------------------------------------------------------------------------------
+
+\begin{figure}[thb!]
+	\centering
+	\includegraphics[width=\columnwidth]{figures/test/removed_all_STD_comments.pdf}
+	\caption{The distribution of all the removed STD comments}
+	\label{fig:removed_all_std_comments}
+\end{figure}
+
 
 \begin{figure*}[t]
 	\centering
@@ -232,12 +240,6 @@ We also compare the time that self-removed and non self-removed \SATD exists in 
 \end{figure*}
 
 
-\begin{figure}[thb!]
-	\centering
-	\includegraphics[width=\columnwidth]{figures/test/removed_all_STD_comments.pdf}
-	\caption{The distribution of all the removed STD comments}
-	\label{fig:removed_all_std_comments}
-\end{figure}
 
 
 
