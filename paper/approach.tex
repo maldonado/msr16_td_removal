@@ -65,7 +65,7 @@ The number of comments shown in Table~\ref{tab:project_details} for each project
             \\
             \cmidrule{2-9}
 
-            & \textbf{\thead{\# of Java files}} & \textbf{\thead{SLOC}} & \textbf{\thead{\# of file\\versions}} & \textbf{\thead{\# of \\contributors}}  & \textbf{\thead{\# of \\comments}}   & \textbf{\thead{\# of \\comments \\after filtering}} & \textbf{\thead{\# of \\TD \\comments}}  & \textbf{\thead{\# of \\unique TD \\comments}}\\ 
+            & \textbf{\thead{\#Java\\ files}} & \textbf{\thead{SLOC}} & \textbf{\thead{\#file\\versions}} & \textbf{\thead{\#contributors}}  & \textbf{\thead{\#comments}}   & \textbf{\thead{\#comments \\after filtering}} & \textbf{\thead{\#TD \\comments}}  & \textbf{\thead{\#unique TD \\comments}}\\ 
             \midrule 
             \textbf{Camel}     & 15,091 & 800,488 & 254,920 & 289  &  1,634,361 &   700,412  &  20,141 &  4,331   \\
             \textbf{Gerrit}    &  3,059 & 222,476 &  53,298 & 270  &  1,018,006 &   129,023  &   4,810 &   271    \\
@@ -95,22 +95,25 @@ The second step to checkout all versions of files is to identify the files that 
 
 Once this step is complete, we have at our disposal the information regarding the files and their versions stored in the database, and an actual copy of each file version in a structured directory inside our tool that will be used to extract the remainder of the data for our study.
 
-\subsection{Parse Source Code}
+\subsection{Identifying \SATD comments}
 \label{sub:parse_source_code}
 
 We parse the source code in order to extract the comments. We use an open source library SrcML~\cite{Collard2013SIE} to parse the source code, and extract the comments and the information related to them such as the line that each comment starts, finishes and the type of the comment (\textit{i.e.,} Javadoc, Line or Block). 
 %All the extracted information is stored in a relational database to facilitate the processing of the data. 
 %
 %Once the parsing step is complete, we have at our disposal all of the comments in all versions of the files for each of the five projects. 
+
 Next, we use the technique presented in by Maldonado \emph{et al.}~\cite{Maldonado2015TSE} to identify the \SATD comments. We refer readers to Maldonado \emph{et al.}'s paper for full details on how to identify \SATD comments, however, to make our paper self-contained, we highlight the key points of their approach next.
+%
+%\subsection{Using NLP to Identify Self-Admitted Technical Debt}
+%
+%The state-of-the-art technique to identify \SATD uses Natural Language Processing (NLP) to classify comments based on their contents. 
+%Before classifying comments, one needs to remove comments that are irrelevant. 
 
-\subsection{Using NLP to Identify Self-Admitted Technical Debt}
+\subsubsection{Filtering Irrelevant Comments.} 
+As the prior work showed, not all comments can contain \SATD \todo{add cite}. Therefore,  as the pre-processing we remove the following types of comments from our dataset: %before applying the NLP-based classification to determine \SATD comments:
 
-The state-of-the-art technique to identify \SATD uses Natural Language Processing (NLP) to classify comments based on their contents. However, before classifying comments, one needs to remove comments that are irrelevant. 
-
-\noindent\textbf{Filtering Irrelevant Comments.} As the prior work showed, not all comments can contain \SATD \todo{add cite}. Therefore, we remove the following types of comments from our dataset before applying the NLP-based classification to determine \SATD comments:
-
-\begin{enumerate}
+\begin{itemize}
 \item \textbf{License comments} that generally do not contain \SATD and are commonly located before the class declaration. That said, comments that contain task annotations (\textit{i.e.,} ``TODO:'', ``FIXME:'', or ``XXX:'') ~\cite{Storey2008ICSE} are not removed since they are usually leveraged by most IDEs, e.g., Eclipse and Netbeans, to automatically generate task lists.
 
 %We create a heuristic that removes comments that are placed before the class declaration. Since we know the line number that the class was declared we can easily check for comments that are placed before that line and remove them. In order to decrease the chances of removing a self-admitted technical debt comment while executing this filter we calibrated this heuristic to not remove comments containing one of task annotations (\textit{i.e.,} ``TODO:'', ``FIXME:'', or ``XXX:'') ~\cite{Storey2008ICSE}. Task annotations are an extended functionality provided by most of the popular Java \textit{IDEs} including Eclipse, InteliJ and NetBeans. When one of these words are used inside a comment the IDE will automatically keep track of the comment creating a centralized list of tasks that can be conveniently accessed later on. \alexander{I miss here something like ``We consider task annotations as \SATD.'' Or ``Following ... we consider...''}
@@ -126,10 +129,10 @@ The state-of-the-art technique to identify \SATD uses Natural Language Processin
 \item \textbf{Javadoc comments} are also removed since they rarely mention self-admitted technical debt \todo{cite}. 
 %For the Javadoc comments that do mention self-admitted technical debt, we notice that they usually\alexander{how often?} \everton{Not often at all, but not quantified yet. To quantify, query the number of comments from table processed\_comment where type = Javadoc and classification is different than WITHOUT\_CLASSIFICATION.} contain one of the task annotations (\textit{i.e.,} ``TODO:'', ``FIXME:'', or ``XXX:''). Therefore, our heuristic removes all comments of the type Javadoc unless they contain at least one of the task annotations  To do so, we create a simple regular expression that searches for the task annotations before removing the comment.  
  
-\end{enumerate} 
+\end{itemize} 
 
 
-The steps mentioned above significantly reduced the number of comments in the dataset and allows us to focus on the most applicable and insightful comments. For example, as shown in Table~\ref{tab:project_details}, in the Camel project, applying the above steps helped to reduce the number of comments from 1,634,361 to 700,412 meaning a reduction of 57.1\% in the number of comments to be classified. Using the filtering heuristics we were able to eliminate between 53.3\% to 87.3\% of all comments. Table \ref{tab:project_details} provides the number of comments kept after the filtering heuristics for each project.
+The pre-processing steps above significantly reduce the number of comments in the dataset and allow us to focus on the most applicable and insightful comments. For example, as shown in Table~\ref{tab:project_details}, in the Camel project, applying the above steps helped to reduce the number of comments from 1,634,361 to 700,412 meaning a reduction of 57.1\% in the number of comments to be classified. Using the filtering heuristics we were able to eliminate between 53.3\% to 87.3\% of all comments. Table \ref{tab:project_details} provides the number of comments kept after the filtering heuristics for each project.
 
 %\alexander{how did we ensure that these were the most ``applicable and insghtful''?} \everton{This statement was intuitively made. Here we are not trying to say that the removed comments were not important, we are trying to say that from our perspective (that is classifying TD comments) removing noisy comments (comments that does not have TD) leaves us with the most applicable comments (for the task)} 
 
@@ -148,10 +151,11 @@ The steps mentioned above significantly reduced the number of comments in the da
 %\subsection{NLP Classification}
 %\label{sub:nlp_classification}
 
-\noindent\textbf{Applying the NLP Classifier.} Next, we use an NLP classifier (i.e, the Stanford NLP Classifier~\cite{Manning2014ACL}) to classify \SATD comments.
+\subsubsection{Applying the NLP Classifier.} 
+We use the Stanford NLP Classifier~\cite{Manning2014ACL} to classify \SATD comments.
 The NLP Classifier takes as input classified data items (comments), and automatically learns \textit{features} (\textit{i.e.,} words) from each \textit{datum} that are associated with positive or negative numeric \textit{votes} for each class. The weights of the features are learned automatically based on the manually classified training data items (supervised learning). The Stanford NLP Classifier builds a \textit{maximum entropy model}~\cite{nigam1999using}, which is equivalent to a multi-class regression model, and is trained to maximize the conditional likelihood of the classes taking into account feature dependences when calculating the feature weights.
 
-To train the NLP classifier, we used the manually classified \SATD comments data set provided by Maldonado \emph{et al.}~\cite{Maldonado2015MTD}. The data set contains contains 62,566 comments extracted from ten open source projects. These comments were classified as \SATD comments or as regular comments (\textit{i.e.,} comments without technical debt). The manually classified data set was verified by the authors of the paper and they showed that two independent reviewers agreed on the classification, achieving a Cohen's Kappa value of +0.81. In addition, the work by Maldonado \emph{et al.}~\cite{Maldonado2015TSE} showed that the NLP classifier is correct in identifying \SATD with an average precision of 0.72 and recall of 0.56. Although these precision and recall values may not seem high, they do represent the state of the art and outperform the comment-patterns technique, which all prior work was built on top of (i.e., \cite{Wehaibi2016SANER,Bavota2016MSR,Potdar2014ICSME}) by 230\%, on average. 
+To train the NLP classifier, we used the manually classified \SATD comments data set provided by Maldonado \emph{et al.}~\cite{Maldonado2015MTD}. The data set contains contains 62,566 comments extracted from ten open source projects. These comments were classified as \SATD comments or as regular comments (\textit{i.e.,} comments without \SATD). The manually classified data set was verified by the authors of the paper and they showed that two independent reviewers agreed on the classification, achieving a Cohen's Kappa value of +0.81. In addition, the work by Maldonado \emph{et al.}~\cite{Maldonado2015TSE} showed that the NLP classifier is correct in identifying \SATD with an average precision of 0.72 and recall of 0.56. Although these precision and recall values may not seem high, they do represent the state of the art and outperform the comment-patterns technique, which all prior work was built on top of (i.e., \cite{Wehaibi2016SANER,Bavota2016MSR,Potdar2014ICSME}) by 230\%, on average. 
 
 
 %classified by the first author and later, to mitigate the risk of bias, another student was asked to classify a statistically significant sample of the dataset. The Cohen's kappa coefficient~\cite{cohen1960coefficient} (\textit{i.e.,} the level of agreement between both reviewer) was of +0.81. The resulting coefficient is scaled to range between -1 and +1, where negative value means poorer than chance agreement, zero indicates exactly chance agreement, and positive value indicates better than chance agreement~\cite{fleiss1973equivalence}. Although we were able to find different types of \SATD \todo{in previous studies} we focus our training dataset on \emph{design \SATD} as it is the most common and impactful\rabe{important source of technical debt}~\cite{Ernst2015FSE}. \alexander{is ``impactful'' a word?}\everton{Not sure, but I found it on Mac's dictionary with the following definition: having a major impact or effect: an eye-catching and impactful design.}
