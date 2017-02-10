@@ -113,7 +113,9 @@ The state-of-the-art technique to identify \SATD uses Natural Language Processin
 \end{enumerate} 
 
 
-The steps mentioned above significantly reduced the number of comments in our dataset and helped us focus on the most applicable and insightful comments.\alexander{how did we ensure that these were the most ``applicable and insghtful''?} \everton{This statement was intuitively made. Here we are not trying to say that the removed comments were not important, we are trying to say that from our perspective (that is classifying TD comments) removing noisy comments (comments that does not have TD) leaves us with the most applicable comments (for the task)} For example, in the Camel project, applying the above steps helped to reduce the number of comments from 1,634,361 to 700,412 meaning a reduction of 57.1\% in the number of comments to be classified. \alexander{Refer to the table above} Using the filtering heuristics we were able to eliminate between 53.3\% to 87.3\% of all comments. Table \ref{tab:project_details} provides the number of comments kept after the filtering heuristics for each project.
+The steps mentioned above significantly reduced the number of comments in the dataset and allows us to focus on the most applicable and insightful comments. For example, as shown in Table~\ref{tab:project_details}, in the Camel project, applying the above steps helped to reduce the number of comments from 1,634,361 to 700,412 meaning a reduction of 57.1\% in the number of comments to be classified. Using the filtering heuristics we were able to eliminate between 53.3\% to 87.3\% of all comments. Table \ref{tab:project_details} provides the number of comments kept after the filtering heuristics for each project.
+
+%\alexander{how did we ensure that these were the most ``applicable and insghtful''?} \everton{This statement was intuitively made. Here we are not trying to say that the removed comments were not important, we are trying to say that from our perspective (that is classifying TD comments) removing noisy comments (comments that does not have TD) leaves us with the most applicable comments (for the task)} 
 
 %\subsection{Filtering Comments}
 %\label{sub:filtering_comments}
@@ -130,7 +132,6 @@ The steps mentioned above significantly reduced the number of comments in our da
 %\subsection{NLP Classification}
 %\label{sub:nlp_classification}
 
-\emad{stopped here}
 \noindent\textbf{Applying the NLP Classifier.} Next, we use an NLP classifier (i.e, the Stanford NLP Classifier~\cite{Manning2014ACL}) to classify \SATD comments.
 The NLP Classifier takes as input classified data items (comments), and automatically learns \textit{features} (\textit{i.e.,} words) from each \textit{datum} that are associated with positive or negative numeric \textit{votes} for each class. The weights of the features are learned automatically based on the manually classified training data items (supervised learning). The Stanford NLP Classifier builds a \textit{maximum entropy model}~\cite{nigam1999using}, which is equivalent to a multi-class regression model, and is trained to maximize the conditional likelihood of the classes taking into account feature dependences when calculating the feature weights.
 
