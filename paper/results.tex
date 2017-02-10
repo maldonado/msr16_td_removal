@@ -112,9 +112,64 @@ Hadoop tends to be an outlier in terms of self-removed \SATD, however, it is wor
 
 %find all changes that introduced a \SATD comment, and similarly, whenever possible, the change that removed the \SATD comment. Each change committed to the source code repository possesses a collection of useful information \alexander{please rephrase} that allows us to run a number of different analyses. To answer this question we examine the time between introduction and removal of each change related related to the \SATD comments that we previously were able to identify. In addition, we leverage the knowledge gathered so far to determine the authors of the change. 
 %\alexander{We should perform a statistical analysis...}
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=0.9\columnwidth]{figures/test/removed_all_STD_comments.pdf}
+	\caption{The distribution of all the removed STD comments}
+	\label{fig:removed_all_std_comments}
+\end{figure}
 
 
-%We also estimated the magnitude of the difference between self-removed technical debt and non self-removed technical debt using the Cliff's Delta (or $d$)~\cite{grissom2005effect}, a non-parametric effect size measure for ordinal data. We consider the effect size values: small for $d$ $<$ 0.33 (positive as well as negative values), medium for 0.33  $\leq d<$ 0.474 and large for $d \geq$ 0.474.
+
+%-------------------------------------------------------------------------------
+
+
+
+\begin{figure*}[t]
+	\centering
+	
+	\begin{subfigure}[b]{0.31\textwidth}
+		\includegraphics[width=\textwidth]{figures/Survival/camel.pdf}
+		%\caption{Self-Removal vs \\ Non Self-Removal for Hadoop}
+		%\label{fig:removal_comparison_camel_survival}
+	\end{subfigure}
+	~
+	~
+	\begin{subfigure}[b]{0.31\textwidth}
+		\includegraphics[width=\textwidth]{figures/Survival/gerrit.pdf}
+		%\caption{Self-Removal vs \\ Non Self-Removal for Tomcat}
+		%\label{fig:removal_comparison_tomcat_survival} 
+	\end{subfigure}
+	~
+	~
+	\begin{subfigure}[b]{0.31\textwidth}
+		\includegraphics[width=\textwidth]{figures/Survival/hadoop.pdf}
+		%\caption{Self-Removal vs \\ Non Self-Removal for Tomcat}
+		%\label{fig:removal_comparison_gerrit_survival} 
+	\end{subfigure}
+	
+	
+	\begin{subfigure}[b]{0.31\textwidth}
+		\includegraphics[width=\textwidth]{figures/Survival/log4j.pdf}
+		%\caption{Self-Removal vs \\ Non Self-Removal for Hadoop}
+		%\label{fig:removal_comparison_log4j_survival}
+	\end{subfigure}
+	~
+	~
+	\begin{subfigure}[b]{0.31\textwidth}
+		\includegraphics[width=\textwidth]{figures/Survival/tomcat.pdf}
+		%\caption{Self-Removal vs Non Self-Removal for Tomcat}
+		%\label{fig:removal_comparison_hadoop_survival} 
+	\end{subfigure}
+	\caption{Survival plots show the probability of the removal of STD Comment for all studied projects}
+	\label{fig:survival_plots}
+\end{figure*}
+
+%------------------------------------------------------------------------------
+
+
+
+\rabe{We also estimated the magnitude of the difference between self-removed technical debt and non self-removed technical debt using the Cliff's Delta (or $d$)~\cite{grissom2005effect}, a non-parametric effect size measure for ordinal data. We consider the effect size values: small for $d$ $<$ 0.33 (positive as well as negative values), medium for 0.33  $\leq d<$ 0.474 and large for $d \geq$ 0.474.}
 
 \subsubsection*{Results} Figure~\ref{fig:removed_all_std_comments} shows the mean and median times for \SATD to be removed from the respective projects. The distribution of \SATD removal is skewed, as indicated by plots and the difference in the mean and median removal times. In general, the time that \SATD stays in a project  varies from one project to another and varies between 18.2--172.8 days on median and 82--613.2 days on average. One clear finding however, is that in Camel and Gerrit, \SATD is removed faster than in Hadoop, Log4j and Tomcat.
 
@@ -133,7 +188,10 @@ software evolution applications of survival analysis~\cite{samoladas2010survival
 Inspecting Figure~\ref{fig:survival_plots} we observe that for all projects, there is a steep decline in the first few hundred days, suggesting that in all projects an important share of \SATD is rapidly removed. Projects do differ in how steep the drop is and where it flattens out. For example, for the Camel project, there is a steep drop in \SATD after around 126 days and a long tail after that. This means that in Camel, the likelihood of \SATD surviving (\emph{i.e.}, existing in the system after introduction) drops significantly after 126 days, and after that time, the chance of surviving is less than 20\%, as indicated by the survival function. Another extreme case is Hadoop, where the chance of \SATD surviving for more than 2,000 days is very high, close 59.5\%, the percentage
 of the \SATD comments remaining at the end of the observations reported in Table~\ref{tbl:removed_self_admitted_technical_debt_per_project}. 
 
-We also compare the time that self-removed and non self-removed \SATD exists in the system before it gets removed. We find that self-removed technical debt gets removed faster than non self-removed technical debt. Figure~\ref{fig:removal_self_vs_nonself} shows that, on median for all projects, self-removed technical debt is removed earlier than non-self-removed technical debt. Our finding confirms our intuition, however, the exact reasons (e.g., is it because the remover is more familiar with the debt) as to why self-removals take less time warrant a study on its own.\alexander{There is no Mann-Whitney here: either we report the results or we remove the discussion of M-W above. If we are doing statistics then we also need to report the effect size.}
+We also compare the time that self-removed and non self-removed \SATD exists in the system before it gets removed. We find that self-removed technical debt gets removed faster than non self-removed technical debt. Figure~\ref{fig:removal_self_vs_nonself} shows that, on median for all projects, self-removed technical debt is removed earlier than non-self-removed technical debt. Our finding confirms our intuition, however, the exact reasons (e.g., is it because the remover is more familiar with the debt) as to why self-removals take less time warrant a study on its own.\alexander{There is no Mann-Whitney here: either we report the results or we remove the discussion of M-W above. If we are doing statistics then we also need to report the effect size.}\rabe{ Table~\ref{tbl:statistic} shows the result of  Mann-Whitney test and Cliff's Delta ($d$) effect size. The Table presents that for all the studied projects the difference between self-removal and non self-removal self-admitted technical debt is a statistically significant different. Also, the effect size, Cliff' Delta ($d$), for all the projects is large except for Camel which is medium. } 
+
+
+
 
 
 \conclusion{The amount of time \SATD remains in a project before removal varies from one project to another and ranges between 18.2--172.8 days on median and 82--613.2 days on average. Moreover, self-removed technical debt is removed faster than non-self-removed technical debt.}
@@ -162,57 +220,6 @@ We also compare the time that self-removed and non self-removed \SATD exists in 
 
 
 
-%-------------------------------------------------------------------------------
-
-\begin{figure}[t]
-	\centering
-	\includegraphics[width=0.9\columnwidth]{figures/test/removed_all_STD_comments.pdf}
-	\caption{The distribution of all the removed STD comments}
-	\label{fig:removed_all_std_comments}
-\end{figure}
-
-
-\begin{figure*}[t]
-	\centering
-	
-	\begin{subfigure}[b]{0.31\textwidth}
-		\includegraphics[width=\textwidth]{figures/Survival/camel.pdf}
-		%\caption{Self-Removal vs \\ Non Self-Removal for Hadoop}
-		%\label{fig:removal_comparison_camel_survival}
-	\end{subfigure}
-	~
-	~
-	\begin{subfigure}[b]{0.31\textwidth}
-		\includegraphics[width=\textwidth]{figures/Survival/gerrit.pdf}
-		%\caption{Self-Removal vs \\ Non Self-Removal for Tomcat}
-		%\label{fig:removal_comparison_tomcat_survival} 
-	\end{subfigure}
-	~
-	~
-	\begin{subfigure}[b]{0.31\textwidth}
-		\includegraphics[width=\textwidth]{figures/Survival/hadoop.pdf}
-		%\caption{Self-Removal vs \\ Non Self-Removal for Tomcat}
-		%\label{fig:removal_comparison_gerrit_survival} 
-	\end{subfigure}
-
-	
-	\begin{subfigure}[b]{0.31\textwidth}
-		\includegraphics[width=\textwidth]{figures/Survival/log4j.pdf}
-		%\caption{Self-Removal vs \\ Non Self-Removal for Hadoop}
-		%\label{fig:removal_comparison_log4j_survival}
-	\end{subfigure}
-	~
-	~
-	\begin{subfigure}[b]{0.31\textwidth}
-		\includegraphics[width=\textwidth]{figures/Survival/tomcat.pdf}
-		%\caption{Self-Removal vs Non Self-Removal for Tomcat}
-		%\label{fig:removal_comparison_hadoop_survival} 
-	\end{subfigure}
-		\caption{Survival plots show the probability of the removal of STD Comment for all studied projects}
-		\label{fig:survival_plots}
-\end{figure*}
-
-%------------------------------------------------------------------------------
 
 \begin{figure*}[t]
 	\centering
@@ -268,25 +275,25 @@ We also compare the time that self-removed and non self-removed \SATD exists in 
 
 
 
-%\begin{table}[t]
-%	\begin{center}
-%		\caption{Self-Removal vs Non Self-Removal: Mann-Whitney Test ($p$-value) and Cliff's Delta ($d$) \emad{is this actually discussed?}}
-%		\label{tbl:statistic}
-%		\begin{tabular}{l| rrr}
-%			\toprule
-%			\textbf{\thead{Project}} & \textbf{\thead{$p$-value}}&~~~ & \textbf{\thead{$d$}}\\ 
-%			\midrule
-%			%\textbf{Ant   }   &  < 2.2e-16& ~~~  &  -0.427(medium)  \\  
-%			\textbf{Camel }   &  0.0001253& ~~~ &  -0.075(negligible)  \\  
-%			\textbf{Gerrit}   &  3.581e-14& ~~~ &  -0.671(large)  \\  
-%			\textbf{Hadoop}   &  < 2.2e-16& ~~~ &  -0.531(large)  \\  
-%			%\textbf{Jmeter}   &  < 2.2e-16& ~~~ &  -0.325(small)  \\  
-%			\textbf{Log4j}   &  2.345e-06 & ~~~ &  -0.517(large)  \\  
-%			\textbf{Tomcat}   &  2.2e-16  & ~~~ &  -0.820(large) \\  
-%			\bottomrule
-%		\end{tabular}
-%	\end{center}    
-%\end{table}
+\begin{table}[t]
+	\begin{center}
+		\caption{\rabe{Self-Removal vs Non Self-Removal: Mann-Whitney Test ($p$-value) and Cliff's Delta ($d$)}}
+		\label{tbl:statistic}
+		\begin{tabular}{l| rrr}
+			\toprule
+			\textbf{\thead{Project}} & \textbf{\thead{$p$-value}}&~~~ & \textbf{\thead{$d$}}\\ 
+			\midrule
+			%\textbf{Ant   }   &  < 2.2e-16& ~~~  &  -0.427(medium)  \\  
+			\textbf{Camel }   &  0.0001253& ~~~ &  $-$0.075(medium)  \\  
+			\textbf{Gerrit}   &  3.581e-14& ~~~ &  $-$0.671(large)  \\  
+			\textbf{Hadoop}   &   2.2e-16& ~~~ &  $-$0.531(large)  \\  
+			%\textbf{Jmeter}   &  < 2.2e-16& ~~~ &  -0.325(small)  \\  
+			\textbf{Log4j}   &  2.345e-06 & ~~~ &  $-$0.517(large)  \\  
+			\textbf{Tomcat}   &  2.2e-16  & ~~~ &  $-$0.820(large) \\  
+			\bottomrule
+		\end{tabular}
+	\end{center}    
+\end{table}
 
 
 
@@ -307,7 +314,7 @@ We also compare the time that self-removed and non self-removed \SATD exists in 
 
 \begin{figure}[!tb]
 	\centering
-	\includegraphics[width=\columnwidth]{figures/test/responses_question.pdf}
+	\includegraphics[width=0.95\columnwidth]{figures/test/_responses_question_.pdf}
 	\caption{Survey responses on how often do developers encounter, add and address self-admitted technical debt.}
 	\label{fig:encouner_add_address}
 \end{figure}
@@ -327,7 +334,12 @@ Thus far, our analysis has been quantitative in nature. To triangulate our findi
 \subsubsection*{Approach} 
 To understand the activities that lead to the introduction and removal of \SATD, we designed an online survey. The survey included three main sections: 1)  questions regarding the participant's role and development tasks and experience in the project, 2) three Likert-scale questions about the frequency of developers encountering, adding, and addressing self-admitted technical debt, and 3) two open ended questions asking why developers add or remove \SATD. 
 
-To identify the target population, we collected the names and emails of all developers who added or removed self-admitted technical debt in our dataset. In total, we found 250 unique developers from the studied projects and we successfully sent the survey to 188 of them.  We received 14 responses, \emph{i.e.}, the response rate is 7.4\%. Although this is lower than the response rate reported in software engineering surveys \alexander{add a couple of references}, the area of technical debt is difficult to discuss, especially since some developers may feel they will be negatively perceived. For, the open-ended questions, we manually analyzed the free-text answers and identified six main reasons why developers add self-admitted technical debt and five main reasons for removing self-admitted technical debt.
+To identify the target population, we collected the names and emails of all developers who added or removed self-admitted technical debt in \rabe{seven open source project, five of them are the project studied in this paper, and two other project namely Apach-Ant and Jamel used in the training dataset. However, through the paper we do not discuss the result from these two project 1) the part of the training data and 2) they could present some bias in our result.}
+
+
+
+
+In total, we found 250 unique developers from the studied projects and we successfully sent the survey to 188 of them.  We received 14 responses, \emph{i.e.}, the response rate is 7.4\%. Although this is lower than the response rate reported in software engineering surveys \cite{Punter2003}, the area of technical debt is difficult to discuss, especially since some developers may feel they will be negatively perceived. For, the open-ended questions, we manually analyzed the free-text answers and identified six main reasons why developers add self-admitted technical debt and five main reasons for removing self-admitted technical debt.
 
 Table~\ref{survey_responses} shows the respondent's role in the projects, their main development tasks and experience. Of the 14 respondents, eight identified themselves as core developers, and six as contributors to the projects. Five of the 14 respondents work on fixing bug, and five work on implementing new features. Only one respondent has the task of code reviewer. Another three respondents indicted having different tasks (\emph{e.g.}, project user). Twelve respondents have more than five years of experience.
 
