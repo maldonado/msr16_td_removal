@@ -1,7 +1,7 @@
 
 % -*- root: main.tex -*-
 % !TEX root = main.tex
-The main goal of our study is to better understand what happens to \SATD once it is introduced into software projects. To do so, our first step is to quantify how much of \SATD comments gets removed (RQ1). Next, we analyze who removes \SATD, i.e., if the same developer that introduced the debt is also most likely to remove it (RQ2). Then, we investigate how long the \SATD remains in the project (RQ3). Finally, we conduct a survey with 12 developers to understand why \SATD is introduced and removed (RQ4). 
+The main goal of our study is to better understand what happens to \SATD once it is introduced into software projects. To do so, our first step is to quantify how much of \SATD comments gets removed (RQ1). Next, we analyze who removes \SATD, i.e., if the same developer that introduced the debt is also most likely to remove it (RQ2). Then, we investigate how long the \SATD remains in the project (RQ3). Finally, we conduct a survey with \rabe{14} developers to understand why \SATD is introduced and removed (RQ4). \rabe{In this section, we answer our research questions. For each question, we describe the motivation behind the question, the approach to address the question, and the results.}
 
 
 %\alexander{An option here would also be to confirm the findings by interviewing/surveying the developers.}
@@ -9,7 +9,7 @@ The main goal of our study is to better understand what happens to \SATD once it
 %\alexander{shouldn't the following discussion of the RQs be in the introduction?}
 %\emad{we incorporate a part of that in the intro.}
 \subsection*{\rqi}
-\subsubsection*{Motivation} Previous work showed that technical debt is widespread, unavoidable, and has a negative impact on the quality of software projects~\cite{Lim2012Software}. Therefore, a priori we expect that removing technical debt is a concern for developers. To understand how developers deal with technical debt we must first quantify how much debt is removed. 
+\subsubsection*{Motivation} Previous work showed that \rabe{is it SATD or general one} technical debt is widespread, unavoidable, and has a negative impact on the quality of software projects~\cite{Lim2012Software}. Therefore, a priori we expect that removing technical debt is a concern for developers. To understand how developers deal with  \rabe{is it SATD or general one} technical debt we must first quantify how much debt is removed. 
 %Also, answering this question will provide us insight if source code comments indeed helps developers to manage technical debt. 
 
 
@@ -18,7 +18,7 @@ The main goal of our study is to better understand what happens to \SATD once it
 %Therefore, the first file version that we are not able to find a match for the analyzed comment is also the version that the \SATD comment was removed. Another possible way to remove a \SATD comment is by deleting the file that contains it. 
 
 
-\subsubsection*{Results} Table \ref{tbl:removed_self_admitted_technical_debt_per_project} presents the identified and removed \SATD comments. We find that the majority (\textit{i.e.,} on average 74.4\%, median 76.7\%) of the identified \SATD comments were removed. We measure the average on a per project basis, \textit{i.e.,} the total from each project is taken and the average over the five projects in provided. For example, we were able to find 854 unique instances of \SATD comments when analyzing Ant project. 85.2\% (\textit{i.e.,} 738) of these \SATD comments were removed during the evolution of the project. Camel had the highest \SATD comments removal percentage (\textit{i.e.,} 90.6), whereas Hadoop had the lowest removal percentage achieving 40.5\%. 
+\subsubsection*{Results} Table \ref{tbl:removed_self_admitted_technical_debt_per_project} presents the identified and removed \SATD comments. We find that the majority (\textit{i.e.,} on average 74.4\%, median 76.7\%) of the identified \SATD comments were removed. We measure the average on a per project basis, \textit{i.e.,} the total from each project is taken and the average over the five projects in provided.\rabe{For example, we were able to find 854 unique instances of \SATD comments when analyzing Ant project. 85.2\% (\textit{i.e.,} 738) of these \SATD comments were removed during the evolution of the project}. Camel had the highest \SATD comments removal percentage (\textit{i.e.,} 90.6), whereas Hadoop had the lowest removal percentage achieving 40.5\%. 
 
 Our findings indicate that developers tend to be aware and do care about \SATD. This finding corroborates with the survey findings of Ernst \emph{et al.}~\cite{Ernst2015FSE}.
 
@@ -83,7 +83,7 @@ Our findings indicate that developers tend to be aware and do care about \SATD. 
 %For example, it would be more difficult to have other developers to address \SATD since 1) they need to know how to address the issue and 2) they may not know where the \SATD is. 
 
 
-\subsubsection*{Approach} To answer this question we analyzed the authors of the changes (\textit{i.e.,} commits from the source code repository) that introduced or removed \SATD comments. In order to do that, we first determine the commit in which a \SATD comment was added, then we check the further file versions to determine if there is any commit that removed the \SATD comment. Finally, we compare the authors of the commits to see if they are the same or not. 
+\subsubsection*{Approach} To answer this question we \rabe{identify the authors' identity} analyzed the authors of the changes (\textit{i.e.,} commits from the source code repository) that introduced or removed \SATD comments. In order to do that, we first determine the commit in which a \SATD comment was added, then we check the further file versions to determine if there is any commit that removed the \SATD comment. Finally, we compare the authors of the commits to see if they are the same or not. 
 
 We take into consideration two attributes of the change when comparing authors---the author name and email address. This is a necessary heuristic to mitigate the risk of misclassifying authors that change their names in the source code repository during the evolution of the project.  %\alexander{didn't we have a complete list of aliases somewhere? or cannot we assume that this list is complete?}
 
@@ -97,7 +97,7 @@ Hadoop tends to be an outlier in terms of self-removed \SATD, however, it is wor
 %\alexander{The risk here is that the self-removal is not a consequence of the ``guilt confession'' but a side effect of one developer/small group of developers doing all the work in the project or in its part. Can we somehow check this?} 
 %\emad{interesting. we should add this to the threats.}
 
-\conclusion{Majority of \SATD is self-removed.}
+\conclusion{\rabe{ I think this is a short conclusion } Majority of \SATD is self-removed.}
 %\alexander{I'm not a big fan of averages...}
 
 
@@ -174,13 +174,12 @@ We also estimated the magnitude of the difference between self-removed technical
 \subsubsection*{Results} Figure~\ref{fig:removed_all_std_comments} shows the mean and median times for \SATD to be removed from the respective projects. The distribution of \SATD removal is skewed, as indicated by plots and the difference in the mean and median removal times. In general, the time that \SATD stays in a project  varies from one project to another and varies between 18.2--172.8 days on median and 82--613.2 days on average. One clear finding however, is that in Camel and Gerrit, \SATD is removed faster than in Hadoop, Log4j and Tomcat.
 
 Figure~\ref{fig:survival_plots} shows the survival plots of \SATD for the five studied projects. 
-Survival plot is a technique originating from the medical domain indicating the probability of 
-a patient to survive at least for $x$ days. To estimate this probability one would ideally like to 
+\rabe{we should move this to approach - Survival plot is a technique originating from the medical domain indicating the probability of a patient to survive at least for $x$ days. To estimate this probability one would ideally like to 
 have complete information about the death time of all patients. Such an assumption is, however,
 usually not realistic as some patients might still be alive at the end of the observations, \emph{i.e.},
 the data is right-censored. Kaplan
 and Meier~\cite{kaplan1958nonparametric} have proposed a technique to estimate the survival
-in presence of right-censored data. As we have seen in Table~\ref{tbl:removed_self_admitted_technical_debt_per_project} some \SATD comments remained at
+in presence of right-censored data.} As we have seen in Table~\ref{tbl:removed_self_admitted_technical_debt_per_project} some \SATD comments remained at
 the end of the observations, \emph{i.e.}, our data is also right-censored, in Figure~\ref{fig:survival_plots}
 we present the Kaplan-Meier estimators. The use of Kaplan-Meier estimators is common in 
 software evolution applications of survival analysis~\cite{samoladas2010survival,goeminne2015towards}.
