@@ -3,11 +3,11 @@
 
 
 The main goal of our study is to understand the removal of \SATD. 
-As this is, to the best of our knowledge, the first study of SATD removal, our work is exploratory in its nature. Therefore, we conduct a case study and triangulate our findings by means of a survey
+As this is, to the best of our knowledge, the first study of SATD removal, our work is exploratory in nature. Therefore, we conduct a case study and triangulate our findings by means of a survey
 as recommended in the empirical software engineering literature~\cite{Easterbrook2008,RunesonH09}.
 We postpone the discussion of the survey to Section~\ref{sec:case_study_results}.
 
-We checkout all versions of five large, well-commented, open source projects. Then, we use the technique recently presented by Maldonado \emph{et al.}~\cite{Maldonado2015TSE} to detect \SATD based on the source code comments. Once \SATD has been identified we can also conclude when and by whom has it been introduced and removed.
+We checkout all versions of five large, well-commented, open source projects. Then, we use the technique recently presented by Maldonado \emph{et al.}~\cite{Maldonado2015TSE} to detect \SATD based on source code comments. Once \SATD has been identified, we can also conclude when and by whom has it been introduced and removed.
 %Finally, we use the generated data to perform our case study. 
 Figure~\ref{fig:automatically_classified_data_approach_overview} shows an overview of our approach, and the following subsections detail each step.
 
@@ -22,7 +22,7 @@ Figure~\ref{fig:automatically_classified_data_approach_overview} shows an overvi
 	\label{fig:automatically_classified_data_approach_overview}
 \end{figure}
 
-\subsection{Project Data}
+\subsection{Project Data Extraction}
 \label{sub:project_data_extraction}
 We start by selecting case study projects. 
 While sometimes even a single case might be sufficient, \emph{e.g.}, when it is typical, we study several
@@ -87,7 +87,7 @@ The number of comments shown in Table~\ref{tab:project_details} for each project
 % R: Whitespace or blank lines are not considered when calculating the similarity theshold. However, comments and source code are. Just remembering that this comparisson is done only in the case of file move or file rename. About the consistency between changes including comments and source code we have related work that shows that they are consistent in 90% of the cases. 
 
 
-Since we focus on introduction and removal of \SATD historical information about the project files is sought. First, we identify all Java source code files currently available in the latest version of the project. Then, we analyze the source code repository to track all changes done to each file. Each change made to a file produces a different version of that file, and by extracting them we can analyze each file version looking for \SATD. Git is capable of tracking renamed or moved files based on a similarity threshold~\cite{BirdMSR2009,HataIWPSE-EVOL2011}. In our study, we use this similarity threshold at 90\%, \emph{i.e.}, if a file is renamed or moved to another folder, and is at least 90\% similar to an older version, Giet will consider that the file was just moved or renamed. However, if after the change the file is less than 90\% similar with the previous version Git will consider that the original file was removed and a new one was created instead. Whitespace or blank lines are not taken into consideration to calculate the similarity of the files. Using this Git feature, we extract all versions of the Java files that are currently in the repository. 
+Since we focus on introduction and removal of \SATD historical information about the project files is sought. First, we identify all Java source code files currently available in the latest version of the project. Then, we analyze the source code repository to track all changes done to each file. Each change made to a file produces a different version of that file, and by extracting them we can analyze each file version looking for \SATD. Git is capable of tracking renamed or moved files based on a similarity threshold~\cite{BirdMSR2009,HataIWPSE-EVOL2011}. In our study, we use this similarity threshold at 90\%, \emph{i.e.}, if a file is renamed or moved to another folder, and is at least 90\% similar to an older version, Git will consider that the file was just moved or renamed. However, if after the change the file is less than 90\% similar with the previous version Git will consider that the original file was removed and a new one was created instead. Whitespace or blank lines are not taken into consideration to calculate the similarity of the files. Using this Git feature, we extract all versions of the Java files that are currently in the repository. 
 
 % \alexander{shouldn't Latin be in italics?}
 The second step to checkout all versions of files is to identify the files that are no longer present in the repository  (\textit{i.e.,} deleted files). Using Git we obtain the list of hashes of commits that has deleted at least one file and the fully qualified names of these files. Using this information we repeat the process described above to obtain all the older versions of the files. To guarantee the correctness of the process we focus solely on Java source files, and ensure that every fully qualified path of the file is analyzed only once. 
