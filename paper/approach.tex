@@ -3,7 +3,7 @@
 
 
 The main goal of our study is to understand the removal of \SATD. 
-As this is, to the best of our knowledge, the first study of SATD removal, our work is exploratory in nature. Therefore, we conduct a case study and triangulate our findings by means of a survey
+\revised{As this is, to the best of our knowledge, the first study of SATD removal,}{R3C5} our work is exploratory in nature. Therefore, we conduct a case study and triangulate our findings by means of a survey
 as recommended in the empirical software engineering literature~\cite{Easterbrook2008,RunesonH09}.
 We postpone the discussion of the survey to Section~\ref{sec:case_study_results}.
 
@@ -87,30 +87,31 @@ The number of comments shown in Table~\ref{tab:project_details} for each project
 % R: Whitespace or blank lines are not considered when calculating the similarity theshold. However, comments and source code are. Just remembering that this comparisson is done only in the case of file move or file rename. About the consistency between changes including comments and source code we have related work that shows that they are consistent in 90% of the cases. 
 
 
-Since we focus on introduction and removal of \SATD historical information about the project files is sought. First, we identify all Java source code files currently available in the latest version of the project. Then, we analyze the source code repository to track all changes done to each file. Each change made to a file produces a different version of that file, and by extracting them we can analyze each file version looking for \SATD. Git is capable of tracking renamed or moved files based on a similarity threshold~\cite{BirdMSR2009,HataIWPSE-EVOL2011}. In our study, we use this similarity threshold at 90\%, \emph{i.e.}, if a file is renamed or moved to another folder, and is at least 90\% similar to an older version, Git will consider that the file was just moved or renamed. However, if after the change the file is less than 90\% similar with the previous version Git will consider that the original file was removed and a new one was created instead. Whitespace or blank lines are not taken into consideration to calculate the similarity of the files. Using this Git feature, we extract all versions of the Java files that are currently in the repository. 
+Since we focus on introduction and removal of \SATD historical information about the project files is sought. First, we identify all Java source code files currently available in the latest version of the project. Then, we analyze the source code repository to track all changes done to each file. Each change made to a file produces a different version of that file, and by extracting them we can analyze each file version looking for \SATD. Git is capable of tracking renamed or moved files based on a similarity threshold~\cite{BirdMSR2009,HataIWPSE-EVOL2011}. In our study, we use this similarity threshold at 90\%, \emph{i.e.}, if a file is renamed or moved to another folder, and is at least 90\% similar to an older version, Git will consider that the file was just moved or renamed. However, if after the change the file is less than 90\% similar with the previous version Git will consider that the original file was removed and a new one was created instead. \revised{Also, we consider deleted file as}{R3C9} Whitespace or blank lines are not taken into consideration to calculate the similarity of the files. Using this Git feature, we extract all versions of the Java files that are currently in the repository. 
 
 % \alexander{shouldn't Latin be in italics?}
 The second step to checkout all versions of files is to identify the files that are no longer present in the repository  (\textit{i.e.,} deleted files). Using Git we obtain the list of hashes of commits that has deleted at least one file and the fully qualified names of these files. Using this information we repeat the process described above to obtain all the older versions of the files. To guarantee the correctness of the process we focus solely on Java source files, and ensure that every fully qualified path of the file is analyzed only once. 
 %\alexander{What happens when the project is restructured and many files are moved from one directory to another? How would this affect the results? Did this happen in the five projects studied?}\everton{Q1/2. Nothing would change. Restructuring files would not cause enough change to break the 90\% similarity threshold, and therefore, Git can track the file and keep it's history. Q3 We did not analyze if this phenomena happened in the five studied projects. What might be confusing is that JRuby, that was present in one of ours first try outs, presented this restructuring phenomena. However, that was before the tool be able to track changed files. With JRuby specifically we were not able to use the our tool because it's repository metadata was weird.}
 
 Once this step is complete, we have at our disposal the information regarding the files and their versions stored in the database, and an actual copy of each file version in a structured directory inside our tool that will be used to extract the remainder of the data for our study.
-
-\subsection{Identifying \SATD comments}
+\revised{It is worth mentioning that we consider all files that exist in the analyzed version of the project and we do not consider files that existed and deleted through the history of the project.}{R3C9}
+\subsection{Extracting Source Code Comments}
 \label{sub:parse_source_code}
-
-We parse the source code in order to extract the comments. We use an open source library SrcML~\cite{Collard2013SIE} to parse the source code, and extract the comments and the information related to them such as the line that each comment starts, finishes and the type of the comment (\textit{i.e.,} Javadoc, Line or Block). 
+\rabe{I changed the format of this section to match Figure~\ref{fig:automatically_classified_data_approach_overview}}
+We parse the source code in order to extract the source code comments. We use an open source library SrcML~\cite{Collard2013SIE} to parse the source code, and extract the comments and the information related to them such as the line that each comment starts, finishes and the type of the comment (\textit{i.e.,} Javadoc, Line or Block). 
+\rabe{This is done fro the current version of the project?}
 %All the extracted information is stored in a relational database to facilitate the processing of the data. 
 %
 %Once the parsing step is complete, we have at our disposal all of the comments in all versions of the files for each of the five projects. 
 
-Next, we use the technique presented in by Maldonado \emph{et al.}~\cite{Maldonado2015TSE} to identify the \SATD comments. We refer readers to Maldonado \emph{et al.}'s paper for full details on how to identify \SATD comments, however, to make our paper self-contained, we highlight the key points of their approach next.
+
 %
 %\subsection{Using NLP to Identify Self-Admitted Technical Debt}
 %
 %The state-of-the-art technique to identify \SATD uses Natural Language Processing (NLP) to classify comments based on their contents. 
 %Before classifying comments, one needs to remove comments that are irrelevant. 
 
-\subsubsection{Filtering Irrelevant Comments.} 
+%\subsubsection{Filtering Irrelevant Comments.} 
 As the prior work showed, not all comments can contain \SATD \cite{Potdar2014ICSME,Wehaibi2016SANER}. Therefore,  as the pre-processing we remove the following types of comments from our dataset: %before applying the NLP-based classification to determine \SATD comments:
 
 \begin{itemize}
@@ -151,11 +152,26 @@ The pre-processing steps above significantly reduce the number of comments in th
 %\subsection{NLP Classification}
 %\label{sub:nlp_classification}
 
-\subsubsection{Applying the NLP Classifier.} 
-We use the Stanford NLP Classifier~\cite{Manning2014ACL} to classify \SATD comments.
-The NLP Classifier takes as input classified data items (comments), and automatically learns \textit{features} (\textit{i.e.,} words) from each \textit{datum} that are associated with positive or negative numeric \textit{votes} for each class. The weights of the features are learned automatically based on the manually classified training data items (supervised learning). The Stanford NLP Classifier builds a \textit{maximum entropy model}~\cite{nigam1999using}, which is equivalent to a multi-class regression model, and is trained to maximize the conditional likelihood of the classes taking into account feature dependences when calculating the feature weights.
+\subsection{Applying the NLP to Identify \SATD} 
+To identify the \SATD comments, we next use the technique presented in by Maldonado \emph{et al.}~\cite{Maldonado2015TSE} . We refer readers to Maldonado \emph{et al.}'s paper for full details on how to identify \SATD comments, however, to make our paper self-contained, we highlight the key points of their approach that we use next.
 
-To train the NLP classifier, we used the manually classified \SATD comments data set provided by Maldonado \emph{et al.}~\cite{Maldonado2015TSE}. The data set contains contains 62,566 comments extracted from ten open source projects. These comments were classified as \SATD comments or as regular comments (\textit{i.e.,} comments without \SATD). The manually classified data set was verified by the authors of the paper and they showed that two independent reviewers agreed on the classification, achieving a Cohen's Kappa value of +0.81. In addition, the work by Maldonado \emph{et al.}~\cite{Maldonado2015TSE} showed that the NLP classifier is correct in identifying \SATD with an average precision of 0.72 and recall of 0.56. Although these precision and recall values may not seem high, they do represent the state of the art and outperform the comment-patterns technique, which all prior work was built on top of (i.e., \cite{Wehaibi2016SANER,Bavota2016MSR,Potdar2014ICSME}) by 230\%, on average. 
+\begin{itemize}
+	\item To train the NLP classifier, we used the manually classified \SATD comments data set provided by Maldonado \emph{et al.}~\cite{Maldonado2015TSE}. The data set contains contains 62,566 comments extracted from ten open source projects. These comments were classified as \SATD comments or as regular comments (\textit{i.e.,} comments without \SATD). The manually classified data set was verified by the authors of the paper and they showed that two independent reviewers agreed on the classification, achieving a Cohen's Kappa value of +0.81. 
+	
+	\item We use the Stanford NLP Classifier~\cite{Manning2014ACL} to classify \SATD comments.
+	The NLP Classifier takes as input classified data items (comments), and automatically learns \textit{features} (\textit{i.e.,} words) from each \textit{datum} that are associated with positive or negative numeric \textit{votes} for each class. The weights of the features are learned automatically based on the manually classified training data items (supervised learning). The Stanford NLP Classifier builds a \textit{maximum entropy model}~\cite{nigam1999using}, which is equivalent to a multi-class regression model, and is trained to maximize the conditional likelihood of the classes taking into account feature dependences when calculating the feature weights.
+	
+	\item In addition, the work by Maldonado \emph{et al.}~\cite{Maldonado2015TSE} showed that the NLP classifier is correct in identifying \SATD with an average precision of 0.72 and recall of 0.56. Although these precision and recall values may not seem high, they do represent the state of the art and outperform the comment-patterns technique, which all prior work was built on top of (i.e., \cite{Wehaibi2016SANER,Bavota2016MSR,Potdar2014ICSME}) by 230\%, on average. 
+\end{itemize}
+
+\revised{Now, we have trained NLP classifier (\textit{maximum entropy model}), we next applied the trained NLP model to classified the extracted comments from our five studied projects. The last two columns in Table~\ref{tab:project_details} show the number of identified \SATD comments in each project.}{R3C11}
+
+
+
+
+
+
+
 
 
 %classified by the first author and later, to mitigate the risk of bias, another student was asked to classify a statistically significant sample of the dataset. The Cohen's kappa coefficient~\cite{cohen1960coefficient} (\textit{i.e.,} the level of agreement between both reviewer) was of +0.81. The resulting coefficient is scaled to range between -1 and +1, where negative value means poorer than chance agreement, zero indicates exactly chance agreement, and positive value indicates better than chance agreement~\cite{fleiss1973equivalence}. Although we were able to find different types of \SATD \todo{in previous studies} we focus our training dataset on \emph{design \SATD} as it is the most common and impactful\rabe{important source of technical debt}~\cite{Ernst2015FSE}. \alexander{is ``impactful'' a word?}\everton{Not sure, but I found it on Mac's dictionary with the following definition: having a major impact or effect: an eye-catching and impactful design.}
