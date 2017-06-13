@@ -24,7 +24,7 @@ Our findings indicate that developers tend to be aware and do care about \SATD. 
 
 \begin{table}[!t]
 	\begin{center}
-		\caption{Removed \SATD per project}
+		\caption{\textsc{Removed \SATD per project}}
 		\label{tbl:removed_self_admitted_technical_debt_per_project}
 		\begin{tabular}{l|rrrr}
 			\toprule
@@ -47,7 +47,7 @@ Our findings indicate that developers tend to be aware and do care about \SATD. 
 
 \begin{table}[t]
 	\begin{center}
-		\caption{Self-removed technical debt per project}
+		\caption{\textsc{Self-removed technical debt per project}}
 		\label{tbl:self_removed_technical_debt_vs_non_self_removed_technical_debt_per_project}
 		\begin{tabular}{l|rrr}% | c c}
 			\toprule
@@ -108,7 +108,7 @@ Hadoop tends to be an outlier in terms of self-removed \SATD, however, it is wor
 
 \subsubsection*{Motivation} From RQs 1 and 2, we know that the majority of \SATD is removed and most of the time it is removed by the same developer who introduced it. Next, we would like to know how long \SATD lives in a project before it is actually removed. Answering this question helps us to understand for how long it is normal to have \SATD comments in the projects. In addition, once we quantify the number of self-removed technical debt and the number of non-self-removed technical debt comments, we would like to understand if these two categories of removal have differences between them. For example, since we know that the majority of \SATD is self-removed, is it the case that it is removed faster since our intuition is that it would be easier to address. 
 
-\subsubsection*{Approach} To determine the amount of time that \SATD lives in a project, we use the time difference between the commit that introduces and removes the \SATD comment. The steps to identify the \SATD introducing and removing commits are the same as we outlined in RQs 1 and 2. We measure the average and median time for \SATD to be removed. It is important to note that the timezone is irrelevant in this analysis since we normalize the data used in our survival plots by calculating the delta between insertion and removal of SATD from each project separately (i.e., on their on repositories timezone).
+\subsubsection*{Approach} To determine the amount of time that \SATD lives in a project, we use the time difference between the commit that introduces and removes the \SATD comment. The steps to identify the \SATD introducing and removing commits are the same as we outlined in RQs 1 and 2. We measure the average and median time for \SATD to be removed. It is important to note that the timezone is irrelevant in this analysis since we normalize the data used in our survival plots by calculating the delta between insertion and removal of SATD from each project separately (i.e., on their own repositories timezone).
 
 Additionally, we generate survival plots for the removal of \SATD to determine how likely the technical debt will live in a project. Survival plots show the (general) trend times for a given event to occur. In our case, the survival plots show the  percentage of self-admitted technical debt that survives in a project overtime. Finally, we distinguish between self- and non-self-removed technical debt and compare the removal time of each. We compare the two distributions (\emph{i.e.}, self- and non-self-removal) using a Mann-Whitney test~\cite{mann1947test} to determine if the difference is statistically significant at the customary level of 0.05.
 
@@ -306,7 +306,7 @@ We also compare the time that self-removed and non-self-removed \SATD exists in 
 
 \begin{table}[t]
 	\begin{center}
-		\caption{Self-removal vs non-self-removal: Mann-Whitney Test ($p$-value) and Cliff's Delta ($d$)}
+		\caption{\textsc{Self-removal vs non-self-removal: Mann-Whitney Test ($p$-value) and Cliff's Delta ($d$)}}
 		\label{tbl:statistic}
 		\begin{tabular}{l| rrr}
 			\toprule
