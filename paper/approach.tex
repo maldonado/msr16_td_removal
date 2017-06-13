@@ -111,7 +111,8 @@ Once this step is complete, we have at our disposal the information regarding th
 \label{sub:parse_source_code}
 %\rabe{I changed the format of this section to match Figure~\ref{fig:automatically_classified_data_approach_overview}}
 
-We parse the source code in order to extract the source code comments. We use an open source library SrcML~\cite{Collard2013SIE} to parse the source code, and extract the comments and the information related to them such as the line that each comment starts, finishes and the type of the comment (\textit{i.e.,} Javadoc, Line or Block). 
+%We parse the source code in order to extract the source code comments. 
+We use an open source library SrcML~\cite{Collard2013SIE} to parse the source code, and extract the comments and the information related to them such as the line that each comment starts, finishes and the type of the comment (\textit{i.e.,} Javadoc, Line or Block). 
 %\rabe{is this  done for the current version of the project or all versions?}
 %All the extracted information is stored in a relational database to facilitate the processing of the data. 
 %
@@ -125,7 +126,7 @@ We parse the source code in order to extract the source code comments. We use an
 %Before classifying comments, one needs to remove comments that are irrelevant. 
 
 %\subsubsection{Filtering Irrelevant Comments.} 
-As the prior work showed, not all comments can contain \SATD \cite{Potdar2014ICSME,Wehaibi2016SANER}. Therefore,  as the pre-processing we remove the following types of comments from our dataset: %before applying the NLP-based classification to determine \SATD comments:
+As the prior work showed, not all comments can contain \SATD \cite{Potdar2014ICSME,Wehaibi2016SANER}. Therefore,  as the pre-processing we exclude the following types of comments:% from our dataset: %before applying the NLP-based classification to determine \SATD comments:
 
 \begin{itemize}
 \item \textbf{License comments} that generally do not contain \SATD and are commonly located before the class declaration. That said, comments that contain task annotations (\textit{i.e.,} ``TODO:'', ``FIXME:'', or ``XXX:'') ~\cite{Storey2008ICSE} are not removed since they are usually leveraged by most IDEs, e.g., Eclipse and Netbeans, to automatically generate task lists.
