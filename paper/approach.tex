@@ -2,14 +2,14 @@
 % !TEX root = main.tex
 
 
-The main goal of our study is to understand the removal of \SATD.  Although some prior work examined the removal of \SATD and who removes \SATD (e.g.,~\cite{Potdar2014ICSME,Bavota2016MSR}), to the best of our knowledge, this is one of the first studies to \emph{exclusively} focus on the removal of \SATD. Furthermore, in addition to quantifying removal and examining who removes \SATD, we also examine how long \SATD tends to live in a project and shed light on the activities that lead to the removal of \SATD. Also our study uses a more accurate way to determine \SATD and examines a different set of projects than the aforementioned work, strengthening the empirical evidence of \SATD removal.
+The main goal of our study is to understand the removal of \SATD.  Although some prior work examined the removal of \SATD and who removes \SATD (e.g.,~\cite{Potdar2014ICSME,Bavota2016MSR}), to the best of our knowledge, this is one of the first studies to \emph{exclusively} focus on the removal of \SATD. Furthermore, in addition to quantifying removal and examining who removes \SATD, we also examine how long \SATD tends to live in a project and shed light on the activities that lead to the removal of \SATD. Also, our study uses a more accurate way to determine \SATD and examines a different set of projects than the aforementioned work, strengthening the empirical evidence of \SATD removal.
 
 
 %Therefore, we conduct a case study and triangulate our findings by means of a survey as recommended in the empirical software engineering literature~\cite{Easterbrook2008,RunesonH09}. We discuss our survey findings in Section~\ref{sec:case_study_results}.
 
-To conduct our study, we checkout all versions of five large, well-commented, open source projects. Then, we use the technique recently presented by Maldonado \emph{et al.}~\cite{Maldonado2015TSE} to detect \SATD based on source code comments. Once \SATD has been identified, we can also conclude when and by whom has it been introduced and removed.
+To conduct our study, we checkout all versions of five large, well-commented, open source projects. Then, we use the NLP technique recently presented by Maldonado \emph{et al.}~\cite{Maldonado2015TSE} to detect \SATD based on source code comments. Once \SATD has been identified, we can also conclude when and by whom it was introduced and removed.
 %Finally, we use the generated data to perform our case study. 
-Figure~\ref{fig:automatically_classified_data_approach_overview} shows an overview of our approach, and the following subsections detail each step.
+Figure~\ref{fig:automatically_classified_data_approach_overview} shows an overview of our approach, and the following subsections detail each of its steps.
 
 %comments after they get introduced into projects, and most specifically, who are the authors responsible for the introduction and removal of these comments. To do that, we divided our study in two main parts. First, we developed a tool that allows us to extract and classify \SATD comments based on natural language processing (NLP) techniques. Using this tool we extracted and classified the comments of five open source projects. Second, we analyze the performance of our tool in terms of precision and recall using two other open source projects which we have manually classified the \SATD comments. 
 
@@ -18,7 +18,7 @@ Figure~\ref{fig:automatically_classified_data_approach_overview} shows an overvi
 \begin{figure}[tb!]
 	\centering
 	\includegraphics[width=\columnwidth]{figures/approach.pdf}
-	\caption{Automatic classification of \SATD}
+	\caption{Automatic classification of \SATD.}
 	\label{fig:automatically_classified_data_approach_overview}
 \end{figure}
 
@@ -52,7 +52,7 @@ The number of comments shown in Table~\ref{tab:project_details} for each project
 
 \begin{table*}[thb!]
     \begin{center}
-    \caption{\textsc{Details of studied projects}}
+    \caption{\textsc{Details of studied projects.}}
     \label{tab:project_details}
     
             \begin{tabular}{l|rrrr||rrrr}
@@ -84,7 +84,7 @@ The number of comments shown in Table~\ref{tab:project_details} for each project
 \begin{figure}[tb!]
 	\centering
 	\includegraphics[width=\columnwidth]{figures/test/files_cases.pdf}
-	\caption{Different cases when checking out all file versions}
+	\caption{Different cases when checking out all file versions.}
 	\label{fig:files_case}
 \end{figure}
 
@@ -92,9 +92,9 @@ The number of comments shown in Table~\ref{tab:project_details} for each project
 % R: Whitespace or blank lines are not considered when calculating the similarity theshold. However, comments and source code are. Just remembering that this comparisson is done only in the case of file move or file rename. About the consistency between changes including comments and source code we have related work that shows that they are consistent in 90% of the cases. 
 
 
-Since we focus on the introduction and removal of \SATD, historical information about the project files is sought. As illustrated in Figure~\ref{fig:files_case}, we first identify all Java source code files currently available in the latest version of the project. Then, we analyze the source code repository to track all changes done to each file. Each change made to a file produces a different version of that file (Figure~\ref{fig:files_case} case 1), and by extracting them we can analyze each file version looking for source comments that indicate \SATD. A version of a file is generated whenever a change (i.e., commit) is made. Once we identify all file versions, we consider the first available file version that contains the \SATD as the file version that introduced the \SATD. Similarly, we consider the date of the commit that removes the \SATD comment or deletes the file that the \SATD exists in as the removal date.
+Since we focus on the introduction and removal of \SATD, historical information about the project files is sought. As illustrated in Figure~\ref{fig:files_case}, we first identify all Java source code files currently available in the latest version of the project. Then, we analyze the source code repository to track all changes done to each file. Each change made to a file produces a different version of that file (Figure~\ref{fig:files_case} case 1), and by extracting them we can analyze each file version looking for source comments that indicate \SATD. A version of a file is generated whenever a change (i.e., commit) is made. Once we identify all file versions, we consider the first available file version that contains the \SATD as the file version that introduced the \SATD. Similarly, we consider the date of the commit that removes the \SATD comment or deletes the file where the \SATD exists in as the removal date.
 
-Since file deletions indicate \SATD removals, it is important to correctly handle file moves and renames (Figure~\ref{fig:files_case} case 2). Git is capable of tracking renamed or moved files based on a similarity threshold~\cite{BirdMSR2009,HataIWPSE-EVOL2011}. In our study, we use the default similarity threshold of 90\%, \emph{i.e.}, if a file is renamed or moved to another folder, and is at least 90\% similar to an older version (excluding whitespace and blank lines), Git will consider that the file was just moved or renamed. If a file was not listed as being moved or renamed, then we consider it to be deleted. 
+Since file deletions indicate \SATD removals, it is important to correctly handle file moves and renames (Figure~\ref{fig:files_case} case 2). Git is capable of tracking renamed or moved files based on a similarity threshold~\cite{BirdMSR2009,HataIWPSE-EVOL2011}. In our study, we use the default similarity threshold of 90\%, \emph{i.e.}, if a file is renamed or moved to another folder, and is at least 90\% similar to an older version (excluding whitespaces and blank lines), Git will consider that the file was just moved or renamed. If a file was not listed as being moved or renamed, then we consider it to be deleted. 
 
 %Our tool differentiates renamed and moved files by analyzing git log with the --follow option (i.e., git log --follow --stat=350 --stat-graph-width=2). This command outputs the old and the current path of a moved or renamed file, which we then parse to perform our analysis. Only then we search for deleted files using  a git log diff to summarize only deleted files (i.e., git log --diff-filter=D --summary). Using the git log diff output we check if the file marked as deleted was already identified as a move/rename action.
 	
@@ -105,7 +105,7 @@ The second step to checkout all versions of files is to identify the files that 
 %\alexander{What happens when the project is restructured and many files are moved from one directory to another? How would this affect the results? Did this happen in the five projects studied?}\everton{Q1/2. Nothing would change. Restructuring files would not cause enough change to break the 90\% similarity threshold, and therefore, Git can track the file and keep it's history. Q3 We did not analyze if this phenomena happened in the five studied projects. What might be confusing is that JRuby, that was present in one of ours first try outs, presented this restructuring phenomena. However, that was before the tool be able to track changed files. With JRuby specifically we were not able to use the our tool because it's repository metadata was weird.}
 
 
-Once this step is complete, we have at our disposal the information regarding the files and their versions stored in the database. We also store an actual copy of each file version in a structured directory will we use to extract the remainder of the data for our study.
+After this step is complete, we have at our disposal the information regarding the files and their versions stored in the database. We also store an actual copy of each file version in a structured directory that we will use to extract the remainder of the data for our study.
 
 \subsection{Extracting Source Code Comments}
 \label{sub:parse_source_code}
@@ -178,7 +178,7 @@ To identify the \SATD comments, we next use the technique presented in by Maldon
 	\item In addition, the work by Maldonado \emph{et al.}~\cite{Maldonado2015TSE} showed that the NLP classifier is correct in identifying \SATD with an average precision of 0.72 and recall of 0.56. Although these precision and recall values may not seem high, they do represent the state of the art and outperform the comment-patterns technique, which all prior work was built on top of (i.e., \cite{Wehaibi2016SANER,Bavota2016MSR,Potdar2014ICSME}) by 230\%, on average. 
 \end{itemize}
 
-Now, that we have a trained NLP classifier (\textit{maximum entropy classifier}), we follow a general process of machine learning where we apply the trained NLP classifier to classify the extracted comments from our five studied projects. We are confident in the trained NLP classifier, which is trained on the data provided by Maldonado \emph{et al.}~\cite{Maldonado2015TSE}, since Maldonado \emph{et al.} show that the trained NLP classifier is able to produce good results even when it is evaluated on cross-project data. We discuss the impact of using the NLP classifier in more details in Section~\ref{sec:threats_to_validity}. The last two columns of Table~\ref{tab:project_details} show the number of identified \SATD comments per project after applying the trained NLP classifier.
+Now that we have a trained NLP classifier (\textit{maximum entropy classifier}), we follow a general process of machine learning where we apply the trained NLP classifier to classify the extracted comments from our five studied projects. We are confident in the trained NLP classifier, which is trained on the data provided by Maldonado \emph{et al.}~\cite{Maldonado2015TSE}, since Maldonado \emph{et al.} showed that the trained NLP classifier is able to produce good results even when it is evaluated on cross-project data. We discuss the impact of using the NLP classifier in more details in Section~\ref{sec:threats_to_validity}. The last two columns of Table~\ref{tab:project_details} show the number of identified \SATD comments per project after applying the trained NLP classifier.
 
 %In their experiment, they trained the NLP classifier on 9 out of 10 projects and evaluated on the remaining one project and were able to achieve results of an average F1-measure of 0.620 when identifying design \SATD, and an average F1-measure of 0.403 when identifying requirement \SATD
 
