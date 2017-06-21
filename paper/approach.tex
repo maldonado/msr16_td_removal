@@ -1,19 +1,12 @@
 % -*- root: main.tex -*-
-% !TEX root = main.tex
-
 
 The main goal of our study is to understand the removal of \SATD.  Although some prior work examined the removal of \SATD and who removes \SATD (e.g.,~\cite{Potdar2014ICSME,Bavota2016MSR}), to the best of our knowledge, this is one of the first studies to \emph{exclusively} focus on the removal of \SATD. Furthermore, in addition to quantifying removal and examining who removes \SATD, we also examine how long \SATD tends to live in a project and shed light on the activities that lead to the removal of \SATD. Also, our study uses a more accurate way to determine \SATD and examines a different set of projects than the aforementioned work, strengthening the empirical evidence of \SATD removal.
 
 
-%Therefore, we conduct a case study and triangulate our findings by means of a survey as recommended in the empirical software engineering literature~\cite{Easterbrook2008,RunesonH09}. We discuss our survey findings in Section~\ref{sec:case_study_results}.
 
 To conduct our study, we checkout all versions of five large, well-commented, open source projects. Then, we use the NLP technique recently presented by Maldonado \emph{et al.}~\cite{Maldonado2015TSE} to detect \SATD based on source code comments. Once \SATD has been identified, we can also conclude when and by whom it was introduced and removed.
-%Finally, we use the generated data to perform our case study. 
 Figure~\ref{fig:automatically_classified_data_approach_overview} shows an overview of our approach, and the following subsections detail each of its steps.
 
-%comments after they get introduced into projects, and most specifically, who are the authors responsible for the introduction and removal of these comments. To do that, we divided our study in two main parts. First, we developed a tool that allows us to extract and classify \SATD comments based on natural language processing (NLP) techniques. Using this tool we extracted and classified the comments of five open source projects. Second, we analyze the performance of our tool in terms of precision and recall using two other open source projects which we have manually classified the \SATD comments. 
-
-%In a nutshell the tool first clones the analyzed repository locally. Second, it identifies all Java source code files in the repository. By analyzing the history of the project we are able to identify even files that were already removed. Third, we use a third part library to parse the source code and extract the information that we use in our analysis. Fourth, we apply four filtering heuristics that aims to eliminate non \SATD comments. Lastly, it uses NLP techniques to automatically classify \SATD comments. 
 
 \begin{figure}[tb!]
 	\centering
@@ -28,41 +21,28 @@ We start by selecting case study projects. While sometimes even a single case mi
 We select projects to cover different application domains, sizes and numbers of contributors. Furthermore, since the \SATD identification heavily depends on source code comments, we selected \emph{well-commented} projects, and since we are interested in changes in \SATD (introduction and removal) we focus on highly active projects. 
 All projects are developed in Java and use Git. We selected five open source projects namely Camel, Gerrit, Hadoop, Log4j, and Tomcat, and started analyzing the selected projects on May 1st 2016.
 
-% alexander{Shouldn't we relate the choice of the projects to the guidelines of Runeson and H\"{o}rst~\cite{RunesonH09}?} \emad{can we add that here?}
 
 
-% \alexander{Did we somehow clean up the contributors? The same person might use different emails to commit the changes in git?} 
+Table~\ref{tab:project_details} provides details about each of the projects used in our study. The columns of Table~\ref{tab:project_details} include the number of extracted comments (\textit{i.e.,} from all versions), the number of comments analyzed after applying our filtering heuristics (\textit{i.e.,} removing commented-out source code, license comments and Javadoc comments), the number of comments that were classified as \SATD and finally the number of unique \SATD comments. To calculate the number of unique \SATD comments, we take in consideration only the first time that the comment appears on any of the different file versions. This is necessary because the same comment may appear in different versions of the file. In total, we obtained 7,749,969 comments, found in 446,775 different versions of 30,915 Java classes. The size of the selected projects varies between 30,287 and 800,488 SLOC, and the number of contributors of these projects ranges from 32 to 289. Since there are exist different definitions for the SLOC metric we clarify that, in our study, a source line of code contains at least one valid character, which is not a blank space or a source code comment. In addition, we only use the Java files to calculate the SLOC, and to do so, we use the SLOCCount tool~\cite{wheeler2004:home}. 
 
-% \alexander{In all versions in total? or is this a median?}
-
-% \alexander{This heuristics has not been described yet. Why does one need to filter?}
-
-Table~\ref{tab:project_details} provides details about each of the projects used in our study. The columns of Table~\ref{tab:project_details} %presents the number of Java files analyzed, followed by the total source lines of code (SLOC), the number of different file versions that we find analyzing the history of the project, the number of contributors, 
-include the number of extracted comments (\textit{i.e.,} from all versions), the number of comments analyzed after applying our filtering heuristics (\textit{i.e.,} removing commented source code, license comments and Javadoc comments), the number of comments that were classified as \SATD and finally the number of unique \SATD comments. To calculate the number of unique \SATD comments we take in consideration only the first time that the comment appears on any of the different file versions. This is necessary because the same comment may appear in different versions of the file. In total, we obtained 7,749,969 comments, found in 446,775 different versions of 30,915 Java classes. The size of the selected projects varies between 30,287 and 800,488 SLOC, and the number of contributors of these projects ranges from 32 to 289. Since there are exist different definitions for the SLOC metric we clarify that, in our study, a source line of code contains at least one valid character, which is not a blank space or a source code comment. In addition, we only use the Java files to calculate the SLOC, and to do so, we use the SLOCCount tool~\cite{wheeler2004:home}. 
-
-% \alexander{What does ``its'' refer to? classes?}
-% \alexander{This information is already in Table ~\ref{tab:project_details}.}
-% I moved the paragraph here to address the above comment. If you prefer, I can remove it later.
  
-The number of contributors was extracted from OpenHub, an on-line community and public directory that offers analytics, search services and tools for open source software \cite{Openhub:home}. Number of contributors is calculated by counting the different authors that committed changes to the source code repository. However, there is the possibility that one developer possesses more than one user name in the source code repository~\cite{DBLP:conf/icsm/KoutersVSB12}. To mitigate this risk, OpenHub provides an interface where the manager of the project on OpenHub can link two or more different user names belonging to the same user~\cite{Openhub:Aliases}. %Activity level \alexander{This metric is not in Table~\ref{tab:project_details}, where is it used and how?} is a metric provided by OpenHub, and it is based on a combination of contributor count and commit count, with more weight placed on contributors. These two metrics are combined so that recent activity is much more heavily weighted, \textit{i.e.,} a contribution this past month is far more important in determining activity level than a contribution a year ago \cite{Openhub:activity_level}. 
+The number of contributors was extracted from OpenHub, an on-line community and public directory that offers analytics, search services and tools for open source software \cite{Openhub:home}. Number of contributors is calculated by counting the different authors that committed changes to the source code repository. However, there is the possibility that one developer possesses more than one user name in the source code repository~\cite{DBLP:conf/icsm/KoutersVSB12}. To mitigate this risk, OpenHub provides an interface where the manager of the project on OpenHub can link two or more different user names belonging to the same user~\cite{Openhub:Aliases}. 
 
-% \alexander{Do I understand correctly that a sequence of line comments would be considered as one block comment? Apparently not (see the second heuristics below). Explain the difference between the three kinds of comments. }
+
+
 The number of comments shown in Table~\ref{tab:project_details} for each project does not represent the number of commented lines, but rather the number of Line, Block and Javadoc comments. 
-%\alexander{Isn't the following discussion redundant? Why is the syntax of the Java comments important? If possible I would prefer to remove it...} Line, Block and Javadoc comments are distinguished by their syntax and their location in the Java class. For example, Line comments are written with ``//'' followed by the desired comment. Block comments and Javadoc comments have similar syntax. To open a Block comment ``/\text{*}'' are used, whereas Javadoc comments are opened with ``/\text{*}\text{*}''. Both, Block and Javadoc comments, are closed by ``\text{*}/''. In addition, Javadoc comments are written exclusively before methods and constructors, whereas Block comments can be found scattered in the class.  
+
+
 
 \begin{table*}[thb!]
     \begin{center}
     \caption{\textsc{Details of studied projects.}}
     \label{tab:project_details}
-    
-            \begin{tabular}{l|rrrr||rrrr}
+             \begin{tabular}{l|rrrr||rrrr}
             \toprule
-            
-            \multirow{5}{*}{\textbf{\thead{Project}}} & \multicolumn{4}{c||}{\textbf{\thead{Project details}}} & \multicolumn{4}{c}{\textbf{\thead{Comments details}}} 
-
+             \multirow{5}{*}{\textbf{\thead{Project}}} & \multicolumn{4}{c||}{\textbf{\thead{Project details}}} & \multicolumn{4}{c}{\textbf{\thead{Comments details}}} 
             \\
             \cmidrule{2-9}
-
             & \textbf{\thead{\# Java\\ files}} & \textbf{\thead{SLOC}} & \textbf{\thead{\# file\\versions}} & \textbf{\thead{\# contributors}}  & \textbf{\thead{\# comments}}   & \textbf{\thead{\# comments \\after filtering}} & \textbf{\thead{\# TD \\comments}}  & \textbf{\thead{\# unique TD \\comments}}\\ 
             \midrule 
             \textbf{Camel}     & 15,091 & 800,488 & 254,920 & 289  &  1,634,361 &   700,412  &  20,141 &  4,331   \\
@@ -70,12 +50,11 @@ The number of comments shown in Table~\ref{tab:project_details} for each project
             \textbf{Hadoop}    &  8,466 & 996,877 &  79,232 & 160  &  2,512,673 &  1,172,051 &  18,927 &  1,164   \\
             \textbf{Log4j}     &  1,112 & 30,287  &  12,609 & 35   &    248,276 &    61,690  &   1,893 &   135    \\
             \textbf{Tomcat}    &  3,187 & 297,828 &  46,716 & 32   &  2,336,653 &  1,081,492 &  26,725 &  1,317   \\  
-           % \textbf{Ant}    & 1,475 & 115,881 & 68,115 & 74 & 1,335,705 & 342,402 & 10,729 &  854 \\
-            %\textbf{Jmeter}    & 1,181 & 81,307 & 38,091 & 33 & 1,033,390 & 441,780 & 21,356 & 1,260    \\
             \bottomrule             
         \end{tabular}
     \end{center}
 \end{table*}
+
 
 \subsection{Checkout All Versions of Files}
 \label{sub:checkout_all_versions_of_files}
@@ -88,45 +67,29 @@ The number of comments shown in Table~\ref{tab:project_details} for each project
 	\label{fig:files_case}
 \end{figure}
 
-% \alexander{Does this 90\% threshold distinguish between whitespace, comments, source code or is this just 90\% of the text? What happens if the source code reflecting TD has been removed but the corresponding comment is still around? What if this happens otherwise?}
-% R: Whitespace or blank lines are not considered when calculating the similarity theshold. However, comments and source code are. Just remembering that this comparisson is done only in the case of file move or file rename. About the consistency between changes including comments and source code we have related work that shows that they are consistent in 90% of the cases. 
 
 
 Since we focus on the introduction and removal of \SATD, historical information about the project files is sought. As illustrated in Figure~\ref{fig:files_case}, we first identify all Java source code files currently available in the latest version of the project. Then, we analyze the source code repository to track all changes done to each file. Each change made to a file produces a different version of that file (Figure~\ref{fig:files_case} case 1), and by extracting them we can analyze each file version looking for source comments that indicate \SATD. A version of a file is generated whenever a change (i.e., commit) is made. Once we identify all file versions, we consider the first available file version that contains the \SATD as the file version that introduced the \SATD. Similarly, we consider the date of the commit that removes the \SATD comment or deletes the file where the \SATD exists in as the removal date.
 
 Since file deletions indicate \SATD removals, it is important to correctly handle file moves and renames (Figure~\ref{fig:files_case} case 2). Git is capable of tracking renamed or moved files based on a similarity threshold~\cite{BirdMSR2009,HataIWPSE-EVOL2011}. In our study, we use the default similarity threshold of 90\%, \emph{i.e.}, if a file is renamed or moved to another folder, and is at least 90\% similar to an older version (excluding whitespaces and blank lines), Git will consider that the file was just moved or renamed. If a file was not listed as being moved or renamed, then we consider it to be deleted. 
 
-%Our tool differentiates renamed and moved files by analyzing git log with the --follow option (i.e., git log --follow --stat=350 --stat-graph-width=2). This command outputs the old and the current path of a moved or renamed file, which we then parse to perform our analysis. Only then we search for deleted files using  a git log diff to summarize only deleted files (i.e., git log --diff-filter=D --summary). Using the git log diff output we check if the file marked as deleted was already identified as a move/rename action.
-	
-%In addition, our analysis is done by comparing all versions of each source code file in the repository.  Each different version of a file is then compared and analyzed to present our results. Lastly, 
 
-% \alexander{shouldn't Latin be in italics?}
+
+
+
 The second step to checkout all versions of files is to identify the files that are no longer present in the repository  (\textit{i.e.,} deleted files,(Figure~\ref{fig:files_case} case 3). Using Git we obtain the list of commit hashes that have deleted at least one file and the fully qualified names of these files. Using this information, we repeat the process described above to obtain all the older versions of the files. To guarantee the correctness of the process we focus solely on Java source files, and ensure that every fully qualified path of the file is analyzed only once. 
-%\alexander{What happens when the project is restructured and many files are moved from one directory to another? How would this affect the results? Did this happen in the five projects studied?}\everton{Q1/2. Nothing would change. Restructuring files would not cause enough change to break the 90\% similarity threshold, and therefore, Git can track the file and keep it's history. Q3 We did not analyze if this phenomena happened in the five studied projects. What might be confusing is that JRuby, that was present in one of ours first try outs, presented this restructuring phenomena. However, that was before the tool be able to track changed files. With JRuby specifically we were not able to use the our tool because it's repository metadata was weird.}
+
 
 
 After this step is complete, we have at our disposal the information regarding the files and their versions stored in the database. We also store an actual copy of each file version in a structured directory that we will use to extract the remainder of the data for our study.
 
 \subsection{Extracting Source Code Comments}
 \label{sub:parse_source_code}
-%\rabe{I changed the format of this section to match Figure~\ref{fig:automatically_classified_data_approach_overview}}
 
-%We parse the source code in order to extract the source code comments. 
 We use an open source library SrcML~\cite{Collard2013SIE} to parse the source code, and extract the comments and the information related to them such as the line that each comment starts, finishes and the type of the comment (\textit{i.e.,} Javadoc, Line or Block). 
-%\rabe{is this  done for the current version of the project or all versions?}
-%All the extracted information is stored in a relational database to facilitate the processing of the data. 
-%
-%Once the parsing step is complete, we have at our disposal all of the comments in all versions of the files for each of the five projects. 
 
 
-%
-%\subsection{Using NLP to Identify Self-Admitted Technical Debt}
-%
-%The state-of-the-art technique to identify \SATD uses Natural Language Processing (NLP) to classify comments based on their contents. 
-%Before classifying comments, one needs to remove comments that are irrelevant. 
-
-%\subsubsection{Filtering Irrelevant Comments.} 
-As the prior work showed, not all comments can contain \SATD \cite{Potdar2014ICSME,Wehaibi2016SANER}. Therefore,  as the pre-processing we exclude the following types of comments:% from our dataset: %before applying the NLP-based classification to determine \SATD comments:
+As the prior work showed, not all comments can contain \SATD \cite{Potdar2014ICSME,Wehaibi2016SANER}. Therefore,  as the pre-processing we exclude the following types of comments:
 
 \begin{itemize}
 \item \textbf{License comments} that generally do not contain \SATD and are commonly located before the class declaration. That said, comments that contain task annotations (\textit{i.e.,} ``TODO:'', ``FIXME:'', or ``XXX:'') ~\cite{Storey2008ICSE} are not removed since they are usually leveraged by most IDEs, e.g., Eclipse and Netbeans, to automatically generate task lists.
@@ -135,7 +98,8 @@ As the prior work showed, not all comments can contain \SATD \cite{Potdar2014ICS
 
 %\item \textbf{Long comments} that are created using multiple \emph{Single-line} comments instead of a \emph{Block} comment can hinder the understanding of the message considering the case that the reader (\textit{i.e.,} human or machine) analyzes each one of these comments independently. To solve that problem, we create a heuristic that searches for consecutive Single-line comments and groups them as one \alexander{Block?} comment.\everton{Block could be confusing because it is a specific entity of the Java language with its own syntax. What we have here is more like an group of single line comments. But, if you think that block makes the text clearer to the reader I am all in.}
 
-\item \textbf{Commented source code} is also ignored since prior work showed that it generally does not contain \SATD \cite{Potdar2014ICSME,Wehaibi2016SANER}.
+\item \textbf{\rabe{Commented-out} source code} \rabe{by developers 
+	which is not compiled,} is also ignored since prior work showed that it generally does not contain \SATD \cite{Potdar2014ICSME,Wehaibi2016SANER}.
 % found in the projects due to many different reasons. One of the possibilities is that the code is not currently being used. Other is that, the code is used for debugging purposes only. Based on our analysis, commented source code does not have self-admitted technical debt.\alexander{``Our analysis'' is very vague here: what has been analyzed and how? What kind of results did we obtain?} \everton{I agree that analysis here is not ideal. This was part of one of our first studies when I joined Concordia. It was a course project, and basically, after we extracted source code comments from ten projects (same projects from TSE) we manually read through them to evaluate the results. Some patterns, became very clear. For example, all classes from one project had license comments. These license comments does not contains TD , so we removed. That is how we created our heuristics}Our heuristic removes commented source code using a simple regular expression that captures typical Java code structures.
 
 \item \textbf{Automatically generated comments} by the IDE are also removed since they, by definition, do not indicate \SATD. 
@@ -179,34 +143,3 @@ To identify the \SATD comments, we next use the technique presented in by Maldon
 \end{itemize}
 
 Now that we have a trained NLP classifier (\textit{maximum entropy classifier}), we follow a general process of machine learning where we apply the trained NLP classifier to classify the extracted comments from our five studied projects. We are confident in the trained NLP classifier, which is trained on the data provided by Maldonado \emph{et al.}~\cite{Maldonado2015TSE}, since Maldonado \emph{et al.} showed that the trained NLP classifier is able to produce good results even when it is evaluated on cross-project data. We discuss the impact of using the NLP classifier in more details in Section~\ref{sec:threats_to_validity}. The last two columns of Table~\ref{tab:project_details} show the number of identified \SATD comments per project after applying the trained NLP classifier.
-
-%In their experiment, they trained the NLP classifier on 9 out of 10 projects and evaluated on the remaining one project and were able to achieve results of an average F1-measure of 0.620 when identifying design \SATD, and an average F1-measure of 0.403 when identifying requirement \SATD
-
-
-
-
-
-
-
-%classified by the first author and later, to mitigate the risk of bias, another student was asked to classify a statistically significant sample of the dataset. The Cohen's kappa coefficient~\cite{cohen1960coefficient} (\textit{i.e.,} the level of agreement between both reviewer) was of +0.81. The resulting coefficient is scaled to range between -1 and +1, where negative value means poorer than chance agreement, zero indicates exactly chance agreement, and positive value indicates better than chance agreement~\cite{fleiss1973equivalence}. Although we were able to find different types of \SATD \todo{in previous studies} we focus our training dataset on \emph{design \SATD} as it is the most common and impactful\rabe{important source of technical debt}~\cite{Ernst2015FSE}. \alexander{is ``impactful'' a word?}\everton{Not sure, but I found it on Mac's dictionary with the following definition: having a major impact or effect: an eye-catching and impactful design.}
-
-%Lastly, after training the NLP classifier, we process all comments that we extracted from the projects that we are analyzing. The resulting computation of this process is a classified source code comment. The classification can either be ``WITHOUT\_CLASSIFICATION'', meaning  that the classifier did not classify the comment as \SATD or ``DESIGN'' meaning that the classifier identified the comment as \SATD.
-
-%\alexander{what is the relation between the heuristics described in the previous section and the NLP classification here? Are those competing approaches? Complementary ones?}\rabe{the heuristics described in the previous section is considered to be a preprocessing step}\everton{In this study we could opt for not using the heuristics. However, we would expend an awful amount of time classifying comments that are not likely to have TD. Is more about feasibility than anything else. (Even in the previous study it was considered necessary to make the task of manual classification possible)}
-
-%\emad{I am missing here the evaluation of the classifier (precision/ recall) }\everton{We have all the precision and recall results in the TSE paper}
-
-
-% Please add the following required packages to your document preamble:
-% \usepackage{booktabs}
-% \usepackage{multirow}
-
-
-
-
-% \subsection*{Find Technical Debt Authors}
-% \label{sub:find_technical_debt_authors}
-
-% Once we have classified all comments as \SATD or non \SATD we can search for the authors responsible for the introduction and eventual removal of the \SATD comments. As described in subsection \ref{sub:checkout_all_versions_of_files} we have stored all different versions of all source code files. Therefore, to find the author who introduced a \SATD comment we look into the oldest version of the file containing the analyzed comment, and incrementally search through all future versions of that file until we find the first time that the comment appears for the first time. Once found, we keep tracking the \SATD comment in the remaining future versions of the file checking if  the \SATD comment was removed. 
-
-% Additionally, when searching for authors who removed \SATD comments we have to take into consideration deleted files. As we also identify the files that once was removed we can check if the last version of the file before removal contained \SATD comments. If that is the case, the author who removed the file is also the author who removed the \SATD comments. 
