@@ -2,20 +2,6 @@
 
 The main \emph{goal} of our study is to better understand what happens to \SATD once it is introduced into software projects. To do so, our first step is to quantify how much of \SATD comments get removed (RQ1). Next, we analyze who removes \SATD, i.e., if the same developer that introduced the debt is also most likely to remove it (RQ2). Then, we investigate how long the \SATD remains in the project (RQ3). Finally, we conduct a survey with 14 developers to understand why \SATD is introduced and removed (RQ4). For each question, we describe the motivation behind it, the approach chosen to address it, and the results obtained.
 
-
-
-\subsection*{\rqi}
-\subsubsection*{Motivation} Previous work showed that technical debt is widespread, unavoidable, and has arguably some negative impact on software projects~\cite{Lim2012Software}. Therefore, a priori we expect that removing technical debt is a concern for developers. To understand how developers deal with  technical debt we must first quantify how much debt is removed. 
-
-
-\subsubsection*{Approach} To answer this question we automatically identify \SATD from the five analyzed projects. As described in Section~\ref{sub:checkout_all_versions_of_files}, we stored all versions of all source code files. Then, for each analyzed \SATD comment we take the oldest file version available in which the debt was found and incrementally search for matches in future versions of the file. The first time that the analyzed \SATD comment(s) appears in a file, indicates the exact file version that the \SATD comment was introduced. To analyze if the introduced \SATD comment was later removed, we search for the same comment in the remaining file versions. When the comment is no longer found, we mark that version of the file as the removal version. In certain cases, a \SATD comment is found in one version only (i.e., the version that it is introduced in). Such cases indicate a scenario where the \SATD was introduced and removed immediately after. 
-
-
-
-\subsubsection*{Results} Table \ref{tbl:removed_self_admitted_technical_debt_per_project} presents the identified and removed \SATD comments. We find that the majority (\textit{i.e.,} on average 74.4\%, median 76.7\%) of the identified \SATD comments were removed. We measure the average on a per project basis, \textit{i.e.,} the total from each project is taken and the average/median over the five projects are provided. For example, we find 271 unique instances of \SATD comments when analyzing the Gerrit project. 76.7\% (\textit{i.e.,} 208) of these \SATD comments were removed during the evolution of the project. Camel had the highest \SATD comments removal percentage (\textit{i.e.,} 90.6), whereas Hadoop had the lowest removal percentage reaching 40.5\%. 
-
-Our findings indicate that developers tend to be aware and do care about \SATD. This finding corroborates with the survey findings of Ernst \emph{et al.}~\cite{Ernst2015FSE}. Also, these results match those observed in earlier studies reported by Potdar and Shihab~\cite{Potdar2014ICSME} and Bavota and Russo~\cite{Bavota2016MSR}.
-
 \begin{table}[!t]
 	\begin{center}
 		\caption{\textsc{Removed \SATD per project.}}
@@ -36,6 +22,20 @@ Our findings indicate that developers tend to be aware and do care about \SATD. 
 		\end{tabular}
 	\end{center}    
 \end{table}
+
+
+\subsection*{\rqi}
+\subsubsection*{Motivation} Previous work showed that technical debt is widespread, unavoidable, and has arguably some negative impact on software projects~\cite{Lim2012Software}. Therefore, a priori we expect that removing technical debt is a concern for developers. To understand how developers deal with  technical debt we must first quantify how much debt is removed. 
+
+
+\subsubsection*{Approach} To answer this question we automatically identify \SATD from the five analyzed projects. As described in Section~\ref{sub:checkout_all_versions_of_files}, we stored all versions of all source code files. Then, for each analyzed \SATD comment we take the oldest file version available in which the debt was found and incrementally search for matches in future versions of the file. The first time that the analyzed \SATD comment(s) appears in a file, indicates the exact file version that the \SATD comment was introduced. To analyze if the introduced \SATD comment was later removed, we search for the same comment in the remaining file versions. When the comment is no longer found, we mark that version of the file as the removal version. In certain cases, a \SATD comment is found in one version only (i.e., the version that it is introduced in). Such cases indicate a scenario where the \SATD was introduced and removed immediately after. 
+
+
+
+\subsubsection*{Results} Table \ref{tbl:removed_self_admitted_technical_debt_per_project} presents the identified and removed \SATD comments. We find that the majority (\textit{i.e.,} on average 74.4\%, median 76.7\%) of the identified \SATD comments were removed. We measure the average on a per project basis, \textit{i.e.,} the total from each project is taken and the average/median over the five projects are provided. For example, we find 271 unique instances of \SATD comments when analyzing the Gerrit project. 76.7\% (\textit{i.e.,} 208) of these \SATD comments were removed during the evolution of the project. Camel had the highest \SATD comments removal percentage (\textit{i.e.,} 90.6), whereas Hadoop had the lowest removal percentage reaching 40.5\%. 
+
+Our findings indicate that developers tend to be aware and do care about \SATD. This finding corroborates with the survey findings of Ernst \emph{et al.}~\cite{Ernst2015FSE}. Also, these results match those observed in earlier studies reported by Potdar and Shihab~\cite{Potdar2014ICSME} and Bavota and Russo~\cite{Bavota2016MSR}.
+
 
 
 
