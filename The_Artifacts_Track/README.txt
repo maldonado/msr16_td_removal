@@ -31,15 +31,61 @@ This artifact presents the dataset that we analyzed to answer our four research 
 
 
 RQ1: How much self-admitted technical debt gets removed?
-For each of the studied project, there is a CSV file that contains a list of all the identified self-admitted technical debt with their meta data such as the file where the comment exists and the commit hash that introduced the source code comment. 
+For each of the studied project, there is a CSV file that contains a list of all the identified self-admitted technical debt with their meta data that include: 
+
+project: Project name
+commit_hash : commit hash that introduce the self-admitted technical debt comments.
+author_name : the name of the author who introduce the self-admitted technical debt.
+author_email : the email of the author who introduce the self-admitted technical debt.
+author_date : date when the  self-admitted technical debt comment where intrduced.
+version_path : the path of the file where self-admitted technical debt comment is located.
+comment_text : the identified self-admitted technical debt comment.
+start_line : line number of start of self-admitted technical debt comment in the file.
+end_line : line number of end of self-admitted technical debt comment in the file.
+introduced_version_commit_hash : commit hash that intrduce the identified self-admitted technical debt comment .
+introduced_version_author : name of the author who intrduce the identified self-admitted technical debt comment
+introduced_version_date : the date when the identified self-admitted technical debt comment has been intrduced.
+removed_version_commit_hash: the commit hash that remove the identified self-admitted technical debt comment.
+has_removed_version : if the identified self-admitted technical debt comment has been removed.
+removed_version_author : the name of the author who removed the identified self-admitted technical debt comment.
+removed_version_date : the date when identified self-admitted technical debt comment has been removed.
+interval_time_to_remove : interval time between the introduction and the removal of the identified self-admitted technical debt comment.
+epoch_time_to_remove :  interval time between the introduction and the removal of the identified self-admitted technical debt comment in seconds.
+
 
 
 RQ2: Who removes self-admitted technical debt? Is it most likely to be self-removed or removed by others?
 For each of the studied project, there is a CSV file that contains a list of all the self-removed technical debt and non-self-removed. They provide authors' name of the commit that introduced and removed the self-admitted technical debt.
 
 
+project: Project name
+commit_hash : commit hash that introduce the self-admitted technical debt comments.
+author_name : the name of the author who introduce the self-admitted technical debt.
+author_email : the email of the author who introduce the self-admitted technical debt.
+author_date : date when the  self-admitted technical debt comment where intrduced.
+version_path : the path of the file where self-admitted technical debt comment is located.
+comment_text : the identified self-admitted technical debt comment.
+start_line : line number of start of self-admitted technical debt comment in the file.
+end_line : line number of end of self-admitted technical debt comment in the file.
+introduced_version_commit_hash : commit hash that intrduce the identified self-admitted technical debt comment .
+introduced_version_author : name of the author who intrduce the identified self-admitted technical debt comment
+introduced_version_date : the date when the identified self-admitted technical debt comment has been intrduced.
+removed_version_commit_hash : the commit hash that remove the identified self-admitted technical debt comment.
+has_removed_version : if the identified self-admitted technical debt comment has been removed.
+removed_version_author : the name of the author who removed the identified self-admitted technical debt comment.
+removed_version_date : the date when identified self-admitted technical debt comment has been removed.
+interval_time_to_remove : interval time between the introduction and the removal of the identified self-admitted technical debt comment.
+epoch_time_to_remove :  interval time between the introduction and the removal of the identified self-admitted technical debt comment in seconds.
+
+
+
+
 RQ3: How long does self-admitted technical debt survive in a project?
 This folder contains both interval time to remove self-admitted technical debt. It also contains the R-script that is used for analysis and generating paper’s plots.
+
+project: Project name
+has_removed_version : if the identified self-admitted technical debt comment has been removed.
+epoch_time_to_remove :  interval time between the introduction and the removal of the identified self-admitted technical debt comment in seconds.
 
 
 RQ4: What activities lead to the removal of self-admitted technical debt?
