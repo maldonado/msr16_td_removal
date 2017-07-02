@@ -149,7 +149,7 @@ Additionally, we generate survival plots for the removal of \SATD to determine h
 			\toprule
 			\textbf{\thead{Project}} & \textbf{\thead{$p$-value}}&~~~ & \textbf{\thead{$d$}}\\ 
 			\midrule
-			\textbf{Camel }   &  0.000125& ~~~ &  $-$0.075(medium)\\  
+			\textbf{Camel }   &  0.000125& ~~~ &  $-$0.075(small)\\  
 			\textbf{Gerrit}   &  3.581e-14& ~~~ &  $-$0.671(large)\\  
 			\textbf{Hadoop}   &  $<$ 2.2e-16& ~~~ &  $-$0.531(large)\\  
 			\textbf{Log4j}   &  2.345e-06 & ~~~ &  $-$0.517(large)\\  
@@ -167,8 +167,7 @@ We estimated the magnitude of the difference between self-removed technical debt
 
 \subsubsection*{Results} Figure~\ref{fig:removed_all_std_comments} shows the distribution, the mean and median times for removal of the \SATD. The distribution of \SATD removal is skewed, as indicated by plots and the difference in the mean and median removal times. In general, the time that \SATD stays in a project  varies from one project to another: medians range between 18.2--172.8 days and averages---82--613.2 days. One clear finding however, is that in Camel and Gerrit, \SATD is removed faster than in Hadoop, Log4j and Tomcat.
 
-Figure~\ref{fig:survival_plots} shows the survival plots of \SATD for the five studied projects. Survival plot is a technique originating from the medical domain indicating the probability of a patient to survive at least for $x$ days. To estimate this probability one would ideally like to 
-have complete information about the death time of all patients. Such an assumption is, however, usually not realistic as some patients might still be alive at the end of the observations, \emph{i.e.}, the data is right-censored. Kaplan and Meier~\cite{kaplan1958nonparametric} have proposed a technique to estimate the survival in presence of right-censored data. As we have seen in Table~\ref{tbl:removed_self_admitted_technical_debt_per_project} some \SATD comments remained at the end of the observations, \emph{i.e.}, our data is also right-censored, in Figure~\ref{fig:survival_plots} we present the Kaplan-Meier estimators. The use of Kaplan-Meier estimators is common in software evolution applications of survival analysis~\cite{samoladas2010survival,goeminne2015towards,Lin:et:al}.
+Figure~\ref{fig:survival_plots} shows the survival plots of \SATD for the five studied projects. Survival plot is a technique originating from the medical domain indicating the probability of a patient to survive at least for $x$ days. To estimate this probability one would ideally like to have complete information about the death time of all patients. Such an assumption is, however, usually not realistic as some patients might still be alive at the end of the observations, \emph{i.e.}, the data is right-censored. Kaplan and Meier~\cite{kaplan1958nonparametric} have proposed a technique to estimate the survival in presence of right-censored data. As we have seen in Table~\ref{tbl:removed_self_admitted_technical_debt_per_project} some \SATD comments remained at the end of the observations, \emph{i.e.}, our data is also right-censored, in Figure~\ref{fig:survival_plots} we present the Kaplan-Meier estimators. The use of Kaplan-Meier estimators is common in software evolution applications of survival analysis~\cite{samoladas2010survival,goeminne2015towards,Lin:et:al}.
 
 Inspecting Figure~\ref{fig:survival_plots} we observe that for all projects, there is a steep decline in the first few hundred days, suggesting that in all projects an important share of \SATD is rapidly removed. Projects do differ in how steep the drop is and where it flattens out. For example, for Camel  there is a steep drop in \SATD after around 48 days and a long tail after that. This means that in Camel, the likelihood of \SATD surviving (\emph{i.e.}, existing in the project after introduction) drops sharply after 48 days, and after that time, the chance of surviving is less than 20\%, as indicated by the survival function. Another extreme case is Hadoop, where the chance of \SATD surviving for more than 1,150 days is close to 57.8\%; the percentage
 of the \SATD comments remaining at the end of the observations reported in Table~\ref{tbl:removed_self_admitted_technical_debt_per_project}. 
@@ -176,7 +175,7 @@ of the \SATD comments remaining at the end of the observations reported in Table
 
 
 
-We also compare the time that self-removed and non-self-removed \SATD exists in the project before it gets removed. We find that self-removed technical debt gets removed faster than non-self-removed technical debt. Figure~\ref{fig:removal_self_vs_nonself} shows that, on median for all projects, self-removed technical debt is removed earlier than non-self-removed technical debt. Our finding confirms our intuition, however, the exact reasons (e.g., is it because the remover is more familiar with the debt) as to why self-removals take less time warrant a study on its own. Table~\ref{tbl:statistic} shows the result of  Mann-Whitney test and Cliff's Delta ($d$), which is a measure of effect size. We observe that for all the studied projects the difference between self-removed and non-self-removed technical debt is statistically different. The effect size, for all the projects is large except for Camel, where the effect size is medium.\alexander{Shouldn't it be small? $d$ for Camel is $-0.075$ far below the $0.33$ threshold?}
+We also compare the time that self-removed and non-self-removed \SATD exists in the project before it gets removed. We find that self-removed technical debt gets removed faster than non-self-removed technical debt. Figure~\ref{fig:removal_self_vs_nonself} shows that, on median for all projects, self-removed technical debt is removed earlier than non-self-removed technical debt. Our finding confirms our intuition, however, the exact reasons (e.g., is it because the remover is more familiar with the debt) as to why self-removals take less time warrant a study on its own. Table~\ref{tbl:statistic} shows the result of  Mann-Whitney test and Cliff's Delta ($d$), which is a measure of effect size. We observe that for all the studied projects the difference between self-removed and non-self-removed technical debt is statistically different. The effect size, for all the projects is large except for Camel, where the effect size is small.
 
 \conclusion{The amount of time \SATD remains in a project before removal varies from one project to another and ranges between 18.2--172.8 days on median and 82--613.2 days on average. Moreover, self-removed technical debt is removed faster than non-self-removed technical debt.}
 
@@ -217,6 +216,7 @@ We also compare the time that self-removed and non-self-removed \SATD exists in 
 
 
 
+
 \begin{table}[t]
 	\centering
 	\caption{\textsc{Number of individuals invited to answer the survey and responses per project.}}
@@ -229,27 +229,23 @@ We also compare the time that self-removed and non-self-removed \SATD exists in 
 	\end{tabular}
 \end{table}
 
-
-
 \subsection*{\rqiv}
 
 
 \subsubsection*{Motivation} 
 Thus far, our analysis has been quantitative in nature. To triangulate our findings and better understand our findings, we perform complementary qualitative analysis to understand the experiences and motives of developers who introduce and remove \SATD.
 
-
-
  
 \subsubsection*{Approach} 
 To understand the activities that lead to the introduction and removal of \SATD, we designed an online survey. 
 While participants have been purposefully recruited, we did not store any identifying information  about the individual respondents.
-%~\alexander{AS: 1) please provide the link to the survey form; 2) are we sure that developers could not be identified based on the project/addd or removed SATD? Can we report the number of such developers per project? 3) any other ethical risks?}
 
-The survey included three main sections: 1)  questions regarding the participant's role and development tasks and experience in the project, 2) three Likert-scale questions about the frequency of developers encountering, adding, and addressing self-admitted technical debt, and 3) two open ended questions asking why developers add or remove \SATD. To ensure that the respondents understand the questions we ``eschew technical jargon that is outside the subjects’ repertoire''~\cite{SingerVinson}, i.e., instead of referring to \SATD explicitly we ask about ``comments indicating delayed or intended work activities such as TODO, FIXME, hack, workaround, etc.''. 
+The survey included three main sections: 1)  questions regarding the participant's role and development tasks and experience in the project, 2) three Likert-scale questions about the frequency of developers encountering, adding, and addressing self-admitted technical debt, and 3) two open ended questions asking why developers add or remove \SATD. To ensure that the respondents understand the questions we ``eschew technical jargon that is outside the subjects’ repertoire''~\cite{SingerVinson}, i.e., instead of referring to \SATD explicitly we ask about ``comments indicating delayed or intended work activities such as TODO, FIXME, hack, workaround, etc.''
 
 To identify the target population, we collected the names and email addresses of all developers who added or removed self-admitted technical debt in the five studied projects and an additional two projects from the training dataset, namely Apache Ant and Jmeter. We chose these two additional projects to increase the potential number of respondents and to avoid including all of the training dataset projects to not overwhelm developers with requests for surveys.
 
-In total, we found 250 unique developers from the studied projects and we successfully sent the survey to 188 of them.  We received 14 responses, \emph{i.e.}, the response rate is 7.4\%. Although this is lower than the response rate reported in software engineering surveys \cite{Punter2003}, the area of technical debt is difficult to discuss, especially since some developers may feel they or their projects will be negatively perceived. Table~\ref{Number_of_the_Survey_Responses_per_Project} shows the number of developers that we surveyed and the survey responses per project. We also make the online survey questions and the anonymized survey responses available online\footnote{\url{http://das.encs.concordia.ca/uploads/2017/06/maldonado_icsme2017.zip}}. Half of the respondents were from the five studied projects and the other half were from the Apache Ant and Jmeter projects. For the open-ended questions, we manually analyzed the free-text answers and identified six main reasons why developers add self-admitted technical debt and five main reasons for removing self-admitted technical debt. Of the 14 respondents, eight identified themselves as core developers, and six as contributors to the projects. Five of the 14 respondents work on fixing bugs, and five work on implementing new features. Only one respondent has the task of code reviewer. Another three respondents indicted having different tasks (\emph{e.g.}, project user). Twelve respondents have more than five years of experience and only two respondents have less than three years of experience.
+In total, we found 250 unique developers from the studied projects and we successfully sent the survey to 188 of them.  We received 14 responses, \emph{i.e.}, the response rate is 7.4\%. Although this is lower than the response rate reported in software engineering surveys \cite{Punter2003}, the area of technical debt is difficult to discuss, especially since some developers may feel they or their projects will be negatively perceived. Table~\ref{Number_of_the_Survey_Responses_per_Project} shows the number of developers that we surveyed and the survey responses per project. We also make the online survey questions and the anonymized survey responses available online\footnote{\url{http://das.encs.concordia.ca/uploads/2017/07/maldonado_icsme2017.zip}}. Half of the respondents were from the five studied projects and the other half were from the Apache Ant and Jmeter projects. For the open-ended questions, we manually analyzed the free-text answers and identified six main reasons why developers add self-admitted technical debt and five main reasons for removing self-admitted technical debt. Of the 14 respondents, eight identified themselves as core developers, and six as contributors to the projects. Five of the 14 respondents work on fixing bugs, and five work on implementing new features. Only one respondent has the task of code reviewer. Another three respondents indicted having different tasks (\emph{e.g.}, project user). Twelve respondents have more than five years of experience and only two respondents have less than three years of experience.
+
 
 
 
@@ -271,6 +267,10 @@ This observation is concurrent, e.g., with an earlier observation that in Eclips
  	\caption{Survey responses on how often do developers encounter, add, and address self-admitted technical debt.}
  	\label{fig:encouner_add_address}
  \end{figure}
+
+
+
+
 
 
 As for why developers tend to add \SATD, nine respondents (P1, P4, P5, P8, P9, P11, P12, P13, and P14) indicated that they add self-admitted technical debt as \emph{a tracker in the source code for potential bugs or source code that needs to be improved or document a need for a new feature}. For example, P12 states that \textit{``It is usually a marker in the source of a missing feature or known bug.''}. Also, contrary to Postdar and Shihab~\cite{Potdar2014ICSME} we find that developers add self-admitted technical debt because of time pressure (P1, P2, P7, P13, and P14) to deliver tasks. For example, P1 said \textit{``Because they want to deliver, and when balancing an early delivery against technical debt."} Some other reasons for adding self-admitted technical debt are very rare and are only mentioned once or twice (e.g,. a remainder or looking for feedback). For example, P5 said that \textit{``They are not sure about the effects of their code and want feedback..."}.
