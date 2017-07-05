@@ -11,7 +11,7 @@ Figure~\ref{fig:automatically_classified_data_approach_overview} shows an overvi
 \begin{figure}[tb!]
 	\centering
 	\includegraphics[width=\columnwidth]{figures/approach.pdf}
-	\caption{Automatic classification of \SATD.}
+	\caption{Process to automatically classify \SATD.}
 	\label{fig:automatically_classified_data_approach_overview}
 \end{figure}
 
@@ -69,15 +69,15 @@ The number of comments shown in Table~\ref{tab:project_details} for each project
 
 
 
-Since we focus on the introduction and removal of \SATD, historical information about the project files is sought. As illustrated in Figure~\ref{fig:files_case}, we first identify all Java source code files currently available in the latest version of the project. Then, we analyze the source code repository to track all changes done to each file. Each change made to a file produces a different version of that file (Figure~\ref{fig:files_case} case 1), and by extracting them we can analyze each file version looking for source comments that indicate \SATD. A version of a file is generated whenever a change (i.e., commit) is made. Once we identify all file versions, we consider the first available file version that contains the \SATD as the file version that introduced the \SATD. Similarly, we consider the date of the commit that removes the \SATD comment or deletes the file where the \SATD exists in as the removal date.
+Since we focus on the introduction and removal of \SATD, historical information about the project files is sought. As illustrated in Figure~\ref{fig:files_case}, we first identify all Java source code files currently available in the latest version of the project. Then, we analyze the source code repository to track all changes done to each file. Each change made to a file produces a different version of that file (Figure~\ref{fig:files_case}, case 1), and by extracting them we can analyze each file version looking for source comments that indicate \SATD. A version of a file is generated whenever a change (i.e., commit) is made. Once we identify all file versions, we consider the first available file version that contains the \SATD as the file version that introduced the \SATD. Similarly, we consider the date of the commit that removes the \SATD comment or deletes the file where the \SATD exists in as the removal date.
 
-Since file deletions indicate \SATD removals, it is important to correctly handle file moves and renames (Figure~\ref{fig:files_case} case 2). Git is capable of tracking renamed or moved files based on a similarity threshold~\cite{BirdMSR2009,HataIWPSE-EVOL2011}. In our study, we use the default similarity threshold of 90\%, \emph{i.e.}, if a file is renamed or moved to another folder, and is at least 90\% similar to an older version (excluding whitespaces and blank lines), Git will consider that the file was just moved or renamed. If a file was not listed as being moved or renamed, then we consider it to be deleted. 
-
-
+Since file deletions indicate \SATD removals, it is important to correctly handle file moves and renames (Figure~\ref{fig:files_case}, case 2). Git is capable of tracking renamed or moved files based on a similarity threshold~\cite{BirdMSR2009,HataIWPSE-EVOL2011}. In our study, we use the default similarity threshold of 90\%, \emph{i.e.}, if a file is renamed or moved to another folder, and is at least 90\% similar to an older version (excluding whitespaces and blank lines), Git will consider that the file was just moved or renamed. If a file was not listed as being moved or renamed, then we consider it to be deleted. 
 
 
 
-The second step to checkout all versions of files is to identify the files that are no longer present in the repository  \textit{i.e.,} deleted files, Figure~\ref{fig:files_case} case 3. Using Git we obtain the list of commit hashes that have deleted at least one file and the fully qualified names of these files. Using this information, we repeat the process described above to obtain all the older versions of the files. To guarantee the correctness of the process we focus solely on Java source files, and ensure that every fully qualified path of the file is analyzed only once. 
+
+
+The second step to checkout all versions of files is to identify the files that are no longer present in the repository  \textit{i.e.,} deleted files (Figure~\ref{fig:files_case}, case 3). Using Git we obtain the list of commit hashes that have deleted at least one file and the fully qualified names of these files. Using this information, we repeat the process described above to obtain all the older versions of the files. To guarantee the correctness of the process we focus solely on Java source files, and ensure that every fully qualified path of the file is analyzed only once. 
 
 
 
@@ -89,7 +89,7 @@ After this step is complete, we have at our disposal the information regarding t
 We use an open source library SrcML~\cite{Collard2013SIE} to parse the source code, and extract the comments and the information related to them such as the line that each comment starts, finishes and the type of the comment (\textit{i.e.,} Javadoc, Line or Block). 
 
 
-As the prior work showed, not all comments can contain \SATD \cite{Potdar2014ICSME,Wehaibi2016SANER}. Therefore,  as the pre-processing we exclude the following types of comments:
+As the prior work showed, not all comments can contain \SATD \cite{Potdar2014ICSME,Wehaibi2016SANER}. Therefore,  in the pre-processing we exclude the following types of comments:
 
 \begin{itemize}
 \item \textbf{License comments} that generally do not contain \SATD and are commonly located before the class declaration. That said, comments that contain task annotations (\textit{i.e.,} ``TODO:'', ``FIXME:'', or ``XXX:'') ~\cite{Storey2008ICSE} are not removed since they are usually leveraged by most IDEs, e.g., Eclipse and Netbeans, to automatically generate task lists.
@@ -110,7 +110,7 @@ As the prior work showed, not all comments can contain \SATD \cite{Potdar2014ICS
 \end{itemize} 
 
 
-The pre-processing steps above significantly reduce the number of comments in the dataset and allow us to focus on the most applicable and insightful comments. For example, as shown in Table~\ref{tab:project_details}, in the Camel project, applying the above steps helped to reduce the number of comments from 1,634,361 to 700,412 meaning a reduction of 57.1\% in the number of comments to be classified. Using the filtering heuristics we were able to eliminate between 53.3\% to 87.3\% of all comments. Table \ref{tab:project_details} provides the number of comments kept after the filtering heuristics for each project.
+The pre-processing steps above significantly reduce the number of comments in the dataset and allow us to focus on the most applicable and insightful comments. For example, as shown in Table~\ref{tab:project_details}, in the Camel project, applying the above steps helped to reduce the number of comments from 1,634,361 to 700,412, a reduction of 57.1\% in the number of comments to be classified. Using the filtering heuristics we were able to eliminate between 53.3\% to 87.3\% of all comments. Table \ref{tab:project_details} provides the number of comments kept after the filtering heuristics for each project.
 %\rabe{I could not figure out from where these comment are calculated, is it from the current version of all files, in all version of files}
 %\alexander{how did we ensure that these were the most ``applicable and insghtful''?} \everton{This statement was intuitively made. Here we are not trying to say that the removed comments were not important, we are trying to say that from our perspective (that is classifying TD comments) removing noisy comments (comments that does not have TD) leaves us with the most applicable comments (for the task)} 
 
@@ -130,7 +130,7 @@ The pre-processing steps above significantly reduce the number of comments in th
 %\label{sub:nlp_classification}
 
 \subsection{Applying the NLP to Identify Self-Admitted Technical Debt} 
-To identify the \SATD comments, we next use the technique presented in by Maldonado \emph{et al.}~\cite{Maldonado2015TSE}. We refer readers to Maldonado \emph{et al.}'s paper for full details on how to identify \SATD comments, however, to make our paper self-contained, we highlight the key points of their approach that we use next.
+To identify the \SATD comments, we next use the technique presented in by Maldonado \emph{et al.}~\cite{Maldonado2015TSE}. We refer readers to Maldonado \emph{et al.}'s paper for full details on how to identify \SATD comments, however, to make our paper self-contained, we highlight the key points of their approach that we use:
 
 \begin{itemize}
 	\item To train the NLP classifier, we used the manually classified \SATD comments dataset provided by Maldonado \emph{et al.}~\cite{Maldonado2015TSE}. The dataset contains 62,566 comments extracted from ten open source projects. These comments were classified as \SATD comments or as regular comments (\textit{i.e.,} comments without \SATD). The manually classified dataset was verified by the authors of Maldonado \emph{et al.}'s paper and they showed that two independent reviewers agreed on the classification, achieving a Cohen's Kappa value of +0.81~\cite{Maldonado2015TSE}. Hence, we have good confidence in the dataset provided by Maldonado \emph{et al.} and used in this study.
