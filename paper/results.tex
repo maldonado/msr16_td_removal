@@ -50,7 +50,7 @@ Our findings indicate that developers tend to be aware and do care about \SATD. 
 
 
 
-\noindent\textbf{A.pproach} To answer this question we analyzed the authors of the changes (\textit{i.e.,} commits from the source code repository) that introduced or removed \SATD comments. In order to do that, we first determine the commit in which a \SATD comment was added, then we check the further file versions to determine if there is any commit that removed the \SATD comment. Finally, we compare the authors of the commits to see if they are the same or not. 
+\noindent\textbf{Approach:} To answer this question we analyzed the authors of the changes (\textit{i.e.,} commits from the source code repository) that introduced or removed \SATD comments. In order to do that, we first determine the commit in which a \SATD comment was added, then we check the further file versions to determine if there is any commit that removed the \SATD comment. Finally, we compare the authors of the commits to see if they are the same or not. 
 
 We take into consideration two attributes of the change when comparing authors---the author name and email address. This is a necessary heuristic to mitigate the risk of misclassifying authors that change their names in the source code repository during the evolution of the project (cf.\ \cite{DBLP:conf/icsm/KoutersVSB12,wiese2016mailing}).
 
@@ -100,7 +100,7 @@ Additionally, we generate survival plots for the removal of \SATD to determine h
 
 \begin{figure}[t]
 	\centering
-	\includegraphics[width=\columnwidth]{figures/test/distribution_.pdf}
+	\includegraphics[width=\columnwidth]{box_distribution.pdf}
 	\caption{The distribution of times of all the removed \SATD comments.}
 	\label{fig:removed_all_std_comments}
 \end{figure}
@@ -112,27 +112,27 @@ Additionally, we generate survival plots for the removal of \SATD to determine h
 	\centering
 	
 	\begin{subfigure}[b]{0.31\textwidth}
-		\includegraphics[width=\textwidth]{figures/Survival/camel.pdf}
+		\includegraphics[width=\textwidth]{sur_camel.pdf}
 	\end{subfigure}
 	~
 	~
 	\begin{subfigure}[b]{0.31\textwidth}
-		\includegraphics[width=\textwidth]{figures/Survival/gerrit.pdf}
+		\includegraphics[width=\textwidth]{sur_gerrit.pdf}
 	\end{subfigure}
 	~
 	~
 	\begin{subfigure}[b]{0.31\textwidth}
-		\includegraphics[width=\textwidth]{figures/Survival/hadoop.pdf}
+		\includegraphics[width=\textwidth]{sur_hadoop.pdf}
 	\end{subfigure}
 	
 	
 	\begin{subfigure}[b]{0.31\textwidth}
-		\includegraphics[width=\textwidth]{figures/Survival/log4j.pdf}
+		\includegraphics[width=\textwidth]{sur_log4j.pdf}
 	\end{subfigure}
 	~
 	~
 	\begin{subfigure}[b]{0.31\textwidth}
-		\includegraphics[width=\textwidth]{figures/Survival/tomcat.pdf}
+		\includegraphics[width=\textwidth]{sur_tomcat.pdf}
 	\end{subfigure}
 	\caption{Survival plots show the probability of the removal of \SATD comment for all studied projects.}
 	\label{fig:survival_plots}
@@ -183,27 +183,27 @@ We also compare the time that self-removed and non-self-removed \SATD exists in 
 \begin{figure*}[t]
 	\centering
 	\begin{subfigure}[b]{0.195\textwidth}
-		\includegraphics[width=\textwidth]{figures/test/Camel.pdf}
+		\includegraphics[width=\textwidth]{ben_Camel.pdf}
 		\label{fig:removal_comparison_camel}
 	\end{subfigure}
 	\begin{subfigure}[b]{0.193\textwidth}
-		\includegraphics[width=\textwidth]{figures/test/Gerrit.pdf}
+		\includegraphics[width=\textwidth]{ben_Gerrit.pdf}
 		\label{fig:removal_comparison_gerrit} 
 	\end{subfigure}
 	\begin{subfigure}[b]{0.195\textwidth}
-		\includegraphics[width=\textwidth]{figures/test/Hadoop.pdf}
+		\includegraphics[width=\textwidth]{ben_Hadoop.pdf}
 		\label{fig:removal_comparison_hadoop} 
 	\end{subfigure}
 	\begin{subfigure}[b]{0.191\textwidth}
-		\includegraphics[width=\textwidth]{figures/test/Log4j.pdf}
+		\includegraphics[width=\textwidth]{ben_Log4j.pdf}
 		\label{fig:removal_comparison_log4j}
 	\end{subfigure}
 	\begin{subfigure}[b]{0.195\textwidth}
-		\includegraphics[width=\textwidth]{figures/test/Tomcat.pdf}
+		\includegraphics[width=\textwidth]{ben_Tomcat.pdf}
 		\label{fig:removal_comparison_tomcat} 
 	\end{subfigure}
-	\begin{subfigure}[b]{0.30\textwidth}
-		\includegraphics[width=\textwidth]{figures/test/legend_.pdf}
+	\begin{subfigure}[b]{0.40\textwidth}
+		\includegraphics[width=\textwidth]{legend.pdf}
 	\end{subfigure}
 	\caption{Time of self-removal vs non-self-removal in days.}
 	\label{fig:removal_self_vs_nonself}
@@ -260,7 +260,7 @@ This observation is concurrent, e.g., with an earlier observation that in Eclips
  
  \begin{figure}[t]
  	\centering
- 	\includegraphics[width=0.95\columnwidth]{figures/test/_responses_question_.pdf}
+ 	\includegraphics[width=1\columnwidth]{responses_question.pdf}
  	\caption{Survey responses on how often developers encounter, add, and address self-admitted technical debt.}
  	\label{fig:encouner_add_address}
  \end{figure}
