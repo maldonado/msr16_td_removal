@@ -94,40 +94,24 @@ As the prior work showed, not all comments can contain \SATD \cite{Potdar2014ICS
 \begin{itemize}
 \item \textbf{License comments} that generally do not contain \SATD and are commonly located before the class declaration. That said, comments that contain task annotations (\textit{i.e.,} ``TODO:'', ``FIXME:'', or ``XXX:'') ~\cite{Storey2008ICSE} are not removed since they are usually leveraged by most IDEs, e.g., Eclipse and Netbeans, to automatically generate task lists.
 
-%We create a heuristic that removes comments that are placed before the class declaration. Since we know the line number that the class was declared we can easily check for comments that are placed before that line and remove them. In order to decrease the chances of removing a self-admitted technical debt comment while executing this filter we calibrated this heuristic to not remove comments containing one of task annotations (\textit{i.e.,} ``TODO:'', ``FIXME:'', or ``XXX:'') ~\cite{Storey2008ICSE}. Task annotations are an extended functionality provided by most of the popular Java \textit{IDEs} including Eclipse, InteliJ and NetBeans. When one of these words are used inside a comment the IDE will automatically keep track of the comment creating a centralized list of tasks that can be conveniently accessed later on. \alexander{I miss here something like ``We consider task annotations as \SATD.'' Or ``Following ... we consider...''}
 
-%\item \textbf{Long comments} that are created using multiple \emph{Single-line} comments instead of a \emph{Block} comment can hinder the understanding of the message considering the case that the reader (\textit{i.e.,} human or machine) analyzes each one of these comments independently. To solve that problem, we create a heuristic that searches for consecutive Single-line comments and groups them as one \alexander{Block?} comment.\everton{Block could be confusing because it is a specific entity of the Java language with its own syntax. What we have here is more like an group of single line comments. But, if you think that block makes the text clearer to the reader I am all in.}
 
 \item \textbf{Commented-out source code}, which is explicitly commented out by developers and not compiled is also ignored since prior work showed that it generally does not contain \SATD \cite{Potdar2014ICSME,Wehaibi2016SANER}.
-% found in the projects due to many different reasons. One of the possibilities is that the code is not currently being used. Other is that, the code is used for debugging purposes only. Based on our analysis, commented source code does not have self-admitted technical debt.\alexander{``Our analysis'' is very vague here: what has been analyzed and how? What kind of results did we obtain?} \everton{I agree that analysis here is not ideal. This was part of one of our first studies when I joined Concordia. It was a course project, and basically, after we extracted source code comments from ten projects (same projects from TSE) we manually read through them to evaluate the results. Some patterns, became very clear. For example, all classes from one project had license comments. These license comments does not contains TD , so we removed. That is how we created our heuristics}Our heuristic removes commented source code using a simple regular expression that captures typical Java code structures.
+
 
 \item \textbf{Automatically generated comments} by the IDE are also removed since they, by definition, do not indicate \SATD. 
-%These comments are inserted as part of code snippets used to generate constructors, methods and try catch blocks, and have a fixed format (\textit{i.e.,} ``Auto-generated constructor stub'', ``Auto-generated method stub'', and ``Auto-generated catch block'' \alexander{is this an extensive list or are these merely examples?}).\everton{An extensive list.} Therefore, our heuristic searches for these automatically generated comments and removes them. 
+
 
 \item \textbf{Javadoc comments} are also removed since they rarely mention self-admitted technical debt \cite{Potdar2014ICSME}. 
-%For the Javadoc comments that do mention self-admitted technical debt, we notice that they usually\alexander{how often?} \everton{Not often at all, but not quantified yet. To quantify, query the number of comments from table processed\_comment where type = Javadoc and classification is different than WITHOUT\_CLASSIFICATION.} contain one of the task annotations (\textit{i.e.,} ``TODO:'', ``FIXME:'', or ``XXX:''). Therefore, our heuristic removes all comments of the type Javadoc unless they contain at least one of the task annotations  To do so, we create a simple regular expression that searches for the task annotations before removing the comment.  
+
  
 \end{itemize} 
 
 
 The pre-processing steps above significantly reduce the number of comments in the dataset and allow us to focus on the most applicable and insightful comments. For example, as shown in Table~\ref{tab:project_details}, in the Camel project, applying the above steps helped to reduce the number of comments from 1,634,361 to 700,412, a reduction of 57.1\% in the number of comments to be classified. Using the filtering heuristics we were able to eliminate between 53.3\% to 87.3\% of all comments. Table \ref{tab:project_details} provides the number of comments kept after the filtering heuristics for each project.
-%\rabe{I could not figure out from where these comment are calculated, is it from the current version of all files, in all version of files}
-%\alexander{how did we ensure that these were the most ``applicable and insghtful''?} \everton{This statement was intuitively made. Here we are not trying to say that the removed comments were not important, we are trying to say that from our perspective (that is classifying TD comments) removing noisy comments (comments that does not have TD) leaves us with the most applicable comments (for the task)} 
-
-%\subsection{Filtering Comments}
-%\label{sub:filtering_comments}
-
-%Source code comments can be used for different purposes in a project, such as giving context, documenting, expressing thoughts, opinions and authorship, and in some cases, disabling source code from the program.\alexander{This is a nice statement but it somehow seems to call for a bibliographic reference.} \rabe{not sure about this \cite{Ying2005MSR}} \everton{This statement was me thinking of how I have used comments in the past. Nevertheless, the same statement now is published in the TSE. I do not know if this counts though.}Comments are used freely by developers and with limited formalities, if any at all. This informal environment allows developers to bring to light opinions, insights and even confessions (e.g., self-admitted technical debt). 
-
-%Part of these comments can be identified as self-admitted technical debt \cite{Potdar2014ICSME}, \alexander{Would you consider the comments themselves as \SATD or merely as admissions, or indications that the technical debt is somewhere around the comment?} \everton{Mostly the second option. For example, Fluri et al. in ``Do code and comments co-evolve? on the relation between source code and comment changes'' states that 97\% of the comment changes are consistent (i.e., the code comment is changed with the related piece of code). However, for the remainder of the cases I would consider option 1. }but they are not the majority of cases. With that in mind, we develop and apply five filtering heuristics \alexander{explicitly number the heuristics below} to narrow down the comments eliminating the ones that are less likely to be classified as self-admitted technical debt. 
 
 
 
-
-%\alexander{I miss here an evaluation of the approach. The fact that filtering reduces the number of comments is hardly surprising. Can you test these heuristics on a set of comments that you have not seen when designing the heuristics?}\rabe{the heuristics filtering could be considered as prepossessing step}\everton{The heuristics can be applied on any Java project. They can be used because they address common usage patterns of code comments in Java projects. The results, (number of comments filtered) will vary from project to project though.}
-
-%\subsection{NLP Classification}
-%\label{sub:nlp_classification}
 
 \subsection{Applying the NLP to Identify Self-Admitted Technical Debt} 
 To identify the \SATD comments, we next use the technique presented in by Maldonado \emph{et al.}~\cite{Maldonado2015TSE}. We refer readers to Maldonado \emph{et al.}'s paper for full details on how to identify \SATD comments, however, to make our paper self-contained, we highlight the key points of their approach that we use:
